@@ -218,25 +218,6 @@ function tabs() {
 
     });
 }
-$(document).ready(function () {
-    backgroundImage();
-    menuBtnToggle();
-    subMenuToggle();
-    owlCarousel($('.owl-slider'));
-    bootstrapSelect();
-    dateTimePicker();
-    productCollapse();
-    backToTop();
-    tabs();
-});
-
-$(window).on('load resize', function () {
-    resizeHeader();
-});
-
-$(window).on('load', function () {
-
-});
 
 function checkOtherValidation(id) {
 
@@ -251,3 +232,34 @@ function checkOtherValidation(id) {
     }
 
 }
+
+function numericValidation() {
+    $(".only_numeric").numeric();
+    // NUMERIC DIGITS WITH + SPECIAL ONLY
+    $("input[name='country_code'], input[name='telephone']").on('keydown', function (e) {
+        if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode != 8 && e.keyCode != 37 && e.keyCode != 39 && e.keyCode != 9 && e.keyCode != 187) {
+            e.preventDefault();
+        }
+    });
+}
+$(document).ready(function () {
+    backgroundImage();
+    menuBtnToggle();
+    subMenuToggle();
+    owlCarousel($('.owl-slider'));
+    bootstrapSelect();
+    dateTimePicker();
+    productCollapse();
+    backToTop();
+    tabs();
+    numericValidation();
+});
+
+$(window).on('load resize', function () {
+    resizeHeader();
+});
+
+$(window).on('load', function () {
+
+});
+
