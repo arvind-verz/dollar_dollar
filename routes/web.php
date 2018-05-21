@@ -140,7 +140,11 @@ Route::group(array('prefix' => 'admin'), function () {
     
     /*Tag module end*/
 
-    Route::get('/temp', 'Product\ProductsController@temp')->name('temp');
+    Route::get('/temp', 'Products\ProductsController@temp')->name('temp');
+
+    Route::get('/promotion-products', 'Products\ProductsController@promotion_products')->name('promotion-products');
+    Route::get('/promotion-formula', 'Products\ProductsController@promotion_formula')->name('promotion-formula');
+    Route::get('/bank-products', 'Products\ProductsController@bank_products')->name('bank-products');
 
 
 });

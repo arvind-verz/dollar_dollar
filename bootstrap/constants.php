@@ -134,6 +134,7 @@ define('PROMOTION_PAGE_ID', 21);
 
 //Blog menu id
 define('BLOG_MENU_ID', 21);
+define('PRODUCT_ID', 37);
 
 //Alert messages
 define('IMPORTED_ALERT', " has been successfully imported.");
