@@ -360,4 +360,10 @@ class Helper
     }
     /* END TAGS */
 
+    /* PRODUCTS */
+    public function getProducts($slug=NULL) {
+        //$sel_query = PromotionProducts::join('pages')
+    }
+    /* END PRODUCTS */
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMenusTable extends Migration
+class PromotionProducts extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('promotion_products', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title')->nullable();
-            $table->integer('main')->nullable();
-            $table->integer('parent')->nullable();
-            $table->integer('child')->nullable();
-            $table->tinyInteger('delete_status')->default("0");
+            $table->integer('promotion_id');
+            $table->integer('formula_id');
+            $table->integer('promotion_start');
+            $table->integer('promotion_end');
+            $table->integer('tenure');
+            $table->double('bonus_interest');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        //
     }
 }
