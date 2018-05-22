@@ -75,6 +75,10 @@
 
 </script>
 <script type="text/javascript">
+    $(document).ready(function() {
+        $(".only_numeric").numeric();
+    });
+
     function check_url(link) {
         //alert(link);
         //Get input value
@@ -100,6 +104,7 @@
 <!-- DataTables -->
 <script src="{{ asset('backend/bower_components/datatables.net/js/jquery.dataTables.min.js' ) }}"></script>
 <script src="{{ asset('backend/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{ asset('frontend/js/jquery.numeric.js') }}"></script>
 <!-- Morris.js charts -->
 <script src="{{ asset('backend/bower_components/raphael/raphael.min.js') }}"></script>
 <script src="{{ asset('backend/bower_components/morris.js/morris.min.js') }}"></script>

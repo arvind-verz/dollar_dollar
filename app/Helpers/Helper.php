@@ -14,6 +14,9 @@ use App\BlogCategory;
 use App\Blog;
 use App\Tag;
 use App\Page;
+use App\PromotionProducts;
+use App\PromotionTypes;
+use App\PromotionFormula;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 
@@ -361,9 +364,61 @@ class Helper
     /* END TAGS */
 
     /* PRODUCTS */
-    public function getProducts($slug=NULL) {
-        //$sel_query = PromotionProducts::join('pages')
+    public static function getProducts($id=NULL) {
+        DB::enableQueryLog();
+        $sel_query = PromotionProducts::join('promotion_types', 'promotion_types.id', '=', 'promotion_products.promotion_type_id')
+        ->where('promotion_products.delete_status', '=', 0)
+        ->select('promotion_products.*')
+        ->get();
+
+        //dd(DB::getQueryLog());
+
+        return $sel_query;
+    }
+
+    public static function getProduct($id=NULL) {
+        $sel_query = PromotionProducts::find($id);
+
+        return $sel_query;
+    }
+
+    public static function productType($id=NULL) {
+        $sel_query = PromotionProducts::find($id);
+        $sel_query = PromotionFormula::where('id', $sel_query->promotion_type_id)
+        ->where('delete_status', 0)
+        ->get();
+        return $sel_query;
     }
     /* END PRODUCTS */
+
+    /* FORMULAS */
+    public static function getFormula($id=NULL) {
+        //DB::enableQueryLog();
+        if($id) {
+            $sel_query = PromotionFormula::find($id);
+        }
+        else {
+            $sel_query = PromotionFormula::where('delete_status', '=', 0)->get();
+        }
+        
+        //dd(DB::getQueryLog());
+        return $sel_query;
+    }
+
+    public static function getAllFormula($id=NULL) {
+        $sel_query = PromotionFormula::where('id', $id)->where('delete_status', 0)->get();
+        return $sel_query;
+    }
+    /* END FORMULAS */
+
+    /* PROMOTION TYPE */
+    public static function getPromotionType() {
+        $sel_query = PromotionTypes::where('delete_status', '=', 0)->get();
+
+        return $sel_query;
+    }
+
+
+    /* END PROMOTION TYPE */
 
 }
