@@ -108,23 +108,6 @@ class Helper
 
     }
 
-//get all parent categories by division
-    public static function getBackendBreadCumsCategoryByMenus($menuId)
-    {
-        $menus = [];
-        //dd($menu);
-        array_push($menus, ['id' => $menu->id, 'title' => $menu->title]);
-
-        $parentMenuId = $menu->parent;
-        while ($parentMenuId != 0) {
-            $menu = Menu::find($parentMenuId);
-            array_push($menus, ['id' => $menu->id, 'title' => $menu->title]);
-            $parentMenuId = $menu->parent;
-        }
-
-        return array_reverse($menus);
-
-    }
 
     /*get pages from page table this pages are manually add in database */
     public static function getPages()
