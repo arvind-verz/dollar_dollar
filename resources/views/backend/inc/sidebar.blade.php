@@ -41,9 +41,32 @@
                             <li><a href="{{ route('life-insurance-enquiry.index') }}"><i class="fa fa-heart"></i> Life Insurance Enquiry</a></li>
                             </ul>
                     </li>
+                    @elseif($menu->label == PRODUCT_MODULE)
+                    <li class="treeview ">
+                        <a href="#" >
+                            <i class="{{$menu->icon}}"></i> <span>{{$menu->label}}</span>
+                             <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="treeview ">
+                                <a href="#"><i class="fa fa-tty"></i> Promotion Products
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="{{ route('promotion-products') }}"><i class="fa fa-plus"></i> Products</a></li>
+                                    <li><a href="{{ route('promotion-formula') }}"><i class="fa fa-tty"></i> Formula</a></li>                                </ul>
+                            </li>
+                            <li><a href="{{ route('bank-products') }}"><i class="fa fa-plus"></i> Bank Products</a></li>
+                        </ul>
+                    </li>
                     @else
+
                     <li>
-                    <a href="{{ route($name) }}" onclick="location.href='{{ route($name) }}'">
+                    <a href="@if($menu->name=='#') $menu->name @else{{ route($name) }} @endif" onclick="location.href='#'">
 
                         <i class="{{$menu->icon}}"></i> <span>{{$menu->label}}</span>
                     </a>
