@@ -85,6 +85,14 @@
 
     }
 
+    $(document).ready(function() {
+    //Date picker
+        $('#datepicker, #datepicker1').datepicker({
+          autoclose: true,
+          format: 'yyyy-mm-dd'
+        });
+    });
+
 </script>
 
 <!-- ./wrapper -->

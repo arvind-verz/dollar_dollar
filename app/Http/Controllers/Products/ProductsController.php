@@ -275,7 +275,7 @@ class ProductsController extends Controller
     }
 
     public function promotion_products_remove($id) {
-        $sel_query = PromotionFormula::where('id', $id)->first();
+        $sel_query = PromotionProducts::where('id', $id)->first();
         $sel_query->delete_status = 1;
         $sel_query->save();
         //dd($sel_query);
@@ -290,7 +290,7 @@ class ProductsController extends Controller
                 ->log(CREATE);
 
         
-        return redirect()->action('Products\ProductsController@promotion_products_add')->with('error', "Data" . ' ' . DELETED_ALERT);
+        return redirect()->action('Products\ProductsController@promotion_products')->with('error', "Data" . ' ' . DELETED_ALERT);
     }
 
     public function promotion_formula() {

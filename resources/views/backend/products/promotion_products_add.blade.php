@@ -66,15 +66,25 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">Promotion Start Date</label>
+                            <label for="title" class="col-sm-2 control-label">Promotion End Date</label>
                             <div class="col-sm-10">
-                                <input type="date" name="promotion_start" class="form-control" placeholder="Enter Promotion Start Date" value="{{ old('promotion_start') }}">
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" name="promotion_start" id="datepicker" value="{{ old('promotion_start') }}">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="title" class="col-sm-2 control-label">Promotion End Date</label>
                             <div class="col-sm-10">
-                                <input type="date" name="promotion_end" class="form-control" placeholder="Enter Promotion End Date" value="{{ old('promotion_end') }}">
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" name="promotion_end" id="datepicker1" value="{{ old('promotion_end') }}">
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
