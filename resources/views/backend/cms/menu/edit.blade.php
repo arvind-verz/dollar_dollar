@@ -7,8 +7,21 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('menu.index') }}">{{MENU_MODULE}}</a></li>
-            <li class="active">{{MENU_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
+            @if(isset($id))
+                <li class=""><a href="{{ route('menu.index') }}">{{MENU_MODULE}}</a></li>
+                <?php
+                $breadcums = Helper::getBackendBreadCumsCategoryByMenus($id);
+                $breadCumsCount = count($breadcums) - 1;
+                ?>
+                @for($i=0; $i<=$breadCumsCount;$i++)
+                    <li><a
+                                href="{{ route("getSubMenus",["id"=>$breadcums[$i]['id']]) }}"> {{$breadcums[$i]['title']}}</a>
+                    </li>
+                @endfor
+            @else
+                <li class="active">{{MENU_MODULE}}</li>
+            @endif
+            <li class="active">{{MENU_MODULE_SINGLE.'  '.EDIT_ACTION}}</li>
         </ol>
     </section>
 
