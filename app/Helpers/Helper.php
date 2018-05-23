@@ -108,7 +108,6 @@ class Helper
         return array_reverse($menus);
 
     }
-
     //get all parent categories by division
     public static function getBackendBreadCumsCategoryByMenus($menuId)
     {
