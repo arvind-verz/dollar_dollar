@@ -161,6 +161,7 @@ define('CONTACT_SLUG', "contact");
 define('THANK_SLUG', "thank");
 define('HEALTH_INSURANCE_ENQUIRY', "health-insurance-enquiry");
 define('LIFE_INSURANCE_ENQUIRY', "life-insurance-enquiry");
+define('FIXED_DEPOSIT_MODE', "fixed-deposit-mode");
 
 //display section contact or offer section
 define('CONTACT_US_SECTION', "Contact Us Now");
