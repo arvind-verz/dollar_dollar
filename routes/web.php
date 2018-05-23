@@ -176,3 +176,5 @@ Route::group(array('prefix' => 'admin'), function () {
 
 Route::get('{slug}', 'CMS\PagesFrontController@show')->name('slug');
 
+
+
