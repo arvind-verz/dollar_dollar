@@ -89,6 +89,7 @@ class Helper
 
     }
 
+    
     //get all parent categories by division
     public static function getBreadCumsCategoryByMenus($menuId)
     {
