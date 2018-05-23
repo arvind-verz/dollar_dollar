@@ -108,6 +108,25 @@ class Helper
 
     }
 
+//get all parent categories by division
+    public static function getBackendBreadCumsCategoryByMenus($menuId)
+    {
+        $menus = [];
+        $menu = Menu::where('menus.id', $menuId)->first();
+        //dd($menu);
+        array_push($menus, ['id' => $menu->id, 'title' => $menu->title]);
+
+        $parentMenuId = $menu->parent;
+        while ($parentMenuId != 0) {
+            $menu = Menu::find($parentMenuId);
+            array_push($menus, ['id' => $menu->id, 'title' => $menu->title]);
+            $parentMenuId = $menu->parent;
+        }
+
+        return array_reverse($menus);
+
+    }
+
     /*get pages from page table this pages are manually add in database */
     public static function getPages()
     {
@@ -275,7 +294,7 @@ class Helper
 
             $menus = $filter_data->groupBy('parent')->toArray();
         }
-        
+
         //dd($menus);
         return $menus;
     }
@@ -335,33 +354,36 @@ class Helper
 
 
     /* TAGS */
-    public static function getTags($tags_id) {
+    public static function getTags($tags_id)
+    {
         $sel_query = Tag::whereIn('id', $tags_id)->get();
         return $sel_query;
         //dd($sel_query);
     }
 
-    public static function searchTags($slug) {
+    public static function searchTags($slug)
+    {
         //dd($slug);
         $sel_query = Tag::where('title', '=', $slug)->get();
         $tag_id = $sel_query[0]->id;
         $tags_found = [];
         $sel_query = Page::whereNotNull('tags')->get();
         //dd($sel_query[0]->tags);
-        foreach($sel_query as $value) {
+        foreach ($sel_query as $value) {
             $mytags = json_decode($value->tags);
             //print_r($tag_id);
-            if(in_array($tag_id, $mytags)) {
+            if (in_array($tag_id, $mytags)) {
                 $tags_found[] = $value->id;
             }
         }
         return $tags_found;
-        
+
     }
     /* END TAGS */
 
     /* PRODUCTS */
-    public function getProducts($slug=NULL) {
+    public function getProducts($slug = NULL)
+    {
         //$sel_query = PromotionProducts::join('pages')
     }
     /* END PRODUCTS */
