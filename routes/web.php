@@ -178,8 +178,6 @@ Route::group(array('prefix' => 'admin'), function () {
 
     Route::get('/promotion-formula-remove/{id}', 'Products\ProductsController@promotion_formula_remove')->name('promotion-formula-remove');
 
-
-
     Route::get('/bank-products', 'Products\ProductsController@bank_products')->name('bank-products');
 
 

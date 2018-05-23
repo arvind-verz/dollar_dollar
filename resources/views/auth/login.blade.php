@@ -1,5 +1,5 @@
 <?php
-    $slug = CONTACT_SLUG;
+    $slug = LOGIN_SLUG;
      $page = DB::table('pages')->LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
             ->where('pages.slug', $slug)
             ->where('pages.delete_status', 0)
