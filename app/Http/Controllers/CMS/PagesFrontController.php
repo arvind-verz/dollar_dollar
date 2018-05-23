@@ -76,13 +76,26 @@ class PagesFrontController extends Controller
 
             if ($page->is_dynamic == 1) {
 
+
                 if ($slug == CONTACT_SLUG) {
                     return view('frontend.CMS.contact', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == HEALTH_INSURANCE_ENQUIRY) {
                     return view('frontend.CMS.health-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == LIFE_INSURANCE_ENQUIRY) {
                     return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+                } elseif ($slug == FIXED_DEPOSIT_MODE) {
+                    $details = [];
+                    $details['brands'] = $brands;
+                    $details['page'] = $page;
+                    $details['systemSetting'] = $systemSetting;
+                    $details['banners'] = $banners;
+
+                    /*sent all pages detail into this function and than return to blade file*/
+                    return $this->fixDepositMode($details);
+
                 }
+
+
             } elseif ($page->is_blog == 1) {
                 $query = Page::join('menus', 'pages.menu_id', '=', 'menus.id')
                     ->where('pages.delete_status', 0)
@@ -125,40 +138,6 @@ class PagesFrontController extends Controller
         }
 
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-//
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-//
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-//
     }
 
     public function  getContactForm()
@@ -211,11 +190,12 @@ class PagesFrontController extends Controller
         } else {
             $details = $query->paginate(5);
         }
-        
+
         return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id'));
     }
 
-    public function search_tags($slug) {
+    public function search_tags($slug)
+    {
         $page = Page::where('pages.slug', BLOG_URL)
             ->where('delete_status', 0)->first();
         if (!$page) {
@@ -234,12 +214,12 @@ class PagesFrontController extends Controller
         $search_tag = \Helper::searchTags($slug);
 
         $sel_query = Page::join('menus', 'pages.menu_id', '=', 'menus.id')
-        ->where('pages.delete_status', 0)
-        ->where('pages.is_blog', 1)
-        ->whereIn('pages.id', $search_tag)
-        ->select('pages.*', 'menus.title as menu_title')
-        ->orderBy('pages.id', 'DESC');
-       
+            ->where('pages.delete_status', 0)
+            ->where('pages.is_blog', 1)
+            ->whereIn('pages.id', $search_tag)
+            ->select('pages.*', 'menus.title as menu_title')
+            ->orderBy('pages.id', 'DESC');
+
         if (Auth::guest()) {
             $details = $sel_query->whereIn('after_login', [0, null])->paginate(5);
 
@@ -250,5 +230,14 @@ class PagesFrontController extends Controller
 
         return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id'));
 
+    }
+
+    public function fixDepositMode($details)
+    {
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners"));
     }
 }
