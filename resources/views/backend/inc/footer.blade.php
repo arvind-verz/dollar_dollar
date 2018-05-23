@@ -18,7 +18,7 @@
             "advlist autolink lists link  charmap print preview hr anchor pagebreak",
             "searchreplace wordcount visualblocks visualchars code fullscreen",
             "insertdatetime  nonbreaking save table contextmenu directionality",
-            "emoticons template paste textcolor colorpicker textpattern image  "
+            "emoticons template paste textcolor colorpicker textpattern image variable "
         ],
         toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code",
         fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
@@ -35,6 +35,7 @@
             '/dollar_dollar/public/frontend/css/main.css',
             '/dollar_dollar/public/frontend/css/custom.css'
         ],
+        variable_class: '',
         file_browser_callback: function (field_name, url, type, win) {
             var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
             var y = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
@@ -75,21 +76,19 @@
 
 </script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $(".only_numeric").numeric();
     });
 
     function check_url(link) {
         //alert(link);
         //Get input value
-
     }
-
-    $(document).ready(function() {
-    //Date picker
+    $(document).ready(function () {
+        //Date picker
         $('#datepicker, #datepicker1').datepicker({
-          autoclose: true,
-          format: 'yyyy-mm-dd'
+            autoclose: true,
+            format: 'yyyy-mm-dd'
         });
     });
 
