@@ -155,6 +155,7 @@ define('PROMOTION_SLUG', "promotion");
 define('LOGIN_SLUG', "login");
 define('SEARCH_SLUG', "search");
 define('REGISTER_SLUG', "register");
+define('REGISTRATION', 'registration');
 define('CATEGORY_SLUG', "get-products-category");
 define('HOME_SLUG', "home");
 define('CONTACT_SLUG', "contact");
