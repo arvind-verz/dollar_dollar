@@ -14,6 +14,9 @@ use App\BlogCategory;
 use App\Blog;
 use App\Tag;
 use App\Page;
+use App\PromotionProducts;
+use App\PromotionTypes;
+use App\PromotionFormula;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 
@@ -109,6 +112,8 @@ class Helper
 
     }
 
+<<<<<<< HEAD
+=======
     //get all parent categories by division
     public static function getBackendBreadCumsCategoryByMenus($menuId)
     {
@@ -129,6 +134,7 @@ class Helper
     }
 
 
+>>>>>>> master
     /*get pages from page table this pages are manually add in database */
     public static function getPages()
     {
@@ -296,7 +302,7 @@ class Helper
 
             $menus = $filter_data->groupBy('parent')->toArray();
         }
-
+        
         //dd($menus);
         return $menus;
     }
@@ -356,38 +362,87 @@ class Helper
 
 
     /* TAGS */
-    public static function getTags($tags_id)
-    {
+    public static function getTags($tags_id) {
         $sel_query = Tag::whereIn('id', $tags_id)->get();
         return $sel_query;
         //dd($sel_query);
     }
 
-    public static function searchTags($slug)
-    {
+    public static function searchTags($slug) {
         //dd($slug);
         $sel_query = Tag::where('title', '=', $slug)->get();
         $tag_id = $sel_query[0]->id;
         $tags_found = [];
         $sel_query = Page::whereNotNull('tags')->get();
         //dd($sel_query[0]->tags);
-        foreach ($sel_query as $value) {
+        foreach($sel_query as $value) {
             $mytags = json_decode($value->tags);
             //print_r($tag_id);
-            if (in_array($tag_id, $mytags)) {
+            if(in_array($tag_id, $mytags)) {
                 $tags_found[] = $value->id;
             }
         }
         return $tags_found;
-
+        
     }
     /* END TAGS */
 
     /* PRODUCTS */
-    public function getProducts($slug = NULL)
-    {
-        //$sel_query = PromotionProducts::join('pages')
+    public static function getProducts($id=NULL) {
+        DB::enableQueryLog();
+        $sel_query = PromotionProducts::join('promotion_types', 'promotion_types.id', '=', 'promotion_products.promotion_type_id')
+        ->where('promotion_products.delete_status', '=', 0)
+        ->select('promotion_products.*')
+        ->get();
+
+        //dd(DB::getQueryLog());
+
+        return $sel_query;
+    }
+
+    public static function getProduct($id=NULL) {
+        $sel_query = PromotionProducts::find($id);
+
+        return $sel_query;
+    }
+
+    public static function productType($id=NULL) {
+        $sel_query = PromotionProducts::find($id);
+        $sel_query = PromotionFormula::where('id', $sel_query->promotion_type_id)
+        ->where('delete_status', 0)
+        ->get();
+        return $sel_query;
     }
     /* END PRODUCTS */
+
+    /* FORMULAS */
+    public static function getFormula($id=NULL) {
+        //DB::enableQueryLog();
+        if($id) {
+            $sel_query = PromotionFormula::find($id);
+        }
+        else {
+            $sel_query = PromotionFormula::where('delete_status', '=', 0)->get();
+        }
+        
+        //dd(DB::getQueryLog());
+        return $sel_query;
+    }
+
+    public static function getAllFormula($id=NULL) {
+        $sel_query = PromotionFormula::where('id', $id)->where('delete_status', 0)->get();
+        return $sel_query;
+    }
+    /* END FORMULAS */
+
+    /* PROMOTION TYPE */
+    public static function getPromotionType() {
+        $sel_query = PromotionTypes::where('delete_status', '=', 0)->get();
+
+        return $sel_query;
+    }
+
+
+    /* END PROMOTION TYPE */
 
 }

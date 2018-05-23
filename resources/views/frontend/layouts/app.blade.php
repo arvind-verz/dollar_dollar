@@ -47,6 +47,18 @@ if (!$systemSetting) {
 @include('frontend.includes.footer')
         <!-- Footer END -->
 <div id="totop"><span>backtotop<i class="fa fa-arrow-right"></i></span></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".only_numeric").numeric();
+        // NUMERIC DIGITS WITH + SPECIAL ONLY
+        $("input[name='country_code'], input[name='telephone']").on('keydown', function (e) {
+            if((e.keyCode<48 || e.keyCode>57) && e.keyCode!=8 && e.keyCode!=37 && e.keyCode!=39 && e.keyCode!=9 && e.keyCode!=187) {
+                e.preventDefault();
+            }
+        });
+    });
+    
+</script>
 <script src="{{ asset('frontend/js/plugin.js') }}"></script>
 <script src="{{ asset('frontend/js/jquery.numeric.js') }}"></script>
 <script src="{{ asset('frontend/plugins/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>

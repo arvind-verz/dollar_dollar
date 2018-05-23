@@ -1,28 +1,8 @@
-<?php
-    $slug = CONTACT_SLUG;
-     $page = DB::table('pages')->LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
-            ->where('pages.slug', $slug)
-            ->where('pages.delete_status', 0)
-            ->where('pages.status', 1)
-            ->select('pages.*', 'menus.title as menu_title', 'menus.id as menu_id')
-            ->first();
-        //dd(DB::getQueryLog())
-        if (!$page) {
-            return redirect(url('/'))->with('error', "Opps! page not found");
-        } else {
-            $systemSetting = \Helper::getSystemSetting();
-            if (!$systemSetting) {
-                return back()->with('error', OPPS_ALERT);
-            }
-        }
-    
-?>
 @extends('frontend.layouts.app')
 @section('title', $page->title)
 @section('content')
     <?php
-     
-   
+    $slug = CONTACT_SLUG;
     //get banners
     $banners = Helper::getBanners($slug);
     ?>
@@ -66,38 +46,46 @@
     {{--Page content start--}}
     <main class="ps-main">
         <div class="container">
-            <h3 class="ps-heading mb-35"><span> Login </span> to your account</h3>
+            <h3 class="ps-heading mb-35"><span> Register </span> to DollarDollar.sg</h3>
 
-            {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--login ps-form--contact', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--contact ps-form--register', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 ">
                     <div class="ps-form__content">
                         <div class="form-group">
-                            <label>Email</label>
-                            <div class="form-icon"><i class="fa fa-envelope"></i>
-                                <input class="form-control" type="text" placeholder="Enter Email Address Here">
-                            </div>
+                            <label>Salutation</label>
+                            <select class="form-control">
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Miss.">Miss.</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input class="form-control" name="first_name" type="text" placeholder="Enter Name Here" value="{{ old('first_name') }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input class="form-control" name="last_name" type="text" placeholder="Enter Last Name Here" value="{{ old('last_name') }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input class="form-control" type="email" name="email" placeholder="Enter Last Name Here" value="{{ old('email') }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number <span class="optional">(Optional)</span></label>
+                            <input class="form-control" type="text" name="contact" placeholder="Enter Contact Number" value="{{ old('contact') }}">
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <div class="form-icon"><i class="fa fa-lock"></i>
-                                <input class="form-control" type="text" placeholder="Enter Password Here">
-                            </div>
+                            <input class="form-control" type="password" name="password" placeholder="Enter Password Here">
                         </div>
-                        <div class="form-group actions">
-                            <div class="ps-checkbox ps-checkbox--inline">
-                                <input class="form-control" type="checkbox" id="remember" name="remember" />
-                                <label for="remember">Remember Me</label>
-                            </div><a href="#">Forgot password</a>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input class="form-control" type="password" name="confirm_password" placeholder="Confirm Password Here">
                         </div>
-                        <div class="form-group"><img src="img/recaptcha.png" alt=""></div>
-                        <div class="form-group submit">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <button class="ps-btn">Login</button>
-                                </div>
-                                <div class="col-xs-6"><a class="ps-btn ps-btn--outline" href="registration.html">Signup</a></div>
-                            </div><a class="ps-btn ps-btn--blue" href="#">Connect with Facebook</a>
+                        <div class="form-group">
+                            <button type="submit" class="ps-btn">Submit</button>
                         </div>
                     </div>
                 </div>
