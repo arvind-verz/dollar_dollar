@@ -112,7 +112,6 @@ class Helper
     public static function getBackendBreadCumsCategoryByMenus($menuId)
     {
         $menus = [];
-        $menu = Menu::where('menus.id', $menuId)->first();
         //dd($menu);
         array_push($menus, ['id' => $menu->id, 'title' => $menu->title]);
 
