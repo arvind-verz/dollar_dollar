@@ -112,8 +112,6 @@ class Helper
 
     }
 
-<<<<<<< HEAD
-=======
     //get all parent categories by division
     public static function getBackendBreadCumsCategoryByMenus($menuId)
     {
@@ -132,9 +130,6 @@ class Helper
         return array_reverse($menus);
 
     }
-
-
->>>>>>> master
     /*get pages from page table this pages are manually add in database */
     public static function getPages()
     {
