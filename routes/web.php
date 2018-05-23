@@ -142,8 +142,33 @@ Route::group(array('prefix' => 'admin'), function () {
 
     Route::get('/temp', 'Products\ProductsController@temp')->name('temp');
 
+    /* PROMOTION PRODUCTS */
     Route::get('/promotion-products', 'Products\ProductsController@promotion_products')->name('promotion-products');
+    Route::get('/promotion-products/add', 'Products\ProductsController@promotion_products_add')->name('promotion-products-add');
+    Route::post('/promotion-products/add-db', 'Products\ProductsController@promotion_products_add_db')->name('promotion-products-add-db');
+
+    Route::get('/promotion-products/{id}/edit', 'Products\ProductsController@promotion_products_edit')->name('promotion-products-edit');
+
+    Route::post('/promotion-products/{id}/update', 'Products\ProductsController@promotion_products_update')->name('promotion-products-update');
+
+    Route::get('/promotion-products-remove/{id}', 'Products\ProductsController@promotion_products_remove')->name('promotion-products-remove');
+
+    Route::get('/promotion-products/get-formula/{id}', 'Products\ProductsController@promotion_products_get_formula')->name('promotion-products-get-formula');
+
+
+    /* PROMOTION FORMULA */
     Route::get('/promotion-formula', 'Products\ProductsController@promotion_formula')->name('promotion-formula');
+
+    Route::post('/promotion-formula-db', 'Products\ProductsController@promotion_formula_db')->name('promotion-formula-db');
+
+    Route::get('/promotion-formula/{id}/edit', 'Products\ProductsController@promotion_formula_edit')->name('promotion-formula-edit');
+
+    Route::post('/promotion-formula/{id}/update', 'Products\ProductsController@promotion_formula_update')->name('promotion-formula-update');
+
+    Route::get('/promotion-formula-remove/{id}', 'Products\ProductsController@promotion_formula_remove')->name('promotion-formula-remove');
+
+
+
     Route::get('/bank-products', 'Products\ProductsController@bank_products')->name('bank-products');
 
 
