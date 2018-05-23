@@ -11,7 +11,7 @@
             @if(isset($id))
                 <li class=""><a href="{{ route('menu.index') }}">{{MENU_MODULE}}</a></li>
                 <?php
-                $breadcums = Helper::getBreadCumsCategoryByMenus($id);
+                $breadcums = Helper::getBackendBreadCumsCategoryByMenus($id);
                 $breadCumsCount = count($breadcums) - 1;
                 ?>
                 @for($i=0; $i<=$breadCumsCount;$i++)
@@ -82,7 +82,7 @@
                                                             @if ($menu->created_at == null)
                                                                 {{$menu->created_at}}
                                                             @endif
-                                                                {!!  date("Y-m-d h:i A", strtotime($menu->created_at))   !!}
+                                                            {!!  date("Y-m-d h:i A", strtotime($menu->created_at))   !!}
 
                                                         </td>
                                                         <td>@if ($menu->updated_at == null)
@@ -99,7 +99,8 @@
                                                             @endif
 
                                                             @if($CheckLayoutPermission[0]->delete==1)
-                                                                <a class="btn btn-app delete @if(($menu->is_blog == 1 || $menu->is_dynamic == 1)) disabled @endif" title="Delete Menu"
+                                                                <a class="btn btn-app delete @if(($menu->is_blog == 1 || $menu->is_dynamic == 1)) disabled @endif"
+                                                                   title="Delete Menu"
                                                                    onclick="return confirm('Are you sure to delete this?')"
                                                                    href="{{ route("menu-destroy",["id"=>$menu->id]) }}">
                                                                     <i class="fa fa-trash"></i> Delete

@@ -83,8 +83,6 @@ class PagesFrontController extends Controller
                     return view('frontend.CMS.health-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == LIFE_INSURANCE_ENQUIRY) {
                     return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
-                } elseif ($slug == REGISTRATION) {
-                    return view('frontend.CMS.registration', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == FIXED_DEPOSIT_MODE) {
                     $details = [];
                     $details['brands'] = $brands;
