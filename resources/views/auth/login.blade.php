@@ -1,131 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!--The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags-->
-    <meta name="author" content="">
-    @yield('og')
-    <meta property="og:type" content="website"/>
-    <link rel="shortcut icon" type="image/ico" href="{{ asset('favicon.ico') }}"/>
-    <link rel="apple-touch-icon" type="image/ico" href="{{ asset('favicon.png') }}"/>
-    <link href="{{ asset('images/favicon.ico') }}" rel="icon">
-    <title>Speedo Marine (Pte) Ltd.</title>
-    {{--<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">--}}
-
-    <link href="{{ asset('frontend/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('frontend/css/jcon-font.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('frontend/css/owl.carousel.css') }}" rel="stylesheet">
-
-
-    <!--[if lt IE 9]>
-    <script src="{{ asset('frontend/js/html5.js') }}"></script>
-    <![endif]-->
-
-
-    <script type="text/javascript" src="{{ asset('frontend/js/respond.min.js') }}"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/jquery.meanmenu.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/owl.carousel.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/plugins.js') }}"></script>
-
-    <link href="{{ asset('frontend/css/bootstrap-select.min.css') }}" rel="stylesheet">
-
-    <script type="text/javascript" src="{{ asset('frontend/js/bootstrap-select.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/typeahead.bundle.js') }}"></script>
-
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1M-BnSt4XemrZLcrBFpQeiNN_wyZTBBo&region=GB"></script>
-
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
-
-    {{--<link rel="stylesheet" href="{{ URL::to('backend/assets/glyphicons/glyphicons.css') }}" type="text/css"/>--}}
-    <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('frontend/css/responsive.css') }}" rel="stylesheet" type="text/css">
-
-</head>
-<div id="wrapper">
-
+<?php
+    $slug = CONTACT_SLUG;
+     $page = DB::table('pages')->LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
+            ->where('pages.slug', $slug)
+            ->where('pages.delete_status', 0)
+            ->where('pages.status', 1)
+            ->select('pages.*', 'menus.title as menu_title', 'menus.id as menu_id')
+            ->first();
+        //dd(DB::getQueryLog())
+        if (!$page) {
+            return redirect(url('/'))->with('error', "Opps! page not found");
+        } else {
+            $systemSetting = \Helper::getSystemSetting();
+            if (!$systemSetting) {
+                return back()->with('error', OPPS_ALERT);
+            }
+        }
+    
+?>
+@extends('frontend.layouts.app')
+@section('title', $page->title)
+@section('content')
     <?php
-    $slug = LOGIN_SLUG;
+     
+   
     //get banners
     $banners = Helper::getBanners($slug);
-    //dd($banners);
     ?>
+    {{--Banner section start--}}
 
-    <div class="lg-left">
-        <div class="tp-btn-holder">
-            <a href="{{ url('/login') }}" class="tp-btn active"><img src="{{asset('images/icon4.png')}} "
-                                                                     alt=""><strong>Login</strong>Access your
-                account</a>
-            <a href="{{ url('/register') }}" class="tp-btn "><img src="{{asset('images/icon5.png')}}" alt=""><strong>Register</strong>Create
-                your account</a>
+    @if($banners->count()>1)
+        <div class="ps-home-banner">
+            <div class="ps-slider--home owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
+                 data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1"
+                 data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000"
+                 data-owl-mousedrag="on">
+                @foreach($banners as $banner)
+                    <div class="ps-banner bg--cover" data-background="{{asset($banner->banner_image )}}"><img
+                                src="{{asset($banner->banner_image )}}" alt="">
 
-            <div class="clear"></div>
-        </div>
-        <div class="grid-tb">
-            <div class="grid-tc">
-                {{--Error or Success--}}
-                @include('frontend.includes.messages')
-                {{--Error or Success message end--}}
-                <div class="title7 text-center"><strong>Login</strong> to your account</div>
-                <div class="login-form">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-
-
-                        <div class="form-group"><img src="{{asset('images/icon6.png')}}" alt="">
-                            <input id="email" type="email" name="email" value="{{ old('email') }}" required="required"
-                                   class="lg-input" placeholder="User ID / Email Address">
-                            @if ($errors->has('email'))
-                                <span class="text-danger">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                            @endif
+                        <div class="ps-banner__content">
+                            {!!$banner->banner_content!!}
                         </div>
-                        <div class="form-group"><img src="{{asset('images/icon7.png')}}" alt="">
-                            <input id="password" type="password" name="password" required="required" class="lg-input"
-                                   placeholder="Password">
-                            @if ($errors->has('password'))
-                                <span class="text-danger">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="button btn-light-alt btn-block">Login</button>
-                        </div>
-                        <div class="form-group mb0">
-                            <div class="form-links text-center"><a href="{{ route('password.request') }}">Forgot your
-                                    password?</a><span>|</span><a
-                                        href="{{ url('/register') }}">No account? <strong>Sign up</strong></a></div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                @endforeach
             </div>
+        </div>
+    @elseif($banners->count()== 1)
+        @foreach($banners as $banner)
+            <div class="ps-hero bg--cover" data-background="{{asset($banner->banner_image )}}"><img
+                        src="{{asset($banner->banner_image )}}" alt=""></div>
+        @endforeach
+    @endif
+
+    {{--Banner section end--}}
+
+    <div class="ps-breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="{{ route('index') }}"><i class="fa fa-home"></i> Home</a></li>
+                @include('frontend.includes.breadcrumb')
+            </ol>
         </div>
     </div>
 
-    @if($banners)
-        @foreach($banners as $banner)
-            <div class="lg-right bg-img" style="background-image:url({!!asset($banner->banner_image )!!});">
-                <div class="grid-tb">
-                    <div class="grid-tc">
-                        <div class="lg-info">
-                            <h2>{!!$banner->title!!}</h2>
+    {{--Page content start--}}
+    <main class="ps-main">
+        <div class="container">
+            <h3 class="ps-heading mb-35"><span> Login </span> to your account</h3>
 
-                            <p style="color: {!!$banner->banner_content_color!!} !important;">{!!$banner->banner_content!!}</p>
-                            <a href="{{ url('/') }}" class="button btn-bdr bdr-white">Return to
-                                Home</a></div>
+            {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--login ps-form--contact', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                    <div class="ps-form__content">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="form-icon"><i class="fa fa-envelope"></i>
+                                <input class="form-control" type="text" placeholder="Enter Email Address Here">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <div class="form-icon"><i class="fa fa-lock"></i>
+                                <input class="form-control" type="text" placeholder="Enter Password Here">
+                            </div>
+                        </div>
+                        <div class="form-group actions">
+                            <div class="ps-checkbox ps-checkbox--inline">
+                                <input class="form-control" type="checkbox" id="remember" name="remember" />
+                                <label for="remember">Remember Me</label>
+                            </div><a href="#">Forgot password</a>
+                        </div>
+                        <div class="form-group"><img src="img/recaptcha.png" alt=""></div>
+                        <div class="form-group submit">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <button class="ps-btn">Login</button>
+                                </div>
+                                <div class="col-xs-6"><a class="ps-btn ps-btn--outline" href="registration.html">Signup</a></div>
+                            </div><a class="ps-btn ps-btn--blue" href="#">Connect with Facebook</a>
+                        </div>
                     </div>
                 </div>
+
+                {!!$page->contents!!}
+
             </div>
-        @endforeach
+            {!! Form::close() !!}
+        </div>
+    </main>
+    {{--Page content end--}}
+    {{--contact us or what we offer section start--}}
+    @if(isset($page->contact_or_offer) && isset($systemSetting->{$page->contact_or_offer}))
+        {!! $systemSetting->{$page->contact_or_offer} !!}
     @endif
-</div>
-</html>
+    {{--contact us or what we offer section end--}}
+
+@endsection

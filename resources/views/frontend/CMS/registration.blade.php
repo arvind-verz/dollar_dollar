@@ -48,7 +48,7 @@
         <div class="container">
             <h3 class="ps-heading mb-35"><span> Register </span> to DollarDollar.sg</h3>
 
-            {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--contact ps-form--register', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 ">
                     <div class="ps-form__content">
