@@ -8,21 +8,26 @@
         <ol class="breadcrumb">
             <ol class="breadcrumb">
                 <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
+                <li><a href="{{ route('menu.index') }}">{{MENU_MODULE}}</a></li>
                 @if(isset($parent))
-                    <li class=""><a href="{{ route('menu.index') }}">{{MENU_MODULE}}</a></li>
                     <?php
-                    $breadcums = Helper::getBackendBreadCumsCategoryByMenus($parent);
+                    $breadcums = Helper::getBreadCumsCategoryByMenus($parent);
+                    dd($breadcums);
                     $breadCumsCount = count($breadcums) - 1;
                     ?>
                     @for($i=0; $i<=$breadCumsCount;$i++)
+                        @if($i==$breadCumsCount)
+                            <li class="active">{{$breadcums[$i]['title']}}</li>
+                        @else
                             <li><a
                                         href="{{ route("getSubMenus",["id"=>$breadcums[$i]['id']]) }}"> {{$breadcums[$i]['title']}}</a>
                             </li>
+
+                        @endif
                     @endfor
                 @else
-                    <li class="active">{{MENU_MODULE}}</li>
+                    <li class="active">{{MENU_MODULE_SINGLE.' '.ADD_ACTION}}</li>
                 @endif
-                <li class="active">{{MENU_MODULE_SINGLE.'  '.ADD_ACTION}}</li>
             </ol>
         </ol>
     </section>
@@ -72,7 +77,7 @@
                             <div class="form-group">
                                 {{Form::label('view_order', 'View Order',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
-                                    {{Form::number('view_order', (old('view_order') ?  old('view_order') :1), ['class' => 'form-control', 'placeholder' => ''])}}
+                                    {{Form::number('view_order', (old('view_order') ?  old('view_order') :0), ['class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
                         </div>

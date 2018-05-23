@@ -22,6 +22,16 @@ Route::get('/', 'HomeController@index')->name('/');
 /*User Module*/
 Auth::routes();
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
+
+
+/* FRONTEND ACCOUNT 
+Route::group(array('prefix' =>  'account'), function() {
+    Route::get('/login', 'AccountsController@login');
+});
+/* END FRONTEND ACCOUNT */
+
+
+/*
 Route::get('/user/account-setting/{id}', 'User\UserFrontController@edit')->name('user.edit');
 Route::put('/user/account-setting/{id}', 'User\UserFrontController@update')->name('user.update');
 Route::get('/user/change-password/{id}', 'User\UserFrontController@changePassword')->name('user.change.password');
@@ -40,6 +50,7 @@ Route::get('/blog-list', 'CMS\PagesFrontController@getBlogByCategories')->name('
 /* TAGS FRONTEND */
 Route::get('/tags/{slug}', 'CMS\PagesFrontController@search_tags');
 /* END TAGS FRONTEND */
+
 
 /*End FrontEnd Routes*/
 Route::group(array('prefix' => 'admin'), function () {

@@ -125,13 +125,9 @@ class MenuController extends Controller
                 'old' => $menu,
                 'new' => null])
             ->log(CREATE);
-        if ($menu->parent != 0) {
-            return redirect(route('getSubMenus', ['id' => $menu->parent]))->with('success', $menu->title . ' ' . ADDED_ALERT);
-        } else {
-            return redirect()->action('CMS\MenuController@index')->with('success', $menu->title . ' ' . ADDED_ALERT);
-        }
 
 
+        return redirect()->action('CMS\MenuController@index')->with('success', $menu->title . ' ' . ADDED_ALERT);
     }
 
     /**
@@ -164,7 +160,7 @@ class MenuController extends Controller
             ->whereNotIn('id', [$id])
             ->get();
 
-        return view("backend.cms.menu.edit", compact("menus", "menu", "id"));
+        return view("backend.cms.menu.edit", compact("menus", "menu"));
     }
 
     /**
@@ -248,11 +244,8 @@ class MenuController extends Controller
             ])
             ->log(UPDATE);
 
-        if ($menu->parent != 0) {
-            return redirect(route('getSubMenus', ['id' => $menu->parent]))->with('success', $menu->title . ' ' . UPDATED_ALERT);
-        } else {
-            return redirect()->action('CMS\MenuController@index')->with('success', $menu->title . ' ' . UPDATED_ALERT);
-        }
+
+        return redirect()->action('CMS\MenuController@index')->with('success', $menu->title . ' ' . UPDATED_ALERT);
     }
 
     /**
@@ -272,8 +265,8 @@ class MenuController extends Controller
             $ids = $childIds;
             do {
                 $childMenus = Menu::whereIn('main', $childIds)
-                    ->where('delete_status', '!=', 1)
-                    ->get();
+                ->where('delete_status', '!=', 1)
+                ->get();
 
                 if ($childMenus->count()) {
                     $childIds = $childMenus->pluck('id')->all();
@@ -284,12 +277,12 @@ class MenuController extends Controller
             } while (count($childIds) != 0);
 
             if (count($ids)) {
-                if (count($ids) <= 1) {
-                    $update_query = Menu::where('id', $ids)->update(['main' => 0, 'parent' => 0, 'child' => 0]);
+                if(count($ids)<=1) {
+                    $update_query = Menu::where('id', $ids)->update(['main'=> 0, 'parent'=> 0, 'child'=> 0]);
                 }
                 $updateDeleteStatus = Menu::whereIn('id', $ids)
                     ->update(['delete_status' => 1]);
-
+                
                 //store log of activity
                 activity()
                     ->performedOn($menu)
@@ -301,12 +294,7 @@ class MenuController extends Controller
                         'new' => null
                     ])
                     ->log(DELETE);
-                if ($menu->parent != 0) {
-                    return redirect(route('getSubMenus', ['id' => $menu->parent]))->with('success', $menu->title . ' ' . DELETED_ALERT);
-                } else {
-                    return redirect()->action('CMS\MenuController@index')->with('success', $menu->title . ' ' . DELETED_ALERT);
-                }
-
+                return redirect(route('menu.index'))->with('success', $menu->title . ' ' . DELETED_ALERT);
             }
         }
     }
