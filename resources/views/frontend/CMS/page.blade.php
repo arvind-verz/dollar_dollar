@@ -54,9 +54,9 @@
                 <h3 class="ps-heading mb-35">
                     <span> {{$pageHeading}} </span> {{implode(' ',$pageName)}}
                 </h3>
-                
-               
-            
+
+
+
                 {!!  $page->contents !!}
 
             </div>

@@ -48,7 +48,7 @@
 <script type="text/javascript" src="{{ asset('backend/dist/js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/tinymce/tinymce.min.js') }}" id="script"></script>
 <script src="{{ asset('js/tinymce/jquery.tinymce.min.js') }}" id="script"></script>
-
+<script src="{{ asset('js/tinymce/plugins/variable/plugin.min.js') }}"></script>
 
 <!-- Google Font -->
 <link rel="stylesheet"

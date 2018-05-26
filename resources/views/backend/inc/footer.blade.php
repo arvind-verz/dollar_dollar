@@ -12,22 +12,6 @@
     var editor_config = {
         path_absolute: "{{ URL::to('/') }}/",
         selector: "textarea",
-        font_formats: 'Roboto,sans-serif;',
-        branding: false,
-        plugins: [
-            "advlist autolink lists link  charmap print preview hr anchor pagebreak",
-            "searchreplace wordcount visualblocks visualchars code fullscreen",
-            "insertdatetime  nonbreaking save table contextmenu directionality",
-            "emoticons template paste textcolor colorpicker textpattern image variable "
-        ],
-        toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code",
-        fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
-        menubar: "tools",
-        relative_urls: false,
-        table_default_attributes: {
-            border: '1'
-        },
-        table_responsive_width: true,
         content_css: [
             '/dollar_dollar/public/frontend/css/plugin.css',
             '/dollar_dollar/public/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
@@ -35,7 +19,43 @@
             '/dollar_dollar/public/frontend/css/main.css',
             '/dollar_dollar/public/frontend/css/custom.css'
         ],
-        variable_class: '',
+        toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code",
+        setup: function (ed) {
+            window.tester = ed;
+            ed.addButton('mybutton', {
+                title: 'My button',
+                text: 'Insert variable',
+                onclick: function () {
+                    ed.plugins.variables.addVariable('account_id');
+                }
+            });
+
+            ed.on('variableClick', function (e) {
+                console.log('click', e);
+            });
+        },
+        plugins: [
+            "advlist autolink lists link  charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars   fullscreen",
+            "insertdatetime  nonbreaking save table contextmenu directionality",
+            "emoticons template paste textcolor colorpicker textpattern image","variables code"
+        ],
+        variable_mapper: {
+            username: 'Username',
+            phone: 'Phone',
+            community_name: 'Community name',
+            email: 'Email address',
+            sender: 'Sender name',
+            account_id: 'Account ID'
+        },
+        font_formats: 'Roboto,sans-serif;',
+        fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
+        menubar: "tools",
+        relative_urls: false,
+        table_default_attributes: {
+            border: '1'
+        },
+        table_responsive_width: true,
         file_browser_callback: function (field_name, url, type, win) {
             var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
             var y = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
