@@ -272,8 +272,11 @@
 
         $('#link').trigger("change");
         // #page 7 is id of category page.
-        $('#link').change(function () {
-            if (this.value.length != 0) {
+
+
+    });
+    $("input[id*=link]").on("change", function () {
+        if (this.value.length != 0) {
                 var input_value = this.value;
                 //Set input value to lower case so HTTP or HtTp become http
                 input_value = input_value.toLowerCase();
@@ -298,7 +301,5 @@
                 $('#target').val('null').trigger('change');
             }
         });
-
-    });
 
 </script>

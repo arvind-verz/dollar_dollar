@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use DB;
+use App\Brand;
 use App\PromotionFormula;
 use App\PromotionTypes;
 use App\PromotionProducts;
@@ -103,9 +104,10 @@ class ProductsController extends Controller
     public function promotion_products_add() {
         $promotion_types = \Helper::getPromotionType();
         $formulas = \Helper::getFormula();
+        $banks = Brand::where('delete_status',0)->orderBy('title','asc')->get();
 
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas'));
+        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas','banks'));
     }
 
     public function promotion_products_get_formula($id) {
@@ -116,7 +118,7 @@ class ProductsController extends Controller
         <?php
         if(count($sel_query)) {
         foreach($sel_query as $value) { ?>
-            <option value="<?php echo $value->id; ?>"><?php echo $value->name .' => '. $value->formula; ?></option>
+            <option value="<?php echo $value->id; ?>" @if(old('formula') == $value->id) selected="selected" @endif><?php echo $value->name .' => '. $value->formula; ?></option>
         <?php }}
     }
 
