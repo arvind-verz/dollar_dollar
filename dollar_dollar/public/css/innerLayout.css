@@ -1,7 +1,0 @@
-.mce-content-body table {width: 100%;border-collapse: collapse;}
-
-.mce-content-body table tr:nth-child(even) {  background: #FAFAFA; }
-
-.mce-content-body table caption, .mce-content-body table td, .mce-content-body table th {
-    border: 1px solid black;
-}
