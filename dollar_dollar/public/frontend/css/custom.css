@@ -1,0 +1,33 @@
+.mce-menu-variables {
+    padding: 0 !important;
+    right: 0;
+    overflow-x: hidden;
+    border: 0 !important;
+}
+
+.mce-menu-variables .mce-menu-item {
+    position: relative !important;
+    border-left: 0;
+}
+
+.mce-menu-variables .mce-menu-item::after {
+    border-bottom: 1px solid #e1e2e4;
+    bottom: -1px;
+    content: "";
+    display: block;
+    left: 0px;
+    pointer-events: none;
+    position: absolute;
+    right: 0px;
+}
+
+.variable {
+    cursor: default;
+    background-color: #65b9dd;
+    color: #FFF;
+    padding: 2px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-style: normal;
+    display: inline-block;
+}

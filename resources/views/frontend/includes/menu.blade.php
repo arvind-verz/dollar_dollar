@@ -1,10 +1,10 @@
 <header class="header">
     <div class="header__top">
         <div class="container">
-            <p>Hello Balaji! Welcome to DollarDollar.SG</p>
+            <p>@if(AUTH::check())Hello, {{ AUTH::user()->first_name }} @endif Welcome to DollarDollar.SG</p>
             <ul class="header__actions">
                 <li><a href="#"><i class="fa fa-user-circle"></i>My account</a></li>
-                <li><a href="#"><i class="fa fa-clock"></i>Login</a></li>
+                <li><a href="{{ url(LOGIN_SLUG) }}"><i class="fa fa-clock"></i>Login</a></li>
                 <li><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
             </ul>
         </div>

@@ -2,6 +2,8 @@
 @section('title', $page->title)
 @section('content')
     <?php
+    //dd(Auth::User()->first_name);
+    
     $slug = HOME_SLUG;
     //get banners
     $banners = \Helper::getBanners($slug);
