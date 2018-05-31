@@ -186,3 +186,6 @@ Route::group(array('prefix' => 'admin'), function () {
 
 });
 Route::get('{slug}', 'CMS\PagesFrontController@show')->name('slug');
+
+/* FRONT END PRODUCT MANAGEMENT */
+Route::post('product-management/store', 'User\ProductManagementController@store')->name('product-management.store');

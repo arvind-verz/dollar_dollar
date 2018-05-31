@@ -57,6 +57,14 @@ if (!$systemSetting) {
             }
         });
     });
+
+    $(document).ready(function () {
+        //Date picker
+        $('.datepicker').datepicker({
+            autoclose: true,
+            dateFormat: "yy-mm-dd"
+        });
+    });
     
 </script>
 <script src="{{ asset('frontend/js/plugin.js') }}"></script>
