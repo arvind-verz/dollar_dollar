@@ -23,6 +23,9 @@ Route::get('/', 'HomeController@index')->name('/');
 Auth::routes();
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
+Route::post('/registration/add', 'Auth\RegisterController@userRegistration')->name('registration-add');
+//Route::post('/login/db', 'Auth\LoginController@userLogin')->name('login-db');
+
 
 /* FRONTEND ACCOUNT 
 Route::group(array('prefix' =>  'account'), function() {
