@@ -97,7 +97,7 @@
                         <div class="form-group">
                             <label>Password</label>
                             <div class="form-icon"><i class="fa fa-lock"></i>
-                                <input class="form-control" type="text" name="password" placeholder="Enter Password Here">
+                                <input class="form-control" type="password" name="password" placeholder="Enter Password Here">
                             </div>
                         </div>
                         <div class="form-group actions">

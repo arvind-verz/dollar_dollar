@@ -29,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -48,7 +48,28 @@ class LoginController extends Controller
     }
 
     protected function credentials(Request $request) {
+      
         return array_merge($request->only($this->username(), 'password'), ['web_login' => 1,'delete_status'=>0]);
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+      
+        $request->session()->regenerate();
+
+        return $this->authenticated($request, $this->guard()->user())
+                ?: redirect('/');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        //
     }
 
     /*public function credentials(Request $request) {

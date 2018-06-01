@@ -133,6 +133,11 @@
                                     <tbody>
                                         @if(count($user_products))
                                             @foreach($user_products as $value)
+                                                @php
+                                                    $curr_date = date("Y-m-d", strtotime('now'));
+                                                    $start_date = date("Y-m-d", strtotime($value->start_date));
+                                                    $end_date = date("Y-m-d", strtotime($value->end_date));
+                                                @endphp
                                             <tr>
                                                 <td>{{ $value->title }}</td>
                                                 <td>{{ $value->account_name }}</td>
@@ -141,7 +146,7 @@
                                                 <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
                                                 <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
                                                 <td>{{ $value->interest_earned }}</td>
-                                                <td>Ongoing</td>
+                                                <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
                                                 <td>
                                                     <button class="ps-btn--action warning">Edit</button>
                                                     <button class="ps-btn--action success">Delete</button>
