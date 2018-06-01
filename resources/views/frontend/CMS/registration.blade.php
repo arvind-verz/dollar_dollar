@@ -44,6 +44,7 @@
     </div>
 
     {{--Page content start--}}
+    @include('frontend.includes.messages')
     @if(count($errors) > 0)
     <div class="col-md-12">
         <div class="box-body">

@@ -3,8 +3,13 @@
         <div class="container">
             <p>@if(AUTH::check())Hello, {{ AUTH::user()->first_name }} @endif Welcome to DollarDollar.SG</p>
             <ul class="header__actions">
-                <li><a href="{{ url(PROFILEDASHBOARD) }}"><i class="fa fa-user-circle"></i>My account</a></li>
+                @guest
+                <li><a href="{{ url(REGISTRATION) }}">Register</a></li>
                 <li><a href="{{ url(LOGIN_SLUG) }}"><i class="fa fa-clock"></i>Login</a></li>
+                @else
+                <li><a href="{{ url(PROFILEDASHBOARD) }}"><i class="fa fa-user-circle"></i>My account</a></li>
+                <li><a href="{{ url('/users/logout') }}">Logout</a></li>
+                @endguest                
                 <li><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
             </ul>
         </div>
