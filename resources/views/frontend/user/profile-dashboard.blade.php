@@ -47,15 +47,15 @@
                             <h3>My Profile Dashboard</h3>
                         </div>
                         <div class="ps-dashboard__content">
-                            <p>Hello, <strong> Balaji Raga!</strong></p>
+                            <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
                                     <h5><img src="img/icons/user.png" alt="">Account Information</h5>
                                 </div>
                                 <div class="ps-block__content">
                                     <h5>Contact Information</h5>
-                                    <p><strong> Name: </strong> Balaji Raja</p>
-                                    <p><strong> Email: </strong><a href="#">balaji@verzdesign.com</a></p><a class="ps-link" href="#">Change password</a>
+                                    <p><strong> Name: </strong> {{ AUTH::user()->first_name }}</p>
+                                    <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
                                 </div>
                             </div>
                             <div class="ps-block--box recommended-product">

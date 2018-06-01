@@ -15,7 +15,7 @@ class PagesFrontController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        
     }
 
 
@@ -97,11 +97,28 @@ class PagesFrontController extends Controller
                 } elseif ($slug == REGISTRATION) {
                     return view('frontend.CMS.registration', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == PROFILEDASHBOARD) {
-                    return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners"));
+                    if(AUTH::check()) {
+                        return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners"));
+                    }                    
+                    else {
+                        return redirect('/login');
+                    }
                 } elseif ($slug == ACCOUNTINFO) {
-                    return view('frontend.user.account-information', compact("brands", "page", "systemSetting", "banners"));
+                    if(AUTH::check()) {
+                        return view('frontend.user.account-information', compact("brands", "page", "systemSetting", "banners"));
+                    }                    
+                    else {
+                        return redirect('/login');
+                    }
+                    
                 } elseif ($slug == PRODUCTMANAGEMENT) {
-                    return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners", "user_products"));
+                    if(AUTH::check()) {
+                         return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners", "user_products"));
+                    }                    
+                    else {
+                        return redirect('/login');
+                    }
+                   
                 } elseif ($slug == FIXED_DEPOSIT_MODE) {
                     $details = [];
                     $details['brands'] = $brands;
