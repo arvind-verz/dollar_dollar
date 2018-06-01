@@ -51,12 +51,16 @@
                             <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5><a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id]) }}">Edit</a>
+                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5>
                                 </div>
                                 <div class="ps-block__content">
+                                    {!! Form::open(['route' => ['account-information.update', AUTH::user()->id], 'method'   => 'POST']) !!}
                                     <h5>Contact Information</h5>
-                                    <p><strong> Name: </strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</p>
-                                    <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p><a class="ps-link" href="{{ route('user.resetpassword', ['id'    =>  AUTH::user()->id]) }}">Change password</a>
+                                    <p><strong> First Name: </strong> <input type="text" class="form-control" name="first_name" placeholder="Enter first name" value="{{ AUTH::user()->first_name }}"></p>
+                                    <p><strong> Last Name: </strong><input type="text" class="form-control" name="last_name" placeholder="Enter last name" value="{{ AUTH::user()->last_name }}"></p>
+                                    <p><strong> Contact Number: </strong><input type="text" class="form-control only_numeric" name="tel_phone" placeholder="Enter contact number" value="{{ AUTH::user()->tel_phone }}"></p>
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                    {!! Form::close() !!}
                                 </div>
                             </div>
                             <div class="ps-block--box recommended-product">

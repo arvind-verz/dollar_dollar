@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Validator;
+use App\Brand;
+use DB;
+use App\Page;
+use App\ProductManagement;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -38,7 +44,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => ['logout', 'userLogout']]);
+        $this->middleware('guest', ['except' => ['logout', 'userLogout', 'resetPassword', 'resetPasswordUpdate']]);
     }
 
     public function userLogout()
@@ -98,4 +104,57 @@ class LoginController extends Controller
     }
     */
 
+    public function resetPassword($id) {
+      $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
+        ->get();
+        //dd($user_products);
+
+        DB::enableQueryLog();
+        $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
+            ->where('pages.slug', ACCOUNTINFO)
+            ->where('pages.delete_status', 0)
+            ->where('pages.status', 1)
+            ->select('pages.*', 'menus.title as menu_title', 'menus.id as menu_id')
+            ->first();
+        //dd(DB::getQueryLog());
+        //dd($page,$slug);
+        if (!$page) {
+            return redirect(url('/'))->with('error', "Opps! page not found");
+        } else {
+            $systemSetting = \Helper::getSystemSetting();
+            if (!$systemSetting) {
+                return back()->with('error', OPPS_ALERT);
+            }
+
+            $slug = $page->slug;
+            //get banners
+            $banners = \Helper::getBanners($slug);
+
+            //get slug
+            $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+        return view('auth.passwords.reset', compact("brands", "page", "systemSetting", "banners"));
+        }
+    }
+
+    public function resetPasswordUpdate(Request $request, $id) {
+        $reset = User::find($id);
+
+        if (!Hash::check($request->old_password, $reset->password)) {
+            return redirect()->route('user.resetpassword', ['id'    =>  $id])->with('error', 'Old Password does not match')->withInput();
+        }
+
+        $validate = Validator::make($request->all(), [
+            'old_password'  =>  'required|min:8',
+            'new_password'  =>  'required|confirmed|min:8'
+        ]);
+
+        if($validate->fails()) {
+            return redirect()->route('user.resetpassword', ['id'    =>  $id])->withErrors($validate)->withInput();
+        }
+        else {
+            $reset->password    =   Hash::make($request->new_password);
+            $reset->save();
+        }
+        return redirect('account-information')->with('success', 'Password ' . UPDATED_ALERT);
+    }
 }

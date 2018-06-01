@@ -1,148 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!--The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags-->
-    <meta name="author" content="">
-    @yield('og')
-    <meta property="og:type" content="website"/>
-    <link rel="shortcut icon" type="image/ico" href="{{ asset('favicon.ico') }}"/>
-    <link rel="apple-touch-icon" type="image/ico" href="{{ asset('favicon.png') }}"/>
-    <link href="{{ asset('images/favicon.ico') }}" rel="icon">
-    <title>Speedo Marine (Pte) Ltd.</title>
-    {{--<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">--}}
+@extends('frontend.layouts.app')
+@section('title', $page->title)
+@section('content')
 
-    <link href="{{ asset('frontend/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('frontend/css/jcon-font.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('frontend/css/owl.carousel.css') }}" rel="stylesheet">
-
-
-    <!--[if lt IE 9]>
-    <script src="{{ asset('frontend/js/html5.js') }}"></script>
-    <![endif]-->
-
-
-    <script type="text/javascript" src="{{ asset('frontend/js/respond.min.js') }}"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/jquery.meanmenu.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/owl.carousel.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/plugins.js') }}"></script>
-
-    <link href="{{ asset('frontend/css/bootstrap-select.min.css') }}" rel="stylesheet">
-
-    <script type="text/javascript" src="{{ asset('frontend/js/bootstrap-select.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('frontend/js/typeahead.bundle.js') }}"></script>
-
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1M-BnSt4XemrZLcrBFpQeiNN_wyZTBBo&region=GB"></script>
-
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
-
-    {{--<link rel="stylesheet" href="{{ URL::to('backend/assets/glyphicons/glyphicons.css') }}" type="text/css"/>--}}
-    <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('frontend/css/responsive.css') }}" rel="stylesheet" type="text/css">
-
-</head>
-<div id="wrapper">
-    @php
-    //Register page id is 1
-    $id=6;
-    //get banners
-    $banners=Helper::getBanners($id);
-    //dd($banners);
-
-    @endphp
-
-    <div class="lg-left">
-        <div class="tp-btn-holder">
-            <a href="{{ url('/login') }}" class="tp-btn active"><img src="{{asset('images/icon4.png')}} "
-                                                                     alt=""><strong>Login</strong>Access your
-                account</a>
-            <a href="{{ url('/register') }}" class="tp-btn "><img src="{{asset('images/icon5.png')}}" alt=""><strong>Register</strong>Create
-                your account</a>
-
-            <div class="clear"></div>
-        </div>
-        <div class="grid-tb">
-
-            <div class="grid-tc">
-                {{--Error or Success--}}
-                @include('frontend.includes.messages')
-                {{--Error or Success message end--}}
-                <div class="title7 text-center"><strong>Reset</strong> your Password?</div>
-                <div class="login-form">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('password.request') }}">
-                        {{ csrf_field() }}
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <input id="email" type="text" class="rg-input" name="email" value="{{ old('email') }}"
-                                       placeholder="Email Address *">
-                                @if ($errors->has('email'))
-                                    <span class="text-danger">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <input id="password" type="password" class="rg-input" name="password"
-                                       placeholder="New Password *">
-                                @if ($errors->has('password'))
-                                    <span class="text-danger">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <input id="password-confirm" type="password" class="rg-input"
-                                       name="password_confirmation" placeholder="Confirm New Password *">
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="text-danger">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group mb0">
-                            <div class="col-md-12">
-                                <button type="submit" class="button btn-light-alt btn-block"> Reset Password</button>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
+    <div class="ps-breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="{{ route('index') }}"><i class="fa fa-home"></i> Home</a></li>
+                @include('frontend.includes.breadcrumb')
+            </ol>
         </div>
     </div>
 
-    @if($banners)
-        @foreach($banners as $banner)
-            <div class="lg-right bg-img" style="background-image:url({!!asset($banner->banner_image )!!});">
-                <div class="grid-tb">
-                    <div class="grid-tc">
-                        <div class="lg-info">
-                            <h2>{!!$banner->title!!}</h2>
+    {{--Page content start--}}
+    @include('frontend.includes.messages')
+    @if(count($errors) > 0)
+    <div class="col-md-12">
+        <div class="box-body">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                @foreach($errors->all() as $error)
+                    <p>
+                        {!!  $error !!}
+                    </p>
+                @endforeach
 
-                            <p style="color: {!!$banner->banner_content_color!!} !important;">{!!$banner->banner_content!!}</p>
-                            <a href="{{ url($banner->banner_link) }}" class="button btn-bdr bdr-white">Return to
-                                Home</a></div>
+            </div>
+        </div>
+    </div>
+    @endif
+    <main class="ps-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+                    <div class="ps-sidebar">
+                        <h3 class="ps-heading"><span> My </span> Account</h3>
+                        <ul class="ps-list--sidebar">
+                            <li><a href="{{ url('profile-dashboard') }}">My Profile Dashboard</a></li>
+                            <li class="current"><a href="{{ url('account-information') }}">Account Information</a></li>
+                            <li><a href="{{ url('product-management') }}">Product Management</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
+                    <div class="ps-dashboard">
+                        <div class="ps-dashboard__header">
+                            <h3>Change password</h3>
+                        </div>
+                        <div class="ps-dashboard__content">
+                            <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
+                            <div class="ps-block--box info">
+                                <div class="ps-block__header">
+                                    <h5><img src="img/icons/user.png" alt="">Change Password</h5>
+                                </div>
+                                <div class="ps-block__content">
+                                    {!! Form::open(['route' => ['user.resetpassword.update', AUTH::user()->id], 'method'   => 'POST']) !!}
+                                    <p><strong> Old Password: </strong> <input type="password" class="form-control" name="old_password" placeholder="Enter old password" value="{{ old('old_password') }}"></p>
+                                    <p><strong> New Password: </strong><input type="password" class="form-control" name="new_password" placeholder="Enter new password" value="{{ old('new_password') }}"></p>
+                                    <p><strong> Confirm Password: </strong><input type="password" class="form-control only_numeric" name="new_password_confirmation" placeholder="Enter contact number" value=""></p>
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        @endforeach
+        </div>
+    </main>
+    {{--Page content end--}}
+    {{--contact us or what we offer section start--}}
+    @if(isset($page->contact_or_offer) && isset($systemSetting->{$page->contact_or_offer}))
+        {!! $systemSetting->{$page->contact_or_offer} !!}
     @endif
-</div>
-</html>
+    {{--contact us or what we offer section end--}}
 
+@endsection
