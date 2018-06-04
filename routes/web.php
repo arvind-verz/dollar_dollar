@@ -21,7 +21,13 @@ Route::get('/', 'HomeController@index')->name('/');
 
 /*User Module*/
 Auth::routes();
+Route::get('/users/resetpassword/{id}', 'Auth\LoginController@resetPassword')->name('user.resetpassword');
+Route::post('/users/resetpassword/update/{id}', 'Auth\LoginController@resetPasswordUpdate')->name('user.resetpassword.update');
+
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
+
+Route::post('/registration/add', 'Auth\RegisterController@userRegistration')->name('registration-add');
+//Route::post('/login/db', 'Auth\LoginController@userLogin')->name('login-db');
 
 
 /* FRONTEND ACCOUNT 
@@ -183,3 +189,10 @@ Route::group(array('prefix' => 'admin'), function () {
 
 });
 Route::get('{slug}', 'CMS\PagesFrontController@show')->name('slug');
+
+/* FRONT END PRODUCT MANAGEMENT */
+Route::post('product-management/store', 'User\ProductManagementController@store')->name('product-management.store');
+
+/* ACCOUNT INFORMATION */
+Route::get('/account-information/edit/{id}', 'User\AccountInformationController@edit')->name('account-information.edit');
+Route::post('/account-information/update/{id}', 'User\AccountInformationController@update')->name('account-information.update');
