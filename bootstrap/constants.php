@@ -92,6 +92,9 @@ define('HEALTH_INSURANCE_ENQUIRY_MODULE', "Health Insurance Enquiry");
 define('LIFE_INSURANCE_ENQUIRY_MODULE', "Life Insurance Enquiry");
 define('CONTACT_ENQUIRY_MODULE', "Contact Enquiry");
 define('TAG_MODULE_SINGLE', "Tag");
+define('PRODUCT_NAME_MODULE_SINGLE', "Product Name");
+define('FORMULA_DETAIL_MODULE_SINGLE', "Formula Detail");
+define('PLACEMENT_RANGE_MODULE_SINGLE', "Placement Range");
 
 //Action name
 define('ADD_ACTION', "Add");
