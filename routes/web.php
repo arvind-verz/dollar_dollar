@@ -197,6 +197,10 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::put('/promotion-products/{id}/update', 'Products\ProductsController@promotion_products_update')->name('promotion-products-update');
     Route::get('/bank-products', 'Products\ProductsController@promotion_products')->name('bank-products');
 
+    /* REPORTS */
+    Route::get('/customer-report', 'Reports\ReportController@customer_report')->name('customer-report');
+    Route::get('/product-report', 'Reports\ReportController@product_report')->name('product-report');
+
 
 
 });

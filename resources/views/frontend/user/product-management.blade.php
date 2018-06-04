@@ -139,7 +139,7 @@
                                                     $end_date = date("Y-m-d", strtotime($value->end_date));
                                                 @endphp
                                             <tr>
-                                                <td>{{ $value->title }}</td>
+                                                <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
                                                 <td>{{ $value->account_name }}</td>
                                                 <td>{{ $value->amount }}</td>
                                                 <td>{{ $value->tenure }}</td>
