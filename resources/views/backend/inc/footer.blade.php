@@ -38,7 +38,7 @@
             "advlist autolink lists link  charmap print preview hr anchor pagebreak",
             "searchreplace wordcount visualblocks visualchars   fullscreen",
             "insertdatetime  nonbreaking save table contextmenu directionality",
-            "emoticons template paste textcolor colorpicker textpattern image","variables code"
+            "emoticons template paste textcolor colorpicker textpattern image", "variables code"
         ],
         variable_mapper: {
             username: 'Username',
@@ -106,7 +106,7 @@
     }
     $(document).ready(function () {
         //Date picker
-        $('#datepicker, #datepicker1').datepicker({
+        $('.datepicker1').datepicker({
             autoclose: true,
             format: 'yyyy-mm-dd'
         });
@@ -223,6 +223,13 @@
                     'order': [[0, 'asc']],
                     "columnDefs": []
                 });
+        $('#products').DataTable(
+                {
+                    "pageLength": 10,
+                    'ordering': true,
+                    'order': [[9, 'desc']],
+                    "columnDefs": []
+                });
         $('#menus').DataTable(
                 {
                     "pageLength": 10,
@@ -241,7 +248,7 @@
         var $newTextArea = $('<div />', {
             'id': '',
             'class': 'form-group'
-        })
+        });
         $newTextArea.append(
                 '<label class="col-sm-2 control-label">'
                 + '</label>'
@@ -255,9 +262,158 @@
                 + '</span>'
                 + '</div>'
                 + '</div>'
-        )
+        );
         $('#inner').append($newTextArea);
         tinymce.init(editor_config);
+    }
+    function addMorePlacementRange(id) {
+
+        var range_id = $(id).data('range-id');
+        range_id++;
+        $(id).addClass('display-none');
+        $(".remove-placement-range-button").removeClass('display-none');
+
+
+        $('#add-placement-range-button').remove();
+        // Layout options
+        var $newTextArea = $('<div>', {});
+
+
+        $newTextArea.append(
+                '<div class="form-group" id="placement_range_'+range_id+'">'
+                + '<label class="col-sm-2 control-label">'
+                + '</label>'
+                + '<div class="col-sm-4">'
+                + ' <div class="input-group date">'
+                + '<div class="input-group-btn">'
+                + '<button type="button" class="btn btn-success">'
+                + 'Min Placement'
+                + '</button>'
+                + '</div>'
+                + '<input type="text" class="form-control pull-right" name="min_placement[ '+range_id+']" value="">'
+                + ' </div>'
+                + ' </div>'
+                + ' <div class="col-sm-4 ">'
+                + '<div class="input-group date ">'
+                + ' <div class="input-group-btn">'
+                + '<button type="button" class="btn btn-danger">'
+                + 'Max Placement'
+                + '</button>'
+                + '</div>'
+                + '<input type="text" class="form-control pull-right" name="max_placement[ '+range_id+']" value="">'
+                + '</div>'
+                + '</div>'
+                + ' <div class="col-sm-2">'
+                + ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= '+range_id
+                + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>'
+                + '<button type="button" class="btn btn-danger -pull-right display-none  remove-placement-range-button"   data-range-id= '+range_id
+                + ' onClick="removePlacementRange(this);"><i class="fa fa-minus"> </i> </button>'
+                + ' </div> </div>'
+
+
+                + '<div class="form-group" id="formula_detail_1">'
+                + '<label for="title" class="col-sm-2 control-label">'
+                + '</label>'
+                + '<div class="col-sm-6 ">'
+                + ' <div class="form-row">'
+                + '<div class="col-md-4 mb-3">'
+                + '<div><label>Tenure Type</lable></div>'
+                + '<select class="form-control " data-placeholder=" "  style="width: 100%; "   name="tenure_type['+range_id+'][1] " >'
+                + ' <option value="None" selected="selected">None</option>'
+                + '<option value="1">Day</option>'
+                + '<option value="2">Month</option>'
+                + '<option value="3">Year</option>'
+                + ' </select>'
+                + ' </div>'
+                + ' <div class="col-md-4 mb-3">'
+                + ' <label for="">Tenure</label>'
+                + '<input type="text" class="form-control" id="" name="tenure['+range_id+'][1]" placeholder="" >'
+                + '</div>'
+                + '<div class="col-md-4 mb-3">'
+                + '<label for="">Bonus Interest</label>'
+                + '<input type="text" class="form-control" id="" name="bonus_interest['+range_id+'][1]" placeholder="" >'
+                + '</div>'
+                + '</div>'
+                + '</div>'
+                + '  <div class="col-sm-1 col-sm-offset-1 ">'
+                + ' <button type="button" class="btn btn-info pull-left mr-15  " id="add-formula-detail-'+range_id+'1" data-formula-detail-id="1" '
+                + ' data-range-id='+range_id
+                + ' onClick="addMoreFormulaDetail(this); " > '
+                + ' <i class="fa fa-plus"> </i> </button>'
+                + '<button type="button" class="btn btn-danger -pull-right   display-none" id="remove-formula-detail-'+range_id+'1" data-formula-detail-id ="1" '
+                + ' data-range-id ='+range_id
+                + ' onClick="removeFormulaDetail(this);" >'
+                + '<i class="fa fa-minus"> </i>'
+                + ' </button>'
+                + ' </div>'
+                + ' <div class="col-sm-2">&emsp;</div></div>'
+                + ' <div id="new-formula-detail-'+range_id+'"></div>'
+                + ' </div>'
+
+        );
+        $('#new-placement-range').append($newTextArea);
+    }
+    function removePlacementRange(id) {
+        var range_id = $(id).data('range-id');
+        $("#placement_range_" + range_id).remove();
+    }
+
+    function addMoreFormulaDetail(id) {
+
+        var formula_detail_id = $(id).data('formula-detail-id');
+        var range_id = $(id).data('range-id');
+        $(id).addClass('display-none');
+        $("#remove-formula-detail-"+range_id+formula_detail_id).removeClass('display-none');
+        formula_detail_id++;
+
+        $('#add-formula-detail-'+range_id+formula_detail_id).remove();
+        // Layout options
+        var $newTextArea = $('<div />', {
+            'id': 'formula_detail_' + formula_detail_id,
+            'class': 'form-group'
+        });
+
+
+        $newTextArea.append(
+                '<label for="title" class="col-sm-2 control-label">'
+                + '</label>'
+                + '<div class="col-sm-6 ">'
+                + ' <div class="form-row">'
+                + '<div class="col-md-4 mb-3">'
+                + '<div><label>Tenure Type</lable></div>'
+                + '<select class="form-control " data-placeholder=" "  style="width: 100%; "   name="tenure_type[' + range_id + '][' + formula_detail_id + '] " >'
+                + ' <option value="None" selected="selected">None</option>'
+                + '<option value="1">Day</option>'
+                + '<option value="2">Month</option>'
+                + '<option value="3">Year</option>'
+                + ' </select>'
+                + ' </div>'
+                + ' <div class="col-md-4 mb-3">'
+                + ' <label for="">Tenure</label>'
+                + '<input type="text" class="form-control" id="" name="tenure[' + range_id + '][' + formula_detail_id + ']" placeholder="" >'
+                + '</div>'
+                + '<div class="col-md-4 mb-3">'
+                + '<label for="">Bonus Interest</label>'
+                + '<input type="text" class="form-control" id="" name="bonus_interest[' + range_id + '][' + formula_detail_id + ']" placeholder="" >'
+                + '</div>'
+                + '</div>'
+                + '</div>'
+                + '  <div class="col-sm-1 col-sm-offset-1 ">'
+                + ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="'+formula_detail_id
+                + '" data-range-id="'+range_id+'" id="add-formula-detail-'+range_id+formula_detail_id+'" onClick="addMoreFormulaDetail(this); " > '
+                + ' <i class="fa fa-plus"> </i> </button>'
+                + '<button type="button" class="btn btn-danger -pull-right  display-none" data-formula-detail-id ="'+formula_detail_id
+                + '" data-range-id ="'+range_id+' " id="remove-formula-detail-'+range_id+formula_detail_id+ '" onClick="removeFormulaDetail(this);" >'
+                + '<i class="fa fa-minus"> </i>'
+                + ' </button>'
+                + ' </div>'
+                + ' <div class="col-sm-2">&emsp;</div>'
+        );
+        $('#new-formula-detail-'+range_id).append($newTextArea);
+    }
+    function removeFormulaDetail(id) {
+        var formula_detail_id = $(id).data('formula-detail-id');
+        $("#formula_detail_" + formula_detail_id).remove();
     }
 
     $(document).ready(function () {
@@ -277,29 +433,29 @@
     });
     $("input[id*=link]").on("change", function () {
         if (this.value.length != 0) {
-                var input_value = this.value;
-                //Set input value to lower case so HTTP or HtTp become http
-                input_value = input_value.toLowerCase();
+            var input_value = this.value;
+            //Set input value to lower case so HTTP or HtTp become http
+            input_value = input_value.toLowerCase();
 
-                //Check if string starts with http:// or https://
-                var regExr = /^(http:|https:)\/\/.*$/m;
+            //Check if string starts with http:// or https://
+            var regExr = /^(http:|https:)\/\/.*$/m;
 
-                //Test expression
-                var result = regExr.test(input_value);
+            //Test expression
+            var result = regExr.test(input_value);
 
-                //If http:// or https:// is not present add http:// before user input
-                if (!result) {
-                    var new_value = "http://" + input_value;
-                    this.value = new_value;
-                }
-                $("#target-div").show();
-                //trigger to change select2 plug in value
-                $('#target').val('null').trigger('change');
-            } else {
-                $("#target-div").hide();
-                //trigger to change select2 plug in value
-                $('#target').val('null').trigger('change');
+            //If http:// or https:// is not present add http:// before user input
+            if (!result) {
+                var new_value = "http://" + input_value;
+                this.value = new_value;
             }
-        });
+            $("#target-div").show();
+            //trigger to change select2 plug in value
+            $('#target').val('null').trigger('change');
+        } else {
+            $("#target-div").hide();
+            //trigger to change select2 plug in value
+            $('#target').val('null').trigger('change');
+        }
+    });
 
 </script>

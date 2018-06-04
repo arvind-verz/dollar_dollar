@@ -24,7 +24,8 @@
                         <h3 class="box-title">{{'Product List'}}</h3>
 
 
-                        <a href="{{ route('promotion-products-add') }}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Add New Products</a>
+                        <a href="{{ route('promotion-products-add') }}" class="btn btn-info pull-right"><i
+                                    class="fa fa-plus"></i> Add New Products</a>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -33,29 +34,48 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="pages" class="table ">
+                                        <table id="products" class="table ">
                                             <thead>
                                             <tr>
-                                                <th>#</th>
+
                                                 <th>Product Name</th>
+                                                <th>Bank Name</th>
+                                                <th>Product Type </th>
+                                                <th>Formula Name </th>
                                                 <th>Placement Range</th>
                                                 <th>Promotion Range</th>
                                                 <th>Tenure</th>
+                                                <th>Bonus Interest</th>
                                                 <th>Created on</th>
+                                                <th>Updated on</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                <?php $i=1; ?>
-                                                @if($products->count())
-                                                    @foreach($products as $product)
+                                            <?php $i = 1; ?>
+                                            @if($products->count())
+                                                @foreach($products as $product)
                                                     <tr>
-                                                        <td>{{ $i }}</td>
-                                                        <td>{{ $product->product_name }}</td>
-                                                        <td>{{ $product->min_range .' - '.$product->max_range }}</td>
-                                                        <td>{{ date('d-m-Y', strtotime($product->promotion_start)) .' - '. date('d-m-Y', strtotime($product->promotion_end)) }}</td>
+
+                                                        <td>{{ $product->name }}</td>
+                                                        <td>{{ $product->bank_name }}</td>
+                                                        <td>{{ $product->promotion_type }}</td>
+                                                        <td>{{ $product->promotion_formula }}</td>
+                                                        <td>{{ $product->min_range .'&emsp;-&emsp;'.$product->max_range }}</td>
+                                                        <td>{{ date('d-m-Y', strtotime($product->promotion_start)) .'&emsp;-&emsp;'. date('d-m-Y', strtotime($product->promotion_end)) }}</td>
                                                         <td>{{ $product->tenure .' (Months)' }}</td>
-                                                        <td>{{ date('d-m-Y', strtotime($product->created_at)) }}</td>
+                                                        <td>{{ $product->bonus_interest .' % ' }}</td>
+                                                        <td>@if ($product->created_at == null)
+                                                                {{$product->created_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d h:i A", strtotime($product->created_at))   !!}
+                                                        </td>
+                                                        <td>@if ($product->updated_at == null)
+                                                                {{$product->updated_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d h:i A", strtotime($product->updated_at))   !!}
+                                                        </td>
+
                                                         <td>
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Product"
@@ -74,12 +94,12 @@
                                                         </td>
                                                     </tr>
                                                     <?php $i++; ?>
-                                                    @endforeach
-                                                @else
+                                                @endforeach
+                                            @else
                                                 <tr>
                                                     <td colspan="7" class="text-center">No data found.</td>
                                                 </tr>
-                                                @endif
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>

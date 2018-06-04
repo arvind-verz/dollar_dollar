@@ -5916,12 +5916,14 @@ table.text-center th {
     border: 1px solid #f7f7f7;
 
 }
+
 .list:hover {
     background: #00c0ef;
     color: #ffffff;
     border: 1px solid #f7f7f7;
 
 }
+
 .tab-content a {
     color: #ffffff;
 }
@@ -5979,4 +5981,13 @@ table.text-center th {
     .table-responsive > .table tr td {
         white-space: normal !important;
     }
+}
+.half-width {
+    width: 50%;
+}
+.display-none {
+    display: none;
+}
+.mr-15 {
+    margin-right: 15px;
 }
