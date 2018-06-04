@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 28, 2018 at 02:54 AM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.0.27
+-- Generation Time: Jun 04, 2018 at 05:57 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -293,7 +293,38 @@ INSERT INTO `activity_log` (`id`, `log_name`, `description`, `subject_id`, `subj
 (230, 'default', 'Created', 43, 'App\\Menu', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Menu Management\",\"msg\":\"Created new menu Test A\",\"old\":{\"title\":\"Test A\",\"parent\":\"42\",\"view_order\":\"1\",\"child\":0,\"main\":42,\"created_at\":\"2018-05-23 17:40:27\",\"updated_at\":\"2018-05-23 17:40:27\",\"id\":43},\"new\":null}', 0, '2018-05-23 12:10:27', '2018-05-23 12:10:27'),
 (231, 'default', 'Created', 44, 'App\\Menu', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Menu Management\",\"msg\":\"Created new menu Test B\",\"old\":{\"title\":\"Test B\",\"parent\":\"42\",\"view_order\":\"1\",\"child\":0,\"main\":42,\"created_at\":\"2018-05-23 17:42:36\",\"updated_at\":\"2018-05-23 17:42:36\",\"id\":44},\"new\":null}', 0, '2018-05-23 12:12:36', '2018-05-23 12:12:36'),
 (232, 'default', 'Created', 45, 'App\\Menu', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Menu Management\",\"msg\":\"Created new menu Test A - 1\",\"old\":{\"title\":\"Test A - 1\",\"parent\":\"44\",\"view_order\":\"1\",\"child\":0,\"main\":42,\"created_at\":\"2018-05-23 17:42:46\",\"updated_at\":\"2018-05-23 17:42:46\",\"id\":45},\"new\":null}', 0, '2018-05-23 12:12:46', '2018-05-23 12:12:46'),
-(233, 'default', 'Updated', 39, 'App\\Page', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Page  Management\",\"msg\":\"Fixed Deposit  has been successfully updated.\",\"old\":{\"id\":39,\"name\":\"Fixed Deposit\",\"title\":\"Dollar Dollar | Fixed Deposit\",\"short_description\":null,\"contents\":\"<div class=\\\"ps-block--image\\\">\\r\\n<div class=\\\"ps-block__content\\\">\\r\\n<h3 class=\\\"ps-heading\\\">{{$page-&gt;title}}<\\/h3>\\r\\n<p>Fixed Deposit offers higher interest rates than saving account whereby customer deposit a sum of money for a fixed period of time, E.g. 6, 9, 12 months for a promised interest upon maturity.<\\/p>\\r\\n<\\/div>\\r\\n<p><img src=\\\"\\/dollar_dollar\\/public\\/uploads\\/images\\/block\\/fixed.png\\\" alt=\\\"\\\" \\/><\\/p>\\r\\n<\\/div>\",\"blog_image\":null,\"tags\":null,\"contact_or_offer\":null,\"meta_title\":null,\"meta_keyword\":null,\"meta_description\":null,\"menu_id\":\"37\",\"page_linked\":null,\"slug\":\"fixed-deposit-mode\",\"after_login\":\"1\",\"is_dynamic\":1,\"is_index\":0,\"is_blog\":0,\"status\":\"1\",\"delete_status\":0,\"created_at\":\"2018-05-23 18:44:21\",\"updated_at\":\"2018-05-23 18:44:21\"},\"new\":{\"id\":39,\"name\":\"Fixed Deposit\",\"title\":\"Dollar Dollar | Fixed Deposit\",\"short_description\":null,\"contents\":\"<div class=\\\"ps-block--image\\\">\\r\\n<div class=\\\"ps-block__content\\\">\\r\\n<h3 class=\\\"ps-heading\\\">{{$page-&gt;title}}<\\/h3>\\r\\n<p>Fixed Deposit offers higher interest rates than saving account whereby customer deposit a sum of money for a fixed period of time, E.g. 6, 9, 12 months for a promised interest upon maturity.<\\/p>\\r\\n<\\/div>\\r\\n<p><img src=\\\"\\/dollar_dollar\\/public\\/uploads\\/images\\/block\\/fixed.png\\\" alt=\\\"\\\" \\/><\\/p>\\r\\n<\\/div>\",\"blog_image\":null,\"tags\":null,\"contact_or_offer\":null,\"meta_title\":null,\"meta_keyword\":null,\"meta_description\":null,\"menu_id\":37,\"page_linked\":0,\"slug\":\"fixed-deposit-mode\",\"after_login\":1,\"is_dynamic\":1,\"is_index\":0,\"is_blog\":0,\"status\":1,\"delete_status\":0,\"created_at\":\"2018-05-23 18:44:21\",\"updated_at\":\"2018-05-23 18:44:21\"}}', 0, '2018-05-23 13:14:21', '2018-05-23 13:14:21');
+(233, 'default', 'Updated', 39, 'App\\Page', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Page  Management\",\"msg\":\"Fixed Deposit  has been successfully updated.\",\"old\":{\"id\":39,\"name\":\"Fixed Deposit\",\"title\":\"Dollar Dollar | Fixed Deposit\",\"short_description\":null,\"contents\":\"<div class=\\\"ps-block--image\\\">\\r\\n<div class=\\\"ps-block__content\\\">\\r\\n<h3 class=\\\"ps-heading\\\">{{$page-&gt;title}}<\\/h3>\\r\\n<p>Fixed Deposit offers higher interest rates than saving account whereby customer deposit a sum of money for a fixed period of time, E.g. 6, 9, 12 months for a promised interest upon maturity.<\\/p>\\r\\n<\\/div>\\r\\n<p><img src=\\\"\\/dollar_dollar\\/public\\/uploads\\/images\\/block\\/fixed.png\\\" alt=\\\"\\\" \\/><\\/p>\\r\\n<\\/div>\",\"blog_image\":null,\"tags\":null,\"contact_or_offer\":null,\"meta_title\":null,\"meta_keyword\":null,\"meta_description\":null,\"menu_id\":\"37\",\"page_linked\":null,\"slug\":\"fixed-deposit-mode\",\"after_login\":\"1\",\"is_dynamic\":1,\"is_index\":0,\"is_blog\":0,\"status\":\"1\",\"delete_status\":0,\"created_at\":\"2018-05-23 18:44:21\",\"updated_at\":\"2018-05-23 18:44:21\"},\"new\":{\"id\":39,\"name\":\"Fixed Deposit\",\"title\":\"Dollar Dollar | Fixed Deposit\",\"short_description\":null,\"contents\":\"<div class=\\\"ps-block--image\\\">\\r\\n<div class=\\\"ps-block__content\\\">\\r\\n<h3 class=\\\"ps-heading\\\">{{$page-&gt;title}}<\\/h3>\\r\\n<p>Fixed Deposit offers higher interest rates than saving account whereby customer deposit a sum of money for a fixed period of time, E.g. 6, 9, 12 months for a promised interest upon maturity.<\\/p>\\r\\n<\\/div>\\r\\n<p><img src=\\\"\\/dollar_dollar\\/public\\/uploads\\/images\\/block\\/fixed.png\\\" alt=\\\"\\\" \\/><\\/p>\\r\\n<\\/div>\",\"blog_image\":null,\"tags\":null,\"contact_or_offer\":null,\"meta_title\":null,\"meta_keyword\":null,\"meta_description\":null,\"menu_id\":37,\"page_linked\":0,\"slug\":\"fixed-deposit-mode\",\"after_login\":1,\"is_dynamic\":1,\"is_index\":0,\"is_blog\":0,\"status\":1,\"delete_status\":0,\"created_at\":\"2018-05-23 18:44:21\",\"updated_at\":\"2018-05-23 18:44:21\"}}', 0, '2018-05-23 13:14:21', '2018-05-23 13:14:21'),
+(234, 'default', 'Updated', 1, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$50 - $100  has been successfully updated.\",\"old\":{\"id\":1,\"name\":\"$50 - $100\",\"bank_id\":\"6\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"50\",\"max_range\":\"100\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"6\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":null,\"ad_type\":null,\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 15:02:00\"},\"new\":{\"id\":1,\"name\":\"$50 - $100\",\"bank_id\":6,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":50,\"max_range\":100,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":6,\"bonus_interest\":1,\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":null,\"ad_type\":null,\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 15:02:00\"}}', 0, '2018-05-28 09:32:00', '2018-05-28 09:32:00'),
+(235, 'default', 'Updated', 1, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$50 - $100  has been successfully updated.\",\"old\":{\"id\":1,\"name\":\"$50 - $100\",\"bank_id\":\"6\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"50\",\"max_range\":\"100\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"6\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/product-2_1527490969.jpg\",\"ad_type\":\"1\",\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 15:02:49\"},\"new\":{\"id\":1,\"name\":\"$50 - $100\",\"bank_id\":6,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":50,\"max_range\":100,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":6,\"bonus_interest\":1,\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/product-2_1527490969.jpg\",\"ad_type\":1,\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 15:02:49\"}}', 0, '2018-05-28 09:32:49', '2018-05-28 09:32:49'),
+(236, 'default', 'Updated', 1, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$50 - $100  has been successfully updated.\",\"old\":{\"id\":1,\"name\":\"$50 - $100\",\"bank_id\":\"6\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"50\",\"max_range\":\"100\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"6\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/large_1527491134.png\",\"ad_type\":\"1\",\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 15:05:34\"},\"new\":{\"id\":1,\"name\":\"$50 - $100\",\"bank_id\":6,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":50,\"max_range\":100,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":6,\"bonus_interest\":1,\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/large_1527491134.png\",\"ad_type\":1,\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 15:05:34\"}}', 0, '2018-05-28 09:35:34', '2018-05-28 09:35:34');
+INSERT INTO `activity_log` (`id`, `log_name`, `description`, `subject_id`, `subject_type`, `causer_id`, `causer_type`, `properties`, `delete_status`, `created_at`, `updated_at`) VALUES
+(237, 'default', 'Updated', 1, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$50 - $100  has been successfully updated.\",\"old\":{\"id\":1,\"name\":\"$50 - $100\",\"bank_id\":\"6\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"50\",\"max_range\":\"100\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"6\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/product-2_1527491144.jpg\",\"ad_type\":\"1\",\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 15:05:44\"},\"new\":{\"id\":1,\"name\":\"$50 - $100\",\"bank_id\":6,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":50,\"max_range\":100,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":6,\"bonus_interest\":1,\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/product-2_1527491144.jpg\",\"ad_type\":1,\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 15:05:44\"}}', 0, '2018-05-28 09:35:44', '2018-05-28 09:35:44'),
+(238, 'default', 'Updated', 2, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$50 - $100 (3 month) CIMB  has been successfully updated.\",\"old\":{\"id\":2,\"name\":\"$50 - $100 (3 month) CIMB\",\"bank_id\":\"6\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"50\",\"max_range\":\"100\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"3\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\">Keypoints<\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months.<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM.<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/large_1527496233.png\",\"ad_type\":\"2\",\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:30:33\"},\"new\":{\"id\":2,\"name\":\"$50 - $100 (3 month) CIMB\",\"bank_id\":6,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":50,\"max_range\":100,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":3,\"bonus_interest\":1,\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\">Keypoints<\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months.<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM.<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/large_1527496233.png\",\"ad_type\":2,\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:30:33\"}}', 0, '2018-05-28 11:00:33', '2018-05-28 11:00:33'),
+(239, 'default', 'Updated', 1, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$50 - $100 (6 month) CIMB  has been successfully updated.\",\"old\":{\"id\":1,\"name\":\"$50 - $100 (6 month) CIMB\",\"bank_id\":\"6\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"50\",\"max_range\":\"100\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"6\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/product-2_1527491144.jpg\",\"ad_type\":\"1\",\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:36:36\"},\"new\":{\"id\":1,\"name\":\"$50 - $100 (6 month) CIMB\",\"bank_id\":6,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":50,\"max_range\":100,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":6,\"bonus_interest\":1,\"criteria\":null,\"key_points\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Keypoints<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Interest will be calculated based on the placement range.<\\/li>\\r\\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months<\\/li>\\r\\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/product-2_1527491144.jpg\",\"ad_type\":1,\"ad_link\":\"http:\\/\\/abm.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:36:36\"}}', 0, '2018-05-28 11:06:36', '2018-05-28 11:06:36'),
+(240, 'default', 'Updated', 3, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$50 - $100 (9 month) CIMB  has been successfully updated.\",\"old\":{\"id\":3,\"name\":\"$50 - $100 (9 month) CIMB\",\"bank_id\":\"6\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"50\",\"max_range\":\"100\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"9\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":null,\"ad_image\":null,\"ad_type\":null,\"ad_link\":null,\"main_page_link\":null,\"tc_link\":null,\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:40:39\"},\"new\":{\"id\":3,\"name\":\"$50 - $100 (9 month) CIMB\",\"bank_id\":6,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":50,\"max_range\":100,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":9,\"bonus_interest\":1,\"criteria\":null,\"key_points\":null,\"ad_image\":null,\"ad_type\":null,\"ad_link\":null,\"main_page_link\":null,\"tc_link\":null,\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:40:39\"}}', 0, '2018-05-28 11:10:39', '2018-05-28 11:10:39'),
+(241, 'default', 'Updated', 4, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$50 - $100 (12 month) CIMB  has been successfully updated.\",\"old\":{\"id\":4,\"name\":\"$50 - $100 (12 month) CIMB\",\"bank_id\":\"6\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"50\",\"max_range\":\"100\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"12\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/medium_1527496864.jpg\",\"ad_type\":\"1\",\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:41:04\"},\"new\":{\"id\":4,\"name\":\"$50 - $100 (12 month) CIMB\",\"bank_id\":6,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":50,\"max_range\":100,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":12,\"bonus_interest\":1,\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/medium_1527496864.jpg\",\"ad_type\":1,\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:41:04\"}}', 0, '2018-05-28 11:11:04', '2018-05-28 11:11:04'),
+(242, 'default', 'Updated', 5, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$50 - $100 (15 month) Hong Leong Finance  has been successfully updated.\",\"old\":{\"id\":5,\"name\":\"$50 - $100 (15 month) Hong Leong Finance\",\"bank_id\":\"4\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"50\",\"max_range\":\"100\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"15\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/product-2_1527496918.jpg\",\"ad_type\":\"1\",\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:41:58\"},\"new\":{\"id\":5,\"name\":\"$50 - $100 (15 month) Hong Leong Finance\",\"bank_id\":4,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":50,\"max_range\":100,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":15,\"bonus_interest\":1,\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/product-2_1527496918.jpg\",\"ad_type\":1,\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:41:58\"}}', 0, '2018-05-28 11:11:58', '2018-05-28 11:11:58'),
+(243, 'default', 'Updated', 6, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$101 - $200 (3 Month) ICBC  has been successfully updated.\",\"old\":{\"id\":6,\"name\":\"$101 - $200 (3 Month) ICBC\",\"bank_id\":\"7\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"101\",\"max_range\":\"200\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"3\",\"bonus_interest\":\"1\",\"criteria\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Criteria<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Criteria point 1<\\/li>\\r\\n<li>Criteria point 2<\\/li>\\r\\n<li>Criteria point 3<\\/li>\\r\\n<li>Criteria point 4<\\/li>\\r\\n<\\/ul>\",\"key_points\":\"<h4 class=\\\"ps-product__heading\\\">Keypoints<\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Key point 1<\\/li>\\r\\n<li>Key point 2<\\/li>\\r\\n<li>Key point 3<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/product-2_1527497085.jpg\",\"ad_type\":\"2\",\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:44:45\"},\"new\":{\"id\":6,\"name\":\"$101 - $200 (3 Month) ICBC\",\"bank_id\":7,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":101,\"max_range\":200,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":3,\"bonus_interest\":1,\"criteria\":\"<h4 class=\\\"ps-product__heading\\\"><strong>Criteria<\\/strong><\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Criteria point 1<\\/li>\\r\\n<li>Criteria point 2<\\/li>\\r\\n<li>Criteria point 3<\\/li>\\r\\n<li>Criteria point 4<\\/li>\\r\\n<\\/ul>\",\"key_points\":\"<h4 class=\\\"ps-product__heading\\\">Keypoints<\\/h4>\\r\\n<ul class=\\\"ps-list--arrow-circle\\\">\\r\\n<li>Key point 1<\\/li>\\r\\n<li>Key point 2<\\/li>\\r\\n<li>Key point 3<\\/li>\\r\\n<\\/ul>\",\"ad_image\":\"uploads\\/products\\/product-2_1527497085.jpg\",\"ad_type\":2,\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:44:45\"}}', 0, '2018-05-28 11:14:45', '2018-05-28 11:14:45'),
+(244, 'default', 'Updated', 7, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$101 - $200 (6 Month) ICBC  has been successfully updated.\",\"old\":{\"id\":7,\"name\":\"$101 - $200 (6 Month) ICBC\",\"bank_id\":\"7\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"101\",\"max_range\":\"200\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"6\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":null,\"ad_image\":null,\"ad_type\":null,\"ad_link\":null,\"main_page_link\":null,\"tc_link\":null,\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:45:20\"},\"new\":{\"id\":7,\"name\":\"$101 - $200 (6 Month) ICBC\",\"bank_id\":7,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":101,\"max_range\":200,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":6,\"bonus_interest\":1,\"criteria\":null,\"key_points\":null,\"ad_image\":null,\"ad_type\":null,\"ad_link\":null,\"main_page_link\":null,\"tc_link\":null,\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:45:20\"}}', 0, '2018-05-28 11:15:20', '2018-05-28 11:15:20'),
+(245, 'default', 'Updated', 8, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$101 - $200 (9 Month) ICBC  has been successfully updated.\",\"old\":{\"id\":8,\"name\":\"$101 - $200 (9 Month) ICBC\",\"bank_id\":\"7\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"101\",\"max_range\":\"200\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"9\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":null,\"ad_image\":null,\"ad_type\":null,\"ad_link\":null,\"main_page_link\":null,\"tc_link\":null,\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:45:39\"},\"new\":{\"id\":8,\"name\":\"$101 - $200 (9 Month) ICBC\",\"bank_id\":7,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":101,\"max_range\":200,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":9,\"bonus_interest\":1,\"criteria\":null,\"key_points\":null,\"ad_image\":null,\"ad_type\":null,\"ad_link\":null,\"main_page_link\":null,\"tc_link\":null,\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:45:39\"}}', 0, '2018-05-28 11:15:39', '2018-05-28 11:15:39'),
+(246, 'default', 'Updated', 9, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$101 - $200 (12 Month) ICBC  has been successfully updated.\",\"old\":{\"id\":9,\"name\":\"$101 - $200 (12 Month) ICBC\",\"bank_id\":\"7\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"101\",\"max_range\":\"200\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"12\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/medium_1527497214.jpg\",\"ad_type\":\"2\",\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:46:54\"},\"new\":{\"id\":9,\"name\":\"$101 - $200 (12 Month) ICBC\",\"bank_id\":7,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":101,\"max_range\":200,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":12,\"bonus_interest\":1,\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/medium_1527497214.jpg\",\"ad_type\":2,\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:46:54\"}}', 0, '2018-05-28 11:16:54', '2018-05-28 11:16:54'),
+(247, 'default', 'Updated', 10, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$101 - $200 (15 Month) ICBC  has been successfully updated.\",\"old\":{\"id\":10,\"name\":\"$101 - $200 (15 Month) ICBC\",\"bank_id\":\"7\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"101\",\"max_range\":\"200\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"6\",\"bonus_interest\":\"1\",\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/product-2_1527497283.jpg\",\"ad_type\":\"1\",\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:48:03\"},\"new\":{\"id\":10,\"name\":\"$101 - $200 (15 Month) ICBC\",\"bank_id\":7,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":101,\"max_range\":200,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":6,\"bonus_interest\":1,\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/product-2_1527497283.jpg\",\"ad_type\":1,\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 16:48:03\"}}', 0, '2018-05-28 11:18:03', '2018-05-28 11:18:03'),
+(248, 'default', 'Updated', 9, 'App\\PromotionProducts', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Management\",\"msg\":\"$101 - $200 (12 Month) ICBC  has been successfully updated.\",\"old\":{\"id\":9,\"name\":\"$101 - $200 (12 Month) ICBC\",\"bank_id\":\"7\",\"promotion_type_id\":\"1\",\"formula_id\":\"1\",\"min_range\":\"101\",\"max_range\":\"200\",\"min_placement\":null,\"promotion_start\":\"2018-05-01\",\"promotion_end\":\"2018-05-31\",\"tenure\":\"12\",\"bonus_interest\":\"1.5\",\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/medium_1527497214.jpg\",\"ad_type\":\"2\",\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":\"1\",\"featured\":\"0\",\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 17:02:48\"},\"new\":{\"id\":9,\"name\":\"$101 - $200 (12 Month) ICBC\",\"bank_id\":7,\"promotion_type_id\":1,\"formula_id\":1,\"min_range\":101,\"max_range\":200,\"min_placement\":null,\"promotion_start\":\"2018-05-01 00:00:00\",\"promotion_end\":\"2018-05-31 00:00:00\",\"tenure\":12,\"bonus_interest\":1.5,\"criteria\":null,\"key_points\":null,\"ad_image\":\"uploads\\/products\\/medium_1527497214.jpg\",\"ad_type\":2,\"ad_link\":\"http:\\/\\/google.com\",\"main_page_link\":\"http:\\/\\/verzdesign.com\",\"tc_link\":\"http:\\/\\/yahoo.com\",\"status\":1,\"featured\":0,\"delete_status\":0,\"created_at\":\"2018-05-21 00:00:00\",\"updated_at\":\"2018-05-28 17:02:48\"}}', 0, '2018-05-28 11:32:48', '2018-05-28 11:32:48'),
+(249, 'default', 'Created', 1, 'App\\ProductName', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Name\",\"msg\":\"Product 1  has been successfully added.\",\"old\":{\"product_name\":\"Product 1\",\"updated_at\":\"2018-05-29 15:15:32\",\"created_at\":\"2018-05-29 15:15:32\",\"id\":1},\"new\":null}', 0, '2018-05-29 09:45:32', '2018-05-29 09:45:32'),
+(250, 'default', 'Created', 2, 'App\\ProductName', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Name\",\"msg\":\"Product 2  has been successfully added.\",\"old\":{\"product_name\":\"Product 2\",\"updated_at\":\"2018-05-29 15:16:01\",\"created_at\":\"2018-05-29 15:16:01\",\"id\":2},\"new\":null}', 0, '2018-05-29 09:46:01', '2018-05-29 09:46:01'),
+(251, 'default', 'Created', 3, 'App\\ProductName', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Name\",\"msg\":\"Product 3  has been successfully added.\",\"old\":{\"product_name\":\"Product 3\",\"updated_at\":\"2018-05-29 16:27:02\",\"created_at\":\"2018-05-29 16:27:02\",\"id\":3},\"new\":null}', 0, '2018-05-29 10:57:02', '2018-05-29 10:57:02'),
+(252, 'default', 'Created', 1, 'App\\PlacementRange', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Name\",\"msg\":\"100 -   has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"min_placement_range\":\"100\",\"max_placement_range\":\"200\",\"updated_at\":\"2018-05-29 17:59:17\",\"created_at\":\"2018-05-29 17:59:17\",\"id\":1},\"new\":null}', 0, '2018-05-29 12:29:17', '2018-05-29 12:29:17'),
+(253, 'default', 'Created', 2, 'App\\PlacementRange', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Name\",\"msg\":\"201 -   has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"min_placement_range\":\"201\",\"max_placement_range\":\"300\",\"updated_at\":\"2018-05-29 17:59:47\",\"created_at\":\"2018-05-29 17:59:47\",\"id\":2},\"new\":null}', 0, '2018-05-29 12:29:47', '2018-05-29 12:29:47'),
+(254, 'default', 'Created', 3, 'App\\PlacementRange', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Name\",\"msg\":\"301 - 400  has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"min_placement_range\":\"301\",\"max_placement_range\":\"400\",\"updated_at\":\"2018-05-29 18:00:38\",\"created_at\":\"2018-05-29 18:00:38\",\"id\":3},\"new\":null}', 0, '2018-05-29 12:30:38', '2018-05-29 12:30:38'),
+(255, 'default', 'Created', 4, 'App\\PlacementRange', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Name\",\"msg\":\"401 - 500 range  has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"min_placement_range\":\"401\",\"max_placement_range\":\"500\",\"updated_at\":\"2018-05-29 18:01:15\",\"created_at\":\"2018-05-29 18:01:15\",\"id\":4},\"new\":null}', 0, '2018-05-29 12:31:15', '2018-05-29 12:31:15'),
+(256, 'default', 'Created', 5, 'App\\PlacementRange', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Name\",\"msg\":\"450 - 500 range  has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"min_placement_range\":\"450\",\"max_placement_range\":\"500\",\"updated_at\":\"2018-05-29 18:03:10\",\"created_at\":\"2018-05-29 18:03:10\",\"id\":5},\"new\":null}', 0, '2018-05-29 12:33:10', '2018-05-29 12:33:10'),
+(257, 'default', 'Created', 1, 'App\\FormulaVariable', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Formula Detail\",\"msg\":\"3  1.5 formula detail  has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"placement_range_id\":\"1\",\"tenure\":\"3\",\"bonus_interest\":\"1.5\",\"updated_at\":\"2018-05-30 12:12:45\",\"created_at\":\"2018-05-30 12:12:45\",\"id\":1},\"new\":null}', 0, '2018-05-30 06:42:45', '2018-05-30 06:42:45'),
+(258, 'default', 'Created', 2, 'App\\FormulaVariable', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Formula Detail\",\"msg\":\"Formula detail  has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"placement_range_id\":\"1\",\"tenure\":\"4\",\"bonus_interest\":\"1.5\",\"updated_at\":\"2018-05-30 12:27:48\",\"created_at\":\"2018-05-30 12:27:48\",\"id\":2},\"new\":null}', 0, '2018-05-30 06:57:48', '2018-05-30 06:57:48'),
+(259, 'default', 'Created', 3, 'App\\FormulaVariable', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Formula Detail\",\"msg\":\"Formula detail  has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"placement_range_id\":\"1\",\"tenure\":\"6\",\"bonus_interest\":\"2\",\"updated_at\":\"2018-05-30 12:28:18\",\"created_at\":\"2018-05-30 12:28:18\",\"id\":3},\"new\":null}', 0, '2018-05-30 06:58:18', '2018-05-30 06:58:18'),
+(260, 'default', 'Created', 4, 'App\\FormulaVariable', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Formula Detail\",\"msg\":\"Formula detail  has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"placement_range_id\":\"2\",\"tenure\":\"3\",\"bonus_interest\":\"1.5\",\"updated_at\":\"2018-05-30 18:29:44\",\"created_at\":\"2018-05-30 18:29:44\",\"id\":4},\"new\":null}', 0, '2018-05-30 12:59:44', '2018-05-30 12:59:44'),
+(261, 'default', 'Created', 5, 'App\\FormulaVariable', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Formula Detail\",\"msg\":\"Formula detail  has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"placement_range_id\":\"3\",\"tenure\":\"3\",\"bonus_interest\":\"5\",\"updated_at\":\"2018-05-30 18:29:59\",\"created_at\":\"2018-05-30 18:29:59\",\"id\":5},\"new\":null}', 0, '2018-05-30 12:59:59', '2018-05-30 12:59:59'),
+(262, 'default', 'Created', 6, 'App\\FormulaVariable', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Formula Detail\",\"msg\":\"Formula detail  has been successfully added.\",\"old\":{\"product_name_id\":\"1\",\"placement_range_id\":\"3\",\"tenure\":\"6\",\"bonus_interest\":\"7\",\"updated_at\":\"2018-05-30 18:30:09\",\"created_at\":\"2018-05-30 18:30:09\",\"id\":6},\"new\":null}', 0, '2018-05-30 13:00:10', '2018-05-30 13:00:10'),
+(263, 'default', 'Created', 4, 'App\\ProductName', 1, 'App\\Admin', '{\"ip\":\"::1\",\"module\":\"Product Name\",\"msg\":\"Product 5  has been successfully added.\",\"old\":{\"product_name\":\"Product 5\",\"updated_at\":\"2018-05-31 11:59:28\",\"created_at\":\"2018-05-31 11:59:28\",\"id\":4},\"new\":null}', 0, '2018-05-31 06:29:28', '2018-05-31 06:29:28');
 
 -- --------------------------------------------------------
 
@@ -319,7 +350,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `first_name`, `last_name`, `email`, `role_type_id`, `password`, `remember_token`, `delete_status`, `created_at`, `updated_at`) VALUES
-(1, 'Super', 'Admin', 'nicckk3@gmail.com', '1', '$2y$10$LsjCAxJAhCr7My3H2d9gKuV0zh3UfDxdaWO5eldKMeEGB85ruMh4m', 'sFa3GMHQjDskqhIHwkzg4RnSAJKRsWIcReVrp1H42k1WD96p6ac8IrYrUvRZ', 0, '2018-01-28 11:41:26', '2018-05-07 08:04:15');
+(1, 'Super', 'Admin', 'nicckk3@gmail.com', '1', '$2y$10$LsjCAxJAhCr7My3H2d9gKuV0zh3UfDxdaWO5eldKMeEGB85ruMh4m', 'x7g60Fv2dBqltop1kAxayjQ3NyEe5OwIviB32ieMfKoN1NhypPwi9OG41Vyl', 0, '2018-01-28 11:41:26', '2018-05-07 08:04:15');
 
 -- --------------------------------------------------------
 
@@ -476,6 +507,36 @@ INSERT INTO `contact_enquiry` (`id`, `user_id`, `full_name`, `email`, `telephone
 (8, NULL, 'Nikunj Patel', 'nicckk3@gmail.com', '8905187666', '+91', 'Hello', 'Test', 0, '2018-05-10 12:47:28', '2018-05-10 12:47:28'),
 (9, NULL, 'Nikunj Patel', 'nicckk3@gmail.com', '12345678', '+91', 'Test', 'Hello', 0, '2018-05-11 08:35:38', '2018-05-11 08:35:38'),
 (10, NULL, 'demo', 'abc@gmail.com', '1234567890', '91', 'sad', 'asda', 0, '2018-05-16 09:15:39', '2018-05-16 09:15:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `formula_variables`
+--
+
+CREATE TABLE `formula_variables` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `product_name_id` int(11) DEFAULT NULL,
+  `placement_range_id` int(11) DEFAULT NULL,
+  `tenure_type` int(11) DEFAULT NULL COMMENT '1=>day , 2=>month, 3=>year',
+  `tenure` int(11) DEFAULT NULL,
+  `bonus_interest` double DEFAULT NULL,
+  `delete_status` tinyint(4) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `formula_variables`
+--
+
+INSERT INTO `formula_variables` (`id`, `product_name_id`, `placement_range_id`, `tenure_type`, `tenure`, `bonus_interest`, `delete_status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, 3, 1.5, 0, '2018-05-30 06:42:45', '2018-05-30 06:42:45'),
+(2, 1, 1, NULL, 4, 1.5, 0, '2018-05-30 06:57:48', '2018-05-30 06:57:48'),
+(3, 1, 1, NULL, 6, 2, 0, '2018-05-30 06:58:18', '2018-05-30 06:58:18'),
+(4, 1, 2, NULL, 3, 1.5, 0, '2018-05-30 12:59:44', '2018-05-30 12:59:44'),
+(5, 1, 3, NULL, 3, 5, 0, '2018-05-30 12:59:59', '2018-05-30 12:59:59'),
+(6, 1, 3, NULL, 6, 7, 0, '2018-05-30 13:00:09', '2018-05-30 13:00:09');
 
 -- --------------------------------------------------------
 
@@ -638,7 +699,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2018_04_13_151540_create_related_products', 11),
 (16, '2018_04_13_154618_create_sessions_table', 11),
 (17, '2018_05_18_174412_promotion_formula', 12),
-(18, '2018_05_18_175846_promotion_products', 13);
+(18, '2018_05_18_175846_promotion_products', 13),
+(19, '2018_05_28_181924_create_formula_variables_table', 14),
+(20, '2018_05_28_182016_create_placement_range_table', 14),
+(21, '2018_05_29_131734_create_product_names_table', 15);
 
 -- --------------------------------------------------------
 
@@ -672,7 +736,7 @@ INSERT INTO `modules` (`id`, `name`, `label`, `icon`, `view_order`, `delete_stat
 (33, 'blog.index', 'Blog Management', 'fa fa-bars', 6, 0, '2018-04-24 09:10:50', '2018-04-24 09:10:50'),
 (35, '#', 'Enquiry Management', 'fa fa-phone', 10, 0, '2018-04-24 09:10:50', '2018-04-24 09:10:50'),
 (36, 'tag.index', 'Tag Management', 'fa fa-tag', 7, 0, '2018-04-24 09:10:50', '2018-04-24 09:10:50'),
-(37, '#', 'Product Management', 'fa fa-tag', 11, 0, '2018-05-18 10:11:54', '2018-05-18 10:11:54');
+(37, '#', 'Product Management', 'fa fa-tag', 0, 0, '2018-05-18 10:11:54', '2018-05-18 10:11:54');
 
 -- --------------------------------------------------------
 
@@ -741,6 +805,54 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `placement_range`
+--
+
+CREATE TABLE `placement_range` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `product_name_id` int(11) DEFAULT NULL,
+  `min_placement_range` double DEFAULT NULL,
+  `max_placement_range` double DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `placement_range`
+--
+
+INSERT INTO `placement_range` (`id`, `product_name_id`, `min_placement_range`, `max_placement_range`, `created_at`, `updated_at`) VALUES
+(1, 1, 101, 200, '2018-05-29 12:29:17', '2018-05-29 12:29:17'),
+(2, 1, 201, 300, '2018-05-29 12:29:47', '2018-05-29 12:29:47'),
+(3, 1, 301, 400, '2018-05-29 12:30:38', '2018-05-29 12:30:38'),
+(4, 1, 401, 500, '2018-05-29 12:31:15', '2018-05-29 12:31:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_names`
+--
+
+CREATE TABLE `product_names` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `product_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_names`
+--
+
+INSERT INTO `product_names` (`id`, `product_name`, `created_at`, `updated_at`) VALUES
+(1, 'Product 1', '2018-05-29 09:45:32', '2018-05-29 09:45:32'),
+(2, 'Product 2', '2018-05-29 09:46:01', '2018-05-29 09:46:01'),
+(3, 'Product 3', '2018-05-29 10:57:02', '2018-05-29 10:57:02'),
+(4, 'Product 5', '2018-05-31 06:29:28', '2018-05-31 06:29:28');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `promotion_formula`
 --
 
@@ -748,6 +860,7 @@ CREATE TABLE `promotion_formula` (
   `id` int(10) UNSIGNED NOT NULL,
   `promotion_id` int(11) NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `formula` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `delete_status` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -757,8 +870,8 @@ CREATE TABLE `promotion_formula` (
 -- Dumping data for table `promotion_formula`
 --
 
-INSERT INTO `promotion_formula` (`id`, `promotion_id`, `name`, `delete_status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Fixed Deposit Promotions (FDP) (Formula 1)', 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00');
+INSERT INTO `promotion_formula` (`id`, `promotion_id`, `name`, `formula`, `delete_status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Fixed Deposit Promotions (FDP) (Formula 1)', '(($P * $BI )/12) * $TM', 0, '2018-05-20 18:30:00', '2018-05-26 13:02:06');
 
 -- --------------------------------------------------------
 
@@ -768,9 +881,9 @@ INSERT INTO `promotion_formula` (`id`, `promotion_id`, `name`, `delete_status`, 
 
 CREATE TABLE `promotion_products` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_name_id` int(11) DEFAULT NULL,
   `bank_id` int(11) DEFAULT NULL,
-  `promotion_type_id` int(11) NOT NULL,
+  `promotion_type_id` int(11) DEFAULT NULL,
   `formula_id` int(11) NOT NULL,
   `min_range` double NOT NULL,
   `max_range` double NOT NULL,
@@ -797,17 +910,17 @@ CREATE TABLE `promotion_products` (
 -- Dumping data for table `promotion_products`
 --
 
-INSERT INTO `promotion_products` (`id`, `name`, `bank_id`, `promotion_type_id`, `formula_id`, `min_range`, `max_range`, `min_placement`, `promotion_start`, `promotion_end`, `tenure`, `bonus_interest`, `criteria`, `key_points`, `ad_image`, `ad_type`, `ad_link`, `main_page_link`, `tc_link`, `status`, `featured`, `delete_status`, `created_at`, `updated_at`) VALUES
-(1, NULL, NULL, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 6, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(2, NULL, NULL, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 3, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(3, NULL, NULL, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 9, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(4, NULL, NULL, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 12, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(5, NULL, NULL, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 15, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(6, NULL, NULL, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 3, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(7, NULL, NULL, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 6, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(8, NULL, NULL, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 9, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(9, NULL, NULL, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 12, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(10, NULL, NULL, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 6, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00');
+INSERT INTO `promotion_products` (`id`, `product_name_id`, `bank_id`, `promotion_type_id`, `formula_id`, `min_range`, `max_range`, `min_placement`, `promotion_start`, `promotion_end`, `tenure`, `bonus_interest`, `criteria`, `key_points`, `ad_image`, `ad_type`, `ad_link`, `main_page_link`, `tc_link`, `status`, `featured`, `delete_status`, `created_at`, `updated_at`) VALUES
+(1, NULL, 6, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 6, 1, NULL, '<h4 class=\"ps-product__heading\"><strong>Keypoints</strong></h4>\r\n<ul class=\"ps-list--arrow-circle\">\r\n<li>Interest will be calculated based on the placement range.</li>\r\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months</li>\r\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM</li>\r\n</ul>', 'uploads/products/product-2_1527491144.jpg', 1, 'http://abm.com', 'http://verzdesign.com', 'http://yahoo.com', 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:06:36'),
+(2, NULL, 6, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 3, 1, NULL, '<h4 class=\"ps-product__heading\">Keypoints</h4>\r\n<ul class=\"ps-list--arrow-circle\">\r\n<li>Interest will be calculated based on the placement range.</li>\r\n<li>FDP Tenure are fixed e.g 6, 9,10,12,16,24 months.</li>\r\n<li>BI is by PA basis therefore have to divided by 12 (months) and times by the number of TM.</li>\r\n</ul>', 'uploads/products/large_1527496233.png', 2, 'http://google.com', 'http://verzdesign.com', 'http://yahoo.com', 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:00:33'),
+(3, NULL, 6, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 9, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:10:39'),
+(4, NULL, 6, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 12, 1, NULL, NULL, 'uploads/products/medium_1527496864.jpg', 1, 'http://google.com', 'http://verzdesign.com', 'http://yahoo.com', 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:11:04'),
+(5, 0, 4, 1, 1, 50, 100, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 15, 1, NULL, NULL, 'uploads/products/product-2_1527496918.jpg', 1, 'http://google.com', 'http://verzdesign.com', 'http://yahoo.com', 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:11:58'),
+(6, 0, 7, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 3, 1, '<h4 class=\"ps-product__heading\"><strong>Criteria</strong></h4>\r\n<ul class=\"ps-list--arrow-circle\">\r\n<li>Criteria point 1</li>\r\n<li>Criteria point 2</li>\r\n<li>Criteria point 3</li>\r\n<li>Criteria point 4</li>\r\n</ul>', '<h4 class=\"ps-product__heading\">Keypoints</h4>\r\n<ul class=\"ps-list--arrow-circle\">\r\n<li>Key point 1</li>\r\n<li>Key point 2</li>\r\n<li>Key point 3</li>\r\n</ul>', 'uploads/products/product-2_1527497085.jpg', 2, 'http://google.com', 'http://verzdesign.com', 'http://yahoo.com', 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:14:45'),
+(7, 0, 7, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 6, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:15:20'),
+(8, 0, 7, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 9, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:15:39'),
+(9, 0, 7, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 12, 1.5, NULL, NULL, 'uploads/products/medium_1527497214.jpg', 2, 'http://google.com', 'http://verzdesign.com', 'http://yahoo.com', 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:32:48'),
+(10, 0, 7, 1, 1, 101, 200, NULL, '2018-04-30 18:30:00', '2018-05-30 18:30:00', 6, 1, NULL, NULL, 'uploads/products/product-2_1527497283.jpg', 1, 'http://google.com', 'http://verzdesign.com', 'http://yahoo.com', 1, 0, 0, '2018-05-20 18:30:00', '2018-05-28 11:18:03');
 
 -- --------------------------------------------------------
 
@@ -830,9 +943,7 @@ CREATE TABLE `promotion_types` (
 INSERT INTO `promotion_types` (`id`, `name`, `delete_status`, `created_at`, `updated_at`) VALUES
 (1, 'Fixed Deposit Promotions (FDP)', 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
 (2, 'Saving Deposit Promotions (SDP)', 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(3, 'Wealth Deposit Promotions (WDP)', 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(4, 'Foreign Currency Deposit Promotions (FCDP)', 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00'),
-(5, 'All in one account Promotions (AIOP)', 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00');
+(3, 'All in one account Promotions (AIOP)', 0, '2018-05-20 18:30:00', '2018-05-20 18:30:00');
 
 -- --------------------------------------------------------
 
@@ -1024,6 +1135,7 @@ INSERT INTO `tags` (`id`, `title`, `status`, `delete_status`, `created_by`, `upd
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
+  `salutation` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1049,38 +1161,38 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `tel_phone`, `company`, `customer_code`, `contact_id`, `price_list`, `shipping_address`, `billing_address`, `subscribe`, `web_login`, `delete_status`, `password`, `remember_token`, `created_at`, `updated_at`, `updated_at_admin`, `updated_at_user`) VALUES
-(1, 'Virat', 'Kohli', 'nicckk3@gmail.com', '12345678', 'Verz Design', 'C-TET001', NULL, 7, 'Delhi', 'Vapi', 1, 1, 0, '$2y$10$0.FUV8V3YDzYBdMLlc5D4upzPKnUldgA3lPMgWsmkqBCyp8NJk6Ge', 'wB8ObWkyeIW0E4juFmkBs7AY3a4nio57iiTv6UPyWApBDN2y5QsMdIxJxzaL', '2018-01-30 06:30:00', '2018-03-22 03:07:39', '2018-03-15 05:05:21', '2018-03-22 03:07:39'),
-(2, 'Nik', 'Patel', 'nicckk.verz@gmail.com', '12345678', 'Verz Design', 'N1234', NULL, 7, 'Goima', 'Vapi', 1, 1, 1, '$2y$10$7keZ7VpGfPwdQAoAAp8BluwnQmyBpUk3fiQE3QUAL6DpT0okmNiWG', 'pOPnrShPWXv41u5PIYxu0O8zjBGhyyFEG9CLnqTplQpNajo3r2gcHZioy4X0', '2018-01-30 06:30:00', '2018-04-26 06:21:18', '2018-03-15 05:12:06', NULL),
-(3, 'IVAN', NULL, 'gavin@tatlee.com.my', '6-07-3325478', 'TATLEE ENGINEERING & TRADING', 'C-TET001', NULL, 7, 'TATLEE ENGINEERING & TRADING(JB) SDN BHD. 12,JALAN BENTARA,80050,MALYSIA', 'TATLEE ENGINEERING & TRADING(JB) SDN BHD. 12,JALAN BENTARA,80050,MALYSIA', 1, 1, 0, '$2y$10$vReeqSgaLIRtt8qAd8wJjuiqO6UoIX6vMBuinF5CVyfN0napZuYzW', 'FV95yvz0UOC0MD8TQJwM3HDJEIWDYbMEcWxacQO4xiISjoS6v9jMBh0MnLOx', '2017-11-21 06:30:00', '2018-03-15 01:41:35', '2018-03-15 01:41:35', NULL),
-(4, 'Huiee', 'C', 'huiee.chu@speedo.com.sg', '+65 6863 1667', 'Speedo Marine (Pte) Ltd', 'SMPL001', NULL, 1, '11 Tuas Link 2', '123 Tuas', 1, 1, 0, '$2y$10$95fGaCcY.LmFfzL2A5tfyu3qWO9tAk.dl1paK5rsgqpjmq7krflUu', 'yAc8i2lgPctu2OhaXlbUOJrUjnoCQhUD7IHvGAKhPokWK4mzPD96YXwPgUde', '2018-02-12 06:30:00', '2018-03-23 01:47:34', '2018-03-14 06:03:53', '2018-03-23 01:47:34'),
-(5, 'TIEN', '', 'tien@gmail.com', '6746 0144', '1 FAST MARINE PTE LTD', 'C-1FM001', NULL, 8, '1 FAST MARINE PTE LTD\n80 GENTING LANE #04-03, \nRUBY INDUSTRIAL COMPLEX \nSINGAPORE 349565', '1 FAST MARINE PTE LTD\n80 GENTING LANE #04-03, \nRUBY INDUSTRIAL COMPLEX \nSINGAPORE 349565', 1, 1, 0, '$2y$10$t1FWwA9JM58mS5G.p08N7.XFOMZy1CaRpBaSDpSMWjx1ML4D1hsQe', 'fV6fz4ddGghmhbqHgNl8cqSlZt8Vy4THDyeCJyXaMh05TriPnNaTVxnzpXOj', NULL, '2018-03-15 02:46:30', '2018-03-15 02:46:30', NULL),
-(6, 'MR MILTON C.', 'LIM', 'miltonclim@yahoo.com', '632 7494926', '3MMM INTEGRATED MARKETING CORPORATION', 'C-3IM001', NULL, 3, '3MMM INTEGRATED MARKETING CORPORATION\n#1441 TOMAS MAPUA STREET STA CRUZ,\nMETRO MANILA PHILIPPINES', '3MMM INTEGRATED MARKETING CORPORATION\n#1441 TOMAS MAPUA STREET STA CRUZ,\nMETRO MANILA PHILIPPINES', 1, 1, 0, '$2y$10$VmoqgKUB.RZNOXzZJCCTH.NJC0D0JEjPJRHhDkZ9YvgRi5H0aw69O', 'CpJMfGoXQbxjEiuCHXOH2DrOfUoySEDbDZnklqSB6wLFMltYMGnICVevNhDd', NULL, '2018-03-15 02:46:30', '2018-03-15 02:46:30', NULL),
-(7, 'JUAN', '', 'juan@outlook.com', '6745 8836', 'ASB PTE LTD', 'C-A00001', NULL, 7, 'ASB PTE LTD\nNO 3 JALAN MESIN\nSINGAPORE 368810', 'ASB PTE LTD\nNO 3 JALAN MESIN\nSINGAPORE 368810', 1, 1, 0, '$2y$10$CWaRQ.68FuQwT.fhFdUjYuRF26DzDpxk3QPPX6/ggxZ2R9rw3k3IO', 'smjS9BNuDV7bYZDmh4elsS4b467oJWfSxOVHMGrOJmMfAKpZoo2ygYK2H3P6', NULL, '2018-03-15 02:46:30', '2018-03-15 02:46:30', NULL),
-(8, 'Mark', 'Cheng', 'mark.cheng@speedo.com.sg', '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 1, '$2y$10$73iWJQhN60kDIajgDI5H0eM6eRmBHjNvKcmqtVq3ZmrJGjTt/mhVm', '5mTyFcPCGPfJNLwwf77OY4hfTgoqDNCLeSsP3uDODigpSuLeibHWpKpfx4gz', '2018-03-15 02:33:56', '2018-03-15 02:35:16', NULL, NULL),
-(12, 'Lian Hoh', 'Loh', 'lianhoh.loh@speedo.com.sg', '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 1, '$2y$10$qNYO0McoKTWDvJTBGYx5ReU93PFDmF6g39tdp11yF5OiuUkDK8mVq', 'ito0imqC3JxyxSzE59Uo3OTyIyQO3pvt2BWJnW3rS1JlC8H0n2jUnsDLPxft', '2018-03-15 02:44:58', '2018-03-15 02:45:51', NULL, NULL),
-(13, 'KUPPAN', NULL, 'sarah@hmsfareast.com', '6775 2122', 'HMS FAR EAST PTE LTD', 'C-HFE002', NULL, 7, 'HMS FAR EAST PTE LTD12 TUAS ROADSINGAPORE 638486', 'HMS FAR EAST PTE LTD12 TUAS ROADSINGAPORE 638486', 1, 1, 0, '$2y$10$EvctM4.PktO383oY4SqzDekE5DsdIzDCt8x8OezBJyuiu8BHoJaQS', 'NxG3kjcxSOVPBQc4tAmkM7ndLanE749LJcUlT3jud7za0X4tebMlN9TkmiCU', NULL, '2018-03-15 02:49:40', '2018-03-15 02:49:40', NULL),
-(14, 'MR KABEER', 'KHADAR', 'peter@euroblastme.com', '971-4-2824400', 'EUROBLAST MIDDLE EAST LLC', 'C-EME001', NULL, 1, 'EUROBLAST MIDDLE EAST LLC (U$)P O BOX 31230DUBAI, UAE', 'EUROBLAST MIDDLE EAST LLC (U$)P O BOX 31230DUBAI, UAE', 1, 1, 0, '$2y$10$x5OjVt03IsWZndBb3LYpV.qSa2MR7aPA.5axoAtOHAA1NCB6PoZYe', 'Y269lE4zZ4yZNwdYMaqr5hKvON6vvn2VVhvafsqVk83BkmecQwI6hLjhZvVZ', NULL, '2018-03-15 02:47:41', '2018-03-15 02:47:41', NULL),
-(15, 'EMILIA /', 'NUGRAHA', 'NFN.Alvanita@halliburton.com', '0542 747500', 'PT HALLIBURTON INDONESIA BPN', 'C-PHI001', NULL, 7, 'PT HALLIBURTON INDONESIA BPNJL MULAWARMAN NO. 19 RT 53 MANGGARBATAKAN BESAR BALIKPAPAN KTI 76117INDONESIA', 'PT HALLIBURTON INDONESIA BPNJL MULAWARMAN NO. 19 RT 53 MANGGARBATAKAN BESAR BALIKPAPAN KTI 76117INDONESIA', 1, 1, 0, '$2y$10$a7ap0TQwn0lsZQX.zwJmne9ya.fA45hL1oyRFDtVHSpz8b0OYp0Oy', NULL, NULL, '2018-03-15 02:52:57', '2018-03-15 02:52:57', NULL),
-(16, 'Nikunj', 'Patel', 'patelnikunj409@yahoo.com', '12345678', 'Verz', NULL, NULL, 1, NULL, NULL, 0, 1, 0, '$2y$10$wtjQchx3G18lwNrm1xGigucs6d7xAHb09mxqHV3qw/WVrH9AcgMWi', NULL, '2018-03-15 06:20:48', '2018-03-28 03:12:10', '2018-03-28 03:12:10', NULL),
-(17, 'Akshay', 'Patel', 'simplylife007@yahoo.com', '12345678', 'Verz', NULL, NULL, NULL, NULL, NULL, 0, 1, 0, '$2y$10$SO7aIFpT1Ym.NH5yYj2Rn.yASpsSP3UmMV.5WAYHTbC6Uxb9UzrUi', NULL, '2018-03-16 03:16:11', '2018-03-16 03:16:11', NULL, NULL),
-(19, 'Shirley', 'Chiew', 'shirley.chiew@speedo.com.sg', NULL, NULL, NULL, NULL, 1, NULL, NULL, 0, 1, 0, '$2y$10$aV48bBRQGvKzUyKFVVcQA.Efse..wGWqrAYRZVY2B.DgJ9FdCrCJu', 'pR3CyawMTYeLHeFQoDzUZnc3LQlLw3SZqPtCy5m7GlxHqEmt9W6stMpHMtPT', '2018-03-20 07:19:47', '2018-03-20 07:31:33', NULL, NULL),
-(20, 'Veron', 'Lim', 'veronica.lim@speedo.com.sg', '+123456789', 'Test Inc.', NULL, NULL, NULL, NULL, NULL, 0, 1, 0, '$2y$10$4P2LS3c7P/06S/.A4r/ZD.bvvfOG8DseRx/yNzqtOAApI8FUT4qK6', 'dxJ1gNa9zYEzZmDyFWpGrxWThTA9eZxF5BdbvQij78mbBO8PbyJLHxSnsg4l', '2018-03-20 07:20:38', '2018-03-20 07:20:38', NULL, NULL),
-(21, 'Shaun', 'Teoh', 'shaun.teoh@speedo.com.sg', '+852 010 966 1251', 'Test Again inc', NULL, NULL, NULL, NULL, NULL, 0, 1, 0, '$2y$10$Z4PgQXXc4SH36OCPBJFA.uAMsi/I86AKzkfDt2cfbTLitf.DWr01O', 'nIU0yQPBTAUueiRqyfsuz8cMqP2S8VMY4W10LURN6mMwWjIvWG54DZxa4eAs', '2018-03-20 07:23:55', '2018-03-20 07:23:55', NULL, NULL),
-(22, 'Mohsin', 'Saikh', 'srini@verzdesign.com', '1234567890', 'Verz', NULL, NULL, 7, 'Valsad', 'Valsad', 0, 1, 0, '$2y$10$KHbQZ1tgRx/Mdsd8Rk1aneoZK3waPxXm3nJ83Bme6i.2UywdnsGye', 'vkx0fqpqrsih3L2Mz5SXNnpx9T6Sd92gxwDZg3TPI3o3AgT2K23do3QIO4TH', '2018-03-22 03:09:17', '2018-03-22 04:07:39', '2018-03-22 04:07:39', NULL),
-(23, 'Brijesh', 'Lad', 'def@gmail.com', '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, '$2y$10$Aslqj56CePWhpr.q9A8d/.zcPQ4NpDJGyZj56DAk0S7TR1g90OefO', 'e1AsiyKQrO0OKX1rxC8q1HWD85vFa9ifdENtYMNpRLypt7VExhPsAjP2SqDj', '2018-03-22 03:22:29', '2018-03-22 03:22:29', NULL, NULL),
-(24, 'Sam', 'Soh', 'sam.soh@speedo.com.sg', NULL, 'Shanghai Speedo', NULL, NULL, 1, '123 Kangqiao Road, Pudong, Shanghai 201315, China', '123 Kangqiao Road, Pudong, Shanghai 201315, China', 1, 1, 0, '$2y$10$GeQVBu8e2HSe.SlFjJFa..S3F.1XpEWg3/lOBgkfMKGcvLctmnnMq', 'KrYFgRdJSIMrOc5PPur4oN3lBCUKC69fS9jBh4iilwzbwc1r0sMOt7lTDKUm', '2018-03-23 01:23:30', '2018-03-23 02:04:01', NULL, NULL),
-(25, 'Ben', 'Lee', 'ben.lee@speedo.com.sg', '+852 010 123 4567', 'Test Co', NULL, NULL, 1, '123 Test Road', '2 Tuas Basin', 0, 1, 0, '$2y$10$WRVd8KZcDDf/hvizdfjes.UeDZyFrf4nG7gKSFDZIb9S5Oms61moO', 'IhHdDOMkCUzCBYCp1NghPK7jBz95G6k8PTqvoYzIdMa0gADhhJH4ARNcwgit', '2018-03-23 01:24:32', '2018-03-23 02:15:03', NULL, NULL),
-(46, 'Nikunj', 'Patel', 'nicckk.verz@gmail.com', '12345678', 'Verz', NULL, NULL, 1, 'Valsad', 'Valsad', 1, 1, 0, '$2y$10$Z2YNiOc2Y4s/M7Ih7n1ADu9mPUKihFFey0SBfmV71nkKjzNAbBWg2', 'VZk662LN0H5CX72htNsWJ1HbkC5C4oKWjDaORTI061PgMKDG0XpfYrovBgLU', '2018-03-27 02:57:40', '2018-05-02 06:47:41', '2018-05-02 06:47:41', NULL),
-(47, 'Darpan', 'Patel', 'patelnikunj409@gmail.com', '1234567890', 'Verz', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, '$2y$10$p2GYqMrl/SsSMS3CPJurG.s8rKbrxor.YOLRFtUTc.3i67EbWoZk6', 'q9VNOTPEOA8zNsPvBM4sxWqklUXNPXb4FUMKjj7VytbEblrjLhdW2jfXFLQq', '2018-03-27 10:26:22', '2018-03-27 10:26:22', NULL, NULL),
-(48, 'Lian HOh', 'Loh', 'lianhoh@hotmail.com', '65126118', 'Speedo ABC', NULL, NULL, NULL, NULL, NULL, 0, 1, 0, '$2y$10$g0/pMe/K62AnhgZ/YFWf8.QsttolJSDwoUCjprPn5afHAs.B0oJIW', 'BBuhCoWCb3J9tfcagKs6aBw0uQAiLV8Xh8crwh4VkPpjTWof9ggZomrHPFc2', '2018-03-28 02:54:00', '2018-03-28 02:54:00', NULL, NULL),
-(49, 'Richard', 'Chu', 'richard.ctchu@gmail.com', '987654321', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, '$2y$10$dl8m4il5WKBblmisj7D7ruXMhqtrlSQmieUpuCEwNCG2FthtJRqrC', 'uzatsm5WAXMy5T4Mxx3nx1LOiVnaTrQMTRxUizcYpEROHmnmtIRKxCicbwFk', '2018-04-04 04:00:13', '2018-04-04 04:00:51', NULL, '2018-04-04 04:00:51'),
-(50, 'Lay Hoon', 'Choo', 'layhoon.choo@speedo.com.sg', NULL, 'Test company', NULL, NULL, 7, '123 Company Road', '123 Company Road', 1, 1, 0, '$2y$10$vx5ZmIZ5gorM6jfHNESeNe.aReaBuJMCwQgjvYhNMnyzlGTjSYnHC', 'LiDz3ZIUcSDm6scQtzGxNs6xZmEWo43dDlMSWVLuNzYz8z1RpsLjQIRFTJqG', '2018-04-05 06:12:50', '2018-04-05 07:00:15', NULL, NULL),
-(51, 'AUNG TUN', 'LIN', 'thuzaraung67@gmail.com', '951 680433', 'BLUE WAVE INTERNATIONAL TRADING COMPANY LIMITED', 'C-BWI001', NULL, 1, 'BLUE WAVE INTERNATIONAL TRADING CO LTD NO.85(F), SHWESABAI 7TH STREET FMI CITY, HLAINGTHARYAR TOWNSHIP', 'BLUE WAVE INTERNATIONAL TRADING CO LTD NO.85(F), SHWESABAI 7TH STREET FMI CITY, HLAINGTHARYAR TOWNSHIP', 1, 1, 0, '$2y$10$cn8Cw.Iqudx5IorGbhsFiu.wMi0./ZikINKk1j22E.x1Mw4K7GeQ2', NULL, '2015-09-14 04:00:00', '2018-04-03 04:00:00', '2018-04-05 06:21:01', NULL),
-(52, 'Mr Phang', NULL, 'sales@pracsys.com.my', '07-3885593', 'PRACTICAL SYSTEMS SDN BHD', 'C-PS0001', NULL, 6, 'PRACTICAL SYSTEMS SDN BHD NO. 17 JALAN SRI WANGI 1/1 KAWASAN PERINDUSTRIAN DESA PLENTONG', 'PRACTICAL SYSTEMS SDN BHD NO. 17 JALAN SRI WANGI 1/1 KAWASAN PERINDUSTRIAN DESA PLENTONG', 1, 1, 0, '$2y$10$gPrKh8FeQ50r07.Vetq.OuTh/b5RpFMd8XswnZS7UENQAqoSPs6sa', 'f3VzV4VtRkj47qxJCrHdhAwSSVUTeRu8zzxTBo3sZjYZEDNS6QUjagYDHecT', '2014-02-06 04:00:00', '2018-05-02 08:31:27', '2018-05-02 08:31:27', NULL),
-(53, 'Iman', 'Abdurrohman', 'Iman_a@tosanda.com', '082321959034', 'PT. Tosanda Putra Pratama', NULL, NULL, NULL, NULL, NULL, 1, 1, 0, '$2y$10$DM2UD8WMTezIs5JAynjoQ.Lv7iGjZlswLxgoi1ckIEqv0yT8f0x56', NULL, '2018-04-09 01:27:05', '2018-04-09 01:27:05', NULL, NULL),
-(54, 'Ben', 'Warne', 'ben@pumpsaustralia.com.au', '0404661262', 'PumpsAustralia', NULL, NULL, NULL, NULL, NULL, 1, 1, 0, '$2y$10$Gd1wk4CfnMFksYjXgIxGi.8LXobZvlH/8hIaMg8uAZTp9ZHccsTzi', NULL, '2018-04-10 08:20:34', '2018-04-10 08:20:34', NULL, NULL),
-(55, 'Nurul Hadi', 'Ghufran', 'hadi@rfz2engineering.com', '+60383204318', 'RFZ2 Engineering Sdn Bhd', NULL, NULL, 1, 'GM-15B, Jalan PP 5C/1, Taman Putra Perdana, 47130 Puchong, Selangor', 'GM-15B, Jalan PP 5C/1, Taman Putra Perdana, 47130 Puchong, Selangor', 0, 1, 0, '$2y$10$HDESZEtx7BFJxoAUoTNKoeUOdWZjh.WjRmfQ3QUHNMrPnbe5Dmf2u', NULL, '2018-04-10 08:49:49', '2018-04-10 08:52:53', NULL, NULL);
+INSERT INTO `users` (`id`, `salutation`, `first_name`, `last_name`, `email`, `tel_phone`, `company`, `customer_code`, `contact_id`, `price_list`, `shipping_address`, `billing_address`, `subscribe`, `web_login`, `delete_status`, `password`, `remember_token`, `created_at`, `updated_at`, `updated_at_admin`, `updated_at_user`) VALUES
+(1, NULL, 'Virat', 'Kohli', 'nicckk3@gmail.com', '12345678', 'Verz Design', 'C-TET001', NULL, 7, 'Delhi', 'Vapi', 1, 1, 0, '$2y$10$0.FUV8V3YDzYBdMLlc5D4upzPKnUldgA3lPMgWsmkqBCyp8NJk6Ge', 'wB8ObWkyeIW0E4juFmkBs7AY3a4nio57iiTv6UPyWApBDN2y5QsMdIxJxzaL', '2018-01-30 06:30:00', '2018-03-22 03:07:39', '2018-03-15 05:05:21', '2018-03-22 03:07:39'),
+(2, NULL, 'Nik', 'Patel', 'nicckk.verz@gmail.com', '12345678', 'Verz Design', 'N1234', NULL, 7, 'Goima', 'Vapi', 1, 1, 1, '$2y$10$7keZ7VpGfPwdQAoAAp8BluwnQmyBpUk3fiQE3QUAL6DpT0okmNiWG', 'pOPnrShPWXv41u5PIYxu0O8zjBGhyyFEG9CLnqTplQpNajo3r2gcHZioy4X0', '2018-01-30 06:30:00', '2018-04-26 06:21:18', '2018-03-15 05:12:06', NULL),
+(3, NULL, 'IVAN', NULL, 'gavin@tatlee.com.my', '6-07-3325478', 'TATLEE ENGINEERING & TRADING', 'C-TET001', NULL, 7, 'TATLEE ENGINEERING & TRADING(JB) SDN BHD. 12,JALAN BENTARA,80050,MALYSIA', 'TATLEE ENGINEERING & TRADING(JB) SDN BHD. 12,JALAN BENTARA,80050,MALYSIA', 1, 1, 0, '$2y$10$vReeqSgaLIRtt8qAd8wJjuiqO6UoIX6vMBuinF5CVyfN0napZuYzW', 'FV95yvz0UOC0MD8TQJwM3HDJEIWDYbMEcWxacQO4xiISjoS6v9jMBh0MnLOx', '2017-11-21 06:30:00', '2018-03-15 01:41:35', '2018-03-15 01:41:35', NULL),
+(4, NULL, 'Huiee', 'C', 'huiee.chu@speedo.com.sg', '+65 6863 1667', 'Speedo Marine (Pte) Ltd', 'SMPL001', NULL, 1, '11 Tuas Link 2', '123 Tuas', 1, 1, 0, '$2y$10$95fGaCcY.LmFfzL2A5tfyu3qWO9tAk.dl1paK5rsgqpjmq7krflUu', 'yAc8i2lgPctu2OhaXlbUOJrUjnoCQhUD7IHvGAKhPokWK4mzPD96YXwPgUde', '2018-02-12 06:30:00', '2018-03-23 01:47:34', '2018-03-14 06:03:53', '2018-03-23 01:47:34'),
+(5, NULL, 'TIEN', '', 'tien@gmail.com', '6746 0144', '1 FAST MARINE PTE LTD', 'C-1FM001', NULL, 8, '1 FAST MARINE PTE LTD\n80 GENTING LANE #04-03, \nRUBY INDUSTRIAL COMPLEX \nSINGAPORE 349565', '1 FAST MARINE PTE LTD\n80 GENTING LANE #04-03, \nRUBY INDUSTRIAL COMPLEX \nSINGAPORE 349565', 1, 1, 0, '$2y$10$t1FWwA9JM58mS5G.p08N7.XFOMZy1CaRpBaSDpSMWjx1ML4D1hsQe', 'fV6fz4ddGghmhbqHgNl8cqSlZt8Vy4THDyeCJyXaMh05TriPnNaTVxnzpXOj', NULL, '2018-03-15 02:46:30', '2018-03-15 02:46:30', NULL),
+(6, NULL, 'MR MILTON C.', 'LIM', 'miltonclim@yahoo.com', '632 7494926', '3MMM INTEGRATED MARKETING CORPORATION', 'C-3IM001', NULL, 3, '3MMM INTEGRATED MARKETING CORPORATION\n#1441 TOMAS MAPUA STREET STA CRUZ,\nMETRO MANILA PHILIPPINES', '3MMM INTEGRATED MARKETING CORPORATION\n#1441 TOMAS MAPUA STREET STA CRUZ,\nMETRO MANILA PHILIPPINES', 1, 1, 0, '$2y$10$VmoqgKUB.RZNOXzZJCCTH.NJC0D0JEjPJRHhDkZ9YvgRi5H0aw69O', 'CpJMfGoXQbxjEiuCHXOH2DrOfUoySEDbDZnklqSB6wLFMltYMGnICVevNhDd', NULL, '2018-03-15 02:46:30', '2018-03-15 02:46:30', NULL),
+(7, NULL, 'JUAN', '', 'juan@outlook.com', '6745 8836', 'ASB PTE LTD', 'C-A00001', NULL, 7, 'ASB PTE LTD\nNO 3 JALAN MESIN\nSINGAPORE 368810', 'ASB PTE LTD\nNO 3 JALAN MESIN\nSINGAPORE 368810', 1, 1, 0, '$2y$10$CWaRQ.68FuQwT.fhFdUjYuRF26DzDpxk3QPPX6/ggxZ2R9rw3k3IO', 'smjS9BNuDV7bYZDmh4elsS4b467oJWfSxOVHMGrOJmMfAKpZoo2ygYK2H3P6', NULL, '2018-03-15 02:46:30', '2018-03-15 02:46:30', NULL),
+(8, NULL, 'Mark', 'Cheng', 'mark.cheng@speedo.com.sg', '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 1, '$2y$10$73iWJQhN60kDIajgDI5H0eM6eRmBHjNvKcmqtVq3ZmrJGjTt/mhVm', '5mTyFcPCGPfJNLwwf77OY4hfTgoqDNCLeSsP3uDODigpSuLeibHWpKpfx4gz', '2018-03-15 02:33:56', '2018-03-15 02:35:16', NULL, NULL),
+(12, NULL, 'Lian Hoh', 'Loh', 'lianhoh.loh@speedo.com.sg', '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 1, '$2y$10$qNYO0McoKTWDvJTBGYx5ReU93PFDmF6g39tdp11yF5OiuUkDK8mVq', 'ito0imqC3JxyxSzE59Uo3OTyIyQO3pvt2BWJnW3rS1JlC8H0n2jUnsDLPxft', '2018-03-15 02:44:58', '2018-03-15 02:45:51', NULL, NULL),
+(13, NULL, 'KUPPAN', NULL, 'sarah@hmsfareast.com', '6775 2122', 'HMS FAR EAST PTE LTD', 'C-HFE002', NULL, 7, 'HMS FAR EAST PTE LTD12 TUAS ROADSINGAPORE 638486', 'HMS FAR EAST PTE LTD12 TUAS ROADSINGAPORE 638486', 1, 1, 0, '$2y$10$EvctM4.PktO383oY4SqzDekE5DsdIzDCt8x8OezBJyuiu8BHoJaQS', 'NxG3kjcxSOVPBQc4tAmkM7ndLanE749LJcUlT3jud7za0X4tebMlN9TkmiCU', NULL, '2018-03-15 02:49:40', '2018-03-15 02:49:40', NULL),
+(14, NULL, 'MR KABEER', 'KHADAR', 'peter@euroblastme.com', '971-4-2824400', 'EUROBLAST MIDDLE EAST LLC', 'C-EME001', NULL, 1, 'EUROBLAST MIDDLE EAST LLC (U$)P O BOX 31230DUBAI, UAE', 'EUROBLAST MIDDLE EAST LLC (U$)P O BOX 31230DUBAI, UAE', 1, 1, 0, '$2y$10$x5OjVt03IsWZndBb3LYpV.qSa2MR7aPA.5axoAtOHAA1NCB6PoZYe', 'Y269lE4zZ4yZNwdYMaqr5hKvON6vvn2VVhvafsqVk83BkmecQwI6hLjhZvVZ', NULL, '2018-03-15 02:47:41', '2018-03-15 02:47:41', NULL),
+(15, NULL, 'EMILIA /', 'NUGRAHA', 'NFN.Alvanita@halliburton.com', '0542 747500', 'PT HALLIBURTON INDONESIA BPN', 'C-PHI001', NULL, 7, 'PT HALLIBURTON INDONESIA BPNJL MULAWARMAN NO. 19 RT 53 MANGGARBATAKAN BESAR BALIKPAPAN KTI 76117INDONESIA', 'PT HALLIBURTON INDONESIA BPNJL MULAWARMAN NO. 19 RT 53 MANGGARBATAKAN BESAR BALIKPAPAN KTI 76117INDONESIA', 1, 1, 0, '$2y$10$a7ap0TQwn0lsZQX.zwJmne9ya.fA45hL1oyRFDtVHSpz8b0OYp0Oy', NULL, NULL, '2018-03-15 02:52:57', '2018-03-15 02:52:57', NULL),
+(16, NULL, 'Nikunj', 'Patel', 'patelnikunj409@yahoo.com', '12345678', 'Verz', NULL, NULL, 1, NULL, NULL, 0, 1, 0, '$2y$10$wtjQchx3G18lwNrm1xGigucs6d7xAHb09mxqHV3qw/WVrH9AcgMWi', NULL, '2018-03-15 06:20:48', '2018-03-28 03:12:10', '2018-03-28 03:12:10', NULL),
+(17, NULL, 'Akshay', 'Patel', 'simplylife007@yahoo.com', '12345678', 'Verz', NULL, NULL, NULL, NULL, NULL, 0, 1, 0, '$2y$10$SO7aIFpT1Ym.NH5yYj2Rn.yASpsSP3UmMV.5WAYHTbC6Uxb9UzrUi', NULL, '2018-03-16 03:16:11', '2018-03-16 03:16:11', NULL, NULL),
+(19, NULL, 'Shirley', 'Chiew', 'shirley.chiew@speedo.com.sg', NULL, NULL, NULL, NULL, 1, NULL, NULL, 0, 1, 0, '$2y$10$aV48bBRQGvKzUyKFVVcQA.Efse..wGWqrAYRZVY2B.DgJ9FdCrCJu', 'pR3CyawMTYeLHeFQoDzUZnc3LQlLw3SZqPtCy5m7GlxHqEmt9W6stMpHMtPT', '2018-03-20 07:19:47', '2018-03-20 07:31:33', NULL, NULL),
+(20, NULL, 'Veron', 'Lim', 'veronica.lim@speedo.com.sg', '+123456789', 'Test Inc.', NULL, NULL, NULL, NULL, NULL, 0, 1, 0, '$2y$10$4P2LS3c7P/06S/.A4r/ZD.bvvfOG8DseRx/yNzqtOAApI8FUT4qK6', 'dxJ1gNa9zYEzZmDyFWpGrxWThTA9eZxF5BdbvQij78mbBO8PbyJLHxSnsg4l', '2018-03-20 07:20:38', '2018-03-20 07:20:38', NULL, NULL),
+(21, NULL, 'Shaun', 'Teoh', 'shaun.teoh@speedo.com.sg', '+852 010 966 1251', 'Test Again inc', NULL, NULL, NULL, NULL, NULL, 0, 1, 0, '$2y$10$Z4PgQXXc4SH36OCPBJFA.uAMsi/I86AKzkfDt2cfbTLitf.DWr01O', 'nIU0yQPBTAUueiRqyfsuz8cMqP2S8VMY4W10LURN6mMwWjIvWG54DZxa4eAs', '2018-03-20 07:23:55', '2018-03-20 07:23:55', NULL, NULL),
+(22, NULL, 'Mohsin', 'Saikh', 'srini@verzdesign.com', '1234567890', 'Verz', NULL, NULL, 7, 'Valsad', 'Valsad', 0, 1, 0, '$2y$10$KHbQZ1tgRx/Mdsd8Rk1aneoZK3waPxXm3nJ83Bme6i.2UywdnsGye', 'vkx0fqpqrsih3L2Mz5SXNnpx9T6Sd92gxwDZg3TPI3o3AgT2K23do3QIO4TH', '2018-03-22 03:09:17', '2018-03-22 04:07:39', '2018-03-22 04:07:39', NULL),
+(23, NULL, 'Brijesh', 'Lad', 'def@gmail.com', '12345678', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, '$2y$10$Aslqj56CePWhpr.q9A8d/.zcPQ4NpDJGyZj56DAk0S7TR1g90OefO', 'e1AsiyKQrO0OKX1rxC8q1HWD85vFa9ifdENtYMNpRLypt7VExhPsAjP2SqDj', '2018-03-22 03:22:29', '2018-03-22 03:22:29', NULL, NULL),
+(24, NULL, 'Sam', 'Soh', 'sam.soh@speedo.com.sg', NULL, 'Shanghai Speedo', NULL, NULL, 1, '123 Kangqiao Road, Pudong, Shanghai 201315, China', '123 Kangqiao Road, Pudong, Shanghai 201315, China', 1, 1, 0, '$2y$10$GeQVBu8e2HSe.SlFjJFa..S3F.1XpEWg3/lOBgkfMKGcvLctmnnMq', 'KrYFgRdJSIMrOc5PPur4oN3lBCUKC69fS9jBh4iilwzbwc1r0sMOt7lTDKUm', '2018-03-23 01:23:30', '2018-03-23 02:04:01', NULL, NULL),
+(25, NULL, 'Ben', 'Lee', 'ben.lee@speedo.com.sg', '+852 010 123 4567', 'Test Co', NULL, NULL, 1, '123 Test Road', '2 Tuas Basin', 0, 1, 0, '$2y$10$WRVd8KZcDDf/hvizdfjes.UeDZyFrf4nG7gKSFDZIb9S5Oms61moO', 'IhHdDOMkCUzCBYCp1NghPK7jBz95G6k8PTqvoYzIdMa0gADhhJH4ARNcwgit', '2018-03-23 01:24:32', '2018-03-23 02:15:03', NULL, NULL),
+(46, NULL, 'Nikunj', 'Patel', 'nicckk.verz@gmail.com', '12345678', 'Verz', NULL, NULL, 1, 'Valsad', 'Valsad', 1, 1, 0, '$2y$10$Z2YNiOc2Y4s/M7Ih7n1ADu9mPUKihFFey0SBfmV71nkKjzNAbBWg2', 'VZk662LN0H5CX72htNsWJ1HbkC5C4oKWjDaORTI061PgMKDG0XpfYrovBgLU', '2018-03-27 02:57:40', '2018-05-02 06:47:41', '2018-05-02 06:47:41', NULL),
+(47, NULL, 'Darpan', 'Patel', 'patelnikunj409@gmail.com', '1234567890', 'Verz', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, '$2y$10$p2GYqMrl/SsSMS3CPJurG.s8rKbrxor.YOLRFtUTc.3i67EbWoZk6', 'q9VNOTPEOA8zNsPvBM4sxWqklUXNPXb4FUMKjj7VytbEblrjLhdW2jfXFLQq', '2018-03-27 10:26:22', '2018-03-27 10:26:22', NULL, NULL),
+(48, NULL, 'Lian HOh', 'Loh', 'lianhoh@hotmail.com', '65126118', 'Speedo ABC', NULL, NULL, NULL, NULL, NULL, 0, 1, 0, '$2y$10$g0/pMe/K62AnhgZ/YFWf8.QsttolJSDwoUCjprPn5afHAs.B0oJIW', 'BBuhCoWCb3J9tfcagKs6aBw0uQAiLV8Xh8crwh4VkPpjTWof9ggZomrHPFc2', '2018-03-28 02:54:00', '2018-03-28 02:54:00', NULL, NULL),
+(49, NULL, 'Richard', 'Chu', 'richard.ctchu@gmail.com', '987654321', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, '$2y$10$dl8m4il5WKBblmisj7D7ruXMhqtrlSQmieUpuCEwNCG2FthtJRqrC', 'uzatsm5WAXMy5T4Mxx3nx1LOiVnaTrQMTRxUizcYpEROHmnmtIRKxCicbwFk', '2018-04-04 04:00:13', '2018-04-04 04:00:51', NULL, '2018-04-04 04:00:51'),
+(50, NULL, 'Lay Hoon', 'Choo', 'layhoon.choo@speedo.com.sg', NULL, 'Test company', NULL, NULL, 7, '123 Company Road', '123 Company Road', 1, 1, 0, '$2y$10$vx5ZmIZ5gorM6jfHNESeNe.aReaBuJMCwQgjvYhNMnyzlGTjSYnHC', 'LiDz3ZIUcSDm6scQtzGxNs6xZmEWo43dDlMSWVLuNzYz8z1RpsLjQIRFTJqG', '2018-04-05 06:12:50', '2018-04-05 07:00:15', NULL, NULL),
+(51, NULL, 'AUNG TUN', 'LIN', 'thuzaraung67@gmail.com', '951 680433', 'BLUE WAVE INTERNATIONAL TRADING COMPANY LIMITED', 'C-BWI001', NULL, 1, 'BLUE WAVE INTERNATIONAL TRADING CO LTD NO.85(F), SHWESABAI 7TH STREET FMI CITY, HLAINGTHARYAR TOWNSHIP', 'BLUE WAVE INTERNATIONAL TRADING CO LTD NO.85(F), SHWESABAI 7TH STREET FMI CITY, HLAINGTHARYAR TOWNSHIP', 1, 1, 0, '$2y$10$cn8Cw.Iqudx5IorGbhsFiu.wMi0./ZikINKk1j22E.x1Mw4K7GeQ2', NULL, '2015-09-14 04:00:00', '2018-04-03 04:00:00', '2018-04-05 06:21:01', NULL),
+(52, NULL, 'Mr Phang', NULL, 'sales@pracsys.com.my', '07-3885593', 'PRACTICAL SYSTEMS SDN BHD', 'C-PS0001', NULL, 6, 'PRACTICAL SYSTEMS SDN BHD NO. 17 JALAN SRI WANGI 1/1 KAWASAN PERINDUSTRIAN DESA PLENTONG', 'PRACTICAL SYSTEMS SDN BHD NO. 17 JALAN SRI WANGI 1/1 KAWASAN PERINDUSTRIAN DESA PLENTONG', 1, 1, 0, '$2y$10$gPrKh8FeQ50r07.Vetq.OuTh/b5RpFMd8XswnZS7UENQAqoSPs6sa', 'f3VzV4VtRkj47qxJCrHdhAwSSVUTeRu8zzxTBo3sZjYZEDNS6QUjagYDHecT', '2014-02-06 04:00:00', '2018-05-02 08:31:27', '2018-05-02 08:31:27', NULL),
+(53, NULL, 'Iman', 'Abdurrohman', 'Iman_a@tosanda.com', '082321959034', 'PT. Tosanda Putra Pratama', NULL, NULL, NULL, NULL, NULL, 1, 1, 0, '$2y$10$DM2UD8WMTezIs5JAynjoQ.Lv7iGjZlswLxgoi1ckIEqv0yT8f0x56', NULL, '2018-04-09 01:27:05', '2018-04-09 01:27:05', NULL, NULL),
+(54, NULL, 'Ben', 'Warne', 'ben@pumpsaustralia.com.au', '0404661262', 'PumpsAustralia', NULL, NULL, NULL, NULL, NULL, 1, 1, 0, '$2y$10$Gd1wk4CfnMFksYjXgIxGi.8LXobZvlH/8hIaMg8uAZTp9ZHccsTzi', NULL, '2018-04-10 08:20:34', '2018-04-10 08:20:34', NULL, NULL),
+(55, NULL, 'Nurul Hadi', 'Ghufran', 'hadi@rfz2engineering.com', '+60383204318', 'RFZ2 Engineering Sdn Bhd', NULL, NULL, 1, 'GM-15B, Jalan PP 5C/1, Taman Putra Perdana, 47130 Puchong, Selangor', 'GM-15B, Jalan PP 5C/1, Taman Putra Perdana, 47130 Puchong, Selangor', 0, 1, 0, '$2y$10$HDESZEtx7BFJxoAUoTNKoeUOdWZjh.WjRmfQ3QUHNMrPnbe5Dmf2u', NULL, '2018-04-10 08:49:49', '2018-04-10 08:52:53', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1132,6 +1244,12 @@ ALTER TABLE `contact_enquiry`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `formula_variables`
+--
+ALTER TABLE `formula_variables`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `health_insurance_enquiry`
 --
 ALTER TABLE `health_insurance_enquiry`
@@ -1172,6 +1290,18 @@ ALTER TABLE `pages`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `placement_range`
+--
+ALTER TABLE `placement_range`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_names`
+--
+ALTER TABLE `product_names`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `promotion_formula`
@@ -1244,7 +1374,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `activity_log`
 --
 ALTER TABLE `activity_log`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=234;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -1283,6 +1413,12 @@ ALTER TABLE `contact_enquiry`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `formula_variables`
+--
+ALTER TABLE `formula_variables`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `health_insurance_enquiry`
 --
 ALTER TABLE `health_insurance_enquiry`
@@ -1304,7 +1440,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `modules`
@@ -1317,6 +1453,18 @@ ALTER TABLE `modules`
 --
 ALTER TABLE `pages`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT for table `placement_range`
+--
+ALTER TABLE `placement_range`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `product_names`
+--
+ALTER TABLE `product_names`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `promotion_formula`
@@ -1334,7 +1482,7 @@ ALTER TABLE `promotion_products`
 -- AUTO_INCREMENT for table `promotion_types`
 --
 ALTER TABLE `promotion_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `related_products`
