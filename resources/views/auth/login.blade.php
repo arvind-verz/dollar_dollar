@@ -64,24 +64,40 @@
     </div>
 
     {{--Page content start--}}
+    @if(count($errors) > 0)
+    <div class="col-md-12">
+        <div class="box-body">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                @foreach($errors->all() as $error)
+                    <p>
+                        {!!  $error !!}
+                    </p>
+                @endforeach
+
+            </div>
+        </div>
+    </div>
+    @endif
     <main class="ps-main">
         <div class="container">
             <h3 class="ps-heading mb-35"><span> Login </span> to your account</h3>
 
-            {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--login ps-form--contact', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['route' => ['login'], 'class'=>'ps-form--login ps-form--contact', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                     <div class="ps-form__content">
                         <div class="form-group">
                             <label>Email</label>
                             <div class="form-icon"><i class="fa fa-envelope"></i>
-                                <input class="form-control" type="text" placeholder="Enter Email Address Here">
+                                <input class="form-control" type="text" name="email" placeholder="Enter Email Address Here">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Password</label>
                             <div class="form-icon"><i class="fa fa-lock"></i>
-                                <input class="form-control" type="text" placeholder="Enter Password Here">
+                                <input class="form-control" type="password" name="password" placeholder="Enter Password Here">
                             </div>
                         </div>
                         <div class="form-group actions">
@@ -94,9 +110,9 @@
                         <div class="form-group submit">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <button class="ps-btn">Login</button>
+                                    <button type="submit" class="ps-btn">Login</button>
                                 </div>
-                                <div class="col-xs-6"><a class="ps-btn ps-btn--outline" href="registration.html">Signup</a></div>
+                                <div class="col-xs-6"><a class="ps-btn ps-btn--outline" href="{{ url('registration') }}">Signup</a></div>
                             </div><a class="ps-btn ps-btn--blue" href="#">Connect with Facebook</a>
                         </div>
                     </div>

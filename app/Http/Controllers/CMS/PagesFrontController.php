@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Page;
+use App\ProductManagement;
 use Illuminate\Http\Request;
 use App\Brand;
 use DB;
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Auth;
 
 class PagesFrontController extends Controller
 {
+    public function __construct()
+    {
+        
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -50,6 +57,10 @@ class PagesFrontController extends Controller
      */
     public function show($slug)
     {
+        $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
+        ->get();
+        //dd($user_products);
+
         DB::enableQueryLog();
         $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
             ->where('pages.slug', $slug)
@@ -85,8 +96,29 @@ class PagesFrontController extends Controller
                     return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == REGISTRATION) {
                     return view('frontend.CMS.registration', compact("brands", "page", "systemSetting", "banners"));
-                } elseif ($slug == LOGIN_SLUG) {
-                    return view('auth.login', compact("brands", "page", "systemSetting", "banners"));
+                } elseif ($slug == PROFILEDASHBOARD) {
+                    if(AUTH::check()) {
+                        return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners"));
+                    }                    
+                    else {
+                        return redirect('/login');
+                    }
+                } elseif ($slug == ACCOUNTINFO) {
+                    if(AUTH::check()) {
+                        return view('frontend.user.account-information', compact("brands", "page", "systemSetting", "banners"));
+                    }                    
+                    else {
+                        return redirect('/login');
+                    }
+                    
+                } elseif ($slug == PRODUCTMANAGEMENT) {
+                    if(AUTH::check()) {
+                         return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners", "user_products"));
+                    }                    
+                    else {
+                        return redirect('/login');
+                    }
+                   
                 } elseif ($slug == FIXED_DEPOSIT_MODE) {
                     $details = [];
                     $details['brands'] = $brands;

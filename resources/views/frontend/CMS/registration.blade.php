@@ -44,17 +44,34 @@
     </div>
 
     {{--Page content start--}}
+    @include('frontend.includes.messages')
+    @if(count($errors) > 0)
+    <div class="col-md-12">
+        <div class="box-body">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                @foreach($errors->all() as $error)
+                    <p>
+                        {!!  $error !!}
+                    </p>
+                @endforeach
+
+            </div>
+        </div>
+    </div>
+    @endif
     <main class="ps-main">
         <div class="container">
             <h3 class="ps-heading mb-35"><span> Register </span> to DollarDollar.sg</h3>
 
-            {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--contact ps-form--register', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['route' => ['registration-add'], 'class'=>'ps-form--contact ps-form--register', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 ">
                     <div class="ps-form__content">
                         <div class="form-group">
                             <label>Salutation</label>
-                            <select class="form-control">
+                            <select class="form-control" name="salutation">
                                 <option value="Mr.">Mr.</option>
                                 <option value="Mrs.">Mrs.</option>
                                 <option value="Miss.">Miss.</option>
@@ -74,7 +91,7 @@
                         </div>
                         <div class="form-group">
                             <label>Contact Number <span class="optional">(Optional)</span></label>
-                            <input class="form-control" type="text" name="contact" placeholder="Enter Contact Number" value="{{ old('contact') }}">
+                            <input class="form-control only_numeric" type="text" name="contact" placeholder="Enter Contact Number" value="{{ old('contact') }}">
                         </div>
                         <div class="form-group">
                             <label>Password</label>
@@ -82,7 +99,7 @@
                         </div>
                         <div class="form-group">
                             <label>Confirm Password</label>
-                            <input class="form-control" type="password" name="confirm_password" placeholder="Confirm Password Here">
+                            <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password Here">
                         </div>
                         <div class="form-group">
                             <button type="submit" class="ps-btn">Submit</button>

@@ -4,9 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Database\Eloquent;
+use Illuminate\Http\Request;
+use Auth;
+use DB;
+use App\Page;
+use App\Brand;
+use Validator;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -48,6 +55,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        //dd($data);
         $validatorFields = [
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
@@ -83,5 +91,72 @@ class RegisterController extends Controller
             'company' => $data['company'],
             'subscribe' => $data['subscribe'],
         ]);
+    }
+
+
+    public function userRegistration(Request $request) {
+        //dd($request->all());
+        $validate = [
+            'salutation'        =>  'required',
+            'first_name'        =>  'required',
+            'last_name'         =>  'required',
+            'email'             =>  'required|email',
+            'contact'           =>  'required|numeric',
+            'password'          =>  'required|min:8|confirmed',
+           
+            //'slug' => 'required'
+        ];
+        
+        $validator = Validator::make($request->all(), $validate);
+
+        $sel_query = User::where('email', $request->email)->first();
+        if(count($sel_query)>0) {
+            $validator->getMessageBag()->add('data', 'Data' . ' ' . ALREADY_TAKEN_ALERT);
+            //return redirect()->action('Products\ProductsController@promotion_formula')->with($error);
+        }
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
+        else {
+            $slug = REGISTRATION;
+            DB::enableQueryLog();
+            $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
+                ->where('pages.slug', $slug)
+                ->where('pages.delete_status', 0)
+                ->where('pages.status', 1)
+                ->select('pages.*', 'menus.title as menu_title', 'menus.id as menu_id')
+                ->first();
+            //dd(DB::getQueryLog());
+            //dd($page,$slug);
+            if (!$page) {
+                return redirect(url('/'))->with('error', "Opps! page not found");
+            } else {
+                $systemSetting = \Helper::getSystemSetting();
+                if (!$systemSetting) {
+                    return back()->with('error', OPPS_ALERT);
+                }
+
+                $slug = $page->slug;
+                //get banners
+                $banners = \Helper::getBanners($slug);
+
+                //get slug
+                $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+            }
+
+        
+            $registration = new User();
+            $registration->salutation   =   $request->salutation;
+            $registration->first_name   =   $request->first_name;
+            $registration->last_name    =   $request->last_name;
+            $registration->email        =   $request->email;
+            $registration->tel_phone    =   $request->contact;
+            $registration->password     =   Hash::make($request->password);
+            $registration->save();
+        
+
+            return redirect(url(REGISTRATION))->with('success','Data ' . ADDED_ALERT);
+        }
+        //$registration = new User();
     }
 }
