@@ -71,6 +71,7 @@ define('BLOG_MODULE', "Blog Management");
 define('BLOG_CATEGORY_MODULE', "Blog Category Management");
 define('ENQUIRY_MODULE', "Enquiry Management");
 define('TAG_MODULE', "Tag Management");
+define('REPORT_MODULE', "Report Management");
 
 //Single Module Name for action
 define('PRODUCT_MODULE_SINGLE', "Product");
@@ -78,6 +79,7 @@ define('CATEGORY_MODULE_SINGLE', "Category");
 define('BANNER_MODULE_SINGLE', "Banner");
 define('BRAND_MODULE_SINGLE', "Brand");
 define('USER_MODULE_SINGLE', "User");
+define('REPORT_MODULE_SINGLE', "Report");
 define('CUSTOMER_MODULE_SINGLE', "Customer");
 define('ORDER_MODULE_SINGLE', "Order");
 define('HOMEPAGE_MODULE_SINGLE', "Homepage");

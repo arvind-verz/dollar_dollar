@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use App\ProductManagement;
+use Auth;
 
 class ProductManagementController extends Controller
 {
@@ -37,7 +38,6 @@ class ProductManagementController extends Controller
      */
     public function store(Request $request)
     {
-
         $validate = Validator::make($request->all(), [
             'bank_id'           =>  'required',
             'amount'            =>  'required|numeric',
@@ -51,6 +51,7 @@ class ProductManagementController extends Controller
         }
         else {
             $product_management                     =   new ProductManagement();
+            $product_management->user_id            =   Auth::user()->id;
             $product_management->bank_id            =   $request->bank_id;
             $product_management->account_name       =   $request->account_name;
             $product_management->amount             =   $request->amount;

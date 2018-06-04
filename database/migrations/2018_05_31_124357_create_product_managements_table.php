@@ -15,6 +15,7 @@ class CreateProductManagementsTable extends Migration
     {
         Schema::create('product_managements', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->integer('bank_id');
             $table->string('account_name')->nullable();
             $table->double('amount');

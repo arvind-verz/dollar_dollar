@@ -63,10 +63,23 @@
                             <li><a href="{{ route('bank-products') }}"><i class="fa fa-plus"></i> Bank Products</a></li>
                         </ul>
                     </li>
+                    @elseif($menu->label == REPORT_MODULE)
+                    <li class="treeview ">
+                        <a href="#" >
+                            <i class="{{$menu->icon}}"></i> <span>{{$menu->label}}</span>
+                             <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ route('customer-report') }}"><i class="fa fa-plus"></i> Customer</a></li>
+                            <li><a href="{{ route('product-report') }}"><i class="fa fa-plus"></i> Product</a></li>
+                        </ul>
+                    </li>
                     @else
 
                     <li>
-                    <a href="@if($menu->name=='#') $menu->name @else{{ route($name) }} @endif" onclick="location.href='#'">
+                    <a href="@if($menu->name=='#') {{ $menu->name }} @else{{ route($name) }} @endif" onclick="location.href='#'">
 
                         <i class="{{$menu->icon}}"></i> <span>{{$menu->label}}</span>
                     </a>
