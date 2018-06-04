@@ -186,6 +186,18 @@ Route::group(array('prefix' => 'admin'), function () {
 
     Route::get('/bank-products', 'Products\ProductsController@bank_products')->name('bank-products');
 
+    Route::post('/add-product-name', 'Products\ProductsController@addProductName')->name('add-product-name');
+    Route::post('/add-price-range', 'Products\ProductsController@addPriceRange')->name('add-price-range');
+    Route::post('/add-formula-detail', 'Products\ProductsController@addFormulaDetail')->name('add-formula-detail');
+    Route::post('/get-placement-range', 'Products\ProductsController@getPlacementRange')->name('get-placement-range');
+    Route::post('/get-formula-detail', 'Products\ProductsController@getFormulaDetail')->name('get-formula-detail');
+
+    Route::post('/promotion-products/get-formula', 'Products\ProductsController@promotion_products_get_formula')->name('promotion-products-get-formula');
+
+    Route::put('/promotion-products/{id}/update', 'Products\ProductsController@promotion_products_update')->name('promotion-products-update');
+    Route::get('/bank-products', 'Products\ProductsController@promotion_products')->name('bank-products');
+
+
 
 });
 Route::get('{slug}', 'CMS\PagesFrontController@show')->name('slug');
