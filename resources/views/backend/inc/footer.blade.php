@@ -129,7 +129,14 @@
 <!-- Select2 -->
 <script src="{{ asset('backend/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- DataTables -->
-<script src="{{ asset('backend/bower_components/datatables.net/js/jquery.dataTables.min.js' ) }}"></script>
+<script src="{{ asset('backend/bower_components/DataTables/datatables.min.js' ) }}"></script>
+<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.flash.min.js') }}"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('backend/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script src="{{ asset('frontend/js/jquery.numeric.js') }}"></script>
 <!-- Morris.js charts -->
@@ -191,7 +198,6 @@
                 {
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[8, 'desc'], [9, 'desc'], [7, 'desc']],
                     "columnDefs": []
                 });
         $('#admins').DataTable(
@@ -236,6 +242,34 @@
                     'ordering': true,
                     'order': [[1, 'asc']],
                     "columnDefs": []
+                });
+        $('#report').DataTable(
+                {
+                    dom: 'Bfrtip',
+                    "pageLength": 50,
+                    buttons: [
+                        {
+                            text: 'Export Customers Report',
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: [0,1,2,3,4,5,6,7]
+                            },
+                            filename: function(){
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy+''+mm+''+dd;
+                                return today + '-Customers-Report';
+                            }
+                        }
+                    ],
                 });
 
     });

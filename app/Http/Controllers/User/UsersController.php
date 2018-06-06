@@ -86,7 +86,7 @@ class UsersController extends Controller
             $fields = array_add($fields, 'password', 'min:8|confirmed');
             $user->password = bcrypt($request->password);
         }
-        if (User::where('email', $fields['email'])->where('delete_status', 0)->exists()) {
+        if (User::where('email', $request->email)->where('delete_status', 0)->exists()) {
             $fields = array_add($fields, 'email', "required|email|max:255|unique:users");
         } else {
             $fields = array_add($fields, 'email', "required|email|max:255");
