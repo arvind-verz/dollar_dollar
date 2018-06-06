@@ -62,7 +62,7 @@ class ProductsController extends Controller
     public function promotion_products_add_db(Request $request)
     {
 
-        dd($request->all());
+        //dd($request->all());
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
 
