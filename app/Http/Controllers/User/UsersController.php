@@ -80,7 +80,6 @@ class UsersController extends Controller
 
         $fields = [
             'first_name' => 'required',
-            'email' => 'required|email|max:255',
         ];
         if (isset($request->password)) {
             $fields = array_add($fields, 'password', 'min:8|confirmed');
