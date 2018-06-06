@@ -33,24 +33,13 @@ class ProductsController extends Controller
 
     public function promotion_products_add()
     {
-
-
         //dd($formulaDetails);
-
         $promotion_types = \Helper::getPromotionType();
         $formulas = \Helper::getFormula();
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
-        $products = PromotionProducts::where('delete_status', 0)->whereNotNull('product_name_id')->groupBy('product_name_id')->get();
-        $alreadyStoreProductNamesId = [];
-        if ($products->count()) {
-            $alreadyStoreProductNamesId = $products->pluck('product_name_id')->all();
-            //dd($alreadyStoreProductNamesId);
-        }
-        $product_names = ProductName::whereNotIn('id', $alreadyStoreProductNamesId)
-            ->orderBy('product_name', 'asc')->get();
 
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'product_names'));
+        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks'));
     }
 
     public function promotion_products_get_formula(Request $request)
@@ -73,7 +62,7 @@ class ProductsController extends Controller
     public function promotion_products_add_db(Request $request)
     {
 
-        //dd($request->all());
+        dd($request->all());
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
 
