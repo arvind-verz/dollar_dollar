@@ -33,24 +33,13 @@ class ProductsController extends Controller
 
     public function promotion_products_add()
     {
-
-
         //dd($formulaDetails);
-
         $promotion_types = \Helper::getPromotionType();
         $formulas = \Helper::getFormula();
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
-        $products = PromotionProducts::where('delete_status', 0)->whereNotNull('product_name_id')->groupBy('product_name_id')->get();
-        $alreadyStoreProductNamesId = [];
-        if ($products->count()) {
-            $alreadyStoreProductNamesId = $products->pluck('product_name_id')->all();
-            //dd($alreadyStoreProductNamesId);
-        }
-        $product_names = ProductName::whereNotIn('id', $alreadyStoreProductNamesId)
-            ->orderBy('product_name', 'asc')->get();
 
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'product_names'));
+        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks'));
     }
 
     public function promotion_products_get_formula(Request $request)
@@ -73,7 +62,7 @@ class ProductsController extends Controller
     public function promotion_products_add_db(Request $request)
     {
 
-        //dd($request->all());
+        dd($request->all());
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
 
@@ -85,6 +74,35 @@ class ProductsController extends Controller
             'promotion_start_date' => 'required|date',
             'promotion_end_date' => 'required|date|after_or_equal:promotion_start_date',
         ];
+
+        function numberBetween($varToCheck, $low, $high)
+        {
+            if ($varToCheck > $high) return false;
+            if ($varToCheck < $low) return false;
+            return true;
+        }
+
+        $validator = Validator::make($request->all(), $validate);
+        foreach ($request->min_placement as $key => $value) {
+            $key = count($request->min_placement) - 1 - $key;
+
+            for ($i = 0; $i <= (count($request->min_placement) - 1); $i++) {
+
+                if (!is_null($request->min_placement[$key]) && !is_null($request->min_placement[$i]) && !is_null($request->max_placement[$i]) && ($key != $i)) {
+                    $error = false;
+                    if (numberBetween($request->min_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
+                        $error = true;
+                    } elseif (numberBetween($request->max_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
+                        $error = true;
+                    }
+                    if ($error == true) {
+                        $validator->getMessageBag()->add('range', $request->min_placement[$key] . ' - ' . $request->max_placement[$key] . ' conflict this ' . $request->min_placement[$i] . ' - ' . $request->max_placement[$i] . ' range.');
+                    }
+                }
+            }
+        }
+
+
         /*DB::enableQueryLog();
         $productDetail = PromotionProducts::where('name', $request->name)
             ->where('delete_status', 0)
@@ -94,29 +112,29 @@ class ProductsController extends Controller
         } else {
             $validate['name'] = 'required';
         }*/
-        $validator = Validator::make($request->all(), $validate);
+
         //dd($validator->getMessageBag());
         //$this->validate($request, $validate);
         //set day of time before one second and end of day after one second for between date
         $startDate = \Helper::startOfDayBefore($request->start_date);
         $endDate = \Helper::endOfDayAfter($request->end_date);
-
-        $sel_query = PromotionProducts::where('promotion_type_id', $request->product_type)
-            ->where('formula_id', $request->formula)
-            ->where('bank_id', $request->bank)
-            ->where('min_range', $request->min_placement)
-            ->where('max_range', $request->max_placement)
-            ->where('promotion_start', $startDate)
-            ->where('promotion_end', $endDate)
-            ->where('tenure', $request->tenure)
-            ->where('bonus_interest', $request->bonus_interest)
-            ->where('delete_status', 0)
-            ->get();
-        //dd(DB::getQueryLog());
-        if ($sel_query->count() > 0) {
-            $validator->getMessageBag()->add('data', 'Data' . ' ' . ALREADY_TAKEN_ALERT);
-            //return redirect()->action('Products\ProductsController@promotion_formula')->with($error);
-        }
+        /*
+                $sel_query = PromotionProducts::where('promotion_type_id', $request->product_type)
+                    ->where('formula_id', $request->formula)
+                    ->where('bank_id', $request->bank)
+                    ->where('min_range', $request->min_placement)
+                    ->where('max_range', $request->max_placement)
+                    ->where('promotion_start', $startDate)
+                    ->where('promotion_end', $endDate)
+                    ->where('tenure', $request->tenure)
+                    ->where('bonus_interest', $request->bonus_interest)
+                    ->where('delete_status', 0)
+                    ->get();
+                //dd(DB::getQueryLog());
+                if ($sel_query->count() > 0) {
+                    $validator->getMessageBag()->add('data', 'Data' . ' ' . ALREADY_TAKEN_ALERT);
+                    //return redirect()->action('Products\ProductsController@promotion_formula')->with($error);
+                }*/
 
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
@@ -662,7 +680,7 @@ class ProductsController extends Controller
         if ($formulaDetails->count()) {
             $formulaDetails = array_values($formulaDetails->groupBy('placement_range_id')->toArray());
         }
-       // dd($formulaDetails);
+        // dd($formulaDetails);
         if (count($formulaDetails)) {
             foreach ($formulaDetails as $formulaDetail) {
                 ?>
