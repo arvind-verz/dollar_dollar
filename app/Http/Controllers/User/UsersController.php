@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Pricelist;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -59,14 +58,7 @@ class UsersController extends Controller
         if (!$user) {
             return redirect()->action('User\UsersController@index')->with('error', OPPS_ALERT);
         }
-
-        $priceLists = [];
-        $priceList = Pricelist::all();
-        if ($priceList->count()) {
-            $priceLists = $priceList;
-        }
-
-        return view("backend.user.edit", compact("user", "priceLists"));
+        return view("backend.user.edit", compact("user"));
     }
 
     /**
@@ -94,19 +86,19 @@ class UsersController extends Controller
             $fields = array_add($fields, 'password', 'min:8|confirmed');
             $user->password = bcrypt($request->password);
         }
+        if (User::where('email', $fields['email'])->where('delete_status', 0)->exists()) {
+            $fields = array_add($fields, 'email', "required|email|max:255|unique:users");
+        } else {
+            $fields = array_add($fields, 'email', "required|email|max:255");
+        }
         $this->validate($request, $fields);
 
         // update Post
-        $user->customer_code = $request->input('customer_code');
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->tel_phone = $request->input('tel_phone');
-        $user->company = $request->input('company');
-        $user->price_list = $request->input('price_list');
-        $user->shipping_address = $request->input('shipping_address');
-        $user->billing_address = $request->input('billing_address');
-        $user->web_login = $request->input('web_login');
+        $user->status = $request->input('status');
         $user->updated_at_admin = Carbon::now()->toDateTimeString();
         $user->save();
 

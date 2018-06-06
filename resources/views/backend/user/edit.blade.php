@@ -29,9 +29,26 @@
                         {!! Form::open(['class' => 'form-horizontal','url' => ['admin/users', $user->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="box-body">
                             <div class="form-group">
-                                {{Form::label('customer_code', 'Customer Code',['class'=>'col-sm-2 control-label'])}}
+                                <label class="col-sm-2 control-label">Salutation</label>
+
                                 <div class="col-sm-10">
-                                    {{Form::text('customer_code', $user->customer_code, ['class' => 'form-control', 'placeholder' => ''])}}
+
+                                    <select class="form-control select2"
+                                            data-placeholder="" name="salutation"
+                                            style="width: 100%;">
+                                        <option value={{MR}}
+                                                @if($user->salutation == MR) selected="selected" @endif>
+                                            {{MR}}
+                                        </option>
+                                        <option value={{MRS}}
+                                        @if($user->salutation == MRS) selected="selected" @endif>
+                                            {{MRS}}
+                                        </option>
+                                        <option value={{MISS}}
+                                        @if($user->salutation == MISS) selected="selected" @endif>
+                                            {{MISS}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -71,55 +88,20 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                {{Form::label('company', 'Company Name',['class'=>'col-sm-2 control-label'])}}
-                                <div class="col-sm-10">
-                                    {{Form::text('company', $user->company, ['class' => 'form-control', 'placeholder' => ''])}}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Price List</label>
+                                <label class="col-sm-2 control-label">Status</label>
 
                                 <div class="col-sm-10">
 
                                     <select class="form-control select2"
-                                            data-placeholder="Select Sub menu of" name="price_list"
-                                            style="width: 100%;">
-                                        @if($priceLists->count())
-                                            @foreach($priceLists as $priceList)
-                                                <option value="{{ $priceList->id }}"
-                                                        @if($priceList->id == $user->price_list) selected="selected" @endif>{{ $priceList->label }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {{Form::label('shipping_address', 'Shipping Address',['class'=>'col-sm-2 control-label'])}}
-                                <div class="col-sm-10">
-                                    {{Form::text('shipping_address', $user->shipping_address, ['class' => 'form-control', 'placeholder' => ''])}}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {{Form::label('billing_address', 'Billing Address',['class'=>'col-sm-2 control-label'])}}
-                                <div class="col-sm-10">
-                                    {{Form::text('billing_address', $user->billing_address, ['class' => 'form-control', 'placeholder' => ''])}}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Web Login</label>
-
-                                <div class="col-sm-10">
-
-                                    <select class="form-control select2"
-                                            data-placeholder="" name="web_login"
+                                            data-placeholder="" name="status"
                                             style="width: 100%;">
                                         <option value="1"
-                                                @if($user->web_login == 1) selected="selected" @endif>
-                                            True
+                                                @if($user->status == 1) selected="selected" @endif>
+                                            Active
                                         </option>
                                         <option value="0"
-                                                @if($user->web_login == 0) selected="selected" @endif>
-                                            False
+                                                @if($user->status == 0) selected="selected" @endif>
+                                            Inactive
                                         </option>
                                     </select>
                                 </div>

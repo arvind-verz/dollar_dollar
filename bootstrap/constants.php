@@ -194,3 +194,8 @@ define('COMPONENTS_INVESTMENT', "Investment");
 define('COMPONENTS_SAVING', "Savings");
 define('GENDER_MALE', "Male");
 define('GENDER_FEMALE', "Female");
+
+//salutation constants
+define('MR', "Mr.");
+define('MRS', "Mrs.");
+define('MISS', "Miss.");
