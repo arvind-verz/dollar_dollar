@@ -129,7 +129,14 @@
 <!-- Select2 -->
 <script src="{{ asset('backend/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <!-- DataTables -->
-<script src="{{ asset('backend/bower_components/datatables.net/js/jquery.dataTables.min.js' ) }}"></script>
+<script src="{{ asset('backend/bower_components/DataTables/datatables.min.js' ) }}"></script>
+<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.flash.min.js') }}"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('backend/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <script src="{{ asset('frontend/js/jquery.numeric.js') }}"></script>
 <!-- Morris.js charts -->
@@ -191,7 +198,6 @@
                 {
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[8, 'desc'], [9, 'desc'], [7, 'desc']],
                     "columnDefs": []
                 });
         $('#admins').DataTable(
@@ -237,6 +243,34 @@
                     'order': [[1, 'asc']],
                     "columnDefs": []
                 });
+        $('#report').DataTable(
+                {
+                    dom: 'Bfrtip',
+                    "pageLength": 50,
+                    buttons: [
+                        {
+                            text: 'Export Customers Report',
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: [0,1,2,3,4,5,6,7]
+                            },
+                            filename: function(){
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy+''+mm+''+dd;
+                                return today + '-Customers-Report';
+                            }
+                        }
+                    ],
+                });
 
     });
 
@@ -276,7 +310,9 @@
 
         $('#add-placement-range-button').remove();
         // Layout options
-        var $newTextArea = $('<div>', {});
+        var $newTextArea = $('<div>', {
+            'id': 'placement_range_' + range_id
+        });
 
 
         $newTextArea.append(
@@ -290,7 +326,7 @@
                 + 'Min Placement'
                 + '</button>'
                 + '</div>'
-                + '<input type="text" class="form-control pull-right" name="min_placement[ '+range_id+']" value="">'
+                + '<input type="text" class="form-control pull-right" name="min_placement['+range_id+']" value="">'
                 + ' </div>'
                 + ' </div>'
                 + ' <div class="col-sm-4 ">'
@@ -300,7 +336,7 @@
                 + 'Max Placement'
                 + '</button>'
                 + '</div>'
-                + '<input type="text" class="form-control pull-right" name="max_placement[ '+range_id+']" value="">'
+                + '<input type="text" class="form-control pull-right" name="max_placement['+range_id+']" value="">'
                 + '</div>'
                 + '</div>'
                 + ' <div class="col-sm-2">'
@@ -318,7 +354,7 @@
                 + ' <div class="form-row">'
                 + '<div class="col-md-4 mb-3">'
                 + '<div><label>Tenure Type</lable></div>'
-                + '<select class="form-control " data-placeholder=" "  style="width: 100%; "   name="tenure_type['+range_id+'][1] " >'
+                + '<select class="form-control " data-placeholder=" "  style="width: 100%; "   name="tenure_type['+range_id+'][0] " >'
                 + ' <option value="None" selected="selected">None</option>'
                 + '<option value="1">Day</option>'
                 + '<option value="2">Month</option>'
@@ -327,20 +363,20 @@
                 + ' </div>'
                 + ' <div class="col-md-4 mb-3">'
                 + ' <label for="">Tenure</label>'
-                + '<input type="text" class="form-control" id="" name="tenure['+range_id+'][1]" placeholder="" >'
+                + '<input type="text" class="form-control" id="" name="tenure['+range_id+'][0]" placeholder="" >'
                 + '</div>'
                 + '<div class="col-md-4 mb-3">'
                 + '<label for="">Bonus Interest</label>'
-                + '<input type="text" class="form-control" id="" name="bonus_interest['+range_id+'][1]" placeholder="" >'
+                + '<input type="text" class="form-control" id="" name="bonus_interest['+range_id+'][0]" placeholder="" >'
                 + '</div>'
                 + '</div>'
                 + '</div>'
                 + '  <div class="col-sm-1 col-sm-offset-1 ">'
-                + ' <button type="button" class="btn btn-info pull-left mr-15  " id="add-formula-detail-'+range_id+'1" data-formula-detail-id="1" '
+                + ' <button type="button" class="btn btn-info pull-left mr-15  " id="add-formula-detail-'+range_id+'0" data-formula-detail-id="0" '
                 + ' data-range-id='+range_id
                 + ' onClick="addMoreFormulaDetail(this); " > '
                 + ' <i class="fa fa-plus"> </i> </button>'
-                + '<button type="button" class="btn btn-danger -pull-right   display-none" id="remove-formula-detail-'+range_id+'1" data-formula-detail-id ="1" '
+                + '<button type="button" class="btn btn-danger -pull-right   display-none" id="remove-formula-detail-'+range_id+'0" data-formula-detail-id ="0" '
                 + ' data-range-id ='+range_id
                 + ' onClick="removeFormulaDetail(this);" >'
                 + '<i class="fa fa-minus"> </i>'
@@ -363,9 +399,10 @@
         var formula_detail_id = $(id).data('formula-detail-id');
         var range_id = $(id).data('range-id');
         $(id).addClass('display-none');
+
         $("#remove-formula-detail-"+range_id+formula_detail_id).removeClass('display-none');
         formula_detail_id++;
-
+        //alert(range_id+' '+formula_detail_id);
         $('#add-formula-detail-'+range_id+formula_detail_id).remove();
         // Layout options
         var $newTextArea = $('<div />', {

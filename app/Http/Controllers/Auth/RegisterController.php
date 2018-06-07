@@ -100,20 +100,18 @@ class RegisterController extends Controller
             'salutation'        =>  'required',
             'first_name'        =>  'required',
             'last_name'         =>  'required',
-            'email'             =>  'required|email',
             'contact'           =>  'required|numeric',
             'password'          =>  'required|min:8|confirmed',
            
             //'slug' => 'required'
         ];
-        
+        if (User::where('email', $request->email)->where('delete_status', 0)->exists()) {
+            $validate = array_add($validate, 'email', "required|email|max:255|unique:users");
+        } else {
+            $validate = array_add($validate, 'email', "required|email|max:255");
+        }
         $validator = Validator::make($request->all(), $validate);
 
-        $sel_query = User::where('email', $request->email)->first();
-        if(count($sel_query)>0) {
-            $validator->getMessageBag()->add('data', 'Data' . ' ' . ALREADY_TAKEN_ALERT);
-            //return redirect()->action('Products\ProductsController@promotion_formula')->with($error);
-        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }

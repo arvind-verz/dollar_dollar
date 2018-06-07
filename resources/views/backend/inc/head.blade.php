@@ -12,8 +12,8 @@
 <!-- Ionicons -->
 <link rel="stylesheet" href="{{ asset('backend/bower_components/Ionicons/css/ionicons.min.css') }}">
 <!-- DataTables -->
-<link rel="stylesheet"
-      href="{{ asset('backend/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('backend/bower_components/DataTables/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/css/buttons.dataTables.min.css') }}">
 <!-- Theme style -->
 <link rel="stylesheet" href="{{ asset('backend/dist/css/AdminLTE.css') }} ">
 <!-- AdminLTE Skins. Choose a skin from the css/skins

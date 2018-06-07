@@ -106,7 +106,14 @@
                                 <label for="remember">Remember Me</label>
                             </div><a href="#">Forgot password</a>
                         </div>
-                        <div class="form-group"><img src="img/recaptcha.png" alt=""></div>
+                       <div class="form-group recaptcha">{!! app('captcha')->display($attributes = [],
+                                                   $lang = []) !!}
+                                <span class="captcha-err"></span>
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <span class="text-danger">
+                                                    <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                                    </span>
+                                @endif</div>
                         <div class="form-group submit">
                             <div class="row">
                                 <div class="col-xs-6">

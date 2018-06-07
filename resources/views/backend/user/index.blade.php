@@ -23,23 +23,6 @@
                         <i class="fa fa-users"></i>
 
                         <h3 class="box-title">{{CUSTOMER_MODULE_SINGLE.'s'}}</h3>
-
-                        <div class=" pull-right">
-                            @if($CheckLayoutPermission[0]->import==1)
-                                <a href="{{ route("users-import") }}" class="">
-                                    <button type="submit" class="btn btn-info"><i
-                                                class="glyphicon glyphicon-import"></i> {{IMPORT_ACTION.' '.CUSTOMER_MODULE_SINGLE}}
-                                    </button>
-                                </a>
-                            @endif
-                            @if($CheckLayoutPermission[0]->export==1)
-                                <a href="{{ route('users-export',['type'=>'csv']) }}" class="">
-                                    <button type="submit" class="btn  btn-warning "><i
-                                                class="glyphicon glyphicon-export"></i> {{EXPORT_ACTION.' '.CUSTOMER_MODULE_SINGLE}}
-                                    </button>
-                                </a>
-                            @endif
-                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -56,9 +39,7 @@
                                                 <th>Last Name</th>
                                                 <th>Email</th>
                                                 <th>Contact Number</th>
-                                                <th>Company</th>
-                                                <th>Web Login</th>
-                                                <th>Subscriber</th>
+                                                <th>Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on by user</th>
                                                 <th>Updated on by admin</th>
@@ -83,22 +64,10 @@
                                                             {!! $user->tel_phone   !!}
                                                         </td>
                                                         <td>
-                                                            {!! $user->company   !!}
-                                                        </td>
-                                                        <td>
-                                                            @if($user->web_login==true)
-                                                                True
+                                                            @if($user->status==true)
+                                                                Active
                                                             @else
-                                                                False
-                                                            @endif
-                                                        </td>
-                                                        <td class="text-center">
-                                                            @if($user->subscribe==1)
-                                                                <span class="nav-icon glyphicon glyphicon-ok "></span>
-                                                                <span style="display: none;">Yes</span>
-                                                            @else
-                                                                <span class="nav-icon glyphicon glyphicon-remove"></span>
-                                                                <span style="display: none;">No</span>
+                                                                Inactive
                                                             @endif
                                                         </td>
                                                         <td>
@@ -127,12 +96,6 @@
                                                                 <a class="btn btn-app edit" title="Edit User"
                                                                    href="{{ route("users.edit",["id"=>$user->id]) }}">
                                                                     <i class="fa fa-edit"></i> Edit
-                                                                </a>
-                                                            @endif
-                                                            @if($CheckLayoutPermission[0]->export==1)
-                                                                <a class="btn btn-app list" title="Export User"
-                                                                   href="{{ route("user-export",["id"=>$user->id,"type"=>'csv']) }}">
-                                                                    <i class="glyphicon glyphicon-export"></i> Export
                                                                 </a>
                                                             @endif
                                                             @if($CheckLayoutPermission[0]->delete==1)

@@ -24,7 +24,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table class="table table-bordered" id="reports">
+                        <table class="table table-bordered" id="report">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -35,7 +35,6 @@
                                     <th>Deposit Amount</th>
                                     <th>Privacy</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,9 +47,12 @@
                                     <td>{{ $customer_report->email }}</td>
                                     <td>{{ $customer_report->tel_phone }}</td>
                                     <td>{{ $customer_report->amount }}</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>Action</td>
+                                    <td>{{ $customer_report->privacy }}</td>
+                                    <td> @if($customer_report->status==1)
+                                            Active
+                                        @else
+                                            Inactive
+                                        @endif</td>
                                 </tr>
                                     @endforeach
                                 @else
