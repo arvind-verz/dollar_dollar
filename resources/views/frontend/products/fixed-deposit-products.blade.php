@@ -222,7 +222,7 @@
                                     @foreach($product_range as $range)
                                     <tr>
                                         <td><img src="img/icons/ff.png" alt=""></td>
-                                        <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+                                        <td>{{ '$' . $range->min_range . 'k - $' . $range->max_range . 'k' }}</td>
                                         @foreach($range->bonus_interest as $bonus_interest)
                                         <td>{{ $bonus_interest . '%' }}</td>
                                         @endforeach
@@ -242,7 +242,7 @@
                                 $P = $product_range[0]->min_range;
                                 @endphp
                                 @if($j%2!=0)
-                                <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                <h4>Possible interest(s) earned for SGD ${{ $P }}k</h4>
                                 @endif
                                 @php                            
                                 for($i=0;$i<$tenure_count;$i++) {
@@ -252,7 +252,7 @@
                                     $days_type = \Helper::days_or_month_or_year($product_tenures[$i]->tenure_type, $product_tenures[$i]->tenure);
                                 @endphp
                                     <p><strong>{{ $TM . ' ' . $days_type }}
-                                    </strong> - ${{ $calc }} ({{ $BI }}%)</p>
+                                    </strong> - ${{ $calc }}k ({{ $BI }}%)</p>
                                 @php
                                 }
                                 $j++;
