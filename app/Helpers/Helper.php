@@ -469,4 +469,34 @@ class Helper
         return $endOfDay;
     }
 
+    public static function days_or_month_or_year($tenure_type, $tenure)
+    {
+        $day = 'Invalid';
+        if($tenure_type==1) {
+            if($tenure>1) {
+                $day = 'Days';
+            }
+            else {
+                $day = 'Day';
+            }
+        }
+        elseif($tenure_type==2) {
+            if($tenure>1) {
+                $day = 'Months';
+            }
+            else {
+                $day = 'Month';
+            }
+        }
+        elseif($tenure_type==3) {
+            if($tenure>1) {
+                $day = 'Years';
+            }
+            else {
+                $day = 'Year';
+            }
+        }
+        return $day;
+    }
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Page;
 use App\ProductManagement;
+use App\PromotionProducts;
 use Illuminate\Http\Request;
 use App\Brand;
 use DB;
@@ -270,10 +271,20 @@ class PagesFrontController extends Controller
 
     public function fixDepositMode($details)
     {
+
+        DB::connection()->enableQueryLog();
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->get();
+        //dd(DB::getQueryLog());
+        //dd($promotion_products);
         $brands = $details['brands'];
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners"));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
     }
 }
