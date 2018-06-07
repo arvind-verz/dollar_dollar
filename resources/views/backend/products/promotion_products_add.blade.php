@@ -20,7 +20,7 @@
             <div class="col-xs-12">
                 <div class="box box-info ">
                     <!-- Custom Tabs -->
-                    <div class="nav-tabs-custom">
+                    <div class="nav-tabs-custom"  id="rootwizard">
                         <ul class="nav nav-tabs pull-right">
 
                             <li><a href="#basic-detail" data-toggle="tab">Other Detail</a></li>
@@ -467,14 +467,20 @@
 
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <a href="{{ route('promotion-products') }}"
+                                {{--<a href="{{ route('promotion-products') }}"
                                    class="btn btn-default"><i class="fa fa-close">
                                     </i> Cancel</a>
 
                                 <button type="submit" class="btn btn-info pull-right"><i
                                             class="fa  fa-check"></i>
                                     Add
-                                </button>
+                                </button>--}}
+                                <ul class="pager wizard">
+                                    <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                                    <li class="previous"><a href="#">Previous</a></li>
+                                    <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                                    <li class="next"><a href="#">Next</a></li>
+                                </ul>
                             </div>
                             <!-- /.tab-content -->
                             {!! Form::close() !!}
