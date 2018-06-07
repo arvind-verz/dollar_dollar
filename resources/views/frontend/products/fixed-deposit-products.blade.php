@@ -177,499 +177,123 @@
                     <p><img src="img/icons/cx.png" alt="">= example funds</p>
                 </div>
             </div>
-            <div class="ps-product featured-1">
-                <div class="ps-product__header"><img src="img/logo/1.png" alt="">
+            @if(count($promotion_products))
+                @foreach($promotion_products as $promotion_product)
+                @php
+                    $product_tenures = json_decode($promotion_product->product_tenure);
+                    $product_range = json_decode($promotion_product->product_range);
+                @endphp
+                <div class="ps-product featured-1">
+                    <div class="ps-product__header"><img src="{{ $promotion_product->brand_logo }}" alt="">
 
-                    <div class="ps-product__promo">
-                        <p><span class="highlight"> Promo: </span> Mar 14, 2017 to Mar 31, 2017</p>
+                        <div class="ps-product__promo">
+                            <p><span class="highlight"> Promo: </span> {{ date('M d, Y', strtotime($promotion_product->promotion_start)) . ' to ' . date('M d, Y', strtotime($promotion_product->promotion_end)) }}</p>
 
-                        <p class="text-uppercase">-252 days left</p>
-                    </div>
-                </div>
-                <div class="ps-product__content">
-                    <div class="ps-product__poster"><a href="#"><img src="img/product/feature-1.jpg" alt=""></a></div>
-                    <div class="ps-product__table">
-                        <div class="ps-table-wrap">
-                            <table class="ps-table ps-table--product highlight">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Account</th>
-                                    <th>13 Month</th>
-                                    <th>13 Month</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td><img src="img/icons/ff.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="img/icons/ef.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <p class="text-uppercase">
+                                @php
+                                    $start_date = new DateTime(date("Y-m-d", strtotime("now")));
+                                    $end_date = new DateTime(date("Y-m-d", strtotime($promotion_product->promotion_end)));
+                                    $interval = date_diff($end_date, $start_date);
+                                    echo $interval->format('%R%a days left');
+                                @endphp
+                             </p>
                         </div>
                     </div>
-                    <div class="ps-product__panel">
-                        <h4>Possible interest(s) earned for SGD $50k</h4>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="ps-product__detail">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Criteria</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Fresh funds #</li>
-                                            <li>RHB Fixed Deposit account</li>
-                                            <li>Placement done at Branch</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Keypoints</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Receive interest upfront</li>
-                                            <li>Deposit into main account</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                <div class="ps-product__actions"><a class="ps-btn ps-btn--black" href="#">Main
-                                        Page</a><a
-                                            class="ps-btn ps-btn--outline" href="#">T&C</a></div>
+                    <div class="ps-product__content">
+                        @if(count($promotion_product->ad_image))
+                        <div class="ps-product__poster"><a href="#"><img src="{{ isset($promotion_product->ad_image) ? $promotion_product->ad_image : '' }}" alt=""></a></div>
+                        @endif
+                        <div class="ps-product__table">
+                            <div class="ps-table-wrap">
+                                <table class="ps-table ps-table--product highlight">
+                                    <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Account</th>
+                                        @foreach($product_tenures as $tenure)
+                                        @php
+                                        $days_type = \Helper::days_or_month_or_year($tenure->tenure_type, $tenure->tenure);
+                                        @endphp
+                                        <th>{{ $tenure->tenure . ' ' . $days_type }}</th>
+                                        @endforeach
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($product_range as $range)
+                                    <tr>
+                                        <td><img src="img/icons/ff.png" alt=""></td>
+                                        <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+                                        @foreach($range->bonus_interest as $bonus_interest)
+                                        <td>{{ $bonus_interest . '%' }}</td>
+                                        @endforeach
+                                    </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </div>
-                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                    class="fa fa-angle-down"></i></a></div>
-                </div>
-            </div>
-            <div class="ps-product">
-                <div class="ps-product__header"><img src="img/logo/1.png" alt="">
-
-                    <div class="ps-product__promo">
-                        <p><span class="highlight"> Promo: </span> Mar 14, 2017 to Mar 31, 2017</p>
-
-                        <p class="text-uppercase">-252 days left</p>
-                    </div>
-                </div>
-                <div class="ps-product__content">
-                    <div class="ps-product__table">
-                        <div class="ps-table-wrap">
-                            <table class="ps-table ps-table--product highlight">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Account</th>
-                                    <th>13 Month</th>
-                                    <th>13 Month</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td><img src="img/icons/ff.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="img/icons/ef.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <div class="ps-product__panel">                            
+                            @php
+                                $tenure_count = count($product_tenures);
+                                $j = 1;
+                            @endphp
+                            @foreach($product_range as $range)
+                                @php                                
+                                $P = $product_range[0]->min_range;
+                                @endphp
+                                @if($j%2!=0)
+                                <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                @endif
+                                @php                            
+                                for($i=0;$i<$tenure_count;$i++) {
+                                    $BI = $range->bonus_interest[$i];
+                                    $TM = $product_tenures[$i]->tenure;
+                                    $calc = eval('return '.$promotion_product->formula.';');
+                                    $days_type = \Helper::days_or_month_or_year($product_tenures[$i]->tenure_type, $product_tenures[$i]->tenure);
+                                @endphp
+                                    <p><strong>{{ $TM . ' ' . $days_type }}
+                                    </strong> - ${{ $calc }} ({{ $BI }}%)</p>
+                                @php
+                                }
+                                $j++;
+                                @endphp
+                            @endforeach
                         </div>
-                    </div>
-                    <div class="ps-product__panel">
-                        <h4>Possible interest(s) earned for SGD $50k</h4>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="ps-product__detail">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Criteria</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Fresh funds #</li>
-                                            <li>RHB Fixed Deposit account</li>
-                                            <li>Placement done at Branch</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Keypoints</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Receive interest upfront</li>
-                                            <li>Deposit into main account</li>
-                                        </ul>
+                        <div class="clearfix"></div>
+                        <div class="ps-product__detail">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                            <h4 class="ps-product__heading">Criteria</h4>
+                                            <ul class="ps-list--arrow-circle">
+                                                <li>Fresh funds #</li>
+                                                <li>RHB Fixed Deposit account</li>
+                                                <li>Placement done at Branch</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                            <h4 class="ps-product__heading">Keypoints</h4>
+                                            <ul class="ps-list--arrow-circle">
+                                                <li>Receive interest upfront</li>
+                                                <li>Deposit into main account</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                <div class="ps-product__actions"><a class="ps-btn ps-btn--black" href="#">Main
-                                        Page</a><a
-                                            class="ps-btn ps-btn--outline" href="#">T&C</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                    class="fa fa-angle-down"></i></a></div>
-                </div>
-            </div>
-            <div class="ps-product">
-                <div class="ps-product__header"><img src="img/logo/2.png" alt="">
-
-                    <div class="ps-product__promo">
-                        <p><span class="highlight"> Promo: </span> Mar 14, 2017 to Mar 31, 2017</p>
-
-                        <p class="text-uppercase">-252 days left</p>
-                    </div>
-                </div>
-                <div class="ps-product__content">
-                    <div class="ps-product__table">
-                        <div class="ps-table-wrap">
-                            <table class="ps-table ps-table--product">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Account</th>
-                                    <th>5 Month</th>
-                                    <th>5 Month</th>
-                                    <th>11 Month</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td><img src="img/icons/ff.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="img/icons/ef.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="ps-product__panel">
-                        <h4>Possible interest(s) earned for SGD $50k</h4>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="ps-product__detail">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Criteria</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Fresh funds #</li>
-                                            <li>RHB Fixed Deposit account</li>
-                                            <li>Placement done at Branch</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Keypoints</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Receive interest upfront</li>
-                                            <li>Deposit into main account</li>
-                                        </ul>
-                                    </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                    <div class="ps-product__actions"><a class="ps-btn ps-btn--black" href="#">Main
+                                            Page</a><a
+                                                class="ps-btn ps-btn--outline" href="#">T&C</a></div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                <div class="ps-product__actions"><a class="ps-btn ps-btn--black" href="#">Main
-                                        Page</a><a
-                                            class="ps-btn ps-btn--outline" href="#">T&C</a></div>
-                            </div>
                         </div>
-                    </div>
-                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                    class="fa fa-angle-down"></i></a></div>
-                </div>
-            </div>
-            <div class="ps-product">
-                <div class="ps-product__header"><img src="img/logo/3.png" alt="">
-
-                    <div class="ps-product__promo">
-                        <p><span class="highlight"> Promo: </span> Mar 14, 2017 to Mar 31, 2017</p>
-
-                        <p class="text-uppercase">-252 days left</p>
+                        <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
+                                        class="fa fa-angle-down"></i></a></div>
                     </div>
                 </div>
-                <div class="ps-product__content">
-                    <div class="ps-product__table">
-                        <div class="ps-table-wrap">
-                            <table class="ps-table ps-table--product">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Account</th>
-                                    <th>5 Month</th>
-                                    <th>5 Month</th>
-                                    <th>11 Month</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td><img src="img/icons/ff.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="img/icons/ef.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="ps-product__panel">
-                        <h4>Possible interest(s) earned for SGD $50k</h4>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="ps-product__detail">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Criteria</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Fresh funds #</li>
-                                            <li>RHB Fixed Deposit account</li>
-                                            <li>Placement done at Branch</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Keypoints</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Receive interest upfront</li>
-                                            <li>Deposit into main account</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                <div class="ps-product__actions"><a class="ps-btn ps-btn--black" href="#">Main
-                                        Page</a><a
-                                            class="ps-btn ps-btn--outline" href="#">T&C</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                    class="fa fa-angle-down"></i></a></div>
-                </div>
-            </div>
-            <div class="ps-product">
-                <div class="ps-product__header"><img src="img/logo/4.png" alt="">
-
-                    <div class="ps-product__promo">
-                        <p><span class="highlight"> Promo: </span> Mar 14, 2017 to Mar 31, 2017</p>
-
-                        <p class="text-uppercase">-252 days left</p>
-                    </div>
-                </div>
-                <div class="ps-product__content">
-                    <div class="ps-product__table">
-                        <div class="ps-table-wrap">
-                            <table class="ps-table ps-table--product">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Account</th>
-                                    <th>5 Month</th>
-                                    <th>5 Month</th>
-                                    <th>11 Month</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td><img src="img/icons/ff.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="img/icons/ef.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="ps-product__panel">
-                        <h4>Possible interest(s) earned for SGD $50k</h4>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="ps-product__detail">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Criteria</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Fresh funds #</li>
-                                            <li>RHB Fixed Deposit account</li>
-                                            <li>Placement done at Branch</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Keypoints</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Receive interest upfront</li>
-                                            <li>Deposit into main account</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                <div class="ps-product__actions"><a class="ps-btn ps-btn--black" href="#">Main
-                                        Page</a><a
-                                            class="ps-btn ps-btn--outline" href="#">T&C</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                    class="fa fa-angle-down"></i></a></div>
-                </div>
-            </div>
-            <div class="ps-product">
-                <div class="ps-product__header"><img src="img/logo/5.png" alt="">
-
-                    <div class="ps-product__promo">
-                        <p><span class="highlight"> Promo: </span> Mar 14, 2017 to Mar 31, 2017</p>
-
-                        <p class="text-uppercase">-252 days left</p>
-                    </div>
-                </div>
-                <div class="ps-product__content">
-                    <div class="ps-product__table">
-                        <div class="ps-table-wrap">
-                            <table class="ps-table ps-table--product">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Account</th>
-                                    <th>5 Month</th>
-                                    <th>5 Month</th>
-                                    <th>11 Month</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td><img src="img/icons/ff.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                    <td>1.20%</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="img/icons/ef.png" alt=""></td>
-                                    <td>$20k - $999k</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                    <td>1.10%</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="ps-product__panel">
-                        <h4>Possible interest(s) earned for SGD $50k</h4>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-
-                        <p><strong>13 mth</strong>- $266.44 (1.20%)</p>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="ps-product__detail">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Criteria</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Fresh funds #</li>
-                                            <li>RHB Fixed Deposit account</li>
-                                            <li>Placement done at Branch</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <h4 class="ps-product__heading">Keypoints</h4>
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Receive interest upfront</li>
-                                            <li>Deposit into main account</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                <div class="ps-product__actions"><a class="ps-btn ps-btn--black" href="#">Main
-                                        Page</a><a
-                                            class="ps-btn ps-btn--outline" href="#">T&C</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                    class="fa fa-angle-down"></i></a></div>
-                </div>
-            </div>
+                @endforeach
+            @endif
         </div>
     </div>
     {{--Page content end--}}
