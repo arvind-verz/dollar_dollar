@@ -212,3 +212,5 @@ Route::post('product-management/store', 'User\ProductManagementController@store'
 /* ACCOUNT INFORMATION */
 Route::get('/account-information/edit/{id}', 'User\AccountInformationController@edit')->name('account-information.edit');
 Route::post('/account-information/update/{id}', 'User\AccountInformationController@update')->name('account-information.update');
+
+Route::post('/fixed-deposit-mode/search/', 'CMS\PagesFrontController@search_fixed_deposit')->name('fixed-deposit-mode.search');

@@ -276,6 +276,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_formula.id', '=', 1)
         ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
         ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
         ->get();
@@ -286,5 +287,26 @@ class PagesFrontController extends Controller
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
+    }
+
+    public function search_fixed_deposit(Request $request) {
+        //dd($request->all());
+        $search_filter = [];
+        $search_filter = $request->all();
+        DB::connection()->enableQueryLog();
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_formula.id', '=', 1)
+        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->get();
+
+        $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 }
