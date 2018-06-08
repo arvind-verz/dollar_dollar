@@ -35,15 +35,13 @@ var bootstrapWizardCreate = function(element, options) {
 			$navigation.find('a:first').tab('show');
 			$activeTab = $navigation.find(baseItemSelector + ':first');
 		}
-
 		// See if we're currently in the first/last then disable the previous and last buttons
-		$($settings.previousSelector, element).toggleClass('disabled', (obj.firstIndex() >= obj.currentIndex()));
-		$($settings.nextSelector, element).toggleClass('disabled', (obj.currentIndex() >= obj.navigationLength()));
-		$($settings.nextSelector, element).toggleClass('hidden', (obj.currentIndex() >= obj.navigationLength() && $($settings.finishSelector, element).length > 0));
+		$($settings.nextSelector, element).toggleClass('hidden', (obj.currentIndex() == obj.navigationLength()));
+		$($settings.previousSelector, element).toggleClass('hidden', (obj.currentIndex() == obj.firstIndex()));
+
 		$($settings.lastSelector, element).toggleClass('hidden', (obj.currentIndex() >= obj.navigationLength() && $($settings.finishSelector, element).length > 0));
-		$($settings.finishSelector, element).toggleClass('hidden', (obj.currentIndex() < obj.navigationLength()));
-		$($settings.backSelector, element).toggleClass('disabled', (historyStack.length == 0));
-		$($settings.backSelector, element).toggleClass('hidden', (obj.currentIndex() >= obj.navigationLength() && $($settings.finishSelector, element).length > 0));
+		$($settings.finishSelector, element).toggleClass('hidden', (obj.currentIndex() != obj.firstIndex()));
+		$($settings.backSelector, element).toggleClass('hidden', obj.currentIndex() != obj.navigationLength());
 
 		// We are unbinding and rebinding to ensure single firing and no double-click errors
 		obj.rebindClick($($settings.nextSelector, element), obj.next);
@@ -325,12 +323,12 @@ $.fn.bootstrapWizard = function(options) {
 $.fn.bootstrapWizard.defaults = {
 	withVisible:      true,
 	tabClass:         'nav nav-pills',
-	nextSelector:     '.wizard li.previous',
-	previousSelector: '.wizard li.next',
-	firstSelector:    '.wizard li.first',
-	lastSelector:     '.wizard li.last',
-  finishSelector:   '.wizard li.finish',
-	backSelector:     '.wizard li.back',
+	nextSelector:     '.wizard .previous',
+	previousSelector: '.wizard .next',
+	firstSelector:    '.wizard .last',
+	lastSelector:     '.wizard .first',
+  finishSelector:   '.wizard .finish',
+	backSelector:     '.wizard .back',
 	onShow:           null,
 	onInit:           null,
 	onNext:           null,
