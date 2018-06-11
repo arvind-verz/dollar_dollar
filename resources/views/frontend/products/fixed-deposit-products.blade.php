@@ -62,7 +62,7 @@
                 },
                 $string);
         ?>
-        {!! $output !!}}
+        {!! $output !!}
         <div class="container">
             <div class="ps-block--deposit-filter">
                 <div class="ps-block__header"><img src="{{ asset('img/block/list-brand.png') }}" alt=""></div>
@@ -228,7 +228,7 @@
                         <div class="ps-product__panel">                            
                             @foreach($product_range as $key => $range)                                
                                 @php              
-                                $tenure_count = count($product_range);
+                                $tenure_count = count($range->bonus_interest);
                                 if(isset($search_filter['search_value']) && ($search_filter['filter']=='Placement') && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) {
                                     $placement_value = $range->max_range;
                                     if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') {
@@ -245,7 +245,7 @@
                                         $days_type = \Helper::days_or_month_or_year($product_range[$i]->tenure_type, $product_range[$i]->tenure);
                                     @endphp
                                         <p><strong>{{ $TM . ' ' . $days_type }}
-                                        </strong> - ${{ $calc }}k ({{ $BI }}%)</p>
+                                        </strong> - ${{ $calc }}k ({{ $range->bonus_interest[$i] }}%)</p>
                                     @php
                                     }
                                 }
@@ -260,15 +260,15 @@
                                     <h4>Possible interest(s) earned for SGD ${{ $P }}k</h4>
                                     @endif
                                     @php
-                                    if($key==0) {                          
+                                    if($key==0) {                      
                                     for($i=0;$i<$tenure_count;$i++) {
-                                        $BI = $range->bonus_interest[$i];
+                                        $BI = ($P/100*$range->bonus_interest[$i]);
                                         $TM = $product_range[$i]->tenure;
                                         $calc = eval('return '.$promotion_product->formula.';');
                                         $days_type = \Helper::days_or_month_or_year($product_range[$i]->tenure_type, $product_range[$i]->tenure);
                                     @endphp
                                         <p><strong>{{ $TM . ' ' . $days_type }}
-                                        </strong> - ${{ $calc }}k ({{ $BI }}%)</p>
+                                        </strong> - ${{ $calc }}k ({{ $range->bonus_interest[$i] }}%)</p>
                                     @php
                                     }}
                                 }
