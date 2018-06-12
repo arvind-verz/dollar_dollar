@@ -30,8 +30,7 @@
                                     <th>Product Name</th>
                                     <th>Product Type</th>
                                     <th>Deposit Amount</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Privacy</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,8 +40,7 @@
                                     <td><img src="{{ asset($product_report->brand_logo) }}" width="50"> {{ $product_report->title }}</td>
                                     <td>-</td>
                                     <td>{{ $product_report->amount }}</td>
-                                    <td>-</td>
-                                    <td>Action</td>
+                                    <td>{{ $product_report->privacy }}</td>
                                 </tr>
                                     @endforeach
                                 @else

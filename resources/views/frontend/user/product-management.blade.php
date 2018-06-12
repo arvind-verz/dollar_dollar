@@ -74,13 +74,23 @@
                                             <input class="form-control" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ old('amount') }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Tenor</label>
                                             <select class="form-control" name="tenure">
                                                 <option value="">Please select</option>
                                                 <option value="1" @if(2==old('tenure')) selected @endif>1</option>
                                                 <option value="2" @if(2==old('tenure')) selected @endif>2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                                        <div class="form-group">
+                                            <label>Privacy</label>
+                                            <select class="form-control" name="privacy">
+                                                <option value="DOD" @if('DOD'==old('DOD')) selected  @endif>DOD</option>
+                                                <option value="Anytime" @if('Anytime'==old('Anytime')) selected @endif>Anytime</option>
+                                                <option value="Occasionally" @if('Occasionally'==old('Occasionally')) selected @endif>Occasionally</option>
                                             </select>
                                         </div>
                                     </div>

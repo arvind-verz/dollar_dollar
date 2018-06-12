@@ -56,6 +56,7 @@ class ProductManagementController extends Controller
             $product_management->account_name       =   $request->account_name;
             $product_management->amount             =   $request->amount;
             $product_management->tenure             =   $request->tenure;
+            $product_management->privacy            =   $request->privacy;
             $product_management->start_date         =   $request->start_date;
             $product_management->end_date           =   $request->end_date;
             $product_management->interest_earned    =   $request->interest_earned;
