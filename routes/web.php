@@ -92,6 +92,7 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/users-csv-import', 'User\UsersController@usersImportIntoDB')->name('users-csv-import');
     Route::get('/user-export/{type}', 'User\UsersController@userExport')->name('user-export');
     Route::get('/users-export/{type}', 'User\UsersController@usersExport')->name('users-export');
+    Route::get('/product-view/{id}', 'User\UsersController@productView')->name('product-view');
     /* Customer module end*/
 
 

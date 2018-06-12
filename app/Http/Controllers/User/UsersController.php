@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Auth;
+use App\ProductManagement;
+use DB;
 
 
 class UsersController extends Controller
@@ -393,6 +395,18 @@ class UsersController extends Controller
                 $sheet->fromArray($export_user_details);
             });
         })->download($type);
+    }
+
+    public function productView($id) {
+        DB::enableQueryLog();
+        $product_reports   =   ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
+        ->join('users', 'product_managements.user_id', '=', 'users.id')
+        ->where('users.id', '=', $id)
+        ->get();
+        //dd(DB::getQueryLog());
+        return view('backend.reports.product-report.index', [
+            'product_reports'      =>  $product_reports
+        ]);
     }
 
 }
