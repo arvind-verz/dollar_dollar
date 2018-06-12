@@ -597,20 +597,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>                     
-                        @if(count($promotion_product->ads_placement))
-                        @php
-                            $ads = json_decode($promotion_product->ads_placement);
-                            if(!empty($ads[1]->ad_image_vertical)) {
-                        @endphp
-                        <div class="ps-product__poster">
-                            <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"><img src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}" alt=""></a>
-                        </div>
-                        <div class="clearfix"></div>
-                        @php } @endphp
-                        @endif
-                        <div class="ps-product__panel">
-                            
                         </div>
                         <div class="clearfix"></div>                        
                         @endif
