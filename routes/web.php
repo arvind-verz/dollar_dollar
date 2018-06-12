@@ -92,6 +92,7 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/users-csv-import', 'User\UsersController@usersImportIntoDB')->name('users-csv-import');
     Route::get('/user-export/{type}', 'User\UsersController@userExport')->name('user-export');
     Route::get('/users-export/{type}', 'User\UsersController@usersExport')->name('users-export');
+    Route::get('/product-view/{id}', 'User\UsersController@productView')->name('product-view');
     /* Customer module end*/
 
 
@@ -212,3 +213,6 @@ Route::post('product-management/store', 'User\ProductManagementController@store'
 /* ACCOUNT INFORMATION */
 Route::get('/account-information/edit/{id}', 'User\AccountInformationController@edit')->name('account-information.edit');
 Route::post('/account-information/update/{id}', 'User\AccountInformationController@update')->name('account-information.update');
+
+Route::post('/fixed-deposit-mode/search/', 'CMS\PagesFrontController@search_fixed_deposit')->name('fixed-deposit-mode.search');
+Route::post('/saving-deposit-mode/search/', 'CMS\PagesFrontController@search_saving_deposit')->name('saving-deposit-mode.search');

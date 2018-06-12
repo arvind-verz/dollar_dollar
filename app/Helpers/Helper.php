@@ -470,4 +470,58 @@ class Helper
         return $endOfDay;
     }
 
+    public static function days_or_month_or_year($tenure_type, $tenure)
+    {
+        $day = 'Invalid';
+        if($tenure_type==1) {
+            if($tenure>1) {
+                $day = 'Days';
+            }
+            else {
+                $day = 'Day';
+            }
+        }
+        elseif($tenure_type==2) {
+            if($tenure>1) {
+                $day = 'Months';
+            }
+            else {
+                $day = 'Month';
+            }
+        }
+        elseif($tenure_type==3) {
+            if($tenure>1) {
+                $day = 'Years';
+            }
+            else {
+                $day = 'Year';
+            }
+        }
+        return $day;
+    }
+
+    public static function get_page_detail($slug=HOME_SLUG) {
+        $page = Page::where('delete_status', 0)->where('slug', $slug)->first();
+        if (!$page) {
+            return back()->with('error', OPPS_ALERT);
+        }
+        $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+
+        $systemSetting = \Helper::getSystemSetting();
+        if (!$systemSetting) {
+            return back()->with('error', OPPS_ALERT);
+        }
+        $slug = $page->slug;
+        //get banners
+        $banners = \Helper::getBanners($slug);
+
+        $details = [];
+        $details['brands'] = $brands;
+        $details['page'] = $page;
+        $details['systemSetting'] = $systemSetting;
+        $details['banners'] = $banners;
+
+        return $details;
+    }
+
 }

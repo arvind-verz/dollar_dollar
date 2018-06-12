@@ -5,7 +5,7 @@ if (!$systemSetting) {
 }
 
 ?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -36,6 +36,16 @@ if (!$systemSetting) {
 
         var APP_URL = {!! json_encode(url('/')) !!}
     </script>
+    <style type="text/css">
+        .ps-form--filter .active {
+            background-color: #0d6ec9;
+            color: #fff;
+        }
+
+       .ps-table--product tbody tr.highlight {
+            background-color: orange;
+        }
+    </style>
 
 </head>
 <body>

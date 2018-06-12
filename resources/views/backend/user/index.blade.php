@@ -92,6 +92,11 @@
                                                             @endif
                                                         </td>
                                                         <td class="text-center">
+                                                            <!-- @if($CheckLayoutPermission[0]->delete==1)
+                                                                <a class="btn btn-app view" title="Product View" href="{{ route("product-view", ["id"=>$user->id]) }}">
+                                                                    <i class="fa fa-eye" aria-hidden="true"></i> Product View
+                                                                </a>
+                                                            @endif -->
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit User"
                                                                    href="{{ route("users.edit",["id"=>$user->id]) }}">

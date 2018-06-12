@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Page;
 use App\ProductManagement;
+use App\PromotionProducts;
 use Illuminate\Http\Request;
 use App\Brand;
 use DB;
@@ -128,6 +129,16 @@ class PagesFrontController extends Controller
 
                     /*sent all pages detail into this function and than return to blade file*/
                     return $this->fixDepositMode($details);
+
+                } elseif ($slug == SAVING_DEPOSIT_MODE) {
+                    $details = [];
+                    $details['brands'] = $brands;
+                    $details['page'] = $page;
+                    $details['systemSetting'] = $systemSetting;
+                    $details['banners'] = $banners;
+
+                    /*sent all pages detail into this function and than return to blade file*/
+                    return $this->savingDepositMode($details);
 
                 }
 
@@ -270,10 +281,87 @@ class PagesFrontController extends Controller
 
     public function fixDepositMode($details)
     {
+
+        DB::connection()->enableQueryLog();
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_formula.promotion_id', '=', 1)
+        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->get();
+        //dd(DB::getQueryLog());
+        //dd($promotion_products);
         $brands = $details['brands'];
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners"));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
+    }
+
+    public function savingDepositMode($details)
+    {
+
+        DB::connection()->enableQueryLog();
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_formula.promotion_id', '=', 2)
+        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+        ->get();
+        //dd(DB::getQueryLog());
+        //dd($promotion_products);
+        $details = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
+    }
+
+    public function search_fixed_deposit(Request $request) {
+        //dd($request->all());
+        $search_filter = [];
+        $search_filter = $request->all();
+        DB::connection()->enableQueryLog();
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_formula.promotion_id', '=', 1)
+        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->get();
+
+        $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
+    }
+
+    public function search_saving_deposit(Request $request) {
+        //dd($request->all());
+        $search_filter = [];
+        $search_filter = $request->all();
+
+        DB::connection()->enableQueryLog();
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_formula.promotion_id', '=', 2)
+        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+        ->get();
+
+        $details = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 }
