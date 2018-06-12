@@ -180,6 +180,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 <script src="{{ asset('backend/dist/bootstrap-tagsinput.min.js')}}"></script>
 <script src="{{ asset('backend/dist/bootstrap-tagsinput-angular.min.js')}}"></script>
+<script src="{{ asset('backend/dist/js/jquery.bootstrap.wizard.js')}}"></script>
 
 <script>
     $(document).ready(function () {
@@ -271,6 +272,8 @@
                         }
                     ],
                 });
+
+        $('#rootwizard').bootstrapWizard();
 
     });
 

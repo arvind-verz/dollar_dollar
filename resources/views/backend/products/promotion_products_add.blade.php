@@ -20,7 +20,7 @@
             <div class="col-xs-12">
                 <div class="box box-info ">
                     <!-- Custom Tabs -->
-                    <div class="nav-tabs-custom">
+                    <div class="nav-tabs-custom" id="rootwizard">
                         <ul class="nav nav-tabs pull-right">
 
                             <li><a href="#basic-detail" data-toggle="tab">Other Detail</a></li>
@@ -274,14 +274,16 @@
                                                                 <button type="button"
                                                                         class="btn btn-info pull-left mr-15"
                                                                         id="add-formula-detail-{{$key}}{{$k}}"
-                                                                        data-formula-detail-id="{{$k}}" data-range-id="{{$key}}"
+                                                                        data-formula-detail-id="{{$k}}"
+                                                                        data-range-id="{{$key}}"
                                                                         onClick="addMoreFormulaDetail(this);"><i
                                                                             class="fa fa-plus"></i>
                                                                 </button>
                                                                 <button type="button"
                                                                         class="btn btn-danger -pull-right display-none"
                                                                         id="remove-formula-detail-{{$key}}{{$k}}"
-                                                                        data-formula-detail-id="{{$k}}" data-range-id="{{$key}}"
+                                                                        data-formula-detail-id="{{$k}}"
+                                                                        data-range-id="{{$key}}"
                                                                         onClick="removeFormulaDetail(this);"><i
                                                                             class="fa fa-minus"> </i>
                                                                 </button>
@@ -466,15 +468,19 @@
                             </div>
 
                             <!-- /.box-body -->
-                            <div class="box-footer">
+                            <div class="box-footer wizard">
                                 <a href="{{ route('promotion-products') }}"
-                                   class="btn btn-default"><i class="fa fa-close">
+                                   class="btn btn-default back"><i class="fa fa-close">
                                     </i> Cancel</a>
-
-                                <button type="submit" class="btn btn-info pull-right"><i
+                                <a href="javascript:;" class="btn btn-warning previous"><i
+                                            class="fa  fa-angle-double-left"></i> Previous</a>
+                                <a href="javascript:;" class=" btn btn-warning pull-right next">Next <i
+                                            class="fa  fa-angle-double-right "></i></a>
+                                <button type="submit" class="btn btn-info pull-right finish"><i
                                             class="fa  fa-check"></i>
                                     Add
                                 </button>
+                                </ul>
                             </div>
                             <!-- /.tab-content -->
                             {!! Form::close() !!}
