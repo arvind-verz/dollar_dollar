@@ -224,7 +224,7 @@
                                     @endphp
                                     <h4>Possible interest(s) earned for SGD ${{ $P }}k</h4>
                                     @php
-                                        $BI = ($P/100*$range->bonus_rate);
+                                        $BI = $range->bonus_rate/100;
                                         $TD = $interval_spent->format('%a');
                                         $calc = eval('return '.$promotion_product->formula.';');
                                     @endphp
@@ -244,7 +244,7 @@
                                     @endif
                                     @php
                                     if($key==0) {
-                                        $BI = ($P/100*$range->bonus_rate);
+                                        $BI = $range->bonus_rate/100;
                                         $TD = $interval_spent->format('%a');
                                         $calc = eval('return '.$promotion_product->formula.';');
                                     @endphp
@@ -319,7 +319,7 @@
                                     @endphp
                                     <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
                                     @php
-                                        $BI = ($P/100*$range->bonus_rate);
+                                        $BI = $range->bonus_rate/100;
                                         $TM = $interval_spent->format('%m');
                                         $calc = eval('return '.$promotion_product->formula.';');
                                     @endphp
@@ -339,7 +339,7 @@
                                     @endif
                                     @php
                                     if($key==0) {
-                                        $BI = ($P/100*$range->bonus_rate);
+                                        $BI = $range->bonus_rate/100;
                                         $TM = $interval_spent->format('%m');
                                         $calc = eval('return '.$promotion_product->formula.';');
                                     @endphp
@@ -368,13 +368,16 @@
                                     </thead>
                                     <tbody>
                                         @php $i = 1; @endphp
-                                        @foreach($product_range->rates as $rates)
+                                        @foreach($product_range->counter as $counter)
+                                            @php
+                                            $base_rate = ($product_range->sibor_rate*$product_range->base_rate);
+                                            @endphp
                                     <tr>
                                         @if($i==1)
-                                        <td rowspan="{{ count($product_range->rates) }}">{{ $product_range->base_rate . '%' }}</td>
+                                        <td rowspan="{{ count($product_range->counter) }}">{{ $base_rate . '%' }}</td>
                                         @endif                                        
-                                        <td>{{ 'COUNTER ' . $i . ' - ' . $rates->bonus_rate . '%' }}</td>
-                                        <td>{{ $rates->total_interest_rate . '%' }}</td>
+                                        <td>{{ 'COUNTER ' . $i . ' - ' . $counter . '%' }}</td>
+                                        <td>{{ ($counter+$base_rate) . '%' }}</td>
                                         
                                     </tr>
                                         @php $i++; @endphp
@@ -395,6 +398,17 @@
                         @php } @endphp
                         @endif
                         <div class="ps-product__panel">
+                            @php
+                                $P = $product_range->max_placement;
+                                if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') {
+                                    $P = $search_filter['search_value'];
+                                }
+                                $AIR = $product_range->average_bonus_interest/100;
+                                $SBR = $product_range->sibor_rate/100;
+                                $calc = eval('return '.$promotion_product->formula.';');
+                            @endphp
+                            <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                            <h2>{{ '$' . $calc }}<br>  <span>Total interest rate {{ (($product_range->sibor_rate*$product_range->base_rate)+end($product_range->counter)) }}%</span></h2>
                         </div>
                         <div class="clearfix"></div>
                         @endif
@@ -492,43 +506,94 @@
                                     <h2>{{ '$' . array_sum($calc)  }} <br>  <span>Total interest rate 1%</span></h2>
                                     @php
                                     }                                   
-                                }                                
+                                }                           
                                 @endphp
                             @endforeach
-                            @php  @endphp
                         </div>
                         <div class="clearfix"></div>
                         @endif
                         <!-- FORMULA 5 -->
-                        @if($promotion_product->promotion_formula_id==6 && $promotion_product->promotion_formula_id==7)
-                        <div class="ps-product__table">
+                        @if($promotion_product->promotion_formula_id==6 || $promotion_product->promotion_formula_id==7)
+                        @php
+                            $row_data = ['CUMMULATED MONTHLY SAVINGS AMOUNT', 'BASE INTEREST', 'ADDITIONAL 2% P.A. INTEREST', 'TOTAL AMOUNT'];
+                        @endphp
+                        <div class="ps-product__table fullwidth">
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product">
                                     <thead>
                                     <tr>
-                                        <th>DEPOSIT BALANCE TIER</th>
-                                        <th>BONUS RATE</th>
-                                        <th>BOARD RATE</th>
-                                        <th>TOTAL INTEREST</th>
+                                        <th></th>
+                                        @foreach($product_range as $key => $range)
+                                            @foreach($range->display_month as $month)
+                                        <th>{{ 'MONTH ' . $month }}</th>
+                                            @endforeach
+                                        @endforeach
+                                        <th>{{ 'END OF YEARS' }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($product_range as $range)
-                                        
-                                    <tr class="
-                                    @if(isset($search_filter['filter']) && ($search_filter['filter']=='Placement'))
-                                        @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight 
-                                        @endif
-                                    @endif">
-                                        <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
-                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_rate) highlight 
-                                        @endif">{{ $range->bonus_rate . '%' }}</td>
-                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->board_rate) highlight 
-                                        @endif">{{ $range->board_rate . '%' }}</td>
-                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->total_interest) highlight 
-                                        @endif">{{ $range->total_interest . '%' }}</td>
-                                    </tr>
-                                    @endforeach
+                                        @php $total_sum = array(); @endphp
+                                        @foreach($row_data as $key => $data)
+                                        <tr>
+                                            <td>{{ $data }}</td>
+                                            @if($key==0)
+                                                @foreach($product_range as $key => $range)
+                                                    @foreach($range->display_month as $month)
+                                                    <td>{{ '$' . ($range->min_average_monthly_placement*$month) }}</td>
+                                                    @endforeach
+                                                    <td>{{ '$' . ($range->min_average_monthly_placement*end($range->display_month)) }}</td>
+                                                @endforeach
+                                                @php $total_sum[] = ($range->min_average_monthly_placement*end($range->display_month)); @endphp
+                                            @elseif($key==1)
+                                                @foreach($product_range as $key => $range)
+                                                    @php
+                                                        $calc = [];
+                                                        $BI = $range->base_interest/100;
+                                                        $CM = 0;
+                                                    @endphp
+                                                    @for($i=1;$i<=($range->placement_month);$i++)
+                                                        @php
+                                                            $PM = $range->min_average_monthly_placement;
+                                                            $calc[] = round(eval('return '.$promotion_product->formula.';'), 2);
+                                                            
+                                                        @endphp
+                                                        @if(in_array($i, $range->display_month))
+                                                        <td>{{ '$' . round(eval('return '.$promotion_product->formula.';'), 2) }}</td>
+                                                        @endif
+                                                        @php $CM = $CM+$PM; @endphp
+                                                    @endfor
+                                                    <td>{{ '$' . array_sum($calc) }}</td>
+                                                @endforeach
+                                                @php $total_sum[] = array_sum($calc); @endphp
+                                            @elseif($key==2)
+                                                @foreach($product_range as $key => $range)
+                                                    @php
+                                                        $promotion_product->formula = '($AI * (($PM + $CM) + $PMIE) * 31/365)';
+                                                        $calc = [];
+                                                        $BI = $range->base_interest/100;
+                                                        $CM = 0;
+                                                        $AI = 2/100;
+                                                        $PMIE = 0;
+                                                    @endphp
+                                                    @for($i=1;$i<=($range->placement_month);$i++)
+                                                        @php
+                                                            $PM = $range->min_average_monthly_placement;
+                                                            $calc[] = round(eval('return '.$promotion_product->formula.';'), 2);
+                                                        @endphp
+                                                        @if(in_array($i, $range->display_month))
+                                                        <td>{{ '$' . round(eval('return '.$promotion_product->formula.';'), 2) }}</td>
+                                                        @endif
+                                                        @php $CM = $CM+$PM;$PMIE = round(eval('return '.$promotion_product->formula.';'), 2); @endphp
+                                                    @endfor
+                                                    <td>{{ '$' . array_sum($calc) }}</td>
+                                                @endforeach
+                                                @php $total_sum[] = array_sum($calc); @endphp
+                                            @elseif($key==3)
+                                                <td colspan="4"></td>
+                                                <td>{{ '$' . array_sum($total_sum) }}</td>
+                                            @endif
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
