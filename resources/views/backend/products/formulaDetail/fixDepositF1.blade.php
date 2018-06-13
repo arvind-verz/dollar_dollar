@@ -1,4 +1,4 @@
-<div class="" id="fixDepositF1">
+<div class="display-none" id="fixDepositF1">
 @if(count(old('min_placement')))
     <?php //dd(old('min_placement')[0]); ?>
     @foreach(old('min_placement') as $key => $value)

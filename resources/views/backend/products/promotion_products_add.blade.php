@@ -132,7 +132,7 @@
                                             <select class="form-control select2"
                                                     data-placeholder="" name="status"
                                                     style="width: 100%;">
-                                                <option value="1" @if(old('status') == 1) selected="selected" @endif>
+                                                <option value="1" selected="selected" >
                                                     Active
                                                 </option>
                                                 <option value="0" @if(old('status') == 0) selected="selected" @endif>
@@ -164,6 +164,7 @@
 
                                 <div class="tab-pane" id="formula-detail">
                                     @include('backend.products.formulaDetail.fixDepositF1')
+                                    @include('backend.products.formulaDetail.savingDepositF1')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -186,9 +187,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('ad_vertical_image', 'Ad Vertical Image',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('ad_image_vertical', 'Ad Vertical Image',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::file('ad_vertical_image', ['class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::file('ad_image_vertical', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -270,10 +271,11 @@
         });
         $("select[name='formula']").on("change", function () {
             var formula = $(this).val();
-
             if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
                 $('#fixDepositF1').removeClass('display-none');
-
+            }if(formula == '<?php echo SAVING_DEPOSIT_F1; ?>') {
+                alert("Hello");
+                $('#SavingDepositF1').removeClass('display-none');
             }
 
         });

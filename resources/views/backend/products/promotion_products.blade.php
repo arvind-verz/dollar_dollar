@@ -42,10 +42,6 @@
                                                 <th>Bank Name</th>
                                                 <th>Product Type </th>
                                                 <th>Formula Name </th>
-                                                <th>Placement Range</th>
-                                                <th>Promotion Range</th>
-                                                <th>Tenure</th>
-                                                <th>Bonus Interest</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
@@ -61,10 +57,6 @@
                                                         <td>{{ $product->bank_name }}</td>
                                                         <td>{{ $product->promotion_type }}</td>
                                                         <td>{{ $product->promotion_formula }}</td>
-                                                        <td>{{ $product->min_range .'&emsp;-&emsp;'.$product->max_range }}</td>
-                                                        <td>{{ date('d-m-Y', strtotime($product->promotion_start)) .'&emsp;-&emsp;'. date('d-m-Y', strtotime($product->promotion_end)) }}</td>
-                                                        <td>{{ $product->tenure .' (Months)' }}</td>
-                                                        <td>{{ $product->bonus_interest .' % ' }}</td>
                                                         <td>@if ($product->created_at == null)
                                                                 {{$product->created_at}}
                                                             @endif
@@ -78,18 +70,18 @@
 
                                                         <td>
                                                             @if($CheckLayoutPermission[0]->edit==1)
-                                                                <a class="btn btn-app edit" title="Edit Product"
+                                                                {{--<a class="btn btn-app edit" title="Edit Product"
                                                                    href="{{ route("promotion-products-edit",["id"=>$product->id]) }}">
                                                                     <i class="fa fa-edit"></i> Edit
-                                                                </a>
+                                                                </a>--}}
                                                             @endif
 
                                                             @if($CheckLayoutPermission[0]->delete==1)
-                                                                <a class="btn btn-app delete" title="Delete Product"
+                                                               {{-- <a class="btn btn-app delete" title="Delete Product"
                                                                    onclick="return confirm('Are you sure to delete this?')"
                                                                    href="{{ route("promotion-products-remove",["id"=>$product->id]) }}">
                                                                     <i class="fa fa-trash"></i> Delete
-                                                                </a>
+                                                                </a>--}}
                                                             @endif
                                                         </td>
                                                     </tr>

@@ -177,6 +177,7 @@ class ProductsController extends Controller
                 // Upload Image
                 $request->file('ad_image_vertical')->move($destinationPath, $adVerticalImage);
             }
+
             $product = new PromotionProducts();
 
             $product->product_name = $request->name;
@@ -185,34 +186,38 @@ class ProductsController extends Controller
             $product->formula_id = $request->formula;
 
             $ranges = [];
-            foreach ($request->min_placement as $k => $v) {
-                $max = $request->max_placement;
-                $bonusInterest = $request->bonus_interest;
-                $range = [];
-                $range['min_range'] = (int)$v;
-                $range['max_range'] = (int)$max[$k];
-                $range['bonus_interest'] = array_map('intVal', $bonusInterest[$k]);
-                $ranges[] = $range;
+            if ($product->formula_id == FIX_DEPOSIT_F1) {
+                foreach ($request->min_placement as $k => $v) {
+                    $max = $request->max_placement;
+                    $bonusInterest = $request->bonus_interest;
+                    $range = [];
+                    $range['min_range'] = (int)$v;
+                    $range['max_range'] = (int)$max[$k];
+                    $range['bonus_interest'] = array_map('intVal', $bonusInterest[$k]);
+                    $ranges[] = $range;
 
+                }
+                $tenure = $request->tenure;
+                $tenure = json_encode(array_map('intVal', $tenure[0]));
+                $ranges = json_encode($ranges);
+                $product->tenure = $tenure;
             }
+
             function intVal($x)
             {
                 return (int)$x;
             }
 
-            $tenure = $request->tenure;
-            $tenure = json_encode(array_map('intVal', $tenure[0]));
-            $ranges = json_encode($ranges);
-            $product->tenure = $tenure;
+
             $product->product_range = $ranges;
-            $product->promotion_start = $request->promotion_start_date;
-            $product->promotion_end = $request->promotion_end_date;
+            $product->promotion_start = \Helper::startOfDayBefore($request->start_date);
+            $product->promotion_end =  \Helper::endOfDayAfter($request->end_date);
             $product->product_footer = $request->product_footer;
 
             if ($request->hasFile('ad_horizontal_image')) {
                 $adHorizontal['ad_image_horizontal'] = $destinationPath . '/' . $adHorizontalImage;
             }
-            if ($request->hasFile('ad_vertical_image')) {
+            if ($request->hasFile('ad_image_vertical')) {
 
                 $adVertical['ad_image_vertical'] = $destinationPath . '/' . $adVerticalImage;
             }
@@ -232,13 +237,13 @@ class ProductsController extends Controller
                 ->performedOn($product)
                 ->withProperties(['ip' => \Request::ip(),
                     'module' => PRODUCT_MODULE,
-                    'msg' =>  $product->product_name . ADDED_ALERT,
+                    'msg' => $product->product_name . ADDED_ALERT,
                     'old' => $product,
                     'new' => null])
                 ->log(CREATE);
 
 
-            return redirect()->action('Products\ProductsController@promotion_products_add')->with('success', $product->product_name . ADDED_ALERT);
+            return redirect()->action('Products\ProductsController@promotion_products')->with('success', $product->product_name . ADDED_ALERT);
 
             //return $this->promotion_formula();
         }
