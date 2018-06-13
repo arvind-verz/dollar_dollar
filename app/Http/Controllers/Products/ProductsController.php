@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Products;
 
+use App\Brand;
 use App\FormulaVariable;
+use App\Http\Controllers\Controller;
 use App\PlacementRange;
 use App\ProductName;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\PromotionFormula;
+use App\PromotionProducts;
+use App\Rules\MaxRule;
 use Auth;
 use DB;
-use App\Brand;
-use App\PromotionFormula;
-use App\PromotionTypes;
-use App\PromotionProducts;
+use Illuminate\Http\Request;
 use Validator;
-use  App\Rules\MaxRule;
 
 class ProductsController extends Controller
 {
@@ -726,5 +725,104 @@ class ProductsController extends Controller
                 <?php
             }
         }
+    }
+
+    public function addMorePlacementRange(Request $request)
+    {
+        $teunre = $request->detail;
+        //return $teunre[0]['value'];
+        ?>
+        <div id="placement_range_<?php echo $request->range_id; ?>">
+            <div class="form-group">
+                <label for="title" class="col-sm-2 control-label"></label>
+
+                <div class="col-sm-4">
+                    <div class="input-group date">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success">Min
+                                Placement
+                            </button>
+                        </div>
+                        <input type="text" class="form-control pull-right "
+                               name="min_placement[<?php echo $request->range_id; ?>]"
+                               value="">
+
+                    </div>
+                </div>
+
+                <div class="col-sm-4 ">
+
+                    <div class="input-group date ">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-danger">Max Placement
+                            </button>
+                        </div>
+                        <input type="text" class="form-control pull-right"
+                               name="max_placement[<?php echo $request->range_id; ?>]"
+                               value="">
+
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+                    <button type="button"
+                            class="btn btn-info pull-left mr-15 add-placement-range-button "
+                            data-range-id="<?php echo $request->range_id; ?>" onClick="addMorePlacementRange(this);"><i
+                            class="fa fa-plus"></i>
+                    </button>
+                    <button type="button"
+                            class="btn btn-danger -pull-right  remove-placement-range-button display-none"
+                            data-range-id="<?php echo $request->range_id; ?>" onClick="removePlacementRange(this);"><i
+                            class="fa fa-minus"> </i>
+                    </button>
+                </div>
+
+            </div>
+            <?php for($i=0;$i<count($request->detail);$i++) { ?>
+            <div class="form-group " id="formula_detail_<?php echo $request->range_id.$i; ?>">
+            <label for="title" class="col-sm-2 control-label"></label>
+
+                <div class="col-sm-6 ">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="">Tenur</label>
+                            <input type="text" class="form-control" id=""
+                                   name="tenure[<?php echo $request->range_id; ?>][<?php echo $i ?>]" value="<?php echo $teunre[$i]['value']; ?>"
+                                   placeholder="" readonly="readonly">
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="">Bonus Interest</label>
+                            <input type="text" class="form-control" id=""
+                                   name="bonus_interest[<?php echo $request->range_id; ?>][<?php echo $i ?>]"
+                                   placeholder="">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-1 col-sm-offset-1 ">
+                    <button type="button"
+                            class="btn btn-info pull-left mr-15"
+                            id="add-formula-detail-<?php echo $request->range_id.$i; ?>"
+                            data-formula-detail-id="<?php echo $i; ?>" data-range-id="<?php echo $request->range_id; ?>"
+                            onClick="addMoreFormulaDetail(this);"><i
+                            class="fa fa-plus"></i>
+                    </button>
+                    <button type="button"
+                            class="btn btn-danger -pull-right display-none"
+                            id="remove-formula-detail-<?php echo $request->range_id.$i; ?>"
+                            data-formula-detail-id="<?php echo $request->range_id.$i; ?>" data-range-id="<?php echo $request->range_id; ?>"
+                            onClick="removeFormulaDetail(this);"><i
+                            class="fa fa-minus"> </i>
+                    </button>
+                </div>
+                <div class="col-sm-2">&emsp;</div>
+            </div>
+
+            <?php } ?>
+            <div id="new-formula-detail-<?php echo $request->range_id; ?>"></div>
+        </div>
+        <?php
     }
 }
