@@ -164,7 +164,6 @@
 
                                 <div class="tab-pane" id="formula-detail">
                                     @include('backend.products.formulaDetail.fixDepositF1')
-                                    @include('backend.products.formulaDetail.savingDepositF1')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -271,11 +270,10 @@
         });
         $("select[name='formula']").on("change", function () {
             var formula = $(this).val();
+
             if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
                 $('#fixDepositF1').removeClass('display-none');
-            }if(formula == '<?php echo SAVING_DEPOSIT_F1; ?>') {
-                alert("Hello");
-                $('#SavingDepositF1').removeClass('display-none');
+
             }
 
         });
