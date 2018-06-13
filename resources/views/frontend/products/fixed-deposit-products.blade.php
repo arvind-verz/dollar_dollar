@@ -139,6 +139,8 @@
                 @php
                     $product_tenures = json_decode($promotion_product->product_tenure);
                     $product_range = json_decode($promotion_product->product_range);
+                    $tenures = json_decode($promotion_product->tenure);
+                    $key = array();
                 @endphp
                 <div class="ps-product featured-1">
                     <div class="ps-product__header"><img src="{{ $promotion_product->brand_logo }}" alt="">
@@ -172,19 +174,18 @@
                                     <tr>
                                         <th>Type</th>
                                         <th>Account</th>
-                                        @foreach($product_range as $tenure)
+                                        @foreach($tenures as $tenor_key => $tenure)
                                         @php
-                                        $key = array();
-                                        $days_type = \Helper::days_or_month_or_year($tenure->tenure_type, $tenure->tenure);
+                                        
+                                        $days_type = \Helper::days_or_month_or_year(2, $tenure);
                                         @endphp
-                                        <th>{{ $tenure->tenure . ' ' . $days_type }}</th>
-                                        @endforeach
+                                        <th>{{ $tenure . ' ' . $days_type }}</th>
 
-                                        @foreach($product_range as $range_key => $range)
                                         @if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor')
-                                            @if($search_filter['search_value']==$range->tenure)
+                                            @if($search_filter['search_value']==$tenure)
                                             @php
-                                            $key[] = $range_key;
+
+                                            $key[] = $tenor_key;
                                             @endphp
                                             @endif
                                         @endif
@@ -200,7 +201,7 @@
                                         @endif
                                     @endif">
                                         <td><img src="{{ asset('img/icons/ff.png') }}" alt=""></td>
-                                        <td>{{ '$' . $range->min_range . 'k - $' . $range->max_range . 'k' }}</td>
+                                        <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
                                         @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
                                         <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$bonus_interest) highlight 
                                         @endif
@@ -227,8 +228,8 @@
                         @endif
                         <div class="ps-product__panel">                            
                             @foreach($product_range as $key => $range)                                
-                                @php              
-                                $tenure_count = count($range->bonus_interest);
+                                @php             
+                                $tenure_count = count($tenures);
                                 if(isset($search_filter['search_value']) && ($search_filter['filter']=='Placement') && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) {
                                     $placement_value = $range->max_range;
                                     if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') {
@@ -236,18 +237,21 @@
                                     }                        
                                     $P = $placement_value;
                                     @endphp
-                                    <h4>Possible interest(s) earned for SGD ${{ $P }}k</h4>
+                                    @if($key==0)
+                                    <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                    @endif
                                     @php
+                                    if($key==0) {                      
                                     for($i=0;$i<$tenure_count;$i++) {
-                                        $BI = $range->bonus_interest[$i];
-                                        $TM = $product_range[$i]->tenure;
+                                        $BI = ($range->bonus_interest[$i]/100);
+                                        $TM = $tenures[$i];
                                         $calc = eval('return '.$promotion_product->formula.';');
-                                        $days_type = \Helper::days_or_month_or_year($product_range[$i]->tenure_type, $product_range[$i]->tenure);
+                                        $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
                                     @endphp
                                         <p><strong>{{ $TM . ' ' . $days_type }}
-                                        </strong> - ${{ $calc }}k ({{ $range->bonus_interest[$i] }}%)</p>
+                                        </strong> - ${{ $calc }} ({{ $range->bonus_interest[$i] }}%)</p>
                                     @php
-                                    }
+                                    }}
                                 }
                                 elseif(!isset($search_filter['search_value'])) {
                                     $placement_value = $range->max_range;
@@ -257,18 +261,18 @@
                                     $P = $placement_value;
                                     @endphp
                                     @if($key==0)
-                                    <h4>Possible interest(s) earned for SGD ${{ $P }}k</h4>
+                                    <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
                                     @endif
                                     @php
                                     if($key==0) {                      
                                     for($i=0;$i<$tenure_count;$i++) {
-                                        $BI = ($P/100*$range->bonus_interest[$i]);
-                                        $TM = $product_range[$i]->tenure;
+                                        $BI = ($range->bonus_interest[$i]/100);
+                                        $TM = $tenures[$i];
                                         $calc = eval('return '.$promotion_product->formula.';');
-                                        $days_type = \Helper::days_or_month_or_year($product_range[$i]->tenure_type, $product_range[$i]->tenure);
+                                        $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
                                     @endphp
                                         <p><strong>{{ $TM . ' ' . $days_type }}
-                                        </strong> - ${{ $calc }}k ({{ $range->bonus_interest[$i] }}%)</p>
+                                        </strong> - ${{ $calc }} ({{ $range->bonus_interest[$i] }}%)</p>
                                     @php
                                     }}
                                 }

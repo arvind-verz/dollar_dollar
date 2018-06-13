@@ -22,6 +22,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $blogs = Page::where('delete_status', 0)
+        ->where('is_blog', 1)
+        ->inRandomOrder()
+        ->limit(5)
+        ->get();
+        //dd($blogs);
         $page = Page::where('delete_status', 0)->where('slug', HOME_SLUG)->first();
         if (!$page) {
             return back()->with('error', OPPS_ALERT);
@@ -32,7 +38,7 @@ class HomeController extends Controller
         if (!$systemSetting) {
             return back()->with('error', OPPS_ALERT);
         }
-        return view('home', compact("brands", "page", "systemSetting"));
+        return view('home', compact("brands", "page", "systemSetting", "blogs"));
     }
 
 
