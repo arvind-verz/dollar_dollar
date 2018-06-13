@@ -309,19 +309,19 @@
     function addMorePlacementRange(id) {
 
         var data = $('#fixDepositF1').find('input[name^="tenure[0]"]').serializeArray();
+        var formula_detail_id = data.length - 1;
         var range_id = $(id).data('range-id');
         range_id++;
-        $(id).addClass('display-none');
-        $(".remove-placement-range-button").removeClass('display-none');
-        $('#add-placement-range-button').remove();
-
         jQuery.ajax({
             type: "POST",
             url: "{{url('/admin/add-more-placement-range')}}",
-            data: {detail: data,range_id:range_id}
+            data: {detail: data, range_id: range_id}
         }).done(function (data) {
             $('#new-placement-range').append(data);
-            console.log(data);
+            var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
+            $('#add-placement-range-button').html(addMoreRangeButton);
+            var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
+            $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
         });
 
 
@@ -329,56 +329,72 @@
     function removePlacementRange(id) {
         var range_id = $(id).data('range-id');
         $("#placement_range_" + range_id).remove();
+
     }
 
     function addMoreFormulaDetail(id) {
 
         var formula_detail_id = $(id).data('formula-detail-id');
         var range_id = $(id).data('range-id');
-        $(id).addClass('display-none');
+        /*$(id).addClass('display-none');*/
 
         $("#remove-formula-detail-" + range_id + formula_detail_id).removeClass('display-none');
         formula_detail_id++;
-        //alert(range_id+' '+formula_detail_id);
+        //alert(range_id + ' ' + formula_detail_id);
         $('#add-formula-detail-' + range_id + formula_detail_id).remove();
         // Layout options
-        var $newTextArea = $('<div />', {
-            'id': 'formula_detail_' + formula_detail_id,
-            'class': 'form-group'
-        });
 
 
-        $newTextArea.append(
-                '<label for="title" class="col-sm-2 control-label">'
-                + '</label>'
-                + '<div class="col-sm-6 ">'
-                + ' <div class="form-row">'
-                + ' <div class="col-md-6 mb-3">'
-                + ' <label for="">Tenure</label>'
-                + '<input type="text" class="form-control" id="" name="tenure[' + range_id + '][' + formula_detail_id + ']" placeholder="" >'
-                + '</div>'
-                + '<div class="col-md-6 mb-3">'
-                + '<label for="">Bonus Interest</label>'
-                + '<input type="text" class="form-control" id="" name="bonus_interest[' + range_id + '][' + formula_detail_id + ']" placeholder="" >'
-                + '</div>'
-                + '</div>'
-                + '</div>'
-                + '  <div class="col-sm-1 col-sm-offset-1 ">'
-                + ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id
-                + '" data-range-id="' + range_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > '
-                + ' <i class="fa fa-plus"> </i> </button>'
-                + '<button type="button" class="btn btn-danger -pull-right  display-none" data-formula-detail-id ="' + formula_detail_id
-                + '" data-range-id ="' + range_id + ' " id="remove-formula-detail-' + range_id + formula_detail_id + '" onClick="removeFormulaDetail(this);" >'
-                + '<i class="fa fa-minus"> </i>'
-                + ' </button>'
-                + ' </div>'
-                + ' <div class="col-sm-2">&emsp;</div>'
-        );
-        $('#new-formula-detail-' + range_id).append($newTextArea);
+        for (var i = 0; i <= parseInt(range_id); i++) {
+
+            var $newTextArea = $('<div />', {
+                'id': 'formula_detail_' + i + formula_detail_id,
+                'class': 'form-group '+formula_detail_id
+            });
+            $newTextArea.append(
+                    '<label for="title" class="col-sm-2 control-label">'
+                    + '</label>'
+                    + '<div class="col-sm-6 ">'
+                    + ' <div class="form-row">'
+                    + ' <div class="col-md-6 mb-3">'
+                    + ' <label for="">Tenure</label>'
+                    + '<input type="text" class="form-control tenure-'+formula_detail_id+'" id="" name="tenure[' + i + '][' + formula_detail_id + ']" placeholder="" data-formula-detail-id='+formula_detail_id+' onchange="changeTenureValue(this)">'
+                    + '</div>'
+                    + '<div class="col-md-6 mb-3">'
+                    + '<label for="">Bonus Interest</label>'
+                    + '<input type="text" class="form-control" id="" name="bonus_interest[' + i + '][' + formula_detail_id + ']" placeholder="" >'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>'
+                    + '  <div class="col-sm-1 col-sm-offset-1 " id="remove-formula-detail-' + i + formula_detail_id + '">'
+
+                    + ' </div>'
+                    + ' <div class="col-sm-2">&emsp;</div>'
+            );
+            $('#new-formula-detail-' + i).append($newTextArea);
+            if (i == 0) {
+                var removeFormulaDetailButton = '<button type="button" class="btn btn-danger -pull-right" data-formula-detail-id ="' + formula_detail_id
+                        + '" data-range-id ="' + range_id + ' " id="remove-formula-detail-' + i + formula_detail_id + '" onClick="removeFormulaDetail(this);" >'
+                        + '<i class="fa fa-minus"> </i>'
+                        + ' </button>';
+                $('#remove-formula-detail-' + i + formula_detail_id).append(removeFormulaDetailButton);
+            }else{
+                $('input[name="tenure[' + i + '][' + formula_detail_id + ']"]').prop('readonly', true);
+            }
+            var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
+            $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
+        }
+
     }
     function removeFormulaDetail(id) {
+
         var formula_detail_id = $(id).data('formula-detail-id');
-        $("#formula_detail_" + formula_detail_id).remove();
+        $("."+ formula_detail_id).remove();
+    }
+    function changeTenureValue(id) {
+
+        var formula_detail_id = $(id).data('formula-detail-id');
+        $(".tenure-"+formula_detail_id).val($(id).val());
     }
 
     $(document).ready(function () {

@@ -167,59 +167,34 @@
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
-                                        {{Form::label('criteria', 'Criteria',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('product_footer', 'Other Detail',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('criteria', old('criteria'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('product_footer', old('product_footer'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        {{Form::label('key_points', 'Key Points',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('ad_horizontal_image', 'Ad Horizontal Image',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('key_points', old('key_points'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::file('ad_horizontal_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('ad_poster', 'Advertisement Image',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('ad_horizontal_link', 'Ad Horizontal Link',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::file('ad_poster', ['class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('ad_horizontal_link', old('ad_horizontal_link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Advertisement Type</label>
-
+                                        {{Form::label('ad_vertical_image', 'Ad Vertical Image',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-
-                                            <select class="form-control select2"
-                                                    data-placeholder="" name="ad_type"
-                                                    style="width: 100%;">
-                                                <option value="">None</option>
-                                                <option value="1" @if(old('ad_type') == 1) selected="selected" @endif>
-                                                    Horizontal
-                                                </option>
-                                                <option value="2" @if(old('ad_type') == 2) selected="selected" @endif>
-                                                    Vertical
-                                                </option>
-                                            </select>
+                                            {{Form::file('ad_vertical_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('ad_link', 'Advertisement Link',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('ad_vertical_link', 'Ad Vertical Link',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('ad_link', old('ad_link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        {{Form::label('main_page_link', 'Main Page Link',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::text('main_page_link', old('main_page_link'), ['id'=>'link_main_page','class' => 'form-control', 'placeholder' => ''])}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        {{Form::label('tc_link', 'T&C Link',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::text('tc_link', old('tc_link'), ['id'=>'link_tc','class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('ad_vertical_link', old('ad_vertical_link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +225,7 @@
                 </div>
             </div>
             <!-- /.box -->
-
+        </div>
     </section>
 
     <!-- /.content -->
@@ -296,11 +271,26 @@
         $("select[name='formula']").on("change", function () {
             var formula = $(this).val();
 
-            if (formula == '<?php echo FIX_DEPOSIT_F1; ?>'){
+            if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
                 $('#fixDepositF1').removeClass('display-none');
 
             }
 
-                    });
+        });
+        $("select[name='product_type']").on("change", function () {
+            var promotion_type = $(this).val();
+            var formula = $("#formula").val();
+            //alert(formula);
+            $.ajax({
+                method: "POST",
+                url: "{{url('/admin/promotion-products/get-formula')}}",
+                data: {promotion_type: promotion_type, formula: formula},
+                cache: false,
+                success: function (data) {
+                    $("select[name='formula']").html(data);
+                }
+            });
+
+        });
     </script>
 @endsection

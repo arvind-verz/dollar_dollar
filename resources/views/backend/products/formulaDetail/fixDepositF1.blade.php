@@ -143,30 +143,25 @@
                 </div>
 
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-2" id="add-placement-range-button">
                 <button type="button"
-                        class="btn btn-info pull-left mr-15 add-placement-range-button 1"
+                        class="btn btn-info pull-left mr-15 add-placement-range-button"
                         data-range-id="0" onClick="addMorePlacementRange(this);"><i
                             class="fa fa-plus"></i>
-                </button>
-                <button type="button"
-                        class="btn btn-danger -pull-right  remove-placement-range-button display-none"
-                        data-range-id="0" onClick="removePlacementRange(this);"><i
-                            class="fa fa-minus"> </i>
                 </button>
             </div>
 
         </div>
-        <div class="form-group " id="formula_detail_00">
+        <div class="form-group 0" id="formula_detail_00">
             <label for="title" class="col-sm-2 control-label"></label>
 
             <div class="col-sm-6 ">
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="">Tenur</label>
-                        <input type="text" class="form-control" id=""
+                        <input type="text" class="form-control tenure-0" id="" data-formula-detail-id="0"
                                name="tenure[0][]"
-                               placeholder="">
+                               placeholder="" onchange="changeTenureValue(this)">
 
                     </div>
                     <div class="col-md-6 mb-3">
@@ -179,7 +174,7 @@
 
                 </div>
             </div>
-            <div class="col-sm-1 col-sm-offset-1 ">
+            <div class="col-sm-1 col-sm-offset-1 " id="add-formula-detail-button">
                 <button type="button"
                         class="btn btn-info pull-left mr-15"
                         id="add-formula-detail-00"
@@ -187,13 +182,7 @@
                         onClick="addMoreFormulaDetail(this);"><i
                             class="fa fa-plus"></i>
                 </button>
-                <button type="button"
-                        class="btn btn-danger -pull-right display-none"
-                        id="remove-formula-detail-00"
-                        data-formula-detail-id="00" data-range-id="0"
-                        onClick="removeFormulaDetail(this);"><i
-                            class="fa fa-minus"> </i>
-                </button>
+
             </div>
             <div class="col-sm-2">&emsp;</div>
         </div>
