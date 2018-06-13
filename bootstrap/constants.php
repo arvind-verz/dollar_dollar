@@ -200,3 +200,7 @@ define('GENDER_FEMALE', "Female");
 define('MR', "Mr.");
 define('MRS', "Mrs.");
 define('MISS', "Miss.");
+
+//formula type ids
+define('FIX_DEPOSIT_F1', 1);
+define('SAVING_DEPOSIT_F1', 1);
