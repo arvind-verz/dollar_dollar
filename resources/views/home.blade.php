@@ -219,47 +219,22 @@
                         <div class="ps-section__header">
                             <h3 class="ps-heading">Lastest <strong> Blog</strong></h3>
 
-                            <div class="ps-slider-navigation" data-slider="ps-slider--home-blog"><a class="ps-prev"
-                                                                                                    href="#"><i
-                                            class="fa fa-caret-left"></i></a><a class="ps-next" href="#"><i
-                                            class="fa fa-caret-right"></i></a></div>
+                            <div class="ps-slider-navigation" data-slider="ps-slider--home-blog"><a class="ps-prev" href="javascript:void(0);"><i class="fa fa-caret-left"></i></a><a class="ps-next" href="javascript:void(0);"><i class="fa fa-caret-right"></i></a></div>
                         </div>
-                        <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-                             data-owl-gap="0" data-owl-nav="false" data-owl-dots="false" data-owl-item="1"
-                             data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1"
-                             data-owl-duration="1000" data-owl-mousedrag="off">
+                        <div class="owl-slider owl-blog" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="off">
+                            @foreach($blogs as $blog)
                             <div class="ps-post--home">
-                                <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="#"></a><img
-                                            src="{{ asset('frontend/img/post/home-detail.jpg') }}" alt="">
+                                <div class="ps-post__thumbnail">
+                                    <a class="ps-post__overlay" href="{{ url($blog->slug) }}"></a><img src="{{ asset($blog->blog_image) }}" alt="">
 
-                                    <div class="ps-post__posted"><span class="date">19</span><span
-                                                class="month">Nov</span></div>
+                                    <div class="ps-post__posted"><span class="date">19</span><span class="month">Nov</span></div>
                                 </div>
-                                <div class="ps-post__content"><a class="ps-post__title" href="#">Lorem ipsum Blog
-                                        Entry</a>
-
-                                    <p>Lorem ipsum Blog Entry Curabitur aliquet quam id dui posuere blandit diam.
-                                        Praesent sapien massa, convallis a pellentesque nec, egestas non si nisi. Donec
-                                        rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula
-                                        elementum sed.</p>
+                                <div class="ps-post__content">
+                                    <a class="ps-post__title" href="{{ url($blog->slug) }}">{{ $blog->name }}</a>
+                                    <p>{!! $blog->short_description !!}</p>
                                 </div>
                             </div>
-                            <div class="ps-post--home">
-                                <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="#"></a><img
-                                            src="{{ asset('frontend/img/post/home-detail.jpg') }}" alt="">
-
-                                    <div class="ps-post__posted"><span class="date">19</span><span
-                                                class="month">Nov</span></div>
-                                </div>
-                                <div class="ps-post__content"><a class="ps-post__title" href="#">Lorem ipsum Blog
-                                        Entry</a>
-
-                                    <p>Lorem ipsum Blog Entry Curabitur aliquet quam id dui posuere blandit diam.
-                                        Praesent sapien massa, convallis a pellentesque nec, egestas non si nisi. Donec
-                                        rutrum congue leo eget malesuada. Vestibulum ac diam sit amet quam vehicula
-                                        elementum sed.</p>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -267,15 +242,29 @@
                     <div class="ps-section__right">
                         <div class="ps-fanpage"><img src="{{ asset('frontend/img/fanpage.png') }}" alt=""></div>
                         <div class="ps-block--home-signup">
-                            <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a
-                                    class="ps-btn ps-btn--yellow" href="#"><i class="fa fa-facebook"></i> Signup with
-                                facebook</a><a class="ps-btn ps-btn--outline" href="#">Sign Up with email</a>
+                            <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a class="ps-btn ps-btn--yellow" href="#"><i class="fa fa-facebook"></i> Signup with facebook</a><a class="ps-btn ps-btn--outline" href="#">Sign Up with email</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $("document").ready(function() {
+            var owl = $('.owl-blog');
+            owl.owlCarousel({
+                loop:true,
+                margin:10,
+                items: 1
+            });
+            $('.ps-next').click(function() {
+                owl.trigger('next.owl.carousel');
+            })
+            $('.ps-prev').click(function() {
+                owl.trigger('prev.owl.carousel', [300]);
+            })
+        });
+    </script>
     {{--Blog section end--}}
 
     {{--contact us or what we offer section start--}}
