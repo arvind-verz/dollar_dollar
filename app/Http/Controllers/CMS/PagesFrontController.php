@@ -282,13 +282,16 @@ class PagesFrontController extends Controller
     public function fixDepositMode($details)
     {
 
+        $startDate = \Helper::startOfDayBefore();
+        $endDate =  \Helper::endOfDayAfter();
+            //dd($startDate);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
         ->where('promotion_formula.promotion_id', '=', 1)
-        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
-        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_start', '<=', $startDate)
+        ->where('promotion_products.promotion_end', '>=', $endDate)
         ->get();
         //dd(DB::getQueryLog());
         //dd($promotion_products);
@@ -302,13 +305,16 @@ class PagesFrontController extends Controller
     public function savingDepositMode($details)
     {
 
+        $startDate = \Helper::startOfDayBefore();
+        $endDate =  \Helper::endOfDayAfter();
+        
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
         ->where('promotion_formula.promotion_id', '=', 2)
-        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
-        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_start', '<=', $startDate)
+        ->where('promotion_products.promotion_end', '>=', $endDate)
         ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
         ->get();
         //dd(DB::getQueryLog());
@@ -322,7 +328,16 @@ class PagesFrontController extends Controller
     }
 
     public function search_fixed_deposit(Request $request) {
+        $startDate = \Helper::startOfDayBefore();
+        $endDate =  \Helper::endOfDayAfter();
+        
         //dd($request->all());
+        $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+        
         $search_filter = [];
         $search_filter = $request->all();
         DB::connection()->enableQueryLog();
@@ -330,15 +345,45 @@ class PagesFrontController extends Controller
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
         ->where('promotion_formula.promotion_id', '=', 1)
-        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
-        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_start', '<=', $startDate)
+        ->where('promotion_products.promotion_end', '>=', $endDate)
         ->get();
+        //dd($search_filter);
+        if(!is_null($search_filter['filter']) &&(!is_null($search_filter['search_value']))){
+            $filterProducts = [];
+        foreach ($promotion_products as $product) {
+            $status= false;
+            $product_range = json_decode($product->product_range);
+            $tenures = json_decode($product->tenure);
+                
+            if(($search_filter['filter']=='Placement') || ($search_filter['filter']=='Interest')){
+            foreach ($product_range as $range) {
+                
+                if(($search_filter['filter']=='Placement') && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range))
+                {  
+                    $status = true;
+                   
+                }
+                elseif( ($search_filter['filter']=='Interest') && (in_array($search_filter['search_value'],$range->bonus_interest)))
+                {
+                        $status = true;
+                }
 
-        $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
-        $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+
+            }
+        }elseif($search_filter['filter']=='Tenor' && (in_array($search_filter['search_value'],$tenures))){
+                $status = true;
+            }
+
+            if($status==true)
+            {
+                $filterProducts[]=$product;
+            }
+        }
+        $promotion_products=$filterProducts;
+    }
+        
+
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
