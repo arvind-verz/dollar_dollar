@@ -106,19 +106,21 @@
                  data-owl-duration="1000" data-owl-mousedrag="on"
                  data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
                  data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
+                 @php $i = 1; @endphp
                  @foreach($promotion_products as $promotion_product)
                 <div class="ps-block--short-product second" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
-                    <h4>up to <strong> 1.3%</strong></h4>
+                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
 
                     <div class="ps-block__info">
                         <p><strong> rate: </strong>1.3%</p>
 
-                        <p><strong>Min:</strong> SGD $20,000</p>
+                        <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
 
-                        <p class="highlight">12 Months</p>
+                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                     </div>
-                    <a class="ps-btn" href="#">More info</a>
+                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                 </div>
+                @php $i++; @endphp
                 @endforeach
             </div>
             @endif
@@ -135,6 +137,7 @@
                 </div>
             </div>
             @if(count($promotion_products))
+                @php $j = 1; @endphp
                 @foreach($promotion_products as $promotion_product)
                 @php
                     $product_tenures = json_decode($promotion_product->product_tenure);
@@ -142,7 +145,7 @@
                     $tenures = json_decode($promotion_product->tenure);
                     $key = array();
                 @endphp
-                <div class="ps-product featured-1">
+                <div class="ps-product featured-1" id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ $promotion_product->brand_logo }}" alt="">
 
                         <div class="ps-product__promo">
@@ -283,10 +286,10 @@
                         <div class="ps-product__detail">
                             {!! $promotion_product->product_footer !!}
                         </div>
-                        <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                        class="fa fa-angle-down"></i></a></div>
+                        <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i class="fa fa-angle-down"></i></a></div>
                     </div>
                 </div>
+                @php $j++; @endphp
                 @endforeach
             @endif
         </div>
