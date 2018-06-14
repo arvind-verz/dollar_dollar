@@ -211,7 +211,7 @@ class ProductsController extends Controller
 
             $product->product_range = $ranges;
             $product->promotion_start = \Helper::startOfDayBefore($request->start_date);
-            $product->promotion_end =  \Helper::endOfDayAfter($request->end_date);
+            $product->promotion_end = \Helper::endOfDayAfter($request->end_date);
             $product->product_footer = $request->product_footer;
 
             if ($request->hasFile('ad_horizontal_image')) {
@@ -256,9 +256,7 @@ class ProductsController extends Controller
         $product = \Helper::getProduct($id);
         $formula = \Helper::productType($id);
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
-
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-
         return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks'));
 
     }
@@ -850,4 +848,28 @@ class ProductsController extends Controller
         <?php
     }
 
+    public function checkProduct(Request $request)
+    {
+        if (isset($request->name)) {
+            $product = PromotionProducts::where('product_name', $request->name)->first();
+
+            if ($product) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        if (isset($request->bank) && isset($request->productType) && isset($request->formula)) {
+            $product = PromotionProducts::where('bank_id', $request->bank)
+                ->where('promotion_type_id', $request->productType)
+                ->where('formula_id', $request->formula)
+                ->first();
+            if ($product) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        return 0;
+    }
 }

@@ -183,6 +183,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
 <script src="{{ asset('backend/dist/bootstrap-tagsinput.min.js')}}"></script>
 <script src="{{ asset('backend/dist/bootstrap-tagsinput-angular.min.js')}}"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="{{ asset('backend/dist/js/jquery.bootstrap.wizard.js')}}"></script>
 
 <script>
@@ -276,10 +277,96 @@
                     ],
                 });
 
-        $('#rootwizard').bootstrapWizard();
+        $('#rootwizard').bootstrapWizard({
+
+            'tabClass': 'nav nav-pills',
+            'onPrevious': function (tab, navigation, index) {
+                var errorSection = document.getElementById("js-errors");
+                errorSection.innerHTML = '';
+                var errors = new Array();
+                var i = 0;
+                if (index == 1) {
+                    var name = $.trim($('#name').val());
+                    var bank = $.trim($('#bank').val());
+                    var productType = $.trim($('#product-type').val());
+                    var formula = $.trim($('#formula').val());
+                    var startDate = $.trim($('#promotion_start_date').val());
+                    var endDate = $.trim($('#promotion_end_date').val());
+                    // Make sure we entered the name
+                    if (!name) {
+                        errors[i] = 'The name is required.';
+                        i++;
+                    } else {
+                        $.ajax({
+                            method: "POST",
+                            url: "{{url('/admin/check-product')}}",
+                            data: {name: name},
+                            cache: false,
+                            async: false,
+                            success: function (data) {
+
+                                if (data == 1) {
+                                    errors[i] = 'The name has already been taken';
+                                    i++;
+                                } else {
+                                    if ((bank != '') && (productType != '') && (formula != '')) {
+
+                                        $.ajax({
+                                            method: "POST",
+                                            url: "{{url('/admin/check-product')}}",
+                                            data: {bank: bank, productType: productType, formula: formula},
+                                            cache: false,
+                                            async: false,
+                                            success: function (data) {
+                                                if (data == 1) {
+                                                    errors[i] = 'This detail has already been taken';
+                                                    i++;
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    if (!bank) {
+                        errors[i] = 'The bank is required.';
+                        i++;
+                    }
+                    if (!productType) {
+                        errors[i] = 'The product type is required.';
+                        i++;
+                    }
+                    if (!formula) {
+                        errors[i] = 'The formula is required.';
+                        i++;
+                    }
+                    if (!startDate) {
+                        errors[i] = 'The start date is required.';
+                        i++;
+                    }
+                    if (!endDate) {
+                        errors[i] = 'The end date is required.';
+                        i++;
+                    }
+
+
+                }
+                if (errors.length) {
+                    $("#error-div").removeClass('display-none');
+                    $.each(errors, function (k, v) {
+                        errorSection.innerHTML = errorSection.innerHTML + '<p>' + v + '</p>';
+                    });
+                    return false;
+
+                }
+            }
+        });
 
     });
-
+    $(".alert-hide").on("click", function () {
+        $("#error-div").addClass('display-none');
+    });
 </script>
 <script type="text/javascript">
 
@@ -349,7 +436,7 @@
 
             var $newTextArea = $('<div />', {
                 'id': 'formula_detail_' + i + formula_detail_id,
-                'class': 'form-group '+formula_detail_id
+                'class': 'form-group ' + formula_detail_id
             });
             $newTextArea.append(
                     '<label for="title" class="col-sm-2 control-label">'
@@ -358,7 +445,7 @@
                     + ' <div class="form-row">'
                     + ' <div class="col-md-6 mb-3">'
                     + ' <label for="">Tenure</label>'
-                    + '<input type="text" class="form-control tenure-'+formula_detail_id+'" id="" name="tenure[' + i + '][' + formula_detail_id + ']" placeholder="" data-formula-detail-id='+formula_detail_id+' onchange="changeTenureValue(this)">'
+                    + '<input type="text" class="form-control tenure-' + formula_detail_id + '" id="" name="tenure[' + i + '][' + formula_detail_id + ']" placeholder="" data-formula-detail-id=' + formula_detail_id + ' onchange="changeTenureValue(this)">'
                     + '</div>'
                     + '<div class="col-md-6 mb-3">'
                     + '<label for="">Bonus Interest</label>'
@@ -378,7 +465,7 @@
                         + '<i class="fa fa-minus"> </i>'
                         + ' </button>';
                 $('#remove-formula-detail-' + i + formula_detail_id).append(removeFormulaDetailButton);
-            }else{
+            } else {
                 $('input[name="tenure[' + i + '][' + formula_detail_id + ']"]').prop('readonly', true);
             }
             var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
@@ -389,12 +476,12 @@
     function removeFormulaDetail(id) {
 
         var formula_detail_id = $(id).data('formula-detail-id');
-        $("."+ formula_detail_id).remove();
+        $("." + formula_detail_id).remove();
     }
     function changeTenureValue(id) {
 
         var formula_detail_id = $(id).data('formula-detail-id');
-        $(".tenure-"+formula_detail_id).val($(id).val());
+        $(".tenure-" + formula_detail_id).val($(id).val());
     }
 
     $(document).ready(function () {
@@ -438,5 +525,4 @@
             $('#target').val('null').trigger('change');
         }
     });
-
 </script>

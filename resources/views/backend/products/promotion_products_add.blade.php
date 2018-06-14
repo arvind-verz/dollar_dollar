@@ -32,7 +32,7 @@
                         </ul>
                         <div class="box-body">
 
-                            {!! Form::open(['class' => 'form-horizontal','route' => 'promotion-products-add-db', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                            {!! Form::open(['id'=>'addProduct','class' => 'form-horizontal','route' => 'promotion-products-add-db', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                                     <!-- Custom Tabs (Pulled to the right) -->
 
                             <div class="tab-content">
@@ -40,7 +40,7 @@
                                     <div class="form-group">
                                         {{Form::label('name', 'Name',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('name', old('name'), ['id'=>'','class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('name', old('name'), ['id'=>'name','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 
@@ -48,7 +48,7 @@
                                         <label for="title" class="col-sm-2 control-label">Bank</label>
 
                                         <div class="col-sm-10">
-                                            <select class="form-control" name="bank">
+                                            <select class="form-control" name="bank" id="bank">
                                                 <option value="">None</option>
                                                 @if($banks->count())
                                                     @foreach($banks as $bank)
@@ -79,7 +79,7 @@
                                         <label for="title" class="col-sm-2 control-label">Formula</label>
 
                                         <div class="col-sm-10">
-                                            <select class="form-control" name="formula">
+                                            <select class="form-control" name="formula" id="formula">
                                                 <option value="">None</option>
                                             </select>
                                             <input type="hidden" id="hidden-formula" value="{{ old('formula') }}">
@@ -97,7 +97,7 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       name="promotion_start_date"
+                                                       name="promotion_start_date" id="promotion_start_date"
                                                        value="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}">
 
                                                 <div class="input-group-addon ">
@@ -115,7 +115,7 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       name="promotion_end_date"
+                                                       name="promotion_end_date" id="promotion_end_date"
                                                        value="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}">
 
                                                 <div class="input-group-addon ">
@@ -234,8 +234,6 @@
         $(document).ready(function () {
             var promotion_type = $("#product-type").val();
             var formula = $("#hidden-formula").val();
-
-
             //alert(product_name_id);
             if ((promotion_type.length != 0) && (formula.length != 0)) {
                 //alert(formula);

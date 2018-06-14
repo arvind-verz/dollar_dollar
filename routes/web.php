@@ -188,6 +188,7 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/bank-products', 'Products\ProductsController@bank_products')->name('bank-products');
 
     Route::post('/add-more-placement-range', 'Products\ProductsController@addMorePlacementRange')->name('add-more-placement-range');
+    Route::post('/check-product', 'Products\ProductsController@checkProduct')->name('check-product');
     Route::post('/add-product-name', 'Products\ProductsController@addProductName')->name('add-product-name');
     Route::post('/add-price-range', 'Products\ProductsController@addPriceRange')->name('add-price-range');
     Route::post('/add-formula-detail', 'Products\ProductsController@addFormulaDetail')->name('add-formula-detail');
