@@ -106,19 +106,21 @@
                  data-owl-duration="1000" data-owl-mousedrag="on"
                  data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
                  data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
+                 @php $i = 1; @endphp
                  @foreach($promotion_products as $promotion_product)
                 <div class="ps-block--short-product second" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
-                    <h4>up to <strong> 1.3%</strong></h4>
+                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
 
                     <div class="ps-block__info">
                         <p><strong> rate: </strong>1.3%</p>
 
-                        <p><strong>Min:</strong> SGD $20,000</p>
+                        <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
 
-                        <p class="highlight">12 Months</p>
+                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                     </div>
-                    <a class="ps-btn" href="#">More info</a>
+                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                 </div>
+                @php $i++; @endphp
                 @endforeach
             </div>
             @endif
@@ -135,6 +137,7 @@
                 </div>
             </div>
             @if(count($promotion_products))
+                @php $j = 1; @endphp
                 @foreach($promotion_products as $promotion_product)
                 @php
                     $product_range = json_decode($promotion_product->product_range);
@@ -143,8 +146,9 @@
                     $date2 = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_end)));
                     $interval = date_diff($date2, $date1);
                     $interval_spent = date_diff($date2, $date1_start);
+                    $days_type = \Helper::days_or_month_or_year(2, $interval_spent->format('%m'));
                 @endphp
-                <div class="ps-product featured-1">
+                <div class="ps-product featured-1" id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ $promotion_product->brand_logo }}" alt="">
 
                         <div class="ps-product__promo">
@@ -188,8 +192,8 @@
                                         @endif
                                     @endif">
                                         <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
-                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_rate) highlight 
-                                        @endif">{{ $range->bonus_rate . '%' }}</td>
+                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_interest) highlight 
+                                        @endif">{{ $range->bonus_interest . '%' }}</td>
                                         <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->board_rate) highlight 
                                         @endif">{{ $range->board_rate . '%' }}</td>
                                         <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->total_interest) highlight 
@@ -224,7 +228,7 @@
                                     @endphp
                                     <h4>Possible interest(s) earned for SGD ${{ $P }}k</h4>
                                     @php
-                                        $BI = $range->bonus_rate/100;
+                                        $BI = $range->bonus_interest/100;
                                         $TD = $interval_spent->format('%a');
                                         $calc = eval('return '.$promotion_product->formula.';');
                                     @endphp
@@ -244,7 +248,7 @@
                                     @endif
                                     @php
                                     if($key==0) {
-                                        $BI = $range->bonus_rate/100;
+                                        $BI = $range->bonus_interest/100;
                                         $TD = $interval_spent->format('%a');
                                         $calc = eval('return '.$promotion_product->formula.';');
                                     @endphp
@@ -282,9 +286,9 @@
                                         <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
                                         @if($key==0)
                                         <td rowspan="{{ count($product_range) }}" class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $search_filter['search_value']==$interval_spent->format('%m'))) highlight 
-                                        @endif">{{ $interval_spent->format('%m') }}</td>@endif
-                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_rate) highlight 
-                                        @endif">{{ $range->bonus_rate . '%' }}</td>
+                                        @endif">{{ $interval_spent->format('%m') . ' ' . $days_type }}</td>@endif
+                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_interest) highlight 
+                                        @endif">{{ $range->bonus_interest . '%' }}</td>
                                         <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->board_rate) highlight 
                                         @endif">{{ $range->board_rate . '%' }}</td>
                                         <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->total_interest) highlight 
@@ -319,7 +323,7 @@
                                     @endphp
                                     <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
                                     @php
-                                        $BI = $range->bonus_rate/100;
+                                        $BI = $range->bonus_interest/100;
                                         $TM = $interval_spent->format('%m');
                                         $calc = eval('return '.$promotion_product->formula.';');
                                     @endphp
@@ -339,7 +343,7 @@
                                     @endif
                                     @php
                                     if($key==0) {
-                                        $BI = $range->bonus_rate/100;
+                                        $BI = $range->bonus_interest/100;
                                         $TM = $interval_spent->format('%m');
                                         $calc = eval('return '.$promotion_product->formula.';');
                                     @endphp
@@ -399,11 +403,11 @@
                         @endif
                         <div class="ps-product__panel">
                             @php
-                                $P = $product_range->max_placement;
+                                $P = $product_range->max_range;
                                 if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') {
                                     $P = $search_filter['search_value'];
                                 }
-                                $AIR = $product_range->average_bonus_interest/100;
+                                $AIR = $product_range->bonus_interest/100;
                                 $SBR = $product_range->sibor_rate/100;
                                 $calc = eval('return '.$promotion_product->formula.';');
                             @endphp
@@ -429,7 +433,7 @@
                                     @foreach($product_range as $key => $range)
                                     <tr>
                                         <td>@if($key==0) 1st - @else NEXT - @endif{{ '$' . $range->account_balance }}</td>                 
-                                        <td>@php echo $range->base_interest . '% <small>p.a.</small>'; @endphp</td>
+                                        <td>@php echo $range->bonus_interest . '% <small>p.a.</small>'; @endphp</td>
                                         <td>@php echo $range->bonus_interest . '% <small>p.a.</small>'; @endphp</td>
                                         <td>@php echo $range->total_interest . '% <small>p.a.</small>'; @endphp</td>     
                                     </tr>
@@ -539,26 +543,26 @@
                                             @if($key==0)
                                                 @foreach($product_range as $key => $range)
                                                     @foreach($range->display_month as $month)
-                                                    <td>{{ '$' . ($range->min_average_monthly_placement*$month) }}</td>
+                                                    <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $month==$search_filter['search_value']) highlight  @endif">{{ '$' . ($range->min_range*$month) }}</td>
                                                     @endforeach
-                                                    <td>{{ '$' . ($range->min_average_monthly_placement*end($range->display_month)) }}</td>
+                                                    <td>{{ '$' . ($range->min_range*end($range->display_month)) }}</td>
                                                 @endforeach
-                                                @php $total_sum[] = ($range->min_average_monthly_placement*end($range->display_month)); @endphp
+                                                @php $total_sum[] = ($range->min_range*end($range->display_month)); @endphp
                                             @elseif($key==1)
                                                 @foreach($product_range as $key => $range)
                                                     @php
                                                         $calc = [];
-                                                        $BI = $range->base_interest/100;
+                                                        $BI = $range->bonus_interest/100;
                                                         $CM = 0;
                                                     @endphp
                                                     @for($i=1;$i<=($range->placement_month);$i++)
                                                         @php
-                                                            $PM = $range->min_average_monthly_placement;
+                                                            $PM = $range->min_range;
                                                             $calc[] = round(eval('return '.$promotion_product->formula.';'), 2);
                                                             
                                                         @endphp
                                                         @if(in_array($i, $range->display_month))
-                                                        <td>{{ '$' . round(eval('return '.$promotion_product->formula.';'), 2) }}</td>
+                                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $i==$search_filter['search_value']) highlight  @endif">{{ '$' . round(eval('return '.$promotion_product->formula.';'), 2) }}</td>
                                                         @endif
                                                         @php $CM = $CM+$PM; @endphp
                                                     @endfor
@@ -570,18 +574,19 @@
                                                     @php
                                                         $promotion_product->formula = '($AI * (($PM + $CM) + $PMIE) * 31/365)';
                                                         $calc = [];
-                                                        $BI = $range->base_interest/100;
+                                                        $BI = $range->bonus_interest/100;
                                                         $CM = 0;
                                                         $AI = 2/100;
                                                         $PMIE = 0;
                                                     @endphp
                                                     @for($i=1;$i<=($range->placement_month);$i++)
                                                         @php
-                                                            $PM = $range->min_average_monthly_placement;
+                                                            $PM = $range->min_range;
                                                             $calc[] = round(eval('return '.$promotion_product->formula.';'), 2);
                                                         @endphp
                                                         @if(in_array($i, $range->display_month))
-                                                        <td>{{ '$' . round(eval('return '.$promotion_product->formula.';'), 2) }}</td>
+                                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $i==$search_filter['search_value']) highlight  @endif
+                                                        ">{{ '$' . round(eval('return '.$promotion_product->formula.';'), 2) }}</td>
                                                         @endif
                                                         @php $CM = $CM+$PM;$PMIE = round(eval('return '.$promotion_product->formula.';'), 2); @endphp
                                                     @endfor
@@ -633,6 +638,7 @@
                                         class="fa fa-angle-down"></i></a></div>
                     </div>
                 </div>
+                @php $j++; @endphp
                 @endforeach
             @endif
         </div>

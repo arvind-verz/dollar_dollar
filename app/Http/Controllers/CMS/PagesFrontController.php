@@ -407,6 +407,44 @@ class PagesFrontController extends Controller
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
+
+        if(!is_null($search_filter['filter']) && (!is_null($search_filter['search_value']))) {
+            $filterProducts = [];
+            foreach ($promotion_products as $product) {
+                $status= false;
+                $product_range = json_decode($product->product_range);
+                   //dd($product); 
+                if((($search_filter['filter']=='Placement') || ($search_filter['filter']=='Interest')) && $product->promotion_formula_id!=5 && $product->promotion_formula_id!=4){
+                foreach ($product_range as $range) {
+                    //var_dump($product_range);
+                    if(($search_filter['filter']=='Placement') && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range))
+                    {  
+                        $status = true;
+                       
+                    }
+                    elseif($search_filter['filter']=='Interest'  && ($product->promotion_formula_id==2 || $product->promotion_formula_id==3))
+                    {
+                            $status = true;
+                    }
+
+
+                }
+            }elseif($search_filter['filter']=='Tenor' && ($product->promotion_formula_id==3 || $product->promotion_formula_id==6)) {
+                    $status = true;
+                }
+
+
+                if((($search_filter['filter']=='Placement')) && $product->promotion_formula_id==4) {
+                    $status = true;
+                }
+                if($status==true)
+                {
+                    $filterProducts[]=$product;
+                }
+            }
+            $promotion_products=$filterProducts;
+        }
+        //dd($promotion_products);
         return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 }

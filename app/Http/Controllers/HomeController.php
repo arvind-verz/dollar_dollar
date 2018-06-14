@@ -6,6 +6,8 @@ use App\Brand;
 use App\Page;
 use App\Helpers\Helper;
 use App\SystemSetting;
+use App\PromotionProducts;
+use DB;
 
 
 class HomeController extends Controller
@@ -22,6 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+        ->get();
+        //dd($promotion_products);
         $blogs = Page::where('delete_status', 0)
         ->where('is_blog', 1)
         ->inRandomOrder()
@@ -38,7 +48,7 @@ class HomeController extends Controller
         if (!$systemSetting) {
             return back()->with('error', OPPS_ALERT);
         }
-        return view('home', compact("brands", "page", "systemSetting", "blogs"));
+        return view('home', compact("brands", "page", "systemSetting", "blogs", "promotion_products"));
     }
 
 

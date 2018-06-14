@@ -12,16 +12,13 @@
 
     @if($banners->count()>1)
         <div class="ps-home-banner">
-            <div class="ps-slider--home owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-                 data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1"
-                 data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000"
-                 data-owl-mousedrag="on">
+            <div class="ps-slider--home owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
                 @foreach($banners as $banner)
                     <div class="ps-banner bg--cover" data-background="{{asset($banner->banner_image )}}"><img
                                 src="{{asset($banner->banner_image )}}" alt="">
 
                         <div class="ps-banner__content">
-                            {!!$banner->banner_content!!}
+                            {!! $banner->banner_content !!}
                         </div>
                     </div>
                 @endforeach
@@ -122,14 +119,79 @@
                             <div class="ps-block__header">
                                 <h3><strong>Fixed</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a
-                                            class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div>
+                            </div>
+                            @if(count($promotion_products))
+                            <div class="row">
+                                @foreach($promotion_products as $products)
+                                    @if($products->promotion_type_id==1)
+                            
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset($products->brand_logo) }}" alt="">
+                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD ${{ $products->minimum_placement_amount }}</p>
+
+                                            <p class="highlight">{{ $products->promotion_period }} Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
+                                    </div>
+                                </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="ps-tab" id="tab-2">
+                        <div class="ps-block--desposit">
+                            <div class="ps-block__header">
+                                <h3><strong>Saving</strong>Deposit</h3>
+
+                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div>
+                            </div>
+                            @if(count($promotion_products))
+                            <div class="row">
+                                @foreach($promotion_products as $products)
+                                    @if($products->promotion_type_id==2)
+                            
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset($products->brand_logo) }}" alt="">
+                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD ${{ $products->minimum_placement_amount }}</p>
+
+                                            <p class="highlight">{{ $products->promotion_period }} Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
+                                    </div>
+                                </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="ps-tab" id="tab-3">
+                        <div class="ps-block--desposit">
+                            <div class="ps-block__header">
+                                <h3><strong>Wealth</strong>Deposit</h3>
+
+                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/1.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/1.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -143,8 +205,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -158,8 +219,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -173,8 +233,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -190,18 +249,141 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="ps-tab" id="tab-2">
-                        <h3>Tab 2 To be update</h3>
-                    </div>
-                    <div class="ps-tab" id="tab-3">
-                        <h3>Tab 3 To be update</h3>
-                    </div>
                     <div class="ps-tab" id="tab-4">
-                        <h3>Tab 4 To be update</h3>
+                        <div class="ps-block--desposit">
+                            <div class="ps-block__header">
+                                <h3><strong>All In One Account</strong></h3>
+
+                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/1.png') }}" alt="">
+                                        <h4>up to <strong> 1.3%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD $20,000</p>
+
+                                            <p class="highlight">12 Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#">More info</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                        <h4>up to <strong> 1.3%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD $20,000</p>
+
+                                            <p class="highlight">12 Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#">More info</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                        <h4>up to <strong> 1.3%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD $20,000</p>
+
+                                            <p class="highlight">12 Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#">More info</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                        <h4>up to <strong> 1.3%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD $20,000</p>
+
+                                            <p class="highlight">12 Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#">More info</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="ps-tab" id="tab-5">
-                        <h3>Tab 5 To be update</h3>
+                        <div class="ps-block--desposit">
+                            <div class="ps-block__header">
+                                <h3><strong>Foreign Currency</strong></h3>
+
+                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/1.png') }}" alt="">
+                                        <h4>up to <strong> 1.3%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD $20,000</p>
+
+                                            <p class="highlight">12 Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#">More info</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                        <h4>up to <strong> 1.3%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD $20,000</p>
+
+                                            <p class="highlight">12 Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#">More info</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                        <h4>up to <strong> 1.3%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD $20,000</p>
+
+                                            <p class="highlight">12 Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#">More info</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                        <h4>up to <strong> 1.3%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+
+                                            <p><strong>Min:</strong> SGD $20,000</p>
+
+                                            <p class="highlight">12 Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#">More info</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="ps-section__footer"><a href="#">View all bank rates</a></div>
