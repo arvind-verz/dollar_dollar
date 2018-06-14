@@ -14,6 +14,7 @@ use DB;
 use App\Page;
 use App\ProductManagement;
 use App\User;
+use Socialite;
 
 class LoginController extends Controller
 {
@@ -159,5 +160,28 @@ class LoginController extends Controller
             $reset->save();
         }
         return redirect('account-information')->with('success', 'Password ' . UPDATED_ALERT);
+    }
+
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('facebook')->user();
+        // All Providers
+        dd($user);
+        $user->getId();
+        $user->getNickname();
+        $user->getName();
+        $user->getEmail();
+        $user->getAvatar();
+        // $user->token;
     }
 }
