@@ -64,81 +64,6 @@ class ProductsController extends Controller
         //dd($request->all());
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
-        $validate = [];
-        /* $validate = [
-             'name' => 'required',
-             'bank' => 'required',
-             'product_type' => 'required',
-             'formula' => 'required',
-             'promotion_start_date' => 'required|date',
-             'promotion_end_date' => 'required|date|after_or_equal:promotion_start_date',
-         ];
-
-         function numberBetween($varToCheck, $low, $high)
-         {
-             if ($varToCheck > $high) return false;
-             if ($varToCheck < $low) return false;
-             return true;
-         }
-
-         $validator = Validator::make($request->all(), $validate);
-         foreach ($request->min_placement as $key => $value) {
-             $key = count($request->min_placement) - 1 - $key;
-
-             for ($i = 0; $i <= (count($request->min_placement) - 1); $i++) {
-
-                 if (!is_null($request->min_placement[$key]) && !is_null($request->min_placement[$i]) && !is_null($request->max_placement[$i]) && ($key != $i)) {
-                     $error = false;
-                     if (numberBetween($request->min_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
-                         $error = true;
-                     } elseif (numberBetween($request->max_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
-                         $error = true;
-                     }
-                     if ($error == true) {
-                         $validator->getMessageBag()->add('range', $request->min_placement[$key] . ' - ' . $request->max_placement[$key] . ' conflict this ' . $request->min_placement[$i] . ' - ' . $request->max_placement[$i] . ' range.');
-                     }
-                 }
-             }
-         }*/
-
-
-        /*DB::enableQueryLog();
-        $productDetail = PromotionProducts::where('name', $request->name)
-            ->where('delete_status', 0)
-            ->get();
-        if ($productDetail->count() > 0) {
-            $validate['name'] = 'required|unique:promotion_products';
-        } else {
-            $validate['name'] = 'required';
-        }*/
-
-        //dd($validator->getMessageBag());
-        //$this->validate($request, $validate);
-        //set day of time before one second and end of day after one second for between date
-        $startDate = \Helper::startOfDayBefore($request->start_date);
-        $endDate = \Helper::endOfDayAfter($request->end_date);
-        /*
-                $sel_query = PromotionProducts::where('promotion_type_id', $request->product_type)
-                    ->where('formula_id', $request->formula)
-                    ->where('bank_id', $request->bank)
-                    ->where('min_range', $request->min_placement)
-                    ->where('max_range', $request->max_placement)
-                    ->where('promotion_start', $startDate)
-                    ->where('promotion_end', $endDate)
-                    ->where('tenure', $request->tenure)
-                    ->where('bonus_interest', $request->bonus_interest)
-                    ->where('delete_status', 0)
-                    ->get();
-                //dd(DB::getQueryLog());
-                if ($sel_query->count() > 0) {
-                    $validator->getMessageBag()->add('data', 'Data' . ' ' . ALREADY_TAKEN_ALERT);
-                    //return redirect()->action('Products\ProductsController@promotion_formula')->with($error);
-                }*/
-        $validator = Validator::make($request->all(), $validate);
-        if ($validator->getMessageBag()->count()) {
-            return back()->withInput()->withErrors($validator->errors());
-        } else {
-
             $destinationPath = 'uploads/products'; // upload path
             $adHorizontalImage = null;
             $adVerticalImage = null;
@@ -184,6 +109,9 @@ class ProductsController extends Controller
             $product->bank_id = $request->bank;
             $product->promotion_type_id = $request->product_type;
             $product->formula_id = $request->formula;
+            $product->promotion_period = $request->promotion_period;
+            $product->maximum_interest_rate = $request->maximum_interest_rate;
+            $product->minimum_placement_amount = $request->minimum_placement_amount;
 
             $ranges = [];
             if ($product->formula_id == FIX_DEPOSIT_F1) {
@@ -211,7 +139,7 @@ class ProductsController extends Controller
 
             $product->product_range = $ranges;
             $product->promotion_start = \Helper::startOfDayBefore($request->start_date);
-            $product->promotion_end =  \Helper::endOfDayAfter($request->end_date);
+            $product->promotion_end = \Helper::endOfDayAfter($request->end_date);
             $product->product_footer = $request->product_footer;
 
             if ($request->hasFile('ad_horizontal_image')) {
@@ -246,7 +174,7 @@ class ProductsController extends Controller
             return redirect()->action('Products\ProductsController@promotion_products')->with('success', $product->product_name . ADDED_ALERT);
 
             //return $this->promotion_formula();
-        }
+
     }
 
     public function promotion_products_edit($id)
@@ -254,11 +182,10 @@ class ProductsController extends Controller
         //dd($request->all());
         $promotion_types = \Helper::getPromotionType();
         $product = \Helper::getProduct($id);
+        //dd($product);
         $formula = \Helper::productType($id);
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
-
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-
         return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks'));
 
     }
@@ -406,13 +333,13 @@ class ProductsController extends Controller
             ->performedOn($sel_query)
             ->withProperties(['ip' => \Request::ip(),
                 'module' => PRODUCT_MODULE,
-                'msg' => $sel_query->name . ' ' . DELETED_ALERT,
+                'msg' => $sel_query->product_name . ' ' . DELETED_ALERT,
                 'old' => $sel_query,
                 'new' => null])
-            ->log(CREATE);
+            ->log(DELETE);
 
 
-        return redirect()->action('Products\ProductsController@promotion_products')->with('error', "Data" . ' ' . DELETED_ALERT);
+        return redirect()->action('Products\ProductsController@promotion_products')->with('success', $sel_query->product_name . ' ' . DELETED_ALERT);
     }
 
     public function promotion_formula()
@@ -784,7 +711,7 @@ class ProductsController extends Controller
                                 Placement
                             </button>
                         </div>
-                        <input type="text" class="form-control pull-right "
+                        <input type="text" class="form-control pull-right only_numeric"
                                name="min_placement[<?php echo $request->range_id; ?>]"
                                value="">
 
@@ -798,7 +725,7 @@ class ProductsController extends Controller
                             <button type="button" class="btn btn-danger">Max Placement
                             </button>
                         </div>
-                        <input type="text" class="form-control pull-right"
+                        <input type="text" class="form-control pull-right only_numeric"
                                name="max_placement[<?php echo $request->range_id; ?>]"
                                value="">
 
@@ -822,7 +749,7 @@ class ProductsController extends Controller
                         <div class="form-row">
                             <div class="col-md-6 mb-3">
                                 <label for="">Tenur</label>
-                                <input type="text" class="form-control tenure-<?php echo $i; ?>" id=""
+                                <input type="text" class="form-control only_numeric tenure-<?php echo $i; ?>" id=""
                                        onchange="changeTenureValue(this)" data-formula-detail-id="<?php echo $i; ?>"
                                        name="tenure[<?php echo $request->range_id; ?>][<?php echo $i; ?>]"
                                        value="<?php echo $teunre[$i]['value']; ?>"
@@ -831,7 +758,7 @@ class ProductsController extends Controller
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="">Bonus Interest</label>
-                                <input type="text" class="form-control" id=""
+                                <input type="text" class="form-control only_numeric" id=""
                                        name="bonus_interest[<?php echo $request->range_id; ?>][<?php echo $i; ?>]"
                                        placeholder="">
 
@@ -850,4 +777,67 @@ class ProductsController extends Controller
         <?php
     }
 
+    public function checkProduct(Request $request)
+    {
+        if (isset($request->name)) {
+            $product = PromotionProducts::where('product_name', $request->name)
+                ->where('delete_status', 0)
+                ->first();
+
+            if ($product) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        if (isset($request->bank) && isset($request->productType) && isset($request->formula)) {
+            $product = PromotionProducts::where('bank_id', $request->bank)
+                ->where('promotion_type_id', $request->productType)
+                ->where('delete_status', 0)
+                ->where('formula_id', $request->formula)
+                ->first();
+            if ($product) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+    public function numberBetween($varToCheck, $low, $high)
+    {
+        if ($varToCheck > $high) return false;
+        if ($varToCheck < $low) return false;
+        return true;
+    }
+
+    public function checkRange(Request $request)
+    {
+
+        foreach ($request->min_placement as $key => $value) {
+            $key = count($request->min_placement) - 1 - $key;
+
+            for ($i = 0; $i <= (count($request->min_placement) - 1); $i++) {
+                if (!is_null($request->min_placement[$key]) && !is_null($request->min_placement[$i]) && !is_null($request->max_placement[$i]) && ($key != $i)) {
+                    if ($this->numberBetween($request->min_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
+                        return 1;
+                    } elseif ($this->numberBetween($request->max_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
+                        return 1;
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    public function checkTenure(Request $request)
+    {
+        foreach ($request->tenures as $tenure) {
+            if (1 < count(array_keys($request->tenures, $tenure))) {
+                return 1;
+            }
+        }
+        return 0;
+    }
 }

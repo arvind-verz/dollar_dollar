@@ -397,14 +397,18 @@ class Helper
             ->where('promotion_products.delete_status', '=', 0)
             ->select('promotion_products.*', 'brands.title as bank_name', 'promotion_types.name as promotion_type', 'promotion_formula.name as promotion_formula')
             ->get();
-        //dd($sel_query);
+
         return $sel_query;
     }
 
     public static function getProduct($id = NULL)
     {
         $sel_query = PromotionProducts::find($id);
+       if($sel_query->ads_placement)
+       {
+           $sel_query->ads_placement = json_decode($sel_query->ads_placement);
 
+       }
         return $sel_query;
     }
 

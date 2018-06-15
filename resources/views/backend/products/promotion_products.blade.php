@@ -70,18 +70,18 @@
 
                                                         <td>
                                                             @if($CheckLayoutPermission[0]->edit==1)
-                                                                {{--<a class="btn btn-app edit" title="Edit Product"
+                                                                <a class="btn btn-app edit" title="Edit Product"
                                                                    href="{{ route("promotion-products-edit",["id"=>$product->id]) }}">
                                                                     <i class="fa fa-edit"></i> Edit
-                                                                </a>--}}
+                                                                </a>
                                                             @endif
 
                                                             @if($CheckLayoutPermission[0]->delete==1)
-                                                               {{-- <a class="btn btn-app delete" title="Delete Product"
+                                                                <a class="btn btn-app delete" title="Delete Product"
                                                                    onclick="return confirm('Are you sure to delete this?')"
                                                                    href="{{ route("promotion-products-remove",["id"=>$product->id]) }}">
                                                                     <i class="fa fa-trash"></i> Delete
-                                                                </a>--}}
+                                                                </a>
                                                             @endif
                                                         </td>
                                                     </tr>

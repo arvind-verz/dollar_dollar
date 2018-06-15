@@ -37,3 +37,12 @@
         </div>
     </div>
 @endif
+<div class="col-md-12 display-none" id="error-div">
+    <div class="box-body">
+        <div class="alert alert-danger alert-hide">
+            <button type="button" class="close" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-ban"></i> Error!</h4>
+            <div id="js-errors"></div>
+        </div>
+    </div>
+</div>
