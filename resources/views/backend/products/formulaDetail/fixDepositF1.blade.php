@@ -15,7 +15,7 @@
                                 Placement
                             </button>
                         </div>
-                        <input type="text" class="form-control pull-right "
+                        <input type="text" class="form-control pull-right only_numeric "
                                name="min_placement[{{$key}}]"
                                value="{{ old('min_placement')[$key]  }}">
 
@@ -30,7 +30,7 @@
                                 Placement
                             </button>
                         </div>
-                        <input type="text" class="form-control pull-right"
+                        <input type="text" class="form-control pull-right only_numeric"
                                name="max_placement[{{$key}}]"
                                value="{{ old('max_placement')[$key]  }}">
 
@@ -64,7 +64,7 @@
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
                                     <label for="">Tenur</label>
-                                    <input type="text" class="form-control" id=""
+                                    <input type="text" class="form-control only_numeric" id=""
                                            name="tenure[{{$key}}][{{$k}}]"
                                            value="{{old('tenure')[$key][$k]}}"
                                            placeholder="">
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="">Bonus Interest</label>
-                                    <input type="text" class="form-control" id=""
+                                    <input type="text" class="form-control only_numeric" id=""
                                            name="bonus_interest[{{$key}}][{{$k}}]"
                                            value=" {{old('bonus_interest')[$key][$k] }}"
                                            placeholder="">
@@ -122,7 +122,7 @@
                             Placement
                         </button>
                     </div>
-                    <input type="text" class="form-control pull-right "
+                    <input type="text" class="form-control pull-right only_numeric "
                            name="min_placement[0]"
                            value="{{ old('min_placement') ? old('min_placement') :''  }}">
 
@@ -136,7 +136,7 @@
                         <button type="button" class="btn btn-danger">Max Placement
                         </button>
                     </div>
-                    <input type="text" class="form-control pull-right"
+                    <input type="text" class="form-control pull-right only_numeric"
                            name="max_placement[0]"
                            value="{{ old('max_placement') ? old('max_placement') :''  }}">
 
@@ -159,14 +159,14 @@
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <label for="">Tenur</label>
-                        <input type="text" class="form-control tenure-0" id="" data-formula-detail-id="0"
+                        <input type="text" class="form-control tenure-0 only_numeric" id="" data-formula-detail-id="0"
                                name="tenure[0][]"
                                placeholder="" onchange="changeTenureValue(this)">
 
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="">Bonus Interest</label>
-                        <input type="text" class="form-control" id=""
+                        <input type="text" class="form-control only_numeric" id=""
                                name="bonus_interest[0][]"
                                placeholder="">
 

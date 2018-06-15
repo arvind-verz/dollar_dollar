@@ -189,6 +189,9 @@ Route::group(array('prefix' => 'admin'), function () {
 
     Route::post('/add-more-placement-range', 'Products\ProductsController@addMorePlacementRange')->name('add-more-placement-range');
     Route::post('/check-product', 'Products\ProductsController@checkProduct')->name('check-product');
+    Route::post('/check-range', 'Products\ProductsController@checkRange')->name('check-range');
+    Route::post('/check-tenure', 'Products\ProductsController@checkTenure')->name('check-tenure');
+
     Route::post('/add-product-name', 'Products\ProductsController@addProductName')->name('add-product-name');
     Route::post('/add-price-range', 'Products\ProductsController@addPriceRange')->name('add-price-range');
     Route::post('/add-formula-detail', 'Products\ProductsController@addFormulaDetail')->name('add-formula-detail');

@@ -85,6 +85,24 @@
                                             <input type="hidden" id="hidden-formula" value="{{ old('formula') }}">
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        {{Form::label('minimum_placement_amount', 'Minimum Placement Amount',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('minimum_placement_amount', old('minimum_placement_amount'), ['id'=>'minimum-placement-amount','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{Form::label('maximum_interest_rate', 'Maximum Interest Rate',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('maximum_interest_rate', old('maximum_interest_rate'), ['id'=>'maximum-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Date Range</label>
