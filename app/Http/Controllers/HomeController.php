@@ -7,6 +7,7 @@ use App\Page;
 use App\Helpers\Helper;
 use App\SystemSetting;
 use App\PromotionProducts;
+use App\systemSettingHomepage;
 use DB;
 
 
@@ -24,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $systemSettingHomepage = systemSettingHomepage::where('delete_status', 0)
+            ->get();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
@@ -48,7 +51,7 @@ class HomeController extends Controller
         if (!$systemSetting) {
             return back()->with('error', OPPS_ALERT);
         }
-        return view('home', compact("brands", "page", "systemSetting", "blogs", "promotion_products"));
+        return view('home', compact("brands", "page", "systemSetting", "blogs", "promotion_products", "systemSettingHomepage"));
     }
 
 
