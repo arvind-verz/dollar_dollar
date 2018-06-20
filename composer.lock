@@ -1733,16 +1733,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.29.2",
+            "version": "1.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "ed6aa898982f441ccc9b2acdec51490f2bc5d337"
+                "reference": "863a1a651ea324e1838da3a52753a4239b9d4bea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/ed6aa898982f441ccc9b2acdec51490f2bc5d337",
-                "reference": "ed6aa898982f441ccc9b2acdec51490f2bc5d337",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/863a1a651ea324e1838da3a52753a4239b9d4bea",
+                "reference": "863a1a651ea324e1838da3a52753a4239b9d4bea",
                 "shasum": ""
             },
             "require": {
@@ -1777,7 +1777,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-05-29T15:23:46+00:00"
+            "time": "2018-06-15T11:52:26+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -2344,16 +2344,16 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "2.5.1",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "cd743016a2653ceeef310513b6f09396ccab2d91"
+                "reference": "e354e84cee54565d59873dfd5826c57fff338c57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/cd743016a2653ceeef310513b6f09396ccab2d91",
-                "reference": "cd743016a2653ceeef310513b6f09396ccab2d91",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/e354e84cee54565d59873dfd5826c57fff338c57",
+                "reference": "e354e84cee54565d59873dfd5826c57fff338c57",
                 "shasum": ""
             },
             "require": {
@@ -2410,7 +2410,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2018-02-10T22:20:31+00:00"
+            "time": "2018-06-18T09:59:53+00:00"
         },
         {
             "name": "spatie/laravel-permission",

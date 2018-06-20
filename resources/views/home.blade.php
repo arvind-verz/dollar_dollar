@@ -35,22 +35,14 @@
 
     <div class="ps-home--links">
         <div class="container">
-            <div class="ps-block--home-link" data-mh="home-link"><a href="#">Grow Your Money Simply</a>
-
-                <p>Curabitur aliquet quam posuere</p>
+            @if(count($systemSettingHomepage))
+                @foreach($systemSettingHomepage as $setting)
+            <div class="ps-block--home-link" data-mh="home-link">
+                <a href="{{ $setting->link }}">{{ $setting->title }}</a>
+                <p>{{ $setting->description }}</p>
             </div>
-            <div class="ps-block--home-link" data-mh="home-link"><a href="#">UOB Saving 1.1 %</a>
-
-                <p>Curabitur aliquet quam posuere</p>
-            </div>
-            <div class="ps-block--home-link" data-mh="home-link"><a href="#">ocbc 360 - up to 3 %</a>
-
-                <p>Curabitur aliquet quam posuere</p>
-            </div>
-            <div class="ps-block--home-link" data-mh="home-link"><a href="#">citibank</a>
-
-                <p>Curabitur aliquet quam posuere</p>
-            </div>
+                @endforeach
+            @endif
         </div>
     </div>
 
@@ -87,7 +79,7 @@
                      data-owl-item-sm="6" data-owl-item-md="7" data-owl-item-lg="8" data-owl-duration="1000"
                      data-owl-mousedrag="on">
                     @foreach($brands as $brand)
-                        <a href="{{$brand->brand_link}}" target="{{$brand->target}}"><img
+                        <a href="#" target="{{$brand->target}}"><img
                                     src="{{ asset($brand->brand_logo) }}" alt=""></a>
                     @endforeach
 
@@ -430,7 +422,7 @@
                     <div class="ps-section__right">
                         <div class="ps-fanpage"><img src="{{ asset('frontend/img/fanpage.png') }}" alt=""></div>
                         <div class="ps-block--home-signup">
-                            <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i class="fa fa-facebook"></i> Signup with facebook</a><a class="ps-btn ps-btn--outline" href="#">Sign Up with email</a>
+                            <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i class="fa fa-facebook"></i> Signup with facebook</a><a class="ps-btn ps-btn--outline" href="{{ url('login/google') }}">Sign Up with email</a>
                         </div>
                     </div>
                 </div>

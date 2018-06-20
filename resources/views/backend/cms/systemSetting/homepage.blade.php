@@ -19,7 +19,7 @@
             <div class="col-xs-12">
                 <div class="box box-warning ">
                     <!-- form start -->
-                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-homepage/store'], 'method' => 'POST']) !!}
+                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-homepage'], 'method' => 'POST']) !!}
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs pull-right">
                             <li><a href="#homepage_links" data-toggle="tab">Homepage Links</a></li>
@@ -56,7 +56,6 @@
 
                         </div>
                         <!-- nav-tabs-custom -->
-                        {{Form::hidden('_method','PUT')}}
                         <div class="box-footer">
                             <a href="{{ url('/admin') }}"
                                class="btn btn-default"><i class="fa fa-close">
@@ -68,12 +67,37 @@
                         </div>
                         <!-- /.box-footer -->
                         {!! Form::close() !!}
+                        <hr>
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(count($systemSetting))
+                                        @foreach($systemSetting as $setting)
+                                    <tr>
+                                        <td>{{ $setting->title }}</td>
+                                        <td>{{ $setting->description }}</td>
+                                        <td>##</td>
+                                    </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <!-- /.box-body -->
+
                 </div>
                 <!-- /.box -->
 
             </div>
+            
             <!-- /.col -->
         </div>
         <!-- /.row -->

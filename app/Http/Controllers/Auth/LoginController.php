@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Illuminate\Http\Request;
+use Socialite;
 use Illuminate\Support\Facades\Session;
 use Validator;
 use App\Brand;
@@ -14,7 +15,7 @@ use DB;
 use App\Page;
 use App\ProductManagement;
 use App\User;
-use Socialite;
+
 
 class LoginController extends Controller
 {
@@ -162,9 +163,9 @@ class LoginController extends Controller
         return redirect('account-information')->with('success', 'Password ' . UPDATED_ALERT);
     }
 
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     /**

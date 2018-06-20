@@ -24,17 +24,16 @@ class systemSettingHomepageController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
         $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required',
-            'link' => 'required'
+            'homepage_link_title' => 'required',
+            'homepage_link_description' => 'required',
+            'homepage_link' => 'required'
         ]);
-
+        
         $oldSystemSetting = new systemSettingHomepage;
-        $oldSystemSetting->company_name = $request->title;
-        $oldSystemSetting->contact_phone = $request->description;
-        $oldSystemSetting->contact_email = $request->link;
+        $oldSystemSetting->title = $request->homepage_link_title;
+        $oldSystemSetting->description = $request->homepage_link_description;
+        $oldSystemSetting->link = $request->homepage_link;
         $oldSystemSetting->created_at = Carbon::now()->toDateTimeString();
 
         $oldSystemSetting->save();
