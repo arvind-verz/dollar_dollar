@@ -58,9 +58,9 @@
                                 </a>
                                 <ul class="treeview-menu">
                                     <li><a href="{{ route('promotion-products') }}"><i class="fa fa-plus"></i> Products</a></li>
-                                    <li><a href="{{ route('promotion-formula') }}"><i class="fa fa-tty"></i> Formula</a></li>                                </ul>
+                                    <!-- <li><a href="{{ route('promotion-formula') }}"><i class="fa fa-tty"></i> Formula</a></li>  -->                               </ul>
                             </li>
-                            <li><a href="{{ route('bank-products') }}"><i class="fa fa-plus"></i> Bank Products</a></li>
+                            <!-- <li><a href="{{ route('bank-products') }}"><i class="fa fa-plus"></i> Bank Products</a></li> -->
                         </ul>
                     </li>
                     @elseif($menu->label == REPORT_MODULE)
