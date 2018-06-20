@@ -238,7 +238,7 @@
                 {
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[9, 'desc']],
+                    'order': [[6, 'asc']],
                     "columnDefs": []
                 });
         $('#menus').DataTable(
@@ -282,6 +282,7 @@
             'tabClass': 'nav nav-pills',
             'onPrevious': function (tab, navigation, index) {
                 $("#error-div").addClass('display-none');
+                var product_id = $.trim($("#product-id").val());
                 var errorSection = document.getElementById("js-errors");
                 errorSection.innerHTML = '';
                 var formula = $.trim($('#formula').val());
@@ -305,31 +306,13 @@
                         $.ajax({
                             method: "POST",
                             url: "{{url('/admin/check-product')}}",
-                            data: {name: name},
+                            data: {name: name, product_id:product_id,bank: bank, productType: productType, formula: formula},
                             cache: false,
                             async: false,
                             success: function (data) {
-
                                 if (data == 1) {
-                                    errors[i] = 'The name has already been taken';
+                                    errors[i] = 'This detail has already been taken';
                                     i++;
-                                } else {
-                                    if ((bank != '') && (productType != '') && (formula != '')) {
-
-                                        $.ajax({
-                                            method: "POST",
-                                            url: "{{url('/admin/check-product')}}",
-                                            data: {bank: bank, productType: productType, formula: formula},
-                                            cache: false,
-                                            async: false,
-                                            success: function (data) {
-                                                if (data == 1) {
-                                                    errors[i] = 'This detail has already been taken';
-                                                    i++;
-                                                }
-                                            }
-                                        });
-                                    }
                                 }
                             }
                         });
@@ -439,6 +422,151 @@
                             });
                         }
                     }
+                    if (formula == 2 || formula==3 || formula == 5) {
+                        var minPlacements = $('#savingDepositF1').find('input[name^="min_placement_sdp1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var maxPlacements = $('#savingDepositF1').find('input[name^="max_placement_sdp1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var bonusInterest = $('#savingDepositF1').find('input[name^="bonus_interest_sdp1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var boardInterest = $('#savingDepositF1').find('input[name^="board_rate_sdp1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var tenureError = false;
+                        var rangeError = false;
+                        $.each(minPlacements, function (k, v) {
+                            if (minPlacements[k] == '' || maxPlacements[k] == '') {
+                                errors[i] = 'The placement range is required.';
+                                i++;
+
+                                return false;
+                            }
+
+                        });
+                        $.each(bonusInterest, function (k, v) {
+                            if (bonusInterest[k] == '') {
+                                errors[i] = 'The bonus interest is required.';
+                                i++;
+
+                                return false;
+                            }
+
+                        });
+                        $.each(boardInterest, function (k, v) {
+                            if (boardInterest[k] == '' ) {
+                                errors[i] = 'The board interest is required.';
+                                i++;
+
+                                return false;
+                            }
+
+                        });
+
+
+                        if (rangeError == false) {
+                            $.ajax({
+                                method: "POST",
+                                url: "{{url('/admin/check-range')}}",
+                                data: {max_placement: maxPlacements, min_placement: minPlacements},
+                                cache: false,
+                                async: false,
+                                success: function (data) {
+                                    if (data == 1) {
+                                        errors[i] = 'Please check your placement range ';
+                                        i++;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                    if (formula == 4) {
+                        var rateCounter = $('#savingDepositF3').find('input[name^="counter_sdp3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var minPlacement = $('#savingDepositF3').find('input[name="min_placement_sdp3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var maxPlacement = $('#savingDepositF3').find('input[name="max_placement_sdp3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var averageInterestRate = $('#savingDepositF3').find('input[name="air_sdp3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var siborRate = $('#savingDepositF3').find('input[name="sibor_rate_sdp3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement)>parseInt(maxPlacement))) {
+                            errors[i] = 'Please check your placement range. ';
+                            i++;
+                        }
+                        $.each(rateCounter, function (k, v) {
+                            if (rateCounter[k] == '' ) {
+                                errors[i] = 'The counter rate is required.';
+                                i++;
+
+                                return false;
+                            }
+                        });
+
+                        if (averageInterestRate == '' ) {
+                            errors[i] = 'The average interest rate is required.';
+                            i++;
+                        } if (siborRate == '') {
+                            errors[i] = 'The sibor rate is required.';
+                            i++;
+
+                        }
+
+
+                    }
+                    if (formula == 6) {
+                        var minPlacement = $('#savingDepositF5').find('input[name="min_placement_sdp5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var maxPlacement = $('#savingDepositF5').find('input[name="max_placement_sdp5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var baseInterest = $('#savingDepositF5').find('input[name="base_interest_sdp5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var bonusInterest = $('#savingDepositF5').find('input[name="bonus_interest_sdp5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var placementMonth = $('#savingDepositF5').find('input[name="placement_month_sdp5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var displayMonth = $('#savingDepositF5').find('input[name="display_month_sdp5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+
+                        if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement)>parseInt(maxPlacement))) {
+                            errors[i] = 'Please check your placement range. ';
+                            i++;
+                        }
+
+                        if (baseInterest == '' ) {
+                            errors[i] = 'The base interest rate is required.';
+                            i++;
+                        } if (bonusInterest == '') {
+                            errors[i] = 'The bonus interest is required.';
+                            i++;
+                        }if (placementMonth == '' ) {
+                            errors[i] = 'The placement month is required.';
+                            i++;
+                        }if (displayMonth == '' ) {
+                            errors[i] = 'The display month is required.';
+                            i++;
+                        }
+                        if (parseInt(displayMonth)>parseInt(placementMonth)) {
+                            errors[i] = 'The display month interval is not greater than placement month.';
+                            i++;
+                        }
+
+                    }
+
                 }
                 if (errors.length) {
                     $("#error-div").removeClass('display-none');
@@ -446,7 +574,6 @@
                         errorSection.innerHTML = errorSection.innerHTML + '<p>' + v + '</p>';
                     });
                     return false;
-
                 }
             }
         });
@@ -482,25 +609,55 @@
         tinymce.init(editor_config);
     }
     function addMorePlacementRange(id) {
-
-        var data = $('#fixDepositF1').find('input[name^="tenure[0]"]').serializeArray();
-        var formula_detail_id = data.length - 1;
+        var formula = $("#formula").val();
         var range_id = $(id).data('range-id');
         range_id++;
-        jQuery.ajax({
-            type: "POST",
-            url: "{{url('/admin/add-more-placement-range')}}",
-            data: {detail: data, range_id: range_id}
-        }).done(function (data) {
-            $('#new-placement-range').append(data);
-            var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
-            $('#add-placement-range-button').html(addMoreRangeButton);
-            var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
-            $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
-        });
-
-
+        if(formula == 1)
+        {
+            var data = $('#fixDepositF1').find('input[name^="tenure[0]"]').serializeArray();
+            var formula_detail_id = data.length - 1;
+            jQuery.ajax({
+                type: "POST",
+                url: "{{url('/admin/add-more-placement-range')}}",
+                data: {detail: data, range_id: range_id,formula:formula}
+            }).done(function (data) {
+                $('#new-placement-range').append(data);
+                var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
+                $('#add-placement-range-button').html(addMoreRangeButton);
+                var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
+                $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
+            });
+        }
+        if(formula == 2 || formula == 3 || formula == 5)
+        {
+            jQuery.ajax({
+                type: "POST",
+                url: "{{url('/admin/add-more-placement-range')}}",
+                data: {detail: data, range_id: range_id,formula:formula}
+            }).done(function (data) {
+                $('#saving-placement-range-f1').append(data);
+                var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 saving-placement-range-f1-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
+                $('#add-saving-placement-range-f1-button').html(addMoreRangeButton);
+                });
+        }
     }
+
+    function addCounter(id)
+    {
+        var formula = $("#formula").val();
+        var counterValue = $(id).val();
+        if(formula == 4)
+        {
+            jQuery.ajax({
+                type: "POST",
+                url: "{{url('/admin/add-counter')}}",
+                data: {counter_value: counterValue}
+            }).done(function (data) {
+                $('#saving-placement-range-f3-counter').append(data);
+                });
+        }
+    }
+
     function removePlacementRange(id) {
         var range_id = $(id).data('range-id');
         $("#placement_range_" + range_id).remove();

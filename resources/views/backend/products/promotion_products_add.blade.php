@@ -100,7 +100,7 @@
                                     <div class="form-group">
                                         {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                            {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control only_numeric', 'placeholder' => '','onChange'=>"addCounter(this);"])}}
                                         </div>
                                     </div>
 
@@ -182,6 +182,9 @@
 
                                 <div class="tab-pane" id="formula-detail">
                                     @include('backend.products.formulaDetail.fixDepositF1')
+                                    @include('backend.products.formulaDetail.savingDepositF1')
+                                    @include('backend.products.formulaDetail.savingDepositF3')
+                                    @include('backend.products.formulaDetail.savingDepositF5')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -270,6 +273,11 @@
 
         });
         $("select[name='product_type']").on("change", function () {
+            $('#fixDepositF1').addClass('display-none');
+            $('#savingDepositF1').addClass('display-none');
+            $('#savingDepositF3').addClass('display-none');
+            $('#savingDepositF5').addClass('display-none');
+
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
             //alert(formula);
@@ -286,11 +294,30 @@
         });
         $("select[name='formula']").on("change", function () {
             var formula = $(this).val();
+            $('#fixDepositF1').addClass('display-none');
+            $('#savingDepositF1').addClass('display-none');
+            $('#savingDepositF3').addClass('display-none');
+            $('#savingDepositF5').addClass('display-none');
 
             if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
                 $('#fixDepositF1').removeClass('display-none');
 
             }
+            if (formula == '<?php echo SAVING_DEPOSIT_F3; ?>') {
+                //alert("Hello");
+                $('#savingDepositF3').removeClass('display-none');
+
+            }
+            if (formula == '<?php echo SAVING_DEPOSIT_F5; ?>') {
+                //alert("Hello");
+                $('#savingDepositF5').removeClass('display-none');
+
+            }
+            if (formula == '<?php echo SAVING_DEPOSIT_F1; ?>' || formula == '<?php echo SAVING_DEPOSIT_F2; ?>' ||formula == '<?php echo SAVING_DEPOSIT_F4; ?>') {
+                $('#savingDepositF1').removeClass('display-none');
+
+            }
+
 
         });
         $("select[name='product_type']").on("change", function () {

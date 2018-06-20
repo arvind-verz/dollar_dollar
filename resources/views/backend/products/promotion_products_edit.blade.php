@@ -32,7 +32,7 @@
                         </ul>
                         <div class="box-body">
 
-                            {!! Form::open(['id'=>'addProduct','class' => 'form-horizontal','route' => 'promotion-products-add-db', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                            {!! Form::open(['id'=>'addProduct','class' => 'form-horizontal','route' => ['promotion-products-update',$product->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                                     <!-- Custom Tabs (Pulled to the right) -->
                             <input type="hidden" name="product_id" id="product-id" value="{{$product->id}}" />
                             <div class="tab-content">
@@ -182,6 +182,9 @@
 
                                 <div class="tab-pane" id="formula-detail">
                                     @include('backend.products.formulaDetail.fixDepositF1')
+                                    @include('backend.products.formulaDetail.savingDepositF1')
+                                    @include('backend.products.formulaDetail.savingDepositF3')
+                                    @include('backend.products.formulaDetail.savingDepositF5')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -234,7 +237,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                {{Form::hidden('_method','PUT')}}
                                 <!-- /.box-body -->
                                 <div class="box-footer wizard">
                                     <a href="{{ route('promotion-products') }}"
@@ -246,7 +249,7 @@
                                                 class="fa  fa-angle-double-right "></i></a>
                                     <button type="submit" class="btn btn-info pull-right finish"><i
                                                 class="fa  fa-check"></i>
-                                        Add
+                                        Update
                                     </button>
                                     </ul>
                                 </div>
@@ -270,6 +273,7 @@
         $(document).ready(function () {
             var promotion_type = $("#product-type").val();
             var formula = $("#hidden-formula").val();
+            //var product_id = $("#product-id").val();
             //alert(product_name_id);
             if ((promotion_type.length != 0) && (formula.length != 0)) {
                 //alert(formula);
@@ -284,10 +288,27 @@
                 });
 
             }
+            if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
+                $('#fixDepositF1').removeClass('display-none');
 
+            }if (formula == '<?php echo SAVING_DEPOSIT_F1; ?>' || formula == '<?php echo SAVING_DEPOSIT_F2; ?>' || formula == '<?php echo SAVING_DEPOSIT_F4; ?>' ) {
+                $('#savingDepositF1').removeClass('display-none');
+
+            }if (formula == '<?php echo SAVING_DEPOSIT_F3; ?>') {
+                $('#savingDepositF3').removeClass('display-none');
+
+            }if (formula == '<?php echo SAVING_DEPOSIT_F5; ?>') {
+                $('#savingDepositF5').removeClass('display-none');
+
+            }
 
         });
         $("select[name='product_type']").on("change", function () {
+            $('#fixDepositF1').addClass('display-none');
+            $('#savingDepositF1').addClass('display-none');
+            $('#savingDepositF3').addClass('display-none');
+            $('#savingDepositF5').addClass('display-none');
+
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
             //alert(formula);
@@ -297,6 +318,7 @@
                 data: {promotion_type: promotion_type, formula: formula},
                 cache: false,
                 success: function (data) {
+                    <?php $product->product_range = [] ?>
                     $("select[name='formula']").html(data);
                 }
             });
@@ -304,9 +326,23 @@
         });
         $("select[name='formula']").on("change", function () {
             var formula = $(this).val();
+            $('#fixDepositF1').addClass('display-none');
+            $('#savingDepositF1').addClass('display-none');
+            $('#savingDepositF3').addClass('display-none');
+            $('#savingDepositF5').addClass('display-none');
 
             if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
                 $('#fixDepositF1').removeClass('display-none');
+
+            }if (formula == '<?php echo SAVING_DEPOSIT_F1; ?>' || formula == '<?php echo SAVING_DEPOSIT_F2; ?>' || formula == '<?php echo SAVING_DEPOSIT_F4; ?>') {
+                $('#savingDepositF1').removeClass('display-none');
+
+            }if (formula == '<?php echo SAVING_DEPOSIT_F3; ?>') {
+                $('#savingDepositF3').removeClass('display-none');
+
+            }if (formula == '<?php echo SAVING_DEPOSIT_F5; ?>') {
+                //alert("Hello");
+                $('#savingDepositF5').removeClass('display-none');
 
             }
 

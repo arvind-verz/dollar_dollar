@@ -438,7 +438,7 @@ class Helper
 
     public static function getAllFormula($id = NULL)
     {
-        $sel_query = PromotionFormula::where('id', $id)->where('delete_status', 0)->get();
+        $sel_query = PromotionFormula::where('promotion_id', $id)->where('delete_status', 0)->get();
         return $sel_query;
     }
     /* END FORMULAS */
