@@ -119,11 +119,12 @@
                             <div class="ps-block__header">
                                 <h3><strong>Fixed</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             @if(count($promotion_products))
                             <div class="row">
+                                @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
                                     @if($products->promotion_type_id==1)
                             
@@ -141,7 +142,9 @@
                                         <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
+                                    @php if($i==4) {break;} $i++; @endphp
                                     @endif
+                                
                                 @endforeach
                             </div>
                             @endif
@@ -153,11 +156,12 @@
                             <div class="ps-block__header">
                                 <h3><strong>Saving</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             @if(count($promotion_products))
                             <div class="row">
+                                @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
                                     @if($products->promotion_type_id==2)
                             
@@ -175,7 +179,9 @@
                                         <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
+                                 @php if($i==4) {break;} $i++; @endphp
                                     @endif
+                               
                                 @endforeach
                             </div>
                             @endif
@@ -186,8 +192,8 @@
                             <div class="ps-block__header">
                                 <h3><strong>Wealth</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -254,8 +260,8 @@
                             <div class="ps-block__header">
                                 <h3><strong>All In One Account</strong></h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -322,8 +328,8 @@
                             <div class="ps-block__header">
                                 <h3><strong>Foreign Currency</strong></h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -386,7 +392,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ps-section__footer"><a href="#">View all bank rates</a></div>
+                <div class="ps-section__footer"><a href="{{ url('fixed-deposit-mode') }}">View all bank rates</a></div>
             </div>
         </div>
     </div>

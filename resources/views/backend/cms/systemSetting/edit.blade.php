@@ -25,6 +25,7 @@
                             <li><a href="#contact" data-toggle="tab">Contact</a></li>
                             <li><a href="#email" data-toggle="tab">Email</a></li>
                             <li class="active"><a href="#detail" data-toggle="tab">Basic Detail</a></li>
+                            
                             <li class="pull-left header"><i class="fa fa-edit"></i>
                                 {{SYSTEM_SETTING_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
                         </ul>

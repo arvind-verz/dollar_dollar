@@ -9,6 +9,7 @@ use App\PromotionProducts;
 use Illuminate\Http\Request;
 use App\Brand;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -282,17 +283,18 @@ class PagesFrontController extends Controller
     public function fixDepositMode($details)
     {
 
-        $startDate = \Helper::startOfDayBefore();
-        $endDate =  \Helper::endOfDayAfter();
+        $curr_date = Carbon::today();
             //dd($startDate);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
         ->where('promotion_formula.promotion_id', '=', 1)
-        ->where('promotion_products.promotion_start', '<=', $startDate)
-        ->where('promotion_products.promotion_end', '>=', $endDate)
+        ->where('promotion_products.promotion_start', '<=', $curr_date)
+        ->where('promotion_products.promotion_end', '>=', $curr_date)
         ->get();
+
+
         //dd(DB::getQueryLog());
         //dd($promotion_products);
         $brands = $details['brands'];
@@ -305,16 +307,15 @@ class PagesFrontController extends Controller
     public function savingDepositMode($details)
     {
 
-        $startDate = \Helper::startOfDayBefore();
-        $endDate =  \Helper::endOfDayAfter();
+        $curr_date = Carbon::today();
         
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
         ->where('promotion_formula.promotion_id', '=', 2)
-        ->where('promotion_products.promotion_start', '<=', $startDate)
-        ->where('promotion_products.promotion_end', '>=', $endDate)
+        ->where('promotion_products.promotion_start', '<=', $curr_date)
+        ->where('promotion_products.promotion_end', '>=', $curr_date)
         ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
         ->get();
         //dd(DB::getQueryLog());
@@ -328,8 +329,7 @@ class PagesFrontController extends Controller
     }
 
     public function search_fixed_deposit(Request $request) {
-        $startDate = \Helper::startOfDayBefore();
-        $endDate =  \Helper::endOfDayAfter();
+        $curr_date = Carbon::today();
         
         //dd($request->all());
         $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
@@ -340,22 +340,24 @@ class PagesFrontController extends Controller
         
         $search_filter = [];
         $search_filter = $request->all();
+        $brand_id = $request->brand_id;
+        //dd($brand_id);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
         ->where('promotion_formula.promotion_id', '=', 1)
-        ->where('promotion_products.promotion_start', '<=', $startDate)
-        ->where('promotion_products.promotion_end', '>=', $endDate)
+        ->where('promotion_products.promotion_start', '<=', $curr_date)
+        ->where('promotion_products.promotion_end', '>=', $curr_date)
+        ->select('brands.id as brand_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
         ->get();
-        //dd($search_filter);
-        if(!is_null($search_filter['filter']) &&(!is_null($search_filter['search_value']))){
+
+        if((!is_null($search_filter['filter']) && (!is_null($search_filter['search_value']))) || !is_null($brand_id)){
             $filterProducts = [];
         foreach ($promotion_products as $product) {
             $status= false;
             $product_range = json_decode($product->product_range);
             $tenures = json_decode($product->tenure);
-                
             if(($search_filter['filter']=='Placement') || ($search_filter['filter']=='Interest')){
             foreach ($product_range as $range) {
                 
@@ -374,6 +376,10 @@ class PagesFrontController extends Controller
         }elseif($search_filter['filter']=='Tenor' && (in_array($search_filter['search_value'],$tenures))){
                 $status = true;
             }
+            if(!empty($brand_id) && $brand_id==$product->brand_id) {
+                
+                $status = true;
+            }
 
             if($status==true)
             {
@@ -381,14 +387,18 @@ class PagesFrontController extends Controller
             }
         }
         $promotion_products=$filterProducts;
+
+
     }
-        
+        //dd($promotion_products);
 
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
     public function search_saving_deposit(Request $request) {
         //dd($request->all());
+        $curr_date = Carbon::today();
+
         $search_filter = [];
         $search_filter = $request->all();
 
@@ -397,8 +407,8 @@ class PagesFrontController extends Controller
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
         ->where('promotion_formula.promotion_id', '=', 2)
-        ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
-        ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+        ->where('promotion_products.promotion_start', '<=', $curr_date)
+        ->where('promotion_products.promotion_end', '>=', $curr_date)
         ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
         ->get();
 

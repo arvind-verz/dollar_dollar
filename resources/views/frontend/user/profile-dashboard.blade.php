@@ -58,7 +58,7 @@
                                     <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
                                 </div>
                             </div>
-                            <div class="ps-block--box recommended-product">
+                            <!-- <div class="ps-block--box recommended-product">
                                 <div class="ps-block__header">
                                     <h5><img src="img/icons/file.png" alt="">recommended products</h5><a href="#">View all</a>
                                 </div>
@@ -216,7 +216,7 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

@@ -74,7 +74,7 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect('/');
+                ?: redirect('profile-dashboard');
     }
 
     protected function authenticated(Request $request, $user)
@@ -172,16 +172,26 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback($provider)
     {
-        $user = Socialite::driver('facebook')->user();
-        // All Providers
-        dd($user);
-        $user->getId();
-        $user->getNickname();
-        $user->getName();
-        $user->getEmail();
-        $user->getAvatar();
-        // $user->token;
+        $user = Socialite::driver($provider)->user();
+
+        $authUser = $this->findOrCreateUser($user, $provider);
+        Auth::login($authUser, true);
+        return redirect($this->redirectTo);
+    }
+
+    function findOrCreateUser($user, $provider) {
+        $authUser = User::where('email', $user->email)->first();
+        if ($authUser) {
+            return $authUser;
+        }
+
+        return User::create([
+            'name'      => $user->name,
+            'email'     => $user->email,
+            'password'  => bcrypt('!!!!!'),
+            'provider'  => $provider
+        ]);
     }
 }
