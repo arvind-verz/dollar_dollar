@@ -65,39 +65,49 @@
         {!! $output !!}
         <div class="container">
             <div class="ps-block--deposit-filter">
-                <div class="ps-block__header"><img src="{{ asset('img/block/list-brand.png') }}" alt=""></div>
+                <form class="ps-form--filter" action="{{ route('fixed-deposit-mode.search') }}" method="post">
+                <div class="ps-block__header">
+                    @if(count($brands))
+                        @foreach($brands as $brand)
+                    <span class="brand">
+                        <input type="radio" name="brand_id" value="{{ $brand->id }}" style="opacity: 0;position: absolute;" >
+                        <img src="{{ asset($brand->brand_logo) }}" width="100px" class="brand_img">
+                    </span>
+                        @endforeach
+                    @endif
+                </div>
                 <div class="ps-block__content">
-                    <form class="ps-form--filter" action="{{ route('fixed-deposit-mode.search') }}" method="post">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="ps-form__option">
-                                    <button type="button" class="ps-btn filter search_type @if(isset($search_filter['filter']) && $search_filter['filter']=='Interest') active @endif"><input type="radio" name="filter" value="Interest" style="opacity: 0;position: absolute;" @if(isset($search_filter['filter']) && $search_filter['filter']=='Interest') checked @endif>Interest</button>
-                                    <button type="button" class="ps-btn filter search_type @if(isset($search_filter['filter']) && $search_filter['filter']=='Placement') active @elseif(empty($search_filter)) active @endif"><input type="radio" name="filter" value="Placement" style="opacity: 0;position: absolute;" @if(isset($search_filter['filter']) && $search_filter['filter']=='Placement') checked @elseif(empty($search_filter)) checked @endif>Placement</button>
-                                    <button type="button" class="ps-btn filter search_type @if(isset($search_filter['filter']) && $search_filter['filter']=='Tenor') active @endif"><input type="radio" name="filter" value="Tenor" style="opacity: 0;position: absolute;" @if(isset($search_filter['filter']) && $search_filter['filter']=='Tenor') checked @endif>Tenor</button>
-                                </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                            <div class="ps-form__option">
+                                <button type="button" class="ps-btn filter search_type @if(isset($search_filter['filter']) && $search_filter['filter']=='Interest') active @endif"><input type="radio" name="filter" value="Interest" style="opacity: 0;position: absolute;" @if(isset($search_filter['filter']) && $search_filter['filter']=='Interest') checked @endif>Interest</button>
+                                <button type="button" class="ps-btn filter search_type @if(isset($search_filter['filter']) && $search_filter['filter']=='Placement') active @elseif(empty($search_filter)) active @endif"><input type="radio" name="filter" value="Placement" style="opacity: 0;position: absolute;" @if(isset($search_filter['filter']) && $search_filter['filter']=='Placement') checked @elseif(empty($search_filter)) checked @endif>Placement</button>
+                                <button type="button" class="ps-btn filter search_type @if(isset($search_filter['filter']) && $search_filter['filter']=='Tenor') active @endif"><input type="radio" name="filter" value="Tenor" style="opacity: 0;position: absolute;" @if(isset($search_filter['filter']) && $search_filter['filter']=='Tenor') checked @endif>Tenor</button>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="row ps-col-tiny">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <div class="form-group form-group--nest">
-                                            <div class="form-group__content"><span class="prefix_holder">@if(isset($search_filter['filter']) && $search_filter['filter']=='Placement')$@elseif(!isset($search_filter['filter']))$@endif</span>
-                                                <input class="form-control" name="search_value" type="text" placeholder="" value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}">
-                                            </div>
-                                            <button type="submit">Go</button>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                            <div class="row ps-col-tiny">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="form-group form-group--nest">
+                                        <div class="form-group__content"><span class="prefix_holder">@if(isset($search_filter['filter']) && $search_filter['filter']=='Placement')$@elseif(!isset($search_filter['filter']))$@endif</span>
+                                            <input class="form-control" name="search_value" type="text" placeholder="" value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}">
                                         </div>
+                                        <button type="submit">Go</button>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <select class="form-control" name="sort_by">
-                                            <option value="">Sort by</option>
-                                            <option value="1" @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==1) selected @endif>1</option>
-                                            <option value="1" @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==2) selected @endif>2</option>
-                                        </select>
-                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <select class="form-control" name="sort_by">
+                                        <option value="">Sort by</option>
+                                        <option value="1" @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==1) selected @endif>1</option>
+                                        <option value="1" @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==2) selected @endif>2</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
+                </form>
             </div>
             @if(count($promotion_products))                
             <div class="ps-slider--feature-product nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true"
@@ -252,7 +262,7 @@
                                         $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
                                     @endphp
                                         <p><strong>{{ $TM . ' ' . $days_type }}
-                                        </strong> - ${{ $calc }} ({{ $range->bonus_interest[$i] }}%)</p>
+                                        </strong> - ${{ round($calc, 2) }} ({{ $range->bonus_interest[$i] }}%)</p>
                                     @php
                                     }}
                                 }
@@ -275,7 +285,7 @@
                                         $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
                                     @endphp
                                         <p><strong>{{ $TM . ' ' . $days_type }}
-                                        </strong> - ${{ $calc }} ({{ $range->bonus_interest[$i] }}%)</p>
+                                        </strong> - ${{ round($calc, 2) }} ({{ $range->bonus_interest[$i] }}%)</p>
                                     @php
                                     }}
                                 }
@@ -305,7 +315,14 @@
                 prefix_holder = '$';
             }
             $("span.prefix_holder").text(prefix_holder);
-        })
+        });
+
+        $("img.brand_img").on("click", function() {
+            $("input[name='brand']").attr("checked", false);
+            $("span.brand img").css("border", "none");
+            $(this).prev().attr("checked", true);
+            $(this).css("border", "1px solid #000");
+        });
     </script>
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}

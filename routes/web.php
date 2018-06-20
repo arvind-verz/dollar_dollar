@@ -18,8 +18,8 @@ Route::get('/welcome', 'HomeController@index')->name('index');
 Route::get('/', 'HomeController@index')->name('/');
 /*End Home Module*/
 
-Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
-Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 /*User Module*/
@@ -118,6 +118,7 @@ Route::group(array('prefix' => 'admin'), function () {
 
     /*System setting start*/
     Route::resource('/system-setting', 'CMS\SystemSettingController');
+    Route::resource('/system-setting-homepage', 'CMS\systemSettingHomepageController');
     /*System setting start*/
 
     /*User Module start*/

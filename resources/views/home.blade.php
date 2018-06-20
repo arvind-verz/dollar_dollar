@@ -35,22 +35,14 @@
 
     <div class="ps-home--links">
         <div class="container">
-            <div class="ps-block--home-link" data-mh="home-link"><a href="#">Grow Your Money Simply</a>
-
-                <p>Curabitur aliquet quam posuere</p>
+            @if(count($systemSettingHomepage))
+                @foreach($systemSettingHomepage as $setting)
+            <div class="ps-block--home-link" data-mh="home-link">
+                <a href="{{ $setting->link }}">{{ $setting->title }}</a>
+                <p>{{ $setting->description }}</p>
             </div>
-            <div class="ps-block--home-link" data-mh="home-link"><a href="#">UOB Saving 1.1 %</a>
-
-                <p>Curabitur aliquet quam posuere</p>
-            </div>
-            <div class="ps-block--home-link" data-mh="home-link"><a href="#">ocbc 360 - up to 3 %</a>
-
-                <p>Curabitur aliquet quam posuere</p>
-            </div>
-            <div class="ps-block--home-link" data-mh="home-link"><a href="#">citibank</a>
-
-                <p>Curabitur aliquet quam posuere</p>
-            </div>
+                @endforeach
+            @endif
         </div>
     </div>
 
@@ -87,7 +79,7 @@
                      data-owl-item-sm="6" data-owl-item-md="7" data-owl-item-lg="8" data-owl-duration="1000"
                      data-owl-mousedrag="on">
                     @foreach($brands as $brand)
-                        <a href="{{$brand->brand_link}}" target="{{$brand->target}}"><img
+                        <a href="#" target="{{$brand->target}}"><img
                                     src="{{ asset($brand->brand_logo) }}" alt=""></a>
                     @endforeach
 
@@ -119,11 +111,12 @@
                             <div class="ps-block__header">
                                 <h3><strong>Fixed</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             @if(count($promotion_products))
                             <div class="row">
+                                @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
                                     @if($products->promotion_type_id==1)
                             
@@ -141,7 +134,9 @@
                                         <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
+                                    @php if($i==4) {break;} $i++; @endphp
                                     @endif
+                                
                                 @endforeach
                             </div>
                             @endif
@@ -153,11 +148,12 @@
                             <div class="ps-block__header">
                                 <h3><strong>Saving</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             @if(count($promotion_products))
                             <div class="row">
+                                @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
                                     @if($products->promotion_type_id==2)
                             
@@ -175,7 +171,9 @@
                                         <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
+                                 @php if($i==4) {break;} $i++; @endphp
                                     @endif
+                               
                                 @endforeach
                             </div>
                             @endif
@@ -186,8 +184,8 @@
                             <div class="ps-block__header">
                                 <h3><strong>Wealth</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -254,8 +252,8 @@
                             <div class="ps-block__header">
                                 <h3><strong>All In One Account</strong></h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -322,8 +320,8 @@
                             <div class="ps-block__header">
                                 <h3><strong>Foreign Currency</strong></h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div>
+                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div> -->
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -386,7 +384,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ps-section__footer"><a href="#">View all bank rates</a></div>
+                <div class="ps-section__footer"><a href="{{ url('fixed-deposit-mode') }}">View all bank rates</a></div>
             </div>
         </div>
     </div>
@@ -409,7 +407,7 @@
                                 <div class="ps-post__thumbnail">
                                     <a class="ps-post__overlay" href="{{ url($blog->slug) }}"></a><img src="{{ asset($blog->blog_image) }}" alt="">
 
-                                    <div class="ps-post__posted"><span class="date">19</span><span class="month">Nov</span></div>
+                                    <div class="ps-post__posted"><span class="date">{{ date("d", strtotime($blog->created_at)) }}</span><span class="month">{{ date("M", strtotime($blog->created_at)) }}</span></div>
                                 </div>
                                 <div class="ps-post__content">
                                     <a class="ps-post__title" href="{{ url($blog->slug) }}">{{ $blog->name }}</a>
@@ -424,7 +422,7 @@
                     <div class="ps-section__right">
                         <div class="ps-fanpage"><img src="{{ asset('frontend/img/fanpage.png') }}" alt=""></div>
                         <div class="ps-block--home-signup">
-                            <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i class="fa fa-facebook"></i> Signup with facebook</a><a class="ps-btn ps-btn--outline" href="#">Sign Up with email</a>
+                            <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i class="fa fa-facebook"></i> Signup with facebook</a><a class="ps-btn ps-btn--outline" href="{{ url('login/google') }}">Sign Up with email</a>
                         </div>
                     </div>
                 </div>
