@@ -203,3 +203,8 @@ define('MISS', "Miss.");
 
 //formula type ids
 define('FIX_DEPOSIT_F1', 1);
+define('SAVING_DEPOSIT_F1', 2);
+define('SAVING_DEPOSIT_F2', 3);
+define('SAVING_DEPOSIT_F3', 4);
+define('SAVING_DEPOSIT_F4', 5);
+define('SAVING_DEPOSIT_F5', 6);

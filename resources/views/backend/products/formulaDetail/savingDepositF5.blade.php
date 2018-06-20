@@ -1,10 +1,10 @@
-<div class="display-none" id="savingDepositF1">
-    @if(isset($product) && (in_array($product->formula_id,[SAVING_DEPOSIT_F1,SAVING_DEPOSIT_F2,SAVING_DEPOSIT_F4])))
+<div class="display-none" id="savingDepositF5">
+    @if(isset($product) && (in_array($product->formula_id,[SAVING_DEPOSIT_F5])))
         @if(count($product->product_range))
             <?php //dd(old('min_placement')[0]); ?>
             @foreach($product->product_range as $key => $value)
 
-                <div id="saving_placement_range_f1_{{$key}}">
+                <div id="saving_placement_range_f5_{{$key}}">
                     <div class="form-group">
                         <label for="title" class="col-sm-2 control-label">Formula
                             Detail</label>
@@ -17,7 +17,7 @@
                                     </button>
                                 </div>
                                 <input type="text" class="form-control pull-right only_numeric "
-                                       name="min_placement_sdp1[{{$key}}]"
+                                       name="min_placement_sdp5"
                                        value="{{ $value->min_range  }}">
 
                             </div>
@@ -32,54 +32,54 @@
                                     </button>
                                 </div>
                                 <input type="text" class="form-control pull-right only_numeric"
-                                       name="max_placement_sdp1[{{$key}}]"
+                                       name="max_placement_sdp5"
                                        value="{{ $value->max_range  }}">
 
                             </div>
 
                         </div>
-                        <div class="col-sm-2" id="add-saving-placement-range-f1-button">
-                            @if($key==0)
-                                <button type="button"
-                                        class="btn btn-info pull-left mr-15 add-saving-placement-range-f1-button"
-                                        data-range-id="{{count($product->product_range)}}"
-                                        onClick="addMorePlacementRange(this);"><i
-                                            class="fa fa-plus"></i>
-                                </button>
-                            @else
-                                <button type="button"
-                                        class="btn btn-danger -pull-right  remove-placement-range-button "
-                                        data-range-id="{{$key}}" onClick="removePlacementRange(this);"><i
-                                            class="fa fa-minus"> </i>
-                                </button>
-                            @endif
+                        <div class="col-sm-2" id="add-saving-placement-range-f5-button">
                         </div>
-
                     </div>
-                    <?php
-                    $bonusInterest = $value->bonus_interest;
-                    $boardRate = $value->board_rate;
-                    ?>
-
-
                     <div class="form-group ">
                         <label for="title" class="col-sm-2 control-label"></label>
 
                         <div class="col-sm-8 ">
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest</label>
-                                    <input type="text" class="form-control only_numeric" id="bonus_interest_{{$key}}"
-                                           name="bonus_interest_sdp1[{{$key}}]" value="{{$bonusInterest}}"
+                                    <label for="">Base Interest</label>
+                                    <input type="text" class="form-control only_numeric" id=""
+                                           name="base_interest_sdp5" value="{{ $value->base_interest  }}"
                                            placeholder="">
 
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Board Rate</label>
-                                    <input type="text" class="form-control only_numeric" id="board_rate_{{$key}}"
-                                           name="board_rate_sdp1[{{$key}}]" value="{{$boardRate}}"
+                                    <label for="">Bonus Interest</label>
+                                    <input type="text" class="form-control only_numeric" id=""
+                                           name="bonus_interest_sdp5" value="{{ $value->bonus_interest  }}"
+                                           placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">&emsp;</div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="title" class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-8 ">
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="">Placement Month</label>
+                                    <input type="text" class="form-control only_numeric" id=""
+                                           name="placement_month_sdp5" value="{{ $value->placement_month  }}"
                                            placeholder="">
 
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="">Display Month Interval</label>
+                                    <input type="text" class="form-control only_numeric" id=""
+                                           name="display_month_sdp5" value="{{ $value->display_month  }}"
+                                           placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
         @endif
     @else
 
-        <div id="saving_placement_range_f1_0">
+        <div id="saving_placement_range_f5_0">
             <div class="form-group">
                 <label for="title" class="col-sm-2 control-label">Formula Detail</label>
 
@@ -102,7 +102,7 @@
                             </button>
                         </div>
                         <input type="text" class="form-control pull-right only_numeric "
-                               name="min_placement_sdp1[0]"
+                               name="min_placement_sdp5"
                                value="{{ old('min_placement') ? old('min_placement') :''  }}">
 
                     </div>
@@ -116,18 +116,14 @@
                             </button>
                         </div>
                         <input type="text" class="form-control pull-right only_numeric"
-                               name="max_placement_sdp1[0]"
+                               name="max_placement_sdp5"
                                value="{{ old('max_placement') ? old('max_placement') :''  }}">
 
                     </div>
 
                 </div>
-                <div class="col-sm-2" id="add-saving-placement-range-f1-button">
-                    <button type="button"
-                            class="btn btn-info pull-left mr-15 add-saving-placement-range-f1-button"
-                            data-range-id="0" onClick="addMorePlacementRange(this);"><i
-                                class="fa fa-plus"></i>
-                    </button>
+                <div class="col-sm-2" id="add-saving-placement-range-f5-button">
+
                 </div>
 
             </div>
@@ -137,16 +133,38 @@
                 <div class="col-sm-8 ">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Bonus Interest</label>
-                            <input type="text" class="form-control only_numeric" id="bonus_interest_0"
-                                   name="bonus_interest_sdp1[0]"
+                            <label for="">Base Interest</label>
+                            <input type="text" class="form-control only_numeric" id=""
+                                   name="base_interest_sdp5"
                                    placeholder="">
 
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Board Rate</label>
-                            <input type="text" class="form-control only_numeric" id="board_rate_0"
-                                   name="board_rate_sdp1[0]"
+                            <label for="">Bonus Interest</label>
+                            <input type="text" class="form-control only_numeric" id=""
+                                   name="bonus_interest_sdp5"
+                                   placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">&emsp;</div>
+            </div>
+            <div class="form-group ">
+                <label for="title" class="col-sm-2 control-label"></label>
+
+                <div class="col-sm-8 ">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="">Placement Month</label>
+                            <input type="text" class="form-control only_numeric" id=""
+                                   name="placement_month_sdp5"
+                                   placeholder="">
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="">Display Month Interval</label>
+                            <input type="text" class="form-control only_numeric" id=""
+                                   name="display_month_sdp5"
                                    placeholder="">
                         </div>
                     </div>
@@ -155,7 +173,7 @@
             </div>
         </div>
     @endif
-    <div id="saving-placement-range-f1"></div>
+    <div id="saving-placement-range-f5"></div>
 
 </div>
 

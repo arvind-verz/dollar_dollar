@@ -42,6 +42,8 @@
                                                 <th>Bank Name</th>
                                                 <th>Product Type </th>
                                                 <th>Formula Name </th>
+                                                <th>Featured </th>
+                                                <th>Status </th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
@@ -57,6 +59,18 @@
                                                         <td>{{ $product->bank_name }}</td>
                                                         <td>{{ $product->promotion_type }}</td>
                                                         <td>{{ $product->promotion_formula }}</td>
+                                                        <td>@if ($product->featured == 1)
+                                                                Yes
+                                                            @else
+                                                                No
+                                                            @endif
+                                                        </td>
+                                                        <td>@if ($product->status == 1)
+                                                                Active
+                                                            @else
+                                                                Inactive
+                                                            @endif
+                                                        </td>
                                                         <td>@if ($product->created_at == null)
                                                                 {{$product->created_at}}
                                                             @endif
