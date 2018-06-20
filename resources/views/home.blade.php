@@ -407,7 +407,7 @@
                                 <div class="ps-post__thumbnail">
                                     <a class="ps-post__overlay" href="{{ url($blog->slug) }}"></a><img src="{{ asset($blog->blog_image) }}" alt="">
 
-                                    <div class="ps-post__posted"><span class="date">19</span><span class="month">Nov</span></div>
+                                    <div class="ps-post__posted"><span class="date">{{ date("d", strtotime($blog->created_at)) }}</span><span class="month">{{ date("M", strtotime($blog->created_at)) }}</span></div>
                                 </div>
                                 <div class="ps-post__content">
                                     <a class="ps-post__title" href="{{ url($blog->slug) }}">{{ $blog->name }}</a>
