@@ -17,9 +17,10 @@
         <div class="row">
             @include('backend.inc.messages')
             <div class="col-xs-12">
+                @if(count($systemSetting))
                 <div class="box box-warning ">
                     <!-- form start -->
-                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-homepage'], 'method' => 'POST']) !!}
+                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-homepage', $systemSetting->id], 'method' => 'POST']) !!}
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs pull-right">
                             <li><a href="#homepage_links" data-toggle="tab">Homepage Links</a></li>
@@ -27,27 +28,29 @@
                             <li class="pull-left header"><i class="fa fa-edit"></i>
                                 {{SYSTEM_SETTING_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
                         </ul>
+
                         <!-- /.box-header -->
                         <div class="box-body">
                             <!-- Custom Tabs (Pulled to the right) -->
+
                             <div class="tab-content">
                                 <div class="tab-pane active" id="homepage_links">
                                     <div class="form-group">
                                         {{Form::label('homepage_link_title', 'Title',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('homepage_link_title', '', ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('homepage_link_title', $systemSetting->title, ['id' => '', 'class' => 'form-control', 'placeholder' => '' ])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('homepage_link_description', 'Description',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('homepage_link_description', '', ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('homepage_link_description', $systemSetting->description, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('homepage_link', 'Link',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('homepage_link', '', ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('homepage_link', $systemSetting->link, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                 </div>
@@ -65,36 +68,15 @@
                                 Update
                             </button>
                         </div>
+                        {{Form::hidden('_method','PUT')}}
                         <!-- /.box-footer -->
                         {!! Form::close() !!}
-                        <hr>
-                        <div class="box-body table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if(count($systemSetting))
-                                        @foreach($systemSetting as $setting)
-                                    <tr>
-                                        <td>{{ $setting->title }}</td>
-                                        <td>{{ $setting->description }}</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-app edit" title="Edit Page" href="{{ route("system-setting-homepage.edit",["id"=>$setting->id]) }}"><i class="fa fa-edit"></i> Edit</a></td>
-                                    </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
+                        
                     </div>
                     <!-- /.box-body -->
 
                 </div>
+                @endif
                 <!-- /.box -->
 
             </div>

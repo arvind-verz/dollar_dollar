@@ -50,19 +50,22 @@
         <div class="ps-section__content" data-mh="home-search"><span>Need something?</span>
             <h4>Search Products</h4>
         </div>
-        <form class="ps-form--search" action="do_action" method="post" data-mh="home-search">
+        <form class="ps-form--search" action="{{ route('product-search') }}" method="POST" data-mh="home-search">
             <div class="form-group">
-                <select class="form-control">
-                    <option value="1">Select account Type</option>
-                    <option value="2">Account type 1</option>
-                    <option value="2">Account type 2</option>
+                <select class="form-control" name="account_type">
+                    <option value="">Select account Type</option>
+                    <option value="1">Fixed Deposit</option>
+                    <option value="2">Saving Deposit</option>
+                    <option value="4">Wealth Deposit</option>
+                    <option value="3">All In One Account</option>
+                    <option value="5">Foreign Currency</option>
                 </select>
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Enter Placement">
+                <input class="form-control" type="text" name="search_value" placeholder="Enter Placement">
             </div>
             <div class="form-group submit">
-                <button class="ps-btn">Search Now<i class="fa fa-search"></i></button>
+                <button type="submit" class="ps-btn">Search Now<i class="fa fa-search"></i></button>
             </div>
         </form>
     </div>
@@ -114,7 +117,7 @@
                                 <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
                                 </div> -->
                             </div>
-                            @if(count($promotion_products))
+                            <!-- @if(count($promotion_products))
                             <div class="row">
                                 @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
@@ -139,7 +142,63 @@
                                 
                                 @endforeach
                             </div>
-                            @endif
+                            @endif -->
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <h4>up to <strong> 1.3%</strong></h4>
+
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD $20,000</p>
+
+                                        <p class="highlight">12 Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#">More info</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <h4>up to <strong> 1.3%</strong></h4>
+
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD $20,000</p>
+
+                                        <p class="highlight">12 Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#">More info</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <h4>up to <strong> 1.3%</strong></h4>
+
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD $20,000</p>
+
+                                        <p class="highlight">12 Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#">More info</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <h4>up to <strong> 1.3%</strong></h4>
+
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD $20,000</p>
+
+                                        <p class="highlight">12 Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#">More info</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -151,7 +210,7 @@
                                 <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
                                 </div> -->
                             </div>
-                            @if(count($promotion_products))
+                            <!-- @if(count($promotion_products))
                             <div class="row">
                                 @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
@@ -176,7 +235,63 @@
                                
                                 @endforeach
                             </div>
-                            @endif
+                            @endif -->
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <h4>up to <strong> 1.3%</strong></h4>
+
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD $20,000</p>
+
+                                        <p class="highlight">12 Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#">More info</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <h4>up to <strong> 1.3%</strong></h4>
+
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD $20,000</p>
+
+                                        <p class="highlight">12 Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#">More info</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <h4>up to <strong> 1.3%</strong></h4>
+
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD $20,000</p>
+
+                                        <p class="highlight">12 Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#">More info</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <h4>up to <strong> 1.3%</strong></h4>
+
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD $20,000</p>
+
+                                        <p class="highlight">12 Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#">More info</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="ps-tab" id="tab-3">

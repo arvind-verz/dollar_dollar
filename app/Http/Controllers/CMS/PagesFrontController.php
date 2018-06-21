@@ -459,4 +459,78 @@ class PagesFrontController extends Controller
         //dd($promotion_products);
         return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
+
+    public function product_search_homepage(Request $request) {
+        //dd($request->all());
+        $account_type = $request->account_type;
+        $search_value = $request->search_value;
+        $type = 'fixed';
+
+        $request = [
+            'account_type' =>   $account_type,
+            'search_value'  =>  $search_value,
+            'filter'        =>  'Placement'
+        ];
+        $search_filter = $request;
+
+        $curr_date = Carbon::now();
+
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_formula.promotion_id', '=', $account_type)
+        ->where('promotion_products.promotion_start', '<=', $curr_date)
+        ->where('promotion_products.promotion_end', '>=', $curr_date)
+        ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+        ->get();
+
+        if($account_type==1) {
+            $type='fixed';
+        }
+        elseif($account_type==2) {
+            $type='saving';
+        }
+        $details = \Helper::get_page_detail($type.'-deposit-mode');
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+
+        if($account_type==2) {
+            foreach ($promotion_products as $product) {
+                $status= false;
+                $product_range = json_decode($product->product_range);
+                   //dd($product); 
+                if((($search_filter['filter']=='Placement') || ($search_filter['filter']=='Interest')) && $product->promotion_formula_id!=5 && $product->promotion_formula_id!=4){
+                foreach ($product_range as $range) {
+                    //var_dump($product_range);
+                    if(($search_filter['filter']=='Placement') && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range))
+                    {  
+                        $status = true;
+                       
+                    }
+                    elseif($search_filter['filter']=='Interest'  && ($product->promotion_formula_id==2 || $product->promotion_formula_id==3))
+                    {
+                            $status = true;
+                    }
+
+
+                }
+            }elseif($search_filter['filter']=='Tenor' && ($product->promotion_formula_id==3 || $product->promotion_formula_id==6)) {
+                    $status = true;
+                }
+
+
+                if((($search_filter['filter']=='Placement')) && $product->promotion_formula_id==4) {
+                    $status = true;
+                }
+                if($status==true)
+                {
+                    $filterProducts[]=$product;
+                }
+            }
+            $promotion_products=$filterProducts;
+        }
+        return view('frontend.products.'.$type.'-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
+    }
 }
