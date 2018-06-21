@@ -226,3 +226,5 @@ Route::post('/account-information/update/{id}', 'User\AccountInformationControll
 
 Route::post('/fixed-deposit-mode/search/', 'CMS\PagesFrontController@search_fixed_deposit')->name('fixed-deposit-mode.search');
 Route::post('/saving-deposit-mode/search/', 'CMS\PagesFrontController@search_saving_deposit')->name('saving-deposit-mode.search');
+
+Route::post('/product-search', 'CMS\PagesFrontController@product_search_homepage')->name('product-search');
