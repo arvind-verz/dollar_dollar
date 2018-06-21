@@ -378,7 +378,7 @@
                                                 $calc = eval('return '.$promotion_product->formula.';');
                                                 @endphp
                                                 <h2>${{ round($calc, 2) }} <br>
-                                                    <span>Total interest rate {{ ($range->$range->bonus_interest + $range->board_rate) }}
+                                                    <span>Total interest rate {{ ($range->bonus_interest + $range->board_rate) }}
                                                         %</span></h2>
                                                 @php
                                                 }
