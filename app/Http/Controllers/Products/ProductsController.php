@@ -151,7 +151,7 @@ class ProductsController extends Controller
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F3])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
-            $range['counter'] = json_encode(array_map('floatVal', $request->counter_sdp3));
+            $range['counter'] = array_map('floatVal', $request->counter_sdp3);
             $range['air'] = (float)$request->air_sdp3;
             $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
             $ranges[] = $range;
@@ -177,8 +177,8 @@ class ProductsController extends Controller
             return (float)$x;
         }
         $product->product_range = $ranges;
-        $product->promotion_start = \Helper::startOfDayBefore($request->start_date);
-        $product->promotion_end = \Helper::endOfDayAfter($request->end_date);
+        $product->promotion_start = \Helper::startOfDayBefore($request->promotion_start_date);
+        $product->promotion_end = \Helper::endOfDayAfter($request->promotion_end_date);
         $product->product_footer = $request->product_footer;
 
         if ($request->hasFile('ad_horizontal_image')) {
@@ -327,7 +327,7 @@ class ProductsController extends Controller
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F3])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
-            $range['counter'] = json_encode(array_map('floatVal', $request->counter_sdp3));
+            $range['counter'] = array_map('floatVal', $request->counter_sdp3);
             $range['air'] = (float)$request->air_sdp3;
             $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
             $ranges[] = $range;
@@ -353,10 +353,9 @@ class ProductsController extends Controller
         {
             return (float)$x;
         }
-
         $product->product_range = $ranges;
-        $product->promotion_start = \Helper::startOfDayBefore($request->start_date);
-        $product->promotion_end = \Helper::endOfDayAfter($request->end_date);
+        $product->promotion_start = \Helper::startOfDayBefore($request->promotion_start_date);
+        $product->promotion_end = \Helper::endOfDayAfter($request->promotion_end_date);
         $product->product_footer = $request->product_footer;
 
         if ($request->hasFile('ad_horizontal_image')) {

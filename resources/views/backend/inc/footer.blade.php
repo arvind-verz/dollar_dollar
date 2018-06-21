@@ -238,7 +238,7 @@
                 {
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[6, 'asc']],
+                    'order': [[7, 'desc'],[6, 'desc']],
                     "columnDefs": []
                 });
         $('#menus').DataTable(

@@ -45,7 +45,7 @@
                         <label for="title" class="col-sm-2 control-label">Base Rate Counter</label>
                         <div class="col-sm-8 " id="saving-placement-range-f3-counter">
                             <?php
-                            $counters = json_decode($value->counter);
+                            $counters = $value->counter;
                             if (count($counters)) {
                             $i = 1;
                             foreach ($counters as $counter) {    ?>
