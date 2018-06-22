@@ -45,6 +45,10 @@ if (!$systemSetting) {
        .ps-table--product tbody tr.highlight {
             background-color: orange;
         }
+
+        .selected_img {
+            border: 1px solid #000;
+        }
     </style>
 
 </head>
