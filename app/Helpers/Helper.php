@@ -281,6 +281,7 @@ class Helper
         $details = Menu::leftJoin('pages', 'pages.menu_id', '=', 'menus.id')
             ->orderBy('menus.view_order', 'ASC')
             ->where('menus.delete_status', 0)
+            //->where('pages.delete_status', 0)
             ->select('menus.*', 'pages.name', 'pages.slug', 'pages.after_login')
             ->get();
         //dd(DB::getQueryLog());
@@ -295,7 +296,7 @@ class Helper
             $filter_data = $details->filter(function ($detail) {
                 if (($detail->child != 0) || ($detail->slug != null))
                     return $detail;
-            });
+                });
 
             $menus = $filter_data->groupBy('parent')->toArray();
         }
