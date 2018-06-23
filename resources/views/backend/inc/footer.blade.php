@@ -238,7 +238,7 @@
                 {
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[7, 'desc'],[6, 'desc']],
+                    'order': [[7, 'desc'], [6, 'desc']],
                     "columnDefs": []
                 });
         $('#menus').DataTable(
@@ -284,6 +284,7 @@
                 $("#error-div").addClass('display-none');
                 var product_id = $.trim($("#product-id").val());
                 var errorSection = document.getElementById("js-errors");
+                var minPlacementAmount = $.trim($('#minimum-placement-amount').val());
                 errorSection.innerHTML = '';
                 var formula = $.trim($('#formula').val());
                 var errors = new Array();
@@ -293,7 +294,6 @@
                     var name = $.trim($('#name').val());
                     var bank = $.trim($('#bank').val());
                     var productType = $.trim($('#product-type').val());
-                    var minPlacement = $.trim($('#minimum-placement-amount').val());
                     var maxInterestRate = $.trim($('#maximum-interest-rate').val());
                     var promotionPeriod = $.trim($('#promotion-period').val());
                     var startDate = $.trim($('#promotion_start_date').val());
@@ -306,7 +306,13 @@
                         $.ajax({
                             method: "POST",
                             url: "{{url('/admin/check-product')}}",
-                            data: {name: name, product_id:product_id,bank: bank, productType: productType, formula: formula},
+                            data: {
+                                name: name,
+                                product_id: product_id,
+                                bank: bank,
+                                productType: productType,
+                                formula: formula
+                            },
                             cache: false,
                             async: false,
                             success: function (data) {
@@ -337,7 +343,7 @@
                         errors[i] = 'The end date is required.';
                         i++;
                     }
-                    if (!minPlacement) {
+                    if (!minPlacementAmount) {
                         errors[i] = 'The minimum placement is required.';
                         i++;
                     }
@@ -383,7 +389,8 @@
                                 return false;
                             }
 
-                        });$.each(interests, function (k, v) {
+                        });
+                        $.each(interests, function (k, v) {
                             if (interests[k] == '') {
                                 errors[i] = 'The bonus interest is required.';
                                 i++;
@@ -422,7 +429,7 @@
                             });
                         }
                     }
-                    if (formula == 2 || formula==3 || formula == 5) {
+                    if (formula == 2 || formula == 3 || formula == 5) {
                         var minPlacements = $('#savingDepositF1').find('input[name^="min_placement_sdp1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -456,7 +463,7 @@
 
                         });
                         $.each(boardInterest, function (k, v) {
-                            if (boardInterest[k] == '' ) {
+                            if (boardInterest[k] == '') {
                                 errors[i] = 'The board interest is required.';
                                 i++;
 
@@ -498,12 +505,12 @@
                         var siborRate = $('#savingDepositF3').find('input[name="sibor_rate_sdp3"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement)>parseInt(maxPlacement))) {
+                        if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
                             errors[i] = 'Please check your placement range. ';
                             i++;
                         }
                         $.each(rateCounter, function (k, v) {
-                            if (rateCounter[k] == '' ) {
+                            if (rateCounter[k] == '') {
                                 errors[i] = 'The counter rate is required.';
                                 i++;
 
@@ -511,10 +518,11 @@
                             }
                         });
 
-                        if (averageInterestRate == '' ) {
+                        if (averageInterestRate == '') {
                             errors[i] = 'The average interest rate is required.';
                             i++;
-                        } if (siborRate == '') {
+                        }
+                        if (siborRate == '') {
                             errors[i] = 'The sibor rate is required.';
                             i++;
 
@@ -542,31 +550,158 @@
                             return $.trim($(this).val());
                         }).get();
 
-                        if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement)>parseInt(maxPlacement))) {
+                        if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
                             errors[i] = 'Please check your placement range. ';
                             i++;
                         }
 
-                        if (baseInterest == '' ) {
+                        if (baseInterest == '') {
                             errors[i] = 'The base interest rate is required.';
                             i++;
-                        } if (bonusInterest == '') {
+                        }
+                        if (bonusInterest == '') {
                             errors[i] = 'The bonus interest is required.';
                             i++;
-                        }if (placementMonth == '' ) {
+                        }
+                        if (placementMonth == '') {
                             errors[i] = 'The placement month is required.';
                             i++;
-                        }if (displayMonth == '' ) {
+                        }
+                        if (displayMonth == '') {
                             errors[i] = 'The display month is required.';
                             i++;
                         }
-                        if (parseInt(displayMonth)>parseInt(placementMonth)) {
+                        if (parseInt(displayMonth) > parseInt(placementMonth)) {
                             errors[i] = 'The display month interval is not greater than placement month.';
                             i++;
                         }
 
                     }
 
+                    if (formula == 7) {
+                        var allInOneAccountF1 = $('#allInOneAccountF1');
+                        var minPlacement = allInOneAccountF1.find('input[name="min_placement_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var maxPlacement = allInOneAccountF1.find('input[name="max_placement_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SalaryMinAmount = allInOneAccountF1.find('input[name="minimum_salary_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SalaryBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_salary_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var GiroMinAmount = allInOneAccountF1.find('input[name="minimum_giro_payment_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var GiroBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_giro_payment_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SpendMinAmount = allInOneAccountF1.find('input[name="minimum_spend_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SpendBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_spend_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var WealthMinAmount = allInOneAccountF1.find('input[name="minimum_wealth_pa_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var WealthBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_wealth_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var LoanMinAmount = allInOneAccountF1.find('input[name="minimum_loan_pa_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var LoanBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_loan_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var BonusAmount = allInOneAccountF1.find('input[name="minimum_bonus_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var BonusInterest = allInOneAccountF1.find('input[name="bonus_interest_bonus_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var FirstCapAmount = allInOneAccountF1.find('input[name="first_cap_amount_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var RemainingBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_remaining_amount_aioa1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+
+
+                        if (parseInt(minPlacementAmount) > parseInt(minPlacement)) {
+                            errors[i] = 'The  minimum placement range  is not greater than or equal to minimum placement amount.';
+                            i++;
+                        } else {
+                            if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
+                                errors[i] = 'Please check your placement range. ';
+                                i++;
+                            }
+                        }
+                        if (SalaryMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Salary) is required.';
+                            i++;
+                        }
+                        if (SalaryBonusInterest == '') {
+                            errors[i] = 'The  bonus interest (Salary) is required.';
+                            i++;
+                        }
+                        if (GiroMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Giro) is required.';
+                            i++;
+                        }
+                        if (GiroBonusInterest == '') {
+                            errors[i] = 'The  bonus interest (Giro) is required.';
+                            i++;
+                        }
+                        if (SpendMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Spend) is required.';
+                            i++;
+                        }
+                        if (SpendBonusInterest == '') {
+                            errors[i] = 'The  bonus interest (Spend) is required.';
+                            i++;
+                        }
+                        if (WealthMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Wealth) is required.';
+                            i++;
+                        }
+                        if (WealthBonusInterest == '') {
+                            errors[i] = 'The  bonus interest (Wealth) is required.';
+                            i++;
+                        }
+                        if (LoanMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Loan) is required.';
+                            i++;
+                        }
+                        if (LoanBonusInterest == '') {
+                            errors[i] = 'The  bonus interest (Loan) is required.';
+                            i++;
+                        }
+                        if (BonusAmount == '') {
+                            errors[i] = 'The  first cap amount is required.';
+                            i++;
+                        }
+                        if (BonusInterest == '') {
+                            errors[i] = 'The  bonus interest (First cap) is required.';
+                            i++;
+                        }
+                        if (FirstCapAmount == '') {
+                            errors[i] = 'The  first cap amount is required.';
+                            i++;
+                        }
+                        if (RemainingBonusInterest == '') {
+                            errors[i] = 'The  bonus interest (Remaining) is required.';
+                            i++;
+                        }
+                        if (parseInt(minPlacement) > parseInt(FirstCapAmount)) {
+                            errors[i] = 'The  first cap amount  is not greater than minimum placement.';
+                            i++;
+                        }
+
+
+                    }
                 }
                 if (errors.length) {
                     $("#error-div").removeClass('display-none');
@@ -612,14 +747,13 @@
         var formula = $("#formula").val();
         var range_id = $(id).data('range-id');
         range_id++;
-        if(formula == 1)
-        {
+        if (formula == 1) {
             var data = $('#fixDepositF1').find('input[name^="tenure[0]"]').serializeArray();
             var formula_detail_id = data.length - 1;
             jQuery.ajax({
                 type: "POST",
                 url: "{{url('/admin/add-more-placement-range')}}",
-                data: {detail: data, range_id: range_id,formula:formula}
+                data: {detail: data, range_id: range_id, formula: formula}
             }).done(function (data) {
                 $('#new-placement-range').append(data);
                 var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
@@ -628,33 +762,30 @@
                 $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
             });
         }
-        if(formula == 2 || formula == 3 || formula == 5)
-        {
+        if (formula == 2 || formula == 3 || formula == 5) {
             jQuery.ajax({
                 type: "POST",
                 url: "{{url('/admin/add-more-placement-range')}}",
-                data: {detail: data, range_id: range_id,formula:formula}
+                data: {detail: data, range_id: range_id, formula: formula}
             }).done(function (data) {
                 $('#saving-placement-range-f1').append(data);
                 var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 saving-placement-range-f1-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
                 $('#add-saving-placement-range-f1-button').html(addMoreRangeButton);
-                });
+            });
         }
     }
 
-    function addCounter(id)
-    {
+    function addCounter(id) {
         var formula = $("#formula").val();
         var counterValue = $(id).val();
-        if(formula == 4)
-        {
+        if (formula == 4) {
             jQuery.ajax({
                 type: "POST",
                 url: "{{url('/admin/add-counter')}}",
                 data: {counter_value: counterValue}
             }).done(function (data) {
                 $('#saving-placement-range-f3-counter').append(data);
-                });
+            });
         }
     }
 

@@ -210,3 +210,4 @@ define('SAVING_DEPOSIT_F2', 3);
 define('SAVING_DEPOSIT_F3', 4);
 define('SAVING_DEPOSIT_F4', 5);
 define('SAVING_DEPOSIT_F5', 6);
+define('ALL_IN_ONE_ACCOUNT_F1', 7);

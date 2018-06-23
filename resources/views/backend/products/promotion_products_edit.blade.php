@@ -185,6 +185,7 @@
                                     @include('backend.products.formulaDetail.savingDepositF1')
                                     @include('backend.products.formulaDetail.savingDepositF3')
                                     @include('backend.products.formulaDetail.savingDepositF5')
+                                    @include('backend.products.formulaDetail.allInOneAccountF1')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -300,6 +301,9 @@
             }if (formula == '<?php echo SAVING_DEPOSIT_F5; ?>') {
                 $('#savingDepositF5').removeClass('display-none');
 
+            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
+                $('#allInOneAccountF1').removeClass('display-none');
+
             }
 
         });
@@ -308,6 +312,7 @@
             $('#savingDepositF1').addClass('display-none');
             $('#savingDepositF3').addClass('display-none');
             $('#savingDepositF5').addClass('display-none');
+            $('#allInOneAccountF1').addClass('display-none');
 
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
@@ -330,6 +335,7 @@
             $('#savingDepositF1').addClass('display-none');
             $('#savingDepositF3').addClass('display-none');
             $('#savingDepositF5').addClass('display-none');
+            $('#allInOneAccountF1').addClass('display-none');
 
             if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
                 $('#fixDepositF1').removeClass('display-none');
@@ -343,6 +349,10 @@
             }if (formula == '<?php echo SAVING_DEPOSIT_F5; ?>') {
                 //alert("Hello");
                 $('#savingDepositF5').removeClass('display-none');
+
+            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
+                //alert("Hello");
+                $('#allInOneAccountF1').removeClass('display-none');
 
             }
 
