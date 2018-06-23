@@ -168,14 +168,38 @@ class ProductsController extends Controller
             $ranges[] = $range;
             $ranges = json_encode($ranges);
         }
+        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F1])) {
+            $range['min_range'] = (int)$request->min_placement_aioa1;
+            $range['max_range'] = (int)$request->max_placement_aioa1;
+
+            $range['minimum_salary'] = (int)$request->minimum_salary_aioa1;
+            $range['bonus_interest_salary'] = (float)$request->bonus_interest_salary_aioa1;
+            $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa1;
+            $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
+            $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
+            $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
+            $range['minimum_wealth_pa'] = (int)$request->minimum_wealth_pa_aioa1;
+            $range['bonus_interest_wealth'] = (float)$request->bonus_interest_wealth_aioa1;
+            $range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
+            $range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
+            $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
+            $range['bonus_interest'] = (float)$request->bonus_interest_bonus_aioa1;
+            $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa1;
+            $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa1;
+
+            $ranges[] = $range;
+            $ranges = json_encode($ranges);
+        }
         function intVal($x)
         {
             return (int)$x;
         }
+
         function floatVal($x)
         {
             return (float)$x;
         }
+
         $product->product_range = $ranges;
         $product->promotion_start = \Helper::startOfDayBefore($request->promotion_start_date);
         $product->promotion_end = \Helper::endOfDayAfter($request->promotion_end_date);
@@ -344,15 +368,39 @@ class ProductsController extends Controller
             $ranges[] = $range;
             $ranges = json_encode($ranges);
         }
+        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F1])) {
+            $range['min_range'] = (int)$request->min_placement_aioa1;
+            $range['max_range'] = (int)$request->max_placement_aioa1;
+
+            $range['minimum_salary'] = (int)$request->minimum_salary_aioa1;
+            $range['bonus_interest_salary'] = (float)$request->bonus_interest_salary_aioa1;
+            $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa1;
+            $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
+            $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
+            $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
+            $range['minimum_wealth_pa'] = (int)$request->minimum_wealth_pa_aioa1;
+            $range['bonus_interest_wealth'] = (float)$request->bonus_interest_wealth_aioa1;
+            $range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
+            $range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
+            $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
+            $range['bonus_interest'] = (float)$request->bonus_interest_bonus_aioa1;
+            $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa1;
+            $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa1;
+
+            $ranges[] = $range;
+            $ranges = json_encode($ranges);
+        }
 
         function intVal($x)
         {
             return (int)$x;
         }
+
         function floatVal($x)
         {
             return (float)$x;
         }
+
         $product->product_range = $ranges;
         $product->promotion_start = \Helper::startOfDayBefore($request->promotion_start_date);
         $product->promotion_end = \Helper::endOfDayAfter($request->promotion_end_date);

@@ -77,7 +77,7 @@
                     @endif
                 </div>
                 <div class="ps-block__content">
-                    
+
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                             <div class="ps-form__option">
@@ -109,7 +109,7 @@
                 </div>
                 </form>
             </div>
-            @if(count($promotion_products))                
+            @if(count($promotion_products))
             <div class="ps-slider--feature-product nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true"
                  data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="4"
                  data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4"
@@ -189,7 +189,7 @@
                                         <th>Account</th>
                                         @foreach($tenures as $tenor_key => $tenure)
                                         @php
-                                        
+
                                         $days_type = \Helper::days_or_month_or_year(2, $tenure);
                                         @endphp
                                         <th>{{ $tenure . ' ' . $days_type }}</th>
@@ -207,18 +207,18 @@
                                     </thead>
                                     <tbody>
                                     @foreach($product_range as $range)
-                                        
+
                                     <tr class="
                                     @if(isset($search_filter['filter']) && ($search_filter['filter']=='Placement'))
-                                        @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight 
+                                        @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
                                         @endif
                                     @endif">
                                         <td><img src="{{ asset('img/icons/ff.png') }}" alt=""></td>
                                         <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
                                         @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
-                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$bonus_interest) highlight 
+                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$bonus_interest) highlight
                                         @endif
-                                        @if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight 
+                                        @if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight
                                         @endif
                                         ">{{ $bonus_interest . '%' }}</td>
                                         @endforeach
@@ -239,22 +239,22 @@
                         <div class="clearfix"></div>
                         @php } @endphp
                         @endif
-                        <div class="ps-product__panel">                            
-                            @foreach($product_range as $key => $range)                                
-                                @php             
+                        <div class="ps-product__panel">
+                            @foreach($product_range as $key => $range)
+                                @php
                                 $tenure_count = count($tenures);
                                 if(isset($search_filter['search_value']) && ($search_filter['filter']=='Placement') && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) {
                                     $placement_value = $range->max_range;
                                     if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') {
                                         $placement_value = $search_filter['search_value'];
-                                    }                        
+                                    }
                                     $P = $placement_value;
                                     @endphp
                                     @if($key==0)
                                     <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
                                     @endif
                                     @php
-                                    if($key==0) {                      
+                                    if($key==0) {
                                     for($i=0;$i<$tenure_count;$i++) {
                                         $BI = ($range->bonus_interest[$i]/100);
                                         $TM = $tenures[$i];
@@ -270,14 +270,14 @@
                                     $placement_value = $range->max_range;
                                     if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') {
                                         $placement_value = $search_filter['search_value'];
-                                    }                        
+                                    }
                                     $P = $placement_value;
                                     @endphp
                                     @if($key==0)
                                     <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
                                     @endif
                                     @php
-                                    if($key==0) {                      
+                                    if($key==0) {
                                     for($i=0;$i<$tenure_count;$i++) {
                                         $BI = ($range->bonus_interest[$i]/100);
                                         $TM = $tenures[$i];
