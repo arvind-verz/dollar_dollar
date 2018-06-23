@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Socialite;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use Illuminate\Http\Request;
-use Socialite;
 use Illuminate\Support\Facades\Session;
 use Validator;
 use App\Brand;
@@ -176,7 +176,7 @@ class LoginController extends Controller
     public function handleProviderCallback($provider)
     {
         $user = Socialite::driver($provider)->user();
-
+    //dd($user);
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         return redirect($this->redirectTo);
@@ -187,12 +187,17 @@ class LoginController extends Controller
         if ($authUser) {
             return $authUser;
         }
-
+        
+        
+		$name = explode(' ', $user->name);
+		$provider = $provider;
+		//dd($provider);
         return User::create([
-            'name'      => $user->name,
-            'email'     => $user->email,
-            'password'  => bcrypt('!!!!!'),
-            'provider'  => $provider
+            'first_name'      => $name[0],
+			'last_name'      => $name[1],
+            'email'     	  => $user->email,
+            'password'  	  => bcrypt('!!!!!'),
+            'provider'  	  => $provider
         ]);
     }
 }

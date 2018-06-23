@@ -110,6 +110,7 @@
                 <?php
                 $id = 0;
                 $menus = Helper::getMenus($id);
+                //dd($menus);
                 printTerms($menus, $page->slug); ?>
             </ul>
         </div>

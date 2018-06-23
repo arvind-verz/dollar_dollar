@@ -95,8 +95,18 @@
                                         </div>
                                         <button type="submit">Go</button>
                                     </div>
+                                </div>                                
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                                    <select class="form-control" name="sort_by">
+                                        <option value="">Select</option>
+                                        @if(count($currency))
+                                            @foreach($currency as $curr)
+                                        <option value="{{ $curr->id }}">{{ $curr->code }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
                                     <select class="form-control" name="sort_by">
                                         <option value="">Sort by</option>
                                         <option value="1" @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==1) selected @endif>1</option>
