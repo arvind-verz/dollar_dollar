@@ -339,7 +339,6 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_formula.promotion_id', '=', 1)
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->get();
