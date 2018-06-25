@@ -187,6 +187,7 @@
                                     @include('backend.products.formulaDetail.savingDepositF5')
                                     @include('backend.products.formulaDetail.allInOneAccountF1')
                                     @include('backend.products.formulaDetail.allInOneAccountF2')
+                                    @include('backend.products.formulaDetail.allInOneAccountF3')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -308,6 +309,9 @@
             }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
                 $('#allInOneAccountF2').removeClass('display-none');
 
+            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
+                $('#allInOneAccountF3').removeClass('display-none');
+
             }
 
         });
@@ -318,6 +322,7 @@
             $('#savingDepositF5').addClass('display-none');
             $('#allInOneAccountF1').addClass('display-none');
             $('#allInOneAccountF2').addClass('display-none');
+            $('#allInOneAccountF3').addClass('display-none');
 
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
@@ -342,6 +347,7 @@
             $('#savingDepositF5').addClass('display-none');
             $('#allInOneAccountF1').addClass('display-none');
             $('#allInOneAccountF2').addClass('display-none');
+            $('#allInOneAccountF3').addClass('display-none');
 
             if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
                 $('#fixDepositF1').removeClass('display-none');
@@ -362,7 +368,11 @@
 
             }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
                 //alert("Hello");
-                $('#allInOneAccountF1').removeClass('display-none');
+                $('#allInOneAccountF2').removeClass('display-none');
+
+            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
+                //alert("Hello");
+                $('#allInOneAccountF3').removeClass('display-none');
 
             }
 
