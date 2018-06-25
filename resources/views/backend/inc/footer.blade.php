@@ -785,7 +785,6 @@
                             });
                         }
 
-                        alert(errors);
                     }
                     if (formula == 9) {
                         var allInOneAccountF3 = $('#allInOneAccountF3');
@@ -876,16 +875,20 @@
                         if (RenovationMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Renovation Loan) is required.';
                             i++;
-                        }if (HomeMinAmount == '') {
+                        }
+                        if (HomeMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Home Loan) is required.';
                             i++;
-                        }if (EducationMinAmount == '') {
+                        }
+                        if (EducationMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Education Loan) is required.';
                             i++;
-                        }if (InsuranceMinAmount == '') {
+                        }
+                        if (InsuranceMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Insurance Loan) is required.';
                             i++;
-                        }if (UnitTrustMinAmount == '') {
+                        }
+                        if (UnitTrustMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Unit Trust Loan) is required.';
                             i++;
                         }
@@ -896,16 +899,20 @@
                         if (RequirementCriteria2 == '') {
                             errors[i] = 'The number of criteria (Criteria 2) is required.';
                             i++;
-                        }if (RequirementCriteria3 == '') {
+                        }
+                        if (RequirementCriteria3 == '') {
                             errors[i] = 'The number of criteria (Criteria 3) is required.';
                             i++;
-                        }if (BonusInterestCriteria1 == '') {
+                        }
+                        if (BonusInterestCriteria1 == '') {
                             errors[i] = 'The  bonus interest (Criteria 1) is required.';
                             i++;
-                        }if (BonusInterestCriteria2 == '') {
+                        }
+                        if (BonusInterestCriteria2 == '') {
                             errors[i] = 'The  bonus interest (Criteria 1) is required.';
                             i++;
-                        }if (BonusInterestCriteria3 == '') {
+                        }
+                        if (BonusInterestCriteria3 == '') {
                             errors[i] = 'The bonus interest (Criteria 1) is required.';
                             i++;
                         }
@@ -921,6 +928,107 @@
                             errors[i] = 'The  first cap amount  is not greater than minimum placement.';
                             i++;
                         }
+                    }
+                    if (formula == 10) {
+                        var allInOneAccountF4 = $('#allInOneAccountF4');
+                        var SalaryMinAmount = allInOneAccountF4.find('input[name="minimum_salary_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var GiroMinAmount = allInOneAccountF4.find('input[name="minimum_giro_payment_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var HomeMinAmount = allInOneAccountF4.find('input[name="minimum_home_loan_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var InsuranceMinAmount = allInOneAccountF4.find('input[name="minimum_insurance_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var InvestmentMinAmount = allInOneAccountF4.find('input[name="minimum_investment_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var minPlacements = allInOneAccountF4.find('input[name^="min_placement_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var maxPlacements = allInOneAccountF4.find('input[name^="max_placement_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var bonusInterestA = allInOneAccountF4.find('input[name^="bonus_interest_criteria_a_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var bonusInterestB = allInOneAccountF4.find('input[name^="bonus_interest_criteria_b_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var rangeError = false;
+
+                        if (SpendMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Spend) is required.';
+                            i++;
+                        }
+                        if (GiroMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Giro) is required.';
+                            i++;
+                        }
+                        if (SalaryMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Salary) is required.';
+                            i++;
+                        }
+                        if (HomeMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Home Loan) is required.';
+                            i++;
+                        }
+                        if (InsuranceMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Insurance) is required.';
+                            i++;
+                        }
+                        if (InvestmentMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Investment) is required.';
+                            i++;
+                        }
+                        $.each(minPlacements, function (k, v) {
+                            if (minPlacements[k] == '' || maxPlacements[k] == '') {
+                                errors[i] = 'The placement range is required.';
+                                i++;
+                                rangeError = true;
+                                return false;
+                            }
+
+                        });
+                        $.each(bonusInterestA, function (k, v) {
+                            if (bonusInterestA[k] == '') {
+                                errors[i] = 'The bonus interest (A) is required.';
+                                i++;
+
+                                return false;
+                            }
+
+                        });
+                        $.each(bonusInterestB, function (k, v) {
+                            if (bonusInterestB[k] == '') {
+                                errors[i] = 'The bonus interest (B) is required.';
+                                i++;
+
+                                return false;
+                            }
+
+                        });
+
+
+                        if (rangeError == false) {
+                            $.ajax({
+                                method: "POST",
+                                url: "{{url('/admin/check-range')}}",
+                                data: {max_placement: maxPlacements, min_placement: minPlacements},
+                                cache: false,
+                                async: false,
+                                success: function (data) {
+                                    if (data == 1) {
+                                        errors[i] = 'Please check your placement range ';
+                                        i++;
+                                    }
+                                }
+                            });
+                        }
+
                     }
                 }
                 if (errors.length) {
@@ -1004,6 +1112,18 @@
                 $('#add-aioa-placement-range-f2-button').html(addMoreRangeButton);
             });
         }
+        if (formula == 10) {
+            jQuery.ajax({
+                type: "POST",
+                url: "{{url('/admin/add-more-placement-range')}}",
+                data: {detail: data, range_id: range_id, formula: formula}
+            }).done(function (data) {
+
+                $('#aioa-placement-range-f4').append(data);
+                var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-aioa-placement-range-f4-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
+                $('#add-aioa-placement-range-f4-button').html(addMoreRangeButton);
+            });
+        }
     }
 
     function addCounter(id) {
@@ -1026,7 +1146,9 @@
 
         if (formula == 8) {
             $("#aioa_placement_range_f2_" + range_id).remove();
-        }else{
+        }if (formula == 10) {
+            $("#aioa_placement_range_f4_" + range_id).remove();
+        } else {
             $("#placement_range_" + range_id).remove();
         }
 
