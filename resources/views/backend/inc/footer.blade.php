@@ -702,6 +702,91 @@
 
 
                     }
+                    if (formula == 8) {
+                        var allInOneAccountF2 = $('#allInOneAccountF2');
+                        var SpendMinAmount = allInOneAccountF2.find('input[name="minimum_spend_aioa2"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var GiroMinAmount = allInOneAccountF2.find('input[name="minimum_giro_payment_aioa2"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SalaryMinAmount = allInOneAccountF2.find('input[name="minimum_salary_aioa2"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var minPlacements = allInOneAccountF2.find('input[name^="min_placement_aioa2"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var maxPlacements = allInOneAccountF2.find('input[name^="max_placement_aioa2"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var bonusInterestA = allInOneAccountF2.find('input[name^="bonus_interest_criteria_a_aioa2"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var bonusInterestB = allInOneAccountF2.find('input[name^="bonus_interest_criteria_b_aioa2"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var rang    eError = false;
+
+                        if (SpendMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Spend) is required.';
+                            i++;
+                        }
+                        if (GiroMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Giro) is required.';
+                            i++;
+                        }
+                        if (SalaryMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Salary) is required.';
+                            i++;
+                        }
+
+                        $.each(minPlacements, function (k, v) {
+                            if (minPlacements[k] == '' || maxPlacements[k] == '') {
+                                errors[i] = 'The placement range is required.';
+                                i++;
+                                rangeError = true;
+                                return false;
+                            }
+
+                        });
+                        $.each(bonusInterestA, function (k, v) {
+                            if (bonusInterestA[k] == '') {
+                                errors[i] = 'The bonus interest (A) is required.';
+                                i++;
+
+                                return false;
+                            }
+
+                        });
+                        $.each(bonusInterestB, function (k, v) {
+                            if (bonusInterestB[k] == '') {
+                                errors[i] = 'The bonus interest (B) is required.';
+                                i++;
+
+                                return false;
+                            }
+
+                        });
+
+
+                        if (rangeError == false) {
+                            $.ajax({
+                                method: "POST",
+                                url: "{{url('/admin/check-range')}}",
+                                data: {max_placement: maxPlacements, min_placement: minPlacements},
+                                cache: false,
+                                async: false,
+                                success: function (data) {
+                                    if (data == 1) {
+                                        errors[i] = 'Please check your placement range ';
+                                        i++;
+                                    }
+                                }
+                            });
+                        }
+
+                        alert(errors);
+                    }
                 }
                 if (errors.length) {
                     $("#error-div").removeClass('display-none');
@@ -773,6 +858,17 @@
                 $('#add-saving-placement-range-f1-button').html(addMoreRangeButton);
             });
         }
+        if (formula == 8) {
+            jQuery.ajax({
+                type: "POST",
+                url: "{{url('/admin/add-more-placement-range')}}",
+                data: {detail: data, range_id: range_id, formula: formula}
+            }).done(function (data) {
+                $('#aioa-placement-range-f2').append(data);
+                var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-aioa-placement-range-f2-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
+                $('#add-aioa-placement-range-f2-button').html(addMoreRangeButton);
+            });
+        }
     }
 
     function addCounter(id) {
@@ -790,8 +886,15 @@
     }
 
     function removePlacementRange(id) {
+        var formula = $("#formula").val();
         var range_id = $(id).data('range-id');
-        $("#placement_range_" + range_id).remove();
+
+        if (formula == 8) {
+            $("#aioa_placement_range_f2_" + range_id).remove();
+        }else{
+            $("#placement_range_" + range_id).remove();
+        }
+
 
     }
 
