@@ -232,6 +232,25 @@ class ProductsController extends Controller
             $ranges[] = $range;
             $ranges = json_encode($ranges);
         }
+        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F4])) {
+            foreach ($request->min_placement_aioa4 as $k => $v) {
+                $max = $request->max_placement_aioa4;
+                $bonusInterestA = $request->bonus_interest_criteria_a_aioa4;
+                $bonusInterestB = $request->bonus_interest_criteria_b_aioa4;
+                $range = [];
+                $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
+                $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa4;
+                $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
+                $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
+                $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
+                $range['min_range'] = (int)$v;
+                $range['max_range'] = (int)$max[$k];
+                $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
+                $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+                $ranges[] = $range;
+            }
+            $ranges = json_encode($ranges);
+        }
         function intVal($x)
         {
             return (int)$x;
@@ -474,7 +493,25 @@ class ProductsController extends Controller
             $ranges[] = $range;
             $ranges = json_encode($ranges);
         }
-
+        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F4])) {
+            foreach ($request->min_placement_aioa4 as $k => $v) {
+                $max = $request->max_placement_aioa4;
+                $bonusInterestA = $request->bonus_interest_criteria_a_aioa4;
+                $bonusInterestB = $request->bonus_interest_criteria_b_aioa4;
+                $range = [];
+                $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
+                $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa4;
+                $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
+                $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
+                $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
+                $range['min_range'] = (int)$v;
+                $range['max_range'] = (int)$max[$k];
+                $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
+                $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+                $ranges[] = $range;
+            }
+            $ranges = json_encode($ranges);
+        }
         function intVal($x)
         {
             return (int)$x;
@@ -1056,8 +1093,7 @@ class ProductsController extends Controller
                 </div>
             </div>
             <?php
-        }
-        elseif (in_array($request->formula, [ALL_IN_ONE_ACCOUNT_F2])) {
+        } elseif (in_array($request->formula, [ALL_IN_ONE_ACCOUNT_F2])) {
             ?>
             <div id="aioa_placement_range_f2_<?php echo $request->range_id; ?>">
                 <div class="form-group">
@@ -1119,6 +1155,77 @@ class ProductsController extends Controller
                                 <input type="text" class="form-control only_numeric"
                                        id="board_rate_<?php echo $request->range_id; ?>"
                                        name="bonus_interest_criteria_b_aioa2[<?php echo $request->range_id; ?>]"
+                                       placeholder="">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">&emsp;</div>
+                </div>
+            </div>
+            <?php
+        } elseif (in_array($request->formula, [ALL_IN_ONE_ACCOUNT_F4])) {
+            ?>
+            <div id="aioa_placement_range_f4_<?php echo $request->range_id; ?>">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-4">
+                        <div class="input-group date">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-success">Min
+                                    Placement
+                                </button>
+                            </div>
+                            <input type="text" class="form-control pull-right only_numeric"
+                                   name="min_placement_aioa4[<?php echo $request->range_id; ?>]"
+                                   value="">
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 ">
+
+                        <div class="input-group date ">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-danger">Max Placement
+                                </button>
+                            </div>
+                            <input type="text" class="form-control pull-right only_numeric"
+                                   name="max_placement_aioa4[<?php echo $request->range_id; ?>]"
+                                   value="">
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button"
+                                class="btn btn-danger   remove-placement-range-button "
+                                data-range-id="<?php echo $request->range_id; ?>" onClick="removePlacementRange(this);">
+                            <i
+                                class="fa fa-minus"> </i>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-8 ">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="">Bonus Interest (A)</label>
+                                <input type="text" class="form-control only_numeric"
+                                       id="bonus_interest_<?php echo $request->range_id; ?>"
+                                       name="bonus_interest_criteria_a_aioa4[<?php echo $request->range_id; ?>]"
+                                       placeholder="">
+
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="">Bonus Interest (B)</label>
+                                <input type="text" class="form-control only_numeric"
+                                       id="board_rate_<?php echo $request->range_id; ?>"
+                                       name="bonus_interest_criteria_b_aioa4[<?php echo $request->range_id; ?>]"
                                        placeholder="">
 
                             </div>
