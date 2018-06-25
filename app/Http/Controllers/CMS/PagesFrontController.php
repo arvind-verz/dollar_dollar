@@ -164,6 +164,16 @@ class PagesFrontController extends Controller
                     /*sent all pages detail into this function and than return to blade file*/
                     return $this->foreignCurrencyDepositMode($details);
 
+                } elseif ($slug == AIO_DEPOSIT_MODE) {
+                    $details = [];
+                    $details['brands'] = $brands;
+                    $details['page'] = $page;
+                    $details['systemSetting'] = $systemSetting;
+                    $details['banners'] = $banners;
+
+                    /*sent all pages detail into this function and than return to blade file*/
+                    return $this->aioDepositMode($details);
+
                 }
 
 
@@ -398,6 +408,28 @@ class PagesFrontController extends Controller
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
         return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
+    }
+
+    public function aioDepositMode($details) {
+        $start_date=\Helper::startOfDayBefore();
+        $end_date=\Helper::endOfDayAfter();
+        DB::connection()->enableQueryLog();
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_products.formula_id', '=', 7)
+        ->where('promotion_products.promotion_start', '<=', $start_date)
+        ->where('promotion_products.promotion_end', '>=', $end_date)
+        ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+        ->get();
+        //dd(DB::getQueryLog());
+        //dd($promotion_products);
+        $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
     }
 
     public function search_fixed_deposit(Request $request) {
