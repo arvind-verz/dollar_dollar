@@ -341,6 +341,7 @@ class PagesFrontController extends Controller
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
+        ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
         ->get();
 
 
@@ -633,5 +634,132 @@ class PagesFrontController extends Controller
             $promotion_products=$filterProducts;
         }
         return view('frontend.products.'.$type.'-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
+    }
+
+    public function search_foreign_currency_deposit(Request $request) {
+        $start_date=\Helper::startOfDayBefore();
+        $end_date=\Helper::endOfDayAfter();
+
+        $search_filter = [];
+        $search_filter = $request->all();
+        $brand_id = $request->brand_id;
+
+        $currency = Currency::get();
+
+        DB::connection()->enableQueryLog();
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_products.promotion_start', '<=', $start_date)
+        ->where('promotion_products.promotion_end', '>=', $end_date)
+        ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+        ->get();
+
+        $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+
+        $filterProducts = [];
+
+        //dd($promotion_products);
+
+        foreach ($promotion_products as $product) {
+            //dd($product);
+            $status= false;
+            $product_range = json_decode($product->product_range);
+            $tenures = json_decode($product->tenure);
+            if($product->formula_id!=1) {
+                if(($search_filter['filter']=='Placement' || $search_filter['filter']=='Interest') && $product->promotion_formula_id!=5 && $product->promotion_formula_id!=4) {
+                    //echo $brand_id;
+                    if(!empty($brand_id) && $brand_id==$product->brand_id) {
+                        $status = true;
+                        //echo "arv";
+                        
+                    }
+                    foreach ($product_range as $range) {
+                        if(!empty($brand_id)) {
+                            
+                            if(!empty($search_filter['search_value']) && $search_filter['filter']=='Placement' && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range) && !empty($brand_id) && $brand_id==$product->brand_id) {
+                                $status = true;
+                            }
+                            elseif(!empty($search_filter['search_value']) && ($search_filter['filter']=='Interest') && !empty($brand_id) && $brand_id==$product->brand_id && ($product->promotion_formula_id==2 || $product->promotion_formula_id==3)) {
+                                $status = true;
+                            }
+                        }
+                        else {
+                            if(!empty($search_filter['search_value']) && $search_filter['filter']=='Placement' && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range) || (!empty($brand_id) && $brand_id==$product->brand_id)) {
+                                $status = true;
+                            }
+                            elseif(!empty($search_filter['search_value']) && ($search_filter['filter']=='Interest') || (!empty($brand_id) && $brand_id==$product->brand_id)  && ($product->promotion_formula_id==2 || $product->promotion_formula_id==3)) {
+                                $status = true;
+                            }
+                        }
+                    }
+                }
+                else {
+                    if(!empty($brand_id)) {
+                        if(!empty($search_filter['search_value']) && $search_filter['filter']=='Tenor' && (!empty($brand_id) && $brand_id==$product->brand_id) && ($product->promotion_formula_id==3 || $product->promotion_formula_id==6)) {
+                            $status = true;
+                        }
+                    }
+                    else {
+                        if(!empty($search_filter['search_value']) && $search_filter['filter']=='Tenor' || (!empty($brand_id) && $brand_id==$product->brand_id) && ($product->promotion_formula_id==3 || $product->promotion_formula_id==6)) {
+                            $status = true;
+                        }
+                    }
+
+                }
+                if((($search_filter['filter']=='Placement')) && $product->promotion_formula_id==4 && (!empty($brand_id) && $brand_id==$product->brand_id)) {
+                    $status = true;
+                }
+            }
+            if($product->formula_id==1) {
+                if(($search_filter['filter']=='Placement') || ($search_filter['filter']=='Interest')) {
+                    if(!empty($brand_id) && $brand_id==$product->brand_id) {
+                        $status = true;
+                    }
+                    foreach ($product_range as $range) {
+                        if(!empty($brand_id)) {
+                            if(!empty($search_filter['search_value']) && $search_filter['filter']=='Placement' && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range) && !empty($brand_id) && $brand_id==$product->brand_id) {
+                                $status = true;
+                            }
+                            elseif(!empty($search_filter['search_value']) && ($search_filter['filter']=='Interest') && (in_array($search_filter['search_value'],$range->bonus_interest)) && !empty($brand_id) && $brand_id==$product->brand_id) {
+                                $status = true;
+                            }
+                        }
+                        else {
+                            if(!empty($search_filter['search_value']) && $search_filter['filter']=='Placement' && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range) || (!empty($brand_id) && $brand_id==$product->brand_id)) {
+                                $status = true;
+                            }
+                            elseif(!empty($search_filter['search_value']) && ($search_filter['filter']=='Interest') && (in_array($search_filter['search_value'],$range->bonus_interest)) || (!empty($brand_id) && $brand_id==$product->brand_id)) {
+                                $status = true;
+                            }
+                        }
+                    }
+                }
+                else {
+                    if(!empty($brand_id)) {
+                        if(!empty($search_filter['search_value']) && $search_filter['filter']=='Tenor' && (in_array($search_filter['search_value'],$tenures)) && (!empty($brand_id) && $brand_id==$product->brand_id)) {
+                            $status = true;
+                        }
+                    }
+                    else {
+                        if(!empty($search_filter['search_value']) && $search_filter['filter']=='Tenor' && (in_array($search_filter['search_value'],$tenures)) || (!empty($brand_id) && $brand_id==$product->brand_id)) {
+                            $status = true;
+                        }
+                    }
+
+                }
+            }
+            if($status==true) {
+                $filterProducts[]=$product;
+            }
+        }
+        
+        $promotion_products=$filterProducts;
+        //dd($promotion_products);
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "currency"));
     }
 }
