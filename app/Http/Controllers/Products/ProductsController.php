@@ -207,6 +207,31 @@ class ProductsController extends Controller
             }
             $ranges = json_encode($ranges);
         }
+        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F3])) {
+            $range['min_range'] = (int)$request->min_placement_aioa3;
+            $range['max_range'] = (int)$request->max_placement_aioa3;
+
+            $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
+            $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
+            $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
+            $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
+            $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
+            $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
+            $range['minimum_education_loan'] = (int)$request->minimum_education_loan_aioa3;
+            $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa3;
+            $range['minimum_unit_trust'] = (int)$request->minimum_unit_trust_aioa3;
+            $range['requirement_criteria1'] = (int)$request->requirement_criteria1_aioa3;
+            $range['bonus_interest_criteria1'] = (float)$request->bonus_interest_criteria1_aioa3;
+            $range['requirement_criteria2'] = (int)$request->requirement_criteria2_aioa3;
+            $range['bonus_interest_criteria2'] = (float)$request->bonus_interest_criteria2_aioa3;
+            $range['requirement_criteria3'] = (int)$request->requirement_criteria3_aioa3;
+            $range['bonus_interest_criteria3'] = (float)$request->bonus_interest_criteria3_aioa3;
+            $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa3;
+            $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa3;
+
+            $ranges[] = $range;
+            $ranges = json_encode($ranges);
+        }
         function intVal($x)
         {
             return (int)$x;
@@ -422,6 +447,31 @@ class ProductsController extends Controller
                 $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
                 $ranges[] = $range;
             }
+            $ranges = json_encode($ranges);
+        }
+        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F3])) {
+            $range['min_range'] = (int)$request->min_placement_aioa3;
+            $range['max_range'] = (int)$request->max_placement_aioa3;
+
+            $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
+            $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
+            $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
+            $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
+            $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
+            $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
+            $range['minimum_education_loan'] = (int)$request->minimum_education_loan_aioa3;
+            $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa3;
+            $range['minimum_unit_trust'] = (int)$request->minimum_unit_trust_aioa3;
+            $range['requirement_criteria1'] = (int)$request->requirement_criteria1_aioa3;
+            $range['bonus_interest_criteria1'] = (float)$request->bonus_interest_criteria1_aioa3;
+            $range['requirement_criteria2'] = (int)$request->requirement_criteria2_aioa3;
+            $range['bonus_interest_criteria2'] = (float)$request->bonus_interest_criteria2_aioa3;
+            $range['requirement_criteria3'] = (int)$request->requirement_criteria3_aioa3;
+            $range['bonus_interest_criteria3'] = (float)$request->bonus_interest_criteria3_aioa3;
+            $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa3;
+            $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa3;
+
+            $ranges[] = $range;
             $ranges = json_encode($ranges);
         }
 
