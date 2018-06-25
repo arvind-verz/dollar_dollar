@@ -725,7 +725,7 @@
                         var bonusInterestB = allInOneAccountF2.find('input[name^="bonus_interest_criteria_b_aioa2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var rang    eError = false;
+                        var rangeError = false;
 
                         if (SpendMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Spend) is required.';
@@ -786,6 +786,141 @@
                         }
 
                         alert(errors);
+                    }
+                    if (formula == 9) {
+                        var allInOneAccountF3 = $('#allInOneAccountF3');
+                        var minPlacement = allInOneAccountF3.find('input[name="min_placement_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var maxPlacement = allInOneAccountF3.find('input[name="max_placement_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SalaryMinAmount = allInOneAccountF3.find('input[name="minimum_salary_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var GiroMinAmount = allInOneAccountF3.find('input[name="minimum_giro_payment_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SpendMinAmount = allInOneAccountF3.find('input[name="minimum_spend_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var HirePurchaseMinAmount = allInOneAccountF3.find('input[name="minimum_hire_purchase_loan_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var RenovationMinAmount = allInOneAccountF3.find('input[name="minimum_renovation_loan_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var HomeMinAmount = allInOneAccountF3.find('input[name="minimum_home_loan_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var EducationMinAmount = allInOneAccountF3.find('input[name="minimum_education_loan_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var InsuranceMinAmount = allInOneAccountF3.find('input[name="minimum_insurance_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var UnitTrustMinAmount = allInOneAccountF3.find('input[name="minimum_unit_trust_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var RequirementCriteria1 = allInOneAccountF3.find('input[name="requirement_criteria1_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var RequirementCriteria2 = allInOneAccountF3.find('input[name="requirement_criteria2_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var RequirementCriteria3 = allInOneAccountF3.find('input[name="requirement_criteria3_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var BonusInterestCriteria1 = allInOneAccountF3.find('input[name="bonus_interest_criteria1_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var BonusInterestCriteria2 = allInOneAccountF3.find('input[name="bonus_interest_criteria2_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var BonusInterestCriteria3 = allInOneAccountF3.find('input[name="bonus_interest_criteria3_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var FirstCapAmount = allInOneAccountF3.find('input[name="first_cap_amount_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var RemainingBonusInterest = allInOneAccountF3.find('input[name="bonus_interest_remaining_amount_aioa3"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+
+
+                        if (parseInt(minPlacementAmount) > parseInt(minPlacement)) {
+                            errors[i] = 'The  minimum placement range  is not greater than or equal to minimum placement amount.';
+                            i++;
+                        } else {
+                            if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
+                                errors[i] = 'Please check your placement range. ';
+                                i++;
+                            }
+                        }
+                        if (SalaryMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Salary) is required.';
+                            i++;
+                        }
+                        if (GiroMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Giro) is required.';
+                            i++;
+                        }
+                        if (SpendMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Spend) is required.';
+                            i++;
+                        }
+                        if (HirePurchaseMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Hire Purchase Loan) is required.';
+                            i++;
+                        }
+                        if (RenovationMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Renovation Loan) is required.';
+                            i++;
+                        }if (HomeMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Home Loan) is required.';
+                            i++;
+                        }if (EducationMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Education Loan) is required.';
+                            i++;
+                        }if (InsuranceMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Insurance Loan) is required.';
+                            i++;
+                        }if (UnitTrustMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Unit Trust Loan) is required.';
+                            i++;
+                        }
+                        if (RequirementCriteria1 == '') {
+                            errors[i] = 'The number of criteria (Criteria 1) is required.';
+                            i++;
+                        }
+                        if (RequirementCriteria2 == '') {
+                            errors[i] = 'The number of criteria (Criteria 2) is required.';
+                            i++;
+                        }if (RequirementCriteria3 == '') {
+                            errors[i] = 'The number of criteria (Criteria 3) is required.';
+                            i++;
+                        }if (BonusInterestCriteria1 == '') {
+                            errors[i] = 'The  bonus interest (Criteria 1) is required.';
+                            i++;
+                        }if (BonusInterestCriteria2 == '') {
+                            errors[i] = 'The  bonus interest (Criteria 1) is required.';
+                            i++;
+                        }if (BonusInterestCriteria3 == '') {
+                            errors[i] = 'The bonus interest (Criteria 1) is required.';
+                            i++;
+                        }
+                        if (FirstCapAmount == '') {
+                            errors[i] = 'The  first cap amount is required.';
+                            i++;
+                        }
+                        if (RemainingBonusInterest == '') {
+                            errors[i] = 'The  bonus interest (Remaining) is required.';
+                            i++;
+                        }
+                        if (parseInt(minPlacement) > parseInt(FirstCapAmount)) {
+                            errors[i] = 'The  first cap amount  is not greater than minimum placement.';
+                            i++;
+                        }
                     }
                 }
                 if (errors.length) {
