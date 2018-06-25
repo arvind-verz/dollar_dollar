@@ -3702,3 +3702,7 @@ html .bg--parallax {
   float: none;
   width: 100%;
   padding-right: 0; }
+
+.ps-table tbody tr.highlight td {
+        background-color: #e2ffe6;
+}
