@@ -106,7 +106,7 @@
                     <div class="form-group ">
                         <label for="title" class="col-sm-2 control-label"></label>
 
-                        <div class="col-sm-8 ">
+                        <div class="col-sm-8">
                             <div class="form-row">
                                 <div class="col-md-4 mb-3">
                                     <label for="">Minimum Amount (Edu Loan)</label>

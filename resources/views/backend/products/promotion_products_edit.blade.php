@@ -188,6 +188,7 @@
                                     @include('backend.products.formulaDetail.allInOneAccountF1')
                                     @include('backend.products.formulaDetail.allInOneAccountF2')
                                     @include('backend.products.formulaDetail.allInOneAccountF3')
+                                    @include('backend.products.formulaDetail.allInOneAccountF4')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -312,6 +313,9 @@
             }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
                 $('#allInOneAccountF3').removeClass('display-none');
 
+            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
+                $('#allInOneAccountF4').removeClass('display-none');
+
             }
 
         });
@@ -323,6 +327,7 @@
             $('#allInOneAccountF1').addClass('display-none');
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
+            $('#allInOneAccountF4').addClass('display-none');
 
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
@@ -348,6 +353,7 @@
             $('#allInOneAccountF1').addClass('display-none');
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
+            $('#allInOneAccountF4').addClass('display-none');
 
             if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
                 $('#fixDepositF1').removeClass('display-none');
@@ -370,10 +376,13 @@
                 //alert("Hello");
                 $('#allInOneAccountF2').removeClass('display-none');
 
-            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
+            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
                 //alert("Hello");
                 $('#allInOneAccountF3').removeClass('display-none');
 
+            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
+                //alert("Hello");
+                $('#allInOneAccountF4').removeClass('display-none');
             }
 
         });
