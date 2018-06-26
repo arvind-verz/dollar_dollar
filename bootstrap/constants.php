@@ -233,3 +233,8 @@ define('FOREIGN_CURRENCY_DEPOSIT_F3', 18);
 define('FOREIGN_CURRENCY_DEPOSIT_F4', 19);
 define('FOREIGN_CURRENCY_DEPOSIT_F5', 20);
 define('FOREIGN_CURRENCY_DEPOSIT_F6', 21);
+
+//search value
+define('PLACEMENT', "Placement");
+define('INTEREST', "Interest");
+define('TENURE', "Tenor");
