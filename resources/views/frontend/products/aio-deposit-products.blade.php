@@ -174,6 +174,11 @@
         <div class="ps-poster">
             <a href="#"><img src="img/poster/large.png" alt=""></a>
         </div>
+        @if(count($promotion_products))
+        @foreach($promotion_products as $promotion_product)
+        @php
+            $product_range = json_decode($promotion_product->product_range);
+        @endphp
         <div class="ps-product ps-product--2">
             <div class="ps-product__header"><img src="img/logo/1.png" alt="">
                 <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a></div>
@@ -288,6 +293,8 @@
                 <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i class="fa fa-angle-down"></i></a></div>
             </div>
         </div>
+        <!-- INDIVIDUAL CRITERIA BASE -->
+        @if($promotion_product->formula_id==7)
         <div class="ps-product ps-product--2">
             <div class="ps-product__header"><img src="img/logo/5.png" alt="">
                 <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a></div>
@@ -307,18 +314,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($product_range as $range)
+                            @php
+                                $total_interest = ($range->bonus_interest_salary+$range->minimum_giro_payment+$range->bonus_interest_spend+$range->bonus_interest_wealth);
+                                
+                                $total_interest_earned = (($total_interest)+());
+                            @endphp
                             <tr>
                                 <td>Bonus Interest PA</td>
-                                <td class="text-center">0.3%</td>
-                                <td class="highlight text-center">0.8%</td>
-                                <td class="text-center">2.75%</td>
-                                <td class="text-center">Up to 2.75%</td>
-                                <td class="text-center">1% on first 70k if account more than 200k</td>
+                                <td class="text-center">{{ $range->bonus_interest_salary }}%</td>
+                                <td class="text-center">{{ $range->minimum_giro_payment }}%</td>
+                                <td class="text-center">{{ $range->bonus_interest_spend }}%</td>
+                                <td class="text-center">Up to {{ $range->bonus_interest_wealth }}%</td>
+                                <td class="text-center">{{ $range->bonus_interest }}% on first 70k if account more than 200k</td>
                             </tr>
                             <tr>
                                 <td colspan="2">Total Bonus Interest Earned for $100k</td>
                                 <td class="highlight text-center" colspan="8">First $60k - $XXX ( = 2.0%), next $40k - $xxxx (0.375) Total = $ XXX</td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -354,6 +368,7 @@
                 <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i class="fa fa-angle-down"></i></a></div>
             </div>
         </div>
+        @endif
         <div class="ps-product ps-product--2">
             <div class="ps-product__header"><img src="img/logo/5.png" alt="">
                 <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a></div>
@@ -533,6 +548,8 @@
                 <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i class="fa fa-angle-down"></i></a></div>
             </div>
         </div>
+        @endforeach
+        @endif
     </div>
 </div>
     {{--Page content end--}}
