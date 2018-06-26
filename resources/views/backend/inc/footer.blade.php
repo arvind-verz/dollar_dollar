@@ -290,6 +290,14 @@
                 var errors = new Array();
                 var i = 0;
 
+                var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+                var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>','<?php echo WEALTH_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
+                var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>','<?php echo WEALTH_DEPOSIT_F5; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
+                var SDP1 = [
+                    '<?php echo SAVING_DEPOSIT_F1; ?>','<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo SAVING_DEPOSIT_F4; ?>',
+                    '<?php echo WEALTH_DEPOSIT_F1; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F4; ?>',
+                    '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+                ];
                 if (index == 1) {
                     var name = $.trim($('#name').val());
                     var bank = $.trim($('#bank').val());
@@ -357,7 +365,7 @@
                     }
                 }
                 if (index == 0) {
-                    if (formula == 1) {
+                    if(jQuery.inArray(formula, FDP1) !== -1) {
                         var minPlacements = $('#fixDepositF1').find('input[name^="min_placement"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -429,7 +437,7 @@
                             });
                         }
                     }
-                    if (formula == 2 || formula == 3 || formula == 5) {
+                    if(jQuery.inArray(formula, SDP1) !== -1) {
                         var minPlacements = $('#savingDepositF1').find('input[name^="min_placement_sdp1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -489,7 +497,7 @@
                             });
                         }
                     }
-                    if (formula == 4) {
+                    if(jQuery.inArray(formula, SDP3) !== -1) {
                         var rateCounter = $('#savingDepositF3').find('input[name^="counter_sdp3"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -530,7 +538,7 @@
 
 
                     }
-                    if (formula == 6) {
+                    if(jQuery.inArray(formula, SDP5) !== -1) {
                         var minPlacement = $('#savingDepositF5').find('input[name="min_placement_sdp5"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -1075,7 +1083,15 @@
         var formula = $("#formula").val();
         var range_id = $(id).data('range-id');
         range_id++;
-        if (formula == 1) {
+        var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+        var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>','<?php echo WEALTH_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
+        var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>','<?php echo WEALTH_DEPOSIT_F5; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
+        var SDP1 = [
+            '<?php echo SAVING_DEPOSIT_F1; ?>','<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo SAVING_DEPOSIT_F4; ?>',
+            '<?php echo WEALTH_DEPOSIT_F1; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F4; ?>',
+            '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+        ];
+        if(jQuery.inArray(formula, FDP1) !== -1) {
             var data = $('#fixDepositF1').find('input[name^="tenure[0]"]').serializeArray();
             var formula_detail_id = data.length - 1;
             jQuery.ajax({
@@ -1090,7 +1106,7 @@
                 $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
             });
         }
-        if (formula == 2 || formula == 3 || formula == 5) {
+        if(jQuery.inArray(formula, SDP1) !== -1) {
             jQuery.ajax({
                 type: "POST",
                 url: "{{url('/admin/add-more-placement-range')}}",
@@ -1129,7 +1145,15 @@
     function addCounter(id) {
         var formula = $("#formula").val();
         var counterValue = $(id).val();
-        if (formula == 4) {
+        var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+        var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>','<?php echo WEALTH_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
+        var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>','<?php echo WEALTH_DEPOSIT_F5; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
+        var SDP1 = [
+            '<?php echo SAVING_DEPOSIT_F1; ?>','<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo SAVING_DEPOSIT_F4; ?>',
+            '<?php echo WEALTH_DEPOSIT_F1; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F4; ?>',
+            '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+        ];
+        if(jQuery.inArray(formula, SDP3) !== -1) {
             jQuery.ajax({
                 type: "POST",
                 url: "{{url('/admin/add-counter')}}",

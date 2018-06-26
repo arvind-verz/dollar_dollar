@@ -292,28 +292,48 @@
                 });
 
             }
-            if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>','<?php echo WEALTH_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
+            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>','<?php echo WEALTH_DEPOSIT_F5; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
+            var SDP1 = [
+                '<?php echo SAVING_DEPOSIT_F1; ?>','<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo SAVING_DEPOSIT_F4; ?>',
+                '<?php echo WEALTH_DEPOSIT_F1; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F4; ?>',
+                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+            ];
+            if(jQuery.inArray(formula, FDP1) !== -1)
+            {
                 $('#fixDepositF1').removeClass('display-none');
 
-            }if (formula == '<?php echo SAVING_DEPOSIT_F1; ?>' || formula == '<?php echo SAVING_DEPOSIT_F2; ?>' || formula == '<?php echo SAVING_DEPOSIT_F4; ?>' ) {
-                $('#savingDepositF1').removeClass('display-none');
-
-            }if (formula == '<?php echo SAVING_DEPOSIT_F3; ?>') {
+            }
+            if(jQuery.inArray(formula, SDP3) !== -1){
+                //alert("Hello");
                 $('#savingDepositF3').removeClass('display-none');
 
-            }if (formula == '<?php echo SAVING_DEPOSIT_F5; ?>') {
+            }
+            if(jQuery.inArray(formula, SDP5) !== -1){
+                //alert("Hello");
                 $('#savingDepositF5').removeClass('display-none');
 
-            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
+            }
+            if(jQuery.inArray(formula, SDP1) !== -1){
+                $('#savingDepositF1').removeClass('display-none');
+
+            }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
+
                 $('#allInOneAccountF1').removeClass('display-none');
 
-            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
+            }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
+
                 $('#allInOneAccountF2').removeClass('display-none');
 
             }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
+
                 $('#allInOneAccountF3').removeClass('display-none');
 
             }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
+
                 $('#allInOneAccountF4').removeClass('display-none');
 
             }
@@ -354,35 +374,50 @@
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
-
-            if (formula == '<?php echo FIX_DEPOSIT_F1; ?>') {
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>','<?php echo WEALTH_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
+            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>','<?php echo WEALTH_DEPOSIT_F5; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
+            var SDP1 = [
+                '<?php echo SAVING_DEPOSIT_F1; ?>','<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo SAVING_DEPOSIT_F4; ?>',
+                '<?php echo WEALTH_DEPOSIT_F1; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F4; ?>',
+                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+            ];
+            if(jQuery.inArray(formula, FDP1) !== -1)
+            {
                 $('#fixDepositF1').removeClass('display-none');
 
-            }if (formula == '<?php echo SAVING_DEPOSIT_F1; ?>' || formula == '<?php echo SAVING_DEPOSIT_F2; ?>' || formula == '<?php echo SAVING_DEPOSIT_F4; ?>') {
-                $('#savingDepositF1').removeClass('display-none');
-
-            }if (formula == '<?php echo SAVING_DEPOSIT_F3; ?>') {
+            }
+            if(jQuery.inArray(formula, SDP3) !== -1){
+                //alert("Hello");
                 $('#savingDepositF3').removeClass('display-none');
 
-            }if (formula == '<?php echo SAVING_DEPOSIT_F5; ?>') {
+            }
+            if(jQuery.inArray(formula, SDP5) !== -1){
                 //alert("Hello");
                 $('#savingDepositF5').removeClass('display-none');
 
-            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
-                //alert("Hello");
+            }
+            if(jQuery.inArray(formula, SDP1) !== -1){
+                $('#savingDepositF1').removeClass('display-none');
+
+            }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
+
                 $('#allInOneAccountF1').removeClass('display-none');
 
-            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
-                //alert("Hello");
+            }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
+
                 $('#allInOneAccountF2').removeClass('display-none');
 
             }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
-                //alert("Hello");
+
                 $('#allInOneAccountF3').removeClass('display-none');
 
             }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
-                //alert("Hello");
+
                 $('#allInOneAccountF4').removeClass('display-none');
+
             }
 
         });
