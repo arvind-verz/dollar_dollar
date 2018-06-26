@@ -419,6 +419,8 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_end', '>=', $end_date)
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
+
+      
         //dd(DB::getQueryLog());
         //dd($promotion_products);
         $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
