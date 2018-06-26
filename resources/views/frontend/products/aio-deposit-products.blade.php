@@ -179,6 +179,8 @@
         @php
             $product_range = json_decode($promotion_product->product_range);
         @endphp
+        <!-- TIER BASE -->
+        @if($promotion_product->formula_id==8)
         <div class="ps-product ps-product--2">
             <div class="ps-product__header"><img src="img/logo/1.png" alt="">
                 <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a></div>
@@ -198,32 +200,30 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $i=1;$interest_earned_arr = $total_interest = []; @endphp
+                            @foreach($product_range as $range)
+                            @php
+                                $spend_giro = $range->bonus_interest_criteria_b;
+                                $total_interest[] = $range->bonus_interest_criteria_b;
+                                $interest_earned_arr[] = round($range->max_range*($spend_giro/100), 2);
+                            @endphp
+                            @endforeach
+                            @foreach($product_range as $range)
+                            @php
+                                $spend_giro = $range->bonus_interest_criteria_b;
+                            @endphp
                             <tr>
-                                <td class="highlight">First $10k</td>
-                                <td>1.00%</td>
-                                <td class="highlight">1.5%</td>
-                                <td>First $10k - $XX (1.5%)</td>
-                                <td class="highlight" rowspan="4">$XXXX
-                                    <br> Effective Interest Rate 2.5%</td>
+                                <td class="">@if($i==1) First @else Next @endif ${{ $range->max_range }}</td>
+                                <td>{{ $range->bonus_interest_criteria_a }}%</td>
+                                <td class="">{{ $spend_giro }}%</td>
+                                <td>@if($i==1) First @else Next @endif ${{ $range->max_range }} - ${{ round($range->max_range*($spend_giro/100), 2) }} ({{ $spend_giro }}%)</td>
+                                @if($i==1)
+                                <td class="" rowspan="4">${{ array_sum($interest_earned_arr) }}
+                                    <br> Effective Interest Rate {{ array_sum($total_interest) }}%</td>
+                                @endif
                             </tr>
-                            <tr>
-                                <td class="highlight">Next $20k</td>
-                                <td>1.50%</td>
-                                <td class="highlight">2.00%</td>
-                                <td>Next $20k - $XX (1.5%)</td>
-                            </tr>
-                            <tr>
-                                <td class="highlight">Next $20k</td>
-                                <td>2.00%</td>
-                                <td class="highlight">3.33%</td>
-                                <td>Next $20k - $XX (2.0%)</td>
-                            </tr>
-                            <tr>
-                                <td class="highlight">Above $50k</td>
-                                <td>0.05%</td>
-                                <td class="highlight">0.05%</td>
-                                <td>Remaining Balance - $XXX (0.05%)</td>
-                            </tr>
+                            @php $i++; @endphp
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -293,6 +293,7 @@
                 <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i class="fa fa-angle-down"></i></a></div>
             </div>
         </div>
+        @endif
         <!-- INDIVIDUAL CRITERIA BASE -->
         @if($promotion_product->formula_id==7)
         <div class="ps-product ps-product--2">
@@ -316,9 +317,28 @@
                         <tbody>
                             @foreach($product_range as $range)
                             @php
-                                $total_interest = ($range->bonus_interest_salary+$range->minimum_giro_payment+$range->bonus_interest_spend+$range->bonus_interest_wealth);
+                                $bonus_interest_salary = $minimum_giro_payment = $bonus_interest_spend = $bonus_interest_wealth = 0;
+                                $input = 20000;
+                                $total_interest_arr = [];
+                                if($input>=$range->minimum_salary) {
+                                    $total_interest_arr[] = $range->bonus_interest_salary;
+                                }
+                                if($input>=$range->minimum_giro_payment) {
+                                    $total_interest_arr[] = $range->bonus_interest_giro_payment;
+                                }
+                                if($input>=$range->minimum_spend) {
+                                    $total_interest_arr[] = $range->bonus_interest_spend;
+                                }
+                                if($input>=$range->minimum_wealth_pa) {
+                                    $total_interest_arr[] = $range->bonus_interest_wealth;
+                                }
+                                if($input>=$range->minimum_loan_pa) {
+                                    $total_interest_arr[] = $range->bonus_interest_loan;
+                                }
+
+                                $total_interest = (array_sum($total_interest_arr)/100);
                                 
-                                $total_interest_earned = (($total_interest)+());
+                                $total_interest_earned = (($range->first_cap_amount*$total_interest)+($range->bonus_interest_remaining_amount*($range->max_range-$range->first_cap_amount)));
                             @endphp
                             <tr>
                                 <td>Bonus Interest PA</td>
@@ -326,11 +346,11 @@
                                 <td class="text-center">{{ $range->minimum_giro_payment }}%</td>
                                 <td class="text-center">{{ $range->bonus_interest_spend }}%</td>
                                 <td class="text-center">Up to {{ $range->bonus_interest_wealth }}%</td>
-                                <td class="text-center">{{ $range->bonus_interest }}% on first 70k if account more than 200k</td>
+                                <td class="text-center">{{ $range->bonus_interest }}% on first {{ $range->first_cap_amount }} if account more than {{ $range->bonus_amount }}</td>
                             </tr>
                             <tr>
                                 <td colspan="2">Total Bonus Interest Earned for $100k</td>
-                                <td class="highlight text-center" colspan="8">First $60k - $XXX ( = 2.0%), next $40k - $xxxx (0.375) Total = $ XXX</td>
+                                <td class="text-center" colspan="4">First ${{ $range->first_cap_amount }} - ${{ ($range->first_cap_amount*$total_interest) }} ( = {{ $range->bonus_interest }}%), next ${{ ($range->max_range-$range->first_cap_amount) }} - ${{ ($range->bonus_interest_remaining_amount*($range->max_range-$range->first_cap_amount)) }} ({{ $range->bonus_interest_remaining_amount }}%) Total = ${{ $total_interest_earned }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -369,6 +389,8 @@
             </div>
         </div>
         @endif
+        <!-- COMBINE TIER BASE -->
+        @if($promotion_product->formula_id==9)
         <div class="ps-product ps-product--2">
             <div class="ps-product__header"><img src="img/logo/5.png" alt="">
                 <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a></div>
@@ -462,6 +484,7 @@
                 <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i class="fa fa-angle-down"></i></a></div>
             </div>
         </div>
+        @endif
         <div class="ps-product ps-product--2 no-border">
             <div class="ps-product__header"><img src="img/logo/6.png" alt="">
                 <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a></div>
