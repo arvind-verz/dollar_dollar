@@ -439,16 +439,60 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($product_range as $range)
+                            @php
+                                $total_interest_arr = [];
+                                if($input>=$range->minimum_salary) {
+                                    $total_interest_arr[] = 1;
+                                }
+                                if($input>=$range->minimum_spend) {
+                                    $total_interest_arr[] = 1;
+                                }
+                                if($input>=$range->minimum_hire_purchase_loan) {
+                                    $total_interest_arr[] = 1;
+                                }
+                                if($input>=$range->minimum_renovation_loan) {
+                                    $total_interest_arr[] = 1;
+                                }
+                                if($input>=$range->minimum_home_loan) {
+                                    $total_interest_arr[] = 1;
+                                }
+                                if($input>=$range->minimum_education_loan) {
+                                    $total_interest_arr[] = 1;
+                                }
+                                if($input>=$range->minimum_insurance) {
+                                    $total_interest_arr[] = 1;
+                                }
+                                if($input>=$range->minimum_unit_trust) {
+                                    $total_interest_arr[] = 1;
+                                }
+
+                                $bonus_interest = $range->bonus_interest_remaining_amount;
+                                if(count($total_interest_arr)==1) {
+                                    $bonus_interest = $range->bonus_interest_criteria1;
+                                }
+                                elseif(count($total_interest_arr)==2) {
+                                    $bonus_interest = $range->bonus_interest_criteria2;
+                                }
+                                elseif(count($total_interest_arr)>=3) {
+                                    $bonus_interest = $range->bonus_interest_criteria3;
+                                }
+                                $bonus_interest = ($bonus_interest/100);
+
+                                $total_interest_earned_cap = ($range->first_cap_amount*$bonus_interest);
+                                $total_interest_earned = (($range->max_range-$range->first_cap_amount)*$range->bonus_interest_remaining_amount/100);
+                            @endphp
                             <tr>
                                 <td>Bonus Interest PA</td>
-                                <td class="text-center" colspan="3">1 Criteria Met – 0.3%</td>
-                                <td class="highlight text-center" colspan="3">2 Criteria – 0.8%</td>
-                                <td class="text-center" colspan="3">3 Criteria 2.75%</td>
+                                <td class="text-center" colspan="3">1 Criteria Met – {{ $range->bonus_interest_criteria1 }}%</td>
+                                <td class="highlight text-center" colspan="3">2 Criteria – {{ $range->bonus_interest_criteria2 }}%</td>
+                                <td class="text-center" colspan="3">3 Criteria {{ $range->bonus_interest_criteria3 }}%</td>
                             </tr>
                             <tr>
-                                <td colspan="2">Total Bonus Interest Earned for $100k</td>
-                                <td class="highlight text-center" colspan="8">First $60k - $XXX ( = 2.0%), next $40k - $xxxx (0.375) Total = $ XXX</td>
+                                <td colspan="2">Total Bonus Interest Earned for ${{ $range->max_range }}</td>
+                                <td class="highlight text-center" colspan="8">First ${{ $range->first_cap_amount }} - ${{ $range->first_cap_amount*$bonus_interest }} ( = 2.0%), next ${{ $total_interest_earned_cap }} - ${{ $total_interest_earned }} ({{ $range->bonus_interest_remaining_amount }}%) Total = ${{ ($total_interest_earned_cap+$total_interest_earned) }}</td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -485,6 +529,12 @@
             </div>
         </div>
         @endif
+        <!-- DBS CRITERIA -->
+        @if($promotion_product->formula_id==10)
+        @php
+            $input_type = 'salary';
+            $input = 50000;
+        @endphp
         <div class="ps-product ps-product--2 no-border">
             <div class="ps-product__header"><img src="img/logo/6.png" alt="">
                 <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a></div>
@@ -498,47 +548,32 @@
                                 <th>Monthly Transaction</th>
                                 <th>Criteria a (Salary + 1 category)</th>
                                 <th>Criteria b (Spend + 2 OR more Cateogry)</th>
-                                <th>Total Interest Earned for $50K</th>
+                                <th>Total Interest Earned for ${{ $input }}</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php $i=1; @endphp
+                            @foreach($product_range as $range)
+                            @php                                
+                                $interest = $range->bonus_interest_criteria_b;
+                                $total_interest_arr = [];
+                                if(count($total_interest_arr)==1 && $input_type=='salary') {
+                                    $interest = $range->bonus_interest_criteria_a;
+                                }
+                                $interest = ($interest/100);
+                            @endphp
+                            @endforeach
+                            @foreach($product_range as $range)
                             <tr>
-                                <td>
-                                    <$2k</td>
-                                        <td>0.05%</td>
-                                        <td>0.05%</td>
-                                        <td class="highlight text-center" rowspan="6">$XXX</td>
+                                <td>@if($i==1) <${{ $range->max_range }} @elseif(count($product_range)==$i) >${{ $range->max_range }} @else ${{ $range->min_range }} TO ${{ $range->max_range }} @endif</td>
+                                <td>{{ $range->bonus_interest_criteria_a }}%</td>
+                                <td>{{ $range->bonus_interest_criteria_b }}%</td>
+                                @if($i==1)
+                                <td class="highlight text-center" rowspan="6">${{ ($input*$interest) }}</td>
+                                @endif
                             </tr>
-                            <tr>
-                                <td>$2k to
-                                    <$2.5k</td>
-                                        <td>1.55%</td>
-                                        <td>1.80%</td>
-                            </tr>
-                            <tr>
-                                <td>$2.5k to
-                                    <$5k</td>
-                                        <td>1.80%</td>
-                                        <td>2.00%</td>
-                            </tr>
-                            <tr>
-                                <td class="highlight">$5k to
-                                    <$15k</td>
-                                        <td class="highlight">1.90%</td>
-                                        <td class="highlight">2.20%</td>
-                            </tr>
-                            <tr>
-                                <td>$15k to
-                                    <$30k</td>
-                                        <td>2.00%</td>
-                                        <td>2.30%</td>
-                            </tr>
-                            <tr>
-                                <td>$15k to
-                                    <$30k</td>
-                                        <td>2.08%</td>
-                                        <td>3.50%</td>
-                            </tr>
+                            @php $i++; @endphp
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -571,6 +606,7 @@
                 <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i class="fa fa-angle-down"></i></a></div>
             </div>
         </div>
+        @endif
         @endforeach
         @endif
     </div>
