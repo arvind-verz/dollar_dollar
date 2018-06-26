@@ -323,7 +323,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_formula.promotion_id', '=', 1)
+        ->where('promotion_products.promotion_type_id', '=', 1)
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->get();
@@ -349,6 +349,8 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_products.promotion_type_id', '=', 1)
+        ->orwhere('promotion_products.promotion_type_id', '=', 2)
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
@@ -372,7 +374,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_formula.promotion_id', '=', 2)
+        ->where('promotion_products.promotion_type_id', '=', 2)
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
@@ -395,7 +397,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_formula.promotion_id', '=', 2)
+        ->where('promotion_products.promotion_type_id', '=', 2)
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
@@ -451,7 +453,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_formula.promotion_id', '=', 1)
+        ->where('promotion_products.promotion_type_id', '=', 1)
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->select('brands.id as brand_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
@@ -523,7 +525,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_formula.promotion_id', '=', 2)
+        ->where('promotion_products.promotion_type_id', '=', 2)
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
@@ -669,6 +671,7 @@ class PagesFrontController extends Controller
     }
 
     public function search_foreign_currency_deposit(Request $request) {
+        //dd($request->all());
         $start_date=\Helper::startOfDayBefore();
         $end_date=\Helper::endOfDayAfter();
 
@@ -677,11 +680,14 @@ class PagesFrontController extends Controller
         $brand_id = $request->brand_id;
 
         $currency = Currency::get();
+        $search_currency = Currency::find($request->currency);
 
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
+        ->where('promotion_products.promotion_type_id', '=', 1)
+        ->orwhere('promotion_products.promotion_type_id', '=', 2)
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
@@ -792,6 +798,6 @@ class PagesFrontController extends Controller
         
         $promotion_products=$filterProducts;
         //dd($promotion_products);
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "currency"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "currency", "search_currency"));
     }
 }
