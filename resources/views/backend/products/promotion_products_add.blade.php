@@ -326,6 +326,7 @@
             }
             if(jQuery.inArray(formula, SDP3) !== -1){
                 //alert("Hello");
+                addCounter();
                 $('#savingDepositF3').removeClass('display-none');
 
             }
