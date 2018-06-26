@@ -204,6 +204,13 @@ define('MR', "Mr.");
 define('MRS', "Mrs.");
 define('MISS', "Miss.");
 
+//Promotion Types
+//formula type ids
+define('FIX_DEPOSIT', 1);
+define('SAVING_DEPOSIT', 2);
+define('ALL_IN_ONE_ACCOUNT', 3);
+define('WEALTH_DEPOSIT', 4);
+define('FOREIGN_CURRENCY_DEPOSIT', 5);
 //formula type ids
 define('FIX_DEPOSIT_F1', 1);
 define('SAVING_DEPOSIT_F1', 2);

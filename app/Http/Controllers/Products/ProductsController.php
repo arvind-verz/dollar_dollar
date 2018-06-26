@@ -114,7 +114,7 @@ class ProductsController extends Controller
         $product->minimum_placement_amount = $request->minimum_placement_amount;
 
         $ranges = [];
-        if ($product->formula_id == FIX_DEPOSIT_F1) {
+        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F1])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
                 $bonusInterest = $request->bonus_interest;
@@ -130,7 +130,7 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
             $product->tenure = $tenure;
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             foreach ($request->min_placement_sdp1 as $k => $v) {
                 $max = $request->max_placement_sdp1;
                 $bonusInterest = $request->bonus_interest_sdp1;
@@ -148,7 +148,7 @@ class ProductsController extends Controller
             }
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3,WEALTH_DEPOSIT_F3,FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
             $range['counter'] = array_map('floatVal', $request->counter_sdp3);
@@ -158,7 +158,7 @@ class ProductsController extends Controller
 
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5,WEALTH_DEPOSIT_F5,FOREIGN_CURRENCY_DEPOSIT_F6])) {
             $range['min_range'] = (int)$request->min_placement_sdp5;
             $range['max_range'] = (int)$request->max_placement_sdp5;
             $range['base_interest'] = (float)$request->base_interest_sdp5;
@@ -375,7 +375,7 @@ class ProductsController extends Controller
         $product->minimum_placement_amount = $request->minimum_placement_amount;
 
         $ranges = [];
-        if ($product->formula_id == FIX_DEPOSIT_F1) {
+        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F1])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
                 $bonusInterest = $request->bonus_interest;
@@ -391,7 +391,7 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
             $product->tenure = $tenure;
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             foreach ($request->min_placement_sdp1 as $k => $v) {
                 $max = $request->max_placement_sdp1;
                 $bonusInterest = $request->bonus_interest_sdp1;
@@ -409,7 +409,7 @@ class ProductsController extends Controller
             }
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3,WEALTH_DEPOSIT_F3,FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
             $range['counter'] = array_map('floatVal', $request->counter_sdp3);
@@ -419,7 +419,7 @@ class ProductsController extends Controller
 
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5,WEALTH_DEPOSIT_F5,FOREIGN_CURRENCY_DEPOSIT_F6])) {
             $range['min_range'] = (int)$request->min_placement_sdp5;
             $range['max_range'] = (int)$request->max_placement_sdp5;
             $range['base_interest'] = (float)$request->base_interest_sdp5;

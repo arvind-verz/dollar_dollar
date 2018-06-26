@@ -529,12 +529,14 @@
             </div>
         </div>
         @endif
+
         <!-- DBS CRITERIA -->
         @if($promotion_product->formula_id==10)
         @php
             $input_type = 'salary';
             $input = 50000;
         @endphp
+
         <div class="ps-product ps-product--2 no-border">
             <div class="ps-product__header"><img src="img/logo/6.png" alt="">
                 <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a></div>
@@ -606,7 +608,6 @@
                 <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i class="fa fa-angle-down"></i></a></div>
             </div>
         </div>
-        @endif
         @endforeach
         @endif
     </div>
