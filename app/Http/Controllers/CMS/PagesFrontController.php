@@ -273,7 +273,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.promotion_type_id', '=', 2)
+            ->where('promotion_products.promotion_type_id', '=', 4)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
@@ -300,8 +300,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.promotion_type_id', '=', 1)
-            ->orwhere('promotion_products.promotion_type_id', '=', 2)
+            ->where('promotion_products.promotion_type_id', '=', 5)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
@@ -539,113 +538,6 @@ class PagesFrontController extends Controller
 
     }
 
-    public function fixDepositMode($details)
-    {
-
-        $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
-        //dd($startDate);
-        DB::connection()->enableQueryLog();
-        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-
-        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_products.promotion_type_id', '=', 1)
-        ->where('promotion_products.promotion_start', '<=', $start_date)
-        ->where('promotion_products.promotion_end', '>=', $end_date)
-        ->get();
-
-
-
-        //dd(DB::getQueryLog());
-        //dd($promotion_products);
-        $brands = $details['brands'];
-        $page = $details['page'];
-        $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
-    }
-
-    public function foreignCurrencyDepositMode($details)
-    {
-        //dd("hello");
-        $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
-        //dd($startDate);
-        DB::connection()->enableQueryLog();
-        $currency = Currency::get();
-
-        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-
-        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_products.promotion_type_id', '=', 5)
-        ->where('promotion_products.promotion_start', '<=', $start_date)
-        ->where('promotion_products.promotion_end', '>=', $end_date)
-        ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-        ->get();
-
-
-
-        //dd(DB::getQueryLog());
-        //dd($promotion_products);
-        $brands = $details['brands'];
-        $page = $details['page'];
-        $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency"));
-    }
-
-    public function savingDepositMode($details)
-    {
-        $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
-        DB::connection()->enableQueryLog();
-        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-
-        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_products.promotion_type_id', '=', 2)
-        ->where('promotion_products.promotion_start', '<=', $start_date)
-        ->where('promotion_products.promotion_end', '>=', $end_date)
-        ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-        ->get();
-
-        //dd(DB::getQueryLog());
-        //dd($promotion_products);
-        $details = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
-        $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
-        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
-    }
-
-    public function wealthDepositMode($details)
-    {
-        $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
-        DB::connection()->enableQueryLog();
-        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-
-        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_products.promotion_type_id', '=', 4)
-        ->where('promotion_products.promotion_start', '<=', $start_date)
-        ->where('promotion_products.promotion_end', '>=', $end_date)
-        ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-        ->get();
-
-        //dd(DB::getQueryLog());
-        //dd($promotion_products);
-        $details = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
-        $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
-    }
-
     public function search_wealth_deposit(Request $request)
     {
         return $this->wealth($request->all());
@@ -729,31 +621,6 @@ class PagesFrontController extends Controller
         $promotion_products = $filterProducts;
         //dd($promotion_products);
         return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
-    }
-
-    public function aioDepositMode($details)
-    {
-        $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
-        DB::connection()->enableQueryLog();
-        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.promotion_type_id', '=', 3)
-            ->where('promotion_products.promotion_start', '<=', $start_date)
-            ->where('promotion_products.promotion_end', '>=', $end_date)
-            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-            ->get();
-
-      
-        //dd(DB::getQueryLog());
-        //dd($promotion_products);
-        $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
-        $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
     }
 
     public function search_fixed_deposit(Request $request)
@@ -964,7 +831,6 @@ class PagesFrontController extends Controller
 
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
         ->where('promotion_products.promotion_type_id', '=', 4)
@@ -972,15 +838,6 @@ class PagesFrontController extends Controller
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
         ->get();
-
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.promotion_type_id', '=', 1)
-            ->orwhere('promotion_products.promotion_type_id', '=', 2)
-            ->where('promotion_products.promotion_start', '<=', $start_date)
-            ->where('promotion_products.promotion_end', '>=', $end_date)
-            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-            ->get();
 
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands = $details['brands'];
@@ -1102,8 +959,6 @@ class PagesFrontController extends Controller
         }
 
 
-        $search_filter = [];
-        $search_filter = $request;
         $search_filter = [];
         $search_filter = $request;
         //$brand_id = $request->brand_id;
