@@ -854,82 +854,48 @@ class PagesFrontController extends Controller
             $status = false;
             $product_range = json_decode($product->product_range);
             $tenures = json_decode($product->tenure);
-            if ($product->formula_id != 1) {
-                if (($search_filter['filter'] == 'Placement' || $search_filter['filter'] == 'Interest') && $product->promotion_formula_id != 5 && $product->promotion_formula_id != 4) {
-                    //echo $brand_id;
-                    if (!empty($brand_id) && $brand_id == $product->brand_id) {
-                        $status = true;
-                        //echo "arv";
-
-                    }
-                    foreach ($product_range as $range) {
-                        if (!empty($brand_id)) {
-
-                            if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Placement' && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) && !empty($brand_id) && $brand_id == $product->brand_id) {
-                                $status = true;
-                            } elseif (!empty($search_filter['search_value']) && ($search_filter['filter'] == 'Interest') && !empty($brand_id) && $brand_id == $product->brand_id && ($product->promotion_formula_id == 2 || $product->promotion_formula_id == 3)) {
-                                $status = true;
-                            }
-                        } else {
-                            if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Placement' && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) || (!empty($brand_id) && $brand_id == $product->brand_id)) {
-                                $status = true;
-                            } elseif (!empty($search_filter['search_value']) && ($search_filter['filter'] == 'Interest') || (!empty($brand_id) && $brand_id == $product->brand_id) && ($product->promotion_formula_id == 2 || $product->promotion_formula_id == 3)) {
-                                $status = true;
-                            }
-                        }
-                    }
-                } else {
-                    if (!empty($brand_id)) {
-                        if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Tenor' && (!empty($brand_id) && $brand_id == $product->brand_id) && ($product->promotion_formula_id == 3 || $product->promotion_formula_id == 6)) {
-                            $status = true;
-                        }
-                    } else {
-                        if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Tenor' || (!empty($brand_id) && $brand_id == $product->brand_id) && ($product->promotion_formula_id == 3 || $product->promotion_formula_id == 6)) {
-                            $status = true;
-                        }
-                    }
-
-                }
-                if ((($search_filter['filter'] == 'Placement')) && $product->promotion_formula_id == 4 && (!empty($brand_id) && $brand_id == $product->brand_id)) {
+            if (($search_filter['filter'] == 'Placement' || $search_filter['filter'] == 'Interest') && $product->promotion_formula_id != 20 && $product->promotion_formula_id != 19) {
+                //echo $brand_id;
+                if (!empty($brand_id) && $brand_id == $product->brand_id) {
                     $status = true;
+                    //echo "arv";
+
                 }
-            }
-            if ($product->formula_id == 1) {
-                if (($search_filter['filter'] == 'Placement') || ($search_filter['filter'] == 'Interest')) {
-                    if (!empty($brand_id) && $brand_id == $product->brand_id) {
-                        $status = true;
-                    }
-                    foreach ($product_range as $range) {
-                        if (!empty($brand_id)) {
-                            if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Placement' && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) && !empty($brand_id) && $brand_id == $product->brand_id) {
-                                $status = true;
-                            } elseif (!empty($search_filter['search_value']) && ($search_filter['filter'] == 'Interest') && (in_array($search_filter['search_value'], $range->bonus_interest)) && !empty($brand_id) && $brand_id == $product->brand_id) {
-                                $status = true;
-                            }
-                        } else {
-                            if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Placement' && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) || (!empty($brand_id) && $brand_id == $product->brand_id)) {
-                                $status = true;
-                            } elseif (!empty($search_filter['search_value']) && ($search_filter['filter'] == 'Interest') && (in_array($search_filter['search_value'], $range->bonus_interest)) || (!empty($brand_id) && $brand_id == $product->brand_id)) {
-                                $status = true;
-                            }
-                        }
-                    }
-                } else {
+                foreach ($product_range as $range) {
                     if (!empty($brand_id)) {
-                        if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Tenor' && (in_array($search_filter['search_value'], $tenures)) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
+
+                        if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Placement' && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) && !empty($brand_id) && $brand_id == $product->brand_id) {
+                            $status = true;
+                        } elseif (!empty($search_filter['search_value']) && ($search_filter['filter'] == 'Interest') && !empty($brand_id) && $brand_id == $product->brand_id && ($product->promotion_formula_id == 17 || $product->promotion_formula_id == 18)) {
                             $status = true;
                         }
                     } else {
-                        if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Tenor' && (in_array($search_filter['search_value'], $tenures)) || (!empty($brand_id) && $brand_id == $product->brand_id)) {
+                        if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Placement' && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) || (!empty($brand_id) && $brand_id == $product->brand_id)) {
+                            $status = true;
+                        } elseif (!empty($search_filter['search_value']) && ($search_filter['filter'] == 'Interest') || (!empty($brand_id) && $brand_id == $product->brand_id) && ($product->promotion_formula_id == 17 || $product->promotion_formula_id == 18)) {
                             $status = true;
                         }
                     }
-
                 }
+            } else {
+                if (!empty($brand_id)) {
+                    if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Tenor' && (!empty($brand_id) && $brand_id == $product->brand_id) && ($product->promotion_formula_id == 18 || $product->promotion_formula_id == 21)) {
+                        $status = true;
+                    }
+                } else {
+                    if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Tenor' || (!empty($brand_id) && $brand_id == $product->brand_id) && ($product->promotion_formula_id == 18 || $product->promotion_formula_id == 21)) {
+                        $status = true;
+                    }
+                }
+
             }
-            if ($status == true) {
-                $filterProducts[] = $product;
+            if ((($search_filter['filter'] == 'Placement')) && $product->promotion_formula_id == 19 && (!empty($brand_id) && $brand_id == $product->brand_id)) {
+                $status = true;
             }
+        }
+            
+        if ($status == true) {
+            $filterProducts[] = $product;
         }
 
         $promotion_products = $filterProducts;

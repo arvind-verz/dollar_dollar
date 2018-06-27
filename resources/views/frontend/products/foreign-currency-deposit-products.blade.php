@@ -229,7 +229,7 @@
                         <div class="clearfix"></div>
                         @endif
                         <!-- FORMULA 1 -->
-                        @if($promotion_product->promotion_formula_id==2)
+                        @if($promotion_product->promotion_formula_id==17)
                         <div class="ps-product__table">
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product">
@@ -285,7 +285,7 @@
                         <div class="clearfix"></div>
                         @endif
                         <!-- FORMULA 2 -->
-                        @if($promotion_product->promotion_formula_id==3)
+                        @if($promotion_product->promotion_formula_id==18)
                         <div class="ps-product__table">
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product">
@@ -350,7 +350,7 @@
                         @endif
 
                         <!-- FORMULA 3 -->
-                        @if($promotion_product->promotion_formula_id==4)
+                        @if($promotion_product->promotion_formula_id==19)
                         <div class="ps-product__table">
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product text-center">
@@ -395,7 +395,7 @@
                         <div class="clearfix"></div>
                         @endif
                         <!-- FORMULA 4 -->
-                        @if($promotion_product->promotion_formula_id==5)
+                        @if($promotion_product->promotion_formula_id==20)
                         <div class="ps-product__table">
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product text-center">
@@ -444,7 +444,7 @@
                         @endif
 
                         <!-- FORMULA 5 -->
-                        @if($promotion_product->promotion_formula_id==6 ) @php $row_data = ['CUMMULATED MONTHLY SAVINGS AMOUNT', 'BASE INTEREST', 'ADDITIONAL 2% P.A. INTEREST', 'TOTAL AMOUNT']; @endphp
+                        @if($promotion_product->promotion_formula_id==21 ) @php $row_data = ['CUMMULATED MONTHLY SAVINGS AMOUNT', 'BASE INTEREST', 'ADDITIONAL 2% P.A. INTEREST', 'TOTAL AMOUNT']; @endphp
                         <?php $months = [1];
                                                     $x = (int)$product_range[0]->placement_month;
                                                     $y = (int)$product_range[0]->display_month;
