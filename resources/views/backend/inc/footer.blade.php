@@ -942,7 +942,7 @@
                         var SalaryMinAmount = allInOneAccountF4.find('input[name="minimum_salary_aioa4"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var GiroMinAmount = allInOneAccountF4.find('input[name="minimum_giro_payment_aioa4"]').map(function () {
+                        var SpendMinAmount = allInOneAccountF4.find('input[name="minimum_spend_aioa4"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var HomeMinAmount = allInOneAccountF4.find('input[name="minimum_home_loan_aioa4"]').map(function () {

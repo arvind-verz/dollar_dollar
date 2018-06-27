@@ -17,10 +17,10 @@
 
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label for="">Minimum No of Payment (Giro)</label>
+                                    <label for="">Minimum Amount (Spend)</label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="minimum_giro_payment_aioa4"
-                                           value="{{ $value->minimum_giro_payment}}"
+                                           name="minimum_spend_aioa4"
+                                           value="{{ $value->minimum_spend}}"
                                            placeholder="">
 
                                 </div>
@@ -160,9 +160,9 @@
 
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="">Minimum No of Payment (Giro)</label>
+                        <label for="">Minimum Amount (Spend)</label>
                         <input type="text" class="form-control only_numeric" id=""
-                               name="minimum_giro_payment_aioa4"
+                               name="minimum_spend_aioa4"
                                value=""
                                placeholder="">
 
