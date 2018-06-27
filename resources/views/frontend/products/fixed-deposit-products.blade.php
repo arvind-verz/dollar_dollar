@@ -175,14 +175,14 @@
                 </div>
             </div>
             @if(count($promotion_products))
-                @php $j = 1; @endphp
-                @foreach($promotion_products as $promotion_product)
-                    @php
-                    $product_tenures = json_decode($promotion_product->product_tenure);
-                    $product_range = json_decode($promotion_product->product_range);
-                    $tenures = json_decode($promotion_product->tenure);
-                    $key = $interest_key = $max_range_arr = array();
-                    @endphp
+            @php $j = 1; @endphp
+            @foreach($promotion_products as $promotion_product)
+            @php
+            $product_tenures = json_decode($promotion_product->product_tenure);
+            $product_range = json_decode($promotion_product->product_range);
+            $tenures = json_decode($promotion_product->tenure);
+            $key = $interest_key = $max_range_arr = array();
+            @endphp
                     <div class="ps-product featured-1" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 

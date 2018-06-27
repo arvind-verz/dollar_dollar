@@ -155,7 +155,7 @@ class PagesFrontController extends Controller
                     $details['page'] = $page;
                     $details['systemSetting'] = $systemSetting;
                     $details['banners'] = $banners;
-                    
+
                     /*sent all pages detail into this function and than return to blade file*/
                     return $this->foreignCurrencyDepositMode($details);
 
@@ -230,7 +230,6 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
             ->get();
-
 
         //dd(DB::getQueryLog());
         //dd($promotion_products);
@@ -821,19 +820,18 @@ class PagesFrontController extends Controller
         $end_date = \Helper::endOfDayAfter();
 
         $currency = isset($request->currency) ? $request->currency : '';
-
         $search_filter = [];
         $search_filter = $request;
         $brand_id = isset($request['brand_id']) ? $request['brand_id'] : '';
 
-        $currency = Currency::get();
+        $currency_list = Currency::get();
         $search_currency = Currency::find($currency);
 
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_products.promotion_type_id', '=', 4)
+        ->where('promotion_products.promotion_type_id', '=', 5)
         ->where('promotion_products.promotion_start', '<=', $start_date)
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
@@ -854,16 +852,16 @@ class PagesFrontController extends Controller
             $status = false;
             $product_range = json_decode($product->product_range);
             $tenures = json_decode($product->tenure);
+            if (!empty($request->currency)) {
+                $status = true;
+            }
             if (($search_filter['filter'] == 'Placement' || $search_filter['filter'] == 'Interest') && $product->promotion_formula_id != 20 && $product->promotion_formula_id != 19) {
-                //echo $brand_id;
                 if (!empty($brand_id) && $brand_id == $product->brand_id) {
                     $status = true;
-                    //echo "arv";
-
                 }
+
                 foreach ($product_range as $range) {
                     if (!empty($brand_id)) {
-
                         if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Placement' && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) && !empty($brand_id) && $brand_id == $product->brand_id) {
                             $status = true;
                         } elseif (!empty($search_filter['search_value']) && ($search_filter['filter'] == 'Interest') && !empty($brand_id) && $brand_id == $product->brand_id && ($product->promotion_formula_id == 17 || $product->promotion_formula_id == 18)) {
@@ -896,12 +894,12 @@ class PagesFrontController extends Controller
                 $filterProducts[] = $product;
             }
         }
-            
-        
+
+
 
         $promotion_products = $filterProducts;
-        //dd($promotion_products);
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "currency", "search_currency"));
+        //dd($search_currency);
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "currency_list", "search_currency"));
     }
 
 
