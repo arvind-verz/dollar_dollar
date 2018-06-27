@@ -973,6 +973,15 @@ class PagesFrontController extends Controller
         ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
         ->get();
 
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            ->where('promotion_products.promotion_type_id', '=', 1)
+            ->orwhere('promotion_products.promotion_type_id', '=', 2)
+            ->where('promotion_products.promotion_start', '<=', $start_date)
+            ->where('promotion_products.promotion_end', '>=', $end_date)
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+            ->get();
+
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands = $details['brands'];
         $page = $details['page'];
@@ -1093,6 +1102,8 @@ class PagesFrontController extends Controller
         }
 
 
+        $search_filter = [];
+        $search_filter = $request;
         $search_filter = [];
         $search_filter = $request;
         //$brand_id = $request->brand_id;
