@@ -539,7 +539,6 @@ class PagesFrontController extends Controller
 
     }
 
-<<<<<<< HEAD
     public function fixDepositMode($details)
     {
 
@@ -757,8 +756,6 @@ class PagesFrontController extends Controller
         return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
     }
 
-=======
->>>>>>> master
     public function search_fixed_deposit(Request $request)
     {
         return $this->fixed($request->all());
@@ -967,7 +964,6 @@ class PagesFrontController extends Controller
 
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-<<<<<<< HEAD
 
         ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
         ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
@@ -976,7 +972,7 @@ class PagesFrontController extends Controller
         ->where('promotion_products.promotion_end', '>=', $end_date)
         ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
         ->get();
-=======
+
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', 1)
@@ -985,7 +981,6 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_end', '>=', $end_date)
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
->>>>>>> master
 
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands = $details['brands'];
@@ -1107,12 +1102,10 @@ class PagesFrontController extends Controller
         }
 
 
-<<<<<<< HEAD
         $search_filter = [];
         $search_filter = $request;
-=======
-        $search_filter = $request->all();
->>>>>>> master
+        $search_filter = [];
+        $search_filter = $request;
         //$brand_id = $request->brand_id;
         $brand_id = null;
 
