@@ -1023,7 +1023,7 @@ class PagesFrontController extends Controller
                             $placement = $productRange->max_range;
 
                         } elseif ($filter == TENURE) {
-                            $placement = $productRange->min_range;
+                            $placement = ($productRange->min_range-1);
 
                         }
                     }
