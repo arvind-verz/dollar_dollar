@@ -892,11 +892,12 @@ class PagesFrontController extends Controller
             if ((($search_filter['filter'] == 'Placement')) && $product->promotion_formula_id == 19 && (!empty($brand_id) && $brand_id == $product->brand_id)) {
                 $status = true;
             }
+            if ($status == true) {
+                $filterProducts[] = $product;
+            }
         }
             
-        if ($status == true) {
-            $filterProducts[] = $product;
-        }
+        
 
         $promotion_products = $filterProducts;
         //dd($promotion_products);
