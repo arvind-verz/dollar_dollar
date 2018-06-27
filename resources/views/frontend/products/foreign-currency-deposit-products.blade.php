@@ -92,7 +92,7 @@
                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
                                             <select class="form-control" name="currency">
                                                 <option value="">Select</option>
-                                                @foreach($currency as $currencies)
+                                                @foreach($currency_list as $currencies)
                                                 <option value="{{ $currencies->id }}" @if(isset($search_filter['currency']) && $search_filter[ 'currency']==$currencies->id) selected @endif>{{ $currencies->code }}</option>
                                                 @endforeach
                                             </select>
@@ -144,7 +144,7 @@
                         <p><img src="{{ asset('img/icons/cx.png') }}" alt="">= example funds</p>
                     </div>
                 </div>
-                @if(count($promotion_products)) @php $j = 1; @endphp @foreach($promotion_products as $promotion_product) @php $product_range = json_decode($promotion_product->product_range); $tenures = json_decode($promotion_product->tenure); $date1 = new DateTime(date('Y-m-d')); $date1_start = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_start))); $date2 = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_end))); $interval = date_diff($date2, $date1); $interval_spent = date_diff($date2, $date1_start); $days_type = \Helper::days_or_month_or_year(2, $interval_spent->format('%m')); $max_range_arr = array(); 
+                @if(count($promotion_products)) @php $j = 1; @endphp @foreach($promotion_products as $promotion_product) @php $product_range = json_decode($promotion_product->product_range); $tenures = json_decode($promotion_product->tenure); $date1 = new DateTime(date('Y-m-d')); $date1_start = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_start))); $date2 = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_end))); $interval = date_diff($date2, $date1); $interval_spent = date_diff($date2, $date1_start); $days_type = \Helper::days_or_month_or_year(2, $interval_spent->format('%m')); $max_range_arr = array();
 
                 @endphp
                 <div class="ps-product featured-1" id="{{ $j }}">
@@ -183,16 +183,16 @@
                                         @foreach($product_range as $range) @php $max_range_arr[] = $range->max_range; @endphp
                                         <tr class="
                                                 @if(isset($search_filter['filter']) && ($search_filter['filter']=='Placement'))
-                                                    @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight 
+                                                    @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
                                                     @endif
                                                 @endif
-                                                @if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && in_array(sprintf('%.1f', $search_filter['search_value']), $range->bonus_interest)) highlight 
+                                                @if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && in_array(sprintf('%.1f', $search_filter['search_value']), $range->bonus_interest)) highlight
                                                 @endif
                                                 ">
                                             <td><img src="{{ asset('img/icons/ff.png') }}" alt=""></td>
                                             <td>{{ $currency_symbol . $range->min_range . ' - ' .$currency_symbol . $range->max_range }}</td>
                                             @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
-                                            <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight 
+                                            <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight
                                                 @endif">{{ $bonus_interest . '%' }}</td>
                                             @endforeach
                                         </tr>
