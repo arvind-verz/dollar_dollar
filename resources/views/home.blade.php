@@ -56,9 +56,9 @@
                     <option value="">Select account Type</option>
                     <option value="1">Fixed Deposit</option>
                     <option value="2">Saving Deposit</option>
-                    <option value="4">Wealth Deposit</option>
-                    <option value="3">All In One Account</option>
-                    <option value="5">Foreign Currency</option>
+                    <option value="3">Wealth Deposit</option>
+                    <option value="4">Foreign Currency</option>
+                    <option value="5">All In One Account</option>
                 </select>
             </div>
             <div class="form-group">

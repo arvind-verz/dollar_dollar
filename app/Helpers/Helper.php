@@ -506,10 +506,12 @@ class Helper
     }
 
     public static function get_page_detail($slug=HOME_SLUG) {
+        //dd($slug);
         $page = Page::where('delete_status', 0)->where('slug', $slug)->first();
         if (!$page) {
             return back()->with('error', OPPS_ALERT);
         }
+        
         $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
 
         $systemSetting = \Helper::getSystemSetting();
