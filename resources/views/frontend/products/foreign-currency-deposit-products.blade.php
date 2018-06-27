@@ -49,7 +49,7 @@
                 },
                 $string);
 
-        $currency_symbol = isset($search_currency->icon) ? $search_currency->icon : '¥';
+        $currency_symbol = isset($search_currency->icon) ? $search_currency->icon : '$';
         ?>
             {!! $output !!}
             <div class="container">

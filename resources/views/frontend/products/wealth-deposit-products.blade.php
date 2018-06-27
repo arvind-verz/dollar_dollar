@@ -66,7 +66,7 @@
         {!! $output !!}
         <div class="container">
             <div class="ps-block--deposit-filter">
-                <form class="ps-form--filter" action="{{ route('saving-deposit-mode.search') }}" method="post">
+                <form class="ps-form--filter" action="{{ route('wealth-deposit-mode.search') }}" method="post">
                     <div class="ps-block__header">
                         @if(count($brands))
                             @foreach($brands as $brand)
@@ -214,7 +214,7 @@
                                 @php } @endphp
                                 @endif
                                         <!-- FORMULA 1 -->
-                                @if($promotion_product->promotion_formula_id==2)
+                                @if($promotion_product->promotion_formula_id==11)
                                     <div class="ps-product__table">
                                         <div class="ps-table-wrap">
                                             <table class="ps-table ps-table--product">
@@ -316,7 +316,7 @@
                                     <div class="clearfix"></div>
                                     @endif
                                             <!-- FORMULA 2 -->
-                                    @if($promotion_product->promotion_formula_id==3)
+                                    @if($promotion_product->promotion_formula_id==12)
                                         <div class="ps-product__table">
                                             <div class="ps-table-wrap">
                                                 <table class="ps-table ps-table--product">
@@ -454,7 +454,7 @@
 
 
                                                 <!-- FORMULA 3 -->
-                                        @if($promotion_product->promotion_formula_id==4)
+                                        @if($promotion_product->promotion_formula_id==13)
                                             <div class="ps-product__table">
                                                 <div class="ps-table-wrap">
                                                     <table class="ps-table ps-table--product text-center">
@@ -520,7 +520,7 @@
                                             <div class="clearfix"></div>
                                             @endif
                                                     <!-- FORMULA 4 -->
-                                            @if($promotion_product->promotion_formula_id==5)
+                                            @if($promotion_product->promotion_formula_id==14)
                                                 <div class="ps-product__table">
                                                     <div class="ps-table-wrap">
                                                         <table class="ps-table ps-table--product text-center">
@@ -636,7 +636,7 @@
                                                 @endif
 
                                                         <!-- FORMULA 5 -->
-                                                @if($promotion_product->promotion_formula_id==6 )
+                                                @if($promotion_product->promotion_formula_id==15 )
                                                     @php
                                                     $row_data = ['CUMMULATED MONTHLY SAVINGS AMOUNT', 'BASE INTEREST',
                                                     'ADDITIONAL 2% P.A. INTEREST', 'TOTAL AMOUNT'];

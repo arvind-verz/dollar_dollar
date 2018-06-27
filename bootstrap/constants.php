@@ -170,7 +170,7 @@ define('LIFE_INSURANCE_ENQUIRY', "life-insurance-enquiry");
 define('FIXED_DEPOSIT_MODE', "fixed-deposit-mode");
 define('SAVING_DEPOSIT_MODE', "saving-deposit-mode");
 define('WEALTH_DEPOSIT_MODE', "wealth-deposit-mode");
-define('FOREIGN_CURRENCY_DEPOSIT_MODE', "foriegn-currency-deposit-mode");
+define('FOREIGN_CURRENCY_DEPOSIT_MODE', "foreign-currency-deposit-mode");
 define('AIO_DEPOSIT_MODE', "all-in-one-deposit-mode");
 define('PROFILEDASHBOARD', "profile-dashboard");
 define('ACCOUNTINFO', "account-information");
