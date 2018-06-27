@@ -294,7 +294,7 @@ class PagesFrontController extends Controller
         $end_date = \Helper::endOfDayAfter();
         //dd($startDate);
         DB::connection()->enableQueryLog();
-        $currency = Currency::get();
+        $currency_list = Currency::get();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -312,7 +312,7 @@ class PagesFrontController extends Controller
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency_list"));
     }
 
     public function aioDepositMode($details)
@@ -855,7 +855,7 @@ class PagesFrontController extends Controller
             if (!empty($request->currency)) {
                 $status = true;
             }
-            if (($search_filter['filter'] == 'Placement' || $search_filter['filter'] == 'Interest') && $product->promotion_formula_id != 20 && $product->promotion_formula_id != 19) {
+            if (($search_filter['filter'] == 'Placement' || $search_filter['filter'] == 'Interest')) {
                 if (!empty($brand_id) && $brand_id == $product->brand_id) {
                     $status = true;
                 }
