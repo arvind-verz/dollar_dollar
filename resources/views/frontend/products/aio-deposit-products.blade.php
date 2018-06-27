@@ -469,8 +469,10 @@
                             </div>--}}
                             <div class="ps-product__content">
 
-                                <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}} :</strong>
-                                    Fulfil up to 3 criteria and earn up to {{ $promotion_product->maximum_interest_rate }}%</h4>
+                                <h4 class="ps-product__heading"><strong
+                                            class="highlight">{{$promotion_product->product_name}} :</strong>
+                                    Fulfil up to 3 criteria and earn up
+                                    to {{ $promotion_product->maximum_interest_rate }}%</h4>
 
                                 <div class="ps-table-wrap">
                                     <table class="ps-table ps-table--product ps-table--product-3">
@@ -540,7 +542,7 @@
                                             <tr>
                                                 <td colspan="2">Total Bonus Interest Earned for
                                                     ${{ $range->placement }}</td>
-                                                <td class=" text-center" colspan="8">First
+                                                <td class=" text-center" colspan="8">
 
                                                     @if($range->placement > $range->first_cap_amount)
                                                         First
@@ -599,11 +601,8 @@
                         </div>
                         @endif
                                 <!-- DBS CRITERIA -->
-                        @if($promotion_product->formula_id==10)
-                            @php
-                            $input_type = 'salary';
-                            $input = 50000;
-                            @endphp
+                        @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
+
                             <div class="ps-product ps-product--2 no-border">
                                 <div class="ps-product__header"><img src="img/logo/6.png" alt="">
 
@@ -611,8 +610,10 @@
                                             Now</a></div>
                                 </div>
                                 <div class="ps-product__content">
-                                    <h4 class="ps-product__heading"><strong class="highlight">DBS Multiplier
-                                            Account: </strong> Meet either Criteria and earn up to 3.5%</h4>
+                                    <h4 class="ps-product__heading"><strong
+                                                class="highlight">{{$promotion_product->product_name}}: </strong> Meet
+                                        either Criteria and earn up to {{$promotion_product->maximum_interest_rate}}%
+                                    </h4>
 
                                     <div class="ps-table-wrap">
                                         <table class="ps-table ps-table--product">
@@ -621,33 +622,26 @@
                                                 <th>Monthly Transaction</th>
                                                 <th>Criteria a (Salary + 1 category)</th>
                                                 <th>Criteria b (Spend + 2 OR more Cateogry)</th>
-                                                <th>Total Interest Earned for ${{ $input }}</th>
+                                                <th>Total Interest Earned for ${{ $promotion_product->placement }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @php $i=1; @endphp
+
                                             @foreach($product_range as $range)
-                                                @php
-                                                $interest = $range->bonus_interest_criteria_b;
-                                                $total_interest_arr = [];
-                                                if(count($total_interest_arr)==1 && $input_type=='salary') {
-                                                $interest = $range->bonus_interest_criteria_a;
-                                                }
-                                                $interest = ($interest/100);
-                                                @endphp
+
                                             @endforeach
-                                            @foreach($product_range as $range)
+                                            @foreach($product_range as $key=>$range)
                                                 <tr>
-                                                    <td>@if($i==1)
-                                                            <${{ $range->max_range }} @elseif(count($product_range)==$i)
-                                                            >${{ $range->max_range }} @else
-                                                            ${{ $range->min_range }} TO
-                                                            ${{ $range->max_range }} @endif</td>
-                                                    <td>{{ $range->bonus_interest_criteria_a }}%</td>
-                                                    <td>{{ $range->bonus_interest_criteria_b }}%</td>
-                                                    @if($i==1)
-                                                        <td class="highlight text-center" rowspan="6">
-                                                            ${{ ($input*$interest) }}</td>
+                                                    <td style="width: 30%">@if($key==0)
+                                                            <${{ $range->max_range+1 }} @elseif((count($product_range)-1)==$key)
+                                                            >=  ${{ $range->min_range }} @else
+                                                            >= ${{ $range->min_range }} TO
+                                                            <  ${{ $range->max_range+1 }} @endif</td>
+                                                    <td class="text-center">{{ $range->bonus_interest_criteria_a }}%</td>
+                                                    <td class="text-center">{{ $range->bonus_interest_criteria_b }}%</td>
+                                                    @if($key==0)
+                                                        <td class=" text-center" rowspan="6">
+                                                            Total= ${{ $promotion_product->total_interest_earned.' ( '.$promotion_product->total_interest.'%) ' }}</td>
                                                     @endif
                                                 </tr>
                                                 @php $i++; @endphp
