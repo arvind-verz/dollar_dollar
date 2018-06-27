@@ -136,7 +136,7 @@ class ProductsController extends Controller
                 $bonusInterest = $request->bonus_interest_sdp1;
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
-                if ($product->formula_id == SAVING_DEPOSIT_F2) {
+                if ( in_array($product->formula_id,[SAVING_DEPOSIT_F2,WEALTH_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F3])) {
                     $range['tenor'] = 3;
 
                 }
@@ -397,7 +397,7 @@ class ProductsController extends Controller
                 $bonusInterest = $request->bonus_interest_sdp1;
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
-                if ($product->formula_id == SAVING_DEPOSIT_F2) {
+                if ( in_array($product->formula_id,[SAVING_DEPOSIT_F2,WEALTH_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F3])) {
                     $range['tenor'] = 3;
 
                 }
