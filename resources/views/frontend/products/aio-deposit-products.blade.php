@@ -216,13 +216,15 @@
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
                 <div class="ps-product ps-product--2">
-                    <div class="ps-product__header"><img src="img/logo/5.png" alt="">
+                    {{--<div class="ps-product__header"><img src="img/logo/5.png" alt="">
 
                         <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a>
                         </div>
-                    </div>
+                    </div>--}}
                     <div class="ps-product__content">
-                        <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}} :</strong> Fulfil each criteria and earn up to {{ $promotion_product->maximum_interest_rate }}%</h4>
+                        <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}}
+                                :</strong> Fulfil each criteria and earn up
+                            to {{ $promotion_product->maximum_interest_rate }}%</h4>
 
                         <div class="ps-table-wrap">
                             <table class="ps-table ps-table--product ps-table--product-3">
@@ -258,7 +260,7 @@
                                                 First
                                                 ${{ $range->first_cap_amount }} -
                                                 ${{ ($range->first_cap_amount*($range->total_interest/100)) }} (
-                                                 {{ $range->total_interest }}%), next
+                                                {{ $range->total_interest }}%), next
                                                 ${{ ($range->max_range-$range->first_cap_amount) }} -
                                                 ${{ (($range->bonus_interest_remaining_amount/100)*($range->max_range-$range->first_cap_amount)) }}
                                                 ({{ $range->bonus_interest_remaining_amount }}%) Total =
@@ -310,16 +312,18 @@
                 @endif
 
                         <!-- TIER BASE -->
-                @if($promotion_product->formula_id==8)
+                @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
                     <div class="ps-product ps-product--2">
-                        <div class="ps-product__header"><img src="img/logo/1.png" alt="">
+                        {{--<div class="ps-product__header"><img src="img/logo/1.png" alt="">
 
                             <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a>
                             </div>
-                        </div>
+                        </div>--}}
                         <div class="ps-product__content">
-                            <h4 class="ps-product__heading"><strong class="highlight">UOB One Account:</strong>
-                                Meet either of Criteria and earn up to 3.33%</h4>
+                            <h4 class="ps-product__heading"><strong
+                                        class="highlight">{{$promotion_product->product_name}} :</strong>
+                                Meet either of Criteria and earn up to {{ $promotion_product->maximum_interest_rate }}%
+                            </h4>
 
                             <div class="ps-product__poster"><img src="img/poster/product-2.jpg" alt=""></div>
                             <div class="ps-table-wrap">
@@ -330,39 +334,44 @@
                                         <th>Criteria a (spend)</th>
                                         <th>Criteria b (Spend + Salary/Giro)</th>
                                         <th>Interest Earned for each Tier</th>
-                                        <th>Total Interest Earned for $50K</th>
+                                        <th>Total Interest Earned for {{ $promotion_product->placement }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @php $i=1;$interest_earned_arr = $total_interest = []; @endphp
-                                    @foreach($product_range as $range)
-                                        @php
-                                        $spend_giro = $range->bonus_interest_criteria_b;
-                                        $total_interest[] = $range->bonus_interest_criteria_b;
-                                        $interest_earned_arr[] = round($range->max_range*($spend_giro/100), 2);
-                                        @endphp
-                                    @endforeach
-                                    @foreach($product_range as $range)
-                                        @php
-                                        $spend_giro = $range->bonus_interest_criteria_b;
-                                        @endphp
+                                    @foreach($product_range as $key=>$range)
                                         <tr>
-                                            <td class="">@if($i==1) First @else Next @endif
+                                            <td class="">
+                                                <?php
+                                                if ($key == 0) {
+                                                    echo "First";
+                                                } elseif ($range->above_range == true) {
+                                                    echo "Above";
+                                                } else {
+                                                    echo "Next";
+                                                } ?>
                                                 ${{ $range->max_range }}</td>
-                                            <td>{{ $range->bonus_interest_criteria_a }}%</td>
-                                            <td class="">{{ $spend_giro }}%</td>
-                                            <td>@if($i==1) First @else Next @endif ${{ $range->max_range }} -
-                                                ${{ round($range->max_range*($spend_giro/100), 2) }}
-                                                ({{ $spend_giro }}%)
+                                            <td class="text-center">{{ $range->bonus_interest_criteria_a }}%</td>
+                                            <td class="text-center">{{ $range->bonus_interest_criteria_b }}%</td>
+                                            <td>
+                                                <?php
+                                                if ($key == 0) {
+                                                    echo "First";
+                                                } elseif ($range->above_range == true) {
+                                                    echo "Above";
+                                                } else {
+                                                    echo "Next";
+                                                } ?>
+                                                ${{ $range->max_range }} -${{ $range->interest_earn }}
+                                                ({{ $range->criteria }}%)
                                             </td>
-                                            @if($i==1)
-                                                <td class="" rowspan="4">${{ array_sum($interest_earned_arr) }}
+                                            @if($key==0)
+                                                <td class="text-center" rowspan="4">
+                                                    ${{ $promotion_product->interest_earned }}
                                                     <br> Effective Interest
-                                                    Rate {{ array_sum($total_interest) }}%
+                                                    Rate {{ $promotion_product->total_interest }}%
                                                 </td>
                                             @endif
                                         </tr>
-                                        @php $i++; @endphp
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -451,16 +460,17 @@
                     </div>
                     @endif
                             <!-- COMBINE TIER BASE -->
-                    @if($promotion_product->formula_id==9)
+                    @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
                         <div class="ps-product ps-product--2">
-                            <div class="ps-product__header"><img src="img/logo/5.png" alt="">
+                            {{--<div class="ps-product__header"><img src="img/logo/5.png" alt="">
 
                                 <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
                                         Now</a></div>
-                            </div>
+                            </div>--}}
                             <div class="ps-product__content">
-                                <h4 class="ps-product__heading"><strong class="highlight">Maybank – Saveup
-                                        Account:</strong> Fulfil up to 3 criteria and earn up to 3.0%</h4>
+
+                                <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}} :</strong>
+                                    Fulfil up to 3 criteria and earn up to {{ $promotion_product->maximum_interest_rate }}%</h4>
 
                                 <div class="ps-table-wrap">
                                     <table class="ps-table ps-table--product ps-table--product-3">
@@ -470,7 +480,7 @@
                                             <th>SALARY</th>
                                             <th>Giro</th>
                                             <th>SPEND</th>
-                                            <th>
+                                            {{--<th>
                                                 <div class="ps-checkbox">
                                                     <input class="form-control" type="checkbox" id="life-1"
                                                            name="life"/>
@@ -502,65 +512,25 @@
                                                 <div class="ps-checkbox">
                                                     <input class="form-control" type="checkbox" id="life-5"
                                                            name="life"/>
-                                                    <label for="life-5">renovation loan</label>
+                                                    <label for="life-5">Renovation loan</label>
                                                 </div>
-                                            </th>
+                                            </th>--}}
+                                            <th>Life Insurance</th>
+                                            <th>Housing Loan</th>
+                                            <th>Education Loan</th>
+                                            <th>Hire Purchase loan</th>
+                                            <th>Renovation loan</th>
                                             <th>Unit trust</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($product_range as $range)
-                                            @php
-                                            $input= 2000;
-                                            $total_interest_arr = [];
-                                            if($input>=$range->minimum_salary) {
-                                            $total_interest_arr[] = 1;
-                                            }
-                                            if($input>=$range->minimum_spend) {
-                                            $total_interest_arr[] = 1;
-                                            }
-                                            if($input>=$range->minimum_hire_purchase_loan) {
-                                            $total_interest_arr[] = 1;
-                                            }
-                                            if($input>=$range->minimum_renovation_loan) {
-                                            $total_interest_arr[] = 1;
-                                            }
-                                            if($input>=$range->minimum_home_loan) {
-                                            $total_interest_arr[] = 1;
-                                            }
-                                            if($input>=$range->minimum_education_loan) {
-                                            $total_interest_arr[] = 1;
-                                            }
-                                            if($input>=$range->minimum_insurance) {
-                                            $total_interest_arr[] = 1;
-                                            }
-                                            if($input>=$range->minimum_unit_trust) {
-                                            $total_interest_arr[] = 1;
-                                            }
-
-                                            $bonus_interest = $range->bonus_interest_remaining_amount;
-                                            if(count($total_interest_arr)==1) {
-                                            $bonus_interest = $range->bonus_interest_criteria1;
-                                            }
-                                            elseif(count($total_interest_arr)==2) {
-                                            $bonus_interest = $range->bonus_interest_criteria2;
-                                            }
-                                            elseif(count($total_interest_arr)>=3) {
-                                            $bonus_interest = $range->bonus_interest_criteria3;
-                                            }
-                                            $bonus_interest = ($bonus_interest/100);
-
-                                            $total_interest_earned_cap =
-                                            ($range->first_cap_amount*$bonus_interest);
-                                            $total_interest_earned =
-                                            (($range->max_range-$range->first_cap_amount)*$range->bonus_interest_remaining_amount/100);
-                                            @endphp
                                             <tr>
                                                 <td>Bonus Interest PA</td>
                                                 <td class="text-center" colspan="3">1 Criteria Met
                                                     – {{ $range->bonus_interest_criteria1 }}%
                                                 </td>
-                                                <td class="highlight text-center" colspan="3">2 Criteria
+                                                <td class=" text-center" colspan="3">2 Criteria
                                                     – {{ $range->bonus_interest_criteria2 }}%
                                                 </td>
                                                 <td class="text-center" colspan="3">3
@@ -569,14 +539,24 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="2">Total Bonus Interest Earned for
-                                                    ${{ $range->max_range }}</td>
-                                                <td class="highlight text-center" colspan="8">First
-                                                    ${{ $range->first_cap_amount }} -
-                                                    ${{ $range->first_cap_amount*$bonus_interest }} ( = 2.0%),
-                                                    next ${{ $total_interest_earned_cap }} -
-                                                    ${{ $total_interest_earned }}
-                                                    ({{ $range->bonus_interest_remaining_amount }}%) Total =
-                                                    ${{ ($total_interest_earned_cap+$total_interest_earned) }}</td>
+                                                    ${{ $range->placement }}</td>
+                                                <td class=" text-center" colspan="8">First
+
+                                                    @if($range->placement > $range->first_cap_amount)
+                                                        First
+                                                        ${{ $range->first_cap_amount }} -
+                                                        ${{ ($range->first_cap_amount*($range->total_interest/100)) }} (
+                                                        {{ $range->total_interest }}%), next
+                                                        ${{ ($range->max_range-$range->first_cap_amount) }} -
+                                                        ${{ (($range->bonus_interest_remaining_amount/100)*($range->max_range-$range->first_cap_amount)) }}
+                                                        ({{ $range->bonus_interest_remaining_amount }}%) Total =
+                                                        ${{ $range->total_interest_earned }}
+                                                    @else
+                                                        Total =
+                                                        ${{ $range->total_interest_earned }}
+                                                    @endif
+                                                </td>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>
