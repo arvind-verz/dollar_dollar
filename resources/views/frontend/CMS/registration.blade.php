@@ -101,6 +101,9 @@
                             <label>Confirm Password</label>
                             <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password Here">
                         </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="notification"> Do you like to receive product notifications?</label>
+                        </div>
                         <div class="form-group">
                             <button type="submit" class="ps-btn">Submit</button>
                         </div>
