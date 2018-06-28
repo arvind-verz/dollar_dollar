@@ -3,7 +3,7 @@
 @section('content')
     <?php
     //dd(Auth::User()->first_name);
-    
+
     $slug = HOME_SLUG;
     //get banners
     $banners = \Helper::getBanners($slug);
@@ -122,7 +122,7 @@
                                 @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
                                     @if($products->promotion_type_id==1)
-                            
+
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                                     <div class="ps-block--short-product"><img src="{{ asset($products->brand_logo) }}" alt="">
                                         <h4>up to <strong> {{ $products->maximum_interest_rate }}%</strong></h4>
@@ -139,7 +139,7 @@
                                 </div>
                                     @php if($i==4) {break;} $i++; @endphp
                                     @endif
-                                
+
                                 @endforeach
                             </div>
                             @endif -->
@@ -215,7 +215,7 @@
                                 @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
                                     @if($products->promotion_type_id==2)
-                            
+
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                                     <div class="ps-block--short-product"><img src="{{ asset($products->brand_logo) }}" alt="">
                                         <h4>up to <strong> {{ $products->maximum_interest_rate }}%</strong></h4>
@@ -232,7 +232,7 @@
                                 </div>
                                  @php if($i==4) {break;} $i++; @endphp
                                     @endif
-                               
+
                                 @endforeach
                             </div>
                             @endif -->
@@ -558,6 +558,11 @@
             $('.ps-prev').click(function() {
                 owl.trigger('prev.owl.carousel', [300]);
             })
+        });
+
+        $(".ps-tab-list li").on("click", function() {
+            $(".ps-tab-list li").removeClass("current");
+            $(this).on("click").addClass("current");
         });
     </script>
     {{--Blog section end--}}

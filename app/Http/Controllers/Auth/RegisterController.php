@@ -102,7 +102,7 @@ class RegisterController extends Controller
             'last_name'         =>  'required',
             'contact'           =>  'required|numeric',
             'password'          =>  'required|min:8|confirmed',
-           
+
             //'slug' => 'required'
         ];
         if (User::where('email', $request->email)->where('delete_status', 0)->exists()) {
@@ -141,8 +141,10 @@ class RegisterController extends Controller
                 //get slug
                 $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
             }
-
-        
+            $notification = 1;
+            if(!empty($request->notification)) {
+              $notification = 3;
+            }
             $registration = new User();
             $registration->salutation   =   $request->salutation;
             $registration->first_name   =   $request->first_name;
@@ -150,8 +152,9 @@ class RegisterController extends Controller
             $registration->email        =   $request->email;
             $registration->tel_phone    =   $request->contact;
             $registration->password     =   Hash::make($request->password);
+            $registration->notification     =   $notification;
             $registration->save();
-        
+
 
             return redirect(url(REGISTRATION))->with('success','Data ' . ADDED_ALERT);
         }
