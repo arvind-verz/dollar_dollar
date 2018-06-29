@@ -1591,6 +1591,9 @@ button {
       background-color: #fdb515;
       border-color: #fdb515;
       color: #fff; }
+  .ps-block--short-product.highlight {
+    background-color: #ffd790;
+    border: 1px solid #fdb515; }
 
 .ps-block--product-info {
   margin-bottom: 30px; }
@@ -3702,7 +3705,3 @@ html .bg--parallax {
   float: none;
   width: 100%;
   padding-right: 0; }
-
-.ps-table tbody tr.highlight td {
-        background-color: #e2ffe6;
-}
