@@ -176,7 +176,7 @@ $banners = Helper::getBanners($slug);
                      data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                     @php $i = 1; @endphp
                     @foreach($promotion_products as $promotion_product)
-                        <div class="ps-block--short-product second" data-mh="product"><img
+                        <div class="ps-block--short-product second @if($promotion_product->featured==1) highlight @endif" data-mh="product"><img
                                     src="{{ asset($promotion_product->brand_logo) }}" alt="">
                             <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
 

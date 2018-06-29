@@ -222,6 +222,7 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_type_id', '=', 1)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
+            ->orderBy('promotion_products.featured', 'DESC')
             ->get();
 
 //dd(DB::getQueryLog());
@@ -230,7 +231,7 @@ class PagesFrontController extends Controller
         $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners       = $details['banners'];
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "slider_products"));
     }
 
     public function savingDepositMode($details)
@@ -244,6 +245,7 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_type_id', '=', 2)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
+            ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
@@ -268,6 +270,7 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_type_id', '=', 4)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
+            ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
@@ -295,6 +298,7 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_type_id', '=', 5)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
+            ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
@@ -319,6 +323,7 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_type_id', '=', 3)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
+            ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
