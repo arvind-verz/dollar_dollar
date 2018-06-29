@@ -166,11 +166,7 @@
                     <h3>Legend table</h3>
                 </div>
                 <div class="ps-block__content">
-                    <p><img src="{{ asset('img/icons/ff.png') }}" alt="">= Fresh funds</p>
-
-                    <p><img src="{{ asset('img/icons/ef.png') }}" alt="">= example funds</p>
-
-                    <p><img src="{{ asset('img/icons/cx.png') }}" alt="">= example funds</p>
+                    <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
                 </div>
             </div>
             @if(count($promotion_products))
