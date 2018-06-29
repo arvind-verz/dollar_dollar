@@ -183,7 +183,7 @@
             $tenures = json_decode($promotion_product->tenure);
             $key = $interest_key = $max_range_arr = $sort_array = array();
             @endphp
-                    <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
+                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                             <div class="ps-product__promo">
