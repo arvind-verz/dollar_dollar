@@ -203,7 +203,7 @@ $banners = Helper::getBanners($slug);
                     <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
                 </div>
             </div>
-           
+
 
             @if(count($promotion_products))
             @foreach($promotion_products as $promotion_product)
