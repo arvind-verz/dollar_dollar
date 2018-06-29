@@ -240,6 +240,26 @@
                                             {{Form::text('ad_vertical_link',  isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' , ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        {{Form::label('ad_horizontal_image_popup', 'Ad Horizontal Image Popup',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="@if(isset($ads[2]->ad_horizontal_image_popup) && ($ads[2]->ad_horizontal_image_popup != ''))col-sm-8 @else col-sm-10 @endif">
+                                            {{Form::file('ad_horizontal_image_popup', ['class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                        @if(isset($ads[2]->ad_horizontal_image_popup) && ($ads[2]->ad_horizontal_image_popup != ''))
+                                            <div class=" col-sm-2">
+                                                <div class="attachment-block clearfix">
+                                                    <a href="{{asset($ads[2]->ad_horizontal_image_popup)}}" target="_blank"><img class="attachment-img" src="{!! asset($ads[2]->ad_horizontal_image_popup) !!}"
+                                                         alt="image"></a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        {{Form::label('ad_horizontal_link_popup', 'Ad Horizontal Link Popup',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('ad_horizontal_link_popup', isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : '' , ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
                                 </div>
                                 {{Form::hidden('_method','PUT')}}
                                 <!-- /.box-body -->
