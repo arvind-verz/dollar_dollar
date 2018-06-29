@@ -101,10 +101,10 @@
                                             <select class="form-control" name="sort_by">
                                                 <option value="">Sort by</option>
                                                 <option value="1" @if(isset($search_filter[ 'sort_by']) && $search_filter['sort_by']==1) selected @endif>
-                                                    1
+                                                    Minimum
                                                 </option>
                                                 <option value="1" @if(isset($search_filter[ 'sort_by']) && $search_filter['sort_by']==2) selected @endif>
-                                                    2
+                                                    Maximum
                                                 </option>
                                             </select>
                                         </div>
