@@ -1957,6 +1957,8 @@ button {
         margin-bottom: 0; }
   .ps-product .ps-product__header {
     margin-bottom: 40px; }
+.ps-product__header img {
+  max-width: 180px; }
   .ps-product .ps-product__detail {
     padding-top: 45px;
     border-top: 1px solid #f1f1f1; }
@@ -2093,11 +2095,13 @@ button {
     margin-bottom: 30px; }
   .ps-product--2 .ps-product__header {
     margin-bottom: 40px; }
+
     .ps-product--2 .ps-product__header::after {
       clear: both;
       content: "";
       display: table; }
     .ps-product--2 .ps-product__header img {
+      max-width: 180px;
       display: inline-block; }
   .ps-product--2 .ps-product__detail {
     padding-top: 45px;
