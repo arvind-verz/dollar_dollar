@@ -203,9 +203,7 @@
                     <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
                 </div>
             </div>
-            <div class="ps-poster">
-                <a href="#"><img src="img/poster/large.png" alt=""></a>
-            </div>
+           
 
             @if(count($promotion_products))
             @foreach($promotion_products as $promotion_product)
@@ -216,11 +214,11 @@
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
                 <div class="ps-product ps-product--2">
-                    {{--<div class="ps-product__header"><img src="img/logo/5.png" alt="">
+                    <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
-                        <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a>
-                        </div>
-                    </div>--}}
+                        {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
+                                Now</a></div>--}}
+                    </div>
                     <div class="ps-product__content">
                         <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}}
                                 :</strong> Fulfil each criteria and earn up
@@ -314,11 +312,11 @@
                         <!-- TIER BASE -->
                 @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
                     <div class="ps-product ps-product--2">
-                        {{--<div class="ps-product__header"><img src="img/logo/1.png" alt="">
+                        <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
-                            <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply Now</a>
-                            </div>
-                        </div>--}}
+                            {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
+                                    Now</a></div>--}}
+                        </div>
                         <div class="ps-product__content">
                             <h4 class="ps-product__heading"><strong
                                         class="highlight">{{$promotion_product->product_name}} :</strong>
@@ -462,11 +460,11 @@
                             <!-- COMBINE TIER BASE -->
                     @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
                         <div class="ps-product ps-product--2">
-                            {{--<div class="ps-product__header"><img src="img/logo/5.png" alt="">
+                            <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
-                                <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
-                                        Now</a></div>
-                            </div>--}}
+                                {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
+                                        Now</a></div>--}}
+                            </div>
                             <div class="ps-product__content">
 
                                 <h4 class="ps-product__heading"><strong
@@ -604,10 +602,10 @@
                         @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
 
                             <div class="ps-product ps-product--2 no-border">
-                                <div class="ps-product__header"><img src="img/logo/6.png" alt="">
+                                <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
-                                    <div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
-                                            Now</a></div>
+                                    {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
+                                            Now</a></div>--}}
                                 </div>
                                 <div class="ps-product__content">
                                     <h4 class="ps-product__heading"><strong
