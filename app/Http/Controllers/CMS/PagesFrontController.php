@@ -751,7 +751,7 @@ $lastCalculatedAmount = $productRange->max_range;
                 ->get();
             //dd(DB::getQueryLog());
         }
-        dd($promotion_products);
+        //dd($promotion_products);
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
