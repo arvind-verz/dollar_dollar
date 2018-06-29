@@ -8,7 +8,6 @@
     $banners = Helper::getBanners($slug);
     ?>
     {{--Banner section start--}}
-
     @if($banners->count()>1)
         <div class="ps-home-banner">
             <div class="ps-slider--home owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"

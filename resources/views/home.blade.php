@@ -154,7 +154,7 @@
 
                                         <p class="highlight">12 Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#">More info</a>
+                                    <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -168,7 +168,7 @@
 
                                         <p class="highlight">12 Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#">More info</a>
+                                    <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -182,7 +182,7 @@
 
                                         <p class="highlight">12 Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#">More info</a>
+                                    <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -196,7 +196,7 @@
 
                                         <p class="highlight">12 Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#">More info</a>
+                                    <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -247,7 +247,7 @@
 
                                         <p class="highlight">12 Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#">More info</a>
+                                    <a class="ps-btn" href="{{ url('saving-deposit-mode') }}">More info</a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -261,7 +261,7 @@
 
                                         <p class="highlight">12 Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#">More info</a>
+                                    <a class="ps-btn" href="{{ url('saving-deposit-mode') }}">More info</a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -275,7 +275,7 @@
 
                                         <p class="highlight">12 Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#">More info</a>
+                                    <a class="ps-btn" href="{{ url('saving-deposit-mode') }}">More info</a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -289,7 +289,7 @@
 
                                         <p class="highlight">12 Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#">More info</a>
+                                    <a class="ps-btn" href="{{ url('saving-deposit-mode') }}">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -314,7 +314,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('wealth-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -328,7 +328,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('wealth-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -342,7 +342,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('wealth-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -356,7 +356,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('wealth-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                             </div>
@@ -382,7 +382,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('all-in-one-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -396,7 +396,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('all-in-one-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -410,7 +410,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('all-in-one-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -424,7 +424,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('all-in-one-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                             </div>
@@ -450,7 +450,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -464,7 +464,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -478,7 +478,7 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -492,14 +492,14 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="#">More info</a>
+                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="ps-section__footer"><a href="{{ url('fixed-deposit-mode') }}">View all bank rates</a></div>
+                <div class="ps-section__footer view_all_types"><a href="{{ url('fixed-deposit-mode') }}">View all bank rates</a></div>
             </div>
         </div>
     </div>
@@ -563,6 +563,26 @@
         $(".ps-tab-list li").on("click", function() {
             $(".ps-tab-list li").removeClass("current");
             $(this).on("click").addClass("current");
+            var title = $(this).on("click").addClass("current a").text();
+            //alert(title);
+            if(title=='Fixed Deposit') {
+                $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');
+            }
+            else if(title=='Saving Deposit') {
+                $(".view_all_types a").attr("href", '{{ url("saving-deposit-mode") }}');
+            }
+            else if(title=='Wealth Deposit') {
+                $(".view_all_types a").attr("href", '{{ url("wealth-deposit-mode") }}');
+            }
+            else if(title=='All In One Account') {
+                $(".view_all_types a").attr("href", '{{ url("all-in-one-deposit-mode") }}');
+            }
+            else if(title=='Foreign Currency') {
+                $(".view_all_types a").attr("href", '{{ url("foreign-currency-deposit-mode") }}');
+            }
+            else {
+                $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');
+            }
         });
     </script>
     {{--Blog section end--}}

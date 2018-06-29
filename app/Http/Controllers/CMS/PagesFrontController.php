@@ -8,11 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Page;
 use App\ProductManagement;
 use App\PromotionProducts;
-use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 
 class PagesFrontController extends Controller
 {
@@ -21,48 +19,46 @@ class PagesFrontController extends Controller
 
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+/**
+ * Display a listing of the resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
     public function index()
     {
-        //
+//
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+/**
+ * Show the form for creating a new resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
     public function create()
     {
-        //
+//
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+/**
+ * Store a newly created resource in storage.
+ *
+ * @param  \Illuminate\Http\Request $request
+ * @return \Illuminate\Http\Response
+ */
     public function store(Request $request)
     {
-        //
+//
     }
 
-
-    /**
-     * @param $slug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
-     */
+/**
+ * @param $slug
+ * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+ */
     public function show($slug)
     {
         $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
             ->get();
-        //dd($user_products);
+//dd($user_products);
 
         DB::enableQueryLog();
         $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
@@ -71,7 +67,7 @@ class PagesFrontController extends Controller
             ->where('pages.status', 1)
             ->select('pages.*', 'menus.title as menu_title', 'menus.id as menu_id')
             ->first();
-        //dd(DB::getQueryLog());
+//dd(DB::getQueryLog());
         //dd($page,$slug);
         if (!$page) {
             return redirect(url('/'))->with('error', "Opps! page not found");
@@ -82,14 +78,13 @@ class PagesFrontController extends Controller
             }
 
             $slug = $page->slug;
-            //get banners
+//get banners
             $banners = \Helper::getBanners($slug);
 
-            //get slug
+//get slug
             $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
 
             if ($page->is_dynamic == 1) {
-
 
                 if ($slug == CONTACT_SLUG) {
                     return view('frontend.CMS.contact', compact("brands", "page", "systemSetting", "banners"));
@@ -120,57 +115,56 @@ class PagesFrontController extends Controller
                     }
 
                 } elseif ($slug == FIXED_DEPOSIT_MODE) {
-                    $details = [];
-                    $details['brands'] = $brands;
-                    $details['page'] = $page;
+                    $details                  = [];
+                    $details['brands']        = $brands;
+                    $details['page']          = $page;
                     $details['systemSetting'] = $systemSetting;
-                    $details['banners'] = $banners;
+                    $details['banners']       = $banners;
 
-                    /*sent all pages detail into this function and than return to blade file*/
+/*sent all pages detail into this function and than return to blade file*/
                     return $this->fixDepositMode($details);
 
                 } elseif ($slug == SAVING_DEPOSIT_MODE) {
-                    $details = [];
-                    $details['brands'] = $brands;
-                    $details['page'] = $page;
+                    $details                  = [];
+                    $details['brands']        = $brands;
+                    $details['page']          = $page;
                     $details['systemSetting'] = $systemSetting;
-                    $details['banners'] = $banners;
+                    $details['banners']       = $banners;
 
-                    /*sent all pages detail into this function and than return to blade file*/
+/*sent all pages detail into this function and than return to blade file*/
                     return $this->savingDepositMode($details);
 
                 } elseif ($slug == WEALTH_DEPOSIT_MODE) {
-                    $details = [];
-                    $details['brands'] = $brands;
-                    $details['page'] = $page;
+                    $details                  = [];
+                    $details['brands']        = $brands;
+                    $details['page']          = $page;
                     $details['systemSetting'] = $systemSetting;
-                    $details['banners'] = $banners;
+                    $details['banners']       = $banners;
 
-                    /*sent all pages detail into this function and than return to blade file*/
+/*sent all pages detail into this function and than return to blade file*/
                     return $this->wealthDepositMode($details);
 
                 } elseif ($slug == FOREIGN_CURRENCY_DEPOSIT_MODE) {
-                    $details = [];
-                    $details['brands'] = $brands;
-                    $details['page'] = $page;
+                    $details                  = [];
+                    $details['brands']        = $brands;
+                    $details['page']          = $page;
                     $details['systemSetting'] = $systemSetting;
-                    $details['banners'] = $banners;
+                    $details['banners']       = $banners;
 
-                    /*sent all pages detail into this function and than return to blade file*/
+/*sent all pages detail into this function and than return to blade file*/
                     return $this->foreignCurrencyDepositMode($details);
 
                 } elseif ($slug == AIO_DEPOSIT_MODE) {
-                    $details = [];
-                    $details['brands'] = $brands;
-                    $details['page'] = $page;
+                    $details                  = [];
+                    $details['brands']        = $brands;
+                    $details['page']          = $page;
                     $details['systemSetting'] = $systemSetting;
-                    $details['banners'] = $banners;
+                    $details['banners']       = $banners;
 
-                    /*sent all pages detail into this function and than return to blade file*/
+/*sent all pages detail into this function and than return to blade file*/
                     return $this->aioDepositMode($details);
 
                 }
-
 
             } elseif ($page->is_blog == 1) {
                 $query = Page::join('menus', 'pages.menu_id', '=', 'menus.id')
@@ -186,11 +180,11 @@ class PagesFrontController extends Controller
                     $details = $query->get();
                 }
 
-                //unserialize tags
+//unserialize tags
                 $tags = [];
                 if ($page->tags != null) {
                     $page->tags = json_decode($page->tags);
-                    $tags = \Helper::getTags($page->tags);
+                    $tags       = \Helper::getTags($page->tags);
                 } else {
                     $page->tags = [];
                 }
@@ -213,15 +207,14 @@ class PagesFrontController extends Controller
             }
         }
 
-
     }
 
     public function fixDepositMode($details)
     {
 
         $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
-        //dd($startDate);
+        $end_date   = \Helper::endOfDayAfter();
+//dd($startDate);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -231,19 +224,19 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_end', '>=', $end_date)
             ->get();
 
-        //dd(DB::getQueryLog());
+//dd(DB::getQueryLog());
         //dd($promotion_products);
-        $brands = $details['brands'];
-        $page = $details['page'];
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
     }
 
     public function savingDepositMode($details)
     {
         $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
+        $end_date   = \Helper::endOfDayAfter();
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -254,20 +247,20 @@ class PagesFrontController extends Controller
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-        //dd(DB::getQueryLog());
+//dd(DB::getQueryLog());
         //dd($promotion_products);
-        $details = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
+        $details       = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
         return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
     }
 
     public function wealthDepositMode($details)
     {
         $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
+        $end_date   = \Helper::endOfDayAfter();
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -278,21 +271,21 @@ class PagesFrontController extends Controller
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-        //dd(DB::getQueryLog());
+//dd(DB::getQueryLog());
         //dd($promotion_products);
-        $details = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
+        $details       = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
         return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
     }
 
     public function foreignCurrencyDepositMode($details)
     {
         $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
-        //dd($startDate);
+        $end_date   = \Helper::endOfDayAfter();
+//dd($startDate);
         DB::connection()->enableQueryLog();
         $currency_list = Currency::get();
 
@@ -305,20 +298,19 @@ class PagesFrontController extends Controller
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-
-        //dd(DB::getQueryLog());
+//dd(DB::getQueryLog());
         //dd($promotion_products);
-        $brands = $details['brands'];
-        $page = $details['page'];
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
         return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency_list"));
     }
 
     public function aioDepositMode($details)
     {
         $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
+        $end_date   = \Helper::endOfDayAfter();
         DB::connection()->enableQueryLog();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -332,13 +324,13 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         foreach ($promotion_products as &$product) {
-            $status = false;
-            $placement = 0;
+            $status        = false;
+            $placement     = 0;
             $productRanges = json_decode($product->product_range);
 
             if ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F1) {
                 foreach ($productRanges as &$productRange) {
-                    // dd($productRange);
+// dd($productRange);
                     $allInterests = [
                         $productRange->bonus_interest_salary,
                         $productRange->bonus_interest_giro_payment,
@@ -351,7 +343,7 @@ class PagesFrontController extends Controller
 
                     $placement = $productRange->bonus_amount;
 
-                    $totalInterest = array_sum($allInterests);
+                    $totalInterest                = array_sum($allInterests);
                     $productRange->total_interest = $totalInterest;
                     if ($placement > 0 && ($placement > $productRange->first_cap_amount)) {
                         $productRange->total_interest_earned = (($productRange->first_cap_amount * ($totalInterest / 100)) + (($productRange->bonus_interest_remaining_amount / 100) * ($placement - $productRange->first_cap_amount)));
@@ -363,31 +355,31 @@ class PagesFrontController extends Controller
                 }
 
             } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F2) {
-                //dd($productRanges);
-                $maxRanges = [];
-                $totalInterests = [];
-                $interestEarns = [];
+//dd($productRanges);
+                $maxRanges            = [];
+                $totalInterests       = [];
+                $interestEarns        = [];
                 $lastCalculatedAmount = 0;
                 foreach ($productRanges as &$productRange) {
-                    $productRange->above_range = false;
-                    $maxRanges[] = $productRange->max_range;
-                    $totalInterests[] = $productRange->bonus_interest_criteria_b;
-                    $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_criteria_b / 100), 2);
+                    $productRange->above_range   = false;
+                    $maxRanges[]                 = $productRange->max_range;
+                    $totalInterests[]            = $productRange->bonus_interest_criteria_b;
+                    $interestEarn                = round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_criteria_b / 100), 2);
                     $productRange->interest_earn = $interestEarn;
-                    $productRange->criteria = $productRange->bonus_interest_criteria_b;
-                    $interestEarns[] = $interestEarn;
-                    $lastCalculatedAmount = $productRange->max_range;
+                    $productRange->criteria      = $productRange->bonus_interest_criteria_b;
+                    $interestEarns[]             = $interestEarn;
+                    $lastCalculatedAmount        = $productRange->max_range;
 
                 }
 
-                $product->total_interest = array_sum($totalInterests);
+                $product->total_interest  = array_sum($totalInterests);
                 $product->interest_earned = array_sum($interestEarns);
-                $product->placement = array_last(array_sort($maxRanges));
+                $product->placement       = array_last(array_sort($maxRanges));
 
             }
             if ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F3) {
                 foreach ($productRanges as &$productRange) {
-                    //dd($productRange);
+//dd($productRange);
                     $allInterests = [
                         $productRange->bonus_interest_criteria1,
                         $productRange->bonus_interest_criteria2,
@@ -396,7 +388,7 @@ class PagesFrontController extends Controller
 
                     $placement = $productRange->first_cap_amount;
 
-                    $totalInterest = $productRange->bonus_interest_criteria3;
+                    $totalInterest                = $productRange->bonus_interest_criteria3;
                     $productRange->total_interest = $totalInterest;
                     if ($placement > 0 && ($placement > $productRange->first_cap_amount)) {
                         $productRange->total_interest_earned = (($productRange->first_cap_amount * ($totalInterest / 100)) + (($productRange->bonus_interest_remaining_amount / 100) * ($placement - $productRange->first_cap_amount)));
@@ -408,44 +400,43 @@ class PagesFrontController extends Controller
                 }
 
             } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F4) {
-                //dd($productRanges);
-                $maxRanges = [];
-                $totalInterests = [];
-                $interestEarns = [];
+//dd($productRanges);
+                $maxRanges            = [];
+                $totalInterests       = [];
+                $interestEarns        = [];
                 $lastCalculatedAmount = 0;
-                /*foreach ($productRanges as &$productRange) {
-                    $productRange->above_range = false;
-                    $maxRanges[] = $productRange->max_range;
-                    $totalInterests[] = $productRange->bonus_interest_criteria_b;
-                    $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_criteria_b / 100), 2);
-                    $productRange->interest_earn = $interestEarn;
-                    $productRange->criteria = $productRange->bonus_interest_criteria_b;
-                    $interestEarns[] = $interestEarn;
-                    $lastCalculatedAmount = $productRange->max_range;
+/*foreach ($productRanges as &$productRange) {
+$productRange->above_range = false;
+$maxRanges[] = $productRange->max_range;
+$totalInterests[] = $productRange->bonus_interest_criteria_b;
+$interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_criteria_b / 100), 2);
+$productRange->interest_earn = $interestEarn;
+$productRange->criteria = $productRange->bonus_interest_criteria_b;
+$interestEarns[] = $interestEarn;
+$lastCalculatedAmount = $productRange->max_range;
 
-                }*/
-                $lastRange = array_last($productRanges);;
-                $product->placement = $lastRange->max_range;
-                $product->total_interest = $lastRange->bonus_interest_criteria_b;
+}*/
+                $lastRange                      = array_last($productRanges);
+                $product->placement             = $lastRange->max_range;
+                $product->total_interest        = $lastRange->bonus_interest_criteria_b;
                 $product->total_interest_earned = $lastRange->min_range * ($lastRange->bonus_interest_criteria_b / 100);
-
 
             }
             $product->product_range = $productRanges;
 
         }
 
-        //dd(DB::getQueryLog());
+//dd(DB::getQueryLog());
         //dd($promotion_products);
-        $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
+        $details       = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
         return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
     }
 
-    public function  getContactForm()
+    public function getContactForm()
     {
         $page = Page::where('delete_status', 0)->where('slug', CONTACT_SLUG)->first();
         if (!$page) {
@@ -458,13 +449,13 @@ class PagesFrontController extends Controller
             return back()->with('error', OPPS_ALERT);
         }
         $slug = $page->slug;
-        //get banners
+//get banners
         $banners = \Helper::getBanners($slug);
 
         return view('frontend.contact', compact("brands", "page", "systemSetting", "banners"));
     }
 
-    public function  getBlogByCategories($id = null)
+    public function getBlogByCategories($id = null)
     {
         $page = Page::where('pages.slug', BLOG_URL)
             ->where('delete_status', 0)->first();
@@ -476,8 +467,7 @@ class PagesFrontController extends Controller
             return back()->with('error', OPPS_ALERT);
         }
 
-
-        //get banners
+//get banners
         $banners = \Helper::getBanners(BLOG_URL);
 
         $query = Page::join('menus', 'pages.menu_id', '=', 'menus.id')
@@ -511,10 +501,8 @@ class PagesFrontController extends Controller
             return back()->with('error', OPPS_ALERT);
         }
 
-
-        //get banners
+//get banners
         $banners = \Helper::getBanners(BLOG_URL);
-
 
         $search_tag = \Helper::searchTags($slug);
 
@@ -542,43 +530,43 @@ class PagesFrontController extends Controller
         return $this->wealth($request->all());
     }
 
-    public function wealth($request) {
+    public function wealth($request)
+    {
         $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
+        $end_date   = \Helper::endOfDayAfter();
 
         $search_filter = [];
         $search_filter = $request;
-        $brand_id = isset($request['brand_id']) ? $request['brand_id'] : '';
+        $brand_id      = isset($request['brand_id']) ? $request['brand_id'] : '';
 
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
 
-        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_products.promotion_type_id', '=', 2)
-        ->where('promotion_products.promotion_start', '<=', $start_date)
-        ->where('promotion_products.promotion_end', '>=', $end_date)
-        ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-        ->get();
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            ->where('promotion_products.promotion_type_id', '=', 2)
+            ->where('promotion_products.promotion_start', '<=', $start_date)
+            ->where('promotion_products.promotion_end', '>=', $end_date)
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+            ->get();
 
-
-        $details = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
+        $details       = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
 
-        $filterProducts = [];
+        $filterProducts = $filterNewProducts = [];
 
         foreach ($promotion_products as $product) {
-            $status = false;
+            $status        = false;
             $product_range = json_decode($product->product_range);
-            $tenures = json_decode($product->tenure);
+            $tenures       = json_decode($product->tenure);
             if (($search_filter['filter'] == 'Placement' || $search_filter['filter'] == 'Interest') && $product->promotion_formula_id != 14 && $product->promotion_formula_id != 13) {
-                //echo $brand_id;
+//echo $brand_id;
                 if (!empty($brand_id) && $brand_id == $product->brand_id) {
                     $status = true;
-                    //echo "arv";
+//echo "arv";
 
                 }
                 foreach ($product_range as $range) {
@@ -618,7 +606,7 @@ class PagesFrontController extends Controller
         }
 
         $promotion_products = $filterProducts;
-        //dd($promotion_products);
+//dd($promotion_products);
         return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
@@ -627,21 +615,23 @@ class PagesFrontController extends Controller
         return $this->fixed($request->all());
     }
 
-    public function fixed($request) {
+    public function fixed($request)
+    {
         $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
+        $end_date   = \Helper::endOfDayAfter();
 
-        //dd($request->all());
-        $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
+//dd($request);
+        $details       = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
 
         $search_filter = [];
         $search_filter = $request;
-        $brand_id = isset($request['brand_id']) ? $request['brand_id'] : '';
-        //dd($brand_id);
+        $brand_id      = isset($request['brand_id']) ? $request['brand_id'] : '';
+        $sort_by      = isset($request['sort_by']) ? $request['sort_by'] : '';
+//dd($brand_id);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -649,55 +639,114 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_type_id', '=', 1)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
-            ->select('brands.id as brand_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
             ->get();
 
+        $filterProducts = $sort_by_arr = [];
 
-        $filterProducts = [];
-
-        foreach ($promotion_products as $product) {
-            $status = false;
+        foreach($promotion_products as $product) {
+            $status        = false;
             $product_range = json_decode($product->product_range);
-            $tenures = json_decode($product->tenure);
-            if (($search_filter['filter'] == 'Placement') || ($search_filter['filter'] == 'Interest')) {
-                if (!empty($brand_id) && $brand_id == $product->brand_id) {
+            $tenures       = json_decode($product->tenure);
+            $P = $request['search_value'];
+            //dd($tenures);
+            foreach ($product_range as $range) {
+                if(!empty($brand_id) && $brand_id == $product->brand_id) {
                     $status = true;
                 }
-                foreach ($product_range as $range) {
-                    if (!empty($brand_id)) {
-                        if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Placement' && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) && !empty($brand_id) && $brand_id == $product->brand_id) {
-                            $status = true;
-                        } elseif (!empty($search_filter['search_value']) && ($search_filter['filter'] == 'Interest') && (in_array($search_filter['search_value'], $range->bonus_interest)) && !empty($brand_id) && $brand_id == $product->brand_id) {
+                //echo $brand_id;
+                if($search_filter['filter']=='Placement') {
+                    if(!empty($brand_id)) {
+                        if (!empty($search_filter['search_value']) && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
                             $status = true;
                         }
-                    } else {
-                        if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Placement' && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) || (!empty($brand_id) && $brand_id == $product->brand_id)) {
-                            $status = true;
-                        } elseif (!empty($search_filter['search_value']) && ($search_filter['filter'] == 'Interest') && (in_array($search_filter['search_value'], $range->bonus_interest)) || (!empty($brand_id) && $brand_id == $product->brand_id)) {
+                    }
+                    else {
+                        if (!empty($search_filter['search_value']) && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range)) {
                             $status = true;
                         }
                     }
                 }
-            } else {
-                if (!empty($brand_id)) {
-                    if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Tenor' && (in_array($search_filter['search_value'], $tenures)) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
-                        $status = true;
+                elseif($search_filter['filter']=='Interest') {
+                    if(!empty($brand_id)) {
+                        if (!empty($search_filter['search_value']) && (in_array($search_filter['search_value'], $range->bonus_interest)) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
+                            $status = true;
+                        }
                     }
-                } else {
-                    if (!empty($search_filter['search_value']) && $search_filter['filter'] == 'Tenor' && (in_array($search_filter['search_value'], $tenures)) || (!empty($brand_id) && $brand_id == $product->brand_id)) {
-                        $status = true;
+                    else {
+                        if (!empty($search_filter['search_value']) && (in_array($search_filter['search_value'], $range->bonus_interest))) {
+                            $status = true;
+                        }
+                    }
+                }
+                elseif($search_filter['filter'] == 'Tenor') {
+                    if(!empty($brand_id)) {
+                        if (!empty($search_filter['search_value']) &&(in_array($search_filter['search_value'], $tenures)) && (!empty($brand_id) && $brand_id == $product->brand_id) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
+                            $status = true;
+                        }
+                    }
+                    else {
+                        if (!empty($search_filter['search_value']) &&(in_array($search_filter['search_value'], $tenures))) {
+                            $status = true;
+                        }
                     }
                 }
 
+                
             }
+            
             if ($status == true) {
                 $filterProducts[] = $product;
             }
         }
 
-        $promotion_products = $filterProducts;
-        //dd($promotion_products);
+        //dd($filterProducts);
+        foreach($filterProducts as $product) {
+            $sort_by_arr = [];
+            $product_range = json_decode($product->product_range);
+            foreach ($product_range as $range) {
+                if($search_filter['filter']=='Placement') {
+                    if($P>=$range->min_range && $P<=$range->max_range) {
+                        for($i=0;$i<count($tenures);$i++) {
+                            $BI = ($range->bonus_interest[$i]/100);
+                            $TM = $tenures[$i];
+                            $calc = eval('return '.$product->formula.';');
+                            $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
+                            //print_r($calc);echo '<br>';
+                            $sort_by_arr[] = $calc;
+                            
+                        }
+                    }
+                }
 
+                elseif($search_filter['filter']=='Interest') {
+
+                }
+                elseif($search_filter['filter']=='Tenor') {
+
+                }
+            }
+            //print_r($sort_by_arr);
+            $filterNewProducts[$product->promotion_product_id] = max($sort_by_arr);
+        }
+        if(!empty($filterNewProducts)) {
+            if($sort_by==1) {
+                asort($filterNewProducts);
+            }
+            elseif($sort_by==2) {
+                arsort($filterNewProducts);
+            }
+            //print_r($filterNewProducts);
+            $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+                ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+                ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+                ->whereIn('promotion_products.id', array_keys($filterNewProducts))
+                ->orderBy('promotion_products.id', array_keys($filterNewProducts))
+                ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+                ->get();
+            //dd(DB::getQueryLog());
+        }
+        dd($promotion_products);
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
@@ -706,14 +755,15 @@ class PagesFrontController extends Controller
         return $this->saving($request);
     }
 
-    public function saving($request) {
-        //dd($request->all());
+    public function saving($request)
+    {
+//dd($request->all());
         $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
+        $end_date   = \Helper::endOfDayAfter();
 
         $search_filter = [];
         $search_filter = $request;
-        $brand_id = isset($request['brand_id']) ? $request['brand_id'] : '';
+        $brand_id      = isset($request['brand_id']) ? $request['brand_id'] : '';
 
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -725,24 +775,23 @@ class PagesFrontController extends Controller
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-
-        $details = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
+        $details       = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
 
         $filterProducts = [];
 
         foreach ($promotion_products as $product) {
-            $status = false;
+            $status        = false;
             $product_range = json_decode($product->product_range);
-            $tenures = json_decode($product->tenure);
+            $tenures       = json_decode($product->tenure);
             if (($search_filter['filter'] == 'Placement' || $search_filter['filter'] == 'Interest') && $product->promotion_formula_id != 5 && $product->promotion_formula_id != 4) {
-                //echo $brand_id;
+//echo $brand_id;
                 if (!empty($brand_id) && $brand_id == $product->brand_id) {
                     $status = true;
-                    //echo "arv";
+//echo "arv";
 
                 }
                 foreach ($product_range as $range) {
@@ -782,18 +831,18 @@ class PagesFrontController extends Controller
         }
 
         $promotion_products = $filterProducts;
-        //dd($promotion_products);
+//dd($promotion_products);
         return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
     public function product_search_homepage(Request $request)
     {
-        //dd($request->all());
+//dd($request->all());
         $account_type = $request->account_type;
 
         $request = [
-            'filter'    =>  'Placement',
-            'search_value'  =>  $request->search_value
+            'filter'       => 'Placement',
+            'search_value' => $request->search_value,
         ];
 
         if ($account_type == 1) {
@@ -809,49 +858,49 @@ class PagesFrontController extends Controller
         }
     }
 
-
     public function search_foreign_currency_deposit(Request $request)
     {
         return $this->foreign_currency($request);
     }
 
-    public function foreign_currency($request) {
+    public function foreign_currency($request)
+    {
         $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
+        $end_date   = \Helper::endOfDayAfter();
 
-        $currency = isset($request->currency) ? $request->currency : '';
+        $currency      = isset($request->currency) ? $request->currency : '';
         $search_filter = [];
         $search_filter = $request;
-        $brand_id = isset($request['brand_id']) ? $request['brand_id'] : '';
+        $brand_id      = isset($request['brand_id']) ? $request['brand_id'] : '';
 
-        $currency_list = Currency::get();
+        $currency_list   = Currency::get();
         $search_currency = Currency::find($currency);
 
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-        ->join('promotion_formula', 'promotion_products.formula_id','=', 'promotion_formula.id')
-        ->where('promotion_products.promotion_type_id', '=', 5)
-        ->where('promotion_products.promotion_start', '<=', $start_date)
-        ->where('promotion_products.promotion_end', '>=', $end_date)
-        ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-        ->get();
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            ->where('promotion_products.promotion_type_id', '=', 5)
+            ->where('promotion_products.promotion_start', '<=', $start_date)
+            ->where('promotion_products.promotion_end', '>=', $end_date)
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+            ->get();
 
-        $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
+        $details       = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
 
         $filterProducts = [];
 
-        //dd($promotion_products);
+//dd($promotion_products);
 
         foreach ($promotion_products as $product) {
-            //dd($product);
-            $status = false;
+//dd($product);
+            $status        = false;
             $product_range = json_decode($product->product_range);
-            $tenures = json_decode($product->tenure);
+            $tenures       = json_decode($product->tenure);
             if (!empty($request->currency)) {
                 $status = true;
             }
@@ -895,27 +944,25 @@ class PagesFrontController extends Controller
             }
         }
 
-
-
         $promotion_products = $filterProducts;
-        //dd($search_currency);
+//dd($search_currency);
         return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "currency_list", "search_currency"));
     }
-
 
     public function search_aioa_deposit(Request $request)
     {
         return $this->aio($request);
     }
 
-    public function aio($request) {
-        $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
-        $salary = (int)$request->salary;
-        $giro = (int)$request->giro;
-        $spend = (int)$request->spend;
-        $loan = (int)$request->loan;
-        $wealth = (int)$request->wealth;
+    public function aio($request)
+    {
+        $start_date  = \Helper::startOfDayBefore();
+        $end_date    = \Helper::endOfDayAfter();
+        $salary      = (int) $request->salary;
+        $giro        = (int) $request->giro;
+        $spend       = (int) $request->spend;
+        $loan        = (int) $request->loan;
+        $wealth      = (int) $request->wealth;
         $searchValue = $request->search_value;
         if (isset($request->filter)) {
             $filter = $request->filter;
@@ -923,10 +970,9 @@ class PagesFrontController extends Controller
             $filter = "Placement";
         }
 
-
         $search_filter = [];
         $search_filter = $request;
-        //$brand_id = $request->brand_id;
+//$brand_id = $request->brand_id;
         $brand_id = null;
 
         DB::connection()->enableQueryLog();
@@ -939,24 +985,22 @@ class PagesFrontController extends Controller
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-
-        $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
+        $details       = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
+        $banners       = $details['banners'];
 
         $filterProducts = [];
         foreach ($promotion_products as $key => $product) {
-            $status = false;
-            $placement = 0;
+            $status        = false;
+            $placement     = 0;
             $productRanges = json_decode($product->product_range);
-
 
             if ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F1) {
 
                 foreach ($productRanges as $productRange) {
-                     //dd($productRange);
+//dd($productRange);
                     $allInterests = [
                         $productRange->bonus_interest_salary,
                         $productRange->bonus_interest_giro_payment,
@@ -967,14 +1011,14 @@ class PagesFrontController extends Controller
                         $productRange->bonus_interest_remaining_amount,
                     ];
                     if (($filter == PLACEMENT) && ($searchValue >= $productRange->min_range)) {
-                        $placement = (int)$searchValue;
-                        $status = true;
-                    } elseif ($filter == INTEREST && (in_array((float)$searchValue, $allInterests))) {
+                        $placement = (int) $searchValue;
+                        $status    = true;
+                    } elseif ($filter == INTEREST && (in_array((float) $searchValue, $allInterests))) {
                         $placement = $productRange->bonus_amount;
-                        $status = true;
+                        $status    = true;
                     } elseif ($filter == TENURE) {
                         $placement = $productRange->bonus_amount;
-                        $status = true;
+                        $status    = true;
                     }
 
                     if ($status == true) {
@@ -1008,25 +1052,24 @@ class PagesFrontController extends Controller
                 }
                 if ($status == true) {
                     $product->product_range = $productRanges;
-                    $filterProducts[] = $product;
-
+                    $filterProducts[]       = $product;
 
                 }
 
             } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F2) {
 
-                //dd($productRanges);
-                $maxRanges = [];
+//dd($productRanges);
+                $maxRanges      = [];
                 $totalInterests = [];
-                $interestEarns = [];
-                $placement = 0;
+                $interestEarns  = [];
+                $placement      = 0;
                 if (($spend >= $productRanges[0]->minimum_spend) && ($salary >= $productRanges[0]->minimum_salary || $giro >= $productRanges[0]->minimum_giro_payment)) {
                     $criteria = "bonus_interest_criteria_b";
-                    $status = true;
+                    $status   = true;
 
                 } elseif (($spend >= $productRanges[0]->minimum_spend)) {
                     $criteria = "bonus_interest_criteria_a";
-                    $status = true;
+                    $status   = true;
                 }
                 if ($status == true) {
                     foreach ($productRanges as $key => $productRange) {
@@ -1036,57 +1079,55 @@ class PagesFrontController extends Controller
                         ];
                         $maxRanges[] = $productRange->max_range;
                         if (($filter == PLACEMENT) && ($searchValue >= $productRange->min_range)) {
-                            $placement = (int)$searchValue;
-                        } elseif ($filter == INTEREST && (in_array((float)$searchValue, $allInterests))) {
+                            $placement = (int) $searchValue;
+                        } elseif ($filter == INTEREST && (in_array((float) $searchValue, $allInterests))) {
                             $placement = $productRange->max_range;
 
                         } elseif ($filter == TENURE) {
-                            $placement = ($productRange->min_range -1);
+                            $placement = ($productRange->min_range - 1);
 
                         }
                     }
-                    $maxPlacement = array_last(array_sort($maxRanges));
-                    $lastRange = array_last($productRanges);
+                    $maxPlacement         = array_last(array_sort($maxRanges));
+                    $lastRange            = array_last($productRanges);
                     $lastCalculatedAmount = 0;
                     if ($placement > 0) {
                         foreach ($productRanges as $productRange) {
                             if ($filter == PLACEMENT && $maxPlacement == $productRange->max_range && $maxPlacement < $placement) {
-                                $totalInterests[] = $lastRange->$criteria;
-                                $interestEarn = round(($placement - $lastCalculatedAmount) * ($lastRange->$criteria / 100), 2);
+                                $totalInterests[]            = $lastRange->$criteria;
+                                $interestEarn                = round(($placement - $lastCalculatedAmount) * ($lastRange->$criteria / 100), 2);
                                 $productRange->interest_earn = $interestEarn;
-                                $productRange->criteria = $productRange->$criteria;
-                                $interestEarns[] = $interestEarn;
-                                $productRange->above_range = true;
+                                $productRange->criteria      = $productRange->$criteria;
+                                $interestEarns[]             = $interestEarn;
+                                $productRange->above_range   = true;
                             } else {
-                                $totalInterests[] = $productRange->$criteria;
-                                $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->$criteria / 100), 2);
+                                $totalInterests[]            = $productRange->$criteria;
+                                $interestEarn                = round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->$criteria / 100), 2);
                                 $productRange->interest_earn = $interestEarn;
-                                $productRange->criteria = $productRange->$criteria;
-                                $interestEarns[] = $interestEarn;
-                                $productRange->above_range = false;
+                                $productRange->criteria      = $productRange->$criteria;
+                                $interestEarns[]             = $interestEarn;
+                                $productRange->above_range   = false;
 
                             }
                             $lastCalculatedAmount = $productRange->max_range;
 
-
                         }
 
-
-                        $product->total_interest = array_sum($totalInterests);
+                        $product->total_interest  = array_sum($totalInterests);
                         $product->interest_earned = array_sum($interestEarns);
-                        $product->placement = $placement;
-                        $product->product_range = $productRanges;
-                        $filterProducts[] = $product;
-                        /*if($key ==2){
-                            dd($filterProducts);
-                        }*/
+                        $product->placement       = $placement;
+                        $product->product_range   = $productRanges;
+                        $filterProducts[]         = $product;
+/*if($key ==2){
+dd($filterProducts);
+}*/
                     }
                 }
 
             } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F3) {
                 $criteriaMatchCount = 0;
                 foreach ($productRanges as $productRange) {
-                   // dd($productRange);
+// dd($productRange);
                     $allInterests = [
                         $productRange->bonus_interest_criteria1,
                         $productRange->bonus_interest_criteria2,
@@ -1094,14 +1135,14 @@ class PagesFrontController extends Controller
                     ];
 
                     if (($filter == PLACEMENT) && ($searchValue >= $productRange->min_range)) {
-                        $placement = (int)$searchValue;
-                        $status = true;
-                    } elseif ($filter == INTEREST && (in_array((float)$searchValue, $allInterests))) {
+                        $placement = (int) $searchValue;
+                        $status    = true;
+                    } elseif ($filter == INTEREST && (in_array((float) $searchValue, $allInterests))) {
                         $placement = $productRange->first_cap_amount;
-                        $status = true;
+                        $status    = true;
                     } elseif ($filter == TENURE) {
                         $placement = $productRange->first_cap_amount;
-                        $status = true;
+                        $status    = true;
                     }
 
                     if ($status == true) {
@@ -1154,18 +1195,18 @@ class PagesFrontController extends Controller
                 }
                 if ($criteriaMatchCount >= 1) {
                     $product->product_range = $productRanges;
-                    $filterProducts[] = $product;
+                    $filterProducts[]       = $product;
 
                 }
 
             } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F4) {
 
-                //dd($productRanges);
-                $maxRanges = [];
+//dd($productRanges);
+                $maxRanges     = [];
                 $totalInterest = 0;
-                $interestEarn = 0;
-                $placement = 0;
-                $baseDetail = $productRanges[0];
+                $interestEarn  = 0;
+                $placement     = 0;
+                $baseDetail    = $productRanges[0];
 
                 $criteriaMatchCount = 0;
                 if ($salary > 0 && $baseDetail->minimum_salary <= $salary) {
@@ -1186,7 +1227,6 @@ class PagesFrontController extends Controller
                     if ($criteriaMatchCount == 1) {
                         $criteria = "bonus_interest_criteria_a";
 
-
                     } elseif ($criteriaMatchCount >= 2) {
                         $criteria = "bonus_interest_criteria_b";
 
@@ -1199,8 +1239,8 @@ class PagesFrontController extends Controller
                             ];
                             $maxRanges[] = $productRange->max_range;
                             if (($filter == PLACEMENT) && ($searchValue >= $productRange->min_range)) {
-                                $placement = (int)$searchValue;
-                            } elseif ($filter == INTEREST && (in_array((float)$searchValue, $allInterests))) {
+                                $placement = (int) $searchValue;
+                            } elseif ($filter == INTEREST && (in_array((float) $searchValue, $allInterests))) {
                                 $placement = $productRange->min_range;
 
                             } elseif ($filter == TENURE) {
@@ -1217,18 +1257,18 @@ class PagesFrontController extends Controller
 
                         if ($productRange->min_range <= $placement && $productRange->max_range >= $placement) {
                             $totalInterest = $productRange->$criteria;
-                            $interestEarn = round(($placement) * ($totalInterest / 100), 2);
+                            $interestEarn  = round(($placement) * ($totalInterest / 100), 2);
 
                         }
                     }
                 }
 
                 if ($totalInterest > 0) {
-                    $product->total_interest = $totalInterest;
+                    $product->total_interest        = $totalInterest;
                     $product->total_interest_earned = $interestEarn;
-                    $product->placement = $placement;
-                    $product->product_range = $productRanges;
-                    $filterProducts[] = $product;
+                    $product->placement             = $placement;
+                    $product->product_range         = $productRanges;
+                    $filterProducts[]               = $product;
 
                 }
 
@@ -1237,7 +1277,7 @@ class PagesFrontController extends Controller
         }
 
         $promotion_products = $filterProducts;
-        //dd($promotion_products);
+//dd($promotion_products);
         return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 }
