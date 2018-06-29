@@ -170,6 +170,8 @@
                     <p><img src="{{ asset('img/icons/ef.png') }}" alt="">= example funds</p>
 
                     <p><img src="{{ asset('img/icons/cx.png') }}" alt="">= example funds</p>
+
+                    <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
                 </div>
             </div>
             @if(count($promotion_products))
