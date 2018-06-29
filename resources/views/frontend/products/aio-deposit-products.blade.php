@@ -2,11 +2,11 @@
 @section('title', $page->title)
 @section('content')
     <?php
-    $search_filter = isset($search_filter) ? $search_filter : "";
-    $slug = CONTACT_SLUG;
-    //get banners
-    $banners = Helper::getBanners($slug);
-    ?>
+$search_filter = isset($search_filter) ? $search_filter : "";
+$slug          = CONTACT_SLUG;
+//get banners
+$banners = Helper::getBanners($slug);
+?>
     {{--Banner section start--}}
 
     @if($banners->count()>1)
@@ -210,9 +210,9 @@
             @if(count($promotion_products))
             @foreach($promotion_products as $promotion_product)
             <?php
-            $product_range = $promotion_product->product_range;
+$product_range = $promotion_product->product_range;
 
-            ?>
+?>
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
                 <div class="ps-product ps-product--2">
@@ -342,25 +342,25 @@
                                         <tr>
                                             <td class="">
                                                 <?php
-                                                if ($key == 0) {
-                                                    echo "First";
-                                                } elseif ($range->above_range == true) {
-                                                    echo "Above";
-                                                } else {
-                                                    echo "Next";
-                                                } ?>
+if ($key == 0) {
+    echo "First";
+} elseif ($range->above_range == true) {
+    echo "Above";
+} else {
+    echo "Next";
+}?>
                                                 ${{ $range->max_range }}</td>
                                             <td class="text-center">{{ $range->bonus_interest_criteria_a }}%</td>
                                             <td class="text-center">{{ $range->bonus_interest_criteria_b }}%</td>
                                             <td>
                                                 <?php
-                                                if ($key == 0) {
-                                                    echo "First";
-                                                } elseif ($range->above_range == true) {
-                                                    echo "Above";
-                                                } else {
-                                                    echo "Next";
-                                                } ?>
+if ($key == 0) {
+    echo "First";
+} elseif ($range->above_range == true) {
+    echo "Above";
+} else {
+    echo "Next";
+}?>
                                                 ${{ $range->max_range }} -${{ $range->interest_earn }}
                                                 ({{ $range->criteria }}%)
                                             </td>
