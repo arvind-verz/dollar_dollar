@@ -647,8 +647,8 @@ $lastCalculatedAmount = $productRange->max_range;
             ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
             ->get();
 
-        $filterProducts = $sort_by_arr = [];
-
+        $filterProducts = [];
+        //dd($promotion_products);
         foreach($promotion_products as $product) {
             $status        = false;
             $product_range = json_decode($product->product_range);
@@ -718,8 +718,7 @@ $lastCalculatedAmount = $productRange->max_range;
                             $calc = eval('return '.$product->formula.';');
                             $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
                             //print_r($calc);echo '<br>';
-                            $sort_by_arr[] = $calc;
-                            
+                            $sort_by_arr[] = round($calc);
                         }
                     }
                 }
@@ -732,26 +731,24 @@ $lastCalculatedAmount = $productRange->max_range;
                 }
             }
             //print_r($sort_by_arr);
-            $filterNewProducts[$product->promotion_product_id] = max($sort_by_arr);
+            $sort_by_new_arr = max($sort_by_arr);
+            if($sort_by==1) {
+                $sort_by_new_arr = min($sort_by_arr);
+            }
+            $filterNewProducts[$sort_by_new_arr] =    $product;
+
         }
+        
         if(!empty($filterNewProducts)) {
             if($sort_by==1) {
-                asort($filterNewProducts);
+                ksort($filterNewProducts);
             }
             elseif($sort_by==2) {
-                arsort($filterNewProducts);
+                krsort($filterNewProducts);
             }
-            //print_r($filterNewProducts);
-            $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                ->whereIn('promotion_products.id', array_keys($filterNewProducts))
-                ->orderBy('promotion_products.id', array_keys($filterNewProducts))
-                ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                ->get();
-            //dd(DB::getQueryLog());
         }
-        //dd($promotion_products);
+        //dd($filterNewProducts);
+        $promotion_products = $filterNewProducts;
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
