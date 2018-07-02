@@ -147,17 +147,14 @@
                     </div>
                 </div>
                 @php
-            $adspopup = json_decode($page->ads_placement);
+            
             //dd($ads);
             @endphp
                 @if(count($promotion_products)) @php $j = 1; @endphp @foreach($promotion_products as $promotion_product) @php $product_range = json_decode($promotion_product->product_range); $tenures = json_decode($promotion_product->tenure); $date1 = new DateTime(date('Y-m-d')); $date1_start = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_start))); $date2 = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_end))); $interval = date_diff($date2, $date1); $interval_spent = date_diff($date2, $date1_start); $days_type = \Helper::days_or_month_or_year(2, $interval_spent->format('%m')); $max_range_arr = array();
-    
+                $ads = json_decode($promotion_product->ads_placement);
                 @endphp
-                @if(count($promotion_products)>2 && $page->slug=='foreign-currency-deposit-mode')
-
-                    @if($j==3)<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? asset($adspopup[0]->ad_horizontal_image_popup) : '' }}" alt=""></a></div>@endif
-                @else
-                <div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? asset($adspopup[0]->ad_horizontal_image_popup) : '' }}" alt=""></a></div>
+                @if($page->slug=='foreign-currency-deposit-mode')
+                <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
                 @endif
                 <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
@@ -525,7 +522,6 @@
                     </div>
                 </div>
                 @php $j++; @endphp @endforeach
-                @if($page->slug=='foreign-currency-deposit-mode')<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? asset($adspopup[0]->ad_horizontal_image_popup) : '' }}" alt=""></a></div>@endif
             @endif
             </div>
     </div>
