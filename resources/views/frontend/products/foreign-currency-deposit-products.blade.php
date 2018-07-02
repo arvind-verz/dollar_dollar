@@ -146,6 +146,10 @@
                         <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
                     </div>
                 </div>
+                @php
+            $adspopup = json_decode($page->ads_placement);
+            //dd($ads);
+            @endphp
                 @if(count($promotion_products)) @php $j = 1; @endphp @foreach($promotion_products as $promotion_product) @php $product_range = json_decode($promotion_product->product_range); $tenures = json_decode($promotion_product->tenure); $date1 = new DateTime(date('Y-m-d')); $date1_start = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_start))); $date2 = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_end))); $interval = date_diff($date2, $date1); $interval_spent = date_diff($date2, $date1_start); $days_type = \Helper::days_or_month_or_year(2, $interval_spent->format('%m')); $max_range_arr = array();
     
                 @endphp

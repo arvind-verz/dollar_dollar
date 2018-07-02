@@ -174,6 +174,10 @@
                     <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
                 </div>
             </div>
+            @php
+            $adspopup = json_decode($page->ads_placement);
+            //dd($ads);
+            @endphp
             @if(count($promotion_products))
                 @php $j = 1; @endphp
                 @foreach($promotion_products as $promotion_product)
