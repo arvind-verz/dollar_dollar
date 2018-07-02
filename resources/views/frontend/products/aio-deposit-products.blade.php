@@ -204,6 +204,7 @@ $banners = Helper::getBanners($slug);
                     <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
                 </div>
             </div>
+
            @php
             $adspopup = json_decode($page->ads_placement);
             //dd($ads);
