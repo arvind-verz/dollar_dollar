@@ -232,19 +232,39 @@
                                                 </thead>
                                                 <tbody>
                                                 @foreach($product_range as $range)
+                                                    <?php
+                                                    $placementHighlight = false;
+                                                    $tenureHighlight = false;
+                                                    $bonusInterestHighlight = false;
+                                                    $boardInterestHighlight = false;
+                                                    $totalInterestHighlight = false;
+                                                    $placementValue = false;
 
-                                                    <tr class="
-                                    @if(isset($search_filter['filter']) && ($search_filter['filter']=='Placement'))
-                                                    @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
-                                        @endif
-                                                    @endif">
-                                                        <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
-                                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_interest) highlight
-                                        @endif">{{ $range->bonus_interest . '%' }}</td>
-                                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->board_rate) highlight
-                                        @endif">{{ $range->board_rate . '%' }}</td>
-                                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==($range->bonus_interest+$range->board_rate)) highlight
-                                        @endif">{{ ($range->bonus_interest+$range->board_rate). '%' }}</td>
+                                                    if (isset($search_filter['filter']) && (isset($search_filter['search_value']))) {
+                                                        $searchPlacement = $search_filter['search_value'];
+                                                        if (($search_filter['filter'] == 'Placement') && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range)) {
+                                                            $placementHighlight = true;
+                                                            $placementValue = true;
+                                                        } elseif (($search_filter['filter'] == 'Interest')) {
+                                                            if ($searchPlacement == $range->bonus_interest) {
+                                                                $placementHighlight = true;
+                                                                $bonusInterestHighlight = true;
+                                                            } elseif ($searchPlacement == $range->board_rate) {
+                                                                $placementHighlight = true;
+                                                                $boardInterestHighlight = true;
+                                                            } elseif ($searchPlacement == $range->bonus_interest + $range->board_rate) {
+                                                                $placementHighlight = true;
+                                                                $totalInterestHighlight = true;
+                                                            }
+
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <tr class="@if($placementHighlight==true && $placementValue==true ) highlight @endif">
+                                                        <td class="@if($placementHighlight==true ) highlight @endif">{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+                                                        <td class="@if($bonusInterestHighlight==true  ) highlight @endif">{{ $range->bonus_interest . '%' }}</td>
+                                                        <td class="@if($boardInterestHighlight==true ) highlight @endif">{{ $range->board_rate . '%' }}</td>
+                                                        <td class="@if($totalInterestHighlight==true ) highlight @endif">{{ ($range->bonus_interest+$range->board_rate). '%' }}</td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -335,23 +355,48 @@
                                                     </thead>
                                                     <tbody>
                                                     @foreach($product_range as $key => $range)
-                                                        @php $max_range_arr[] = $range->max_range; @endphp
-                                                        <tr class="
-                                    @if(isset($search_filter['filter']) && ($search_filter['filter']=='Placement'))
-                                                        @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
-                                        @endif
-                                                        @endif">
-                                                            <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
-                                                            @if($key==0)
-                                                                <td rowspan="{{ count($product_range) }}"
-                                                                    class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $search_filter['search_value']==$range->tenor)) highlight
-                                        @endif">{{ $range->tenor. ' ' . $days_type }}</td>@endif
-                                                            <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_interest) highlight
-                                        @endif">{{ $range->bonus_interest . '%' }}</td>
-                                                            <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->board_rate) highlight
-                                        @endif">{{ $range->board_rate . '%' }}</td>
-                                                            <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==($range->bonus_interest+$range->board_rate)) highlight
-                                        @endif">{{ ($range->bonus_interest+$range->board_rate). '%' }}</td>
+
+                                                        <?php $max_range_arr[] = $range->max_range;
+                                                        $placementHighlight = false;
+                                                        $tenureHighlight = false;
+                                                        $bonusInterestHighlight = false;
+                                                        $boardInterestHighlight = false;
+                                                        $totalInterestHighlight = false;
+                                                        $tenureHighlight = false;
+                                                        $placementValue = false;
+
+                                                        if (isset($search_filter['filter']) && (isset($search_filter['search_value']))) {
+                                                            $searchPlacement = $search_filter['search_value'];
+                                                            if (($search_filter['filter'] == 'Placement') && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range)) {
+                                                                $placementHighlight = true;
+                                                                $placementValue = true;
+                                                            } elseif (($search_filter['filter'] == 'Interest')) {
+                                                                if ($searchPlacement == $range->bonus_interest) {
+                                                                    $placementHighlight = true;
+                                                                    $bonusInterestHighlight = true;
+                                                                } elseif ($searchPlacement == $range->board_rate) {
+                                                                    $placementHighlight = true;
+                                                                    $boardInterestHighlight = true;
+                                                                } elseif ($searchPlacement == $range->bonus_interest + $range->board_rate) {
+                                                                    $placementHighlight = true;
+                                                                    $totalInterestHighlight = true;
+                                                                }
+
+                                                            }elseif (($search_filter['filter'] == 'Tenor')) {
+                                                                if ($searchPlacement == $range->tenor) {
+                                                                    $placementHighlight = true;
+                                                                    $tenureHighlight = true;
+                                                                }
+                                                            }
+                                                        }
+                                                        ?>
+                                                        <tr class="@if($placementHighlight==true && $placementValue==true ) highlight @endif">
+                                                            <td class="@if($placementHighlight==true ) highlight @endif">{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+
+                                                            <td class="@if($tenureHighlight==true  ) highlight @endif">{{ $range->tenor. ' ' . $days_type }}</td>
+                                                            <td class="@if($bonusInterestHighlight==true  ) highlight @endif">{{ $range->bonus_interest . '%' }}</td>
+                                                            <td class="@if($boardInterestHighlight==true  ) highlight @endif">{{ $range->board_rate . '%' }}</td>
+                                                            <td class="@if($totalInterestHighlight==true  ) highlight @endif">{{ ($range->bonus_interest+$range->board_rate). '%' }}</td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
