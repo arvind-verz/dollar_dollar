@@ -65,7 +65,7 @@ class ProductsController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
         $destinationPath = 'uploads/products'; // upload path
-        $adHorizontalImage = null;
+        $adHorizontalImage = $adHorizontalPopupImage = null;
         $adVerticalImage = null;
         if (!is_dir('uploads')) {
             mkdir('uploads');
@@ -101,6 +101,19 @@ class ProductsController extends Controller
             $adVerticalImage = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $request->file('ad_image_vertical')->move($destinationPath, $adVerticalImage);
+        }
+        if ($request->hasFile('ad_horizontal_image_popup')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('ad_horizontal_image_popup')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('ad_horizontal_image_popup')->getClientOriginalExtension();
+            // Filename to store
+            $adHorizontalPopupImage = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('ad_horizontal_image_popup')->move($destinationPath, $adHorizontalPopupImage);
         }
 
         $product = new PromotionProducts();
@@ -273,13 +286,18 @@ class ProductsController extends Controller
 
             $adVertical['ad_image_vertical'] = $destinationPath . '/' . $adVerticalImage;
         }
+        if ($request->hasFile('ad_horizontal_image_popup')) {
 
+            $adHorizontalPopup['ad_horizontal_image_popup'] = $destinationPath . '/' . $adHorizontalPopupImage;
+        }
+        
         $adHorizontal['ad_link_horizontal'] = $request->ad_horizontal_link;
         $adVertical['ad_link_vertical'] = $request->ad_vertical_link;
-        $adsPlacement = [$adHorizontal, $adVertical];
+        $adHorizontalPopup['ad_link_horizontal_popup'] = $request->ad_horizontal_link_popup;
+        $adsPlacement = [$adHorizontal, $adVertical, $adHorizontalPopup];
 
         $product->ads_placement = json_encode($adsPlacement);
-
+ //dd($product->ads_placement);
         $product->status = $request->status;
         $product->featured = $request->featured;
         $product->save();
@@ -328,7 +346,7 @@ class ProductsController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
         $destinationPath = 'uploads/products'; // upload path
-        $adHorizontalImage = null;
+        $adHorizontalImage = $adHorizontalPopupImage = null;
         $adVerticalImage = null;
         if (!is_dir('uploads')) {
             mkdir('uploads');
@@ -364,6 +382,19 @@ class ProductsController extends Controller
             $adVerticalImage = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $request->file('ad_image_vertical')->move($destinationPath, $adVerticalImage);
+        }
+        if ($request->hasFile('ad_horizontal_image_popup')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('ad_horizontal_image_popup')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('ad_horizontal_image_popup')->getClientOriginalExtension();
+            // Filename to store
+            $adHorizontalPopupImage = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('ad_horizontal_image_popup')->move($destinationPath, $adHorizontalPopupImage);
         }
 
         $product->product_name = $request->name;
@@ -536,12 +567,19 @@ class ProductsController extends Controller
 
             $adVertical['ad_image_vertical'] = $destinationPath . '/' . $adVerticalImage;
         } else {
-            $adHorizontal['ad_image_vertical'] = isset($ads[1]->ad_image_vertical) ? $ads[1]->ad_image_vertical : null;
+            $adVertical['ad_image_vertical'] = isset($ads[1]->ad_image_vertical) ? $ads[1]->ad_image_vertical : null;
         }
+        if ($request->hasFile('ad_horizontal_image_popup')) {
 
+            $adHorizontalPopup['ad_horizontal_image_popup'] = $destinationPath . '/' . $adHorizontalPopupImage;
+        } else {
+            $adHorizontalPopup['ad_horizontal_image_popup'] = isset($ads[2]->ad_horizontal_image_popup) ? $ads[2]->ad_horizontal_image_popup : null;
+        }
+        //dd($request->ad_horizontal_image_popup);
         $adHorizontal['ad_link_horizontal'] = $request->ad_horizontal_link;
         $adVertical['ad_link_vertical'] = $request->ad_vertical_link;
-        $adsPlacement = [$adHorizontal, $adVertical];
+        $adHorizontalPopup['ad_link_horizontal_popup'] = $request->ad_horizontal_link_popup;
+        $adsPlacement = [$adHorizontal, $adVertical, $adHorizontalPopup];
 
         $product->ads_placement = json_encode($adsPlacement);
 

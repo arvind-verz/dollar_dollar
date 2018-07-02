@@ -62,6 +62,18 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        {{Form::label('ad_horizontal_image_popup', 'Ad Horizontal Image Popup',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::file('ad_horizontal_image_popup', ['class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{Form::label('ad_horizontal_link_popup', 'Ad Horizontal Link Popup',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('ad_horizontal_link_popup', old('ad_horizontal_link_popup'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="meta">

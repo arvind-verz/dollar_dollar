@@ -66,6 +66,30 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <?php
+                                        $ads = json_decode($page->ads_placement);
+                                        //dd($ads);
+                                    ?>
+                                    <div class="form-group">
+                                        {{Form::label('ad_horizontal_image_popup', 'Ad Horizontal Image Popup',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="@if(isset($ads[0]->ad_horizontal_image_popup) && ($ads[0]->ad_horizontal_image_popup != ''))col-sm-8 @else col-sm-10 @endif">
+                                            {{Form::file('ad_horizontal_image_popup', ['class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                        @if(isset($ads[0]->ad_horizontal_image_popup) && ($ads[0]->ad_horizontal_image_popup != ''))
+                                            <div class=" col-sm-2">
+                                                <div class="attachment-block clearfix">
+                                                    <a href="{{asset($ads[0]->ad_horizontal_image_popup)}}" target="_blank"><img class="attachment-img" src="{!! asset($ads[0]->ad_horizontal_image_popup) !!}"
+                                                         alt="image"></a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="form-group">
+                                        {{Form::label('ad_horizontal_link_popup', 'Ad Horizontal Link Popup',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('ad_horizontal_link_popup', isset($ads[0]->ad_link_horizontal_popup) ? $ads[0]->ad_link_horizontal_popup : '' , ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="meta">

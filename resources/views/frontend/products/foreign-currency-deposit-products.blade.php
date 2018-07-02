@@ -101,10 +101,10 @@
                                             <select class="form-control" name="sort_by">
                                                 <option value="">Sort by</option>
                                                 <option value="1" @if(isset($search_filter[ 'sort_by']) && $search_filter['sort_by']==1) selected @endif>
-                                                    1
+                                                    Minimum
                                                 </option>
                                                 <option value="1" @if(isset($search_filter[ 'sort_by']) && $search_filter['sort_by']==2) selected @endif>
-                                                    2
+                                                    Maximum
                                                 </option>
                                             </select>
                                         </div>
@@ -117,7 +117,7 @@
                 @if(count($promotion_products))
                 <div class="ps-slider--feature-product nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                     @php $i = 1; @endphp @foreach($promotion_products as $promotion_product)
-                    <div class="ps-block--short-product second" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                    <div class="ps-block--short-product second @if($promotion_product->featured==1) highlight @endif" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
                         <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
 
                         <div class="ps-block__info">
@@ -142,12 +142,24 @@
                         <p><img src="{{ asset('img/icons/ef.png') }}" alt="">= example funds</p>
 
                         <p><img src="{{ asset('img/icons/cx.png') }}" alt="">= example funds</p>
+
+                        <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
                     </div>
                 </div>
+                @php
+            $adspopup = json_decode($page->ads_placement);
+            //dd($ads);
+            @endphp
                 @if(count($promotion_products)) @php $j = 1; @endphp @foreach($promotion_products as $promotion_product) @php $product_range = json_decode($promotion_product->product_range); $tenures = json_decode($promotion_product->tenure); $date1 = new DateTime(date('Y-m-d')); $date1_start = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_start))); $date2 = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_end))); $interval = date_diff($date2, $date1); $interval_spent = date_diff($date2, $date1_start); $days_type = \Helper::days_or_month_or_year(2, $interval_spent->format('%m')); $max_range_arr = array();
-
+    
                 @endphp
-                <div class="ps-product featured-1" id="{{ $j }}">
+                @if(count($promotion_products)>2 && $page->slug=='foreign-currency-deposit-mode')
+
+                    @if($j==3)<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
+                @else
+                <div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>
+                @endif
+                <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                         <div class="ps-product__promo">
@@ -512,7 +524,9 @@
                                                                 class="fa fa-angle-down"></i></a></div>
                     </div>
                 </div>
-                @php $j++; @endphp @endforeach @endif
+                @php $j++; @endphp @endforeach
+                @if($page->slug=='fixed-deposit-mode')<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
+            @endif
             </div>
     </div>
     <script type="text/javascript">

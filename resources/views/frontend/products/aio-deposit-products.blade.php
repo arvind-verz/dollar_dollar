@@ -2,11 +2,11 @@
 @section('title', $page->title)
 @section('content')
     <?php
-    $search_filter = isset($search_filter) ? $search_filter : "";
-    $slug = CONTACT_SLUG;
-    //get banners
-    $banners = Helper::getBanners($slug);
-    ?>
+$search_filter = isset($search_filter) ? $search_filter : "";
+$slug          = CONTACT_SLUG;
+//get banners
+$banners = Helper::getBanners($slug);
+?>
     {{--Banner section start--}}
 
     @if($banners->count()>1)
@@ -152,11 +152,11 @@
                                             <option value="">Sort by</option>
                                             <option value="1"
                                                     @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==1) selected @endif>
-                                                1
+                                                Minimum
                                             </option>
                                             <option value="1"
                                                     @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==2) selected @endif>
-                                                2
+                                                Maximum
                                             </option>
                                         </select>
                                     </div>
@@ -167,6 +167,7 @@
                     </form>
                 </div>
             </div>
+
             @if(count($promotion_products))
                 <div class="ps-slider--feature-product nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true"
                      data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="4"
@@ -176,7 +177,7 @@
                      data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                     @php $i = 1; @endphp
                     @foreach($promotion_products as $promotion_product)
-                        <div class="ps-block--short-product second" data-mh="product"><img
+                        <div class="ps-block--short-product second @if($promotion_product->featured==1) highlight @endif" data-mh="product"><img
                                     src="{{ asset($promotion_product->brand_logo) }}" alt="">
                             <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
 
@@ -204,15 +205,28 @@
                 </div>
             </div>
 
+           @php
+            $adspopup = json_decode($page->ads_placement);
+            //dd($ads);
+            $j=1;
+            @endphp
 
             @if(count($promotion_products))
+
             @foreach($promotion_products as $promotion_product)
             <?php
-            $product_range = $promotion_product->product_range;
 
-            ?>
+$product_range = $promotion_product->product_range;
+
+?>
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
+            @if(count($promotion_products)>2 && $page->slug=='all-in-one-deposit-mode')
+
+                @if($j==3)<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
+            @else
+            <div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>
+            @endif
                 <div class="ps-product ps-product--2">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
@@ -340,25 +354,25 @@
                                         <tr>
                                             <td class="">
                                                 <?php
-                                                if ($key == 0) {
-                                                    echo "First";
-                                                } elseif ($range->above_range == true) {
-                                                    echo "Above";
-                                                } else {
-                                                    echo "Next";
-                                                } ?>
+if ($key == 0) {
+    echo "First";
+} elseif ($range->above_range == true) {
+    echo "Above";
+} else {
+    echo "Next";
+}?>
                                                 ${{ $range->max_range }}</td>
                                             <td class="text-center">{{ $range->bonus_interest_criteria_a }}%</td>
                                             <td class="text-center">{{ $range->bonus_interest_criteria_b }}%</td>
                                             <td>
                                                 <?php
-                                                if ($key == 0) {
-                                                    echo "First";
-                                                } elseif ($range->above_range == true) {
-                                                    echo "Above";
-                                                } else {
-                                                    echo "Next";
-                                                } ?>
+if ($key == 0) {
+    echo "First";
+} elseif ($range->above_range == true) {
+    echo "Above";
+} else {
+    echo "Next";
+}?>
                                                 ${{ $range->max_range }} -${{ $range->interest_earn }}
                                                 ({{ $range->criteria }}%)
                                             </td>
@@ -681,8 +695,11 @@
                                 </div>
                             </div>
                         @endif
+                        @php $j++; @endphp
                         @endforeach
-                    @endif
+                    @else
+            @if($page->slug=='all-in-one-deposit-mode')<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
+            @endif
         </div>
     </div>
     <script type="text/javascript">

@@ -1,27 +1,29 @@
 var isMobile = {
-    Android: function () {
+    Android: function() {
         return navigator.userAgent.match(/Android/i);
     },
-    BlackBerry: function () {
+    BlackBerry: function() {
         return navigator.userAgent.match(/BlackBerry/i);
     },
-    iOS: function () {
+    iOS: function() {
         return navigator.userAgent.match(/iPhone|iPad|iPod/i);
     },
-    Opera: function () {
+    Opera: function() {
         return navigator.userAgent.match(/Opera Mini/i);
     },
-    Windows: function () {
+    Windows: function() {
         return navigator.userAgent.match(/IEMobile/i);
     },
-    any: function () {
+    any: function() {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 }
-
+$(".ps-poster-popup .close-popup").click(function(){
+	$(this).parent().slideUp();
+});
 function backgroundImage() {
     var databackground = $('[data-background]');
-    databackground.each(function () {
+    databackground.each(function() {
         if ($(this).attr('data-background')) {
             var image_path = $(this).attr('data-background');
             $(this).css({
@@ -32,14 +34,14 @@ function backgroundImage() {
 }
 
 function parallax() {
-    $('.bg--parallax').each(function () {
+    $('.bg--parallax').each(function() {
         var el = $(this),
             xpos = "50%",
             windowHeight = $(window).height();
         if (isMobile.any()) {
             $(this).css('background-attachment', 'scroll');
         } else {
-            $(window).scroll(function () {
+            $(window).scroll(function() {
                 var current = $(window).scrollTop(),
                     top = el.offset().top,
                     height = el.outerHeight();
@@ -55,7 +57,7 @@ function parallax() {
 function menuBtnToggle() {
     var toggleBtn = $('.menu-toggle'),
         menu = $('.menu');
-    toggleBtn.on('click', function (e) {
+    toggleBtn.on('click', function(e) {
         e.preventDefault();
         var self = $(this);
         if (!$(this).hasClass('active')) {
@@ -69,7 +71,7 @@ function menuBtnToggle() {
 }
 
 function subMenuToggle() {
-    $('body').on('click', '.menu--mobile .menu-item-has-children > .menu-mobile-collapse', function (event) {
+    $('body').on('click', '.menu--mobile .menu-item-has-children > .menu-mobile-collapse', function(event) {
         event.preventDefault();
         var current = $(this).parent('.menu-item-has-children');
         current.children('.sub-menu').slideToggle(350);
@@ -94,7 +96,7 @@ function resizeHeader() {
 
 function owlCarousel(element) {
     if (element.length > 0) {
-        element.each(function () {
+        element.each(function() {
             var el = $(this),
                 dataAuto = el.data('owl-auto'),
                 dataLoop = el.data('owl-loop'),
@@ -165,7 +167,7 @@ function dateTimePicker() {
 
 function productCollapse() {
     $('.ps-product__detail').hide();
-    $('.ps-product__more').on('click', function (e) {
+    $('.ps-product__more').on('click', function(e) {
         e.preventDefault();
         if (!$(this).hasClass('active')) {
             $(this).addClass('active');
@@ -184,7 +186,7 @@ function productCollapse() {
 function backToTop() {
     var scrollPos = 0;
     var element = $('#totop');
-    $(window).scroll(function () {
+    $(window).scroll(function() {
         var scrollCur = $(window).scrollTop();
         if (scrollCur > scrollPos) {
             // scroll down
@@ -201,7 +203,7 @@ function backToTop() {
         scrollPos = scrollCur;
     });
 
-    element.on('click', function () {
+    element.on('click', function() {
         $('html, body').animate({
             scrollTop: '0px'
         }, 800);
@@ -209,7 +211,7 @@ function backToTop() {
 }
 
 function tabs() {
-    $('.ps-tab-list > li > a').on('click', function (e) {
+    $('.ps-tab-list > li > a').on('click', function(e) {
         e.preventDefault();
         var $this = $(this),
             target = $this.attr('href');
@@ -218,7 +220,7 @@ function tabs() {
 
     });
 }
-$(document).ready(function () {
+$(document).ready(function() {
     backgroundImage();
     menuBtnToggle();
     subMenuToggle();
@@ -230,24 +232,10 @@ $(document).ready(function () {
     tabs();
 });
 
-$(window).on('load resize', function () {
+$(window).on('load resize', function() {
     resizeHeader();
 });
 
-$(window).on('load', function () {
+$(window).on('load', function() {
 
 });
-
-function checkOtherValidation(id) {
-
-
-    var textareaLength = $(id).val().length;
-    if (textareaLength == 0) {
-        $('#time-5').prop('checked', false);
-    }
-    else {
-        $('#time-5').prop('checked', true);
-
-    }
-
-}

@@ -1591,6 +1591,9 @@ button {
       background-color: #fdb515;
       border-color: #fdb515;
       color: #fff; }
+  .ps-block--short-product.highlight {
+    background-color: #ffd790;
+    border: 1px solid #fdb515; }
 
 .ps-block--product-info {
   margin-bottom: 30px; }
@@ -1988,7 +1991,7 @@ button {
 
 .ps-product.featured-1 {
   border: 2px solid #fdb515; }
-  .ps-product.featured-1 .ps-product__poster {
+  .ps-product .ps-product__poster {
     margin: 0 -40px 50px; }
 
 .ps-product.featured-2 {
@@ -3706,7 +3709,5 @@ html .bg--parallax {
   float: none;
   width: 100%;
   padding-right: 0; }
-
-.ps-table tbody tr.highlight td {
-        background-color: #e2ffe6;
-}
+.ps-poster-popup{position:relative;padding-top:30px;}
+.ps-poster-popup .close-popup{position:absolute;top: 60px;    right: 45px;    z-index: 1;    color: #fff;cursor:pointer;}
