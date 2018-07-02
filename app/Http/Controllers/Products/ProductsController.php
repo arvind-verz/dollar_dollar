@@ -288,13 +288,13 @@ class ProductsController extends Controller
         }
         if ($request->hasFile('ad_horizontal_image_popup')) {
 
-            $adHorizontalPopupImage['ad_horizontal_image_popup'] = $destinationPath . '/' . $adHorizontalPopupImage;
+            $adHorizontalPopup['ad_horizontal_image_popup'] = $destinationPath . '/' . $adHorizontalPopupImage;
         }
         
         $adHorizontal['ad_link_horizontal'] = $request->ad_horizontal_link;
         $adVertical['ad_link_vertical'] = $request->ad_vertical_link;
         $adHorizontalPopup['ad_link_horizontal_popup'] = $request->ad_horizontal_link_popup;
-        $adsPlacement = [$adHorizontal, $adVertical, $adHorizontalPopupImage];
+        $adsPlacement = [$adHorizontal, $adVertical, $adHorizontalPopup];
 
         $product->ads_placement = json_encode($adsPlacement);
  //dd($product->ads_placement);
