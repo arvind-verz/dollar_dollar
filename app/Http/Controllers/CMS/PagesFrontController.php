@@ -224,9 +224,8 @@ class PagesFrontController extends Controller
             ->where('promotion_products.promotion_end', '>=', $end_date)
             ->orderBy('promotion_products.featured', 'DESC')
             ->get();
-
 //dd(DB::getQueryLog());
-        //dd($promotion_products);
+        //dd($page);
         $brands        = $details['brands'];
         $page          = $details['page'];
         $systemSetting = $details['systemSetting'];

@@ -169,6 +169,10 @@
                     <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
                 </div>
             </div>
+            @php
+            $adspopup = json_decode($page->ads_placement);
+            //dd($ads);
+            @endphp
             @if(count($promotion_products))
                 @php $j = 1; @endphp
                 @foreach($promotion_products as $promotion_product)
@@ -182,6 +186,11 @@
                     $days_type = \Helper::days_or_month_or_year(2, $interval_spent->format('%m'));
                     $max_range_arr = array();
                     @endphp
+                    @if(count($promotion_products)>2 && $page->slug=='fixed-deposit-mode')
+                        @if($j==3)<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
+                    @else
+                    <div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>
+                    @endif
                     <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
@@ -760,6 +769,7 @@
                     </div>
                     @php $j++; @endphp
                 @endforeach
+            @if($page->slug=='fixed-deposit-mode')<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
             @endif
         </div>
     </div>

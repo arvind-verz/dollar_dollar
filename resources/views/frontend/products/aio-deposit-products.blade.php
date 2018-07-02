@@ -167,6 +167,7 @@ $banners = Helper::getBanners($slug);
                     </form>
                 </div>
             </div>
+
             @if(count($promotion_products))
                 <div class="ps-slider--feature-product nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true"
                      data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="4"
@@ -204,15 +205,28 @@ $banners = Helper::getBanners($slug);
                 </div>
             </div>
 
+           @php
+            $adspopup = json_decode($page->ads_placement);
+            //dd($ads);
+            $j=1;
+            @endphp
 
             @if(count($promotion_products))
+
             @foreach($promotion_products as $promotion_product)
             <?php
+
 $product_range = $promotion_product->product_range;
 
 ?>
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
+            @if(count($promotion_products)>2 && $page->slug=='all-in-one-deposit-mode')
+
+                @if($j==3)<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
+            @else
+            <div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>
+            @endif
                 <div class="ps-product ps-product--2">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
@@ -681,8 +695,11 @@ if ($key == 0) {
                                 </div>
                             </div>
                         @endif
+                        @php $j++; @endphp
                         @endforeach
-                    @endif
+                    @else
+            @if($page->slug=='all-in-one-deposit-mode')<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
+            @endif
         </div>
     </div>
     <script type="text/javascript">
