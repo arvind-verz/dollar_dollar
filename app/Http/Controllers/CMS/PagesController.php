@@ -85,27 +85,6 @@ class PagesController extends Controller
             return redirect()->back()->withInput($request->input())->withErrors(['The slug' . ALREADY_TAKEN_ALERT]);
         }
 
-        if ($request->hasFile('ad_horizontal_image_popup')) {
-
-            // Get filename with the extension
-            $filenameWithExt = $request->file('ad_horizontal_image_popup')->getClientOriginalName();
-            // Get just filename
-            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
-            // Get just ext
-            $extension = $request->file('ad_horizontal_image_popup')->getClientOriginalExtension();
-            // Filename to store
-            $adHorizontalPopupImage = $filename . '_' . time() . '.' . $extension;
-            // Upload Image
-            $request->file('ad_horizontal_image_popup')->move($destinationPath, $adHorizontalPopupImage);
-        }
-       
-        if ($request->hasFile('ad_horizontal_image_popup')) {
-           // dd($request);
-            $adHorizontalPopup['ad_horizontal_image_popup'] = $destinationPath . '/' . $adHorizontalPopupImage;
-        }
-        $adHorizontalPopup['ad_link_horizontal_popup'] = $request->ad_horizontal_link_popup;
-        $adsPlacement = [$adHorizontalPopup];
-
 
 
         $page = new Page();
@@ -116,7 +95,6 @@ class PagesController extends Controller
         $page->meta_title = $request->meta_title;
         $page->meta_keyword = $request->meta_keyword;
         $page->meta_description = $request->meta_description;
-        $page->ads_placement = json_encode($adsPlacement);
         if ($request->menu_id == "null") {
             $page->menu_id = null;
         } else {
@@ -238,26 +216,7 @@ class PagesController extends Controller
             }
         }
 
-        if ($request->hasFile('ad_horizontal_image_popup')) {
-
-            // Get filename with the extension
-            $filenameWithExt = $request->file('ad_horizontal_image_popup')->getClientOriginalName();
-            // Get just filename
-            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
-            // Get just ext
-            $extension = $request->file('ad_horizontal_image_popup')->getClientOriginalExtension();
-            // Filename to store
-            $adHorizontalPopupImage = $filename . '_' . time() . '.' . $extension;
-            // Upload Image
-            $request->file('ad_horizontal_image_popup')->move($destinationPath, $adHorizontalPopupImage);
-        }
-       
-        if ($request->hasFile('ad_horizontal_image_popup')) {
-           // dd($request);
-            $adHorizontalPopup['ad_horizontal_image_popup'] = $destinationPath . '/' . $adHorizontalPopupImage;
-        }
-        $adHorizontalPopup['ad_link_horizontal_popup'] = $request->ad_horizontal_link_popup;
-        $adsPlacement = [$adHorizontalPopup];
+        
 
 
         $oldPage = $page;
@@ -292,7 +251,6 @@ class PagesController extends Controller
         } else {
             $page->status = $request->status;
         }
-        $page->ads_placement = json_encode($adsPlacement);
         $page->after_login = $request->after_login;
         $page->created_at = Carbon::now()->toDateTimeString();
         $page->save();

@@ -65,7 +65,7 @@ class ProductsController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
         $destinationPath = 'uploads/products'; // upload path
-        $adHorizontalImage = $adHorizontalPopupImage = null;
+        $adHorizontalImage = $adHorizontalPopupImage = $adHorizontalPopupImageTop = null;
         $adVerticalImage = null;
         if (!is_dir('uploads')) {
             mkdir('uploads');
@@ -115,6 +115,19 @@ class ProductsController extends Controller
             // Upload Image
             $request->file('ad_horizontal_image_popup')->move($destinationPath, $adHorizontalPopupImage);
         }
+        if ($request->hasFile('ad_horizontal_image_popup_top')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('ad_horizontal_image_popup_top')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('ad_horizontal_image_popup_top')->getClientOriginalExtension();
+            // Filename to store
+            $adHorizontalPopupImageTop = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('ad_horizontal_image_popup_top')->move($destinationPath, $adHorizontalPopupImageTop);
+        }
 
         $product = new PromotionProducts();
 
@@ -134,13 +147,13 @@ class ProductsController extends Controller
                 $range = [];
                 $range['min_range'] = (int)$v;
                 $range['max_range'] = (int)$max[$k];
-                $range['bonus_interest'] = array_values(rray_map('floatVal', $bonusInterest[$k]));
+                $range['bonus_interest'] = array_map('floatVal', $bonusInterest[$k]);
                 $ranges[] = $range;
 
             }
             $tenure = $request->tenure;
-            $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
-            $ranges = json_encode(array_values($ranges));
+            $tenure = json_encode(array_map('intVal', $tenure[0]));
+            $ranges = json_encode($ranges);
             $product->tenure = $tenure;
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F5])) {
@@ -290,11 +303,16 @@ class ProductsController extends Controller
 
             $adHorizontalPopup['ad_horizontal_image_popup'] = $destinationPath . '/' . $adHorizontalPopupImage;
         }
+        if ($request->hasFile('ad_horizontal_image_popup_top')) {
+
+            $adHorizontalPopupTop['ad_horizontal_image_popup_top'] = $destinationPath . '/' . $adHorizontalPopupImageTop;
+        }
         
         $adHorizontal['ad_link_horizontal'] = $request->ad_horizontal_link;
         $adVertical['ad_link_vertical'] = $request->ad_vertical_link;
         $adHorizontalPopup['ad_link_horizontal_popup'] = $request->ad_horizontal_link_popup;
-        $adsPlacement = [$adHorizontal, $adVertical, $adHorizontalPopup];
+        $adHorizontalPopupTop['ad_link_horizontal_popup_top'] = $request->ad_horizontal_link_popup_top;
+        $adsPlacement = [$adHorizontal, $adVertical, $adHorizontalPopup, $adHorizontalPopupTop];
 
         $product->ads_placement = json_encode($adsPlacement);
  //dd($product->ads_placement);
@@ -346,7 +364,7 @@ class ProductsController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
         $destinationPath = 'uploads/products'; // upload path
-        $adHorizontalImage = $adHorizontalPopupImage = null;
+        $adHorizontalImage = $adHorizontalPopupImage = $adHorizontalPopupImageTop = null;
         $adVerticalImage = null;
         if (!is_dir('uploads')) {
             mkdir('uploads');
@@ -396,7 +414,20 @@ class ProductsController extends Controller
             // Upload Image
             $request->file('ad_horizontal_image_popup')->move($destinationPath, $adHorizontalPopupImage);
         }
+        if ($request->hasFile('ad_horizontal_image_popup_top')) {
 
+            // Get filename with the extension
+            $filenameWithExt = $request->file('ad_horizontal_image_popup_top')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('ad_horizontal_image_popup_top')->getClientOriginalExtension();
+            // Filename to store
+            $adHorizontalPopupImageTop = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('ad_horizontal_image_popup_top')->move($destinationPath, $adHorizontalPopupImageTop);
+        }
+        //dd($adHorizontalPopupImageTop);
         $product->product_name = $request->name;
         $product->bank_id = $request->bank;
         $product->promotion_type_id = $request->product_type;
@@ -413,15 +444,13 @@ class ProductsController extends Controller
                 $range = [];
                 $range['min_range'] = (int)$v;
                 $range['max_range'] = (int)$max[$k];
-                $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
+                $range['bonus_interest'] = array_map('floatVal', $bonusInterest[$k]);
                 $ranges[] = $range;
 
             }
-
             $tenure = $request->tenure;
-            $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
-            $ranges = json_encode(array_values($ranges));
-            //dd($ranges);
+            $tenure = json_encode(array_map('intVal', $tenure[0]));
+            $ranges = json_encode($ranges);
             $product->tenure = $tenure;
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F5])) {
@@ -577,11 +606,19 @@ class ProductsController extends Controller
         } else {
             $adHorizontalPopup['ad_horizontal_image_popup'] = isset($ads[2]->ad_horizontal_image_popup) ? $ads[2]->ad_horizontal_image_popup : null;
         }
-        //dd($request->ad_horizontal_image_popup);
+        //dd($request->ad_horizontal_image_popup_top);
+        if ($request->hasFile('ad_horizontal_image_popup_top')) {
+
+            $adHorizontalPopupTop['ad_horizontal_image_popup_top'] = $destinationPath . '/' . $adHorizontalPopupImageTop;
+        } else {
+            $adHorizontalPopupTop['ad_horizontal_image_popup_top'] = isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : null;
+        }
+        
         $adHorizontal['ad_link_horizontal'] = $request->ad_horizontal_link;
         $adVertical['ad_link_vertical'] = $request->ad_vertical_link;
         $adHorizontalPopup['ad_link_horizontal_popup'] = $request->ad_horizontal_link_popup;
-        $adsPlacement = [$adHorizontal, $adVertical, $adHorizontalPopup];
+        $adHorizontalPopupTop['ad_link_horizontal_popup_top'] = $request->ad_horizontal_link_popup_top;
+        $adsPlacement = [$adHorizontal, $adVertical, $adHorizontalPopup, $adHorizontalPopupTop];
 
         $product->ads_placement = json_encode($adsPlacement);
 

@@ -209,23 +209,21 @@ $banners = Helper::getBanners($slug);
             $adspopup = json_decode($page->ads_placement);
             //dd($ads);
             $j=1;
+            
             @endphp
 
             @if(count($promotion_products))
 
             @foreach($promotion_products as $promotion_product)
             <?php
-
+$ads = json_decode($promotion_product->ads_placement);
 $product_range = $promotion_product->product_range;
 
 ?>
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
-            @if(count($promotion_products)>2 && $page->slug=='all-in-one-deposit-mode')
-
-                @if($j==3)<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
-            @else
-            <div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>
+            @if($page->slug=='all-in-one-deposit-mode')
+            <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
             @endif
                 <div class="ps-product ps-product--2">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
@@ -697,8 +695,6 @@ if ($key == 0) {
                         @endif
                         @php $j++; @endphp
                         @endforeach
-                    @else
-            @if($page->slug=='all-in-one-deposit-mode')<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}" alt=""></a></div>@endif
             @endif
         </div>
     </div>

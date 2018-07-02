@@ -145,8 +145,7 @@
                      data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                     @php $i = 1; @endphp
                     @foreach($promotion_products as $promotion_product)
-                        <div class="ps-block--short-product second @if($promotion_product->featured==1) highlight @endif"
-                             data-mh="product"><img
+                        <div class="ps-block--short-product second @if($promotion_product->featured==1) highlight @endif" data-mh="product"><img
                                     src="{{ asset($promotion_product->brand_logo) }}" alt="">
                             <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
 
@@ -176,30 +175,21 @@
                 </div>
             </div>
             @php
-            $adspopup = json_decode($page->ads_placement);
             //dd($ads);
             @endphp
             @if(count($promotion_products))
-                @php $j = 1; @endphp
-                @foreach($promotion_products as $promotion_product)
-                    @php
-                    $product_tenures = json_decode($promotion_product->product_tenure);
-                    $product_range = json_decode($promotion_product->product_range);
-                    $tenures = json_decode($promotion_product->tenure);
-                    $key = $interest_key = $max_range_arr = $sort_array = array();
-                    @endphp
-                    @if(count($promotion_products)>2 && $page->slug=='fixed-deposit-mode')
-                        @if($j==3)
-                            <div class="ps-poster"><a
-                                        href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img
-                                            src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}"
-                                            alt=""></a></div>@endif
-                    @else
-                        <div class="ps-poster"><a
-                                    href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img
-                                        src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}"
-                                        alt=""></a></div>
-                    @endif
+            @php $j = 1; @endphp
+            @foreach($promotion_products as $promotion_product)
+            @php
+            $product_tenures = json_decode($promotion_product->product_tenure);
+            $product_range = json_decode($promotion_product->product_range);
+            $tenures = json_decode($promotion_product->tenure);
+            $key = $interest_key = $max_range_arr = $sort_array = array();
+            $ads = json_decode($promotion_product->ads_placement);
+            @endphp
+            @if($page->slug=='fixed-deposit-mode')
+            <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
+            @endif
                     <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
@@ -277,7 +267,7 @@
                                         @endforeach
                                         </tbody>
                                     </table>
-                                </div>
+                                </div>                                
                             </div>
                             @if(count($promotion_product->ads_placement))
                                 @php
@@ -299,68 +289,67 @@
                                     if(isset($search_filter['search_value'])) {
                                     $placement_value = max($max_range_arr);
                                     if(($search_filter['filter']=='Placement')) {
-                                    if(!empty($search_filter['search_value'])) {
-                                    $placement_value = $search_filter['search_value'];
-                                    }
-                                    $P = $placement_value;
-                                    @endphp
-                                    @if($key==0)
-                                        <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
-                                    @endif
-                                    @php
-                                    for($i=0;$i<$tenure_count;$i++) {
-                                    $BI = ($range->bonus_interest[$i]/100);
-                                    $TM = $tenures[$i];
-                                    $calc = eval('return '.$promotion_product->formula.';');
-                                    $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
-                                    $sort_array[$calc] = array(
-                                    'TM'    =>  $TM,
-                                    'days_type' =>  $days_type,
-                                    'bonus_interest'    =>  $range->bonus_interest[$i],
-                                    'calc'  =>  $calc
-                                    );
-                                    }
-                                    }
-                                    elseif($search_filter['filter']=='Interest') {
-                                    $P = $placement_value;
-                                    @endphp
-                                    @if($key==0)
-                                        <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
-                                    @endif
-                                    @php
-                                    for($i=0;$i<$tenure_count;$i++) {
-                                    $BI = ($range->bonus_interest[$i]/100);
-                                    $TM = $tenures[$i];
-                                    $calc = eval('return '.$promotion_product->formula.';');
-                                    $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
-                                    $sort_array[$range->bonus_interest[$i]] = array(
-                                    'TM'    =>  $TM,
-                                    'days_type' =>  $days_type,
-                                    'bonus_interest'    =>  $range->bonus_interest[$i],
-                                    'calc'  =>  $calc
-                                    );
-                                    }
-                                    }
-                                    //dd($sort_array);
+                                            if(!empty($search_filter['search_value'])) {
+                                                $placement_value = $search_filter['search_value'];
+                                            }
+                                            $P = $placement_value;
+                                            @endphp
+                                            @if($key==0)
+                                            <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                            @endif
+                                            @php
+                                            for($i=0;$i<$tenure_count;$i++) {
+                                                $BI = ($range->bonus_interest[$i]/100);
+                                                $TM = $tenures[$i];
+                                                $calc = eval('return '.$promotion_product->formula.';');
+                                                $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
+                                                $sort_array[$calc] = array(
+                                                    'TM'    =>  $TM,
+                                                    'days_type' =>  $days_type,
+                                                    'bonus_interest'    =>  $range->bonus_interest[$i],
+                                                    'calc'  =>  $calc
+                                                );
+                                            }
+                                        }
+                                        elseif($search_filter['filter']=='Interest') {
+                                            $P = $placement_value;
+                                            @endphp
+                                            @if($key==0)
+                                            <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                            @endif
+                                            @php
+                                            for($i=0;$i<$tenure_count;$i++) {
+                                                $BI = ($range->bonus_interest[$i]/100);
+                                                $TM = $tenures[$i];
+                                                $calc = eval('return '.$promotion_product->formula.';');
+                                                $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
+                                                $sort_array[$range->bonus_interest[$i]] = array(
+                                                    'TM'    =>  $TM,
+                                                    'days_type' =>  $days_type,
+                                                    'bonus_interest'    =>  $range->bonus_interest[$i],
+                                                    'calc'  =>  $calc
+                                                );
+                                            }
+                                        }
+                                        //dd($sort_array);
                                     @endphp
                                     @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==1)
                                         @php
                                         ksort($sort_array);
-                                        @endphp
+                                        @endphp   
                                     @elseif(isset($search_filter['sort_by']) && $search_filter['sort_by']==2)
                                         @php
                                         krsort($sort_array);
-                                        @endphp
+                                        @endphp                                      
                                     @endif
                                     @if($key==0)
-                                        @foreach($sort_array as $sort)
-                                            <p><strong>{{ $sort['TM'] . ' ' . $sort['days_type'] }}
-                                                </strong> - ${{ round($sort['calc'], 2) }}
-                                                ({{ $sort['bonus_interest'] }}%)</p>
-                                        @endforeach
+                                    @foreach($sort_array as $sort)
+                                    <p><strong>{{ $sort['TM'] . ' ' . $sort['days_type'] }}
+                                        </strong> - ${{ round($sort['calc'], 2) }} ({{ $sort['bonus_interest'] }}%)</p>
+                                    @endforeach
                                     @endif
                                     @php
-
+                                    
                                     }
                                     elseif(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor') {
                                     $placement_value = max($max_range_arr);
@@ -418,12 +407,10 @@
                                     <div class="close-popup">
                                         <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <a href="#"><img
-                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                alt=""></a>
+                                    <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""></a>
                                 </div>
                                 @php } @endphp
-                            @endif
+                                @endif
                             <div class="ps-product__detail">
                                 {!! $promotion_product->product_footer !!}
                             </div>
@@ -433,12 +420,6 @@
                     </div>
                     @php $j++; @endphp
                 @endforeach
-            @else
-                @if($page->slug=='fixed-deposit-mode')
-                    <div class="ps-poster"><a
-                                href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img
-                                    src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? $adspopup[0]->ad_horizontal_image_popup : '' }}"
-                                    alt=""></a></div>@endif
             @endif
         </div>
     </div>
