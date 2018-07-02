@@ -185,11 +185,10 @@
                     $interval_spent = date_diff($date2, $date1_start);
                     $days_type = \Helper::days_or_month_or_year(2, $interval_spent->format('%m'));
                     $max_range_arr = array();
+                    $ads = json_decode($promotion_product->ads_placement);
                     @endphp
-                    @if(count($promotion_products)>2 && $page->slug=='saving-deposit-mode')
-                        @if($j==3)<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? asset($adspopup[0]->ad_horizontal_image_popup) : '' }}" alt=""></a></div>@endif
-                    @else
-                    <div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? asset($adspopup[0]->ad_horizontal_image_popup) : '' }}" alt=""></a></div>
+                    @if($page->slug=='saving-deposit-mode')
+                        <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
                     @endif
                     <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
@@ -769,7 +768,6 @@
                     </div>
                     @php $j++; @endphp
                 @endforeach
-            @if($page->slug=='saving-deposit-mode')<div class="ps-poster"><a href="{{ isset($adspopup[0]->ad_link_horizontal_popup) ? $adspopup[0]->ad_link_horizontal_popup : '' }}"><img src="{{ isset($adspopup[0]->ad_horizontal_image_popup) ? asset($adspopup[0]->ad_horizontal_image_popup) : '' }}" alt=""></a></div>@endif
             @endif
         </div>
     </div>
