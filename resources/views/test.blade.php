@@ -71,10 +71,8 @@
                         @if(count($brands))
                             @foreach($brands as $brand)
                                 <span class="brand">
-                            <input type="radio" name="brand_id" value="{{ $brand->id }}"
-                                   style="opacity: 0;position: absolute;">
-                            <img src="{{ asset($brand->brand_logo) }}" width="100px"
-                                 class="brand_img @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) selected_img @endif">
+                            <input type="radio" name="brand_id" value="{{ $brand->id }}" style="opacity: 0;position: absolute;" >
+                            <img src="{{ asset($brand->brand_logo) }}" width="100px" class="brand_img @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) selected_img @endif">
                         </span>
                             @endforeach
                         @endif
@@ -216,7 +214,7 @@
                             @php } @endphp
                             @endif
                                     <!-- FORMULA 1 -->
-                            @if($promotion_product->promotion_formula_id == SAVING_DEPOSIT_F1)
+                            @if($promotion_product->promotion_formula_id==2)
                                 <div class="ps-product__table">
                                     <div class="ps-table-wrap">
                                         <table class="ps-table ps-table--product">
@@ -230,28 +228,19 @@
                                             </thead>
                                             <tbody>
                                             @foreach($product_range as $range)
-                                                <?php
-                                                $placementHighlight = false;
-                                                $interestHighlight = false;
-                                                $tenureHighlight = false;
 
-                                                if (isset($search_filter['filter'])) {
-                                                    if (isset($search_filter['search_value']) && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range)) {
-                                                        $placementHighlight = true;
-                                                    }
-                                                    if (isset($search_filter['search_value']) && $search_filter['filter'] == 'Interest' && $search_filter['search_value'] == $range->bonus_interest) {
-                                                        $placementHighlight = true;
-                                                        $interestHighlight = true;
-                                                    }
-                                                }
-
-                                                ?>
-
-                                                <tr class="@if($placementHighlight) highlight @endif">
-                                                    <td class="@if($placementHighlight) highlight @endif">{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
-                                                    <td class="@if($interestHighlight) highlight @endif">{{ $range->bonus_interest . '%' }}</td>
-                                                    <td class="@if($interestHighlight) highlight @endif">{{ $range->board_rate . '%' }}</td>
-                                                    <td class="@if($interestHighlight) highlight @endif">{{ ($range->bonus_interest+$range->board_rate). '%' }}</td>
+                                                <tr class="
+                                    @if(isset($search_filter['filter']) && ($search_filter['filter']=='Placement'))
+                                                @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
+                                        @endif
+                                                @endif">
+                                                    <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+                                                    <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_interest) highlight
+                                        @endif">{{ $range->bonus_interest . '%' }}</td>
+                                                    <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->board_rate) highlight
+                                        @endif">{{ $range->board_rate . '%' }}</td>
+                                                    <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==($range->bonus_interest+$range->board_rate)) highlight
+                                        @endif">{{ ($range->bonus_interest+$range->board_rate). '%' }}</td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -408,8 +397,7 @@
                                             @endif
                                             @php
                                             }
-                                            elseif(isset($search_filter['search_value']) &&
-                                            $search_filter['filter']=='Tenor') {
+                                            elseif(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor') {
                                             $placement_value = max($max_range_arr);
                                             $P = $placement_value;
                                             $PI = $range->board_rate/100;
@@ -766,7 +754,6 @@
                                             @endif
 
 
-
                                             <div class="ps-product__detail">
                                                 {!! $promotion_product->product_footer !!}
                                             </div>
@@ -793,7 +780,7 @@
             $("span.prefix_holder").text(prefix_holder);
         });
 
-        $("img.brand_img").on("click", function () {
+        $("img.brand_img").on("click", function() {
             $("input[name='brand']").attr("checked", false);
             $("span.brand img").css("border", "none");
             $(this).prev().attr("checked", true);
