@@ -147,13 +147,15 @@ class ProductsController extends Controller
                 $range = [];
                 $range['min_range'] = (int)$v;
                 $range['max_range'] = (int)$max[$k];
-                $range['bonus_interest'] = array_map('floatVal', $bonusInterest[$k]);
+                $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
                 $ranges[] = $range;
 
             }
+
             $tenure = $request->tenure;
-            $tenure = json_encode(array_map('intVal', $tenure[0]));
-            $ranges = json_encode($ranges);
+            $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
+            $ranges = json_encode(array_values($ranges));
+            //dd($ranges);
             $product->tenure = $tenure;
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F5])) {
@@ -444,13 +446,15 @@ class ProductsController extends Controller
                 $range = [];
                 $range['min_range'] = (int)$v;
                 $range['max_range'] = (int)$max[$k];
-                $range['bonus_interest'] = array_map('floatVal', $bonusInterest[$k]);
+                $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
                 $ranges[] = $range;
 
             }
+
             $tenure = $request->tenure;
-            $tenure = json_encode(array_map('intVal', $tenure[0]));
-            $ranges = json_encode($ranges);
+            $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
+            $ranges = json_encode(array_values($ranges));
+            //dd($ranges);
             $product->tenure = $tenure;
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F5])) {
