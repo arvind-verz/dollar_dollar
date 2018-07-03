@@ -616,7 +616,8 @@
                                                     @php } @endphp
                                                 @endif
                                                 <div class="ps-product__panel">
-                                                    @php $placement_value = 15000;$calc = []; @endphp
+
+                           @php $placement_value = 15000;$calc = []; @endphp
                                                     @foreach($product_range as $key => $range)
                                                         @php
                                                         if(isset($search_filter['search_value']) &&
@@ -686,6 +687,7 @@
 
                                                         <!-- FORMULA 5 -->
                                                 @if($promotion_product->promotion_formula_id==6 )
+
                                                     @php
                                                     $row_data = ['CUMMULATED MONTHLY SAVINGS AMOUNT', 'BASE INTEREST',
                                                     'ADDITIONAL 2% P.A. INTEREST', 'TOTAL AMOUNT'];
