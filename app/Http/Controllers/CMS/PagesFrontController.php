@@ -919,8 +919,6 @@ $lastCalculatedAmount = $productRange->max_range;
                         }
                     }
                 }
-
-                
             }
             
             if ($status == true) {
