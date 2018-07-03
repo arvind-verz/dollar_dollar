@@ -731,7 +731,7 @@ $lastCalculatedAmount = $productRange->max_range;
             ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
             ->get();
 
-        $filterProducts = $filterNewProducts = [];
+        $filterProducts = $filterNewProducts = $orginalProducts = [];
         //dd($promotion_products);
         foreach($promotion_products as $product) {
             $status        = false;
@@ -789,11 +789,17 @@ $lastCalculatedAmount = $productRange->max_range;
             }
         }
 
-        //dd($filterProducts);
+        //dd($tenures);
+        
         foreach($filterProducts as $product) {
+            //dd($product);
+            $promotion_product_id = $product->promotion_product_id;
             $sort_by_arr = [];
             $product_range = json_decode($product->product_range);
-            foreach ($product_range as $range) {
+            $tenures       = json_decode($product->tenure);
+            $P = $request['search_value'];
+            foreach ($product_range as $key => $range) {
+                //print_r($range);
                 if($search_filter['filter']=='Placement') {
                     if($P>=$range->min_range && $P<=$range->max_range) {
                         for($i=0;$i<count($tenures);$i++) {
@@ -806,33 +812,51 @@ $lastCalculatedAmount = $productRange->max_range;
                         }
                     }
                 }
-
                 elseif($search_filter['filter']=='Interest') {
-
+                    if($key==0) {
+                        for($i=0;$i<count($tenures);$i++) {
+                            $sort_by_arr[] = $range->bonus_interest[$i];
+                        }
+                    }
                 }
                 elseif($search_filter['filter']=='Tenor') {
-
+                    $P = $product_range[0]->max_range;
+                    if($P>=$range->min_range && $P<=$range->max_range) {
+                        for($i=0;$i<count($tenures);$i++) {
+                            $BI = ($range->bonus_interest[$i]/100);
+                            $TM = $tenures[$i];
+                            $calc = eval('return '.$product->formula.';');
+                            $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
+                            //print_r($calc);echo '<br>';
+                            $sort_by_arr[] = round($calc);
+                        }
+                    }
                 }
             }
+            //print_r($sort_by_arr);
             if(count($sort_by_arr)) {
                 $sort_by_new_arr = max($sort_by_arr);
                 if($sort_by==1) {
                     $sort_by_new_arr = min($sort_by_arr);
                 }
-                $filterNewProducts[$sort_by_new_arr] =    $product;
+                //print_r($sort_by_new_arr);echo '<br>';
+                $filterNewProducts[$promotion_product_id] = $sort_by_new_arr;
             }
         }
         
         if(!empty($filterNewProducts)) {
             if($sort_by==1) {
-                ksort($filterNewProducts);
+                asort($filterNewProducts);
             }
             elseif($sort_by==2) {
-                krsort($filterNewProducts);
+                arsort($filterNewProducts);
             }
         }
-        //dd($filterNewProducts);
-        $promotion_products = $filterNewProducts;
+        
+        foreach ($filterNewProducts as $key => $value) {
+            $orginalProducts[]= $promotion_products->where('promotion_product_id',$key)->first();  
+        }
+        $promotion_products = $orginalProducts;
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
