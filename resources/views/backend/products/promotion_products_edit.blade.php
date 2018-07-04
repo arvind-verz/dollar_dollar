@@ -265,10 +265,10 @@
                                         <div class="@if(isset($ads[3]->ad_horizontal_image_popup_top) && ($ads[3]->ad_horizontal_image_popup_top != ''))col-sm-8 @else col-sm-10 @endif">
                                             {{Form::file('ad_horizontal_image_popup_top', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
-                                        @if(isset($ads[3]->ad_horizontal_image_popup) && ($ads[3]->ad_horizontal_image_popup != ''))
+                                        @if(isset($ads[3]->ad_horizontal_image_popup_top) && ($ads[3]->ad_horizontal_image_popup_top != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="{{asset($ads[3]->ad_horizontal_image_popup)}}" target="_blank"><img class="attachment-img" src="{!! asset($ads[3]->ad_horizontal_image_popup) !!}"
+                                                    <a href="{{asset($ads[3]->ad_horizontal_image_popup_top)}}" target="_blank"><img class="attachment-img" src="{!! asset($ads[3]->ad_horizontal_image_popup_top) !!}"
                                                          alt="image"></a>
                                                 </div>
                                             </div>
@@ -277,7 +277,7 @@
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link_popup_top', 'Ad Horizontal Link Popup Top',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('ad_horizontal_link_popup_top', isset($ads[3]->ad_link_horizontal_popup) ? $ads[3]->ad_link_horizontal_popup : '' , ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('ad_horizontal_link_popup_top', isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' , ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                 </div>
