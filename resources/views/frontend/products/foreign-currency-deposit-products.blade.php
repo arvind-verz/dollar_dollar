@@ -174,7 +174,7 @@
                         <div class="ps-product__poster"><a href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
                                                 src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
                                                 alt=""></a></div>
-                        @php } @endphp @endif @if($promotion_product->formula_id==1)
+                        @php } @endphp @endif @if($promotion_product->formula_id==16)
                         <div class="ps-product__table">
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product">
@@ -512,7 +512,20 @@
                             </div>
                             <div class="clearfix"></div>
                             @endif
-
+                            <div class="clearfix"></div>
+                                                @if(count($promotion_product->ads_placement))
+                                                    @php
+                                                    $ads = json_decode($promotion_product->ads_placement);
+                                                    if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                                    @endphp
+                                                    <div class="ps-poster-popup">
+                                                        <div class="close-popup">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </div>
+                                                        <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""></a>
+                                                    </div>
+                                                    @php } @endphp
+                                                    @endif
                             <div class="ps-product__detail">
                                 {!! $promotion_product->product_footer !!}
                             </div>

@@ -212,10 +212,31 @@ class PagesFrontController extends Controller
 
     public function fixDepositMode($details)
     {
+        return $this->fixed($request=NULL);
+    }
 
+    public function search_fixed_deposit(Request $request)
+    {
+        return $this->fixed($request->all());
+    }
+
+    public function fixed($request)
+    {
         $start_date = \Helper::startOfDayBefore();
         $end_date   = \Helper::endOfDayAfter();
-//dd($startDate);
+
+//dd($request);
+        $details       = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners       = $details['banners'];
+
+        $search_filter = [];
+        $search_filter = $request;
+        $brand_id      = isset($request['brand_id']) ? $request['brand_id'] : '';
+        $sort_by      = isset($request['sort_by']) ? $request['sort_by'] : '';
+//dd($brand_id);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -226,14 +247,190 @@ class PagesFrontController extends Controller
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
+            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
             ->get();
-//dd(DB::getQueryLog());
-        //dd($page);
-        $brands        = $details['brands'];
-        $page          = $details['page'];
-        $systemSetting = $details['systemSetting'];
-        $banners       = $details['banners'];
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "slider_products"));
+
+        $filterProducts = $filterNewProducts = $orginalProducts = $result_data = [];
+        //dd($promotion_products);
+        if(empty($request)) {
+            $orginalProducts = $promotion_products;
+            //dd($filterProducts);
+            foreach($orginalProducts as $product) {
+                $promotion_product_id = $product->promotion_product_id;
+                $sort_by_arr = $result_data_old = [];
+                $product_range = json_decode($product->product_range);
+                $tenures       = json_decode($product->tenure);
+                $P = $product_range[0]->max_range;
+                foreach ($product_range as $key => $range) {
+                    if($P>=$range->min_range && $P<=$range->max_range) {
+                        for($i=0;$i<count($tenures);$i++) {
+                            $BI = ($range->bonus_interest[$i]/100);
+                            $TM = $tenures[$i];
+                            $calc = eval('return '.$product->formula.';');
+                            $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
+                            //print_r($calc);echo '<br>';
+                            $sort_by_arr[] = round($calc);
+                            $result_data_old[] = [
+                                'calc'  =>  $calc,
+                                'interest'  =>  $range->bonus_interest[$i],
+                                'amount'    =>  $P
+                            ];
+                        }
+                        $result_data_old['tenor']   =   $tenures;
+                    }
+                }
+                $result_data[$promotion_product_id] = $result_data_old;
+            }
+        }
+        else {
+            foreach($promotion_products as $product) {
+                $status        = false;
+                $product_range = json_decode($product->product_range);
+                $tenures       = json_decode($product->tenure);
+                $P = $request['search_value'];
+                //dd($tenures);
+                foreach ($product_range as $range) {
+                    if(!empty($brand_id) && $brand_id == $product->brand_id) {
+                        $status = true;
+                    }
+                    //echo $brand_id;
+                    if($search_filter['filter']=='Placement') {
+                        if(!empty($brand_id)) {
+                            if (!empty($search_filter['search_value']) && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
+                                $status = true;
+                            }
+                        }
+                        else {
+                            if (!empty($search_filter['search_value']) && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range)) {
+                                $status = true;
+                            }
+                        }
+                    }
+                    elseif($search_filter['filter']=='Interest') {
+                        if(!empty($brand_id)) {
+                            if (!empty($search_filter['search_value']) && (in_array($search_filter['search_value'], $range->bonus_interest)) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
+                                $status = true;
+                            }
+                        }
+                        else {
+                            if (!empty($search_filter['search_value']) && (in_array($search_filter['search_value'], $range->bonus_interest))) {
+                                $status = true;
+                            }
+                        }
+                    }
+                    elseif($search_filter['filter'] == 'Tenor') {
+                        if(!empty($brand_id)) {
+                            if (!empty($search_filter['search_value']) &&(in_array($search_filter['search_value'], $tenures)) && (!empty($brand_id) && $brand_id == $product->brand_id) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
+                                $status = true;
+                            }
+                        }
+                        else {
+                            if (!empty($search_filter['search_value']) &&(in_array($search_filter['search_value'], $tenures))) {
+                                $status = true;
+                            }
+                        }
+                    }
+
+                    
+                }
+                
+                if ($status == true) {
+                    $filterProducts[] = $product;
+                }
+            }
+            
+            foreach($filterProducts as $product) {
+                $promotion_product_id = $product->promotion_product_id;
+                $sort_by_arr = $result_data_old = [];
+                $product_range = json_decode($product->product_range);
+                $tenures       = json_decode($product->tenure);
+                $P = $request['search_value'];
+                foreach ($product_range as $key => $range) {
+                    //print_r($range);
+                    if($search_filter['filter']=='Placement') {
+                        if($P>=$range->min_range && $P<=$range->max_range) {
+                            for($i=0;$i<count($tenures);$i++) {
+                                $BI = ($range->bonus_interest[$i]/100);
+                                $TM = $tenures[$i];
+                                $calc = eval('return '.$product->formula.';');
+                                $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
+                                //print_r($calc);echo '<br>';
+                                $sort_by_arr[] = round($calc);
+                                $result_data_old[] = [
+                                    'calc'  =>  $calc,
+                                    'interest'  =>  $range->bonus_interest[$i],
+                                    'amount'    =>  $P
+                                ];
+                            }                        
+                        }
+                    }
+                    elseif($search_filter['filter']=='Interest') {
+                        $P = $product_range[0]->max_range;
+                        if($key==0) {
+                            for($i=0;$i<count($tenures);$i++) {
+                                $BI = ($range->bonus_interest[$i]/100);
+                                $TM = $tenures[$i];
+                                $calc = eval('return '.$product->formula.';');
+                                $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
+
+                                $sort_by_arr[] = $range->bonus_interest[$i];
+                                $result_data_old[] = [
+                                    'calc'  =>  $calc,
+                                    'interest'  =>  $range->bonus_interest[$i],
+                                    'amount'    =>  $P
+                                ];
+                            }
+                        }
+                    }
+                    elseif($search_filter['filter']=='Tenor') {
+                        $P = $product_range[0]->max_range;
+                        if($P>=$range->min_range && $P<=$range->max_range) {
+                            for($i=0;$i<count($tenures);$i++) {
+                                $BI = ($range->bonus_interest[$i]/100);
+                                $TM = $tenures[$i];
+                                $calc = eval('return '.$product->formula.';');
+                                $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
+                                //print_r($calc);echo '<br>';
+                                $sort_by_arr[] = round($calc);
+                                $result_data_old[] = [
+                                    'calc'  =>  $calc,
+                                    'interest'  =>  $range->bonus_interest[$i],
+                                    'amount'    =>  $P
+                                ];
+                            }
+                        }
+                    }
+                    $result_data_old['tenor']   =   $tenures;
+                }
+                //dd($result_data);
+                if(count($sort_by_arr)) {
+                    $sort_by_new_arr = max($sort_by_arr);
+                    if($sort_by==1) {
+                        $sort_by_new_arr = min($sort_by_arr);
+                    }
+                    //print_r($sort_by_new_arr);echo '<br>';
+                    $filterNewProducts[$promotion_product_id] = $sort_by_new_arr;
+                }
+                $result_data[$promotion_product_id] = $result_data_old;
+            }
+            //dd($result_data);
+            
+            if(!empty($filterNewProducts)) {
+                if($sort_by==1) {
+                    asort($filterNewProducts);
+                }
+                elseif($sort_by==2) {
+                    arsort($filterNewProducts);
+                }
+            }
+            
+            foreach ($filterNewProducts as $key => $value) {
+                $orginalProducts[] = $promotion_products->where('promotion_product_id',$key)->first();  
+            }
+        }
+        $promotion_products = $orginalProducts;
+        //dd($result_data);
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "result_data"));
     }
 
     public function savingDepositMode($details)
@@ -631,6 +828,7 @@ $lastCalculatedAmount = $productRange->max_range;
                 $filterProducts[] = $product;
             }
         }
+        
         //dd($filterProducts);
         foreach($filterProducts as $product) {
             $date1 = Carbon::now();
@@ -697,168 +895,7 @@ $lastCalculatedAmount = $productRange->max_range;
         return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
-    public function search_fixed_deposit(Request $request)
-    {
-        return $this->fixed($request->all());
-    }
-
-    public function fixed($request)
-    {
-        $start_date = \Helper::startOfDayBefore();
-        $end_date   = \Helper::endOfDayAfter();
-
-//dd($request);
-        $details       = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
-        $brands        = $details['brands'];
-        $page          = $details['page'];
-        $systemSetting = $details['systemSetting'];
-        $banners       = $details['banners'];
-
-        $search_filter = [];
-        $search_filter = $request;
-        $brand_id      = isset($request['brand_id']) ? $request['brand_id'] : '';
-        $sort_by      = isset($request['sort_by']) ? $request['sort_by'] : '';
-//dd($brand_id);
-        DB::connection()->enableQueryLog();
-        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.promotion_type_id', '=', 1)
-            ->where('promotion_products.promotion_start', '<=', $start_date)
-            ->where('promotion_products.promotion_end', '>=', $end_date)
-            ->where('promotion_products.delete_status', '=', 0)
-            ->where('promotion_products.status', '=', 1)
-            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-            ->get();
-
-        $filterProducts = $filterNewProducts = $orginalProducts = [];
-        //dd($promotion_products);
-        foreach($promotion_products as $product) {
-            $status        = false;
-            $product_range = json_decode($product->product_range);
-            $tenures       = json_decode($product->tenure);
-            $P = $request['search_value'];
-            //dd($tenures);
-            foreach ($product_range as $range) {
-                if(!empty($brand_id) && $brand_id == $product->brand_id) {
-                    $status = true;
-                }
-                //echo $brand_id;
-                if($search_filter['filter']=='Placement') {
-                    if(!empty($brand_id)) {
-                        if (!empty($search_filter['search_value']) && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
-                            $status = true;
-                        }
-                    }
-                    else {
-                        if (!empty($search_filter['search_value']) && ($search_filter['search_value'] >= $range->min_range && $search_filter['search_value'] <= $range->max_range)) {
-                            $status = true;
-                        }
-                    }
-                }
-                elseif($search_filter['filter']=='Interest') {
-                    if(!empty($brand_id)) {
-                        if (!empty($search_filter['search_value']) && (in_array($search_filter['search_value'], $range->bonus_interest)) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
-                            $status = true;
-                        }
-                    }
-                    else {
-                        if (!empty($search_filter['search_value']) && (in_array($search_filter['search_value'], $range->bonus_interest))) {
-                            $status = true;
-                        }
-                    }
-                }
-                elseif($search_filter['filter'] == 'Tenor') {
-                    if(!empty($brand_id)) {
-                        if (!empty($search_filter['search_value']) &&(in_array($search_filter['search_value'], $tenures)) && (!empty($brand_id) && $brand_id == $product->brand_id) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
-                            $status = true;
-                        }
-                    }
-                    else {
-                        if (!empty($search_filter['search_value']) &&(in_array($search_filter['search_value'], $tenures))) {
-                            $status = true;
-                        }
-                    }
-                }
-
-                
-            }
-            
-            if ($status == true) {
-                $filterProducts[] = $product;
-            }
-        }
-
-        //dd($tenures);
-        
-        foreach($filterProducts as $product) {
-            //dd($product);
-            $promotion_product_id = $product->promotion_product_id;
-            $sort_by_arr = [];
-            $product_range = json_decode($product->product_range);
-            $tenures       = json_decode($product->tenure);
-            $P = $request['search_value'];
-            foreach ($product_range as $key => $range) {
-                //print_r($range);
-                if($search_filter['filter']=='Placement') {
-                    if($P>=$range->min_range && $P<=$range->max_range) {
-                        for($i=0;$i<count($tenures);$i++) {
-                            $BI = ($range->bonus_interest[$i]/100);
-                            $TM = $tenures[$i];
-                            $calc = eval('return '.$product->formula.';');
-                            $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
-                            //print_r($calc);echo '<br>';
-                            $sort_by_arr[] = round($calc);
-                        }
-                    }
-                }
-                elseif($search_filter['filter']=='Interest') {
-                    if($key==0) {
-                        for($i=0;$i<count($tenures);$i++) {
-                            $sort_by_arr[] = $range->bonus_interest[$i];
-                        }
-                    }
-                }
-                elseif($search_filter['filter']=='Tenor') {
-                    $P = $product_range[0]->max_range;
-                    if($P>=$range->min_range && $P<=$range->max_range) {
-                        for($i=0;$i<count($tenures);$i++) {
-                            $BI = ($range->bonus_interest[$i]/100);
-                            $TM = $tenures[$i];
-                            $calc = eval('return '.$product->formula.';');
-                            $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
-                            //print_r($calc);echo '<br>';
-                            $sort_by_arr[] = round($calc);
-                        }
-                    }
-                }
-            }
-            //print_r($sort_by_arr);
-            if(count($sort_by_arr)) {
-                $sort_by_new_arr = max($sort_by_arr);
-                if($sort_by==1) {
-                    $sort_by_new_arr = min($sort_by_arr);
-                }
-                //print_r($sort_by_new_arr);echo '<br>';
-                $filterNewProducts[$promotion_product_id] = $sort_by_new_arr;
-            }
-        }
-        
-        if(!empty($filterNewProducts)) {
-            if($sort_by==1) {
-                asort($filterNewProducts);
-            }
-            elseif($sort_by==2) {
-                arsort($filterNewProducts);
-            }
-        }
-        
-        foreach ($filterNewProducts as $key => $value) {
-            $orginalProducts[]= $promotion_products->where('promotion_product_id',$key)->first();  
-        }
-        $promotion_products = $orginalProducts;
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
-    }
+    
 
     public function search_saving_deposit(Request $request)
     {
