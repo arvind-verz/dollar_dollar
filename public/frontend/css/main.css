@@ -3711,3 +3711,6 @@ html .bg--parallax {
   padding-right: 0; }
 .ps-poster-popup{position:relative;padding-top:30px;}
 .ps-poster-popup .close-popup{position:absolute;top: 60px;    right: 45px;    z-index: 1;    color: #fff;cursor:pointer;}
+.ps-table tbody tr.highlight td {
+        background-color: #e2ffe6;
+}

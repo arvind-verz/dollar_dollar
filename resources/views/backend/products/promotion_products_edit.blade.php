@@ -260,7 +260,6 @@
                                             {{Form::text('ad_horizontal_link_popup', isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : '' , ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-                                    </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_image_popup_top', 'Ad Horizontal Image Popup Top',['class'=>'col-sm-2 control-label'])}}
                                         <div class="@if(isset($ads[3]->ad_horizontal_image_popup_top) && ($ads[3]->ad_horizontal_image_popup_top != ''))col-sm-8 @else col-sm-10 @endif">
@@ -282,6 +281,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                    </div>
                                 {{Form::hidden('_method','PUT')}}
                                 <!-- /.box-body -->
                                 <div class="box-footer wizard">
