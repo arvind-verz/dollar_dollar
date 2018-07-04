@@ -290,9 +290,7 @@ class PagesFrontController extends Controller
                 $P = $request['search_value'];
                 //dd($tenures);
                 foreach ($product_range as $range) {
-                    if(!empty($brand_id) && $brand_id == $product->brand_id) {
-                        $status = true;
-                    }
+                    
                     //echo $brand_id;
                     if($search_filter['filter']=='Placement') {
                         if(!empty($brand_id)) {
@@ -330,7 +328,9 @@ class PagesFrontController extends Controller
                             }
                         }
                     }
-
+                    /*if(!empty($brand_id) && $brand_id == $product->brand_id) {
+                        $status = true;
+                    }*/
                     
                 }
                 
