@@ -71,8 +71,8 @@
                             @if(count($brands))
                                 @foreach($brands as $brand)
                                     <span class="brand">
-                                        <input type="radio" name="brand_id" value="{{ $brand->id }}"
-                                               style="opacity: 0;position: absolute;">
+                                        <input type="radio" name="brand_id" value="@if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) {{ $search_filter['brand_id'] }} @else {{ $brand->id }} @endif"
+                                               style="opacity: 0;position: absolute;" @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) checked  @endif>
                                         <img src="{{ asset($brand->brand_logo) }}" width="100px"
                                              class="brand_img @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) selected_img @endif">
                                     </span>
@@ -348,10 +348,16 @@
         });
 
         $("img.brand_img").on("click", function () {
-            $("input[name='brand_id']").prop("checked", false);
-            $("span.brand img").css("border", "none");
-            $(this).prev().prop("checked", true);
-            $(this).css("border", "1px solid #000");
+            if($(this).prev().prop("checked")) {
+                $("input[name='brand_id']").prop("checked", false);
+                $("span.brand img").css("border", "none");
+            }
+            else {
+                $("input[name='brand_id']").prop("checked", false);
+                $("span.brand img").css("border", "none");
+                $(this).prev().prop("checked", true);
+                $(this).css("border", "1px solid #000");
+            }
         });
     </script>
     {{--Page content end--}}

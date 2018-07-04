@@ -269,7 +269,7 @@ class PagesFrontController extends Controller
                             $calc = eval('return '.$product->formula.';');
                             $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
                             //print_r($calc);echo '<br>';
-                            $sort_by_arr[] = round($calc);
+                            $sort_by_arr[] = $calc;
                             $result_data_old[] = [
                                 'calc'  =>  $calc,
                                 'interest'  =>  $range->bonus_interest[$i],
