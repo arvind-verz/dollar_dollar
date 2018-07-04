@@ -1960,8 +1960,6 @@ button {
         margin-bottom: 0; }
   .ps-product .ps-product__header {
     margin-bottom: 40px; }
-.ps-product__header img {
-  max-width: 180px; }
   .ps-product .ps-product__detail {
     padding-top: 45px;
     border-top: 1px solid #f1f1f1; }
@@ -2098,13 +2096,11 @@ button {
     margin-bottom: 30px; }
   .ps-product--2 .ps-product__header {
     margin-bottom: 40px; }
-
     .ps-product--2 .ps-product__header::after {
       clear: both;
       content: "";
       display: table; }
     .ps-product--2 .ps-product__header img {
-      max-width: 180px;
       display: inline-block; }
   .ps-product--2 .ps-product__detail {
     padding-top: 45px;
@@ -3711,6 +3707,7 @@ html .bg--parallax {
   padding-right: 0; }
 .ps-poster-popup{position:relative;padding-top:30px;}
 .ps-poster-popup .close-popup{position:absolute;top: 60px;    right: 45px;    z-index: 1;    color: #fff;cursor:pointer;}
+.product-popup{display:none;}
 .ps-table tbody tr.highlight td {
         background-color: #e2ffe6;
 }

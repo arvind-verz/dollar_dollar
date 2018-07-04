@@ -67,16 +67,18 @@
             <div class="ps-block--deposit-filter">
                 <form class="ps-form--filter" action="{{ route('fixed-deposit-mode.search') }}" method="post">
                     <div class="ps-block__header">
-                        @if(count($brands))
-                            @foreach($brands as $brand)
-                                <span class="brand">
-                        <input type="radio" name="brand_id" value="{{ $brand->id }}"
-                               style="opacity: 0;position: absolute;">
-                        <img src="{{ asset($brand->brand_logo) }}" width="100px"
-                             class="brand_img @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) selected_img @endif">
-                    </span>
-                            @endforeach
-                        @endif
+                        <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="15" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
+                            @if(count($brands))
+                                @foreach($brands as $brand)
+                                    <span class="brand">
+                                        <input type="radio" name="brand_id" value="{{ $brand->id }}"
+                                               style="opacity: 0;position: absolute;">
+                                        <img src="{{ asset($brand->brand_logo) }}" width="100px"
+                                             class="brand_img @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) selected_img @endif">
+                                    </span>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
                     <div class="ps-block__content">
 
@@ -188,15 +190,15 @@
             $key = $interest_key = $sort_array = array();
             $ads = json_decode($promotion_product->ads_placement);
             @endphp
-            @if($page->slug=='fixed-deposit-mode')
-            <!-- <div class="ps-poster-popup">
+            @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+            <div class="ps-poster-popup">
                 <div class="close-popup">
                     <i class="fa fa-times" aria-hidden="true"></i>
                 </div>
                 <a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a>
-            </div> -->
+            </div>
             @endif
-                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
+                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                             <div class="ps-product__promo">
