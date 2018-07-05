@@ -381,12 +381,18 @@
                                                             </thead>
                                                             <tbody>
                                                             @foreach($product->product_ranges as $key => $productRange)
-                                                                <tr>
+                                                                <tr class="@if($product->highlight>=$key) highlight @endif">
                                                                     <td>@if($key==0) 1st - @else NEXT
                                                                         - @endif{{ '$' . $productRange->max_range }}</td>
-                                                                    <td>{{ $productRange->board_rate }}%<small>p.a.</small></td>
-                                                                    <td>{{ $productRange->bonus_interest }}%<small>p.a.</small></td>
-                                                                    <td>{{ $productRange->total_interest }}%<small>p.a.</small></td>
+                                                                    <td>{{ $productRange->board_rate }}%
+                                                                        <small>p.a.</small>
+                                                                    </td>
+                                                                    <td>{{ $productRange->bonus_interest }}%
+                                                                        <small>p.a.</small>
+                                                                    </td>
+                                                                    <td>{{ $productRange->total_interest }}%
+                                                                        <small>p.a.</small>
+                                                                    </td>
                                                                 </tr>
                                                             @endforeach
                                                             </tbody>
@@ -406,7 +412,8 @@
                                                     <?php } ?>
                                                 @endif
                                                 <div class="ps-product__panel">
-                                                    <h4>Possible interest(s) earned for SGD ${{ $product->placement }}</h4>
+                                                    <h4>Possible interest(s) earned for SGD
+                                                        ${{ $product->placement }}</h4>
 
                                                     <h2>${{ $product->total_interest_earn }} <br>
                                                 <span>
@@ -418,7 +425,7 @@
                                                 @endif
 
                                                         <!-- FORMULA 5 -->
-                                                @if($product->promotion_formula_id==6 )
+                                                @if($product->promotion_formula_id==SAVING_DEPOSIT_F5 )
 
                                                     @php
                                                     $row_data = ['CUMMULATED MONTHLY SAVINGS AMOUNT', 'BASE INTEREST',

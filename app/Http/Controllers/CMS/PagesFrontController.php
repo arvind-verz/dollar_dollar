@@ -807,7 +807,7 @@ class PagesFrontController extends Controller
 
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : null;
-        $searchValue = isset($request['search_value']) ? $request['search_value'] : null;
+        $searchValue = isset($request['search_value']) ? $request['search_value'] : 0;
         $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
 
         DB::connection()->enableQueryLog();
@@ -815,7 +815,7 @@ class PagesFrontController extends Controller
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', 2)
-            ->where('promotion_products.formula_id', '=', 5)
+            ->where('promotion_products.formula_id', '=', 6)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
             ->where('promotion_products.delete_status', '=', 0)
@@ -831,7 +831,7 @@ class PagesFrontController extends Controller
         $banners = $details['banners'];
 
         $filterProducts = [];
-        //dd($promotion_products);
+        //dd($products);
 
         foreach ($products as &$product) {
             //dd($product);
@@ -979,58 +979,166 @@ class PagesFrontController extends Controller
                 }
 
             } elseif (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F4])) {
-                $maxPlacements = [];
-                //dd($product);
-                foreach ($productRanges as $productRange) {
-                    //dd($productRange);
-                    $maxPlacements[] = $productRange->max_range;
-                }
-                $placement = max($maxPlacements);
-                $totalInterests = [];
-                $interestEarns = [];
-                $lastCalculatedAmount = 0;
+                $maxPlacements = [0];
                 $highlight = 0;
-                foreach ($productRanges as $k => &$productRange) {
-                    $productRange->highlight = false;
+
+
+                foreach ($productRanges as $k => $productRange) {
+                    //dd($productRanges);
                     $allInterests = [$productRange->bonus_interest, $productRange->board_rate, $productRange->bonus_interest + $productRange->board_rate];
 
                     if (count($searchFilter)) {
                         if ($filter == PLACEMENT && ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range)) {
                             $highlight++;
-                            $placement = (int)$searchValue;
+                            $maxPlacements[] = (int)$searchValue;
                             $status = true;
                         } elseif ($filter == INTEREST && (in_array((float)$searchValue, $allInterests))) {
                             $highlight++;
+                            $maxPlacements[] = $productRange->max_range;
                             $status = true;
                         } elseif ($filter == TENURE) {
                             $status = false;
                         }
 
 
+                    } else {
+
+                        $maxPlacements[] = $productRange->max_range;
                     }
 
-                    if ($placement >= $productRange->max_range && ($lastCalculatedAmount < $productRange->max_range)) {
+                }
+
+                $placement = max($maxPlacements);
+                $totalInterests = [];
+                $interestEarns = [];
+                $lastCalculatedAmount = 0;
+
+                foreach ($productRanges as $k => &$productRange) {
+
+                    $interestEarn = 0;
+                    if ($placement >= $productRange->max_range) {
                         $totalInterest = $productRange->bonus_interest + $productRange->board_rate;
-                        $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($totalInterest / 100), 2);
+                        if ($lastCalculatedAmount < $placement) {
+                            $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($totalInterest / 100), 2);
+                        }
                         $productRange->interest_earn = $interestEarn;
                         $productRange->total_interest = $totalInterest;
                         $interestEarns[] = $interestEarn;
+                        $lastCalculatedAmount = $lastCalculatedAmount + ($productRange->max_range - $lastCalculatedAmount);
+                        //dd($interestEarns);
                     } else {
                         $totalInterest = $productRange->bonus_interest + $productRange->board_rate;
                         $productRange->total_interest = $totalInterest;
-                        $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
+                        if ($lastCalculatedAmount < $placement) {
+                            $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
+                        }
                         $productRange->interest_earn = $interestEarn;
                         $interestEarns[] = $interestEarn;
+                        $lastCalculatedAmount = $lastCalculatedAmount + ($placement - $lastCalculatedAmount);
 
                     }
-                    $lastCalculatedAmount = $productRange->max_range;
-
 
 
                 }
                 $product->total_interest = null;
                 $product->total_interest_earn = array_sum($interestEarns);
                 $product->placement = $placement;
+                $product->highlight = $highlight;
+                if (!is_null($brandId) && ($brandId != $product->bank_id)) {
+                    $status = false;
+                }
+
+                if ($status == true) {
+                    $filterProducts[] = $product;
+                }
+
+            } elseif (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F5])) {
+
+                $rowHeadings = [CUMMULATED_MONTHLY_SAVINGS_AMOUNT, BASE_INTEREST,
+                    ADDITIONAL_INTEREST, TOTAL_AMOUNT];
+                $product->highlight = false;
+                foreach ($productRanges as $productRange) {
+                    //dd($productRange);
+                    $months = [1];
+                    $allInterests = [$productRange->base_interest, $productRange->bonus_interest];
+
+                    if (count($searchFilter)) {
+                        if ($filter == PLACEMENT && ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range)) {
+                            $product->highlight = true;
+                            $status = true;
+                        } elseif ($filter == INTEREST && (in_array((float)$searchValue, $allInterests))) {
+
+                            $product->highlight = true;
+                            $status = true;
+                        } elseif ($filter == TENURE && ($searchValue > 0 && $searchValue <= $productRange->placement_month)) {
+                            $product->highlight = true;
+                            $months[] = $searchValue;
+                            $status = true;
+                        }
+
+
+                    }
+                    $x = (int)$productRange->placement_month;
+                    $y = (int)$productRange->display_month;
+                    $j = 1;
+                    $z = 1;
+                    do {
+                        $z = $y * $j;
+
+                        if (($x > $z)) {
+                            $months[] = $z;
+                        } else {
+                            $z = $x;
+                            $months[] = $z;
+                        }
+                        $j++;
+                    } while ($z != $x);
+                    $product->months = array_sort($months);
+
+
+                    //dd($productRange, $months);
+                    $details = [];
+                    foreach ($rowHeadings as $k => $row) {
+                        $monthlySavingAmount = [];
+                        $baseInterests = [];
+                        $totalBaseInterest = 0;
+                        $totalAdditionalInterest = 0;
+                        if ($k == 0) {
+                            foreach ($months as $month) {
+                                $monthlySavingAmount['month_' . $month] = $productRange->min_range * $month;
+                            }
+                            $monthlySavingAmount['end_of_years'] = $productRange->min_range * end($months);
+                            $details[0] = $monthlySavingAmount;
+                        } elseif ($k == 1 || $k == 2) {
+                            for ($i = 1; $i <= ($productRange->placement_month); $i++) {
+                                /*if($i==6){//dd(round($productRange->base_interest * $productRange->min_range * $i * 31 / (365 * 100), 2));
+                                    }*/
+                                $baseInterest = round($productRange->base_interest * $productRange->min_range * $i * 31 / (365 * 100), 2);
+                                $AdditionalInterest = round($productRange->bonus_interest * ($productRange->min_range + $baseInterest) * $i * 31 / (365 * 100), 2);
+                                if (in_array($i, $months)) {
+                                    $baseInterests['month_' . $i] = $baseInterest;
+                                    $AdditionalInterests['month_' . $i] = $AdditionalInterest;
+                                }
+
+                                $totalBaseInterest = $totalBaseInterest + $baseInterest;
+                                $totalAdditionalInterest = $totalAdditionalInterest + $AdditionalInterest;
+
+                            }
+                            $baseInterests['total_base_interest'] = $totalBaseInterest;
+                            $details[1] = $baseInterests;
+                            $AdditionalInterests['total_additional_interest'] = $totalAdditionalInterest;
+                            $details[2] = $AdditionalInterests;
+
+                        }
+                    }
+                    //dd($details, $productRange);
+                    $product->total_interest = $productRange->bonus_interest + $productRange->base_interest;
+                    $totalInterest = (($placement * $productRange->bonus_interest / 100) * ($tenure / $tenureTotal)) + (($placement * $productRange->board_rate / 100) * ($tenure / $tenureTotal));
+                    $product->total_interest_earn = round($totalInterest, 2);
+                    $product->placement = $placement;
+                }
+
+
                 if (!is_null($brandId) && ($brandId != $product->bank_id)) {
                     $status = false;
                 }

@@ -238,3 +238,9 @@ define('FOREIGN_CURRENCY_DEPOSIT_F6', 21);
 define('PLACEMENT', "Placement");
 define('INTEREST', "Interest");
 define('TENURE', "Tenor");
+
+//Row Heading for Saving Deposit Formula 5
+define('CUMMULATED_MONTHLY_SAVINGS_AMOUNT', "CUMMULATED MONTHLY SAVINGS AMOUNT");
+define('BASE_INTEREST', "BASE INTEREST");
+define('ADDITIONAL_INTEREST', "ADDITIONAL 2% P.A. INTEREST");
+define('TOTAL_AMOUNT', "TOTAL AMOUNT");
