@@ -815,7 +815,7 @@ class PagesFrontController extends Controller
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', 2)
-            ->where('promotion_products.formula_id', '=', 6)
+            //->where('promotion_products.formula_id', '=', 6)
             ->where('promotion_products.promotion_start', '<=', $start_date)
             ->where('promotion_products.promotion_end', '>=', $end_date)
             ->where('promotion_products.delete_status', '=', 0)
@@ -1040,7 +1040,7 @@ class PagesFrontController extends Controller
 
 
                 }
-                $product->total_interest = null;
+                $product->total_interest = 0;
                 $product->total_interest_earn = array_sum($interestEarns);
                 $product->placement = $placement;
                 $product->highlight = $highlight;
@@ -1061,10 +1061,12 @@ class PagesFrontController extends Controller
                     //dd($productRange);
                     $months = [1];
                     $allInterests = [$productRange->base_interest, $productRange->bonus_interest];
-
+                    $placement = $productRange->max_range;
                     if (count($searchFilter)) {
+
                         if ($filter == PLACEMENT && ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range)) {
                             $product->highlight = true;
+                            $placement = $searchValue;
                             $status = true;
                         } elseif ($filter == INTEREST && (in_array((float)$searchValue, $allInterests))) {
 
@@ -1084,8 +1086,8 @@ class PagesFrontController extends Controller
                     $z = 1;
                     do {
                         $z = $y * $j;
-
-                        if (($x > $z)) {
+                        if ($z == 1) {
+                        } elseif (($x > $z)) {
                             $months[] = $z;
                         } else {
                             $z = $x;
@@ -1097,47 +1099,37 @@ class PagesFrontController extends Controller
 
 
                     //dd($productRange, $months);
-                    $details = [];
-                    foreach ($rowHeadings as $k => $row) {
-                        $monthlySavingAmount = [];
-                        $baseInterests = [];
-                        $totalBaseInterest = 0;
-                        $totalAdditionalInterest = 0;
-                        if ($k == 0) {
-                            foreach ($months as $month) {
-                                $monthlySavingAmount['month_' . $month] = $productRange->min_range * $month;
-                            }
-                            $monthlySavingAmount['end_of_years'] = $productRange->min_range * end($months);
-                            $details[0] = $monthlySavingAmount;
-                        } elseif ($k == 1 || $k == 2) {
-                            for ($i = 1; $i <= ($productRange->placement_month); $i++) {
-                                /*if($i==6){//dd(round($productRange->base_interest * $productRange->min_range * $i * 31 / (365 * 100), 2));
-                                    }*/
-                                $baseInterest = round($productRange->base_interest * $productRange->min_range * $i * 31 / (365 * 100), 2);
-                                $AdditionalInterest = round($productRange->bonus_interest * ($productRange->min_range + $baseInterest) * $i * 31 / (365 * 100), 2);
-                                if (in_array($i, $months)) {
-                                    $baseInterests['month_' . $i] = $baseInterest;
-                                    $AdditionalInterests['month_' . $i] = $AdditionalInterest;
-                                }
+                    $monthlySavingAmount = [];
+                    $baseInterests = [];
+                    $additionalInterests = [];
+                    $totalInterestAmount = 0;
 
-                                $totalBaseInterest = $totalBaseInterest + $baseInterest;
-                                $totalAdditionalInterest = $totalAdditionalInterest + $AdditionalInterest;
+                    foreach ($months as $month) {
+                        $monthlySavingAmount[$month] = $placement * $month;
+                    }
+                    $monthlySavingAmount[] = $placement * end($months);
 
-                            }
-                            $baseInterests['total_base_interest'] = $totalBaseInterest;
-                            $details[1] = $baseInterests;
-                            $AdditionalInterests['total_additional_interest'] = $totalAdditionalInterest;
-                            $details[2] = $AdditionalInterests;
+                    for ($i = 1; $i <= ($productRange->placement_month); $i++) {
 
+                        $baseInterest = round($productRange->base_interest * $placement * $i * 31 / (365 * 100), 2);
+                        $AdditionalInterest = round($productRange->bonus_interest * ($placement + $baseInterest) * $i * 31 / (365 * 100), 2);
+                        if (in_array($i, $months)) {
+                            $baseInterests[$i] = $baseInterest;
+                            $additionalInterests[$i] = $AdditionalInterest;
                         }
                     }
-                    //dd($details, $productRange);
-                    $product->total_interest = $productRange->bonus_interest + $productRange->base_interest;
-                    $totalInterest = (($placement * $productRange->bonus_interest / 100) * ($tenure / $tenureTotal)) + (($placement * $productRange->board_rate / 100) * ($tenure / $tenureTotal));
-                    $product->total_interest_earn = round($totalInterest, 2);
+                    $baseInterests[] = array_sum($baseInterests);
+                    $additionalInterests[] = array_sum($additionalInterests);
+                    $totalInterestAmount = end($baseInterests) + end($additionalInterests);
+                    $product->row_headings = $rowHeadings;
+                    $product->months = $months;
+                    $product->monthly_saving_amount = $monthlySavingAmount;
+                    $product->base_interests = $baseInterests;
+                    $product->additional_interests = $additionalInterests;
+                    $product->total_interest_earn = $totalInterestAmount + ($placement * $productRange->placement_month);
                     $product->placement = $placement;
+                    $product->total_interest = 0;
                 }
-
 
                 if (!is_null($brandId) && ($brandId != $product->bank_id)) {
                     $status = false;
@@ -1152,11 +1144,30 @@ class PagesFrontController extends Controller
         if (count($searchFilter)) {
             $products = collect($filterProducts);
         }
-        //dd($products);
+        if ($products->count()) {
+
+            if ($sortBy == MINIMUM) {
+                if ($filter == PLACEMENT || $filter == TENURE) {
+                    $products = $products->sortBy('total_interest_earn');
+                } elseif ($filter == INTEREST) {
+                    $products = $products->sortBy('total_interest');
+
+                }
+            } else {
+                if ($filter == PLACEMENT || $filter == TENURE) {
+                    $products = $products->sortByDesc('total_interest_earn');
+                } elseif ($filter == INTEREST) {
+                    $products = $products->sortByDesc('total_interest');
+
+                }
+            }
+
+        }
         return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter"));
     }
 
-    public function product_search_homepage(Request $request)
+    public
+    function product_search_homepage(Request $request)
     {
 //dd($request->all());
         $account_type = $request->account_type;
@@ -1179,12 +1190,14 @@ class PagesFrontController extends Controller
         }
     }
 
-    public function search_foreign_currency_deposit(Request $request)
+    public
+    function search_foreign_currency_deposit(Request $request)
     {
         return $this->foreign_currency($request);
     }
 
-    public function foreign_currency($request)
+    public
+    function foreign_currency($request)
     {
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -1334,12 +1347,14 @@ class PagesFrontController extends Controller
         return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "currency_list", "search_currency"));
     }
 
-    public function search_aioa_deposit(Request $request)
+    public
+    function search_aioa_deposit(Request $request)
     {
         return $this->aio($request);
     }
 
-    public function aio($request)
+    public
+    function aio($request)
     {
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();

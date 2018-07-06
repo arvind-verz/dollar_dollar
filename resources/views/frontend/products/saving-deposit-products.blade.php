@@ -125,7 +125,7 @@
                                                     @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
                                                 Minimum
                                             </option>
-                                            <option value="1"
+                                            <option value="2"
                                                     @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
                                                 Maximum
                                             </option>
@@ -416,9 +416,9 @@
                                                         ${{ $product->placement }}</h4>
 
                                                     <h2>${{ $product->total_interest_earn }} <br>
-                                                <span>
-                                                    {{--Total interest rate {{ $product->total_interest }}%--}}
-                                                </span>
+                                                {{-- <span>
+                                                    Total interest rate {{ $product->total_interest }}%
+                                                </span>--}}
                                                     </h2>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -427,112 +427,44 @@
                                                         <!-- FORMULA 5 -->
                                                 @if($product->promotion_formula_id==SAVING_DEPOSIT_F5 )
 
-                                                    @php
-                                                    $row_data = ['CUMMULATED MONTHLY SAVINGS AMOUNT', 'BASE INTEREST',
-                                                    'ADDITIONAL 2% P.A. INTEREST', 'TOTAL AMOUNT'];
-                                                    @endphp
-                                                    <?php $months = [1];
-                                                    $x = (int)$product_range[0]->placement_month;
-                                                    $y = (int)$product_range[0]->display_month;
-                                                    $j = 1;
-                                                    $z = 1;
-                                                    do {
-                                                        $z = $y * $j;
-
-                                                        if (($x > $z)) {
-                                                            $months[] = $z;
-                                                        } else {
-                                                            $z = $x;
-                                                            $months[] = $z;
-                                                        }
-                                                        $j++;
-                                                    } while ($z != $x); ?>
                                                     <div class="ps-product__table fullwidth">
                                                         <div class="ps-table-wrap">
                                                             <table class="ps-table ps-table--product">
                                                                 <thead>
                                                                 <tr>
                                                                     <th></th>
-                                                                    @foreach($months as $month)
+                                                                    @foreach($product->months as $month)
                                                                         <th>{{ 'MONTH ' . $month }}</th>
                                                                     @endforeach
                                                                     <th>{{ 'END OF YEARS' }}</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @php $total_sum = array(); @endphp
-                                                                @foreach($row_data as $key => $data)
-                                                                    <tr>
-                                                                        <td>{{ $data }}</td>
+                                                                @foreach($product->row_headings as $key => $heading)
+                                                                    <tr class="@if($product->highlight==true ) highlight @endif">
+                                                                        <td>{{ $heading }}</td>
                                                                         @if($key==0)
-                                                                            @foreach($product_range as $key => $range)
-                                                                                @foreach($months as $month)
-                                                                                    <td class="@if(isset($searchFilter['search_value']) && $searchFilter['filter']=='Tenor' && $month==$searchFilter['search_value']) highlight  @endif">{{ '$' . ($range->min_range*$month) }}</td>
-                                                                                @endforeach
-                                                                                <td>{{ '$' . ($range->min_range*end($months)) }}</td>
+                                                                            @foreach($product->monthly_saving_amount as $amount)
+                                                                                <td class="">{{ '$' . $amount }}</td>
                                                                             @endforeach
-                                                                            @php $total_sum[] =
-                                                                            ($range->min_range*end($months)); @endphp
-                                                                        @elseif($key==1)
-                                                                            @foreach($product_range as $key => $range)
-                                                                                @php
-                                                                                $IEB_formula = '($BI *
-                                                                                (($PM + $CM)) * 31/365)';
-                                                                                $calc = [];
-                                                                                $BI = $range->bonus_interest/100;
-                                                                                $CM = 0;
-                                                                                @endphp
-                                                                                @for($i=1;$i<=($range->placement_month);$i++)
-                                                                                    @php
-                                                                                    $PM = $range->min_range;
-                                                                                    $calc[] = round(eval('return
-                                                                                    '.$IEB_formula.';'),
-                                                                                    2);
 
-                                                                                    @endphp
-                                                                                    @if(in_array($i, $months))
-                                                                                        <td class="@if(isset($searchFilter['search_value']) && $searchFilter['filter']=='Tenor' && $i==$searchFilter['search_value']) highlight  @endif">{{ '$' . round(eval('return '.$IEB_formula.';'), 2) }}</td>
-                                                                                    @endif
-                                                                                    @php $CM = $CM+$PM; @endphp
-                                                                                @endfor
-                                                                                <td>{{ '$' . array_sum($calc) }}</td>
+                                                                        @elseif($key==1)
+                                                                            @foreach($product->base_interests as $baseInterest )
+                                                                                <td class="">{{ '$' .$baseInterest }}</td>
                                                                             @endforeach
-                                                                            @php $total_sum[] =
-                                                                            array_sum($calc); @endphp
+
                                                                         @elseif($key==2)
-                                                                            @foreach($product_range as $key => $range)
-                                                                                @php
-                                                                                $IEA_formula = '($AI *
-                                                                                (($PM + $CM) + $PMIE) * 31/365)';
-                                                                                $calc = [];
-                                                                                $BI = $range->bonus_interest/100;
-                                                                                $CM = 0;
-                                                                                $AI = 2/100;
-                                                                                $PMIE = 0;
-                                                                                @endphp
-                                                                                @for($i=1;$i<=($range->placement_month);$i++)
-                                                                                    @php
-                                                                                    $PM = $range->min_range;
-                                                                                    $calc[] = round(eval('return
-                                                                                    '.$IEA_formula.';'),
-                                                                                    2);
-                                                                                    @endphp
-                                                                                    @if(in_array($i, $months ))
-                                                                                        <td class="@if(isset($searchFilter['search_value']) && $searchFilter['filter']=='Tenor' && $i==$searchFilter['search_value']) highlight  @endif
-                                                                                                ">{{ '$' . round(eval('return '.$IEA_formula.';'), 2) }}</td>
-                                                                                    @endif
-                                                                                    @php $CM = $CM+$PM;$PMIE =
-                                                                                    round(eval('return
-                                                                                    '.$IEA_formula.';'),
-                                                                                    2); @endphp
-                                                                                @endfor
-                                                                                <td>{{ '$' . array_sum($calc) }}</td>
+                                                                            @foreach($product->additional_interests as $additionalInterest)
+                                                                                <td>{{ '$' . $additionalInterest }}</td>
                                                                             @endforeach
-                                                                            @php $total_sum[] =
-                                                                            array_sum($calc); @endphp
                                                                         @elseif($key==3)
-                                                                            <td colspan="{{count($months)}}"></td>
-                                                                            <td>{{ '$' . array_sum($total_sum) }}</td>
+                                                                            <td colspan="{{count($product->months)}}"></td>
+                                                                            <td>{{ '$' . $product->total_interest_earn }}
+                                                                               {{-- <br/>
+                                                                                <span>
+                                                                                    Total interest rate {{ $product->total_interest }}%
+                                                                                </span>--}}
+                                                                            </td>
                                                                         @endif
                                                                     </tr>
                                                                 @endforeach
