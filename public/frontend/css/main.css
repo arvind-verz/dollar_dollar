@@ -1959,7 +1959,7 @@ button {
         margin-right: 0;
         margin-bottom: 0; }
   .ps-product .ps-product__header {
-    margin-bottom: 40px; }
+    margin-bottom: 20px; }
   .ps-product .ps-product__detail {
     padding-top: 45px;
     border-top: 1px solid #f1f1f1; }
@@ -1990,7 +1990,7 @@ button {
 .ps-product.featured-1 {
   border: 2px solid #fdb515; }
   .ps-product .ps-product__poster {
-    margin: 0 -40px 50px; }
+    margin: 0 -40px 20px; }
 
 .ps-product.featured-2 {
   border: 2px solid #fdb515; }
@@ -3700,7 +3700,7 @@ html .bg--parallax {
   .ps-product .ps-product__panel h2 span {
     display: block;
     font-size: 14px; }
-
+.ps-form--filter .owl-item.active{background:transparent !important;}
 .ps-product .ps-product__table.fullwidth {
   float: none;
   width: 100%;
