@@ -114,91 +114,35 @@
                             <div class="ps-block__header">
                                 <h3><strong>Fixed</strong>Deposit</h3>
 
-                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div> -->
-                            </div>
-                            <!-- @if(count($promotion_products))
-                            <div class="row">
+                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div>
+                                                            </div>
+                                                            @if(count($promotion_products))
+                                                            <div class="row">
                                 @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
-                                    @if($products->promotion_type_id==1)
-
+                                    @if($products->promotion_type_id==1 && $i<=4)
+                                
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                                     <div class="ps-block--short-product"><img src="{{ asset($products->brand_logo) }}" alt="">
                                         <h4>up to <strong> {{ $products->maximum_interest_rate }}%</strong></h4>
-
+                                
                                         <div class="ps-block__info">
                                             <p><strong> rate: </strong>1.3%</p>
-
+                                
                                             <p><strong>Min:</strong> SGD ${{ $products->minimum_placement_amount }}</p>
-
+                                
                                             <p class="highlight">{{ $products->promotion_period }} Months</p>
                                         </div>
                                         <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
-                                    @php if($i==4) {break;} $i++; @endphp
+                                    @php $i++; @endphp
                                     @endif
-
+                                
                                 @endforeach
-                            </div>
-                            @endif -->
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                    <h4>up to <strong> 1.3%</strong></h4>
-
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
-
-                                        <p><strong>Min:</strong> SGD $20,000</p>
-
-                                        <p class="highlight">12 Months</p>
-                                    </div>
-                                    <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                 </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                    <h4>up to <strong> 1.3%</strong></h4>
-
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
-
-                                        <p><strong>Min:</strong> SGD $20,000</p>
-
-                                        <p class="highlight">12 Months</p>
-                                    </div>
-                                    <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                    <h4>up to <strong> 1.3%</strong></h4>
-
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
-
-                                        <p><strong>Min:</strong> SGD $20,000</p>
-
-                                        <p class="highlight">12 Months</p>
-                                    </div>
-                                    <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                    <h4>up to <strong> 1.3%</strong></h4>
-
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
-
-                                        <p><strong>Min:</strong> SGD $20,000</p>
-
-                                        <p class="highlight">12 Months</p>
-                                    </div>
-                                    <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
-                                </div>
-                            </div>
+                                @endif
                         </div>
                     </div>
 
@@ -207,14 +151,14 @@
                             <div class="ps-block__header">
                                 <h3><strong>Saving</strong>Deposit</h3>
 
-                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div> -->
+                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div>
                             </div>
-                            <!-- @if(count($promotion_products))
+                             @if(count($promotion_products))
                             <div class="row">
                                 @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
-                                    @if($products->promotion_type_id==2)
+                                    @if($products->promotion_type_id==2 && $i<=4)
 
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                                     <div class="ps-block--short-product"><img src="{{ asset($products->brand_logo) }}" alt="">
@@ -235,63 +179,7 @@
 
                                 @endforeach
                             </div>
-                            @endif -->
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                    <h4>up to <strong> 1.3%</strong></h4>
-
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
-
-                                        <p><strong>Min:</strong> SGD $20,000</p>
-
-                                        <p class="highlight">12 Months</p>
-                                    </div>
-                                    <a class="ps-btn" href="{{ url('saving-deposit-mode') }}">More info</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                    <h4>up to <strong> 1.3%</strong></h4>
-
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
-
-                                        <p><strong>Min:</strong> SGD $20,000</p>
-
-                                        <p class="highlight">12 Months</p>
-                                    </div>
-                                    <a class="ps-btn" href="{{ url('saving-deposit-mode') }}">More info</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                    <h4>up to <strong> 1.3%</strong></h4>
-
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
-
-                                        <p><strong>Min:</strong> SGD $20,000</p>
-
-                                        <p class="highlight">12 Months</p>
-                                    </div>
-                                    <a class="ps-btn" href="{{ url('saving-deposit-mode') }}">More info</a>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                    <h4>up to <strong> 1.3%</strong></h4>
-
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
-
-                                        <p><strong>Min:</strong> SGD $20,000</p>
-
-                                        <p class="highlight">12 Months</p>
-                                    </div>
-                                    <a class="ps-btn" href="{{ url('saving-deposit-mode') }}">More info</a>
-                                </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="ps-tab" id="tab-3">
@@ -299,8 +187,8 @@
                             <div class="ps-block__header">
                                 <h3><strong>Wealth</strong>Deposit</h3>
 
-                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div> -->
+                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -367,8 +255,8 @@
                             <div class="ps-block__header">
                                 <h3><strong>All In One Account</strong></h3>
 
-                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div> -->
+                               <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                               </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
@@ -435,8 +323,8 @@
                             <div class="ps-block__header">
                                 <h3><strong>Foreign Currency</strong></h3>
 
-                                <!-- <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                                </div> -->
+                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">

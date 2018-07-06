@@ -1951,7 +1951,7 @@ button {
     text-transform: uppercase;
     color: #303030; }
   .ps-product .ps-product__actions {
-    text-align: right; }
+    margin:30px -15px 0; }
     .ps-product .ps-product__actions .ps-btn {
       margin-right: 10px;
       margin-bottom: 10px; }
@@ -1959,9 +1959,7 @@ button {
         margin-right: 0;
         margin-bottom: 0; }
   .ps-product .ps-product__header {
-    margin-bottom: 40px; }
-.ps-product__header img {
-  max-width: 180px; }
+    margin-bottom: 20px; }
   .ps-product .ps-product__detail {
     padding-top: 45px;
     border-top: 1px solid #f1f1f1; }
@@ -1992,7 +1990,7 @@ button {
 .ps-product.featured-1 {
   border: 2px solid #fdb515; }
   .ps-product .ps-product__poster {
-    margin: 0 -40px 50px; }
+    margin: 0 -40px 20px; }
 
 .ps-product.featured-2 {
   border: 2px solid #fdb515; }
@@ -2098,13 +2096,11 @@ button {
     margin-bottom: 30px; }
   .ps-product--2 .ps-product__header {
     margin-bottom: 40px; }
-
     .ps-product--2 .ps-product__header::after {
       clear: both;
       content: "";
       display: table; }
     .ps-product--2 .ps-product__header img {
-      max-width: 180px;
       display: inline-block; }
   .ps-product--2 .ps-product__detail {
     padding-top: 45px;
@@ -2737,7 +2733,7 @@ button {
   .ps-home-fixed-deposit .ps-section__content {
     padding-bottom: 40px; }
   .ps-home-fixed-deposit .ps-section__footer {
-    padding-bottom: 50px;
+    padding-bottom: 10px;
     text-align: center; }
     .ps-home-fixed-deposit .ps-section__footer a {
       display: inline-block;
@@ -3704,13 +3700,16 @@ html .bg--parallax {
   .ps-product .ps-product__panel h2 span {
     display: block;
     font-size: 14px; }
-
+.ps-form--filter .owl-item.active{background:transparent !important;}
 .ps-product .ps-product__table.fullwidth {
   float: none;
   width: 100%;
   padding-right: 0; }
 .ps-poster-popup{position:relative;padding-top:30px;}
 .ps-poster-popup .close-popup{position:absolute;top: 60px;    right: 45px;    z-index: 1;    color: #fff;cursor:pointer;}
+
+.product-popup{display:none;}
 .ps-table tbody tr.highlight td {
-  background-color: #e2ffe6;
+        background-color: #e2ffe6;
+
 }

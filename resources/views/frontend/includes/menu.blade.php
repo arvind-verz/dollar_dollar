@@ -9,8 +9,7 @@
                 @else
                 <li><a href="{{ url(PROFILEDASHBOARD) }}"><i class="fa fa-user-circle"></i>My account</a></li>
                 <li><a href="{{ url('/users/logout') }}">Logout</a></li>
-                @endguest                
-                <li><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
+                @endguest
             </ul>
         </div>
     </div>

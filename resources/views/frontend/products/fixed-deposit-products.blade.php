@@ -67,16 +67,18 @@
             <div class="ps-block--deposit-filter">
                 <form class="ps-form--filter" action="{{ route('fixed-deposit-mode.search') }}" method="post">
                     <div class="ps-block__header">
-                        @if(count($brands))
-                            @foreach($brands as $brand)
-                                <span class="brand">
-                        <input type="radio" name="brand_id" value="{{ $brand->id }}"
-                               style="opacity: 0;position: absolute;">
-                        <img src="{{ asset($brand->brand_logo) }}" width="100px"
-                             class="brand_img @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) selected_img @endif">
-                    </span>
-                            @endforeach
-                        @endif
+                        <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="15" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
+                            @if(count($brands))
+                                @foreach($brands as $brand)
+                                    <span class="brand">
+                                        <input type="radio" name="brand_id" value="@if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) {{ $search_filter['brand_id'] }} @else {{ $brand->id }} @endif"
+                                               style="opacity: 0;position: absolute;" @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) checked  @endif>
+                                        <img src="{{ asset($brand->brand_logo) }}" width="100px"
+                                             class="brand_img @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) selected_img @endif">
+                                    </span>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
                     <div class="ps-block__content">
 
@@ -106,7 +108,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content"><span class="prefix_holder">@if(isset($search_filter['filter']) && $search_filter['filter']=='Placement')
                                                         $@elseif(!isset($search_filter['filter']))$@endif</span>
@@ -117,7 +119,7 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                         <select class="form-control" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
@@ -181,16 +183,22 @@
             @php $j = 1; @endphp
             @foreach($promotion_products as $promotion_product)
             @php
+            $promotion_product_id = $promotion_product->promotion_product_id;
             $product_tenures = json_decode($promotion_product->product_tenure);
             $product_range = json_decode($promotion_product->product_range);
             $tenures = json_decode($promotion_product->tenure);
-            $key = $interest_key = $max_range_arr = $sort_array = array();
+            $key = $interest_key = $sort_array = array();
             $ads = json_decode($promotion_product->ads_placement);
             @endphp
-            @if($page->slug=='fixed-deposit-mode')
-            <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
+            @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+            <div class="ps-poster-popup">
+                <div class="close-popup">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+                <a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a>
+            </div>
             @endif
-                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
+                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                             <div class="ps-product__promo">
@@ -215,10 +223,7 @@
                                 $ads = json_decode($promotion_product->ads_placement);
                                 if(!empty($ads[0]->ad_image_horizontal)) {
                                 @endphp
-                                <div class="ps-product__poster"><a
-                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
-                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                alt=""></a></div>
+                                <div class="ps-product__poster"><a href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}" alt=""></a></div>
                                 @php } @endphp
                             @endif
                             <div class="ps-product__table">
@@ -248,20 +253,26 @@
                                         </thead>
                                         <tbody>
                                         @foreach($product_range as $range)
-                                            @php $max_range_arr[] = $range->max_range; @endphp
                                             <tr class="
-                                    @if(isset($search_filter['filter']) && ($search_filter['filter']=='Placement'))
-                                            @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
-                                        @endif
-                                            @endif
-                                            @if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && in_array(sprintf('%.1f', $search_filter['search_value']), $range->bonus_interest)) highlight
-                                    @endif
-                                                    ">
+                                                @if(isset($search_filter['filter']) && ($search_filter['filter']=='Placement'))
+                                                        @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
+                                                        @endif
+                                                @endif">
                                                 <td><img src="{{ asset('img/icons/ff.png') }}" alt=""></td>
-                                                <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+                                                <td class="
+                                                @if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && in_array(sprintf('%.1f', $search_filter['search_value']), $range->bonus_interest)) highlight
+                                                @endif
                                                 @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
-                                                    <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight
-                                    @endif">{{ $bonus_interest . '%' }}</td>
+                                                    @if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight
+                                                    @endif
+                                                @endforeach
+                                                ">{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+                                                @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
+                                                    <td class="
+                                                    @if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && sprintf('%.1f', $search_filter['search_value'])==$bonus_interest) highlight
+                                                    @endif
+                                                    @if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight
+                                                    @endif">{{ $bonus_interest . '%' }}</td>
                                                 @endforeach
                                             </tr>
                                         @endforeach
@@ -283,119 +294,19 @@
                                 @php } @endphp
                             @endif
                             <div class="ps-product__panel">
-                                @foreach($product_range as $key => $range)
-                                    @php
-                                    $tenure_count = count($tenures);
-                                    if(isset($search_filter['search_value'])) {
-                                    $placement_value = max($max_range_arr);
-                                    if(($search_filter['filter']=='Placement')) {
-                                            if(!empty($search_filter['search_value'])) {
-                                                $placement_value = $search_filter['search_value'];
-                                            }
-                                            $P = $placement_value;
-                                            @endphp
-                                            @if($key==0)
-                                            <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
-                                            @endif
-                                            @php
-                                            for($i=0;$i<$tenure_count;$i++) {
-                                                $BI = ($range->bonus_interest[$i]/100);
-                                                $TM = $tenures[$i];
-                                                $calc = eval('return '.$promotion_product->formula.';');
-                                                $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
-                                                $sort_array[$calc] = array(
-                                                    'TM'    =>  $TM,
-                                                    'days_type' =>  $days_type,
-                                                    'bonus_interest'    =>  $range->bonus_interest[$i],
-                                                    'calc'  =>  $calc
-                                                );
-                                            }
-                                        }
-                                        elseif($search_filter['filter']=='Interest') {
-                                            $P = $placement_value;
-                                            @endphp
-                                            @if($key==0)
-                                            <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
-                                            @endif
-                                            @php
-                                            for($i=0;$i<$tenure_count;$i++) {
-                                                $BI = ($range->bonus_interest[$i]/100);
-                                                $TM = $tenures[$i];
-                                                $calc = eval('return '.$promotion_product->formula.';');
-                                                $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
-                                                $sort_array[$range->bonus_interest[$i]] = array(
-                                                    'TM'    =>  $TM,
-                                                    'days_type' =>  $days_type,
-                                                    'bonus_interest'    =>  $range->bonus_interest[$i],
-                                                    'calc'  =>  $calc
-                                                );
-                                            }
-                                        }
-                                        //dd($sort_array);
-                                    @endphp
-                                    @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==1)
-                                        @php
-                                        ksort($sort_array);
-                                        @endphp   
-                                    @elseif(isset($search_filter['sort_by']) && $search_filter['sort_by']==2)
-                                        @php
-                                        krsort($sort_array);
-                                        @endphp                                      
-                                    @endif
-                                    @if($key==0)
-                                    @foreach($sort_array as $sort)
-                                    <p><strong>{{ $sort['TM'] . ' ' . $sort['days_type'] }}
-                                        </strong> - ${{ round($sort['calc'], 2) }} ({{ $sort['bonus_interest'] }}%)</p>
+                                @if(count($result_data))
+                                    @foreach($result_data as $key => $result)
+                                        @if($promotion_product_id==$key)
+                                            @foreach($result['tenor'] as $key2 => $value)
+                                                @php $type = Helper::days_or_month_or_year(2, $value); @endphp   
+                                                @if($key2==0)
+                                                <h4>Possible interest(s) earned for SGD ${{ $result[$key2]['amount'] }}</h4>
+                                                @endif
+                                                <p><strong>{{ $value . ' ' . $type }}</strong>-  ${{ $result[$key2]['calc'] }} ({{ $result[$key2]['interest'] . '%' }})</p>
+                                            @endforeach
+                                        @endif                               
                                     @endforeach
-                                    @endif
-                                    @php
-                                    
-                                    }
-                                    elseif(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor') {
-                                    $placement_value = max($max_range_arr);
-                                    $P = $placement_value;
-                                    @endphp
-                                    @if($key==0)
-                                        <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
-                                    @endif
-                                    @php
-                                    if($key==0) {
-                                    for($i=0;$i<$tenure_count;$i++) {
-                                    $BI = ($range->bonus_interest[$i]/100);
-                                    $TM = $tenures[$i];
-                                    $calc = eval('return '.$promotion_product->formula.';');
-                                    $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
-                                    @endphp
-                                    <p><strong>{{ $TM . ' ' . $days_type }}
-                                        </strong> - ${{ round($calc, 2) }} ({{ $range->bonus_interest[$i] }}%)</p>
-                                    @php
-                                    }}
-                                    }
-                                    elseif(!isset($search_filter['search_value'])) {
-                                    $placement_value = $range->max_range;
-                                    if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') {
-                                    $placement_value = $search_filter['search_value'];
-                                    }
-                                    $P = $placement_value;
-                                    @endphp
-                                    @if($key==0)
-                                        <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
-                                    @endif
-                                    @php
-                                    if($key==0) {
-                                    for($i=0;$i<$tenure_count;$i++) {
-                                    $BI = ($range->bonus_interest[$i]/100);
-                                    $TM = $tenures[$i];
-                                    $calc = eval('return '.$promotion_product->formula.';');
-                                    $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
-                                    @endphp
-                                    <p><strong>{{ $TM . ' ' . $days_type }}
-                                        </strong> - ${{ round($calc, 2) }} ({{ $range->bonus_interest[$i] }}%)</p>
-                                    @php
-                                    }}
-                                    }
-                                    @endphp
-                                @endforeach
+                                @endif
                             </div>
                             <div class="clearfix"></div>
                             @if(count($promotion_product->ads_placement))
@@ -437,10 +348,16 @@
         });
 
         $("img.brand_img").on("click", function () {
-            $("input[name='brand_id']").prop("checked", false);
-            $("span.brand img").css("border", "none");
-            $(this).prev().prop("checked", true);
-            $(this).css("border", "1px solid #000");
+            if($(this).prev().prop("checked")) {
+                $("input[name='brand_id']").prop("checked", false);
+                $("span.brand img").css("border", "none");
+            }
+            else {
+                $("input[name='brand_id']").prop("checked", false);
+                $("span.brand img").css("border", "none");
+                $(this).prev().prop("checked", true);
+                $(this).css("border", "1px solid #000");
+            }
         });
     </script>
     {{--Page content end--}}

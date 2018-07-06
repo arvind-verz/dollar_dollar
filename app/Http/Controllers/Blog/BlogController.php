@@ -33,7 +33,7 @@ class BlogController extends Controller
             ->select('pages.*', 'menus.title as menu_title')
             ->orderBy('pages.name', 'ASC')->get();
 
-
+        
         return view("backend.blog.index", compact("pages", "CheckLayoutPermission"));
     }
 

@@ -25,22 +25,29 @@ class MenuController extends Controller
      */
     public function index()
     {
+        $countSubMenu = [];
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, MENU_MODULE_ID);
 
         $menus = Menu::where('delete_status', 0)
             ->where('parent', 0)
             ->orderBy('view_order', 'ASC')
             ->get();
+        foreach($menus as $submenu) {
+            $countSubMenu[$submenu->id] = Menu::where('parent', $submenu->id)->get();
+            
+        }
+        //dd($countSubMenu);
 
         $parent = null;
-        return view("backend.cms.menu.index", compact("menus", "CheckLayoutPermission", "parent"));
+        //dd($menus);
+        return view("backend.cms.menu.index", compact("menus", "CheckLayoutPermission", "parent", "countSubMenu"));
 
 
     }
 
     public function getSubMenus($id)
     {
-
+        $countSubMenu = [];
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, MENU_MODULE_ID);
         $menus = Menu::orderBy('view_order', 'ASC')
             ->where('parent', $id)
@@ -50,9 +57,10 @@ class MenuController extends Controller
         if (!$menu) {
             return redirect()->action('CMS\MenuController@index')->with('error', OPPS_ALERT);
         }
+        $countSubMenu[$id] = Menu::where('parent', $id)->get();
         $parent = $id;
-
-        return view("backend.cms.menu.index", compact("menus", 'id', "CheckLayoutPermission", 'parent'));
+        //dd($menu);
+        return view("backend.cms.menu.index", compact("menus", 'id', "CheckLayoutPermission", 'parent', "countSubMenu", "menu"));
     }
 
 

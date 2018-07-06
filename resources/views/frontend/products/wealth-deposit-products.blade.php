@@ -104,7 +104,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content"><span class="prefix_holder">@if(isset($search_filter['filter']) && $search_filter['filter']=='Placement')
                                                         $@elseif(!isset($search_filter['filter']))$@endif</span>
@@ -115,7 +115,7 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                         <select class="form-control" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
@@ -193,7 +193,7 @@
                     $ads = json_decode($promotion_product->ads_placement);
                     @endphp
                     @if($page->slug=='wealth-deposit-mode')
-                        <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
+                        <!-- <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div> -->
                     @endif
                     <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
@@ -761,7 +761,20 @@
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 @endif
-
+                                                <div class="clearfix"></div>
+                                                @if(count($promotion_product->ads_placement))
+                                                    @php
+                                                    $ads = json_decode($promotion_product->ads_placement);
+                                                    if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                                    @endphp
+                                                    <div class="ps-poster-popup">
+                                                        <div class="close-popup">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </div>
+                                                        <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""></a>
+                                                    </div>
+                                                    @php } @endphp
+                                                    @endif
 
                                                 <div class="ps-product__detail">
                                                     {!! $promotion_product->product_footer !!}

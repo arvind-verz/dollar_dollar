@@ -172,6 +172,7 @@ define('SAVING_DEPOSIT_MODE', "saving-deposit-mode");
 define('WEALTH_DEPOSIT_MODE', "wealth-deposit-mode");
 define('FOREIGN_CURRENCY_DEPOSIT_MODE', "foreign-currency-deposit-mode");
 define('AIO_DEPOSIT_MODE', "all-in-one-deposit-mode");
+define('TERMS_CONDITION', "terms-and-condition");
 define('PROFILEDASHBOARD', "profile-dashboard");
 define('ACCOUNTINFO', "account-information");
 define('PRODUCTMANAGEMENT', "product-management");

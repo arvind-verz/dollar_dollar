@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CMS;
+namespace App\Http\Controllers\cms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,7 +28,7 @@ class TagController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, TAG_MODULE_ID);
         $tags = Tag::where('delete_status', 0)->get();
         //dd($tags);
-        return view("backend.CMS.tag.index", compact("tags", "CheckLayoutPermission"));
+        return view("backend.cms.tag.index", compact("tags", "CheckLayoutPermission"));
     }
 
     /**
@@ -42,7 +42,7 @@ class TagController extends Controller
             return redirect()->back()->with('error', OPPS_ALERT);
         }
 
-        return view("backend.CMS.tag.create");
+        return view("backend.cms.tag.create");
     }
 
     /**
@@ -81,7 +81,7 @@ class TagController extends Controller
                 'new' => null])
             ->log(CREATE);
 
-        return redirect()->action('CMS\TagController@index')->with('success', implode(', ', $tag_array) . ' ' . ADDED_ALERT);
+        return redirect()->action('cms\TagController@index')->with('success', implode(', ', $tag_array) . ' ' . ADDED_ALERT);
     }
 
     /**
@@ -108,9 +108,9 @@ class TagController extends Controller
         }
         $tag = Tag::find($id);
         if (!$tag) {
-            return redirect()->action('CMS\TagController@index')->with('error', OPPS_ALERT);
+            return redirect()->action('cms\TagController@index')->with('error', OPPS_ALERT);
         }
-        return view("backend.CMS.tag.edit", compact("tag"));
+        return view("backend.cms.tag.edit", compact("tag"));
     }
 
     /**
@@ -130,7 +130,7 @@ class TagController extends Controller
         $oldTag = $tag;
 
         if (!$tag) {
-            return redirect()->action('CMS\TagController@index')->with('error', OPPS_ALERT);
+            return redirect()->action('cms\TagController@index')->with('error', OPPS_ALERT);
         }
         $tag->title = $request->title;
         $tag->status = $request->status;
@@ -149,7 +149,7 @@ class TagController extends Controller
                 'new' => $newTag
             ])
             ->log(UPDATE);
-        return redirect()->action('CMS\TagController@index')->with('success', $newTag->title . ' ' . UPDATED_ALERT);
+        return redirect()->action('cms\TagController@index')->with('success', $newTag->title . ' ' . UPDATED_ALERT);
 
     }
 
@@ -166,7 +166,7 @@ class TagController extends Controller
         }
         $tag = Tag::where('id', $id)->first();
         if (!$tag) {
-            return redirect()->action('CMS\TagController@index')->with('error', OPPS_ALERT);
+            return redirect()->action('cms\TagController@index')->with('error', OPPS_ALERT);
         } else {
             $tag->delete_status = 1;
             $tag->save();
@@ -181,7 +181,7 @@ class TagController extends Controller
                     'new' => null
                 ])
                 ->log(DELETE);
-            return redirect()->action('CMS\TagController@index')->with('success', $tag->title . ' ' . DELETED_ALERT);
+            return redirect()->action('cms\TagController@index')->with('success', $tag->title . ' ' . DELETED_ALERT);
         }
     }
 }

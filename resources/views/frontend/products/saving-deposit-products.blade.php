@@ -107,7 +107,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content"><span class="prefix_holder">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                                         $@elseif(!isset($searchFilter['filter']))$@endif</span>
@@ -118,7 +118,7 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                         <select class="form-control" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
@@ -164,15 +164,36 @@
                     @php $i++; @endphp
                 @endforeach
             </div>
-        @endif
-        <div class="ps-block--legend-table">
-            <div class="ps-block__header">
-                <h3>Legend table</h3>
-            </div>
-            <div class="ps-block__content">
-                <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
-            </div>
-        </div>
+
+            @php
+            $adspopup = json_decode($page->ads_placement);
+            //dd($ads);
+            @endphp
+            @if(count($promotion_products))
+                @php $j = 1; @endphp
+                @foreach($promotion_products as $promotion_product)
+                    @php
+                    $product_range = json_decode($promotion_product->product_range);
+                    $date1 = new DateTime(date('Y-m-d'));
+                    $date1_start = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_start)));
+                    $date2 = new DateTime(date('Y-m-d', strtotime($promotion_product->promotion_end)));
+                    $interval = date_diff($date2, $date1);
+                    $interval_spent = date_diff($date2, $date1_start);
+                    $days_type = \Helper::days_or_month_or_year(2, $interval_spent->format('%m'));
+                    $max_range_arr = array();
+                    $ads = json_decode($promotion_product->ads_placement);
+                    @endphp
+                    @if($page->slug=='saving-deposit-mode')
+                        <!-- <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div> -->
+                    @endif
+                    <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
+                        <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+
+                            <div class="ps-product__promo">
+                                <p>
+                                    <span class="highlight"> Promo: </span> {{ date('M d, Y', strtotime($promotion_product->promotion_start)) . ' to ' . date('M d, Y', strtotime($promotion_product->promotion_end)) }}
+                                </p>
+
 
         @if($products->count())
             <?php $j = 1;?>
@@ -474,7 +495,20 @@
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 @endif
-
+                                                <div class="clearfix"></div>
+                                                @if(count($promotion_product->ads_placement))
+                                                    @php
+                                                    $ads = json_decode($promotion_product->ads_placement);
+                                                    if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                                    @endphp
+                                                    <div class="ps-poster-popup">
+                                                        <div class="close-popup">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </div>
+                                                        <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""></a>
+                                                    </div>
+                                                    @php } @endphp
+                                                    @endif
 
                                                 <div class="ps-product__detail">
                                                     {!! $product->product_footer !!}
