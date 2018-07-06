@@ -1951,7 +1951,7 @@ button {
     text-transform: uppercase;
     color: #303030; }
   .ps-product .ps-product__actions {
-    text-align: right; }
+    margin:30px -15px 0; }
     .ps-product .ps-product__actions .ps-btn {
       margin-right: 10px;
       margin-bottom: 10px; }
@@ -2733,7 +2733,7 @@ button {
   .ps-home-fixed-deposit .ps-section__content {
     padding-bottom: 40px; }
   .ps-home-fixed-deposit .ps-section__footer {
-    padding-bottom: 50px;
+    padding-bottom: 10px;
     text-align: center; }
     .ps-home-fixed-deposit .ps-section__footer a {
       display: inline-block;
