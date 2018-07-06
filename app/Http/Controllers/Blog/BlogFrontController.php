@@ -45,6 +45,7 @@ class BlogFrontController extends Controller
         } else {
             $details = $query->paginate(5);
         }
+
         return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting'));
     }
 
@@ -55,7 +56,7 @@ class BlogFrontController extends Controller
         if (!$page) {
             return redirect()->action('Blog\BlogController@index')->with('error', OPPS_ALERT);
         } else {
-            dd($page);
+            //dd($page);
         }
 
         $systemSetting = \Helper::getSystemSetting();

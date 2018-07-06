@@ -39,7 +39,7 @@
                     <div class="box-header with-border">
                         <i class="fa fa-bars"></i>
 
-                        <h3 class="box-title">{{MENU_MODULE_SINGLE.'s'}}</h3>
+                        <h3 class="box-title">@if(isset($menu)) {{ $menu->title }} @else {{MENU_MODULE_SINGLE.'s'}} @endif</h3>
                         @if($CheckLayoutPermission[0]->create==1)
                             <a href=" {{ route("menu-create",["parent"=>$parent]) }}" class="">
                                 <button type="submit" class="btn btn-info pull-right"><i
@@ -109,7 +109,14 @@
 
                                                             <a class="btn btn-app list" title="Menu List"
                                                                href="{{ route("getSubMenus",["id"=>$menu->id]) }}">
-                                                                <i class="fa fa-list"></i> List
+                                                                <i class="fa fa-list"></i> List 
+                                                                @if(count($countSubMenu))
+                                                                    @foreach($countSubMenu as $key => $count)
+                                                                        @if($key==$menu->id)
+                                                                        <span class="badge">{{ count($count) }}</span>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endif
                                                             </a>
 
 

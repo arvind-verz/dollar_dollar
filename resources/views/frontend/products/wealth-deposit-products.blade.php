@@ -104,7 +104,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content"><span class="prefix_holder">@if(isset($search_filter['filter']) && $search_filter['filter']=='Placement')
                                                         $@elseif(!isset($search_filter['filter']))$@endif</span>
@@ -115,7 +115,7 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                         <select class="form-control" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"

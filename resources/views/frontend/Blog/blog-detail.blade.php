@@ -71,7 +71,7 @@
             <div class="col-lg-8 col-md-12{{-- col-lg-push-5--}}">
                 <div class="ps-post--detail">
                     <div class="ps-post__header">
-                        <h3>{{$page->name}}</h3><span class="ps-post__meta">{{$page->menu_title}}</span>
+                        <h3>{{$page->name}}</h3><span class="ps-post__meta"><a href="{{ url('get-blog-by-category/' . $page->menu_id)}}"> {{$page->menu_title}}</a></span>
                          <!-- Go to www.addthis.com/dashboard to customize your tools -->
                 <div class="addthis_inline_share_toolbox"></div>
                     </div>

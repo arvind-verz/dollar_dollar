@@ -166,6 +166,17 @@ class PagesFrontController extends Controller
                     return $this->aioDepositMode($details);
 
                 }
+                elseif ($slug == TERMS_CONDITION) {
+                    $details                  = [];
+                    $details['brands']        = $brands;
+                    $details['page']          = $page;
+                    $details['systemSetting'] = $systemSetting;
+                    $details['banners']       = $banners;
+
+/*sent all pages detail into this function and than return to blade file*/
+                    return $this->termsCondition($details);
+
+                }
 
             } elseif ($page->is_blog == 1) {
                 $query = Page::join('menus', 'pages.menu_id', '=', 'menus.id')
@@ -208,6 +219,16 @@ class PagesFrontController extends Controller
             }
         }
 
+    }
+
+    public function termsCondition($details) {
+        $details       = \Helper::get_page_detail(TERMS_CONDITION);
+        $brands        = $details['brands'];
+        $page          = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners       = $details['banners'];
+
+        return view('frontend.CMS.terms-condition', compact("brands", "page", "systemSetting", "banners"));
     }
 
     public function fixDepositMode($details)
