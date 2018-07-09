@@ -5,7 +5,7 @@
             <ul class="header__actions">
                 @guest
                 <li><a href="{{ url(REGISTRATION) }}">Register</a></li>
-                <li><a href="{{ url(LOGIN_SLUG) }}"><i class="fa fa-clock"></i>Login</a></li>
+                <li><a href="{{ url(LOGIN_SLUG) }}">Login</a></li>
                 @else
                 <li><a href="{{ url(PROFILEDASHBOARD) }}"><i class="fa fa-user-circle"></i>My account</a></li>
                 <li><a href="{{ url('/users/logout') }}">Logout</a></li>
