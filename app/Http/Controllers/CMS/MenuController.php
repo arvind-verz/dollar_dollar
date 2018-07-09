@@ -94,6 +94,7 @@ class MenuController extends Controller
 
         $menu = new Menu;
         $menu->title = ucfirst($request->title);
+        $menu->icon = $request->icon;
         $menu->parent = $request->parent;
         $menu->view_order = $request->view_order;
         $menu->child = 0;
@@ -217,6 +218,7 @@ class MenuController extends Controller
         }
 
         $menu->title = ucfirst($request->title);
+        $menu->icon = $request->icon;
         $menu->parent = $request->parent;
         $menu->view_order = $request->view_order;
         if ($request->parent != 0) {
