@@ -464,6 +464,7 @@ class Helper
         return $startOfDay;
     }
 
+
     //convert date into end of the day
     public static function endOfDayAfter($date = null)
     {
@@ -474,7 +475,24 @@ class Helper
         $endOfDay = Carbon::createFromFormat('Y-m-d H:i:s', $date)->endOfDay()->toDateTimeString();
         return $endOfDay;
     }
-
+    public static function convertToCarbonStartDate($date = null)
+    {
+        if (!$date) {
+            $carbonStartDate = Carbon::now()->startOfDay();
+        }else{
+            $carbonStartDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->startOfDay();
+        }
+        return $carbonStartDate;
+    }
+    public static function convertToCarbonEndDate($date = null)
+    {
+        if (!$date) {
+            $carbonEndDate = Carbon::now()->endOfDay();
+        }else{
+            $carbonEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->endOfDay();
+        }
+        return $carbonEndDate;
+    }
     public static function days_or_month_or_year($tenure_type, $tenure)
     {
         $day = 'Invalid';
