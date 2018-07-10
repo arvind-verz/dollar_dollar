@@ -241,3 +241,4 @@ Route::post('/foreign-currency-deposit-mode/search/', 'CMS\PagesFrontController@
 Route::post('/aioa-deposit-mode/search/', 'CMS\PagesFrontController@search_aioa_deposit')->name('aioa-deposit-mode.search');
 
 Route::post('/product-search', 'CMS\PagesFrontController@product_search_homepage')->name('product-search');
+Route::post('/deposit-type', 'HomeController@depositType')->name('deposit-type');

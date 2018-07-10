@@ -92,7 +92,7 @@
     @endif
     {{--Brand section end--}}
 
-
+    <input type="hidden" name="deposit_type" value="Fixed Deposit">
     <div class="ps-home-fixed-deposit ps-tabs-root">
         <div class="ps-section__header">
             <div class="container">
@@ -114,16 +114,19 @@
                             <div class="ps-block__header">
                                 <h3><strong>Fixed</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                <div class="ps-block__actions">
+                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
                                 </div>
-                                                            </div>
-                                                            @if(count($promotion_products))
-                                                            <div class="row">
+                            </div>
+                            <span class="display_fixed">
+                            @if(count($promotion_products))
+                                <div class="row">
                                 @php $i = 1; @endphp
                                 @foreach($promotion_products as $products)
-                                    @if($products->promotion_type_id==1 && $i<=4)
-                                
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                @if($products->promotion_type_id==1 && $i<=4)
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <div class="ps-block--short-product"><img src="{{ asset($products->brand_logo) }}" alt="">
                                         <h4>up to <strong> {{ $products->maximum_interest_rate }}%</strong></h4>
                                 
@@ -137,12 +140,13 @@
                                         <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
                                     </div>
                                 </div>
-                                    @php $i++; @endphp
-                                    @endif
+                                @php $i++; @endphp
+                                @endif
                                 
                                 @endforeach
                                 </div>
-                                @endif
+                            @endif
+                            </span>
                         </div>
                     </div>
 
@@ -151,9 +155,13 @@
                             <div class="ps-block__header">
                                 <h3><strong>Saving</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                <div class="ps-block__actions">
+                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
                                 </div>
                             </div>
+                            <span class="display_saving">
                              @if(count($promotion_products))
                             <div class="row">
                                 @php $i = 1; @endphp
@@ -180,6 +188,7 @@
                                 @endforeach
                             </div>
                             @endif
+                            </span>
                         </div>
                     </div>
                     <div class="ps-tab" id="tab-3">
@@ -187,9 +196,13 @@
                             <div class="ps-block__header">
                                 <h3><strong>Wealth</strong>Deposit</h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                <div class="ps-block__actions">
+                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
                                 </div>
                             </div>
+                            <span class="display_wealth">
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                                     <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/1.png') }}" alt="">
@@ -248,6 +261,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </span>
                         </div>
                     </div>
                     <div class="ps-tab" id="tab-4">
@@ -255,9 +269,13 @@
                             <div class="ps-block__header">
                                 <h3><strong>All In One Account</strong></h3>
 
-                               <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
-                               </div>
+                               <div class="ps-block__actions">
+                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
+                                </div>
                             </div>
+                            <span class="display_aio">
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                                     <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/1.png') }}" alt="">
@@ -316,6 +334,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </span>
                         </div>
                     </div>
                     <div class="ps-tab" id="tab-5">
@@ -323,9 +342,13 @@
                             <div class="ps-block__header">
                                 <h3><strong>Foreign Currency</strong></h3>
 
-                                <div class="ps-block__actions"><a class="ps-btn active" href="#">Interest</a><a class="ps-btn" href="#">Placement</a><a class="ps-btn" href="#">Tenor</a>
+                                <div class="ps-block__actions">
+                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
+                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
                                 </div>
                             </div>
+                            <span class="display_foreign_currency">
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                                     <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/1.png') }}" alt="">
@@ -384,6 +407,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -453,8 +477,9 @@
             $(this).on("click").addClass("current");
             var title = $(this).on("click").addClass("current a").text();
             //alert(title);
+            $("input[name='deposit_type']").val(title);
             if(title=='Fixed Deposit') {
-                $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');
+                $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');                
             }
             else if(title=='Saving Deposit') {
                 $(".view_all_types a").attr("href", '{{ url("saving-deposit-mode") }}');
@@ -470,6 +495,59 @@
             }
             else {
                 $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');
+            }
+        });
+
+        $.ajax({
+            method: 'POST',
+            url:    '{{ route('deposit-type') }}',
+            data: 'type=Interest',
+            cache: false,
+            success: function(data) {
+                //alert(data);
+                $("span.display_fixed").html(data);
+            }
+        });  
+        $("a.deposit_value").on("click", function() {
+            $("a.deposit_value").removeClass("active");
+            $(this).addClass("active");
+            var title = $("input[name='deposit_type']").val();
+            var value = $(this).text();
+            if(title=='Fixed Deposit') {
+                $.ajax({
+                    method: 'POST',
+                    url:    '{{ route('deposit-type') }}',
+                    data: 'type='+value,
+                    cache: false,
+                    success: function(data) {
+                        //alert(data);
+                        $("span.display_fixed").html(data);
+                    }
+                });   
+            }
+            else if(title=='Saving Deposit') {
+                //
+            }
+            else if(title=='Wealth Deposit') {
+                //
+            }
+            else if(title=='All In One Account') {
+                //
+            }
+            else if(title=='Foreign Currency') {
+                //
+            }
+            else {
+                $.ajax({
+                    method: 'POST',
+                    url:    '{{ route('deposit-type') }}',
+                    data: 'type=Interest',
+                    cache: false,
+                    success: function(data) {
+                        //alert(data);
+                        $("span.display_fixed").html(data);
+                    }
+                });
             }
         });
     </script>
