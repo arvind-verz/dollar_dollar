@@ -2,11 +2,11 @@
 @section('title', $page->title)
 @section('content')
     <?php
-$search_filter = isset($search_filter) ? $search_filter : "";
-$slug          = CONTACT_SLUG;
-//get banners
-$banners = Helper::getBanners($slug);
-?>
+    $search_filter = isset($search_filter) ? $search_filter : "";
+    $slug = CONTACT_SLUG;
+    //get banners
+    $banners = Helper::getBanners($slug);
+    ?>
     {{--Banner section start--}}
 
     @if($banners->count()>1)
@@ -154,7 +154,7 @@ $banners = Helper::getBanners($slug);
                                                     @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==1) selected @endif>
                                                 Minimum
                                             </option>
-                                            <option value="1"
+                                            <option value="2"
                                                     @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==2) selected @endif>
                                                 Maximum
                                             </option>
@@ -177,7 +177,8 @@ $banners = Helper::getBanners($slug);
                      data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                     @php $i = 1; @endphp
                     @foreach($promotion_products as $promotion_product)
-                        <div class="ps-block--short-product second @if($promotion_product->featured==1) highlight @endif" data-mh="product"><img
+                        <div class="ps-block--short-product second @if($promotion_product->featured==1) highlight @endif"
+                             data-mh="product"><img
                                     src="{{ asset($promotion_product->brand_logo) }}" alt="">
                             <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
 
@@ -205,26 +206,110 @@ $banners = Helper::getBanners($slug);
                 </div>
             </div>
 
-           @php
+            @php
             $adspopup = json_decode($page->ads_placement);
             //dd($ads);
             $j=1;
-            
+
             @endphp
 
             @if(count($promotion_products))
 
             @foreach($promotion_products as $promotion_product)
             <?php
-$ads = json_decode($promotion_product->ads_placement);
-$product_range = $promotion_product->product_range;
+            $ads = json_decode($promotion_product->ads_placement);
+            $product_range = $promotion_product->product_range;
 
-?>
+            ?>
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
             @if($page->slug=='all-in-one-deposit-mode')
-            <!-- <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div> -->
+                    <!-- <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div> -->
             @endif
+            <div class="ps-product ps-product--2">
+                <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+
+                    {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
+                            Now</a></div>--}}
+                </div>
+                <div class="ps-product__content">
+                    <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}}
+                            :</strong> Fulfil each criteria and earn up
+                        to {{ $promotion_product->maximum_interest_rate }}%</h4>
+
+                    <div class="ps-table-wrap">
+                        <table class="ps-table ps-table--product ps-table--product-3">
+                            <thead>
+                            <tr>
+                                <th>CRITERIA</th>
+                                <th>SALARY</th>
+                                <th>PAYMENT</th>
+                                <th>SPEND</th>
+                                <th>WEALTH</th>
+                                <th>BONUS(OPTIONAL)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($product_range as $range)
+                                @php
+                                //dd($range);
+                                @endphp
+                                <tr>
+                                    <td>Bonus Interest PA</td>
+                                    <td class="text-center @if($promotion_product->salary_highlight==true ) highlight @endif">{{ $range->bonus_interest_salary }}
+                                        %
+                                    </td>
+                                    <td class="text-center @if($promotion_product->payment_highlight==true ) highlight @endif">{{ $range->bonus_interest_giro_payment }}
+                                        %
+                                    </td>
+                                    <td class="text-center @if($promotion_product->spend_highlight==true ) highlight @endif">{{ $range->bonus_interest_spend }}
+                                        %
+                                    </td>
+                                    <td class="text-center @if($promotion_product->wealth_highlight==true ) highlight @endif">
+                                        Up to {{ $range->bonus_interest_wealth }}%
+                                    </td>
+                                    <td class="text-center @if($promotion_product->bonus_highlight==true ) highlight @endif">{{ $range->bonus_interest }}
+                                        % on
+                                        first {{ $range->first_cap_amount }} if account more
+                                        than {{ $range->bonus_amount }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Total Bonus Interest Earned for ${{$range->placement}}</td>
+                                    <td class="text-center @if($promotion_product->highlight==true ) highlight @endif"
+                                        colspan="4">
+                                        @if($range->placement > $range->first_cap_amount)
+                                            First
+                                            ${{ $range->first_cap_amount }} -
+                                            ${{ ($range->first_cap_amount*($promotion_product->total_interest/100)) }} (
+                                            {{ $promotion_product->total_interest }}%), next
+                                            ${{ ($range->placement-$range->first_cap_amount) }} -
+                                            ${{ (($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount)) }}
+                                            ({{ $range->bonus_interest_remaining_amount }}%) Total =
+                                            ${{ $promotion_product->interest_earned }}
+                                        @else
+                                            Total =
+                                            ${{ $promotion_product->interest_earned }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ps-product__detail">
+                        {!! $promotion_product->product_footer !!}
+                    </div>
+                    <div class="ps-poster">
+                        <a href="#"><img src="img/poster/medium/" alt=""></a>
+                    </div>
+                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
+                                    class="fa fa-angle-down"></i></a></div>
+                </div>
+            </div>
+            @endif
+
+                    <!-- TIER BASE -->
+            @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
                 <div class="ps-product ps-product--2">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
@@ -232,97 +317,83 @@ $product_range = $promotion_product->product_range;
                                 Now</a></div>--}}
                     </div>
                     <div class="ps-product__content">
-                        <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}}
-                                :</strong> Fulfil each criteria and earn up
-                            to {{ $promotion_product->maximum_interest_rate }}%</h4>
+                        <h4 class="ps-product__heading"><strong
+                                    class="highlight">{{$promotion_product->product_name}} :</strong>
+                            Meet either of Criteria and earn up to {{ $promotion_product->maximum_interest_rate }}%
+                        </h4>
 
+                        <div class="ps-product__poster"><img src="img/poster/product-2.jpg" alt=""></div>
                         <div class="ps-table-wrap">
-                            <table class="ps-table ps-table--product ps-table--product-3">
+                            <table class="ps-table ps-table--product ps-table--product-2">
                                 <thead>
                                 <tr>
-                                    <th>CRITERIA</th>
-                                    <th>SALARY</th>
-                                    <th>PAYMENT</th>
-                                    <th>SPEND</th>
-                                    <th>WEALTH</th>
-                                    <th>BONUS(OPTIONAL)</th>
+                                    <th>Balance</th>
+                                    <th>Criteria a (spend)</th>
+                                    <th>Criteria b (Spend + Salary/Giro)</th>
+                                    <th>Interest Earned for each Tier</th>
+                                    <th>Total Interest Earned for {{ $promotion_product->placement }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($product_range as $range)
-                                    @php
-                                    //dd($range);
-                                    @endphp
+                                @foreach($product_range as $key=>$range)
                                     <tr>
-                                        <td>Bonus Interest PA</td>
-                                        <td class="text-center">{{ $range->bonus_interest_salary }}%</td>
-                                        <td class="text-center">{{ $range->minimum_giro_payment }}%</td>
-                                        <td class="text-center">{{ $range->bonus_interest_spend }}%</td>
-                                        <td class="text-center">Up to {{ $range->bonus_interest_wealth }}%</td>
-                                        <td class="text-center">{{ $range->bonus_interest }}% on
-                                            first {{ $range->first_cap_amount }} if account more
-                                            than {{ $range->bonus_amount }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">Total Bonus Interest Earned for ${{$range->placement}}</td>
-                                        <td class="text-center" colspan="4">
-                                            @if($range->placement > $range->first_cap_amount)
-                                                First
-                                                ${{ $range->first_cap_amount }} -
-                                                ${{ ($range->first_cap_amount*($range->total_interest/100)) }} (
-                                                {{ $range->total_interest }}%), next
-                                                ${{ ($range->max_range-$range->first_cap_amount) }} -
-                                                ${{ (($range->bonus_interest_remaining_amount/100)*($range->max_range-$range->first_cap_amount)) }}
-                                                ({{ $range->bonus_interest_remaining_amount }}%) Total =
-                                                ${{ $range->total_interest_earned }}
-                                            @else
-                                                Total =
-                                                ${{ $range->total_interest_earned }}
-                                            @endif
+                                        <td class=" @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_b_highlight==true || $promotion_product->criteria_a_highlight==true) ) highlight @endif ">
+                                            <?php
+                                            if ($key == 0) {
+                                                echo "First ";
+                                                echo "$".$range->max_range;
+                                            } elseif ($range->above_range == true) {
+                                                echo "Above ";
+                                                echo "$".$range->min_range;
+                                            } else {
+                                                echo "Next ";
+                                                echo "$".$range->max_range;
+                                            }?>
+                                            </td>
+                                        <td class="text-center @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_a_highlight==true) ) highlight @endif">{{ $range->bonus_interest_criteria_a }}
+                                            %
                                         </td>
+                                        <td class="text-center @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_b_highlight==true) ) highlight @endif  ">{{ $range->bonus_interest_criteria_b }}
+                                            %
+                                        </td>
+                                        <td>
+                                            <?php
+                                            if ($key == 0) {
+                                                echo "First ";
+                                                echo "$".$range->max_range;
+                                            } elseif ($range->above_range == true) {
+                                                echo "Above ";
+                                                echo "$".$range->min_range;
+                                            } else {
+                                                echo "Next ";
+                                                echo "$".$range->max_range;
+                                            }?>
+                                             -${{ $range->interest_earn }}
+                                            ({{ $range->criteria }}%)
+                                        </td>
+                                        @if($key==0)
+                                            <td class="text-center  @if($promotion_product->highlight==true) highlight @endif"
+                                                rowspan="4">
+                                                ${{ $promotion_product->interest_earned }}
+                                                <br> Effective Interest
+                                                Rate {{ $promotion_product->total_interest }}%
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
                         <div class="ps-product__detail">
-                            <div class="row">
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                            <h4 class="ps-product__heading">Criteria</h4>
-                                            <ul class="ps-list--arrow-circle">
-                                                <li>Fresh funds #</li>
-                                                <li>RHB Fixed Deposit account</li>
-                                                <li>Placement done at Branch</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                            <h4 class="ps-product__heading">Keypoints</h4>
-                                            <ul class="ps-list--arrow-circle">
-                                                <li>Receive interest upfront</li>
-                                                <li>Deposit into main account</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                    <div class="ps-product__actions"><a class="ps-btn ps-btn--black" href="#">Main
-                                            Page</a><a class="ps-btn ps-btn--outline" href="#">T&C</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ps-poster">
-                            <a href="#"><img src="img/poster/medium/" alt=""></a>
+                            {!! $promotion_product->product_footer !!}
                         </div>
                         <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
                                         class="fa fa-angle-down"></i></a></div>
                     </div>
                 </div>
                 @endif
-
-                        <!-- TIER BASE -->
-                @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
+                        <!-- COMBINE TIER BASE -->
+                @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
                     <div class="ps-product ps-product--2">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
@@ -330,372 +401,185 @@ $product_range = $promotion_product->product_range;
                                     Now</a></div>--}}
                         </div>
                         <div class="ps-product__content">
+
                             <h4 class="ps-product__heading"><strong
                                         class="highlight">{{$promotion_product->product_name}} :</strong>
-                                Meet either of Criteria and earn up to {{ $promotion_product->maximum_interest_rate }}%
-                            </h4>
+                                Fulfil up to 3 criteria and earn up
+                                to {{ $promotion_product->maximum_interest_rate }}%</h4>
 
-                            <div class="ps-product__poster"><img src="img/poster/product-2.jpg" alt=""></div>
                             <div class="ps-table-wrap">
-                                <table class="ps-table ps-table--product ps-table--product-2">
+                                <table class="ps-table ps-table--product ps-table--product-3">
                                     <thead>
                                     <tr>
-                                        <th>Balance</th>
-                                        <th>Criteria a (spend)</th>
-                                        <th>Criteria b (Spend + Salary/Giro)</th>
-                                        <th>Interest Earned for each Tier</th>
-                                        <th>Total Interest Earned for {{ $promotion_product->placement }}</th>
+                                        <th>CRITERIA</th>
+                                        <th>SALARY</th>
+                                        <th>Giro</th>
+                                        <th>SPEND</th>
+                                        {{--<th>
+                                            <div class="ps-checkbox">
+                                                <input class="form-control" type="checkbox" id="life-1"
+                                                       name="life"/>
+                                                <label for="life-1">Life Insurance</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="ps-checkbox">
+                                                <input class="form-control" type="checkbox" id="life-2"
+                                                       name="life"/>
+                                                <label for="life-2">Housing Loan</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="ps-checkbox">
+                                                <input class="form-control" type="checkbox" id="life-3"
+                                                       name="life"/>
+                                                <label for="life-3">Education Loan</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="ps-checkbox">
+                                                <input class="form-control" type="checkbox" id="life-4"
+                                                       name="life"/>
+                                                <label for="life-4">Hire Purchase loan</label>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="ps-checkbox">
+                                                <input class="form-control" type="checkbox" id="life-5"
+                                                       name="life"/>
+                                                <label for="life-5">Renovation loan</label>
+                                            </div>
+                                        </th>--}}
+                                        <th>Life Insurance</th>
+                                        <th>Housing Loan</th>
+                                        <th>Education Loan</th>
+                                        <th>Hire Purchase loan</th>
+                                        <th>Renovation loan</th>
+                                        <th>Unit trust</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($product_range as $key=>$range)
+                                    @foreach($product_range as $range)
                                         <tr>
-                                            <td class="">
-                                                <?php
-if ($key == 0) {
-    echo "First";
-} elseif ($range->above_range == true) {
-    echo "Above";
-} else {
-    echo "Next";
-}?>
-                                                ${{ $range->max_range }}</td>
-                                            <td class="text-center">{{ $range->bonus_interest_criteria_a }}%</td>
-                                            <td class="text-center">{{ $range->bonus_interest_criteria_b }}%</td>
-                                            <td>
-                                                <?php
-if ($key == 0) {
-    echo "First";
-} elseif ($range->above_range == true) {
-    echo "Above";
-} else {
-    echo "Next";
-}?>
-                                                ${{ $range->max_range }} -${{ $range->interest_earn }}
-                                                ({{ $range->criteria }}%)
+                                            <td>Bonus Interest PA</td>
+                                            <td class="text-center @if($promotion_product->criteria_1==true ) highlight @endif"
+                                                colspan="3">1 Criteria Met
+                                                – {{ $range->bonus_interest_criteria1 }}%
                                             </td>
-                                            @if($key==0)
-                                                <td class="text-center" rowspan="4">
+                                            <td class=" text-center @if($promotion_product->criteria_2==true ) highlight @endif"
+                                                colspan="3">2 Criteria
+                                                – {{ $range->bonus_interest_criteria2 }}%
+                                            </td>
+                                            <td class="text-center @if($promotion_product->criteria_3==true ) highlight @endif"
+                                                colspan="3">3
+                                                Criteria {{ $range->bonus_interest_criteria3 }}%
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Total Bonus Interest Earned for
+                                                ${{ $range->placement }}</td>
+                                            <td class=" text-center @if($promotion_product->highlight==true ) highlight @endif"
+                                                colspan="8">
+
+                                                @if($range->placement > $range->first_cap_amount)
+                                                    First
+                                                    ${{ $range->first_cap_amount }} -
+                                                    ${{ ($range->first_cap_amount*($promotion_product->total_interest/100)) }} (
+                                                    {{ $promotion_product->total_interest }}%), next
+                                                    ${{ ($range->placement-$range->first_cap_amount) }} -
+                                                    ${{ (($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount)) }}
+                                                    ({{ $range->bonus_interest_remaining_amount }}%) Total =
                                                     ${{ $promotion_product->interest_earned }}
-                                                    <br> Effective Interest
-                                                    Rate {{ $promotion_product->total_interest }}%
-                                                </td>
-                                            @endif
+                                                @else
+                                                    Total =
+                                                    ${{ $promotion_product->interest_earned }}
+                                                @endif
+                                            </td>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
                             <div class="ps-product__detail">
-                                <div class="ps-criteria-detail">
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
-                                            <h4 class="ps-product__heading">Criteria Details</h4>
-                                        </div>
-                                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 ">
-                                            <div class="ps-block--product-info">
-                                                <h5>A (Spend)</h5>
-
-                                                <div class="ps-block__content">
-                                                    <p>Spend - $500 spending on Credit Card / Debit Card</p><a
-                                                            class="ps-block__more" href="#">Show DETAILS<i
-                                                                class="fa fa-angle-down"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="ps-block--product-info">
-                                                <h5>B (Giro OR Salary)</h5>
-
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                                        <div class="ps-block__content">
-                                                            <p>Giro – 3 bill payment via Giro</p><a
-                                                                    class="ps-block__more" href="#">Show DETAILS<i
-                                                                        class="fa fa-angle-down"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                                        <div class="ps-block__content">
-                                                            <p>Salary – Credit of Salary (min $2k)</p><a
-                                                                    class="ps-block__more" href="#">Show DETAILS<i
-                                                                        class="fa fa-angle-down"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ps-criteria-detail__content">
-                                        <ul class="ps-list--arrow-circle">
-                                            <li>Spend minimum of $500 in total across all UOB Credit card such
-                                                as lady cards, one card and YOLO Card
-                                            </li>
-                                            <li>You has to be primary account holder and principal card member
-                                            </li>
-                                            <li>Eligible transaction with posting date within calendar month
-                                                will be considered
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                                <h4 class="ps-product__heading">Criteria</h4>
-                                                <ul class="ps-list--arrow-circle">
-                                                    <li>Fresh funds #</li>
-                                                    <li>RHB Fixed Deposit account</li>
-                                                    <li>Placement done at Branch</li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                                <h4 class="ps-product__heading">Keypoints</h4>
-                                                <ul class="ps-list--arrow-circle">
-                                                    <li>Receive interest upfront</li>
-                                                    <li>Deposit into main account</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                        <div class="ps-product__actions"><a class="ps-btn ps-btn--black"
-                                                                            href="#">Main Page</a><a
-                                                    class="ps-btn ps-btn--outline" href="#">T&C</a></div>
-                                    </div>
-                                </div>
+                                {!! $promotion_product->product_footer !!}
+                            </div>
+                            <div class="ps-poster">
+                                <a href="#"><img src="img/poster/medium/" alt=""></a>
                             </div>
                             <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
                                             class="fa fa-angle-down"></i></a></div>
                         </div>
                     </div>
                     @endif
-                            <!-- COMBINE TIER BASE -->
-                    @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
-                        <div class="ps-product ps-product--2">
-                            <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                            <!-- DBS CRITERIA -->
+                    @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
+
+                        <div class="ps-product ps-product--2 no-border">
+                            <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}"
+                                                                 alt="">
 
                                 {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
                                         Now</a></div>--}}
                             </div>
                             <div class="ps-product__content">
-
                                 <h4 class="ps-product__heading"><strong
-                                            class="highlight">{{$promotion_product->product_name}} :</strong>
-                                    Fulfil up to 3 criteria and earn up
-                                    to {{ $promotion_product->maximum_interest_rate }}%</h4>
+                                            class="highlight">{{$promotion_product->product_name}}: </strong> Meet
+                                    either Criteria and earn up to {{$promotion_product->maximum_interest_rate}}%
+                                </h4>
 
                                 <div class="ps-table-wrap">
-                                    <table class="ps-table ps-table--product ps-table--product-3">
+                                    <table class="ps-table ps-table--product">
                                         <thead>
                                         <tr>
-                                            <th>CRITERIA</th>
-                                            <th>SALARY</th>
-                                            <th>Giro</th>
-                                            <th>SPEND</th>
-                                            {{--<th>
-                                                <div class="ps-checkbox">
-                                                    <input class="form-control" type="checkbox" id="life-1"
-                                                           name="life"/>
-                                                    <label for="life-1">Life Insurance</label>
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="ps-checkbox">
-                                                    <input class="form-control" type="checkbox" id="life-2"
-                                                           name="life"/>
-                                                    <label for="life-2">Housing Loan</label>
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="ps-checkbox">
-                                                    <input class="form-control" type="checkbox" id="life-3"
-                                                           name="life"/>
-                                                    <label for="life-3">Education Loan</label>
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="ps-checkbox">
-                                                    <input class="form-control" type="checkbox" id="life-4"
-                                                           name="life"/>
-                                                    <label for="life-4">Hire Purchase loan</label>
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div class="ps-checkbox">
-                                                    <input class="form-control" type="checkbox" id="life-5"
-                                                           name="life"/>
-                                                    <label for="life-5">Renovation loan</label>
-                                                </div>
-                                            </th>--}}
-                                            <th>Life Insurance</th>
-                                            <th>Housing Loan</th>
-                                            <th>Education Loan</th>
-                                            <th>Hire Purchase loan</th>
-                                            <th>Renovation loan</th>
-                                            <th>Unit trust</th>
+                                            <th>Monthly Transaction</th>
+                                            <th>Criteria a (Salary + 1 category)</th>
+                                            <th>Criteria b (Salary + 2 OR more Cateogry)</th>
+                                            <th>Total Interest Earned for ${{ $promotion_product->placement }}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($product_range as $range)
-                                            <tr>
-                                                <td>Bonus Interest PA</td>
-                                                <td class="text-center" colspan="3">1 Criteria Met
-                                                    – {{ $range->bonus_interest_criteria1 }}%
-                                                </td>
-                                                <td class=" text-center" colspan="3">2 Criteria
-                                                    – {{ $range->bonus_interest_criteria2 }}%
-                                                </td>
-                                                <td class="text-center" colspan="3">3
-                                                    Criteria {{ $range->bonus_interest_criteria3 }}%
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">Total Bonus Interest Earned for
-                                                    ${{ $range->placement }}</td>
-                                                <td class=" text-center" colspan="8">
 
-                                                    @if($range->placement > $range->first_cap_amount)
-                                                        First
-                                                        ${{ $range->first_cap_amount }} -
-                                                        ${{ ($range->first_cap_amount*($range->total_interest/100)) }} (
-                                                        {{ $range->total_interest }}%), next
-                                                        ${{ ($range->max_range-$range->first_cap_amount) }} -
-                                                        ${{ (($range->bonus_interest_remaining_amount/100)*($range->max_range-$range->first_cap_amount)) }}
-                                                        ({{ $range->bonus_interest_remaining_amount }}%) Total =
-                                                        ${{ $range->total_interest_earned }}
-                                                    @else
-                                                        Total =
-                                                        ${{ $range->total_interest_earned }}
-                                                    @endif
+                                        @foreach($product_range as $range)
+
+                                        @endforeach
+                                        @foreach($product_range as $key=>$range)
+                                            <tr>
+                                                <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
+                                                    style="width: 30%">@if($key==0)
+                                                        <${{ $range->max_range+1 }} @elseif((count($product_range)-1)==$key)
+                                                        >=  ${{ $range->min_range }} @else
+                                                        >= ${{ $range->min_range }} TO
+                                                        <  ${{ $range->max_range+1 }} @endif</td>
+                                                <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">{{ $range->bonus_interest_criteria_a }}
+                                                    %
                                                 </td>
+                                                <td class="text-center @if($range->criteria_b_highlight==true ) highlight @endif">{{ $range->bonus_interest_criteria_b }}
+                                                    %
                                                 </td>
+                                                @if($key==0)
+                                                    <td class=" text-center @if($promotion_product->highlight==true ) highlight @endif"
+                                                        rowspan="6">
+                                                        Total=
+                                                        ${{ $promotion_product->interest_earned.' ( '.$promotion_product->total_interest.'%) ' }}</td>
+                                                @endif
                                             </tr>
+                                            @php $i++; @endphp
                                         @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="ps-product__detail">
-                                    <div class="row">
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                                    <h4 class="ps-product__heading">Criteria</h4>
-                                                    <ul class="ps-list--arrow-circle">
-                                                        <li>Fresh funds #</li>
-                                                        <li>RHB Fixed Deposit account</li>
-                                                        <li>Placement done at Branch</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                                    <h4 class="ps-product__heading">Keypoints</h4>
-                                                    <ul class="ps-list--arrow-circle">
-                                                        <li>Receive interest upfront</li>
-                                                        <li>Deposit into main account</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                            <div class="ps-product__actions"><a class="ps-btn ps-btn--black"
-                                                                                href="#">Main Page</a><a
-                                                        class="ps-btn ps-btn--outline" href="#">T&C</a></div>
-                                        </div>
-                                    </div>
+                                    {!! $promotion_product->product_footer !!}
                                 </div>
-                                <div class="ps-poster">
-                                    <a href="#"><img src="img/poster/medium/" alt=""></a>
-                                </div>
-                                <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                                class="fa fa-angle-down"></i></a></div>
+                                <div class="ps-product__footer"><a class="ps-product__more" href="#">More
+                                        Detail<i class="fa fa-angle-down"></i></a></div>
                             </div>
                         </div>
-                        @endif
-                                <!-- DBS CRITERIA -->
-                        @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
-
-                            <div class="ps-product ps-product--2 no-border">
-                                <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
-
-                                    {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
-                                            Now</a></div>--}}
-                                </div>
-                                <div class="ps-product__content">
-                                    <h4 class="ps-product__heading"><strong
-                                                class="highlight">{{$promotion_product->product_name}}: </strong> Meet
-                                        either Criteria and earn up to {{$promotion_product->maximum_interest_rate}}%
-                                    </h4>
-
-                                    <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product">
-                                            <thead>
-                                            <tr>
-                                                <th>Monthly Transaction</th>
-                                                <th>Criteria a (Salary + 1 category)</th>
-                                                <th>Criteria b (Spend + 2 OR more Cateogry)</th>
-                                                <th>Total Interest Earned for ${{ $promotion_product->placement }}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            @foreach($product_range as $range)
-
-                                            @endforeach
-                                            @foreach($product_range as $key=>$range)
-                                                <tr>
-                                                    <td style="width: 30%">@if($key==0)
-                                                            <${{ $range->max_range+1 }} @elseif((count($product_range)-1)==$key)
-                                                            >=  ${{ $range->min_range }} @else
-                                                            >= ${{ $range->min_range }} TO
-                                                            <  ${{ $range->max_range+1 }} @endif</td>
-                                                    <td class="text-center">{{ $range->bonus_interest_criteria_a }}%</td>
-                                                    <td class="text-center">{{ $range->bonus_interest_criteria_b }}%</td>
-                                                    @if($key==0)
-                                                        <td class=" text-center" rowspan="6">
-                                                            Total= ${{ $promotion_product->total_interest_earned.' ( '.$promotion_product->total_interest.'%) ' }}</td>
-                                                    @endif
-                                                </tr>
-                                                @php $i++; @endphp
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="ps-product__detail">
-                                        <div class="row">
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                                        <h4 class="ps-product__heading">Criteria</h4>
-                                                        <ul class="ps-list--arrow-circle">
-                                                            <li>Fresh funds #</li>
-                                                            <li>RHB Fixed Deposit account</li>
-                                                            <li>Placement done at Branch</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                                        <h4 class="ps-product__heading">Keypoints</h4>
-                                                        <ul class="ps-list--arrow-circle">
-                                                            <li>Receive interest upfront</li>
-                                                            <li>Deposit into main account</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                                <div class="ps-product__actions"><a class="ps-btn ps-btn--black"
-                                                                                    href="#">Main Page</a><a
-                                                            class="ps-btn ps-btn--outline" href="#">T&C</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More
-                                            Detail<i class="fa fa-angle-down"></i></a></div>
-                                </div>
-                            </div>
-                        @endif
-                        @php $j++; @endphp
-                        @endforeach
-            @endif
+                    @endif
+                    @php $j++; @endphp
+                    @endforeach
+                @endif
         </div>
     </div>
     <script type="text/javascript">
