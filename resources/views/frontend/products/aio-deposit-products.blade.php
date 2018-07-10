@@ -341,15 +341,15 @@
                                             <?php
                                             if ($key == 0) {
                                                 echo "First ";
-                                                echo "$".$range->max_range;
+                                                echo "$" . $range->max_range;
                                             } elseif ($range->above_range == true) {
                                                 echo "Above ";
-                                                echo "$".$range->min_range;
+                                                echo "$" . $range->min_range;
                                             } else {
                                                 echo "Next ";
-                                                echo "$".$range->max_range;
+                                                echo "$" . $range->max_range;
                                             }?>
-                                            </td>
+                                        </td>
                                         <td class="text-center @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_a_highlight==true) ) highlight @endif">{{ $range->bonus_interest_criteria_a }}
                                             %
                                         </td>
@@ -360,15 +360,15 @@
                                             <?php
                                             if ($key == 0) {
                                                 echo "First ";
-                                                echo "$".$range->max_range;
+                                                echo "$" . $range->max_range;
                                             } elseif ($range->above_range == true) {
                                                 echo "Above ";
-                                                echo "$".$range->min_range;
+                                                echo "$" . $range->min_range;
                                             } else {
                                                 echo "Next ";
-                                                echo "$".$range->max_range;
+                                                echo "$" . $range->max_range;
                                             }?>
-                                             -${{ $range->interest_earn }}
+                                            -${{ $range->interest_earn }}
                                             ({{ $range->criteria }}%)
                                         </td>
                                         @if($key==0)
@@ -484,7 +484,8 @@
                                                 @if($range->placement > $range->first_cap_amount)
                                                     First
                                                     ${{ $range->first_cap_amount }} -
-                                                    ${{ ($range->first_cap_amount*($promotion_product->total_interest/100)) }} (
+                                                    ${{ ($range->first_cap_amount*($promotion_product->total_interest/100)) }}
+                                                    (
                                                     {{ $promotion_product->total_interest }}%), next
                                                     ${{ ($range->placement-$range->first_cap_amount) }} -
                                                     ${{ (($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount)) }}
