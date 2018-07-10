@@ -128,6 +128,7 @@ Route::group(array('prefix' => 'admin'), function () {
     /*System setting start*/
     Route::resource('/system-setting', 'CMS\SystemSettingController');
     Route::resource('/system-setting-homepage', 'CMS\systemSettingHomepageController');
+    Route::resource('/system-setting-legend-table', 'CMS\systemSettingLegendTableController');
     /*System setting start*/
 
     /*User Module start*/

@@ -164,18 +164,20 @@
                     @endforeach
                 </div>
             @endif
+            @if(count($legendtable))
             <div class="ps-block--legend-table">
                 <div class="ps-block__header">
                     <h3>Legend table</h3>
                 </div>
                 <div class="ps-block__content">
-                    <p><img src="{{ asset('img/icons/ff.png') }}" alt="">= Fresh funds</p>
-
-                    <p><img src="{{ asset('img/icons/ef.png') }}" alt="">= example funds</p>
-
-                    <p><img src="{{ asset('img/icons/cx.png') }}" alt="">= example funds</p>
+                    @foreach($legendtable as $legend)
+                    @if($legend->page_type=='Fixed Deposit')
+                    <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                    @endif
+                    @endforeach
                 </div>
             </div>
+            @endif
             @php
             //dd($ads);
             @endphp

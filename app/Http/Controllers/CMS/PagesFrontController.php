@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Page;
 use App\ProductManagement;
 use App\PromotionProducts;
+use App\systemSettingLegendTable;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -257,6 +258,8 @@ class PagesFrontController extends Controller
         $search_filter = $request;
         $brand_id      = isset($request['brand_id']) ? $request['brand_id'] : '';
         $sort_by       = isset($request['sort_by']) ? $request['sort_by'] : '';
+
+        $legendtable = systemSettingLegendTable::all();
 //dd($brand_id);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -441,8 +444,8 @@ $status = true;
             }
         }
         $promotion_products = $orginalProducts;
-//dd($result_data);
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "result_data"));
+//dd($legendtable);
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "result_data", "legendtable"));
     }
 
     public function savingDepositMode()
