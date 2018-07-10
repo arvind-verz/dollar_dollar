@@ -15,9 +15,9 @@
 Route::get('/clear', function () {
     //dd("Hello");
     $exitCode1 = Artisan::call('cache:clear');
-    $exitCode2= Artisan::call('config:clear');
+    $exitCode2 = Artisan::call('config:clear');
     $exitCode3 = Artisan::call('view:clear');
-    
+
     return '<h1>All cleared</h1>';
 });
 
@@ -168,7 +168,7 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Tag Module start*/
     Route::get('/tag/destroy/{id}', 'CMS\TagController@destroy')->name('tag-destroy');
     Route::resource('/tag', 'CMS\TagController');
-    
+
     /*Tag module end*/
 
     Route::get('/temp', 'Products\ProductsController@temp')->name('temp');
@@ -220,7 +220,6 @@ Route::group(array('prefix' => 'admin'), function () {
     /* REPORTS */
     Route::get('/customer-report', 'Reports\ReportController@customer_report')->name('customer-report');
     Route::get('/product-report', 'Reports\ReportController@product_report')->name('product-report');
-
 
 
 });
