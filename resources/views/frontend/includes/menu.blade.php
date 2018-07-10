@@ -5,7 +5,7 @@
             <ul class="header__actions">
                 @guest
                 <li><a href="{{ url(REGISTRATION) }}">Register</a></li>
-                <li><a href="{{ url(LOGIN_SLUG) }}"><i class="fa fa-clock"></i>Login</a></li>
+                <li><a href="{{ url(LOGIN_SLUG) }}">Login</a></li>
                 @else
                 <li><a href="{{ url(PROFILEDASHBOARD) }}"><i class="fa fa-user-circle"></i>My account</a></li>
                 <li><a href="{{ url('/users/logout') }}">Logout</a></li>
@@ -23,7 +23,7 @@
             @if (isset($menus[$menu['id']]) && (count($menus[$menu['id']]) > 0) )
 
                 <li class="menu-item-has-children"><a
-                            href="@if($menu['slug'] != null) {{route('slug',[$menu['slug']]) }} @else # @endif">{{$menu['title']}}</a>
+                            href="@if($menu['slug'] != null) {{route('slug',[$menu['slug']]) }} @else # @endif"><i class="{{ $menu['icon'] }}"></i>{{$menu['title']}}</a>
 
                     @if($menu['slug'] == BLOG_URL)
                         <ul class="sub-menu">
@@ -45,7 +45,7 @@
                 </li>
             @elseif($menu['slug'] != null)
                 <li class="@if($menu['slug']== $slug) current-menu-item @endif"><a
-                            href="{{route('slug',[$menu['slug']]) }}">{{$menu['title']}}</a>
+                            href="{{route('slug',[$menu['slug']]) }}"><i class="{{ $menu['icon'] }}"></i>{{$menu['title']}}</a>
 
                     @if($menu['slug'] == BLOG_URL)
                         <ul class="sub-menu">
@@ -81,7 +81,7 @@
             @if (isset($parentCategories[$parentCategory['id']]) && (count($parentCategories[$parentCategory['id']]) > 0) )
 
                 <li class="menu-item-has-children"><a
-                            href="{{ route('get-blog-by-category',['id'=>$parentCategory['id']]) }}">{{$parentCategory['title']}}</a>
+                            href="{{ route('get-blog-by-category',['id'=>$parentCategory['id']]) }}"><i class="{{ $parentCategory['icon'] }}"></i>{{$parentCategory['title']}}</a>
                     <ul class="sub-menu">
                         @php
                         printCategories($parentCategories, $parentCategory['id'], ($deep + 1));
@@ -91,7 +91,7 @@
             @else
 
                 <li class=""><a
-                            href="{{ route('get-blog-by-category',['id'=>$parentCategory['id']]) }}">{{$parentCategory['title']}}</a>
+                            href="{{ route('get-blog-by-category',['id'=>$parentCategory['id']]) }}"><i class="{{ $parentCategory['icon'] }}"></i>{{$parentCategory['title']}}</a>
                 </li>
             @endif
 

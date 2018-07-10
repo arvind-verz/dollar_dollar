@@ -132,6 +132,7 @@
 <script src="{{ asset('backend/bower_components/DataTables/datatables.min.js' ) }}"></script>
 <script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/dataTables.buttons.min.js') }}"></script>
 <script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.flash.min.js') }}"></script>
+<script src="{{ asset('backend/bower_components/iconpicker/fontawesome-iconpicker.js') }}"></script>
 <script type="text/javascript" language="javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script type="text/javascript" language="javascript"
@@ -1287,4 +1288,6 @@
             $('#target').val('null').trigger('change');
         }
     });
+
+    $('.iconpicker').iconpicker();
 </script>
