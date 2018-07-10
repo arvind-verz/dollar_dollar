@@ -242,3 +242,4 @@ Route::post('/aioa-deposit-mode/search/', 'CMS\PagesFrontController@search_aioa_
 Route::get('/aioa-deposit-mode/search/', 'CMS\PagesFrontController@aioDepositMode');
 
 Route::post('/product-search', 'CMS\PagesFrontController@product_search_homepage')->name('product-search');
+Route::post('/deposit-type', 'HomeController@depositType')->name('deposit-type');
