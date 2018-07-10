@@ -272,7 +272,7 @@ class PagesFrontController extends Controller
             ->get();
 
         $filterProducts = $filterNewProducts = $orginalProducts = $result_data = [];
-//dd($promotion_products);
+dd($promotion_products);
         if (empty($request)) {
             $orginalProducts = $promotion_products;
 //dd($filterProducts);
