@@ -50,17 +50,11 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="treeview ">
-                                <a href="#"><i class="fa fa-tty"></i> Promotion Products
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="{{ route('promotion-products') }}"><i class="fa fa-plus"></i> Products</a></li>
-                                    <!-- <li><a href="{{ route('promotion-formula') }}"><i class="fa fa-tty"></i> Formula</a></li>  -->                               </ul>
-                            </li>
-                            <!-- <li><a href="{{ route('bank-products') }}"><i class="fa fa-plus"></i> Bank Products</a></li> -->
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>FIX_DEPOSIT]) }}"><i class="fa fa-credit-card"></i> Fixed Deposit</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>SAVING_DEPOSIT]) }}"><i class="fa fa-cloud"></i> Saving Deposit</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>ALL_IN_ONE_ACCOUNT]) }}"><i class="fa fa-sign-language "></i> All in One Account Deposit</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>WEALTH_DEPOSIT]) }}"><i class="fa fa-bolt"></i> Wealth Deposit</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>FOREIGN_CURRENCY_DEPOSIT]) }}"><i class="fa fa-dollar-sign"></i> Foreign Currency Deposit</a></li>
                         </ul>
                     </li>
                     @elseif($menu->label == REPORT_MODULE)

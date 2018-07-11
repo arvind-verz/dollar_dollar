@@ -72,6 +72,11 @@ define('BLOG_CATEGORY_MODULE', "Blog Category Management");
 define('ENQUIRY_MODULE', "Enquiry Management");
 define('TAG_MODULE', "Tag Management");
 define('REPORT_MODULE', "Report Management");
+define('FIX_DEPOSIT_MODULE', "Fix Deposit");
+define('SAVING_DEPOSIT_MODULE', "Saving Deposit");
+define('ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE', "All in One Account Deposit");
+define('WEALTH_DEPOSIT_MODULE', "Wealth Deposit");
+define('FOREIGN_CURRENCY_DEPOSIT_MODULE', "Foreign Currency Deposit");
 
 //Single Module Name for action
 define('PRODUCT_MODULE_SINGLE', "Product");

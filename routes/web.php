@@ -174,8 +174,8 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/temp', 'Products\ProductsController@temp')->name('temp');
 
     /* PROMOTION PRODUCTS */
-    Route::get('/promotion-products', 'Products\ProductsController@promotion_products')->name('promotion-products');
-    Route::get('/promotion-products/add', 'Products\ProductsController@promotion_products_add')->name('promotion-products-add');
+    Route::get('/promotion-products/{productTypeId}', 'Products\ProductsController@promotion_products')->name('promotion-products');
+    Route::get('/promotion-products-add/{productTypeId}', 'Products\ProductsController@promotion_products_add')->name('promotion-products-add');
     Route::post('/promotion-products/add-db', 'Products\ProductsController@promotion_products_add_db')->name('promotion-products-add-db');
 
     Route::get('/promotion-products/{id}/edit', 'Products\ProductsController@promotion_products_edit')->name('promotion-products-edit');
