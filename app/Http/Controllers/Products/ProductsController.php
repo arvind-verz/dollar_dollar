@@ -22,23 +22,24 @@ class ProductsController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function promotion_products()
+    public function promotion_products($productTypeId = FIX_DEPOSIT)
     {
-        $products = \Helper::getProducts();
+        $products = \Helper::getProducts($productTypeId);
+        $productType = $this->productType($productTypeId);
 
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products', compact('CheckLayoutPermission', 'products'));
+        return view('backend.products.promotion_products', compact('CheckLayoutPermission', 'products', 'productType', 'productTypeId'));
     }
 
-    public function promotion_products_add()
+    public function promotion_products_add($productTypeId)
     {
-        //dd($formulaDetails);
-        $promotion_types = \Helper::getPromotionType();
-        $formulas = \Helper::getFormula();
+        //dd($productTypeId);
+        $promotion_types = \Helper::getPromotionType($productTypeId);
+        $formulas = \Helper::getAllFormula($productTypeId);
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
-
+        $productType = $this->productType($productTypeId);
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks'));
+        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks','productType','productTypeId'));
     }
 
     public function promotion_products_get_formula(Request $request)
@@ -164,7 +165,7 @@ class ProductsController extends Controller
                 $bonusInterest = $request->bonus_interest_sdp1;
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
-                if ( in_array($product->formula_id,[SAVING_DEPOSIT_F2,WEALTH_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F3])) {
+                if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
                     $range['tenor'] = 3;
 
                 }
@@ -176,7 +177,7 @@ class ProductsController extends Controller
             }
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3,WEALTH_DEPOSIT_F3,FOREIGN_CURRENCY_DEPOSIT_F4])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, WEALTH_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
             $range['counter'] = array_map('floatVal', $request->counter_sdp3);
@@ -186,7 +187,7 @@ class ProductsController extends Controller
 
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5,WEALTH_DEPOSIT_F5,FOREIGN_CURRENCY_DEPOSIT_F6])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, WEALTH_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
             $range['min_range'] = (int)$request->min_placement_sdp5;
             $range['max_range'] = (int)$request->max_placement_sdp5;
             $range['base_interest'] = (float)$request->base_interest_sdp5;
@@ -309,7 +310,7 @@ class ProductsController extends Controller
 
             $adHorizontalPopupTop['ad_horizontal_image_popup_top'] = $destinationPath . '/' . $adHorizontalPopupImageTop;
         }
-        
+
         $adHorizontal['ad_link_horizontal'] = $request->ad_horizontal_link;
         $adVertical['ad_link_vertical'] = $request->ad_vertical_link;
         $adHorizontalPopup['ad_link_horizontal_popup'] = $request->ad_horizontal_link_popup;
@@ -317,7 +318,7 @@ class ProductsController extends Controller
         $adsPlacement = [$adHorizontal, $adVertical, $adHorizontalPopup, $adHorizontalPopupTop];
 
         $product->ads_placement = json_encode($adsPlacement);
- //dd($product->ads_placement);
+        //dd($product->ads_placement);
         $product->status = $request->status;
         $product->featured = $request->featured;
         $product->save();
@@ -332,23 +333,25 @@ class ProductsController extends Controller
                 'new' => null])
             ->log(CREATE);
 
-
-        return redirect()->action('Products\ProductsController@promotion_products')->with('success', $product->product_name . ADDED_ALERT);
-
+        return redirect()->route('promotion-products',["productTypeId"=>$product->promotion_type_id])->with('success', $product->product_name . ADDED_ALERT);
         //return $this->promotion_formula();
 
     }
 
-    public function promotion_products_edit($id)
+    public function promotion_products_edit($id,Request $request)
     {
-        $promotion_types = \Helper::getPromotionType();
+        $promotion_types = \Helper::getPromotionType($request->product_type_id);
         $product = \Helper::getProduct($id);
+        if (!$product) {
+            return redirect()->route('promotion-products',['productTypeId'=>$request->product_type_id])->with('error', OPPS_ALERT);
+            }
         $product->product_range = json_decode($product->product_range);
+        $productType = $this->productType($request->product_type_id);
         //dd($product);
         $formula = \Helper::productType($id);
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks'));
+        return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks','productType'));
 
     }
 
@@ -357,8 +360,9 @@ class ProductsController extends Controller
         $product = \Helper::getProduct($id);
         $ads = $product->ads_placement;
 
+
         if (!$product) {
-            return redirect()->action('Products\ProductsController@promotion_products')->with('error', OPPS_ALERT);
+            return redirect()->route('promotion-products',['productTypeId'=>$request->product_type])->with('error', OPPS_ALERT);
         }
 
         $oldProduct = $product;
@@ -463,7 +467,7 @@ class ProductsController extends Controller
                 $bonusInterest = $request->bonus_interest_sdp1;
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
-                if ( in_array($product->formula_id,[SAVING_DEPOSIT_F2,WEALTH_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F3])) {
+                if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
                     $range['tenor'] = 3;
 
                 }
@@ -475,7 +479,7 @@ class ProductsController extends Controller
             }
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3,WEALTH_DEPOSIT_F3,FOREIGN_CURRENCY_DEPOSIT_F4])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, WEALTH_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
             $range['counter'] = array_map('floatVal', $request->counter_sdp3);
@@ -485,7 +489,7 @@ class ProductsController extends Controller
 
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5,WEALTH_DEPOSIT_F5,FOREIGN_CURRENCY_DEPOSIT_F6])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, WEALTH_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
             $range['min_range'] = (int)$request->min_placement_sdp5;
             $range['max_range'] = (int)$request->max_placement_sdp5;
             $range['base_interest'] = (float)$request->base_interest_sdp5;
@@ -617,7 +621,7 @@ class ProductsController extends Controller
         } else {
             $adHorizontalPopupTop['ad_horizontal_image_popup_top'] = isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : null;
         }
-        
+
         $adHorizontal['ad_link_horizontal'] = $request->ad_horizontal_link;
         $adVertical['ad_link_vertical'] = $request->ad_vertical_link;
         $adHorizontalPopup['ad_link_horizontal_popup'] = $request->ad_horizontal_link_popup;
@@ -640,16 +644,17 @@ class ProductsController extends Controller
                 'new' => null])
             ->log(UPDATE);
 
-
-        return redirect()->action('Products\ProductsController@promotion_products')->with('success', $product->product_name . UPDATED_ALERT);
-
-        //return $this->promotion_formula();
-
+        return redirect()->route('promotion-products',["productTypeId"=>$product->promotion_type_id])->with('success', $product->product_name . UPDATED_ALERT);
     }
 
-    public function promotion_products_remove($id)
+    public function promotion_products_remove($id,Request $request)
     {
+
         $sel_query = PromotionProducts::where('id', $id)->first();
+        if (!$sel_query) {
+            return redirect()->route('promotion-products',['productTypeId'=>$request->product_type_id])->with('error', OPPS_ALERT);
+        }
+
         $sel_query->delete_status = 1;
         $sel_query->save();
         //dd($sel_query);
@@ -662,9 +667,7 @@ class ProductsController extends Controller
                 'old' => $sel_query,
                 'new' => null])
             ->log(DELETE);
-
-
-        return redirect()->action('Products\ProductsController@promotion_products')->with('success', $sel_query->product_name . ' ' . DELETED_ALERT);
+        return redirect()->route('promotion-products',["productTypeId"=>$sel_query->promotion_type_id])->with('success', $sel_query->product_name . ' ' . DELETED_ALERT);
     }
 
     public function promotion_formula()
@@ -683,7 +686,6 @@ class ProductsController extends Controller
         $promotion_types = \Helper::getPromotionType();
         $formulas = \Helper::getFormula();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-
 
         $validate = [
             'promotion_type' => 'required',
@@ -1406,5 +1408,21 @@ class ProductsController extends Controller
             }
         }
         return 0;
+    }
+
+    public function productType($productTypeId)
+    {
+        if ($productTypeId == SAVING_DEPOSIT) {
+            $productType = SAVING_DEPOSIT_MODULE;
+        } elseif ($productTypeId == ALL_IN_ONE_ACCOUNT) {
+            $productType = ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE;
+        } elseif ($productTypeId == FOREIGN_CURRENCY_DEPOSIT) {
+            $productType = FOREIGN_CURRENCY_DEPOSIT_MODULE;
+        } elseif ($productTypeId == WEALTH_DEPOSIT) {
+            $productType = WEALTH_DEPOSIT_MODULE;
+        } else {
+            $productType = FIX_DEPOSIT_MODULE;
+        }
+        return $productType;
     }
 }

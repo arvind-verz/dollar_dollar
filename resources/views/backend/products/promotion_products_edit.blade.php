@@ -4,12 +4,12 @@
 
         <h1>
             {{strtoupper( PRODUCT_MODULE )}}
-            <small></small>
+            <small>{{$productType}}</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
-            <li class="active"><a href="{{ route('promotion-products') }}">{{PRODUCT_MODULE}}</a></li>
-            <li class="active">{{PRODUCT_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
+            <li class="active"><a href="{{ route('promotion-products',['productTypeId'=>$product->promotion_type_id]) }}">{{$productType}}</a></li>
+            <li class="active">{{'Product '.EDIT_ACTION}}</li>
         </ol>
     </section>
 
@@ -27,7 +27,7 @@
                             <li><a href="#formula-detail" data-toggle="tab">Formula Detail</a></li>
                             <li class="active"><a href="#product-detail" data-toggle="tab">Product Detail</a></li>
                             <li class="pull-left header"><i class="fa fa-edit"></i>
-                                {{PRODUCT_MODULE_SINGLE.' '.ADD_ACTION}}</li>
+                                {{'Product '.EDIT_ACTION}}</li>
 
                         </ul>
                         <div class="box-body">
@@ -64,8 +64,7 @@
                                         <label for="title" class="col-sm-2 control-label">Product Type</label>
 
                                         <div class="col-sm-10">
-                                            <select class="form-control" name="product_type" id="product-type">
-                                                <option value="">None</option>
+                                            <select class="form-control" name="product_type" id="product-type" readonly="readonly">
                                                 @if($promotion_types->count())
                                                     @foreach($promotion_types as $product_type)
                                                         <option value="{{$product_type->id}}"
@@ -286,7 +285,7 @@
                                 {{Form::hidden('_method','PUT')}}
                                 <!-- /.box-body -->
                                 <div class="box-footer wizard">
-                                    <a href="{{ route('promotion-products') }}"
+                                    <a href="{{ route('promotion-products',['productTypeId'=>$product->promotion_type_id]) }}"
                                        class="btn btn-default back"><i class="fa fa-close">
                                         </i> Cancel</a>
                                     <a href="javascript:;" class="btn btn-warning previous"><i

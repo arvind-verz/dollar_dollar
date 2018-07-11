@@ -389,13 +389,14 @@ class Helper
     /* END TAGS */
 
     /* PRODUCTS */
-    public static function getProducts($id = NULL)
+    public static function getProducts($productTypeId = FIX_DEPOSIT)
     {
         DB::enableQueryLog();
         $sel_query = PromotionProducts::leftjoin('brands', 'brands.id', '=', 'promotion_products.bank_id')
             ->leftjoin('promotion_types', 'promotion_types.id', '=', 'promotion_products.promotion_type_id')
             ->leftjoin('promotion_formula', 'promotion_formula.id', '=', 'promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.promotion_type_id', '=', $productTypeId)
             ->select('promotion_products.*', 'brands.title as bank_name', 'promotion_types.name as promotion_type', 'promotion_formula.name as promotion_formula')
             ->get();
 
@@ -405,7 +406,11 @@ class Helper
     public static function getProduct($id = NULL)
     {
         $sel_query = PromotionProducts::find($id);
-       if($sel_query->ads_placement)
+        if (!$sel_query) {
+            return null;
+        }
+
+        if($sel_query->ads_placement)
        {
            $sel_query->ads_placement = json_decode($sel_query->ads_placement);
 
@@ -440,14 +445,17 @@ class Helper
     public static function getAllFormula($id = NULL)
     {
         $sel_query = PromotionFormula::where('promotion_id', $id)->where('delete_status', 0)->get();
+
         return $sel_query;
     }
     /* END FORMULAS */
 
     /* PROMOTION TYPE */
-    public static function getPromotionType()
+    public static function getPromotionType($productTypeId = null)
     {
-        $sel_query = PromotionTypes::where('delete_status', '=', 0)->get();
+        $sel_query = PromotionTypes::where('delete_status', '=', 0)
+            ->where('id', '=', $productTypeId)
+            ->get();
 
         return $sel_query;
     }
