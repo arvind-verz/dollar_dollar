@@ -4,11 +4,11 @@
 
         <h1>
             {{strtoupper( PRODUCT_MODULE )}}
-            <small></small>
+            <small>{{$productType}}</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
-            <li class="active">{{PRODUCT_MODULE}}</li>
+            <li class="active">{{$productType}}</li>
         </ol>
     </section>
 
@@ -21,10 +21,10 @@
                     <div class="box-header with-border">
                         <i class="fa fa-book"></i>
 
-                        <h3 class="box-title">{{'Product List'}}</h3>
+                        <h3 class="box-title">{{$productType}}</h3>
 
 
-                        <a href="{{ route('promotion-products-add') }}" class="btn btn-info pull-right"><i
+                        <a href="{{ route('promotion-products-add',['productTypeId'=>$productTypeId]) }}" class="btn btn-info pull-right"><i
                                     class="fa fa-plus"></i> Add New Products</a>
                     </div>
                     <!-- /.box-header -->
@@ -54,7 +54,6 @@
                                             @if($products->count())
                                                 @foreach($products as $product)
                                                     <tr>
-
                                                         <td>{{ $product->product_name }}</td>
                                                         <td>{{ $product->bank_name }}</td>
                                                         <td>{{ $product->promotion_type }}</td>
@@ -85,7 +84,7 @@
                                                         <td>
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Product"
-                                                                   href="{{ route("promotion-products-edit",["id"=>$product->id]) }}">
+                                                                   href="{{ route("promotion-products-edit",["id"=>$product->id,'product_type_id'=>$productTypeId]) }}">
                                                                     <i class="fa fa-edit"></i> Edit
                                                                 </a>
                                                             @endif
@@ -93,7 +92,7 @@
                                                             @if($CheckLayoutPermission[0]->delete==1)
                                                                 <a class="btn btn-app delete" title="Delete Product"
                                                                    onclick="return confirm('Are you sure to delete this?')"
-                                                                   href="{{ route("promotion-products-remove",["id"=>$product->id]) }}">
+                                                                   href="{{ route("promotion-products-remove",["id"=>$product->id,'product_type_id'=>$productTypeId]) }}">
                                                                     <i class="fa fa-trash"></i> Delete
                                                                 </a>
                                                             @endif
