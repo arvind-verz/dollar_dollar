@@ -45,7 +45,6 @@
                                                 <th>Title</th>
                                                 <th>Content</th>
                                                 <th>Page</th>
-                                                <th>Link</th>
                                                 <th>Target</th>
                                                 <th>Image</th>
                                                 <th>View Order</th>
@@ -66,9 +65,6 @@
                                                         </td>
                                                         <td>
                                                             {!! $banner->label  !!}
-                                                        </td>
-                                                        <td>
-                                                            {!! $banner->banner_link   !!}
                                                         </td>
                                                         <td>
                                                             {!! $banner->target   !!}

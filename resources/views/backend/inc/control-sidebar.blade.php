@@ -11,9 +11,9 @@
                     <a href="{{ route('system-setting.index') }}">
                         <i class="fa fa-cog"></i> <span>{{SYSTEM_SETTING_MODULE_SINGLE}}</span>
                     </a>
-                    <a href="{{ route('system-setting-homepage.index') }}">
+                    <!-- <a href="{{ route('system-setting-homepage.index') }}">
                         <i class="fa fa-cog"></i> <span>Homepage Setting</span>
-                    </a>
+                    </a> -->
                     <a href="{{ route('system-setting-legend-table.index') }}">
                         <i class="fa fa-cog"></i> <span>Legend Table Setting</span>
                     </a>

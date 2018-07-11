@@ -54,6 +54,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                {{Form::label('description', 'Description',['class'=>'col-sm-2 control-label'])}}
+                                <div class="col-sm-10">
+                                    {{Form::text('description', '', ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 {{Form::label('banner_content', 'Contents',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
                                     {{Form::textarea('banner_content', old('banner_content'), ['id' => 'article-ckeditor', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
@@ -68,7 +74,7 @@
                             <div class="form-group">
                                 {{Form::label('banner_link', 'Link',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
-                                    {{Form::text('banner_link', old('banner_link'), ['id'=>'link', 'class' => 'form-control', 'placeholder' => ''])}}
+                                    {{Form::text('banner_link', old('banner_link'), ['id'=>'', 'class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
                             <div class="form-group" id="target-div">

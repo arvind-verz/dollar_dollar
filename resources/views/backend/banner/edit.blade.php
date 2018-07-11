@@ -45,11 +45,17 @@
                                         @endif
                                     </select>
                                 </div>
-                            </div>
+                            </div>                            
                             <div class="form-group">
                                 {{Form::label('title', 'Title',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
                                     {{Form::text('title',  $banner->title, ['id' => '', 'class' => 'form-control  ', 'placeholder' => ''])}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{Form::label('description', 'Description',['class'=>'col-sm-2 control-label'])}}
+                                <div class="col-sm-10">
+                                    {{Form::text('description',  $banner->description, ['id' => '', 'class' => 'form-control  ', 'placeholder' => ''])}}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -76,7 +82,7 @@
                             <div class="form-group">
                                 {{Form::label('banner_link', ' Link',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
-                                    {{Form::text('banner_link', $banner->banner_link, ['id'=>'link','class' => 'form-control', 'placeholder' => ''])}}
+                                    {{Form::text('banner_link', $banner->banner_link, ['id'=>'','class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
                             <div class="form-group" id="target-div">

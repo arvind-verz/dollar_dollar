@@ -1432,14 +1432,13 @@ button {
     margin-bottom: 10px; } }
 
 .ps-block--home-signup {
-  padding: 100px 30px;
+  padding: 45px 30px;
   background-color: #fbf9f8;
   border: 1px solid #dde3e5;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
-  border-radius: 5px;
-  }
+  border-radius: 5px; }
   .ps-block--home-signup h3 {
     margin-bottom: 30px;
     font-family: "Montserrat", sans-serif;
@@ -1472,11 +1471,9 @@ button {
         color: #fff; }
 
 .ps-block--desposit {
-  padding: 0;
-  }
+  padding: 80px 0 40px; }
   .ps-block--desposit .ps-block__header {
-    margin-bottom: 0;
-    }
+    margin-bottom: 50px; }
     .ps-block--desposit .ps-block__header h3 {
       margin-right: 50px;
       margin-bottom: 0;
@@ -3683,8 +3680,10 @@ html .bg--parallax {
 
 .bg--cover {
   background-position: 50% 50% !important;
-  background-size: cover !important; }
-
+  background-size: cover !important;
+  height: 770px;
+  }
+.ps-slider--home.owl-carousel .bg--cover img{display:none !important;}
 .ps-wiget--footer ul, .header ul, .ps-wiget--footer ol, .header ol {
   margin: 0;
   padding: 0;
@@ -3714,5 +3713,32 @@ html .bg--parallax {
 .product-popup{display:none;}
 .ps-table tbody tr.highlight td {
         background-color: #e2ffe6;
-
+}
+.ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer{overflow-x:auto;}
+.ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer::-webkit-scrollbar-track
+{
+  border-radius: 15px;
+  background: #fff;
+  border: 1px solid #dde2e5;
+}
+.ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer::-webkit-scrollbar
+{
+  width: 8px;
+  height: 8px;
+}
+.ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer::-webkit-scrollbar-thumb
+{
+  border-radius: 15px;
+  background: #dde2e5;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer::-webkit-scrollbar-thumb:hover{background: #777;}
+@media (max-width: 1199px){
+  .bg--cover{height:500px;}
+}
+@media (max-width: 767px){
+  .bg--cover{height:350px;}
 }
