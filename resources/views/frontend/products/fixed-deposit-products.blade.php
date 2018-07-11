@@ -140,8 +140,8 @@
             </div>
             @if(count($promotion_products))
                 <div class="ps-slider--feature-product nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true"
-                     data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="4"
-                     data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4"
+                     data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="5"
+                     data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="5"
                      data-owl-duration="1000" data-owl-mousedrag="on"
                      data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
                      data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
@@ -164,18 +164,20 @@
                     @endforeach
                 </div>
             @endif
+            @if(count($legendtable))
             <div class="ps-block--legend-table">
                 <div class="ps-block__header">
                     <h3>Legend table</h3>
                 </div>
                 <div class="ps-block__content">
-                    <p><img src="{{ asset('img/icons/ff.png') }}" alt="">= Fresh funds</p>
-
-                    <p><img src="{{ asset('img/icons/ef.png') }}" alt="">= example funds</p>
-
-                    <p><img src="{{ asset('img/icons/cx.png') }}" alt="">= example funds</p>
+                    @foreach($legendtable as $legend)
+                    @if($legend->page_type=='Fixed Deposit')
+                    <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                    @endif
+                    @endforeach
                 </div>
             </div>
+            @endif
             @php
             //dd($ads);
             @endphp

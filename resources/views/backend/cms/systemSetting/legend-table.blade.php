@@ -2,13 +2,13 @@
 @section('content')
     <section class="content-header">
         <h1>
-            {{strtoupper( SYSTEM_SETTING_MODULE )}}
-            <small>{{SYSTEM_SETTING_MODULE_SINGLE.' '.EDIT_ACTION}}</small>
+            {{strtoupper( SYSTEM_SETTING_LEGEND_MODULE )}}
+            <small>{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.EDIT_ACTION}}</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('system-setting-homepage.index') }}">{{SYSTEM_SETTING_MODULE_SINGLE}}</a></li>
-            <li class="active">{{SYSTEM_SETTING_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
+            <li><a href="{{ route('system-setting-legend-table.index') }}">{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE}}</a></li>
+            <li class="active">{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
         </ol>
     </section>
 
@@ -19,13 +19,13 @@
             <div class="col-xs-12">
                 <div class="box box-warning ">
                     <!-- form start -->
-                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-homepage'], 'method' => 'POST']) !!}
+                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-legend-table'], 'method' => 'POST']) !!}
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs pull-right">
                             <li><a href="#homepage_links" data-toggle="tab">Homepage Links</a></li>
                             
                             <li class="pull-left header"><i class="fa fa-edit"></i>
-                                {{SYSTEM_SETTING_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
+                                {{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
                         </ul>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -33,21 +33,28 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="homepage_links">
                                     <div class="form-group">
-                                        {{Form::label('homepage_link_title', 'Title',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('page_type', 'Type',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('homepage_link_title', '', ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                            <select name="page_type" class="form-control">
+                                                <option value="">Select</option>
+                                                <option value="Fixed Deposit">Fixed Deposit</option>
+                                                <option value="Saving Deposit">Saving Deposit</option>
+                                                <option value="Foreign Currency Deposit">Foreign Currency Deposit</option>
+                                                <option value="Wealth Deposit">Wealth Deposit</option>
+                                                <option value="All in One Deposit">All in One Deposit</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('homepage_link_description', 'Description',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('title', 'Title',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('homepage_link_description', '', ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('title', '', ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('homepage_link', 'Link',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('icon', 'Icon',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('homepage_link', '', ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
+                                            <input type="file" name="icon" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -72,8 +79,9 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>Type</th>
+                                        <th>Icon</th>
                                         <th>Title</th>
-                                        <th>Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -81,10 +89,11 @@
                                     @if(count($systemSetting))
                                         @foreach($systemSetting as $setting)
                                     <tr>
+                                        <td>{{ $setting->page_type }}</td>
+                                        <td>{{ $setting->icon }}</td>
                                         <td>{{ $setting->title }}</td>
-                                        <td>{{ $setting->description }}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-app edit" title="Edit Page" href="{{ route("system-setting-homepage.edit",["id"=>$setting->id]) }}"><i class="fa fa-edit"></i> Edit</a></td>
+                                            <a class="btn btn-app edit" title="Edit Page" href="{{ route("system-setting-legend-table.edit",["id"=>$setting->id]) }}"><i class="fa fa-edit"></i> Edit</a></td>
                                     </tr>
                                         @endforeach
                                     @endif
