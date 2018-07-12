@@ -5112,9 +5112,9 @@ html .bg--parallax {
     background-size: cover !important;
 }
 
-.ps-slider--home.owl-carousel .bg--cover {
-    height: 770px;
-}
+/*.ps-slider--home.owl-carousel .bg--cover {
+    height: 425px;
+}*/
 
 .ps-slider--home.owl-carousel .bg--cover img {
     display: none !important;
@@ -5203,10 +5203,14 @@ html .bg--parallax {
 .ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer::-webkit-scrollbar-thumb:hover {
     background: #777;
 }
-
+@media (min-width: 1349px) {
+    .bg--cover {
+        height: 428px;
+    }
+}
 @media (max-width: 1199px) {
     .bg--cover {
-        height: 500px;
+        height: 428px;
     }
 }
 
@@ -5214,4 +5218,11 @@ html .bg--parallax {
     .bg--cover {
         height: 350px;
     }
+
+}
+@media (max-width: 320px) {
+    .bg--cover {
+        height: 226px;
+    }
+
 }

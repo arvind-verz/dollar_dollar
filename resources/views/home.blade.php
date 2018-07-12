@@ -41,12 +41,12 @@
             <?php $i = 1; ?>
             @if($banners->count()>1)
                 @foreach($banners as $banner)
-                    <a href="javascript:clickSliderhome({{$i}})" class="ps-home--links-a">
+
                         <div class="ps-block--home-link" data-mh="home-link">
-                            <span>{{ $banner->title }}</span>
+                            <a href="javascript:clickSliderhome({{$i}})" >{{ $banner->title }}</a>
                             <p>{{ $banner->description }}</p>
                         </div>
-                    </a>
+
                     <?php $i++; ?>
                 @endforeach
             @endif
