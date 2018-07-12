@@ -1944,7 +1944,7 @@ button {
 }
 
 .ps-block--home-signup {
-    padding: 45px 30px;
+    padding: 100px 30px;
     background-color: #fbf9f8;
     border: 1px solid #dde3e5;
     -webkit-border-radius: 5px;
@@ -2683,7 +2683,7 @@ button {
 }
 
 .ps-product .ps-product__header {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 .ps-product .ps-product__detail {
