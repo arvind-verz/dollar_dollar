@@ -1471,9 +1471,11 @@ button {
         color: #fff; }
 
 .ps-block--desposit {
-  padding: 80px 0 40px; }
+  /* padding: 80px 0 40px; */
+  }
   .ps-block--desposit .ps-block__header {
-    margin-bottom: 50px; }
+    /* margin-bottom: 50px; */
+    }
     .ps-block--desposit .ps-block__header h3 {
       margin-right: 50px;
       margin-bottom: 0;
@@ -3680,9 +3682,9 @@ html .bg--parallax {
 
 .bg--cover {
   background-position: 50% 50% !important;
-  background-size: cover !important;
-  height: 770px;
+  background-size: cover !important;  
   }
+  .ps-slider--home.owl-carousel .bg--cover{height: 770px;}
 .ps-slider--home.owl-carousel .bg--cover img{display:none !important;}
 .ps-wiget--footer ul, .header ul, .ps-wiget--footer ol, .header ol {
   margin: 0;

@@ -55,7 +55,7 @@
                                             src="{{ asset($detail->blog_image) }}" alt=""></div>
                                 <div class="ps-post__content"><a class="ps-post__title"
                                                                  href="{{ url($detail->slug) }}">{{$detail->name}}</a>
-                                    <span class="ps-post__meta">{{$detail->menu_title}}</span>
+                                    <span class="ps-post__meta"><a href="{{ url('get-blog-by-category/' . $detail->menu_id)}}">{{$detail->menu_title}}</a></span>
 
                                     <p>{!! $detail->short_description !!}</p><a class="ps-post__morelink ps-btn"
                                                                                 href="{{ url($detail->slug) }}">Read

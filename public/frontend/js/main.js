@@ -115,8 +115,7 @@ function owlCarousel(element) {
                 dataNavLeft = (el.data('owl-nav-left')) ? el.data('owl-nav-left') : "<i class='fa fa-angle-left'></i>",
                 dataNavRight = (el.data('owl-nav-right')) ? el.data('owl-nav-right') : "<i class='fa fa-angle-right'></i>",
                 duration = el.data('owl-duration'),
-                datamouseDrag = (el.data('owl-mousedrag') == 'on') ? true : false,
-                datatouchDrag = (el.data('owl-touchdrag') == 'off') ? false : true;
+                datamouseDrag = (el.data('owl-mousedrag') == 'on') ? true : false;
             if (el.children.length > 1) {
                 el.owlCarousel({
                     animateIn: dataAnimateIn,
@@ -128,7 +127,7 @@ function owlCarousel(element) {
                     loop: dataLoop,
                     nav: dataNav,
                     mouseDrag: datamouseDrag,
-                    touchDrag: datatouchDrag,
+                    touchDrag: true,
                     autoplaySpeed: duration,
                     navSpeed: duration,
                     dotsSpeed: duration,
@@ -136,7 +135,6 @@ function owlCarousel(element) {
                     navText: [dataNavLeft, dataNavRight],
                     dots: dataDots,
                     items: dataDefaultItem,
-                    autoHeight:true,
                     responsive: {
                         0: {
                             items: dataItemXS
@@ -185,9 +183,7 @@ function productCollapse() {
 
     });
 }
-function clickSliderhome(id){
-    $(".ps-slider--home .owl-dot:nth-child("+id+")").click();
-}
+
 function backToTop() {
     var scrollPos = 0;
     var element = $('#totop');
@@ -244,3 +240,7 @@ $(window).on('load resize', function() {
 $(window).on('load', function() {
 
 });
+
+function clickSliderhome(id){
+ $(".ps-slider--home .owl-dot:nth-child("+id+")").click();
+}
