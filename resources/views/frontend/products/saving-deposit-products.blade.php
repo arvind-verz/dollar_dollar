@@ -326,18 +326,21 @@
                                                         </thead>
                                                         <tbody>
                                                         @foreach($product->product_ranges as $productRange)
-                                                            <?php $i = 1;   $counters = $productRange->counter;?>
-                                                            @foreach($counters as $counter)
+                                                            <?php //$i = 1;   $counters = 12;?>
+                                                            @for($i==1;$i<=12;$i++)
                                                                 <tr class="@if($productRange->high_light==true ) highlight @endif">
                                                                     @if($i==1)
-                                                                        <td rowspan="{{ count((array)$counters) }}">{{ $productRange->sibor_rate. '%' }}</td>
+                                                                        <td rowspan="12">{{ $productRange->sibor_rate. '%' }}</td>
                                                                     @endif
-                                                                    <td>{{ 'COUNTER ' . $i . ' - ' . $counter . '%' }}</td>
+                                                                        @if($i==1)
+                                                                            <td>{{ 'COUNTER ' . $i . ' - ' . ($i*0.1). '%' }}</td>
+                                                                        @else
+                                                                            <td>{{ 'COUNTER ' . $i . ' - ' . $counter . '%' }}</td>
+                                                                        @endif
                                                                     <td>{{ ($counter+($productRange->sibor_rate)) . '%' }}</td>
-
                                                                 </tr>
-                                                                <?php $i++; ?>
-                                                            @endforeach
+
+                                                            @endfor
                                                         @endforeach
                                                         </tbody>
                                                     </table>
