@@ -41,26 +41,11 @@
                     <div class="form-group">
                         <label for="title" class="col-sm-2 control-label"></label>
 
-                        <div class="col-sm-4">
-                            <div class="input-group date">
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-success">Min
-                                        Placement
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control pull-right only_numeric "
-                                       name="min_placement_aioa2[{{$key}}]"
-                                       value="{{ $value->min_range  }}">
-
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 ">
+                        <div class="col-sm-8 ">
 
                             <div class="input-group date ">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-danger">Max
-                                        Placement
+                                    <button type="button" class="btn btn-danger">Placement
                                     </button>
                                 </div>
                                 <input type="text" class="form-control pull-right only_numeric"
@@ -157,25 +142,11 @@
             <div class="form-group">
                 <label for="title" class="col-sm-2 control-label"></label>
 
-                <div class="col-sm-4">
-                    <div class="input-group date">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-success">Min
-                                Placement
-                            </button>
-                        </div>
-                        <input type="text" class="form-control pull-right only_numeric "
-                               name="min_placement_aioa2[0]"
-                               value="{{ old('min_placement') ? old('min_placement') :''  }}">
-
-                    </div>
-                </div>
-
-                <div class="col-sm-4 ">
+                <div class="col-sm-8 ">
 
                     <div class="input-group date ">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-danger">Max Placement
+                            <button type="button" class="btn btn-danger">Placement
                             </button>
                         </div>
                         <input type="text" class="form-control pull-right only_numeric"
