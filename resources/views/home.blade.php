@@ -35,11 +35,11 @@
 
     <div class="ps-home--links">
         <div class="container">
-            @if(count($systemSettingHomepage))
-                @foreach($systemSettingHomepage as $setting)
+            @if($banners->count()>1)
+                @foreach($banners as $banner)
             <div class="ps-block--home-link" data-mh="home-link">
-                <a href="{{ $setting->link }}">{{ $setting->title }}</a>
-                <p>{{ $setting->description }}</p>
+                <a href="{{ $banner->banner_link }}">{{ $banner->title }}</a>
+                <p>{{ $banner->description }}</p>
             </div>
                 @endforeach
             @endif

@@ -19,8 +19,8 @@ var isMobile = {
     }
 }
 $(".ps-poster-popup .close-popup").click(function(){
-	$(this).parent().slideUp();
-	$(".product-popup").slideDown();
+    $(this).parent().slideUp();
+    $(".product-popup").slideDown();
 });
 function backgroundImage() {
     var databackground = $('[data-background]');
@@ -240,3 +240,7 @@ $(window).on('load resize', function() {
 $(window).on('load', function() {
 
 });
+
+function clickSliderhome(id){
+ $(".ps-slider--home .owl-dot:nth-child("+id+")").click();
+}

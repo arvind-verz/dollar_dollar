@@ -148,6 +148,7 @@ class BannerController extends Controller
         $banner = new Banner;
         $banner->page_id = $request->page;
         $banner->title = $request->title;
+        $banner->description = $request->description;
         $banner->target = $request->target;
         $banner->banner_content_color = $request->banner_content_color;
         $banner->banner_content = $request->banner_content;
@@ -302,6 +303,7 @@ class BannerController extends Controller
 
         $banner->page_id = $request->page;
         $banner->title = $request->title;
+        $banner->description = $request->description;
         $banner->target = $request->target;
         $banner->banner_content = $request->banner_content;
         $banner->banner_content_color = $request->banner_content_color;
