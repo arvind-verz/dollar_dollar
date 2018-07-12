@@ -12,7 +12,10 @@
 
     @if($banners->count()>1)
         <div class="ps-home-banner">
-            <div class="ps-slider--home owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
+            <div class="ps-slider--home owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
+                 data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1"
+                 data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000"
+                 data-owl-mousedrag="on">
                 @foreach($banners as $banner)
                     <div class="ps-banner bg--cover" data-background="{{asset($banner->banner_image )}}"><img
                                 src="{{asset($banner->banner_image )}}" alt="">
@@ -35,12 +38,16 @@
 
     <div class="ps-home--links">
         <div class="container">
+            <?php $i = 1; ?>
             @if($banners->count()>1)
                 @foreach($banners as $banner)
-            <div class="ps-block--home-link" data-mh="home-link">
-                <a href="{{ $banner->banner_link }}">{{ $banner->title }}</a>
-                <p>{{ $banner->description }}</p>
-            </div>
+                    <a href="javascript:clickSliderhome({{$i}})" class="ps-home--links-a">
+                        <div class="ps-block--home-link" data-mh="home-link">
+                            <span>{{ $banner->title }}</span>
+                            <p>{{ $banner->description }}</p>
+                        </div>
+                    </a>
+                    <?php $i++; ?>
                 @endforeach
             @endif
         </div>
@@ -122,30 +129,35 @@
                             </div>
                             <span class="display_fixed">
                             @if(count($promotion_products))
-                                <div class="row">
-                                @php $i = 1; @endphp
-                                @foreach($promotion_products as $products)
-                                @if($products->promotion_type_id==1 && $i<=4)
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                    <div class="ps-block--short-product"><img src="{{ asset($products->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}%</strong></h4>
-                                
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-                                
-                                            <p><strong>Min:</strong> SGD ${{ $products->minimum_placement_amount }}</p>
-                                
-                                            <p class="highlight">{{ $products->promotion_period }} Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
+                                    <div class="row">
+                                        @php $i = 1; @endphp
+                                        @foreach($promotion_products as $products)
+                                            @if($products->promotion_type_id==1 && $i<=4)
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                    <div class="ps-block--short-product"><img
+                                                                src="{{ asset($products->brand_logo) }}" alt="">
+                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                                %</strong></h4>
+
+                                                        <div class="ps-block__info">
+                                                            <p><strong> rate: </strong>1.3%</p>
+
+                                                            <p><strong>Min:</strong> SGD
+                                                                ${{ $products->minimum_placement_amount }}</p>
+
+                                                            <p class="highlight">{{ $products->promotion_period }}
+                                                                Months</p>
+                                                        </div>
+                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                            info</a>
+                                                    </div>
+                                                </div>
+                                                @php $i++; @endphp
+                                            @endif
+
+                                        @endforeach
                                     </div>
-                                </div>
-                                @php $i++; @endphp
                                 @endif
-                                
-                                @endforeach
-                                </div>
-                            @endif
                             </span>
                         </div>
                     </div>
@@ -163,31 +175,36 @@
                             </div>
                             <span class="display_saving">
                              @if(count($promotion_products))
-                            <div class="row">
-                                @php $i = 1; @endphp
-                                @foreach($promotion_products as $products)
-                                    @if($products->promotion_type_id==2 && $i<=4)
+                                    <div class="row">
+                                        @php $i = 1; @endphp
+                                        @foreach($promotion_products as $products)
+                                            @if($products->promotion_type_id==2 && $i<=4)
 
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset($products->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}%</strong></h4>
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                                    <div class="ps-block--short-product"><img
+                                                                src="{{ asset($products->brand_logo) }}" alt="">
+                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                                %</strong></h4>
 
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                                        <div class="ps-block__info">
+                                                            <p><strong> rate: </strong>1.3%</p>
 
-                                            <p><strong>Min:</strong> SGD ${{ $products->minimum_placement_amount }}</p>
+                                                            <p><strong>Min:</strong> SGD
+                                                                ${{ $products->minimum_placement_amount }}</p>
 
-                                            <p class="highlight">{{ $products->promotion_period }} Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More info</a>
+                                                            <p class="highlight">{{ $products->promotion_period }}
+                                                                Months</p>
+                                                        </div>
+                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                            info</a>
+                                                    </div>
+                                                </div>
+                                                @php if($i==4) {break;} $i++; @endphp
+                                            @endif
+
+                                        @endforeach
                                     </div>
-                                </div>
-                                 @php if($i==4) {break;} $i++; @endphp
-                                    @endif
-
-                                @endforeach
-                            </div>
-                            @endif
+                                @endif
                             </span>
                         </div>
                     </div>
@@ -205,7 +222,8 @@
                             <span class="display_wealth">
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/1.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/1.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -219,7 +237,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -233,7 +252,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -247,7 +267,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -269,7 +290,7 @@
                             <div class="ps-block__header">
                                 <h3><strong>All In One Account</strong></h3>
 
-                               <div class="ps-block__actions">
+                                <div class="ps-block__actions">
                                     <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
                                     <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
                                     <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
@@ -278,7 +299,8 @@
                             <span class="display_aio">
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/1.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/1.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -292,7 +314,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -306,7 +329,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -320,7 +344,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -351,7 +376,8 @@
                             <span class="display_foreign_currency">
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/1.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/1.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -361,11 +387,13 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More info</a>
+                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More
+                                            info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -375,11 +403,13 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More info</a>
+                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More
+                                            info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -389,11 +419,13 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More info</a>
+                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More
+                                            info</a>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img src="{{ asset('frontend/img/logo/2.png') }}" alt="">
+                                    <div class="ps-block--short-product"><img
+                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
                                         <h4>up to <strong> 1.3%</strong></h4>
 
                                         <div class="ps-block__info">
@@ -403,7 +435,8 @@
 
                                             <p class="highlight">12 Months</p>
                                         </div>
-                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More info</a>
+                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More
+                                            info</a>
                                     </div>
                                 </div>
                             </div>
@@ -411,7 +444,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="ps-section__footer view_all_types"><a href="{{ url('fixed-deposit-mode') }}">View all bank rates</a></div>
+                <div class="ps-section__footer view_all_types"><a href="{{ url('fixed-deposit-mode') }}">View all bank
+                        rates</a></div>
             </div>
         </div>
     </div>
@@ -426,21 +460,33 @@
                         <div class="ps-section__header">
                             <h3 class="ps-heading">Lastest <strong> Blog</strong></h3>
 
-                            <div class="ps-slider-navigation" data-slider="ps-slider--home-blog"><a class="ps-prev" href="javascript:void(0);"><i class="fa fa-caret-left"></i></a><a class="ps-next" href="javascript:void(0);"><i class="fa fa-caret-right"></i></a></div>
+                            <div class="ps-slider-navigation" data-slider="ps-slider--home-blog"><a class="ps-prev"
+                                                                                                    href="javascript:void(0);"><i
+                                            class="fa fa-caret-left"></i></a><a class="ps-next"
+                                                                                href="javascript:void(0);"><i
+                                            class="fa fa-caret-right"></i></a></div>
                         </div>
-                        <div class="owl-slider owl-blog" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="off">
+                        <div class="owl-slider owl-blog" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
+                             data-owl-gap="0" data-owl-nav="false" data-owl-dots="false" data-owl-item="1"
+                             data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1"
+                             data-owl-duration="1000" data-owl-mousedrag="off">
                             @foreach($blogs as $blog)
-                            <div class="ps-post--home">
-                                <div class="ps-post__thumbnail">
-                                    <a class="ps-post__overlay" href="{{ url($blog->slug) }}"></a><img src="{{ asset($blog->blog_image) }}" alt="">
+                                <div class="ps-post--home">
+                                    <div class="ps-post__thumbnail">
+                                        <a class="ps-post__overlay" href="{{ url($blog->slug) }}"></a><img
+                                                src="{{ asset($blog->blog_image) }}" alt="">
 
-                                    <div class="ps-post__posted"><span class="date">{{ date("d", strtotime($blog->created_at)) }}</span><span class="month">{{ date("M", strtotime($blog->created_at)) }}</span></div>
+                                        <div class="ps-post__posted"><span
+                                                    class="date">{{ date("d", strtotime($blog->created_at)) }}</span><span
+                                                    class="month">{{ date("M", strtotime($blog->created_at)) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="ps-post__content">
+                                        <a class="ps-post__title" href="{{ url($blog->slug) }}">{{ $blog->name }}</a>
+
+                                        <p>{!! $blog->short_description !!}</p>
+                                    </div>
                                 </div>
-                                <div class="ps-post__content">
-                                    <a class="ps-post__title" href="{{ url($blog->slug) }}">{{ $blog->name }}</a>
-                                    <p>{!! $blog->short_description !!}</p>
-                                </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>
@@ -449,7 +495,11 @@
                     <div class="ps-section__right">
                         <div class="ps-fanpage"><img src="{{ asset('frontend/img/fanpage.png') }}" alt=""></div>
                         <div class="ps-block--home-signup">
-                            <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i class="fa fa-facebook"></i> Signup with facebook</a><a class="ps-btn ps-btn--outline" href="{{ url('login/google') }}">Sign Up with email</a>
+                            <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a
+                                    class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i
+                                        class="fa fa-facebook"></i> Signup with facebook</a><a
+                                    class="ps-btn ps-btn--outline" href="{{ url('login/google') }}">Sign Up with
+                                email</a>
                         </div>
                     </div>
                 </div>
@@ -457,40 +507,40 @@
         </div>
     </div>
     <script type="text/javascript">
-        $("document").ready(function() {
+        $("document").ready(function () {
             var owl = $('.owl-blog');
             owl.owlCarousel({
-                loop:true,
-                margin:10,
+                loop: true,
+                margin: 10,
                 items: 1
             });
-            $('.ps-next').click(function() {
+            $('.ps-next').click(function () {
                 owl.trigger('next.owl.carousel');
             })
-            $('.ps-prev').click(function() {
+            $('.ps-prev').click(function () {
                 owl.trigger('prev.owl.carousel', [300]);
             })
         });
 
-        $(".ps-tab-list li").on("click", function() {
+        $(".ps-tab-list li").on("click", function () {
             $(".ps-tab-list li").removeClass("current");
             $(this).on("click").addClass("current");
             var title = $(this).on("click").addClass("current a").text();
             //alert(title);
             $("input[name='deposit_type']").val(title);
-            if(title=='Fixed Deposit') {
-                $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');                
+            if (title == 'Fixed Deposit') {
+                $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');
             }
-            else if(title=='Saving Deposit') {
+            else if (title == 'Saving Deposit') {
                 $(".view_all_types a").attr("href", '{{ url("saving-deposit-mode") }}');
             }
-            else if(title=='Wealth Deposit') {
+            else if (title == 'Wealth Deposit') {
                 $(".view_all_types a").attr("href", '{{ url("wealth-deposit-mode") }}');
             }
-            else if(title=='All In One Account') {
+            else if (title == 'All In One Account') {
                 $(".view_all_types a").attr("href", '{{ url("all-in-one-deposit-mode") }}');
             }
-            else if(title=='Foreign Currency') {
+            else if (title == 'Foreign Currency') {
                 $(".view_all_types a").attr("href", '{{ url("foreign-currency-deposit-mode") }}');
             }
             else {
@@ -500,50 +550,50 @@
 
         $.ajax({
             method: 'POST',
-            url:    '{{ route('deposit-type') }}',
+            url: '{{ route('deposit-type') }}',
             data: 'type=Interest',
             cache: false,
-            success: function(data) {
+            success: function (data) {
                 //alert(data);
                 $("span.display_fixed").html(data);
             }
-        });  
-        $("a.deposit_value").on("click", function() {
+        });
+        $("a.deposit_value").on("click", function () {
             $("a.deposit_value").removeClass("active");
             $(this).addClass("active");
             var title = $("input[name='deposit_type']").val();
             var value = $(this).text();
-            if(title=='Fixed Deposit') {
+            if (title == 'Fixed Deposit') {
                 $.ajax({
                     method: 'POST',
-                    url:    '{{ route('deposit-type') }}',
-                    data: 'type='+value,
+                    url: '{{ route('deposit-type') }}',
+                    data: 'type=' + value,
                     cache: false,
-                    success: function(data) {
+                    success: function (data) {
                         //alert(data);
                         $("span.display_fixed").html(data);
                     }
-                });   
+                });
             }
-            else if(title=='Saving Deposit') {
+            else if (title == 'Saving Deposit') {
                 //
             }
-            else if(title=='Wealth Deposit') {
+            else if (title == 'Wealth Deposit') {
                 //
             }
-            else if(title=='All In One Account') {
+            else if (title == 'All In One Account') {
                 //
             }
-            else if(title=='Foreign Currency') {
+            else if (title == 'Foreign Currency') {
                 //
             }
             else {
                 $.ajax({
                     method: 'POST',
-                    url:    '{{ route('deposit-type') }}',
+                    url: '{{ route('deposit-type') }}',
                     data: 'type=Interest',
                     cache: false,
-                    success: function(data) {
+                    success: function (data) {
                         //alert(data);
                         $("span.display_fixed").html(data);
                     }
