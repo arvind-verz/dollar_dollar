@@ -327,18 +327,27 @@
                                                         <tbody>
                                                         @foreach($product->product_ranges as $productRange)
                                                             <?php //$i = 1;   $counters = 12;?>
-                                                            @for($i==1;$i<=12;$i++)
-                                                                <tr class="@if($productRange->high_light==true ) highlight @endif">
-                                                                    @if($i==1)
-                                                                        <td rowspan="12">{{ $productRange->sibor_rate. '%' }}</td>
-                                                                    @endif
-                                                                        @if($i==1)
-                                                                            <td>{{ 'COUNTER ' . $i . ' - ' . ($i*0.1). '%' }}</td>
-                                                                        @else
-                                                                            <td>{{ 'COUNTER ' . $i . ' - ' . $counter . '%' }}</td>
+                                                            @for($i=1;$i<=12;$i++)
+                                                                @if(!((4 <= $i) && ($i < 11)))
+                                                                    <tr class="@if($productRange->high_light==true ) highlight @endif">
                                                                         @endif
-                                                                    <td>{{ ($counter+($productRange->sibor_rate)) . '%' }}</td>
-                                                                </tr>
+                                                                        @if($i==1)
+                                                                            <td rowspan="6" style="border: none; font-size: 30px; background-color: #faf9f9">{{ $productRange->sibor_rate. '%' }}</td>
+                                                                        @endif
+                                                                        @if($i==4)
+                                                                            <td>TO</td>
+                                                                        @elseif(!((4 < $i) && ($i < 11)))
+                                                                            <td>{{ 'COUNTER ' . $i . ' - ' . ($i*0.1). '%' }}</td>
+                                                                        @endif
+                                                                        @if($i==4)
+                                                                            <td>TO</td>
+                                                                        @elseif(!((4 <= $i) && ($i <= 10)))
+                                                                            <td>{{ (($i*0.1)+($productRange->sibor_rate)) . '%' }}</td>
+                                                                        @endif
+
+                                                                        @if(!((4 <= $i) && ($i < 11)))
+                                                                    </tr>
+                                                                @endif
 
                                                             @endfor
                                                         @endforeach

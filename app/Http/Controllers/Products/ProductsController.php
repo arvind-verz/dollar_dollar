@@ -180,7 +180,6 @@ class ProductsController extends Controller
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, WEALTH_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
-            $range['counter'] = array_map('floatVal', $request->counter_sdp3);
             $range['air'] = (float)$request->air_sdp3;
             $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
             $ranges[] = $range;
@@ -500,7 +499,6 @@ class ProductsController extends Controller
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, WEALTH_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
-            $range['counter'] = array_map('floatVal', $request->counter_sdp3);
             $range['air'] = (float)$request->air_sdp3;
             $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
             $ranges[] = $range;
