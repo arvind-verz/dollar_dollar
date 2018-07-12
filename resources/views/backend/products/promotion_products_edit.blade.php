@@ -1,4 +1,4 @@
-\@extends('backend.layouts.app')
+@extends('backend.layouts.app')
 @section('content')
     <section class="content-header">
 
@@ -8,7 +8,9 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
-            <li class="active"><a href="{{ route('promotion-products',['productTypeId'=>$product->promotion_type_id]) }}">{{$productType}}</a></li>
+            <li class="active"><a
+                        href="{{ route('promotion-products',['productTypeId'=>$product->promotion_type_id]) }}">{{$productType}}</a>
+            </li>
             <li class="active">{{'Product '.EDIT_ACTION}}</li>
         </ol>
     </section>
@@ -34,7 +36,8 @@
 
                             {!! Form::open(['id'=>'addProduct','class' => 'form-horizontal','route' => ['promotion-products-update',$product->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                                     <!-- Custom Tabs (Pulled to the right) -->
-                            <input type="hidden" name="product_id" id="product-id" value="{{$product->id}}" />
+                            <input type="hidden" name="product_id" id="product-id" value="{{$product->id}}"/>
+
                             <div class="tab-content">
                                 <div class="tab-pane active" id="product-detail">
                                     <div class="form-group">
@@ -149,7 +152,8 @@
                                             <select class="form-control select2"
                                                     data-placeholder="" name="status"
                                                     style="width: 100%;">
-                                                <option value="1" @if($product->status == 1) selected="selected" @endif >
+                                                <option value="1"
+                                                        @if($product->status == 1) selected="selected" @endif >
                                                     Active
                                                 </option>
                                                 <option value="0" @if($product->status == 0) selected="selected" @endif>
@@ -166,10 +170,12 @@
                                             <select class="form-control select2"
                                                     data-placeholder="" name="featured"
                                                     style="width: 100%;">
-                                                <option value="0" @if($product->featured == 0) selected="selected" @endif >
+                                                <option value="0"
+                                                        @if($product->featured == 0) selected="selected" @endif >
                                                     No
                                                 </option>
-                                                <option value="1" @if($product->featured == 1) selected="selected" @endif>
+                                                <option value="1"
+                                                        @if($product->featured == 1) selected="selected" @endif>
                                                     Yes
                                                 </option>
 
@@ -183,6 +189,7 @@
                                     @include('backend.products.formulaDetail.fixDepositF1')
                                     @include('backend.products.formulaDetail.savingDepositF1')
                                     @include('backend.products.formulaDetail.savingDepositF3')
+                                    @include('backend.products.formulaDetail.savingDepositF4')
                                     @include('backend.products.formulaDetail.savingDepositF5')
                                     @include('backend.products.formulaDetail.allInOneAccountF1')
                                     @include('backend.products.formulaDetail.allInOneAccountF2')
@@ -197,7 +204,7 @@
                                         </div>
                                     </div>
                                     <?php
-                                        $ads = $product->ads_placement;
+                                    $ads = $product->ads_placement;
                                     ?>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_image', 'Ad Horizontal Image',['class'=>'col-sm-2 control-label'])}}
@@ -207,8 +214,10 @@
                                         @if(isset($ads[0]->ad_image_horizontal) && ($ads[0]->ad_image_horizontal != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="{{asset($ads[0]->ad_image_horizontal)}}" target="_blank"><img class="attachment-img" src="{!! asset($ads[0]->ad_image_horizontal) !!}"
-                                                         alt="image"></a>
+                                                    <a href="{{asset($ads[0]->ad_image_horizontal)}}"
+                                                       target="_blank"><img class="attachment-img"
+                                                                            src="{!! asset($ads[0]->ad_image_horizontal) !!}"
+                                                                            alt="image"></a>
                                                 </div>
                                             </div>
                                         @endif
@@ -227,8 +236,10 @@
                                         @if(isset($ads[1]->ad_image_vertical) && ($ads[1]->ad_image_vertical != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="{{asset($ads[1]->ad_image_vertical)}}" target="_blank"><img class="attachment-img" src="{!! asset($ads[1]->ad_image_vertical) !!}"
-                                                         alt="image"></a>
+                                                    <a href="{{asset($ads[1]->ad_image_vertical)}}" target="_blank"><img
+                                                                class="attachment-img"
+                                                                src="{!! asset($ads[1]->ad_image_vertical) !!}"
+                                                                alt="image"></a>
                                                 </div>
                                             </div>
                                         @endif
@@ -247,8 +258,10 @@
                                         @if(isset($ads[2]->ad_horizontal_image_popup) && ($ads[2]->ad_horizontal_image_popup != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="{{asset($ads[2]->ad_horizontal_image_popup)}}" target="_blank"><img class="attachment-img" src="{!! asset($ads[2]->ad_horizontal_image_popup) !!}"
-                                                         alt="image"></a>
+                                                    <a href="{{asset($ads[2]->ad_horizontal_image_popup)}}"
+                                                       target="_blank"><img class="attachment-img"
+                                                                            src="{!! asset($ads[2]->ad_horizontal_image_popup) !!}"
+                                                                            alt="image"></a>
                                                 </div>
                                             </div>
                                         @endif
@@ -267,8 +280,10 @@
                                         @if(isset($ads[3]->ad_horizontal_image_popup_top) && ($ads[3]->ad_horizontal_image_popup_top != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="{{asset($ads[3]->ad_horizontal_image_popup_top)}}" target="_blank"><img class="attachment-img" src="{!! asset($ads[3]->ad_horizontal_image_popup_top) !!}"
-                                                         alt="image"></a>
+                                                    <a href="{{asset($ads[3]->ad_horizontal_image_popup_top)}}"
+                                                       target="_blank"><img class="attachment-img"
+                                                                            src="{!! asset($ads[3]->ad_horizontal_image_popup_top) !!}"
+                                                                            alt="image"></a>
                                                 </div>
                                             </div>
                                         @endif
@@ -280,35 +295,35 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                    </div>
-                                {{Form::hidden('_method','PUT')}}
-                                <!-- /.box-body -->
-                                <div class="box-footer wizard">
-                                    <a href="{{ route('promotion-products',['productTypeId'=>$product->promotion_type_id]) }}"
-                                       class="btn btn-default back"><i class="fa fa-close">
-                                        </i> Cancel</a>
-                                    <a href="javascript:;" class="btn btn-warning previous"><i
-                                                class="fa  fa-angle-double-left"></i> Previous</a>
-                                    <a href="javascript:;" class=" btn btn-warning pull-right next">Next <i
-                                                class="fa  fa-angle-double-right "></i></a>
-                                    <button type="submit" class="btn btn-info pull-right finish"><i
-                                                class="fa  fa-check"></i>
-                                        Update
-                                    </button>
-                                    </ul>
-                                </div>
-                                <!-- /.tab-content -->
-                                {!! Form::close() !!}
 
                             </div>
+                            {{Form::hidden('_method','PUT')}}
+                                    <!-- /.box-body -->
+                            <div class="box-footer wizard">
+                                <a href="{{ route('promotion-products',['productTypeId'=>$product->promotion_type_id]) }}"
+                                   class="btn btn-default back"><i class="fa fa-close">
+                                    </i> Cancel</a>
+                                <a href="javascript:;" class="btn btn-warning previous"><i
+                                            class="fa  fa-angle-double-left"></i> Previous</a>
+                                <a href="javascript:;" class=" btn btn-warning pull-right next">Next <i
+                                            class="fa  fa-angle-double-right "></i></a>
+                                <button type="submit" class="btn btn-info pull-right finish"><i
+                                            class="fa  fa-check"></i>
+                                    Update
+                                </button>
+                                </ul>
+                            </div>
+                            <!-- /.tab-content -->
+                            {!! Form::close() !!}
+
                         </div>
-                        <!-- nav-tabs-custom -->
                     </div>
-                    <!-- /.box-body -->
+                    <!-- nav-tabs-custom -->
                 </div>
+                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
+        </div>
+        <!-- /.box -->
         </div>
     </section>
 
@@ -335,33 +350,47 @@
             }
 
 
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
-            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>','<?php echo WEALTH_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
-            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>','<?php echo WEALTH_DEPOSIT_F5; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
+            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
-                '<?php echo SAVING_DEPOSIT_F1; ?>','<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo SAVING_DEPOSIT_F4; ?>',
-                '<?php echo WEALTH_DEPOSIT_F1; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F4; ?>',
-                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+                '<?php echo SAVING_DEPOSIT_F1; ?>', '<?php echo SAVING_DEPOSIT_F2; ?>',
+                '<?php echo WEALTH_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>',
+                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
-            if(jQuery.inArray(formula, FDP1) !== -1)
-            {
+            var SDP6 = [
+                '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+            ];
+            var SDP4 = [
+                '<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
+            ];
+            if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
 
 
             }
-            if(jQuery.inArray(formula, SDP3) !== -1){
+            if (jQuery.inArray(formula, SDP3) !== -1) {
                 //alert("Hello");
                 $('#savingDepositF3').removeClass('display-none');
 
             }
-            if(jQuery.inArray(formula, SDP5) !== -1){
+            if (jQuery.inArray(formula, SDP6) !== -1) {
+                //alert("Hello");
+                $('#savingDepositF4').removeClass('display-none');
+
+            }
+            if (jQuery.inArray(formula, SDP5) !== -1) {
                 //alert("Hello");
                 $('#savingDepositF5').removeClass('display-none');
 
             }
-            if(jQuery.inArray(formula, SDP1) !== -1){
+            if (jQuery.inArray(formula, SDP1) !== -1) {
                 $('#savingDepositF1').removeClass('display-none');
-
+                if (jQuery.inArray(formula, SDP4) !== -1) {
+                    $('#savingDepositF2Tenure').removeClass('display-none');
+                } else {
+                    $('#savingDepositF2Tenure').addClass('display-none');
+                }
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
 
@@ -372,11 +401,13 @@
 
                 $('#allInOneAccountF2').removeClass('display-none');
 
-            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
+            }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
 
                 $('#allInOneAccountF3').removeClass('display-none');
 
-            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
+            }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
 
                 $('#allInOneAccountF4').removeClass('display-none');
 
@@ -387,6 +418,7 @@
             $('#fixDepositF1').addClass('display-none');
             $('#savingDepositF1').addClass('display-none');
             $('#savingDepositF3').addClass('display-none');
+            $('#savingDepositF4').addClass('display-none');
             $('#savingDepositF5').addClass('display-none');
             $('#allInOneAccountF1').addClass('display-none');
             $('#allInOneAccountF2').addClass('display-none');
@@ -413,39 +445,51 @@
             $('#fixDepositF1').addClass('display-none');
             $('#savingDepositF1').addClass('display-none');
             $('#savingDepositF3').addClass('display-none');
+            $('#savingDepositF4').addClass('display-none');
             $('#savingDepositF5').addClass('display-none');
             $('#allInOneAccountF1').addClass('display-none');
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
-            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>','<?php echo WEALTH_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
-            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>','<?php echo WEALTH_DEPOSIT_F5; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
+            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
-                '<?php echo SAVING_DEPOSIT_F1; ?>','<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo SAVING_DEPOSIT_F4; ?>',
-                '<?php echo WEALTH_DEPOSIT_F1; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F4; ?>',
-                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+                '<?php echo SAVING_DEPOSIT_F1; ?>', '<?php echo SAVING_DEPOSIT_F2; ?>',
+                '<?php echo WEALTH_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>',
+                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
-            if(jQuery.inArray(formula, FDP1) !== -1)
-            {
+            var SDP6 = [
+                '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+            ];
+            var SDP4 = [
+                '<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
+            ];
+            if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
 
             }
-            if(jQuery.inArray(formula, SDP3) !== -1){
-                //alert("Hello");
-
+            if (jQuery.inArray(formula, SDP3) !== -1) {
                 addCounter();
-
                 $('#savingDepositF3').removeClass('display-none');
+            }
+            if (jQuery.inArray(formula, SDP6) !== -1) {
+                //alert("Hello");
+                $('#savingDepositF4').removeClass('display-none');
 
             }
-            if(jQuery.inArray(formula, SDP5) !== -1){
+            if (jQuery.inArray(formula, SDP5) !== -1) {
                 //alert("Hello");
                 $('#savingDepositF5').removeClass('display-none');
 
             }
-            if(jQuery.inArray(formula, SDP1) !== -1){
+            if (jQuery.inArray(formula, SDP1) !== -1) {
                 $('#savingDepositF1').removeClass('display-none');
+                if (jQuery.inArray(formula, SDP4) !== -1) {
+                    $('#savingDepositF2Tenure').removeClass('display-none');
+                } else {
+                    $('#savingDepositF2Tenure').addClass('display-none');
+                }
 
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
@@ -457,11 +501,13 @@
 
                 $('#allInOneAccountF2').removeClass('display-none');
 
-            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
+            }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
 
                 $('#allInOneAccountF3').removeClass('display-none');
 
-            }if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
+            }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
 
                 $('#allInOneAccountF4').removeClass('display-none');
 
