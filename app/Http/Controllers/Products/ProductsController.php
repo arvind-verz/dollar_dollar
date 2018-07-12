@@ -39,7 +39,7 @@ class ProductsController extends Controller
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
         $productType = $this->productType($productTypeId);
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks','productType','productTypeId'));
+        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId'));
     }
 
     public function promotion_products_get_formula(Request $request)
@@ -159,14 +159,14 @@ class ProductsController extends Controller
             //dd($ranges);
             $product->tenure = $tenure;
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
             foreach ($request->min_placement_sdp1 as $k => $v) {
                 $max = $request->max_placement_sdp1;
                 $bonusInterest = $request->bonus_interest_sdp1;
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
                 if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
-                    $range['tenor'] = 3;
+                    $range['tenor'] = $request->tenure_sdp1;
 
                 }
                 $range['min_range'] = (int)$v;
@@ -186,6 +186,22 @@ class ProductsController extends Controller
             $ranges[] = $range;
 
             $ranges = json_encode($ranges);
+        }
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+            $min = 0;
+            foreach ($request->max_placement_sdp4 as $k => $v) {
+                $bonusInterest = $request->bonus_interest_sdp4;
+                $boardInterest = $request->board_rate_sdp4;
+                $range = [];
+                $range['min_range'] = (int)$min;
+                $range['max_range'] = (int)$v;
+                $range['bonus_interest'] = (float)$bonusInterest[$k];
+                $range['board_rate'] = (float)$boardInterest[$k];
+                $ranges[] = $range;
+                $min = $v + 1;
+            }
+            $ranges = json_encode($ranges);
+
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, WEALTH_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
             $range['min_range'] = (int)$request->min_placement_sdp5;
@@ -220,19 +236,21 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
-            foreach ($request->min_placement_aioa2 as $k => $v) {
-                $max = $request->max_placement_aioa2;
+            $min = 0;
+            foreach ($request->max_placement_aioa2 as $k => $v) {
+
                 $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
                 $bonusInterestB = $request->bonus_interest_criteria_b_aioa2;
                 $range = [];
                 $range['minimum_spend'] = (int)$request->minimum_spend_aioa2;
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
-                $range['min_range'] = (int)$v;
-                $range['max_range'] = (int)$max[$k];
+                $range['min_range'] = (int)$min;
+                $range['max_range'] = (int)$v;
                 $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
                 $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
                 $ranges[] = $range;
+                $min = $v + 1;
             }
             $ranges = json_encode($ranges);
         }
@@ -333,25 +351,25 @@ class ProductsController extends Controller
                 'new' => null])
             ->log(CREATE);
 
-        return redirect()->route('promotion-products',["productTypeId"=>$product->promotion_type_id])->with('success', $product->product_name . ADDED_ALERT);
+        return redirect()->route('promotion-products', ["productTypeId" => $product->promotion_type_id])->with('success', $product->product_name . ADDED_ALERT);
         //return $this->promotion_formula();
 
     }
 
-    public function promotion_products_edit($id,Request $request)
+    public function promotion_products_edit($id, Request $request)
     {
         $promotion_types = \Helper::getPromotionType($request->product_type_id);
         $product = \Helper::getProduct($id);
         if (!$product) {
-            return redirect()->route('promotion-products',['productTypeId'=>$request->product_type_id])->with('error', OPPS_ALERT);
-            }
+            return redirect()->route('promotion-products', ['productTypeId' => $request->product_type_id])->with('error', OPPS_ALERT);
+        }
         $product->product_range = json_decode($product->product_range);
         $productType = $this->productType($request->product_type_id);
         //dd($product);
         $formula = \Helper::productType($id);
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks','productType'));
+        return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType'));
 
     }
 
@@ -362,7 +380,7 @@ class ProductsController extends Controller
 
 
         if (!$product) {
-            return redirect()->route('promotion-products',['productTypeId'=>$request->product_type])->with('error', OPPS_ALERT);
+            return redirect()->route('promotion-products', ['productTypeId' => $request->product_type])->with('error', OPPS_ALERT);
         }
 
         $oldProduct = $product;
@@ -461,14 +479,14 @@ class ProductsController extends Controller
             //dd($ranges);
             $product->tenure = $tenure;
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
             foreach ($request->min_placement_sdp1 as $k => $v) {
                 $max = $request->max_placement_sdp1;
                 $bonusInterest = $request->bonus_interest_sdp1;
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
                 if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
-                    $range['tenor'] = 3;
+                    $range['tenor'] = $request->tenure_sdp1;
 
                 }
                 $range['min_range'] = (int)$v;
@@ -488,6 +506,22 @@ class ProductsController extends Controller
             $ranges[] = $range;
 
             $ranges = json_encode($ranges);
+        }
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+            $min = 0;
+            foreach ($request->max_placement_sdp4 as $k => $v) {
+                $bonusInterest = $request->bonus_interest_sdp4;
+                $boardInterest = $request->board_rate_sdp4;
+                $range = [];
+                $range['min_range'] = (int)$min;
+                $range['max_range'] = (int)$v;
+                $range['bonus_interest'] = (float)$bonusInterest[$k];
+                $range['board_rate'] = (float)$boardInterest[$k];
+                $ranges[] = $range;
+                $min = $v + 1;
+            }
+            $ranges = json_encode($ranges);
+
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, WEALTH_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
             $range['min_range'] = (int)$request->min_placement_sdp5;
@@ -522,19 +556,21 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
-            foreach ($request->min_placement_aioa2 as $k => $v) {
-                $max = $request->max_placement_aioa2;
+            $min = 0;
+            foreach ($request->max_placement_aioa2 as $k => $v) {
+
                 $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
                 $bonusInterestB = $request->bonus_interest_criteria_b_aioa2;
                 $range = [];
                 $range['minimum_spend'] = (int)$request->minimum_spend_aioa2;
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
-                $range['min_range'] = (int)$v;
-                $range['max_range'] = (int)$max[$k];
+                $range['min_range'] = (int)$min;
+                $range['max_range'] = (int)$v;
                 $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
                 $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
                 $ranges[] = $range;
+                $min = $v + 1;
             }
             $ranges = json_encode($ranges);
         }
@@ -644,15 +680,15 @@ class ProductsController extends Controller
                 'new' => null])
             ->log(UPDATE);
 
-        return redirect()->route('promotion-products',["productTypeId"=>$product->promotion_type_id])->with('success', $product->product_name . UPDATED_ALERT);
+        return redirect()->route('promotion-products', ["productTypeId" => $product->promotion_type_id])->with('success', $product->product_name . UPDATED_ALERT);
     }
 
-    public function promotion_products_remove($id,Request $request)
+    public function promotion_products_remove($id, Request $request)
     {
 
         $sel_query = PromotionProducts::where('id', $id)->first();
         if (!$sel_query) {
-            return redirect()->route('promotion-products',['productTypeId'=>$request->product_type_id])->with('error', OPPS_ALERT);
+            return redirect()->route('promotion-products', ['productTypeId' => $request->product_type_id])->with('error', OPPS_ALERT);
         }
 
         $sel_query->delete_status = 1;
@@ -667,7 +703,7 @@ class ProductsController extends Controller
                 'old' => $sel_query,
                 'new' => null])
             ->log(DELETE);
-        return redirect()->route('promotion-products',["productTypeId"=>$sel_query->promotion_type_id])->with('success', $sel_query->product_name . ' ' . DELETED_ALERT);
+        return redirect()->route('promotion-products', ["productTypeId" => $sel_query->promotion_type_id])->with('success', $sel_query->product_name . ' ' . DELETED_ALERT);
     }
 
     public function promotion_formula()
@@ -1105,7 +1141,7 @@ class ProductsController extends Controller
                 <div id="new-formula-detail-<?php echo $request->range_id; ?>"></div>
             </div>
             <?php
-        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, SAVING_DEPOSIT_F4])) {
+        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2])) {
             ?>
             <div id="placement_range_<?php echo $request->range_id; ?>">
                 <div class="form-group">
@@ -1176,31 +1212,74 @@ class ProductsController extends Controller
                 </div>
             </div>
             <?php
+        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+            ?>
+            <div id="placement_range_<?php echo $request->range_id; ?>">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-8 ">
+
+                        <div class="input-group date ">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-danger">Placement
+                                </button>
+                            </div>
+                            <input type="text" class="form-control pull-right only_numeric"
+                                   name="max_placement_sdp4[<?php echo $request->range_id; ?>]"
+                                   value="">
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button"
+                                class="btn btn-danger -pull-right  remove-placement-range-button "
+                                data-range-id="<?php echo $request->range_id; ?>" onClick="removePlacementRange(this);">
+                            <i
+                                class="fa fa-minus"> </i>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-8 ">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="">Bonus Interest</label>
+                                <input type="text" class="form-control only_numeric"
+                                       id="bonus_interest_<?php echo $request->range_id; ?>"
+                                       name="bonus_interest_sdp4[<?php echo $request->range_id; ?>]"
+                                       placeholder="">
+
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="">Board Rate</label>
+                                <input type="text" class="form-control only_numeric"
+                                       id="board_rate_<?php echo $request->range_id; ?>"
+                                       name="board_rate_sdp4[<?php echo $request->range_id; ?>]"
+                                       placeholder="">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">&emsp;</div>
+                </div>
+            </div>
+            <?php
         } elseif (in_array($request->formula, [ALL_IN_ONE_ACCOUNT_F2])) {
             ?>
             <div id="aioa_placement_range_f2_<?php echo $request->range_id; ?>">
                 <div class="form-group">
                     <label for="title" class="col-sm-2 control-label"></label>
 
-                    <div class="col-sm-4">
-                        <div class="input-group date">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-success">Min
-                                    Placement
-                                </button>
-                            </div>
-                            <input type="text" class="form-control pull-right only_numeric"
-                                   name="min_placement_aioa2[<?php echo $request->range_id; ?>]"
-                                   value="">
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 ">
+                    <div class="col-sm-8">
 
                         <div class="input-group date ">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger">Max Placement
+                                <button type="button" class="btn btn-danger">Placement
                                 </button>
                             </div>
                             <input type="text" class="form-control pull-right only_numeric"
