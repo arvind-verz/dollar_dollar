@@ -43,31 +43,6 @@
                         </div>
                     </div>
                     <div class="form-group ">
-                        <label for="title" class="col-sm-2 control-label">Base Rate Counter</label>
-                        <div class="col-sm-8 " id="saving-placement-range-f3-counter">
-                            <?php
-                            $counters = $value->counter;
-
-                            if (count($counters)) {
-                            $i = 1;
-                            foreach ($counters as $counter) {    ?>
-                            <div class="form-row">
-                                <div class="col-md-2 mb-3">
-                                    <label for="">Counter <?php echo $i; ?></label>
-                                    <input type="text" class="form-control only_numeric" id="counter_<?php echo $i; ?>"
-                                           name="counter_sdp3[<?php echo $i; ?>]" value="{{$counter}}"
-                                           placeholder="">
-                                </div>
-                            </div>
-                            <?php
-                            $i++;}
-                            }
-                            ?>
-
-                        </div>
-
-                    </div>
-                    <div class="form-group ">
                         <label for="title" class="col-sm-2 control-label"></label>
 
                         <div class="col-sm-8 ">
@@ -127,14 +102,6 @@
 
                 </div>
                 <div class="col-sm-2" id="add-saving-placement-range-f3-button">
-
-                </div>
-
-            </div>
-            <div class="form-group ">
-                <label for="title" class="col-sm-2 control-label">Base Rate Counter</label>
-
-                <div class="col-sm-8 " id="saving-placement-range-f3-counter">
 
                 </div>
 
