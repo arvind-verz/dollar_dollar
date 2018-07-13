@@ -14,6 +14,7 @@ use Auth;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
+use App\DefaultSearch;
 
 class ProductsController extends Controller
 {
@@ -24,11 +25,12 @@ class ProductsController extends Controller
 
     public function promotion_products($productTypeId = FIX_DEPOSIT)
     {
+        $defaultSearch = DefaultSearch::where('promotion_id',$productTypeId)->first();
         $products = \Helper::getProducts($productTypeId);
         $productType = $this->productType($productTypeId);
 
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products', compact('CheckLayoutPermission', 'products', 'productType', 'productTypeId'));
+        return view('backend.products.promotion_products', compact('CheckLayoutPermission', 'defaultSearch', 'products', 'productType', 'productTypeId'));
     }
 
     public function promotion_products_add($productTypeId)
@@ -180,7 +182,6 @@ class ProductsController extends Controller
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, WEALTH_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
-            $range['counter'] = array_map('floatVal', $request->counter_sdp3);
             $range['air'] = (float)$request->air_sdp3;
             $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
             $ranges[] = $range;
@@ -500,7 +501,6 @@ class ProductsController extends Controller
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, WEALTH_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
-            $range['counter'] = array_map('floatVal', $request->counter_sdp3);
             $range['air'] = (float)$request->air_sdp3;
             $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
             $ranges[] = $range;
@@ -1503,5 +1503,51 @@ class ProductsController extends Controller
             $productType = FIX_DEPOSIT_MODULE;
         }
         return $productType;
+    }
+
+    public function defaultSearch($productTypeId)
+    {
+        $defaultSearch = DefaultSearch::where('promotion_id', $productTypeId)->first();
+        $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
+        $productType = $this->productType($productTypeId);
+
+        return view('backend.products.formulaDetail.default_search_value', compact('CheckLayoutPermission', 'productType', 'productTypeId', 'defaultSearch'));
+
+    }
+
+    public function defaultSearchUpdate(Request $request)
+    {
+        $validate = ['placement' => 'required'];
+        if ($request->promotion_id == ALL_IN_ONE_ACCOUNT) {
+            $validate['salary'] = 'required';
+            $validate['payment'] = 'required';
+            $validate['spend'] = 'required';
+            $validate['wealth'] = 'required';
+        }
+
+        $validator = Validator::make($request->all(), $validate);
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
+        $defaultSearch = DefaultSearch::where('promotion_id', $request->promotion_id)->first();
+        $msg = UPDATED_ALERT;
+        if (!$defaultSearch) {
+            $defaultSearch = new DefaultSearch();
+            $msg = ADDED_ALERT;
+        }
+        $defaultSearch->placement = $request->placement;
+        $defaultSearch->promotion_id = $request->promotion_id;
+
+        if ($request->promotion_id == ALL_IN_ONE_ACCOUNT) {
+            $defaultSearch->salary = $request->salary;
+            $defaultSearch->payment = $request->payment;
+            $defaultSearch->spend = $request->spend;
+            $defaultSearch->wealth = $request->wealth;
+            $defaultSearch->loan = $request->loan;
+        }
+        $defaultSearch->save();
+
+        return redirect()->route('promotion-products', ["productTypeId" => $request->promotion_id])->with('success', 'Default Search values ' . $msg);
+
     }
 }

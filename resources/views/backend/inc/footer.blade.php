@@ -592,9 +592,6 @@
                         }
                     }
                     if (jQuery.inArray(formula, SDP3) !== -1) {
-                        var rateCounter = $('#savingDepositF3').find('input[name^="counter_sdp3"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
                         var minPlacement = $('#savingDepositF3').find('input[name="min_placement_sdp3"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -611,14 +608,6 @@
                             errors[i] = 'Please check your placement range. ';
                             i++;
                         }
-                        $.each(rateCounter, function (k, v) {
-                            if (rateCounter[k] == '') {
-                                errors[i] = 'The counter rate is required.';
-                                i++;
-
-                                return false;
-                            }
-                        });
 
                         if (averageInterestRate == '') {
                             errors[i] = 'The average interest rate is required.';
