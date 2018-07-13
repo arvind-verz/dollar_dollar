@@ -212,6 +212,7 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_horizontal_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1136*140 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link', 'Ad Horizontal Link',['class'=>'col-sm-2 control-label'])}}
@@ -224,6 +225,7 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_image_vertical', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 278*140 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_vertical_link', 'Ad Vertical Link',['class'=>'col-sm-2 control-label'])}}
@@ -236,6 +238,7 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_horizontal_image_popup', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*500 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link_popup', 'Ad Horizontal Link Popup Bottom',['class'=>'col-sm-2 control-label'])}}
@@ -248,6 +251,7 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_horizontal_image_popup_top', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*500 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link_popup_top', 'Ad Horizontal Link Popup Top',['class'=>'col-sm-2 control-label'])}}

@@ -222,6 +222,9 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/customer-report', 'Reports\ReportController@customer_report')->name('customer-report');
     Route::get('/product-report', 'Reports\ReportController@product_report')->name('product-report');
 
+    /* REMOVE IMAGE */
+    Route::post('/remove-image', 'AdminController@removeImage')->name('remove-image');
+
 
 });
 Route::get('{slug}', 'CMS\PagesFrontController@show')->name('slug');

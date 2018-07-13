@@ -90,7 +90,13 @@
                                         <td>{{ $setting->icon }}</td>
                                         <td>{{ $setting->title }}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-app edit" title="Edit Page" href="{{ route("system-setting-legend-table.edit",["id"=>$setting->id]) }}"><i class="fa fa-edit"></i> Edit</a></td>
+                                            <a class="btn btn-app edit" title="Edit Page" href="{{ route("system-setting-legend-table.edit",["id"=>$setting->id]) }}"><i class="fa fa-edit"></i> Edit</a>
+                                            <a class="btn btn-app delete" title="Delete Brand"
+                                                                   onclick="return confirm('Are you sure to delete this?')"
+                                                                   href="{{ route("system-setting-legend-table.destroy",["id"=>$setting->id]) }}">
+                                                                    <i class="fa fa-trash"></i> Delete
+                                                                </a>
+                                                            </td>
                                     </tr>
                                         @endforeach
                                     @endif

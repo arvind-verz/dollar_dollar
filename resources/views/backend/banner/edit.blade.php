@@ -70,13 +70,15 @@
                                     {{Form::file('banner_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                                 @if(isset($banner->banner_image) && ($banner->banner_image != ''))
-                                    <div class=" col-sm-2">
+                                    <div class=" col-sm-2">                                        
                                         <div class="attachment-block clearfix">
+                                            <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $banner->id }}');"><i class="fas fa-times fa-lg"></i></a>
                                             <img class="attachment-img" src="{!! asset($banner->banner_image) !!}"
                                                  alt="Banner Image">
                                         </div>
                                     </div>
                                 @endif
+                                <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1920*428 for better display</div>
                             </div>
 
                             <div class="form-group">
@@ -105,7 +107,7 @@
                             <div class="form-group">
                                 {{Form::label('view_order', 'View Order',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
-                                    {{Form::number('view_order', ($banner->view_order ? $banner->view_order :0), ['class' => 'form-control', 'placeholder' => ''])}}
+                                    {{Form::text('view_order', ($banner->view_order ? $banner->view_order :0), ['class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
 
@@ -137,4 +139,19 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
+    <script>
+            function removeImage(ref, id) {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('remove-image') }}",
+                    data: "type=banner&id="+id,
+                    cache: false,
+                    success: function(data) {
+                        if(data.trim()=='success') {
+                            $(ref).parents(".col-sm-2").remove();
+                        }
+                    }
+                });
+            }
+    </script>
 @endsection

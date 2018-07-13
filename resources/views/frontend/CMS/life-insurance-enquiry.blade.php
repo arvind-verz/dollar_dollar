@@ -98,7 +98,7 @@
                 <h5 class="ps-heading--3">3. What is your date of birth?</h5>
 
                 <div class="ps-form-icon max-500"><i class="fa fa-calendar"></i>
-                    <input class="form-control datepicker" value="{{old('dob')}}" name="dob" type="text" placeholder="">
+                    <input class="form-control " id="datepicker" value="{{old('dob')}}" name="dob" type="text" placeholder="">
                 </div>
                 @if ($errors->has('dob'))
                     <span class="text-danger">
@@ -262,6 +262,17 @@
                 $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("disabled", true);
             }
         } 
+    });
+
+    $(document).ready(function () {
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true,
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0",
+            dateFormat: "yy-mm-dd"
+        });
     });
 </script>
 @endsection
