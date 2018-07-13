@@ -186,7 +186,29 @@
 <script src="{{ asset('backend/dist/bootstrap-tagsinput-angular.min.js')}}"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="{{ asset('backend/dist/js/jquery.bootstrap.wizard.js')}}"></script>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        var bulk_arr = [];
+        $("input[name='bluk_remove[]']").on("click", function() {
+            var value = $(this).val();
+            if(bulk_arr.length) {
+                $("a.bulk_remove").removeClass("hide");
+            }
+            else {
+                $("a.bulk_remove").addClass("hide");
+            }
+            $(this).each(function() {
+                if($(this).is(":checked")) {
+                    bulk_arr.push(value);
+                }
+                else {
+                    bulk_arr.pop(value);
+                }
+            });
+            alert(bulk_arr);
+        });
+    });
+</script>
 <script>
     $(document).ready(function () {
         //Initialize Select2 Elements

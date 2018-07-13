@@ -5253,26 +5253,6 @@ span.ps-post__meta a {
     background: #777;
 }
 
-@media (min-width: 1349px) {
-    .ps-slider--home.owl-carousel .bg--cover {
-        height: 428px;
-    }
-}
-@media (max-width: 1199px) {
-    .ps-slider--home.owl-carousel .bg--cover {
-        height: 428px;
-    }
-}
-
-@media (max-width: 767px) {
-    .ps-slider--home.owl-carousel .bg--cover {
-        height: 350px;
-    }
-
-}
-@media (max-width: 320px) {
-    .ps-slider--home.owl-carousel .bg--cover {
-        height: 226px;
-    }
-
+.ps-slider--home.owl-carousel .bg--cover {
+    height: 428px;
 }
