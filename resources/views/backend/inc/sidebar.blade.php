@@ -67,7 +67,6 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="{{ route('customer-report') }}"><i class="fa fa-plus"></i> Customer</a></li>
-                            <li><a href="{{ route('product-report') }}"><i class="fa fa-plus"></i> Product</a></li>
                         </ul>
                     </li>
                     @else

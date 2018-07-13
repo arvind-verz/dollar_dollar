@@ -38,10 +38,7 @@
                                             <select name="page_type" class="form-control">
                                                 <option value="">Select</option>
                                                 <option value="Fixed Deposit">Fixed Deposit</option>
-                                                <option value="Saving Deposit">Saving Deposit</option>
                                                 <option value="Foreign Currency Deposit">Foreign Currency Deposit</option>
-                                                <option value="Wealth Deposit">Wealth Deposit</option>
-                                                <option value="All in One Deposit">All in One Deposit</option>
                                             </select>
                                         </div>
                                     </div>
