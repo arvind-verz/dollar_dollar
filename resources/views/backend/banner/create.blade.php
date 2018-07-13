@@ -70,6 +70,7 @@
                                 <div class="col-sm-10">
                                     {{Form::file('banner_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
+                                <div class="text-muted col-sm-offset-2"><strong>Note:</strong> Image size should be 1920*428 for better display</div>
                             </div>
                             <div class="form-group">
                                 {{Form::label('banner_link', 'Link',['class'=>'col-sm-2 control-label'])}}
@@ -93,7 +94,7 @@
                             <div class="form-group">
                                 {{Form::label('view_order', 'View Order',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
-                                    {{Form::number('view_order', (old('view_order') ?  old('view_order') :0), ['class' => 'form-control', 'placeholder' => ''])}}
+                                    {{Form::text('view_order', (old('view_order') ?  old('view_order') :0), ['class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
 

@@ -41,12 +41,12 @@
             <?php $i = 1; ?>
             @if($banners->count()>1)
                 @foreach($banners as $banner)
-
+                    <a href="javascript:clickSliderhome({{$i}})" >
                         <div class="ps-block--home-link" data-mh="home-link">
-                            <a href="javascript:clickSliderhome({{$i}})" >{{ $banner->title }}</a>
+                            {{ $banner->title }}
                             <p>{{ $banner->description }}</p>
                         </div>
-
+                    </a>
                     <?php $i++; ?>
                 @endforeach
             @endif
@@ -474,7 +474,7 @@
                                 <div class="ps-post--home">
                                     <div class="ps-post__thumbnail">
                                         <a class="ps-post__overlay" href="{{ url($blog->slug) }}"></a><img
-                                                src="{{ asset($blog->blog_image) }}" alt="">
+                                                src="{{ asset($blog->blog_image) }}" alt="" height="250px">
 
                                         <div class="ps-post__posted"><span
                                                     class="date">{{ date("d", strtotime($blog->created_at)) }}</span><span

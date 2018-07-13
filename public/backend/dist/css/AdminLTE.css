@@ -1,7 +1,7 @@
 /*!
  *   AdminLTE v2.4.2
  *   Author: Almsaeed Studio
- *	 Website: Almsaeed Studio <https://adminlte.io>
+ *   Website: Almsaeed Studio <https://adminlte.io>
  *   License: Open source - MIT
  *           Please visit http://opensource.org/licenses/MIT for more information
  */
@@ -378,7 +378,7 @@ a:focus {
     background: transparent;
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 12px;
+    font-size: 20px;
     padding: 7px 5px;
     position: absolute;
     top: 15px;
@@ -5925,7 +5925,7 @@ table.text-center th {
 }
 
 .tab-content a {
-    color: #ffffff;
+    /* color: #ffffff; */
 }
 
 .lower-case {

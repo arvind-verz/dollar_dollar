@@ -81,7 +81,7 @@ class TagController extends Controller
                 'new' => null])
             ->log(CREATE);
 
-        return redirect()->action('cms\TagController@index')->with('success', implode(', ', $tag_array) . ' ' . ADDED_ALERT);
+        return redirect()->action('CMS\TagController@index')->with('success', implode(', ', $tag_array) . ' ' . ADDED_ALERT);
     }
 
     /**
@@ -108,7 +108,7 @@ class TagController extends Controller
         }
         $tag = Tag::find($id);
         if (!$tag) {
-            return redirect()->action('cms\TagController@index')->with('error', OPPS_ALERT);
+            return redirect()->action('CMS\TagController@index')->with('error', OPPS_ALERT);
         }
         return view("backend.cms.tag.edit", compact("tag"));
     }
@@ -130,7 +130,7 @@ class TagController extends Controller
         $oldTag = $tag;
 
         if (!$tag) {
-            return redirect()->action('cms\TagController@index')->with('error', OPPS_ALERT);
+            return redirect()->action('CMS\TagController@index')->with('error', OPPS_ALERT);
         }
         $tag->title = $request->title;
         $tag->status = $request->status;
@@ -149,7 +149,7 @@ class TagController extends Controller
                 'new' => $newTag
             ])
             ->log(UPDATE);
-        return redirect()->action('cms\TagController@index')->with('success', $newTag->title . ' ' . UPDATED_ALERT);
+        return redirect()->action('CMS\TagController@index')->with('success', $newTag->title . ' ' . UPDATED_ALERT);
 
     }
 
@@ -166,7 +166,7 @@ class TagController extends Controller
         }
         $tag = Tag::where('id', $id)->first();
         if (!$tag) {
-            return redirect()->action('cms\TagController@index')->with('error', OPPS_ALERT);
+            return redirect()->action('CMS\TagController@index')->with('error', OPPS_ALERT);
         } else {
             $tag->delete_status = 1;
             $tag->save();
@@ -181,7 +181,7 @@ class TagController extends Controller
                     'new' => null
                 ])
                 ->log(DELETE);
-            return redirect()->action('cms\TagController@index')->with('success', $tag->title . ' ' . DELETED_ALERT);
+            return redirect()->action('CMS\TagController@index')->with('success', $tag->title . ' ' . DELETED_ALERT);
         }
     }
 }

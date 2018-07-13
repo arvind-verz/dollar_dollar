@@ -259,7 +259,7 @@ class PagesFrontController extends Controller
         $brand_id      = isset($request['brand_id']) ? $request['brand_id'] : '';
         $sort_by       = isset($request['sort_by']) ? $request['sort_by'] : '';
 
-        $legendtable = systemSettingLegendTable::all();
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Fixed Deposit')->get();
 //dd($brand_id);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -488,6 +488,8 @@ $status = true;
         DB::connection()->enableQueryLog();
         $currency_list = Currency::get();
 
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->get();
+
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
@@ -500,13 +502,15 @@ $status = true;
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
+
+
 //dd(DB::getQueryLog());
         //dd($promotion_products);
         $brands        = $details['brands'];
         $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners       = $details['banners'];
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency_list"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency_list", "legendtable"));
     }
 
     public function aioDepositMode()
@@ -1301,6 +1305,8 @@ $status = true;
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->get();
+
         $details       = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands        = $details['brands'];
         $page          = $details['page'];
@@ -1836,6 +1842,6 @@ $status = true;
 
         }
         //dd($promotion_products);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable"));
     }
 }

@@ -50,11 +50,13 @@
                                         @if(isset($page->blog_image) && ($page->blog_image != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
+                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $page->id }}');"><i class="fas fa-times fa-lg"></i></a>
                                                     <img class="attachment-img" src="{!! asset($page->blog_image) !!}"
                                                          alt="Banner Image">
                                                 </div>
                                             </div>
                                         @endif
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 495*250 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('short_description', 'Short Description',['class'=>'col-sm-2 control-label'])}}
@@ -227,4 +229,19 @@
     </section>
     <!-- /.content -->
 @endsection
+<script>
+function removeImage(ref, id) {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('remove-image') }}",
+                    data: "type=blog&id="+id,
+                    cache: false,
+                    success: function(data) {
+                        if(data.trim()=='success') {
+                            $(ref).parents(".col-sm-2").remove();
+                        }
+                    }
+                });
+            }
+    </script>
 
