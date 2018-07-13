@@ -191,21 +191,62 @@
         var bulk_arr = [];
         $("input[name='bluk_remove[]']").on("click", function() {
             var value = $(this).val();
-            if(bulk_arr.length) {
-                $("a.bulk_remove").removeClass("hide");
-            }
-            else {
-                $("a.bulk_remove").addClass("hide");
-            }
+            
             $(this).each(function() {
                 if($(this).is(":checked")) {
                     bulk_arr.push(value);
+                    $("a.bulk_remove").removeClass("hide");
                 }
                 else {
                     bulk_arr.pop(value);
                 }
-            });
-            alert(bulk_arr);
+            });            
+
+            if(bulk_arr.length<1) {
+                $("a.bulk_remove").addClass("hide");
+                $("a.bluk_remove").find(".badge").text('');
+            }
+            else {
+                $("a.bulk_remove").removeClass("hide");
+                $("a.bulk_remove").find(".badge").text(bulk_arr.length);
+            }
+            //alert(bulk_arr);
+        });
+
+        $("input[name='all_bulk_remove']").on("click", function() {
+            bulk_arr = [];
+            
+            if($(this).is(":checked")) {
+                $("input[name='bluk_remove[]']").each(function() {
+                    var value = $(this).val();
+                    $(this).prop("checked", true);
+                    bulk_arr.push(value);
+                    $("a.bulk_remove").removeClass("hide");
+                });
+                $("a.bulk_remove").find(".badge").text(bulk_arr.length);
+            }
+            else {
+                $("input[name='bluk_remove[]").prop("checked", false);
+                $("input[name='bluk_remove[]']").each(function() {
+                    var value = $(this).val();
+                    $(this).prop("checked", false);
+                    bulk_arr.pop(value);
+                    $("a.bulk_remove").addClass("hide");
+                });
+                $("a.bulk_remove").find(".badge").text('');
+            }
+        });
+
+        $("a.bulk_remove").on("click", function() {
+            var r = confirm("Are you sure?");
+            var type = $("input[name='bulk_remove_type']").val();
+            if(r==true) {
+                $.post("{{ route('user-bulk-remove') }}", {id:bulk_arr, type:type}, function(data) {
+                    if(data.trim()=='success') {
+                        window.location.reload();
+                    }
+                });
+            }
         });
     });
 </script>

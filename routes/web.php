@@ -105,6 +105,7 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/user-export/{type}', 'User\UsersController@userExport')->name('user-export');
     Route::get('/users-export/{type}', 'User\UsersController@usersExport')->name('users-export');
     Route::get('/product-view/{id}', 'User\UsersController@productView')->name('product-view');
+    Route::post('/user-bulk-delete', 'User\UsersController@bulkRemove')->name('user-bulk-remove');
     /* Customer module end*/
 
 
@@ -230,6 +231,8 @@ Route::group(array('prefix' => 'admin'), function () {
 
     /* REMOVE IMAGE */
     Route::post('/remove-image', 'AdminController@removeImage')->name('remove-image');
+
+
 
 
 });

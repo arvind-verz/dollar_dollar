@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
@@ -407,6 +408,28 @@ class UsersController extends Controller
         return view('backend.reports.product-report.index', [
             'product_reports'      =>  $product_reports
         ]);
+    }
+
+    public function bulkRemove(Request $request) {
+        $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, CUSTOMER_MODULE_ID);
+        $ids = isset($request->id) ? $request->id : '';
+        $type = isset($request->type) ? $request->type : '';
+        //return $type;
+        if(count($ids)) {
+            foreach($ids as $id) {
+                if($type=='bulk_customer_remove') {
+                    $users = User::find($id);
+                }
+                elseif($type=='bulk_user_remove') {
+                    $users = Admin::find($id);
+                }
+                //return $users;
+                $users->delete_status = 1;
+                $users->save();
+            }
+            
+            echo "success";
+        }
     }
 
 }
