@@ -344,7 +344,6 @@
                                                                         @elseif(!((4 <= $i) && ($i <= 10)))
                                                                             <td>{{ (($i*0.1)+($productRange->sibor_rate)) . '%' }}</td>
                                                                         @endif
-
                                                                         @if(!((4 <= $i) && ($i < 11)))
                                                                     </tr>
                                                                 @endif
