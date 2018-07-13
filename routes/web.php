@@ -128,7 +128,9 @@ Route::group(array('prefix' => 'admin'), function () {
     /*System setting start*/
     Route::resource('/system-setting', 'CMS\SystemSettingController');
     Route::resource('/system-setting-homepage', 'CMS\systemSettingHomepageController');
+    Route::get('/system-setting-legend-table/{id}', 'CMS\systemSettingLegendTableController@destroy')->name('system-setting-legend-table-destory');
     Route::resource('/system-setting-legend-table', 'CMS\systemSettingLegendTableController');
+
     /*System setting start*/
 
     /*User Module start*/
