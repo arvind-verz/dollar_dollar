@@ -47,6 +47,11 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{ asset('backend/dist/js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/tinymce/tinymce.min.js') }}" id="script"></script>
 <script src="{{ asset('js/tinymce/jquery.tinymce.min.js') }}" id="script"></script>
