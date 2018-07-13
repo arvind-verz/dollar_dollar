@@ -187,6 +187,10 @@ Route::group(array('prefix' => 'admin'), function () {
 
     Route::get('/promotion-products/get-formula/{id}', 'Products\ProductsController@promotion_products_get_formula')->name('promotion-products-get-formula');
 
+    Route::get('/default-search/{productTypeId}', 'Products\ProductsController@defaultSearch')->name('default-search');
+    Route::post('/default-search-update', 'Products\ProductsController@defaultSearchUpdate');
+    Route::put('/default-search-update', 'Products\ProductsController@defaultSearchUpdate');
+
 
     /* PROMOTION FORMULA */
     Route::get('/promotion-formula', 'Products\ProductsController@promotion_formula')->name('promotion-formula');

@@ -23,9 +23,15 @@
 
                         <h3 class="box-title">{{$productType}}</h3>
 
-
-                        <a href="{{ route('promotion-products-add',['productTypeId'=>$productTypeId]) }}" class="btn btn-info pull-right"><i
+                        <a href="{{ route('default-search',['productTypeId'=>$productTypeId]) }}"
+                           class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
+                            @if($defaultSearch)Edit Default Search Values @else  Add Default Search Values @endif
+                        </a>
+                        <a href="{{ route('promotion-products',['productTypeId'=>$productTypeId]) }}"
+                           class="btn btn-info pull-right mr-10 "><i
                                     class="fa fa-plus"></i> Add New Products</a>
+
+
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -40,10 +46,10 @@
 
                                                 <th>Product Name</th>
                                                 <th>Bank Name</th>
-                                                <th>Product Type </th>
-                                                <th>Formula Name </th>
-                                                <th>Featured </th>
-                                                <th>Status </th>
+                                                <th>Product Type</th>
+                                                <th>Formula Name</th>
+                                                <th>Featured</th>
+                                                <th>Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
