@@ -152,6 +152,7 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Blog module start*/
     Route::get('/blog/destroy/{id}', 'Blog\BlogController@destroy')->name('blog-destroy');
     Route::resource('/blog', 'Blog\BlogController');
+    Route::get('/filter-category/{id}', 'Blog\BlogController@filter')->name('filter-category');
     /*Blog module end*/
 
     /*Blog module start*/
@@ -167,6 +168,8 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Blog module start*/
     Route::get('/health-insurance-enquiry/destroy/{id}', 'Enquiry\HealthInsuranceEnquiryController@destroy')->name('health-insurance-destroy');
     Route::resource('/health-insurance-enquiry', 'Enquiry\HealthInsuranceEnquiryController');
+
+
     /*Blog module end*/
 
     /*Tag Module start*/

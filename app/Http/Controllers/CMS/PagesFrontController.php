@@ -209,11 +209,11 @@ class PagesFrontController extends Controller
                         } else {
                             $detail->tags = [];
                         }
-                        if (count(array_intersect($page->tags, $detail->tags))) {
-                            $relatedBlog[] = $detail;
-                        }
+                        $relatedBlog[] = $detail;                        
                     }
                 }
+                $relatedBlog = array_random($relatedBlog, 3);
+                //dd($relatedBlog);
                 return view("frontend.Blog.blog-detail", compact("page", "systemSetting", "banners", "relatedBlog", 'tags'));
             } else {
                 return view("frontend.CMS.page", compact("page", "systemSetting", "banners"));

@@ -26,7 +26,16 @@ class BlogController extends Controller
     public function index()
     {
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PAGE_MODULE_ID);
-
+        $blogMenu = Menu::where('delete_status', 0)
+            ->where('is_blog', 1)
+            ->first();
+        if ($blogMenu) {
+            $menus = Menu::where('delete_status', 0)
+                ->where('parent', $blogMenu->id)
+                ->get();
+        } else {
+            $menus = collect([]);
+        }
         $pages = Page::leftJoin('menus', 'pages.menu_id', '=', 'menus.id')
             ->where('pages.delete_status', 0)
             ->where('pages.is_blog', 1)
@@ -34,7 +43,7 @@ class BlogController extends Controller
             ->orderBy('pages.name', 'ASC')->get();
 
         
-        return view("backend.blog.index", compact("pages", "CheckLayoutPermission"));
+        return view("backend.blog.index", compact("pages", "CheckLayoutPermission", "menus"));
     }
 
     /**
@@ -350,5 +359,39 @@ class BlogController extends Controller
                 ->log(DELETE);
             return redirect(route('blog.index'))->with('success', $page->name . ' ' . DELETED_ALERT);
         }
+    }
+
+    public function filter($id) {
+
+        $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PAGE_MODULE_ID);
+        $blogMenu = Menu::where('delete_status', 0)
+            ->where('is_blog', 1)
+            ->first();
+            //dd($blogMenu);
+        if ($blogMenu) {
+            $menus = Menu::where('delete_status', 0)
+                ->where('parent', $blogMenu->id)
+                ->get();
+        } else {
+            $menus = collect([]);
+        }
+        if($id=='all') {
+        $pages = Page::leftJoin('menus', 'pages.menu_id', '=', 'menus.id')
+            ->where('pages.delete_status', 0)
+            ->where('pages.is_blog', 1) 
+            ->select('pages.*', 'menus.title as menu_title')
+            ->orderBy('pages.name', 'ASC')->get();
+        }
+        else {
+            $pages = Page::leftJoin('menus', 'pages.menu_id', '=', 'menus.id')
+            ->where('pages.delete_status', 0)
+            ->where('pages.is_blog', 1)            
+            ->where('menu_id', $id)
+            ->select('pages.*', 'menus.title as menu_title')
+            ->orderBy('pages.name', 'ASC')->get();
+        }
+
+        
+        return view("backend.blog.index", compact("pages", "CheckLayoutPermission", "menus"));
     }
 }

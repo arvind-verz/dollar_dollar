@@ -293,6 +293,10 @@
 
         $('#pages').DataTable(
                 {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        'excel', 'pdf', 'print'
+                    ],
                     "pageLength": 10,
                     'ordering': true,
                     'order': [[0, 'asc']],
