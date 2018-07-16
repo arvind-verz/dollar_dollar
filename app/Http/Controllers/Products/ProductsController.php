@@ -1076,7 +1076,8 @@ class ProductsController extends Controller
 
     public function addMorePlacementRange(Request $request)
     {
-        if ($request->formula == FIX_DEPOSIT_F1) {
+        if  (in_array($request->formula, [FIX_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F1]))
+        {
             $teunre = $request->detail;
             //return $teunre[0]['value'];
             ?>
@@ -1157,9 +1158,9 @@ class ProductsController extends Controller
                 <div id="new-formula-detail-<?php echo $request->range_id; ?>"></div>
             </div>
             <?php
-        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2])) {
+        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2,WEALTH_DEPOSIT_F1,WEALTH_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F3])) {
             ?>
-            <div id="placement_range_<?php echo $request->range_id; ?>">
+            <div id="saving_placement_range_f1_<?php echo $request->range_id; ?>">
                 <div class="form-group">
                     <label for="title" class="col-sm-2 control-label"></label>
 
