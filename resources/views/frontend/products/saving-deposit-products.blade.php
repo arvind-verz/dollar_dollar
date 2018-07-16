@@ -396,13 +396,13 @@
                                                                     <td>@if($key==0) 1st - @else NEXT
                                                                         - @endif{{ '$' . $productRange->max_range }}</td>
                                                                     <td>{{ $productRange->board_rate }}%
-                                                                        <small>p.a.</small>
+
                                                                     </td>
                                                                     <td>{{ $productRange->bonus_interest }}%
-                                                                        <small>p.a.</small>
+
                                                                     </td>
                                                                     <td>{{ $productRange->total_interest }}%
-                                                                        <small>p.a.</small>
+
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
