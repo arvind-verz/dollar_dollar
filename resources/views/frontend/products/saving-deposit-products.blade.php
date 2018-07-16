@@ -165,14 +165,20 @@
                 @endforeach
             </div>
         @endif
-        <div class="ps-block--legend-table">
-            <div class="ps-block__header">
-                <h3>Legend table</h3>
+        @if(count($legendtable))
+            <div class="ps-block--legend-table">
+                <div class="ps-block__header">
+                    <h3>Legend table</h3>
+                </div>
+                <div class="ps-block__content">
+                    @foreach($legendtable as $legend)
+                    @if($legend->page_type=='Fixed Deposit')
+                    <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                    @endif
+                    @endforeach
+                </div>
             </div>
-            <div class="ps-block__content">
-                <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
-            </div>
-        </div>
+            @endif
 
         @if($products->count())
             <?php $j = 1;?>
