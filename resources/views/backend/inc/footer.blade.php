@@ -267,14 +267,22 @@
                 {
                     "pageLength": 10,
                     'ordering': true,
-                    "columnDefs": []
+                    "aoColumnDefs": [{
+                        "aTargets": [0],
+                        "bSortable": false,
+                    
+                    }]
                 });
         $('#admins').DataTable(
                 {
                     "pageLength": 10,
                     'ordering': true,
                     'order': [[5, 'desc'], [4, 'desc']],
-                    "columnDefs": []
+                    "aoColumnDefs": [{
+                        "aTargets": [0],
+                        "bSortable": false,
+                    
+                    }]
                 });
         $('#banners').DataTable(
                 {

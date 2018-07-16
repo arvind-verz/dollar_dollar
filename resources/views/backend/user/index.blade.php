@@ -36,7 +36,7 @@
                                         <table id="users" class="table ">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="all_bulk_remove"></th>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"></th>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
                                                 <th>Email</th>

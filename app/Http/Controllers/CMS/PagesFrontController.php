@@ -259,7 +259,7 @@ class PagesFrontController extends Controller
         $brand_id      = isset($request['brand_id']) ? $request['brand_id'] : '';
         $sort_by       = isset($request['sort_by']) ? $request['sort_by'] : '';
 
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Fixed Deposit')->get();
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Fixed Deposit')->where('delete_status', 0)->get();
 //dd($brand_id);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -470,6 +470,7 @@ $status = true;
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Wealth Deposit')->where('delete_status', 0)->get();
 //dd(DB::getQueryLog());
         //dd($promotion_products);
         $details       = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
@@ -477,7 +478,8 @@ $status = true;
         $page          = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners       = $details['banners'];
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
+
+        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "legendtable"));
     }
 
     public function foreignCurrencyDepositMode($details)
@@ -487,8 +489,6 @@ $status = true;
 //dd($startDate);
         DB::connection()->enableQueryLog();
         $currency_list = Currency::get();
-
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->get();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -502,7 +502,7 @@ $status = true;
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->where('delete_status', 0)->get();
 
 //dd(DB::getQueryLog());
         //dd($promotion_products);
@@ -531,6 +531,8 @@ $status = true;
             ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
+
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'AIO Deposit')->where('delete_status', 0)->get();
 
         $filterProducts = [];
         foreach ($promotion_products as &$product) {
@@ -642,7 +644,7 @@ $status = true;
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "legendtable"));
     }
     public function getContactForm()
     {
@@ -761,6 +763,8 @@ $status = true;
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Wealth Deposit')->where('delete_status', 0)->get();
+
         $details       = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
         $brands        = $details['brands'];
         $page          = $details['page'];
@@ -875,7 +879,7 @@ $status = true;
 //dd($filterNewProducts);
         $promotion_products = $filterNewProducts;
 //dd($promotion_products);
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
+        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable"));
     }
 
     public function search_saving_deposit(Request $request)
@@ -894,6 +898,8 @@ $status = true;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : null;
         $searchValue = isset($request['search_value']) ? $request['search_value'] : 0;
         $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Saving Deposit')->where('delete_status', 0)->get();
 
         DB::connection()->enableQueryLog();
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -1248,7 +1254,7 @@ $status = true;
             }
 
         }
-        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter"));
+        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
     }
 
     public function product_search_homepage(Request $request)
@@ -1293,6 +1299,8 @@ $status = true;
         $currency_list   = Currency::get();
         $search_currency = Currency::find($currency);
 
+
+
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -1305,7 +1313,7 @@ $status = true;
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->get();
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->where('delete_status', 0)->get();
 
         $details       = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands        = $details['brands'];
