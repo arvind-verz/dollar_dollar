@@ -25,7 +25,8 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
+                        <input type="hidden" name="bulk_remove_type" value="bulk_life_insurance_remove">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>
@@ -34,6 +35,7 @@
                                         <table id="pages" class="table ">
                                             <thead>
                                             <tr>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
                                                 <th>Full name</th>
                                                 <th>Email</th>
                                                 <th>Contact number</th>
@@ -51,6 +53,9 @@
                                             @if($enquiries->count())
                                                 @foreach($enquiries as $enquiry)
                                                     <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="bluk_remove[]" value="{{ $enquiry->id }}">
+                                                        </td>
                                                         <td>
                                                             {{ $enquiry->full_name }}
                                                         </td>

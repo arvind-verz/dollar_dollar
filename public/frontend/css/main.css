@@ -1944,7 +1944,7 @@ button {
 }
 
 .ps-block--home-signup {
-    padding: 100px 30px;
+    padding: 45px 30px;
     background-color: #fbf9f8;
     border: 1px solid #dde3e5;
     -webkit-border-radius: 5px;
@@ -3484,7 +3484,7 @@ button {
 }
 
 .ps-form--enquiry .form-group {
-    border-bottom: 1px solid #e9e9e9;
+    /* border-bottom: 1px solid #e9e9e9; */
     padding-bottom: 15px;
 }
 
@@ -5256,3 +5256,4 @@ span.ps-post__meta a {
 .ps-slider--home.owl-carousel .bg--cover {
     height: 428px;
 }
+

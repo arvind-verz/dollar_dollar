@@ -60,8 +60,9 @@ class PagesFrontController extends Controller
     public function show($slug)
     {
         $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
+        ->where('user_id', Auth::user()->id)
             ->get();
-//dd($user_products);
+
 
         DB::enableQueryLog();
         $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
@@ -209,11 +210,10 @@ class PagesFrontController extends Controller
                         } else {
                             $detail->tags = [];
                         }
-                        if (count(array_intersect($page->tags, $detail->tags))) {
-                            $relatedBlog[] = $detail;
-                        }
+                        $relatedBlog[] = $detail;
                     }
                 }
+                $relatedBlog = array_random($relatedBlog, 3);
                 return view("frontend.Blog.blog-detail", compact("page", "systemSetting", "banners", "relatedBlog", 'tags'));
             } else {
                 return view("frontend.CMS.page", compact("page", "systemSetting", "banners"));
@@ -260,7 +260,9 @@ class PagesFrontController extends Controller
         $brand_id = isset($request['brand_id']) ? $request['brand_id'] : '';
         $sort_by = isset($request['sort_by']) ? $request['sort_by'] : '';
 
-        $legendtable = systemSettingLegendTable::all();
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Fixed Deposit')
+        ->where('delete_status', 0)
+        ->get();
         //dd($request);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -472,6 +474,10 @@ class PagesFrontController extends Controller
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
         DB::connection()->enableQueryLog();
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Wealth Deposit')
+        ->where('delete_status', 0)
+        ->get();
+
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
@@ -491,7 +497,7 @@ class PagesFrontController extends Controller
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
+        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "legendtable"));
     }
 
     public function foreignCurrencyDepositMode($details)
@@ -501,6 +507,10 @@ class PagesFrontController extends Controller
 //dd($startDate);
         DB::connection()->enableQueryLog();
         $currency_list = Currency::get();
+
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')
+        ->where('delete_status', 0)
+        ->get();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -520,7 +530,7 @@ class PagesFrontController extends Controller
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency_list"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency_list", "legendtable"));
     }
 
     public function aioDepositMode()
@@ -633,6 +643,10 @@ class PagesFrontController extends Controller
         $search_filter = $request;
         $brand_id = isset($request['brand_id']) ? $request['brand_id'] : '';
         $sort_by = isset($request['sort_by']) ? $request['sort_by'] : '';
+
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Wealth Deposit')
+        ->where('delete_status', 0)
+        ->get();
 
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -760,7 +774,7 @@ class PagesFrontController extends Controller
 //dd($filterNewProducts);
         $promotion_products = $filterNewProducts;
 //dd($promotion_products);
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
+        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable"));
     }
 
     public function search_saving_deposit(Request $request)
@@ -782,6 +796,10 @@ class PagesFrontController extends Controller
 
         //dd($searchValue,$searchFilter);
         DB::connection()->enableQueryLog();
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Saving Deposit')
+        ->where('delete_status', 0)
+        ->get();
+
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
@@ -1164,7 +1182,7 @@ class PagesFrontController extends Controller
             }
 
         }
-        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter"));
+        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
     }
 
     public function product_search_homepage(Request $request)
@@ -1210,6 +1228,10 @@ class PagesFrontController extends Controller
         $search_currency = Currency::find($currency);
 
         DB::connection()->enableQueryLog();
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')
+        ->where('delete_status', 0)
+        ->get();
+
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
@@ -1341,7 +1363,7 @@ class PagesFrontController extends Controller
 //dd($filterNewProducts);
         $promotion_products = $filterNewProducts;
 //dd($search_currency);
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "currency_list", "search_currency"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "currency_list", "search_currency", "legendtable"));
     }
 
     public
@@ -1362,6 +1384,10 @@ class PagesFrontController extends Controller
 
 
         DB::connection()->enableQueryLog();
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'AIO Deposit')
+        ->where('delete_status', 0)
+        ->get();
+
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
@@ -1791,6 +1817,6 @@ class PagesFrontController extends Controller
 
         }
         //dd($promotion_products);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable"));
     }
 }

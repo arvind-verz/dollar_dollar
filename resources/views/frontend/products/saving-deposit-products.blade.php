@@ -165,14 +165,20 @@
                 @endforeach
             </div>
         @endif
-        <div class="ps-block--legend-table">
-            <div class="ps-block__header">
-                <h3>Legend table</h3>
+        @if(count($legendtable))
+            <div class="ps-block--legend-table">
+                <div class="ps-block__header">
+                    <h3>Legend table</h3>
+                </div>
+                <div class="ps-block__content">
+                    @foreach($legendtable as $legend)
+                    @if($legend->page_type=='Fixed Deposit')
+                    <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                    @endif
+                    @endforeach
+                </div>
             </div>
-            <div class="ps-block__content">
-                <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
-            </div>
-        </div>
+            @endif
 
         @if($products->count())
             <?php $j = 1;?>
@@ -183,7 +189,7 @@
                 ?>
                 @if(isset($ads[3]))
                     <div class="ps-poster"><a
-                                href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img
+                                href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}" target="_blank"><img
                                     src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
                                     alt=""></a></div>
                 @endif
@@ -265,7 +271,7 @@
                                         if(!empty($ads[1]->ad_image_vertical)) {
                                         ?>
                                         <div class="ps-product__poster">
-                                            <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"><img
+                                            <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
                                                         src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                         alt=""></a>
                                         </div>
@@ -321,7 +327,7 @@
                                             if(!empty($ads[1]->ad_image_vertical)) {
                                             ?>
                                             <div class="ps-product__poster">
-                                                <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"><img
+                                                <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
                                                             src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                             alt=""></a>
                                             </div>
@@ -390,7 +396,7 @@
                                                 if(!empty($ads[1]->ad_image_vertical)) {
                                                 ?>
                                                 <div class="ps-product__poster">
-                                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"><img
+                                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
                                                                 src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                                 alt=""></a>
                                                 </div>
@@ -450,7 +456,7 @@
                                                     if(!empty($ads[1]->ad_image_vertical)) {
                                                     ?>
                                                     <div class="ps-product__poster">
-                                                        <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"><img
+                                                        <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
                                                                     src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                                     alt=""></a>
                                                     </div>

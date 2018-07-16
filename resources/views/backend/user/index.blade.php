@@ -27,6 +27,14 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
+                        <div class="form-group col-md-2 bulk_status hide">
+                          <span class="badge"></span>
+                          <select class="form-control" name="select_type">
+                            <option value="">-- Select --</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                          </select>
+                        </div> 
                         <input type="hidden" name="bulk_remove_type" value="bulk_customer_remove">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
@@ -36,7 +44,8 @@
                                         <table id="users" class="table ">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="all_bulk_remove"></th>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
+                                                <th><input type="checkbox" name="all_bulk_update" class="no-sort"> Status</th>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
                                                 <th>Email</th>
@@ -55,6 +64,9 @@
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $user->id }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="checkbox" name="bluk_status[]" value="{{ $user->id }}">
                                                         </td>
                                                         <td>
                                                             {!!   $user->first_name !!}

@@ -26,9 +26,11 @@
                         <!-- /.box-header -->
                         <!-- /.box-header -->
                         <div class="box-body ">
+                            
                             <table class="table  table-list-view">
                                 @if($enquiry->count())
                                     <tr>
+                                        
                                         <th>Full name</th>
                                         <td>
                                             {{ $enquiry->full_name }}

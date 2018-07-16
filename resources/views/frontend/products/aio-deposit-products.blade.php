@@ -195,16 +195,20 @@
                     @endforeach
                 </div>
             @endif
+            @if(count($legendtable))
             <div class="ps-block--legend-table">
                 <div class="ps-block__header">
                     <h3>Legend table</h3>
                 </div>
                 <div class="ps-block__content">
-                    <p><img src="img/icons/cf.png" alt="">= Criteria Fulfilled</p>
-
-                    <p><img src="img/icons/bonus.png" alt="">= eligible for bonus interest</p>
+                    @foreach($legendtable as $legend)
+                    @if($legend->page_type=='Fixed Deposit')
+                    <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                    @endif
+                    @endforeach
                 </div>
             </div>
+            @endif
 
             @php
             $adspopup = json_decode($page->ads_placement);
@@ -224,7 +228,7 @@
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
             @if($page->slug=='all-in-one-deposit-mode')
-                    <!-- <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div> -->
+                    <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}" target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
             @endif
             <div class="ps-product ps-product--2">
                 <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">

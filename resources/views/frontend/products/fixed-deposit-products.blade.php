@@ -188,28 +188,27 @@
             //dd($ads);
             @endphp
             @if(count($promotion_products))
-                @php $j = 1; @endphp
-                @foreach($promotion_products as $promotion_product)
-                    @php
-                    $promotion_product_id = $promotion_product->promotion_product_id;
-                    $product_tenures = json_decode($promotion_product->product_tenure);
-                    $product_range = json_decode($promotion_product->product_range);
-                    $tenures = json_decode($promotion_product->tenure);
-                    $key = $interest_key = $sort_array = array();
-                    $ads = json_decode($promotion_product->ads_placement);
-                    @endphp
-                    @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
-                        <div class="ps-poster-popup">
-                            <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                            </div>
-                            <a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"><img
-                                        src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
-                                        alt=""></a>
-                        </div>
-                    @endif
-                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
-                         id="{{ $j }}">
+
+            @php $j = 1; @endphp
+            @foreach($promotion_products as $promotion_product)
+            @php
+            $promotion_product_id = $promotion_product->promotion_product_id;
+            $product_tenures = json_decode($promotion_product->product_tenure);
+            $product_range = json_decode($promotion_product->product_range);
+            $tenures = json_decode($promotion_product->tenure);
+            $key = $interest_key = $sort_array = array();
+            $ads = json_decode($promotion_product->ads_placement);
+            @endphp
+            @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+            <div class="ps-poster-popup">
+                <div class="close-popup">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+                <a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a>
+            </div>
+            @endif
+                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
+
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
@@ -312,7 +311,7 @@
                                 if(!empty($ads[1]->ad_image_vertical)) {
                                 @endphp
                                 <div class="ps-product__poster">
-                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"><img
+                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
                                                 src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                 alt=""></a>
                                 </div>
@@ -347,9 +346,9 @@
                                     <div class="close-popup">
                                         <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
-                                    <a href="#"><img
-                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                alt=""></a>
+
+                                    <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""  target="_blank"></a>
+
                                 </div>
                                 @php } @endphp
                             @endif
