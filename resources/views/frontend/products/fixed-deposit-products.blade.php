@@ -210,20 +210,31 @@
                     <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
 
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
-
+                            <?php
+                            $todayStartDate = \Helper::startOfDayBefore();
+                            $todayEndDate = \Helper::endOfDayAfter();
+                            ?>
                             <div class="ps-product__promo">
                                 <p>
-                                    <span class="highlight"> Promo: </span> {{ date('M d, Y', strtotime($promotion_product->promotion_start)) . ' to ' . date('M d, Y', strtotime($promotion_product->promotion_end)) }}
+                                    <span class="highlight"> Promo: </span>
+                                    @if($promotion_product->promotion_end == null)
+                                        ONGOING
+                                    @elseif($promotion_product->promotion_end < $todayStartDate)
+                                        ENDED
+                                    @elseif($promotion_product->promotion_end > $todayStartDate)
+                               {{ date('M d, Y', strtotime($promotion_product->promotion_start)) . ' to ' . date('M d, Y', strtotime($promotion_product->promotion_end)) }}
+                                     @endif
                                 </p>
-
-                                <p class="text-uppercase">
-                                    @php
-                                    $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                    $end_date = new DateTime(date("Y-m-d",
-                                    strtotime($promotion_product->promotion_end)));
-                                    $interval = date_diff($end_date, $start_date);
-                                    echo $interval->format('%R%a days left');
-                                    @endphp
+                                    <p class="text-uppercase">
+                                        <?php
+                                        if ($promotion_product->promotion_end > $todayStartDate) {
+                                            $start_date = new DateTime(date("Y-m-d", strtotime("now")));
+                                            $end_date = new DateTime(date("Y-m-d",
+                                                    strtotime($promotion_product->promotion_end)));
+                                            $interval = date_diff($end_date, $start_date);
+                                            echo $interval->format('%a days left');
+                                        }
+                                        ?>
                                 </p>
                             </div>
                         </div>

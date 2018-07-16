@@ -25,7 +25,7 @@ class ProductsController extends Controller
 
     public function promotion_products($productTypeId = FIX_DEPOSIT)
     {
-        $defaultSearch = DefaultSearch::where('promotion_id',$productTypeId)->first();
+        $defaultSearch = DefaultSearch::where('promotion_id', $productTypeId)->first();
         $products = \Helper::getProducts($productTypeId);
         $productType = $this->productType($productTypeId);
 
@@ -310,8 +310,16 @@ class ProductsController extends Controller
         }
 
         $product->product_range = $ranges;
-        $product->promotion_start = \Helper::startOfDayBefore($request->promotion_start_date);
-        $product->promotion_end = \Helper::endOfDayAfter($request->promotion_end_date);
+        if ($request->promotion_start_date) {
+            $product->promotion_start = \Helper::startOfDayBefore($request->promotion_start_date);
+        } else {
+            $product->promotion_start = null;
+        }
+        if ($request->promotion_end_date) {
+            $product->promotion_end = \Helper::endOfDayAfter($request->promotion_end_date);
+        } else {
+            $product->promotion_end = null;
+        }
         $product->product_footer = $request->product_footer;
 
         if ($request->hasFile('ad_horizontal_image')) {
@@ -629,8 +637,16 @@ class ProductsController extends Controller
         }
 
         $product->product_range = $ranges;
-        $product->promotion_start = \Helper::startOfDayBefore($request->promotion_start_date);
-        $product->promotion_end = \Helper::endOfDayAfter($request->promotion_end_date);
+        if ($request->promotion_start_date) {
+            $product->promotion_start = \Helper::startOfDayBefore($request->promotion_start_date);
+        } else {
+            $product->promotion_start = null;
+        }
+        if ($request->promotion_end_date) {
+            $product->promotion_end = \Helper::endOfDayAfter($request->promotion_end_date);
+        } else {
+            $product->promotion_end = null;
+        }
         $product->product_footer = $request->product_footer;
 
         if ($request->hasFile('ad_horizontal_image')) {

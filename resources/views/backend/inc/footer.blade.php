@@ -488,18 +488,11 @@
                         errors[i] = 'The product type is required.';
                         i++;
                     }
-                    if (!formula) {
-                        errors[i] = 'The formula is required.';
+                    if (!(!startDate && !endDate) && (!startDate || !endDate) ) {
+                        errors[i] = 'The date is required.';
                         i++;
                     }
-                    if (!startDate) {
-                        errors[i] = 'The start date is required.';
-                        i++;
-                    }
-                    if (!endDate) {
-                        errors[i] = 'The end date is required.';
-                        i++;
-                    }
+                    
                     if (!minPlacementAmount) {
                         errors[i] = 'The minimum placement is required.';
                         i++;

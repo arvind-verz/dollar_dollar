@@ -27,7 +27,7 @@
                            class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
                             @if($defaultSearch)Edit Default Search Values @else  Add Default Search Values @endif
                         </a>
-                        <a href="{{ route('promotion-products',['productTypeId'=>$productTypeId]) }}"
+                        <a href="{{ route('promotion-products-add',['productTypeId'=>$productTypeId]) }}"
                            class="btn btn-info pull-right mr-10 "><i
                                     class="fa fa-plus"></i> Add New Products</a>
 
