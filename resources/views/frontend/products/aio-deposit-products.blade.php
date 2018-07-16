@@ -348,7 +348,7 @@
                                                 echo "$" . $range->max_range;
                                             } elseif ($range->above_range == true) {
                                                 echo "Above ";
-                                                echo "$" . $range->min_range;
+                                                echo "$" . ($range->min_range - 1);
                                             } else {
                                                 echo "Next ";
                                                 echo "$" . $range->max_range;
@@ -367,7 +367,7 @@
                                                 echo "$" . $range->max_range;
                                             } elseif ($range->above_range == true) {
                                                 echo "Above ";
-                                                echo "$" . $range->min_range;
+                                                echo "$" . ($range->min_range - 1);
                                             } else {
                                                 echo "Next ";
                                                 echo "$" . $range->max_range;
