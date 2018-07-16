@@ -59,9 +59,13 @@ class PagesFrontController extends Controller
      */
     public function show($slug)
     {
+        $user_products = "";
+        if(Auth::check())
+        {
         $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
         ->where('user_id', Auth::user()->id)
             ->get();
+        }
 
 
         DB::enableQueryLog();
