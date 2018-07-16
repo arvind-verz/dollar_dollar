@@ -371,8 +371,8 @@
                                                 echo "First ";
                                                 echo "$" . $range->max_range;
                                             } elseif ($range->above_range == true) {
-                                                echo "Above ";
-                                                echo "$" . ($range->min_range - 1);
+                                                echo "REMAINING BALANCE ";
+                                               // echo "$" . ($range->min_range - 1);
                                             } else {
                                                 echo "Next ";
                                                 echo "$" . $range->max_range;
@@ -561,10 +561,12 @@
                                             <tr>
                                                 <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
                                                     style="width: 30%">@if($key==0)
-                                                        <${{ $range->max_range+1 }} @elseif((count($product_range)-1)==$key)
-                                                        >=  ${{ $range->min_range }} @else
-                                                        >= ${{ $range->min_range }} TO
-                                                        <  ${{ $range->max_range+1 }} @endif</td>
+                                                        <${{ $range->max_range+1 }}
+                                                    @elseif((count($product_range)-1)==$key)
+                                                         >${{ $range->min_range }}
+                                                    @else
+                                                         ${{ $range->min_range }} TO
+                                                        <${{ $range->max_range+1 }} @endif</td>
                                                 <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
                                                     @if($range->bonus_interest_criteria_a<=0)
                                                         - @else  {{ $range->bonus_interest_criteria_a }}% @endif
