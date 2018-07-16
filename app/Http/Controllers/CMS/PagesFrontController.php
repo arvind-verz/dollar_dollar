@@ -209,11 +209,11 @@ class PagesFrontController extends Controller
                         } else {
                             $detail->tags = [];
                         }
-                        $relatedBlog[] = $detail;                        
+                        if (count(array_intersect($page->tags, $detail->tags))) {
+                            $relatedBlog[] = $detail;
+                        }
                     }
                 }
-                $relatedBlog = array_random($relatedBlog, 3);
-                //dd($relatedBlog);
                 return view("frontend.Blog.blog-detail", compact("page", "systemSetting", "banners", "relatedBlog", 'tags'));
             } else {
                 return view("frontend.CMS.page", compact("page", "systemSetting", "banners"));
@@ -260,7 +260,7 @@ class PagesFrontController extends Controller
         $brand_id = isset($request['brand_id']) ? $request['brand_id'] : '';
         $sort_by = isset($request['sort_by']) ? $request['sort_by'] : '';
 
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Fixed Deposit')->get();
+        $legendtable = systemSettingLegendTable::all();
 //dd($brand_id);
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -489,8 +489,6 @@ class PagesFrontController extends Controller
         DB::connection()->enableQueryLog();
         $currency_list = Currency::get();
 
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->get();
-
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
@@ -503,17 +501,13 @@ class PagesFrontController extends Controller
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-
-
 //dd(DB::getQueryLog());
         //dd($promotion_products);
         $brands = $details['brands'];
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
-
-        $banners       = $details['banners'];
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency_list", "legendtable"));
-
+        $banners = $details['banners'];
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "currency_list"));
     }
 
     public function aioDepositMode()
@@ -1349,12 +1343,9 @@ class PagesFrontController extends Controller
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->get();
-
-        $details       = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
-        $brands        = $details['brands'];
-        $page          = $details['page'];
+        $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
+        $brands = $details['brands'];
+        $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
 
@@ -1922,6 +1913,6 @@ class PagesFrontController extends Controller
 
         }
         //dd($promotion_products);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 }
