@@ -492,7 +492,7 @@
                         errors[i] = 'The date is required.';
                         i++;
                     }
-                    
+
                     if (!minPlacementAmount) {
                         errors[i] = 'The minimum placement is required.';
                         i++;
@@ -1400,7 +1400,10 @@
 
         if (jQuery.inArray(formula, SDP6) !== -1) {
             $("#saving_placement_range_f4_" + range_id).remove();
-        }if (formula == 8) {
+        }if (jQuery.inArray(formula, SDP1) !== -1) {
+            $("#saving_placement_range_f1_" + range_id).remove();
+        }
+        if (formula == 8) {
             $("#aioa_placement_range_f2_" + range_id).remove();
         }
         if (formula == 10) {
