@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Auth;
 use App\ProductManagement;
+use App\ContactEnquiry;
+use App\HealthInsuranceEnquiry;
+use App\LifeInsuranceEnquiry;
 use DB;
 
 
@@ -414,17 +417,41 @@ class UsersController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, CUSTOMER_MODULE_ID);
         $ids = isset($request->id) ? $request->id : '';
         $type = isset($request->type) ? $request->type : '';
+        $select_type = isset($request->select_type) ? $request->select_type : '';
         //return $type;
         if(count($ids)) {
             foreach($ids as $id) {
                 if($type=='bulk_customer_remove') {
                     $users = User::find($id);
+                    $users->delete_status = 1;
                 }
                 elseif($type=='bulk_user_remove') {
                     $users = Admin::find($id);
+                    $users->delete_status = 1;
+                }
+                elseif($type=='bulk_user_status_update') {
+                    $users = User::find($id);
+                    if($select_type=='active') {
+                        $users->status = 1;
+                    }
+                    else {
+                        $users->status = 0;
+                    }
+                }
+                elseif($type=='bulk_enquiry_remove') {
+                    $users = ContactEnquiry::find($id);
+                    $users->delete_status = 1;
+                }
+                elseif($type=='bulk_health_insurance_remove') {
+                    $users = HealthInsuranceEnquiry::find($id);
+                    $users->delete_status = 1;
+                }
+                elseif($type=='bulk_life_insurance_remove') {
+                    $users = LifeInsuranceEnquiry::find($id);
+                    $users->delete_status = 1;
                 }
                 //return $users;
-                $users->delete_status = 1;
+                
                 $users->save();
             }
             
