@@ -6695,3 +6695,7 @@ table.text-center th {
 .ps-fullwidth {
     width: 100%;
 }
+
+ol.breadcrumb>li.active {
+    font-weight: bold;
+}
