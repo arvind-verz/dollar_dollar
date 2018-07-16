@@ -229,9 +229,14 @@
 
                                                     <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                         <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . $productRange->min_range . ' - $' . $productRange->max_range }}</td>
-                                                        <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">{{ $productRange->bonus_interest . '%' }}</td>
-                                                        <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">{{ $productRange->board_rate . '%' }}</td>
-                                                        <td class="@if($productRange->total_interest_highlight==true ) highlight @endif">{{ ($productRange->bonus_interest+$productRange->board_rate). '%' }}</td>
+                                                        <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if($productRange->bonus_interest<=0)
+                                                                - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
+                                                        <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if($productRange->board_rate<=0)
+                                                                - @else {{ $productRange->board_rate . '%' }} @endif </td>
+                                                        <td class="@if($productRange->total_interest_highlight==true ) highlight @endif">
+                                                            @if(($productRange->bonus_interest+$productRange->board_rate)<=0)
+                                                                - @else {{ ($productRange->bonus_interest+$productRange->board_rate) . '%' }} @endif
+                                                            </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -253,9 +258,11 @@
                                     <div class="ps-product__panel">
                                         <h4>Possible interest(s) earned for SGD ${{ $product->placement }}</h4>
 
-                                        <h2>${{ $product->total_interest_earn }} <br>
+                                        <h2> @if(($product->total_interest_earn)<=0)
+                                                - @else ${{ $product->total_interest_earn . '%' }} @endif<br>
                                                 <span>
-                                                    Total interest rate {{ $product->total_interest }}%
+                                                    Total interest rate @if(($product->total_interest)<=0)
+                                                        - @else {{ $product->total_interest }}% @endif
                                                 </span>
                                         </h2>
                                     </div>
@@ -280,9 +287,12 @@
                                                         <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                             <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . $productRange->min_range . ' - $' . $productRange->max_range }}</td>
                                                             <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenor. ' Months' }}</td>
-                                                            <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">{{ $productRange->bonus_interest . '%' }}</td>
-                                                            <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">{{ $productRange->board_rate . '%' }}</td>
-                                                            <td class="@if($productRange->total_interest_highlight==true ) highlight @endif">{{ ($productRange->bonus_interest+$productRange->board_rate). '%' }}</td>
+                                                            <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($product->bonus_interest)<=0)
+                                                                    - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
+                                                            <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if(($product->board_rate)<=0)
+                                                                    - @else {{ $productRange->board_rate . '%' }} @endif</td>
+                                                            <td class="@if($productRange->total_interest_highlight==true ) highlight @endif">@if(($productRange->bonus_interest+$productRange->board_rate)<=0)
+                                                                    - @else {{ ($productRange->bonus_interest+$productRange->board_rate). '%' }} @endif</td>
                                                         </tr>
                                                     @endforeach
                                                     </tbody>
@@ -304,9 +314,11 @@
                                         <div class="ps-product__panel">
                                             <h4>Possible interest(s) earned for SGD ${{ $product->placement }}</h4>
 
-                                            <h2>${{ $product->total_interest_earn }} <br>
+                                            <h2>@if(($product->total_interest_earn)<=0)
+                                                    - @else ${{ $product->total_interest_earn }} @endif <br>
                                                 <span>
-                                                    Total interest rate {{ $product->total_interest }}%
+                                                    Total interest rate @if(($product->total_interest)<=0)
+                                                        - @else ${{ $product->total_interest }}% @endif
                                                 </span>
                                             </h2>
                                         </div>
@@ -332,7 +344,8 @@
                                                                     <tr class="@if($productRange->high_light==true ) highlight @endif">
                                                                         @endif
                                                                         @if($i==1)
-                                                                            <td rowspan="6" style="border: none; font-size: 30px; background-color: #faf9f9">{{ $productRange->sibor_rate. '%' }}</td>
+                                                                            <td rowspan="6" style="border: none; font-size: 30px; background-color: #faf9f9"> @if(($productRange->sibor_rate)<=0)
+                                                                                    - @else {{ $productRange->sibor_rate. '%' }} @endif</td>
                                                                         @endif
                                                                         @if($i==4)
                                                                             <td>TO</td>
@@ -342,7 +355,8 @@
                                                                         @if($i==4)
                                                                             <td>TO</td>
                                                                         @elseif(!((4 <= $i) && ($i <= 10)))
-                                                                            <td>{{ (($i*0.1)+($productRange->sibor_rate)) . '%' }}</td>
+                                                                            <td> @if((($i*0.1)+($productRange->sibor_rate)) <=0)
+                                                                                    - @else {{ (($i*0.1)+($productRange->sibor_rate)) . '%' }} @endif </td>
                                                                         @endif
                                                                         @if(!((4 <= $i) && ($i < 11)))
                                                                     </tr>
@@ -369,9 +383,11 @@
                                             <div class="ps-product__panel">
                                                 <h4>Possible interest(s) earned for SGD ${{ $product->placement }}</h4>
 
-                                                <h2>${{ $product->total_interest_earn }} <br>
+                                                <h2>@if($product->total_interest_earn <=0)
+                                                        - @else ${{ $product->total_interest_earn }} @endif   <br>
                                                 <span>
-                                                    Total interest rate {{ $product->total_interest }}%
+                                                    Total interest rate  @if($product->total_interest <=0)
+                                                        - @else {{ $product->total_interest }}% @endif
                                                 </span>
                                                 </h2>
                                             </div>
@@ -395,13 +411,15 @@
                                                                 <tr class="@if($product->highlight>=$key) highlight @endif">
                                                                     <td>@if($key==0) 1st - @else NEXT
                                                                         - @endif{{ '$' . $productRange->max_range }}</td>
-                                                                    <td>{{ $productRange->board_rate }}%
+                                                                    <td>@if($productRange->board_rate <=0 )
+                                                                            - @else {{ $productRange->board_rate }}% @endif
+                                                                    </td>
+                                                                    <td>@if($productRange->bonus_interest <=0 )
+                                                                            - @else {{ $productRange->bonus_interest }}% @endif
 
                                                                     </td>
-                                                                    <td>{{ $productRange->bonus_interest }}%
-
-                                                                    </td>
-                                                                    <td>{{ $productRange->total_interest }}%
+                                                                    <td>@if($productRange->total_interest <=0 )
+                                                                            - @else {{ $productRange->total_interest }}% @endif
 
                                                                     </td>
                                                                 </tr>
@@ -426,7 +444,8 @@
                                                     <h4>Possible interest(s) earned for SGD
                                                         ${{ $product->placement }}</h4>
 
-                                                    <h2>${{ $product->total_interest_earn }} <br>
+                                                    <h2>@if($productRange->total_interest_earn <=0 )
+                                                            - @else ${{ $product->total_interest_earn }}% @endif   <br>
                                                         {{-- <span>
                                                             Total interest rate {{ $product->total_interest }}%
                                                         </span>--}}
@@ -461,16 +480,19 @@
 
                                                                         @elseif($key==1)
                                                                             @foreach($product->base_interests as $baseInterest )
-                                                                                <td class="">{{ '$' .$baseInterest }}</td>
+                                                                                <td class="">@if($baseInterest <=0 )
+                                                                                        - @else {{ '$' .$baseInterest }} @endif   </td>
                                                                             @endforeach
 
                                                                         @elseif($key==2)
                                                                             @foreach($product->additional_interests as $additionalInterest)
-                                                                                <td>{{ '$' . $additionalInterest }}</td>
+                                                                                <td>@if($additionalInterest <=0 )
+                                                                                        - @else {{ '$' .$additionalInterest }} @endif  </td>
                                                                             @endforeach
                                                                         @elseif($key==3)
                                                                             <td colspan="{{count($product->months)}}"></td>
-                                                                            <td>{{ '$' . $product->total_interest_earn }}
+                                                                            <td>@if($product->total_interest_earn <=0 )
+                                                                                    - @else {{ '$' . $product->total_interest_earn }} @endif
                                                                                 {{-- <br/>
                                                                                  <span>
                                                                                      Total interest rate {{ $product->total_interest }}%
