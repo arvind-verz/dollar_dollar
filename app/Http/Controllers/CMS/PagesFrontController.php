@@ -260,13 +260,8 @@ class PagesFrontController extends Controller
         $brand_id = isset($request['brand_id']) ? $request['brand_id'] : '';
         $sort_by = isset($request['sort_by']) ? $request['sort_by'] : '';
 
-<<<<<<< HEAD
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Fixed Deposit')->where('delete_status', 0)->get();
-//dd($brand_id);
-=======
         $legendtable = systemSettingLegendTable::all();
         //dd($request);
->>>>>>> master
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -489,21 +484,14 @@ class PagesFrontController extends Controller
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Wealth Deposit')->where('delete_status', 0)->get();
 //dd(DB::getQueryLog());
         //dd($promotion_products);
         $details = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
         $brands = $details['brands'];
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
-<<<<<<< HEAD
-        $banners       = $details['banners'];
-
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "legendtable"));
-=======
         $banners = $details['banners'];
         return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
->>>>>>> master
     }
 
     public function foreignCurrencyDepositMode($details)
@@ -526,11 +514,6 @@ class PagesFrontController extends Controller
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-<<<<<<< HEAD
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->where('delete_status', 0)->get();
-
-=======
->>>>>>> master
 //dd(DB::getQueryLog());
         //dd($promotion_products);
         $brands = $details['brands'];
@@ -542,142 +525,9 @@ class PagesFrontController extends Controller
 
     public function aioDepositMode()
     {
-<<<<<<< HEAD
-        $start_date = \Helper::startOfDayBefore();
-        $end_date = \Helper::endOfDayAfter();
-        DB::connection()->enableQueryLog();
-
-        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.promotion_type_id', '=', 3)
-            //->where('promotion_products.formula_id', '=', 10)
-            ->where('promotion_products.promotion_start', '<=', $start_date)
-            ->where('promotion_products.promotion_end', '>=', $end_date)
-            ->where('promotion_products.delete_status', '=', 0)
-            ->where('promotion_products.status', '=', 1)
-            ->orderBy('promotion_products.featured', 'DESC')
-            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-            ->get();
-
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'AIO Deposit')->where('delete_status', 0)->get();
-
-        $filterProducts = [];
-        foreach ($promotion_products as &$product) {
-            $status = false;
-            $placement = 0;
-            $productRanges = json_decode($product->product_range);
-
-            if ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F1) {
-                $totalInterests = [];
-                $interestEarns = [];
-
-                foreach ($productRanges as &$productRange) {
-                    $allInterests = [
-                        $productRange->bonus_interest_salary,
-                        $productRange->bonus_interest_giro_payment,
-                        $productRange->bonus_interest_spend,
-                        $productRange->bonus_interest_wealth,
-                        $productRange->bonus_interest,
-                    ];
-
-                    $placement = $productRange->bonus_amount;
-                    //dd($allInterests);
-                    $totalInterest = array_sum($allInterests);
-                    $totalInterests[] = $totalInterest;
-                    //dd(($productRange->bonus_interest_remaining_amount / 100) * ($placement - $productRange->first_cap_amount));
-                    if ($placement > 0 && ($placement > $productRange->first_cap_amount)) {
-                        $interestEarns[] = (($productRange->first_cap_amount * ($totalInterest / 100)) + (($productRange->bonus_interest_remaining_amount / 100) * ($placement - $productRange->first_cap_amount)));
-                    } else {
-                        $interestEarns[] = $placement * ($totalInterest / 100);
-                    }
-                    $productRange->placement = $placement;
-                }
-                $product->total_interest = array_sum($totalInterests);
-                $product->interest_earned = array_sum($interestEarns);
-                $product->placement = $placement;
-
-            } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F2) {
-
-                $maxRanges = [];
-                $totalInterests = [];
-                $interestEarns = [];
-                $lastCalculatedAmount = 0;
-                foreach ($productRanges as &$productRange) {
-                    $productRange->above_range = false;
-                    $maxRanges[] = $productRange->max_range;
-                    $totalInterests[] = $productRange->bonus_interest_criteria_b;
-                    $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_criteria_b / 100), 2);
-                    $productRange->interest_earn = $interestEarn;
-                    $productRange->criteria = $productRange->bonus_interest_criteria_b;
-                    $interestEarns[] = $interestEarn;
-                    $lastCalculatedAmount = $productRange->max_range;
-
-                }
-
-                $product->total_interest = array_sum($totalInterests);
-                $product->interest_earned = array_sum($interestEarns);
-                $product->placement = array_last(array_sort($maxRanges));
-
-            }
-            if ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F3) {
-                $totalInterests = [];
-                $interestEarns = [];
-                foreach ($productRanges as &$productRange) {
-                    $allInterests = [
-                        $productRange->bonus_interest_criteria1,
-                        $productRange->bonus_interest_criteria2,
-                        $productRange->bonus_interest_criteria3,
-                    ];
-
-                    $placement = $productRange->first_cap_amount;
-
-                    $totalInterest = $productRange->bonus_interest_criteria3;
-                    $totalInterests[] = $totalInterest;
-                    if ($placement > 0 && ($placement > $productRange->first_cap_amount)) {
-                        $interestEarns[] = (($productRange->first_cap_amount * ($totalInterest / 100)) + (($productRange->bonus_interest_remaining_amount / 100) * ($placement - $productRange->first_cap_amount)));
-                    } else {
-                        $interestEarns[] = $placement * ($totalInterest / 100);
-                    }
-
-                    $productRange->placement = $placement;
-
-                }
-                $product->total_interest = array_sum($totalInterests);
-                $product->interest_earned = array_sum($interestEarns);
-                $product->placement = $placement;
-
-            } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F4) {
-                //dd($productRanges);
-                $product->highlight = false;
-                foreach ($productRanges as &$productRange) {
-
-                    $productRange->criteria_a_highlight = false;
-                    $productRange->criteria_b_highlight = false;
-                }
-                $lastRange = array_last($productRanges);
-                $product->placement = $lastRange->min_range;
-                $product->total_interest = $lastRange->bonus_interest_criteria_b;
-                $product->interest_earned = $lastRange->min_range * ($lastRange->bonus_interest_criteria_b / 100);
-
-            }
-            $product->product_range = $productRanges;
-
-        }
-
-        //dd(DB::getQueryLog());
-        //dd($promotion_products);
-        $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
-        $brands = $details['brands'];
-        $page = $details['page'];
-        $systemSetting = $details['systemSetting'];
-        $banners = $details['banners'];
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "legendtable"));
-=======
         $request = [];
         return $this->aio($request);
 
->>>>>>> master
     }
 
     public function getContactForm()
@@ -796,17 +646,9 @@ class PagesFrontController extends Controller
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-<<<<<<< HEAD
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Wealth Deposit')->where('delete_status', 0)->get();
-
-        $details       = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
-        $brands        = $details['brands'];
-        $page          = $details['page'];
-=======
         $details = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
         $brands = $details['brands'];
         $page = $details['page'];
->>>>>>> master
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
 
@@ -918,7 +760,7 @@ class PagesFrontController extends Controller
 //dd($filterNewProducts);
         $promotion_products = $filterNewProducts;
 //dd($promotion_products);
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable"));
+        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter"));
     }
 
     public function search_saving_deposit(Request $request)
@@ -937,13 +779,8 @@ class PagesFrontController extends Controller
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : 1;
         $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
 
-<<<<<<< HEAD
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Saving Deposit')->where('delete_status', 0)->get();
-
-=======
 
         //dd($searchValue,$searchFilter);
->>>>>>> master
         DB::connection()->enableQueryLog();
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -1327,7 +1164,7 @@ class PagesFrontController extends Controller
             }
 
         }
-        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
+        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter"));
     }
 
     public function product_search_homepage(Request $request)
@@ -1372,8 +1209,6 @@ class PagesFrontController extends Controller
         $currency_list = Currency::get();
         $search_currency = Currency::find($currency);
 
-
-
         DB::connection()->enableQueryLog();
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -1386,17 +1221,9 @@ class PagesFrontController extends Controller
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-<<<<<<< HEAD
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')->where('delete_status', 0)->get();
-
-        $details       = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
-        $brands        = $details['brands'];
-        $page          = $details['page'];
-=======
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands = $details['brands'];
         $page = $details['page'];
->>>>>>> master
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
 
