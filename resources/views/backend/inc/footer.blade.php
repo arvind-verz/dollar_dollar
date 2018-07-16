@@ -186,9 +186,75 @@
 <script src="{{ asset('backend/dist/bootstrap-tagsinput-angular.min.js')}}"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="{{ asset('backend/dist/js/jquery.bootstrap.wizard.js')}}"></script>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         var bulk_arr = [];
+        var bulk_arr1 = [];
+
+        $("input[name='bluk_status[]']").on("click", function() {
+            var value = $(this).val();
+            
+            $(this).each(function() {
+                if($(this).is(":checked")) {
+                    bulk_arr1.push(value);
+                    $("div.bulk_status").removeClass("hide");
+                }
+                else {
+                    bulk_arr1.pop(value);
+                }
+            });            
+
+            if(bulk_arr1.length<1) {
+                $("div.bulk_status").addClass("hide");
+                $("div.bulk_status").find(".badge").text('');
+            }
+            else {
+                $("div.bulk_status").removeClass("hide");
+                $("div.bulk_status").find(".badge").text(bulk_arr1.length);
+            }
+            //alert(bulk_arr);
+        });
+
+        $("input[name='all_bulk_update']").on("click", function() {
+            bulk_arr1 = [];
+            
+            if($(this).is(":checked")) {
+                $("input[name='bluk_status[]']").each(function() {
+                    
+                    var value = $(this).val();
+                    $(this).prop("checked", true);
+                    bulk_arr1.push(value);
+                    $("div.bulk_status").removeClass("hide");
+                });
+                $("div.bulk_status").find(".badge").text(bulk_arr1.length);
+            }
+            else {
+                $("input[name='bluk_status[]']").prop("checked", false);
+                $("input[name='bluk_status[]']").each(function() {
+                    var value = $(this).val();
+                    $(this).prop("checked", false);
+                    bulk_arr1.pop(value);
+                    $("div.bulk_status").addClass("hide");
+                });
+                $("div.bulk_status").find(".badge").text('');
+            }
+        });
+
+        $("select[name='select_type']").on("change", function() {
+            var select_type = $(this).val();
+            if(select_type!='') {
+                var r = confirm("Are you sure?");
+                if(r==true) {
+                    $.post("{{ route('user-bulk-remove') }}", {id:bulk_arr1, type:'bulk_user_status_update', select_type: select_type}, function(data) {
+                        if(data.trim()=='success') {
+                            window.location.reload();
+                        }
+                    });
+                }
+            }
+        });
+
         $("input[name='bluk_remove[]']").on("click", function() {
             var value = $(this).val();
             
@@ -268,7 +334,7 @@
                     "pageLength": 10,
                     'ordering': true,
                     "aoColumnDefs": [{
-                        "aTargets": [0],
+                        "aTargets": [0, 1],
                         "bSortable": false,
                     
                     }]
@@ -308,7 +374,11 @@
                     "pageLength": 10,
                     'ordering': true,
                     'order': [[0, 'asc']],
-                    "columnDefs": []
+                    "aoColumnDefs": [{
+                        "aTargets": [0],
+                        "bSortable": false,
+                    
+                    }]
                 });
         $('#products').DataTable(
                 {

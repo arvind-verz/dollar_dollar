@@ -209,11 +209,10 @@ class PagesFrontController extends Controller
                         } else {
                             $detail->tags = [];
                         }
-                        if (count(array_intersect($page->tags, $detail->tags))) {
-                            $relatedBlog[] = $detail;
-                        }
+                        $relatedBlog[] = $detail;
                     }
                 }
+                $relatedBlog = array_random($relatedBlog, 3);
                 return view("frontend.Blog.blog-detail", compact("page", "systemSetting", "banners", "relatedBlog", 'tags'));
             } else {
                 return view("frontend.CMS.page", compact("page", "systemSetting", "banners"));
@@ -497,7 +496,7 @@ class PagesFrontController extends Controller
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products"));
+        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "legendtable"));
     }
 
     public function foreignCurrencyDepositMode($details)
@@ -507,6 +506,10 @@ class PagesFrontController extends Controller
 //dd($startDate);
         DB::connection()->enableQueryLog();
         $currency_list = Currency::get();
+
+        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Foreign Currency Deposit')
+        ->where('delete_status', 0)
+        ->get();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')

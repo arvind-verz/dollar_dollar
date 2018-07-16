@@ -41,6 +41,9 @@
                                             <select name="page_type" class="form-control">
                                                 <option value="">Select</option>
                                                 <option value="Fixed Deposit" @if($systemSetting->page_type=='Fixed Deposit') selected @endif>Fixed Deposit</option>
+                                                <option value="Saving Deposit" @if($systemSetting->page_type=='Saving Deposit') selected @endif>Saving Deposit</option>
+                                                <option value="Wealth Deposit" @if($systemSetting->page_type=='Wealth Deposit') selected @endif>Wealth Deposit</option>
+                                                <option value="AIO Deposit" @if($systemSetting->page_type=='AIO Deposit') selected @endif>All in One Deposit</option>
                                                 <option value="Foreign Currency Deposit" @if($systemSetting->page_type=='Foreign Currency Deposit') selected @endif>Foreign Currency Deposit</option>
                                             </select>
                                         </div>
