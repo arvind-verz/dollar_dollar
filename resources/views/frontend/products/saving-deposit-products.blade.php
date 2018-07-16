@@ -450,7 +450,7 @@
                                                     <h4>Possible interest(s) earned for SGD
                                                         ${{ $product->placement }}</h4>
 
-                                                    <h2>@if($productRange->total_interest_earn <=0 )
+                                                    <h2>@if($product->total_interest_earn <=0 )
                                                             - @else ${{ $product->total_interest_earn }}% @endif   <br>
                                                         {{-- <span>
                                                             Total interest rate {{ $product->total_interest }}%
