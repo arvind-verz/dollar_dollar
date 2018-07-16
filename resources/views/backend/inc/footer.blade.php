@@ -187,22 +187,22 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="{{ asset('backend/dist/js/jquery.bootstrap.wizard.js')}}"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var bulk_arr = [];
-        $("input[name='bluk_remove[]']").on("click", function() {
+        $("input[name='bluk_remove[]']").on("click", function () {
             var value = $(this).val();
-            
-            $(this).each(function() {
-                if($(this).is(":checked")) {
+
+            $(this).each(function () {
+                if ($(this).is(":checked")) {
                     bulk_arr.push(value);
                     $("a.bulk_remove").removeClass("hide");
                 }
                 else {
                     bulk_arr.pop(value);
                 }
-            });            
+            });
 
-            if(bulk_arr.length<1) {
+            if (bulk_arr.length < 1) {
                 $("a.bulk_remove").addClass("hide");
                 $("a.bluk_remove").find(".badge").text('');
             }
@@ -213,11 +213,11 @@
             //alert(bulk_arr);
         });
 
-        $("input[name='all_bulk_remove']").on("click", function() {
+        $("input[name='all_bulk_remove']").on("click", function () {
             bulk_arr = [];
-            
-            if($(this).is(":checked")) {
-                $("input[name='bluk_remove[]']").each(function() {
+
+            if ($(this).is(":checked")) {
+                $("input[name='bluk_remove[]']").each(function () {
                     var value = $(this).val();
                     $(this).prop("checked", true);
                     bulk_arr.push(value);
@@ -227,7 +227,7 @@
             }
             else {
                 $("input[name='bluk_remove[]").prop("checked", false);
-                $("input[name='bluk_remove[]']").each(function() {
+                $("input[name='bluk_remove[]']").each(function () {
                     var value = $(this).val();
                     $(this).prop("checked", false);
                     bulk_arr.pop(value);
@@ -237,12 +237,12 @@
             }
         });
 
-        $("a.bulk_remove").on("click", function() {
+        $("a.bulk_remove").on("click", function () {
             var r = confirm("Are you sure?");
             var type = $("input[name='bulk_remove_type']").val();
-            if(r==true) {
-                $.post("{{ route('user-bulk-remove') }}", {id:bulk_arr, type:type}, function(data) {
-                    if(data.trim()=='success') {
+            if (r == true) {
+                $.post("{{ route('user-bulk-remove') }}", {id: bulk_arr, type: type}, function (data) {
+                    if (data.trim() == 'success') {
                         window.location.reload();
                     }
                 });
@@ -414,14 +414,14 @@
                         errors[i] = 'The formula is required.';
                         i++;
                     }
-                    if (!startDate) {
-                        errors[i] = 'The start date is required.';
-                        i++;
-                    }
+                    if (!(!startDate && !endDate) && (!startDate || !endDate) ) {
+                     errors[i] = 'The date is required.';
+                     i++;
+                     }
                     if (!endDate) {
-                        errors[i] = 'The end date is required.';
-                        i++;
-                    }
+                     errors[i] = 'The end date is required.';
+                     i++;
+                     }
                     if (!minPlacementAmount) {
                         errors[i] = 'The minimum placement is required.';
                         i++;
@@ -618,7 +618,7 @@
                         var min = 0;
                         $.each(maxPlacements, function (k, v) {
                             minPlacements[k] = Number(min);
-                            min =  Number(v) + Number(1);
+                            min = Number(v) + Number(1);
                         });
                         if (rangeError == false) {
                             $.ajax({
@@ -849,7 +849,7 @@
                         var SalaryMinAmount = allInOneAccountF2.find('input[name="minimum_salary_aioa2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                         var maxPlacements = allInOneAccountF2.find('input[name^="max_placement_aioa2"]').map(function () {
+                        var maxPlacements = allInOneAccountF2.find('input[name^="max_placement_aioa2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var bonusInterestA = allInOneAccountF2.find('input[name^="bonus_interest_criteria_a_aioa2"]').map(function () {
@@ -904,7 +904,7 @@
                         var min = 0;
                         $.each(maxPlacements, function (k, v) {
                             minPlacements[k] = Number(min);
-                            min =  Number(v) + Number(1);
+                            min = Number(v) + Number(1);
                         });
 
                         if (rangeError == false) {
@@ -1329,7 +1329,8 @@
 
         if (jQuery.inArray(formula, SDP6) !== -1) {
             $("#saving_placement_range_f4_" + range_id).remove();
-        }if (formula == 8) {
+        }
+        if (formula == 8) {
             $("#aioa_placement_range_f2_" + range_id).remove();
         }
         if (formula == 10) {

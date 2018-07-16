@@ -190,14 +190,31 @@
                 <div class="ps-product  @if($product->featured==1) featured-1 @endif" id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 
+                        <?php
+                        $todayStartDate = \Helper::startOfDayBefore();
+                        $todayEndDate = \Helper::endOfDayAfter();
+                        ?>
                         <div class="ps-product__promo">
                             <p>
-                                <span class="highlight"> Promo: </span> {{ date('M d, Y', strtotime($product->promotion_start)) . ' to ' . date('M d, Y', strtotime($product->promotion_end)) }}
+                                <span class="highlight"> Promo: </span>
+                                @if($product->promotion_end == null)
+                                    ONGOING
+                                @elseif($product->promotion_end < $todayStartDate)
+                                    ENDED
+                                @elseif($product->promotion_end > $todayStartDate)
+                                    {{ date('M d, Y', strtotime($product->promotion_start)) . ' to ' . date('M d, Y', strtotime($product->promotion_end)) }}
+                                @endif
                             </p>
-
                             <p class="text-uppercase">
-                                {{-$product->remaining_days}} days left
-
+                                <?php
+                                if ($product->promotion_end > $todayStartDate) {
+                                    $start_date = new DateTime(date("Y-m-d", strtotime("now")));
+                                    $end_date = new DateTime(date("Y-m-d",
+                                            strtotime($product->promotion_end)));
+                                    $interval = date_diff($end_date, $start_date);
+                                    echo $interval->format('%a days left');
+                                }
+                                ?>
                             </p>
                         </div>
                     </div>

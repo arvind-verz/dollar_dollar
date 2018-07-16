@@ -118,7 +118,7 @@
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
                                                        name="promotion_start_date" id="promotion_start_date"
-                                                       value="{{  date('Y-m-d',strtotime($product->promotion_start ))}}">
+                                                       value="{{ $product->promotion_start? date('Y-m-d',strtotime($product->promotion_start )) : null}}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
@@ -136,7 +136,7 @@
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
                                                        name="promotion_end_date" id="promotion_end_date"
-                                                       value="{{ date('Y-m-d', strtotime($product->promotion_end )) }}">
+                                                       value="{{ $product->promotion_end ? date('Y-m-d', strtotime($product->promotion_end )) : null }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
