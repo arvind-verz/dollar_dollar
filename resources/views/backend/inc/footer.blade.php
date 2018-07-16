@@ -186,7 +186,70 @@
 <script src="{{ asset('backend/dist/bootstrap-tagsinput-angular.min.js')}}"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="{{ asset('backend/dist/js/jquery.bootstrap.wizard.js')}}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var bulk_arr = [];
+        $("input[name='bluk_remove[]']").on("click", function() {
+            var value = $(this).val();
+            
+            $(this).each(function() {
+                if($(this).is(":checked")) {
+                    bulk_arr.push(value);
+                    $("a.bulk_remove").removeClass("hide");
+                }
+                else {
+                    bulk_arr.pop(value);
+                }
+            });            
 
+            if(bulk_arr.length<1) {
+                $("a.bulk_remove").addClass("hide");
+                $("a.bluk_remove").find(".badge").text('');
+            }
+            else {
+                $("a.bulk_remove").removeClass("hide");
+                $("a.bulk_remove").find(".badge").text(bulk_arr.length);
+            }
+            //alert(bulk_arr);
+        });
+
+        $("input[name='all_bulk_remove']").on("click", function() {
+            bulk_arr = [];
+            
+            if($(this).is(":checked")) {
+                $("input[name='bluk_remove[]']").each(function() {
+                    var value = $(this).val();
+                    $(this).prop("checked", true);
+                    bulk_arr.push(value);
+                    $("a.bulk_remove").removeClass("hide");
+                });
+                $("a.bulk_remove").find(".badge").text(bulk_arr.length);
+            }
+            else {
+                $("input[name='bluk_remove[]").prop("checked", false);
+                $("input[name='bluk_remove[]']").each(function() {
+                    var value = $(this).val();
+                    $(this).prop("checked", false);
+                    bulk_arr.pop(value);
+                    $("a.bulk_remove").addClass("hide");
+                });
+                $("a.bulk_remove").find(".badge").text('');
+            }
+        });
+
+        $("a.bulk_remove").on("click", function() {
+            var r = confirm("Are you sure?");
+            var type = $("input[name='bulk_remove_type']").val();
+            if(r==true) {
+                $.post("{{ route('user-bulk-remove') }}", {id:bulk_arr, type:type}, function(data) {
+                    if(data.trim()=='success') {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    });
+</script>
 <script>
     $(document).ready(function () {
         //Initialize Select2 Elements
@@ -230,6 +293,10 @@
 
         $('#pages').DataTable(
                 {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        'excel', 'pdf', 'print'
+                    ],
                     "pageLength": 10,
                     'ordering': true,
                     'order': [[0, 'asc']],

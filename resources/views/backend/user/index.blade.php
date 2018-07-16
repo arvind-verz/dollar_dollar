@@ -26,7 +26,8 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
+                        <input type="hidden" name="bulk_remove_type" value="bulk_customer_remove">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>
@@ -35,6 +36,7 @@
                                         <table id="users" class="table ">
                                             <thead>
                                             <tr>
+                                                <th><input type="checkbox" name="all_bulk_remove"></th>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
                                                 <th>Email</th>
@@ -51,6 +53,9 @@
 
                                                 @foreach($users as $user)
                                                     <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="bluk_remove[]" value="{{ $user->id }}">
+                                                        </td>
                                                         <td>
                                                             {!!   $user->first_name !!}
                                                         </td>
@@ -138,3 +143,4 @@
     <!-- /.content -->
 
 @endsection
+

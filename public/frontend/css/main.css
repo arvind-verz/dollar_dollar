@@ -1944,7 +1944,7 @@ button {
 }
 
 .ps-block--home-signup {
-    padding: 100px 30px;
+    padding: 45px 30px;
     background-color: #fbf9f8;
     border: 1px solid #dde3e5;
     -webkit-border-radius: 5px;
@@ -2003,6 +2003,7 @@ button {
 
 .ps-block--desposit .ps-block__header {
     /* margin-bottom: 50px; */
+    padding: 20px 0;
 }
 
 .ps-block--desposit .ps-block__header h3 {
@@ -4028,8 +4029,8 @@ button {
 }
 
 .ps-home--links .ps-block--home-link:last-child {
-    border-right: 0;
-}
+    border-right: 0;    font-size: 15px;    display: block;    color: #fff;    font-weight: 700;    text-transform: uppercase;
+}.ps-home--links .ps-block--home-link:last-child:hover{color:#fdb515;}
 
 .ps-home--links .ps-block--home-link:last-child:after {
     display: none;
@@ -5240,30 +5241,18 @@ html .bg--parallax {
     transition: all 0.4s ease;
 }
 
+.ps-home--partners {
+    padding: 10px 0;
+}
+
+span.ps-post__meta a {
+    font-weight: bold;
+}
+
 .ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer::-webkit-scrollbar-thumb:hover {
     background: #777;
 }
 
-@media (min-width: 1349px) {
-    .ps-slider--home.owl-carousel .bg--cover {
-        height: 428px;
-    }
-}
-@media (max-width: 1199px) {
-    .ps-slider--home.owl-carousel .bg--cover {
-        height: 428px;
-    }
-}
-
-@media (max-width: 767px) {
-    .ps-slider--home.owl-carousel .bg--cover {
-        height: 350px;
-    }
-
-}
-@media (max-width: 320px) {
-    .ps-slider--home.owl-carousel .bg--cover {
-        height: 226px;
-    }
-
+.ps-slider--home.owl-carousel .bg--cover {
+    height: 428px;
 }

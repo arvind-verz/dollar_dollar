@@ -47,6 +47,7 @@
                                         <div class="col-sm-10">
                                             {{Form::file('blog_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 495*250 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('short_description', 'Short Description',['class'=>'col-sm-2 control-label'])}}
