@@ -260,20 +260,26 @@
                                 @endphp
                                 <tr>
                                     <td>Bonus Interest PA</td>
-                                    <td class="text-center @if($promotion_product->salary_highlight==true ) highlight @endif">{{ $range->bonus_interest_salary }}
-                                        %
+                                    <td class="text-center @if($promotion_product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
+                                            - @else {{ $range->bonus_interest_salary }} % @endif
+
                                     </td>
-                                    <td class="text-center @if($promotion_product->payment_highlight==true ) highlight @endif">{{ $range->bonus_interest_giro_payment }}
-                                        %
+                                    <td class="text-center @if($promotion_product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
+                                            - @else {{ $range->bonus_interest_giro_payment }} % @endif
+
                                     </td>
-                                    <td class="text-center @if($promotion_product->spend_highlight==true ) highlight @endif">{{ $range->bonus_interest_spend }}
-                                        %
+                                    <td class="text-center @if($promotion_product->spend_highlight==true ) highlight @endif">
+                                        @if($range->bonus_interest_spend<=0)
+                                            - @else {{ $range->bonus_interest_spend }} % @endif
+
                                     </td>
                                     <td class="text-center @if($promotion_product->wealth_highlight==true ) highlight @endif">
-                                        Up to {{ $range->bonus_interest_wealth }}%
+                                        Up to @if($range->bonus_interest_wealth<=0)
+                                            - @else  {{ $range->bonus_interest_wealth }}% @endif
                                     </td>
-                                    <td class="text-center @if($promotion_product->bonus_highlight==true ) highlight @endif">{{ $range->bonus_interest }}
-                                        % on
+                                    <td class="text-center @if($promotion_product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
+                                            - @else  {{ $range->bonus_interest }}% @endif
+                                        on
                                         first {{ $range->first_cap_amount }} if account more
                                         than {{ $range->bonus_amount }}</td>
                                 </tr>
@@ -323,7 +329,8 @@
                     <div class="ps-product__content">
                         <h4 class="ps-product__heading"><strong
                                     class="highlight">{{$promotion_product->product_name}} :</strong>
-                            Meet either of Criteria and earn up to {{ $promotion_product->maximum_interest_rate }}%
+                            Meet either of Criteria and earn up to @if($promotion_product->maximum_interest_rate<=0)
+                                - @else  {{ $promotion_product->maximum_interest_rate }}% @endif
                         </h4>
 
                         <div class="ps-product__poster"><img src="img/poster/product-2.jpg" alt=""></div>
@@ -354,11 +361,13 @@
                                                 echo "$" . $range->max_range;
                                             }?>
                                         </td>
-                                        <td class="text-center @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_a_highlight==true) ) highlight @endif">{{ $range->bonus_interest_criteria_a }}
-                                            %
+                                        <td class="text-center @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_a_highlight==true) ) highlight @endif">
+                                            @if($range->bonus_interest_criteria_a<=0)
+                                                - @else  {{ $range->bonus_interest_criteria_a }}% @endif
                                         </td>
-                                        <td class="text-center @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_b_highlight==true) ) highlight @endif  ">{{ $range->bonus_interest_criteria_b }}
-                                            %
+                                        <td class="text-center @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_b_highlight==true) ) highlight @endif  ">
+                                            @if($range->bonus_interest_criteria_b<=0)
+                                                - @else  {{ $range->bonus_interest_criteria_b }}% @endif
                                         </td>
                                         <td>
                                             <?php
@@ -409,7 +418,8 @@
                             <h4 class="ps-product__heading"><strong
                                         class="highlight">{{$promotion_product->product_name}} :</strong>
                                 Fulfil up to 3 criteria and earn up
-                                to {{ $promotion_product->maximum_interest_rate }}%</h4>
+                                to @if($promotion_product->maximum_interest_rate<=0)
+                                    - @else  {{ $promotion_product->maximum_interest_rate }}% @endif</h4>
 
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product ps-table--product-3">
@@ -468,15 +478,18 @@
                                             <td>Bonus Interest PA</td>
                                             <td class="text-center @if($promotion_product->criteria_1==true ) highlight @endif"
                                                 colspan="3">1 Criteria Met
-                                                – {{ $range->bonus_interest_criteria1 }}%
+                                                – @if($range->bonus_interest_criteria1<=0)
+                                                    - @else  {{ $range->bonus_interest_criteria1 }}% @endif
                                             </td>
                                             <td class=" text-center @if($promotion_product->criteria_2==true ) highlight @endif"
                                                 colspan="3">2 Criteria
-                                                – {{ $range->bonus_interest_criteria2 }}%
+                                                – @if($range->bonus_interest_criteria2<=0)
+                                                    - @else  {{ $range->bonus_interest_criteria2 }}% @endif
                                             </td>
                                             <td class="text-center @if($promotion_product->criteria_3==true ) highlight @endif"
                                                 colspan="3">3
-                                                Criteria {{ $range->bonus_interest_criteria3 }}%
+                                                Criteria @if($range->bonus_interest_criteria3<=0)
+                                                    - @else  {{ $range->bonus_interest_criteria3 }}% @endif
                                             </td>
                                         </tr>
                                         <tr>
@@ -556,11 +569,15 @@
                                                         >=  ${{ $range->min_range }} @else
                                                         >= ${{ $range->min_range }} TO
                                                         <  ${{ $range->max_range+1 }} @endif</td>
-                                                <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">{{ $range->bonus_interest_criteria_a }}
-                                                    %
+                                                <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
+                                                    @if($range->bonus_interest_criteria_a<=0)
+                                                        - @else  {{ $range->bonus_interest_criteria_a }}% @endif
+
                                                 </td>
-                                                <td class="text-center @if($range->criteria_b_highlight==true ) highlight @endif">{{ $range->bonus_interest_criteria_b }}
-                                                    %
+                                                <td class="text-center @if($range->criteria_b_highlight==true ) highlight @endif">
+                                                    @if($range->bonus_interest_criteria_b<=0)
+                                                        - @else  {{ $range->bonus_interest_criteria_b }}% @endif
+
                                                 </td>
                                                 @if($key==0)
                                                     <td class=" text-center @if($promotion_product->highlight==true ) highlight @endif"
