@@ -60,8 +60,9 @@ class PagesFrontController extends Controller
     public function show($slug)
     {
         $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
+        ->where('user_id', Auth::user()->id)
             ->get();
-//dd($user_products);
+
 
         DB::enableQueryLog();
         $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
