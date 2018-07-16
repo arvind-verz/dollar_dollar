@@ -59,7 +59,7 @@ class PagesFrontController extends Controller
      */
     public function show($slug)
     {
-        $user_products = "";
+        $user_products = null;
         if(Auth::check())
         {
         $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
