@@ -105,6 +105,7 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/user-export/{type}', 'User\UsersController@userExport')->name('user-export');
     Route::get('/users-export/{type}', 'User\UsersController@usersExport')->name('users-export');
     Route::get('/product-view/{id}', 'User\UsersController@productView')->name('product-view');
+    Route::post('/user-bulk-delete', 'User\UsersController@bulkRemove')->name('user-bulk-remove');
     /* Customer module end*/
 
 
@@ -128,7 +129,9 @@ Route::group(array('prefix' => 'admin'), function () {
     /*System setting start*/
     Route::resource('/system-setting', 'CMS\SystemSettingController');
     Route::resource('/system-setting-homepage', 'CMS\systemSettingHomepageController');
+    Route::get('/system-setting-legend-table/{id}', 'CMS\systemSettingLegendTableController@destroy')->name('system-setting-legend-table-destory');
     Route::resource('/system-setting-legend-table', 'CMS\systemSettingLegendTableController');
+
     /*System setting start*/
 
     /*User Module start*/
@@ -149,6 +152,7 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Blog module start*/
     Route::get('/blog/destroy/{id}', 'Blog\BlogController@destroy')->name('blog-destroy');
     Route::resource('/blog', 'Blog\BlogController');
+    Route::get('/filter-category/{id}', 'Blog\BlogController@filter')->name('filter-category');
     /*Blog module end*/
 
     /*Blog module start*/
@@ -164,6 +168,8 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Blog module start*/
     Route::get('/health-insurance-enquiry/destroy/{id}', 'Enquiry\HealthInsuranceEnquiryController@destroy')->name('health-insurance-destroy');
     Route::resource('/health-insurance-enquiry', 'Enquiry\HealthInsuranceEnquiryController');
+
+
     /*Blog module end*/
 
     /*Tag Module start*/
@@ -225,6 +231,11 @@ Route::group(array('prefix' => 'admin'), function () {
     /* REPORTS */
     Route::get('/customer-report', 'Reports\ReportController@customer_report')->name('customer-report');
     Route::get('/product-report', 'Reports\ReportController@product_report')->name('product-report');
+
+    /* REMOVE IMAGE */
+    Route::post('/remove-image', 'AdminController@removeImage')->name('remove-image');
+
+
 
 
 });

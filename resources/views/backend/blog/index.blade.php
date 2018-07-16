@@ -22,6 +22,8 @@
                         <i class="fa fa-book"></i>
 
                         <h3 class="box-title">{{BLOG_MODULE_SINGLE.'s'}}</h3>
+
+                        
                         <a href="{{ route("blog.create") }}" class="">
                             @if($CheckLayoutPermission[0]->create==1)
 
@@ -31,6 +33,15 @@
                             @endif
 
                         </a>
+                        <select name="filter_category" class="form-control" style="width: 10em;float: right;margin-right: 10px;">
+                            <option value="">-- Select --</option>
+                            <option value="all">All</option>
+                            @if($menus->count())
+                                @foreach($menus as $singleMenu)
+                                    <option value="{{ $singleMenu->id }}">{{ $singleMenu->title }}</option>
+                                @endforeach
+                            @endif
+                        </select>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -118,5 +129,11 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
+    <script type="text/javascript">
+        $("select[name='filter_category']").on("change", function() {
+            var value = $(this).val();
+            window.location.href = "{{ url('admin/filter-category') }}/"+value;
+        });
+    </script>
 
 @endsection

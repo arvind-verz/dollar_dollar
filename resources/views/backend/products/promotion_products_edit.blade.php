@@ -214,13 +214,13 @@
                                         @if(isset($ads[0]->ad_image_horizontal) && ($ads[0]->ad_image_horizontal != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="{{asset($ads[0]->ad_image_horizontal)}}"
-                                                       target="_blank"><img class="attachment-img"
+                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $product->id }}', 'horizontal');"><i class="fas fa-times fa-lg"></i></a><img class="attachment-img"
                                                                             src="{!! asset($ads[0]->ad_image_horizontal) !!}"
                                                                             alt="image"></a>
                                                 </div>
                                             </div>
                                         @endif
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1136*140 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link', 'Ad Horizontal Link',['class'=>'col-sm-2 control-label'])}}
@@ -236,13 +236,14 @@
                                         @if(isset($ads[1]->ad_image_vertical) && ($ads[1]->ad_image_vertical != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="{{asset($ads[1]->ad_image_vertical)}}" target="_blank"><img
+                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $product->id }}', 'vertical');"><i class="fas fa-times fa-lg"></i></a><img
                                                                 class="attachment-img"
                                                                 src="{!! asset($ads[1]->ad_image_vertical) !!}"
-                                                                alt="image"></a>
+                                                                alt="image">
                                                 </div>
                                             </div>
                                         @endif
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 278*140 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_vertical_link', 'Ad Vertical Link',['class'=>'col-sm-2 control-label'])}}
@@ -258,13 +259,13 @@
                                         @if(isset($ads[2]->ad_horizontal_image_popup) && ($ads[2]->ad_horizontal_image_popup != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="{{asset($ads[2]->ad_horizontal_image_popup)}}"
-                                                       target="_blank"><img class="attachment-img"
+                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $product->id }}', 'horizontal_popup');"><i class="fas fa-times fa-lg"></i></a><img class="attachment-img"
                                                                             src="{!! asset($ads[2]->ad_horizontal_image_popup) !!}"
-                                                                            alt="image"></a>
+                                                                            alt="image">
                                                 </div>
                                             </div>
                                         @endif
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*500 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link_popup', 'Ad Horizontal Link Popup Bottom',['class'=>'col-sm-2 control-label'])}}
@@ -280,13 +281,14 @@
                                         @if(isset($ads[3]->ad_horizontal_image_popup_top) && ($ads[3]->ad_horizontal_image_popup_top != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="{{asset($ads[3]->ad_horizontal_image_popup_top)}}"
-                                                       target="_blank"><img class="attachment-img"
+                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $product->id }}', 'vertical_popup');"><i class="fas fa-times fa-lg"></i></a><img class="attachment-img"
                                                                             src="{!! asset($ads[3]->ad_horizontal_image_popup_top) !!}"
-                                                                            alt="image"></a>
+                                                                            alt="image">
                                                 </div>
                                             </div>
+                                            
                                         @endif
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*500 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link_popup_top', 'Ad Horizontal Link Popup Top',['class'=>'col-sm-2 control-label'])}}
@@ -529,5 +531,19 @@
             });
 
         });
+
+            function removeImage(ref, id, ad_type) {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('remove-image') }}",
+                    data: "type=product&id="+id+"&ad_type="+ad_type,
+                    cache: false,
+                    success: function(data) {
+                        if(data.trim()=='success') {
+                            $(ref).parents(".col-sm-2").remove();
+                        }
+                    }
+                });
+            }
     </script>
 @endsection

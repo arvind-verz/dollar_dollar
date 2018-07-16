@@ -24,6 +24,7 @@ if (!$systemSetting) {
     <link href="{{ asset('frontend/plugins/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/custom.css') }}" rel="stylesheet">
+    
     <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!--WARNING: Respond.js doesn't work if you view the page via file://-->
     <!--[if lt IE 9]>
@@ -77,6 +78,8 @@ if (!$systemSetting) {
         //Date picker
         $('.datepicker').datepicker({
             autoclose: true,
+            changeMonth: true,
+            changeYear: true
             dateFormat: "yy-mm-dd"
         });
     });

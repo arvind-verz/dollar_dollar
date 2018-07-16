@@ -70,4 +70,12 @@ class systemSettingLegendTableController extends Controller
 
         return redirect('admin/system-setting-legend-table')->with('success', "Legend Table Setting" . UPDATED_ALERT);
     }
+
+    public function destroy($id)
+    {
+        $systemSetting = systemSettingLegendTable::where('id', $id)->first();
+        $systemSetting->delete_status = 1;
+        $systemSetting->save();
+        return redirect('admin/system-setting-legend-table')->with('success', "Legend Table Setting" . DELETED_ALERT);
+    }
 }
