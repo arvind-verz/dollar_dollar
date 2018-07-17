@@ -454,7 +454,7 @@
         $.ajax({
             method: 'POST',
             url: '{{ route('deposit-type') }}',
-            data: {type: 'Interest', promotion_type:'<?php echo FIX_DEPOSIT ; ?>'}
+            data: {type: 'Interest', promotion_type:'<?php echo FIX_DEPOSIT ; ?>'},
             cache: false,
             success: function (data) {
                 //alert(data);
