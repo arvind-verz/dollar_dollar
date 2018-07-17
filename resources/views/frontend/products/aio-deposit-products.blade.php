@@ -240,7 +240,17 @@
                     <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}}
                             :</strong> Fulfil each criteria and earn up
                         to {{ $promotion_product->maximum_interest_rate }}%</h4>
-
+                    @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
                     <div class="ps-table-wrap">
                         <table class="ps-table ps-table--product ps-table--product-3">
                             <thead>
@@ -306,11 +316,24 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="clearfix"></div>
+                    @if(count($promotion_product->ads_placement))
+                        @php
+                        $ads = json_decode($promotion_product->ads_placement);
+                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                        @endphp
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+
+                            <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""  target="_blank"></a>
+
+                        </div>
+                        @php } @endphp
+                    @endif
                     <div class="ps-product__detail">
                         {!! $promotion_product->product_footer !!}
-                    </div>
-                    <div class="ps-poster">
-                        <a href="#"><img src="img/poster/medium/" alt=""></a>
                     </div>
                     <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
                                     class="fa fa-angle-down"></i></a></div>
@@ -327,13 +350,35 @@
                                 Now</a></div>--}}
                     </div>
                     <div class="ps-product__content">
+
                         <h4 class="ps-product__heading"><strong
                                     class="highlight">{{$promotion_product->product_name}} :</strong>
                             Meet either of Criteria and earn up to @if($promotion_product->maximum_interest_rate<=0)
                                 - @else  {{ $promotion_product->maximum_interest_rate }}% @endif
                         </h4>
-
-                        <div class="ps-product__poster"><img src="img/poster/product-2.jpg" alt=""></div>
+                        @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
+                        @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
+                        
                         <div class="ps-table-wrap">
                             <table class="ps-table ps-table--product ps-table--product-2">
                                 <thead>
@@ -414,13 +459,33 @@
                                     Now</a></div>--}}
                         </div>
                         <div class="ps-product__content">
-
+                            @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
                             <h4 class="ps-product__heading"><strong
                                         class="highlight">{{$promotion_product->product_name}} :</strong>
                                 Fulfil up to 3 criteria and earn up
                                 to @if($promotion_product->maximum_interest_rate<=0)
                                     - @else  {{ $promotion_product->maximum_interest_rate }}% @endif</h4>
-
+                            @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product ps-table--product-3">
                                     <thead>
@@ -522,9 +587,22 @@
                             <div class="ps-product__detail">
                                 {!! $promotion_product->product_footer !!}
                             </div>
-                            <div class="ps-poster">
-                                <a href="#"><img src="img/poster/medium/" alt=""></a>
-                            </div>
+                            <div class="clearfix"></div>
+                            @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                @endphp
+                                <div class="ps-poster-popup">
+                                    <div class="close-popup">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div>
+
+                                    <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""  target="_blank"></a>
+
+                                </div>
+                                @php } @endphp
+                            @endif
                             <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
                                             class="fa fa-angle-down"></i></a></div>
                         </div>
@@ -545,7 +623,17 @@
                                             class="highlight">{{$promotion_product->product_name}}: </strong> Meet
                                     either Criteria and earn up to {{$promotion_product->maximum_interest_rate}}%
                                 </h4>
-
+                                @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
                                 <div class="ps-table-wrap">
                                     <table class="ps-table ps-table--product">
                                         <thead>
@@ -593,6 +681,22 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="clearfix"></div>
+                    @if(count($promotion_product->ads_placement))
+                        @php
+                        $ads = json_decode($promotion_product->ads_placement);
+                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                        @endphp
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+
+                            <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""  target="_blank"></a>
+
+                        </div>
+                        @php } @endphp
+                    @endif
                                 <div class="ps-product__detail">
                                     {!! $promotion_product->product_footer !!}
                                 </div>
