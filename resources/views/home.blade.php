@@ -195,7 +195,7 @@
                                                             <p class="highlight">{{ $products->promotion_period }}
                                                                 Months</p>
                                                         </div>
-                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                        <a class="ps-btn" href="{{ url('saving-deposit-mode') }}">More
                                                             info</a>
                                                     </div>
                                                 </div>
@@ -428,7 +428,7 @@
         $(".ps-tab-list li").on("click", function () {
             $(".ps-tab-list li").removeClass("current");
             $(this).on("click").addClass("current");
-            var title = $(this).on("click").addClass("current a").text();
+            var title = $(this).on("click").addClass("current a").text().trim();
             //alert(title);
             $("input[name='deposit_type']").val(title);
             if (title == 'Fixed Deposit') {
