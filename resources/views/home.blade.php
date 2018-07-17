@@ -428,7 +428,7 @@
         $(".ps-tab-list li").on("click", function () {
             $(".ps-tab-list li").removeClass("current");
             $(this).on("click").addClass("current");
-            var title = $(this).on("click").addClass("current a").text().trim();
+            var title = $(this).on("click").addClass("current a").text();
             //alert(title);
             $("input[name='deposit_type']").val(title);
             if (title == 'Fixed Deposit') {
@@ -454,7 +454,7 @@
         $.ajax({
             method: 'POST',
             url: '{{ route('deposit-type') }}',
-            data: {type: 'Interest', promotion_type:'<?php echo FIX_DEPOSIT ; ?>'}
+            data: {type: 'Interest', promotion_type:'<?php echo FIX_DEPOSIT ; ?>'},
             cache: false,
             success: function (data) {
                 //alert(data);
