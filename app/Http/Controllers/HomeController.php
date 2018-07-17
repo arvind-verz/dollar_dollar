@@ -29,8 +29,8 @@ class HomeController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
-            ->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
+            //->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
+            //->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 //dd($promotion_products);
@@ -59,28 +59,29 @@ class HomeController extends Controller
         $end_date   = \Helper::endOfDayAfter();
 
         $search_filter = isset($request->type) ? $request->type : '';
-//dd($brand_id);
+        $promotionType = $request->promotion_type ? $request->promotion_type : '';
         DB::connection()->enableQueryLog();
         if ($search_filter == 'Interest') {
             $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                ->where('promotion_products.promotion_type_id', '=', 1)
-                ->where('promotion_products.promotion_start', '<=', $start_date)
-                ->where('promotion_products.promotion_end', '>=', $end_date)
+                ->where('promotion_products.promotion_type_id', '=', $promotionType)
+                //->where('promotion_products.promotion_start', '<=', $start_date)
+                //->where('promotion_products.promotion_end', '>=', $end_date)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
                 ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
                 ->get();
+            //return $promotion_products;
         }
         elseif ($search_filter == 'Placement') {
             $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                ->where('promotion_products.promotion_type_id', '=', 1)
-                ->where('promotion_products.promotion_start', '<=', $start_date)
-                ->where('promotion_products.promotion_end', '>=', $end_date)
+                ->where('promotion_products.promotion_type_id', '=', $promotionType)
+                //->where('promotion_products.promotion_start', '<=', $start_date)
+                //->where('promotion_products.promotion_end', '>=', $end_date)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->orderBy('promotion_products.minimum_placement_amount', 'ASC')
@@ -91,9 +92,9 @@ class HomeController extends Controller
             $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                ->where('promotion_products.promotion_type_id', '=', 1)
-                ->where('promotion_products.promotion_start', '<=', $start_date)
-                ->where('promotion_products.promotion_end', '>=', $end_date)
+                ->where('promotion_products.promotion_type_id', '=', $promotionType)
+               // ->where('promotion_products.promotion_start', '<=', $start_date)
+                //->where('promotion_products.promotion_end', '>=', $end_date)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->orderBy('promotion_products.promotion_period', 'ASC')
@@ -105,7 +106,7 @@ class HomeController extends Controller
 //dd($result_data);
         $i = 1;
         foreach ($promotion_products as $products) {
-            if ($products->promotion_type_id == 1 && $i <= 4) {
+            if ($products->promotion_type_id == $promotionType && $i <= 4) {
                 ?>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
                 <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
