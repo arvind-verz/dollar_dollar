@@ -57,6 +57,19 @@
                             <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>FOREIGN_CURRENCY_DEPOSIT]) }}"><i class="fa fa-dollar-sign"></i> Foreign Currency Deposit</a></li>
                         </ul>
                     </li>
+                    @elseif($menu->label == BANNER_MODULE)
+                    <li class="treeview ">
+                        <a href="#" >
+                            <i class="{{$menu->icon}}"></i> <span>{{$menu->label}}</span>
+                             <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class=" "><a href="{{ route('banner-home') }}"> Home Page</a></li>
+                            <li class=" "><a href="{{ route('banner-inner') }}"> Inner Page</a></li>
+                        </ul>
+                    </li>
                     @elseif($menu->label == REPORT_MODULE)
                     <li class="treeview ">
                         <a href="#" >

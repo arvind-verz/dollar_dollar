@@ -38,6 +38,7 @@ class BannerController extends Controller
         $banners = Banner::join('pages', 'banners.page_id', '=', 'pages.id')
             ->where('banners.delete_status', 0)
             ->where('pages.delete_status', 0)
+            ->where('pages.slug', '=', 'home')
             ->select('banners.*', 'pages.name as label')
             ->orderBy('page_id', 'ASC')
             ->orderBy('view_order', 'ASC')
@@ -358,5 +359,25 @@ class BannerController extends Controller
 
         return redirect(route('banner.index'))->with('success', strip_tags($Banner->title) . ' ' . DELETED_ALERT);
 
+    }
+
+    public function bannerHome() {
+        return $this->index();
+    }
+
+    public function bannerInner() {
+        $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, BANNER_MODULE_ID);
+
+
+        $banners = Banner::join('pages', 'banners.page_id', '=', 'pages.id')
+            ->where('banners.delete_status', 0)
+            ->where('pages.delete_status', 0)
+            ->where('pages.slug', '!=', 'home')
+            ->select('banners.*', 'pages.name as label')
+            ->orderBy('page_id', 'ASC')
+            ->orderBy('view_order', 'ASC')
+            ->get();
+
+        return view("backend.banner.index", compact("banners", "CheckLayoutPermission"));
     }
 }

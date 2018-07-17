@@ -79,7 +79,7 @@ if (!$systemSetting) {
         $('.datepicker').datepicker({
             autoclose: true,
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
             dateFormat: "yy-mm-dd"
         });
     });

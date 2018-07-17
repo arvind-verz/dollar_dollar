@@ -89,6 +89,8 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Banner Module Start*/
     Route::get('/banners/destroy/{id}', 'Banner\BannerController@destroy')->name('banner-destroy');
     Route::resource('/banner', 'Banner\BannerController');
+    Route::get('/banner-home', 'Banner\BannerController@bannerHome')->name('banner-home');
+    Route::get('/banner-inner', 'Banner\BannerController@bannerInner')->name('banner-inner');
     /*Banner Module End*/
 
     /*Brand Module Start*/

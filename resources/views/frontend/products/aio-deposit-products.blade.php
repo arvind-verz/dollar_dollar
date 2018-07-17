@@ -280,25 +280,25 @@
                                     <td class="text-center @if($promotion_product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
                                             - @else  {{ $range->bonus_interest }}% @endif
                                         on
-                                        first {{ $range->first_cap_amount }} if account more
-                                        than {{ $range->bonus_amount }}</td>
+                                        first {{ Helper::inThousand($range->first_cap_amount) }} if account more
+                                        than {{ Helper::inThousand($range->bonus_amount) }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Total Bonus Interest Earned for ${{$range->placement}}</td>
+                                    <td colspan="2">Total Bonus Interest Earned for ${{Helper::inThousand($range->placement)}}</td>
                                     <td class="text-center @if($promotion_product->highlight==true ) highlight @endif"
                                         colspan="4">
                                         @if($range->placement > $range->first_cap_amount)
                                             First
-                                            ${{ $range->first_cap_amount }} -
-                                            ${{ ($range->first_cap_amount*($promotion_product->total_interest/100)) }} (
+                                            ${{ Helper::inThousand($range->first_cap_amount) }} -
+                                            ${{ Helper::inThousand(($range->first_cap_amount*($promotion_product->total_interest/100))) }} (
                                             {{ $promotion_product->total_interest }}%), next
-                                            ${{ ($range->placement-$range->first_cap_amount) }} -
-                                            ${{ (($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount)) }}
+                                            ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }} -
+                                            ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
                                             ({{ $range->bonus_interest_remaining_amount }}%) Total =
-                                            ${{ $promotion_product->interest_earned }}
+                                            ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                         @else
                                             Total =
-                                            ${{ $promotion_product->interest_earned }}
+                                            ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                         @endif
                                     </td>
                                 </tr>
@@ -342,7 +342,7 @@
                                     <th>Criteria a (spend)</th>
                                     <th>Criteria b (Spend + Salary/Giro)</th>
                                     <th>Interest Earned for each Tier</th>
-                                    <th>Total Interest Earned for {{ $promotion_product->placement }}</th>
+                                    <th>Total Interest Earned for {{ Helper::inThousand($promotion_product->placement) }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -352,13 +352,13 @@
                                             <?php
                                             if ($key == 0) {
                                                 echo "First ";
-                                                echo "$" . $range->max_range;
+                                                echo "$" . Helper::inThousand($range->max_range);
                                             } elseif ($range->above_range == true) {
                                                 echo "Above ";
-                                                echo "$" . ($range->min_range - 1);
+                                                echo "$" . Helper::inThousand(($range->min_range - 1));
                                             } else {
                                                 echo "Next ";
-                                                echo "$" . $range->max_range;
+                                                echo "$" . Helper::inThousand($range->max_range);
                                             }?>
                                         </td>
                                         <td class="text-center @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_a_highlight==true) ) highlight @endif">
@@ -373,21 +373,21 @@
                                             <?php
                                             if ($key == 0) {
                                                 echo "First ";
-                                                echo "$" . $range->max_range;
+                                                echo "$" . Helper::inThousand($range->max_range);
                                             } elseif ($range->above_range == true) {
                                                 echo "REMAINING BALANCE ";
                                                // echo "$" . ($range->min_range - 1);
                                             } else {
                                                 echo "Next ";
-                                                echo "$" . $range->max_range;
+                                                echo "$" . Helper::inThousand($range->max_range);
                                             }?>
-                                            -${{ $range->interest_earn }}
+                                            -${{ Helper::inThousand($range->interest_earn) }}
                                             ({{ $range->criteria }}%)
                                         </td>
                                         @if($key==0)
                                             <td class="text-center  @if($promotion_product->highlight==true) highlight @endif"
                                                 rowspan="4">
-                                                ${{ $promotion_product->interest_earned }}
+                                                ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                                 <br> Effective Interest
                                                 Rate {{ $promotion_product->total_interest }}%
                                             </td>
@@ -494,23 +494,23 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2">Total Bonus Interest Earned for
-                                                ${{ $range->placement }}</td>
+                                                ${{ Helper::inThousand($range->placement) }}</td>
                                             <td class=" text-center @if($promotion_product->highlight==true ) highlight @endif"
                                                 colspan="8">
 
                                                 @if($range->placement > $range->first_cap_amount)
                                                     First
-                                                    ${{ $range->first_cap_amount }} -
-                                                    ${{ ($range->first_cap_amount*($promotion_product->total_interest/100)) }}
+                                                    ${{ Helper::inThousand($range->first_cap_amount) }} -
+                                                    ${{ Helper::inThousand(($range->first_cap_amount*($promotion_product->total_interest/100))) }}
                                                     (
                                                     {{ $promotion_product->total_interest }}%), next
-                                                    ${{ ($range->placement-$range->first_cap_amount) }} -
-                                                    ${{ (($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount)) }}
+                                                    ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }} -
+                                                    ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
                                                     ({{ $range->bonus_interest_remaining_amount }}%) Total =
-                                                    ${{ $promotion_product->interest_earned }}
+                                                    ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                                 @else
                                                     Total =
-                                                    ${{ $promotion_product->interest_earned }}
+                                                    ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                                 @endif
                                             </td>
                                             </td>
@@ -553,7 +553,7 @@
                                             <th>Monthly Transaction</th>
                                             <th>Criteria a (Salary + 1 category)</th>
                                             <th>Criteria b (Salary + 2 OR more Cateogry)</th>
-                                            <th>Total Interest Earned for ${{ $promotion_product->placement }}</th>
+                                            <th>Total Interest Earned for ${{ Helper::inThousand($promotion_product->placement) }}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -565,12 +565,12 @@
                                             <tr>
                                                 <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
                                                     style="width: 30%">@if($key==0)
-                                                        <${{ $range->max_range+1 }}
+                                                        <${{ Helper::inThousand($range->max_range+1) }}
                                                     @elseif((count($product_range)-1)==$key)
-                                                         >${{ $range->min_range }}
+                                                         >${{ Helper::inThousand($range->min_range) }}
                                                     @else
-                                                         ${{ $range->min_range }} TO
-                                                        <${{ $range->max_range+1 }} @endif</td>
+                                                         ${{ Helper::inThousand($range->min_range) }} TO
+                                                        <${{ Helper::inThousand($range->max_range+1) }} @endif</td>
                                                 <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
                                                     @if($range->bonus_interest_criteria_a<=0)
                                                         - @else  {{ $range->bonus_interest_criteria_a }}% @endif
@@ -585,7 +585,7 @@
                                                     <td class=" text-center @if($promotion_product->highlight==true ) highlight @endif"
                                                         rowspan="6">
                                                         Total=
-                                                        ${{ $promotion_product->interest_earned.' ( '.$promotion_product->total_interest.'%) ' }}</td>
+                                                        ${{ Helper::inThousand($promotion_product->interest_earned).' ( '.$promotion_product->total_interest.'%) ' }}</td>
                                                 @endif
                                             </tr>
                                             @php $i++; @endphp

@@ -557,4 +557,9 @@ class Helper
         return $details;
     }
 
+    public static function inThousand($amount) {
+        //dd($amount);
+        return $amount > 999 ? ($amount/1000) . 'k' : $amount;
+    }
+
 }

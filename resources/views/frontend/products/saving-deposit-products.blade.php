@@ -251,7 +251,7 @@
                                                 @foreach($product->product_ranges as $productRange)
 
                                                     <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
-                                                        <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . $productRange->min_range . ' - $' . $productRange->max_range }}</td>
+                                                        <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                         <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if($productRange->bonus_interest<=0)
                                                                 - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                         <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if($productRange->board_rate<=0)
@@ -279,10 +279,10 @@
                                         <?php } ?>
                                     @endif
                                     <div class="ps-product__panel">
-                                        <h4>Possible interest(s) earned for SGD ${{ $product->placement }}</h4>
+                                        <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($product->placement) }}</h4>
 
                                         <h2> @if(($product->total_interest_earn)<=0)
-                                                - @else ${{ $product->total_interest_earn . '%' }} @endif<br>
+                                                - @else ${{ Helper::inThousand($product->total_interest_earn) }} @endif<br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
                                                         - @else {{ $product->total_interest }}% @endif
@@ -308,7 +308,7 @@
                                                     <tbody>
                                                     @foreach($product->product_ranges as $productRange)
                                                         <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
-                                                            <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . $productRange->min_range . ' - $' . $productRange->max_range }}</td>
+                                                            <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                             <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenor. ' Months' }}</td>
                                                             <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($product->bonus_interest)<=0)
                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
@@ -335,10 +335,10 @@
                                             <?php } ?>
                                         @endif
                                         <div class="ps-product__panel">
-                                            <h4>Possible interest(s) earned for SGD ${{ $product->placement }}</h4>
+                                            <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($product->placement) }}</h4>
 
                                             <h2>@if(($product->total_interest_earn)<=0)
-                                                    - @else ${{ $product->total_interest_earn }} @endif <br>
+                                                    - @else ${{ Helper::inThousand($product->total_interest_earn) }} @endif <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
                                                         - @else ${{ $product->total_interest }}% @endif
@@ -404,10 +404,10 @@
                                                 <?php } ?>
                                             @endif
                                             <div class="ps-product__panel">
-                                                <h4>Possible interest(s) earned for SGD ${{ $product->placement }}</h4>
+                                                <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($product->placement) }}</h4>
 
                                                 <h2>@if($product->total_interest_earn <=0)
-                                                        - @else ${{ $product->total_interest_earn }} @endif   <br>
+                                                        - @else ${{ Helper::inThousand($product->total_interest_earn) }} @endif   <br>
                                                 <span>
                                                     Total interest rate  @if($product->total_interest <=0)
                                                         - @else {{ $product->total_interest }}% @endif
@@ -433,7 +433,7 @@
                                                             @foreach($product->product_ranges as $key => $productRange)
                                                                 <tr class="@if($product->highlight>=$key) highlight @endif">
                                                                     <td>@if($key==0) 1st - @else NEXT
-                                                                        - @endif{{ '$' . $productRange->max_range }}</td>
+                                                                        - @endif{{ '$' . Helper::inThousand($productRange->max_range) }}</td>
                                                                     <td>@if($productRange->board_rate <=0 )
                                                                             - @else {{ $productRange->board_rate }}% @endif
                                                                     </td>
@@ -465,10 +465,10 @@
                                                 @endif
                                                 <div class="ps-product__panel">
                                                     <h4>Possible interest(s) earned for SGD
-                                                        ${{ $product->placement }}</h4>
+                                                        ${{ Helper::inThousand($product->placement) }}</h4>
 
                                                     <h2>@if($product->total_interest_earn <=0 )
-                                                            - @else ${{ $product->total_interest_earn }}% @endif   <br>
+                                                            - @else ${{ Helper::inThousand($product->total_interest_earn) }} @endif   <br>
                                                         {{-- <span>
                                                             Total interest rate {{ $product->total_interest }}%
                                                         </span>--}}
