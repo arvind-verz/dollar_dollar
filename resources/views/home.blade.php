@@ -220,68 +220,37 @@
                                 </div>
                             </div>
                             <span class="display_wealth">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/1.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
+                            @if(count($promotion_products))
+                                    <div class="row">
+                                        @php $i = 1; @endphp
+                                        @foreach($promotion_products as $products)
+                                            @if($products->promotion_type_id==WEALTH_DEPOSIT && $i<=4)
 
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                                    <div class="ps-block--short-product"><img
+                                                                src="{{ asset($products->brand_logo) }}" alt="">
+                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                                %</strong></h4>
 
-                                            <p><strong>Min:</strong> SGD $20,000</p>
+                                                        <div class="ps-block__info">
+                                                            <p><strong> rate: </strong>1.3%</p>
 
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('wealth-deposit-mode') }}">More info</a>
+                                                            <p><strong>Min:</strong> SGD
+                                                                ${{ $products->minimum_placement_amount }}</p>
+
+                                                            <p class="highlight">{{ $products->promotion_period }}
+                                                                Months</p>
+                                                        </div>
+                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                            info</a>
+                                                    </div>
+                                                </div>
+                                                @php if($i==4) {break;} $i++; @endphp
+                                            @endif
+
+                                        @endforeach
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('wealth-deposit-mode') }}">More info</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('wealth-deposit-mode') }}">More info</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('wealth-deposit-mode') }}">More info</a>
-                                    </div>
-                                </div>
-                            </div>
+                                @endif
                             </span>
                         </div>
                     </div>
@@ -297,68 +266,37 @@
                                 </div>
                             </div>
                             <span class="display_aio">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/1.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
+                            @if(count($promotion_products))
+                                    <div class="row">
+                                        @php $i = 1; @endphp
+                                        @foreach($promotion_products as $products)
+                                            @if($products->promotion_type_id==ALL_IN_ONE_ACCOUNT && $i<=4)
 
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                                    <div class="ps-block--short-product"><img
+                                                                src="{{ asset($products->brand_logo) }}" alt="">
+                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                                %</strong></h4>
 
-                                            <p><strong>Min:</strong> SGD $20,000</p>
+                                                        <div class="ps-block__info">
+                                                            <p><strong> rate: </strong>1.3%</p>
 
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('all-in-one-deposit-mode') }}">More info</a>
+                                                            <p><strong>Min:</strong> SGD
+                                                                ${{ $products->minimum_placement_amount }}</p>
+
+                                                            <p class="highlight">{{ $products->promotion_period }}
+                                                                Months</p>
+                                                        </div>
+                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                            info</a>
+                                                    </div>
+                                                </div>
+                                                @php if($i==4) {break;} $i++; @endphp
+                                            @endif
+
+                                        @endforeach
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('all-in-one-deposit-mode') }}">More info</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('all-in-one-deposit-mode') }}">More info</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('all-in-one-deposit-mode') }}">More info</a>
-                                    </div>
-                                </div>
-                            </div>
+                                @endif
                             </span>
                         </div>
                     </div>
@@ -374,72 +312,37 @@
                                 </div>
                             </div>
                             <span class="display_foreign_currency">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/1.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
+                            @if(count($promotion_products))
+                                    <div class="row">
+                                        @php $i = 1; @endphp
+                                        @foreach($promotion_products as $products)
+                                            @if($products->promotion_type_id==FOREIGN_CURRENCY_DEPOSIT && $i<=4)
 
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                                                    <div class="ps-block--short-product"><img
+                                                                src="{{ asset($products->brand_logo) }}" alt="">
+                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                                %</strong></h4>
 
-                                            <p><strong>Min:</strong> SGD $20,000</p>
+                                                        <div class="ps-block__info">
+                                                            <p><strong> rate: </strong>1.3%</p>
 
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More
-                                            info</a>
+                                                            <p><strong>Min:</strong> SGD
+                                                                ${{ $products->minimum_placement_amount }}</p>
+
+                                                            <p class="highlight">{{ $products->promotion_period }}
+                                                                Months</p>
+                                                        </div>
+                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                            info</a>
+                                                    </div>
+                                                </div>
+                                                @php if($i==4) {break;} $i++; @endphp
+                                            @endif
+
+                                        @endforeach
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More
-                                            info</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More
-                                            info</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                    <div class="ps-block--short-product"><img
-                                                src="{{ asset('frontend/img/logo/2.png') }}" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-
-                                            <p class="highlight">12 Months</p>
-                                        </div>
-                                        <a class="ps-btn" href="{{ url('foreign-currency-deposit-mode') }}">More
-                                            info</a>
-                                    </div>
-                                </div>
-                            </div>
+                                @endif
                             </span>
                         </div>
                     </div>
@@ -551,7 +454,7 @@
         $.ajax({
             method: 'POST',
             url: '{{ route('deposit-type') }}',
-            data: 'type=Interest',
+            data: {type: 'Interest', promotion_type:'<?php echo FIX_DEPOSIT ; ?>'}
             cache: false,
             success: function (data) {
                 //alert(data);
@@ -567,7 +470,7 @@
                 $.ajax({
                     method: 'POST',
                     url: '{{ route('deposit-type') }}',
-                    data: 'type=' + value,
+                    data: {type: value, promotion_type:'<?php echo FIX_DEPOSIT ; ?>'},
                     cache: false,
                     success: function (data) {
                         //alert(data);
@@ -575,17 +478,53 @@
                     }
                 });
             }
+
             else if (title == 'Saving Deposit') {
-                //
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('deposit-type') }}',
+                    data: {type: value, promotion_type:'<?php echo SAVING_DEPOSIT ; ?>'},
+                    cache: false,
+                    success: function (data) {
+                        $("span.display_saving").html(data);
+                    }
+                });
             }
             else if (title == 'Wealth Deposit') {
-                //
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('deposit-type') }}',
+                    data: {type: value, promotion_type:'<?php echo WEALTH_DEPOSIT ; ?>'},
+                    cache: false,
+                    success: function (data) {
+                        //alert(data);
+                        $("span.display_fixed").html(data);
+                    }
+                });
             }
             else if (title == 'All In One Account') {
-                //
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('deposit-type') }}',
+                    data: {type: value, promotion_type:'<?php echo ALL_IN_ONE_ACCOUNT ; ?>'},
+                    cache: false,
+                    success: function (data) {
+                        //alert(data);
+                        $("span.display_fixed").html(data);
+                    }
+                });
             }
             else if (title == 'Foreign Currency') {
-                //
+                $.ajax({
+                    method: 'POST',
+                    url: '{{ route('deposit-type') }}',
+                    data: {type: value, promotion_type:'<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>'},
+                    cache: false,
+                    success: function (data) {
+                        //alert(data);
+                        $("span.display_fixed").html(data);
+                    }
+                });
             }
             else {
                 $.ajax({
