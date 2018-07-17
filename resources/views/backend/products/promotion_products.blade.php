@@ -35,6 +35,17 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
+                        <div class="form-group col-md-2 bulk_status hide">
+                          <span class="badge"></span>
+                          <select class="form-control" name="select_type">
+                            <option value="">-- Select --</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                          </select>
+                        </div> 
+                        <input type="hidden" name="bulk_remove_type" value="bulk_product_remove">
+                        <input type="hidden" name="bulk_update_type" value="bulk_product_status_update">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>
@@ -43,7 +54,7 @@
                                         <table id="products" class="table ">
                                             <thead>
                                             <tr>
-
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete/Update</th>
                                                 <th>Product Name</th>
                                                 <th>Bank Name</th>
                                                 <th>Product Type</th>
@@ -60,6 +71,9 @@
                                             @if($products->count())
                                                 @foreach($products as $product)
                                                     <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="bluk_remove[]" value="{{ $product->id }}">
+                                                        </td>
                                                         <td>{{ $product->product_name }}</td>
                                                         <td>{{ $product->bank_name }}</td>
                                                         <td>{{ $product->promotion_type }}</td>

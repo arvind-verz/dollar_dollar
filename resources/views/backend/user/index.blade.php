@@ -36,6 +36,7 @@
                           </select>
                         </div> 
                         <input type="hidden" name="bulk_remove_type" value="bulk_customer_remove">
+                        <input type="hidden" name="bulk_update_type" value="bulk_user_status_update">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>
@@ -44,8 +45,7 @@
                                         <table id="users" class="table ">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
-                                                <th><input type="checkbox" name="all_bulk_update" class="no-sort"> Status</th>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete/Update</th>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
                                                 <th>Email</th>
@@ -64,9 +64,6 @@
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $user->id }}">
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" name="bluk_status[]" value="{{ $user->id }}">
                                                         </td>
                                                         <td>
                                                             {!!   $user->first_name !!}

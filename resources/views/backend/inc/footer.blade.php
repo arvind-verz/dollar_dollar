@@ -192,7 +192,7 @@
         var bulk_arr = [];
         var bulk_arr1 = [];
 
-        $("input[name='bluk_status[]']").on("click", function() {
+        /*$("input[name='bluk_remove[]']").on("click", function() {
             var value = $(this).val();
             
             $(this).each(function() {
@@ -220,7 +220,7 @@
             bulk_arr1 = [];
             
             if($(this).is(":checked")) {
-                $("input[name='bluk_status[]']").each(function() {
+                $("input[name='bluk_remove[]']").each(function() {
                     
                     var value = $(this).val();
                     $(this).prop("checked", true);
@@ -230,8 +230,8 @@
                 $("div.bulk_status").find(".badge").text(bulk_arr1.length);
             }
             else {
-                $("input[name='bluk_status[]']").prop("checked", false);
-                $("input[name='bluk_status[]']").each(function() {
+                $("input[name='bluk_remove[]']").prop("checked", false);
+                $("input[name='bluk_remove[]']").each(function() {
                     var value = $(this).val();
                     $(this).prop("checked", false);
                     bulk_arr1.pop(value);
@@ -239,14 +239,15 @@
                 });
                 $("div.bulk_status").find(".badge").text('');
             }
-        });
+        });*/
 
         $("select[name='select_type']").on("change", function() {
             var select_type = $(this).val();
+            var type = $("input[name='bulk_update_type']").val();
             if(select_type!='') {
                 var r = confirm("Are you sure?");
                 if(r==true) {
-                    $.post("{{ route('user-bulk-remove') }}", {id:bulk_arr1, type:'bulk_user_status_update', select_type: select_type}, function(data) {
+                    $.post("{{ route('user-bulk-remove') }}", {id:bulk_arr1, type:type, select_type: select_type}, function(data) {
                         if(data.trim()=='success') {
                             window.location.reload();
                         }
@@ -261,20 +262,23 @@
             $(this).each(function() {
                 if($(this).is(":checked")) {
                     bulk_arr.push(value);
-                    $("a.bulk_remove").removeClass("hide");
+                    bulk_arr1.push(value);
+                    $("a.bulk_remove, div.bulk_status").removeClass("hide");                    
                 }
                 else {
                     bulk_arr.pop(value);
+                    bulk_arr1.pop(value);
                 }
             });            
 
             if(bulk_arr.length<1) {
-                $("a.bulk_remove").addClass("hide");
-                $("a.bluk_remove").find(".badge").text('');
+                $("a.bulk_remove, div.bulk_status").addClass("hide");
+                $("a.bluk_remove, div.bulk_status").find(".badge").text('');
             }
             else {
-                $("a.bulk_remove").removeClass("hide");
+                $("a.bulk_remove, div.bulk_status").removeClass("hide");
                 $("a.bulk_remove").find(".badge").text(bulk_arr.length);
+                $("div.bulk_status").find(".badge").text(bulk_arr1.length);
             }
             //alert(bulk_arr);
         });
@@ -287,9 +291,11 @@
                     var value = $(this).val();
                     $(this).prop("checked", true);
                     bulk_arr.push(value);
-                    $("a.bulk_remove").removeClass("hide");
+                    bulk_arr1.push(value);
+                    $("a.bulk_remove, div.bulk_status").removeClass("hide");
                 });
                 $("a.bulk_remove").find(".badge").text(bulk_arr.length);
+                $("div.bulk_status").find(".badge").text(bulk_arr1.length);
             }
             else {
                 $("input[name='bluk_remove[]").prop("checked", false);
@@ -297,9 +303,10 @@
                     var value = $(this).val();
                     $(this).prop("checked", false);
                     bulk_arr.pop(value);
-                    $("a.bulk_remove").addClass("hide");
+                    bulk_arr1.pop(value);
+                    $("a.bulk_remove, div.bulk_status").addClass("hide");
                 });
-                $("a.bulk_remove").find(".badge").text('');
+                $("a.bulk_remove, div.bulk_status").find(".badge").text('');
             }
         });
 

@@ -123,7 +123,7 @@
                         <div class="ps-block__info">
                             <p><strong> rate: </strong>1.3%</p>
 
-                            <p><strong>Min:</strong> {{ $currency_symbol .' '. $promotion_product->minimum_placement_amount }}</p>
+                            <p><strong>Min:</strong> {{ $currency_symbol .' '. Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
                             <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                         </div>
@@ -199,7 +199,7 @@
                                                 @endif
                                                 ">
                                             <td><img src="{{ asset('img/icons/ff.png') }}" alt=""></td>
-                                            <td>{{ $currency_symbol.' ' . $range->min_range . ' - ' .$currency_symbol.' ' . $range->max_range }}</td>
+                                            <td>{{ $currency_symbol.' ' . Helper::inThousand($range->min_range) . ' - ' .$currency_symbol.' ' . Helper::inThousand($range->max_range) }}</td>
                                             @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
                                             <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight
                                                 @endif">{{ $bonus_interest . '%' }}</td>
@@ -219,20 +219,20 @@
                         <div class="ps-product__panel">
                             @foreach($product_range as $key => $range) @php $tenure_count = count($tenures); if(isset($search_filter['search_value']) && ($search_filter['filter']=='Placement') && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']
                             <=$range->max_range)) { $placement_value = max($max_range_arr); if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') { $placement_value = $search_filter['search_value']; } $P = $placement_value; @endphp
-                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}</h4> @php for($i=0;$i
+                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}</h4> @php for($i=0;$i
                                 <$tenure_count;$i++) { $BI=( $range->bonus_interest[$i]/100); $TM = $tenures[$i]; $calc = eval('return '.$promotion_product->formula.';'); $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]); @endphp
                                     <p><strong>{{ $TM . ' ' . $days_type }}
-                                    </strong> - {{ $currency_symbol.' ' . round($calc, 2) }} ({{ $range->bonus_interest[$i] }}%)</p>
+                                    </strong> - {{ $currency_symbol.' ' . Helper::inThousand(round($calc, 2)) }} ({{ $range->bonus_interest[$i] }}%)</p>
                                     @php } } elseif(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor') { $placement_value = max($max_range_arr); $P = $placement_value; @endphp @if($key==0)
-                                    <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}</h4> @endif @php if($key==0) { for($i=0;$i
+                                    <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}</h4> @endif @php if($key==0) { for($i=0;$i
                                     <$tenure_count;$i++) { $BI=( $range->bonus_interest[$i]/100); $TM = $tenures[$i]; $calc = eval('return '.$promotion_product->formula.';'); $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]); @endphp
                                         <p><strong>{{ $TM . ' ' . $days_type }}
-                                        </strong> - {{ $currency_symbol.' ' . round($calc, 2) }} ({{ $range->bonus_interest[$i] }}%)</p>
+                                        </strong> - {{ $currency_symbol.' ' . Helper::inThousand(round($calc, 2)) }} ({{ $range->bonus_interest[$i] }}%)</p>
                                         @php }} } elseif(!isset($search_filter['search_value'])) { $placement_value = $range->max_range; if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') { $placement_value = $search_filter['search_value']; } $P = $placement_value; @endphp @if($key==0)
-                                        <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}</h4> @endif @php if($key==0) { for($i=0;$i
+                                        <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}</h4> @endif @php if($key==0) { for($i=0;$i
                                         <$tenure_count;$i++) { $BI=( $range->bonus_interest[$i]/100); $TM = $tenures[$i]; $calc = eval('return '.$promotion_product->formula.';'); $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]); @endphp
                                             <p><strong>{{ $TM . ' ' . $days_type }}
-                                            </strong> - {{ $currency_symbol.' ' . round($calc, 2) }} ({{ $range->bonus_interest[$i] }}%)</p>
+                                            </strong> - {{ $currency_symbol.' ' . Helper::inThousand(round($calc, 2)) }} ({{ $range->bonus_interest[$i] }}%)</p>
                                             @php }} } @endphp @endforeach
                         </div>
                         <div class="clearfix"></div>
@@ -258,7 +258,7 @@
                                                     @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
                                         @endif
                                                     @endif">
-                                            <td>{{ $currency_symbol.' ' . $range->min_range . ' - ' . $currency_symbol.' ' . $range->max_range }}</td>
+                                            <td>{{ $currency_symbol.' ' . Helper::inThousand($range->min_range) . ' - ' . $currency_symbol.' ' . Helper::inThousand($range->max_range) }}</td>
                                             <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_interest) highlight
                                         @endif">{{ $range->bonus_interest . '%' }}</td>
                                             <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->board_rate) highlight
@@ -282,12 +282,12 @@
                         <div class="ps-product__panel">
                             @foreach($product_range as $key => $range) @php if(isset($search_filter['search_value']) && ($search_filter['filter']=='Placement') && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']
                             <=$range->max_range)) { $placement_value = $range->max_range; if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') { $placement_value = $search_filter['search_value']; } $P = $placement_value; $PI = $range->board_rate/100; @endphp
-                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}k</h4> @php $BI = $range->bonus_interest/100; $TD = $interval_spent->format('%a'); $calc = eval('return '.$promotion_product->formula.';'); @endphp
-                                <h2>{{ $currency_symbol.' ' . round($calc, 2) }} <br>
+                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}k</h4> @php $BI = $range->bonus_interest/100; $TD = $interval_spent->format('%a'); $calc = eval('return '.$promotion_product->formula.';'); @endphp
+                                <h2>{{ $currency_symbol.' ' . Helper::inThousand(round($calc, 2)) }} <br>
                                                 <span>Total interest rate {{ ($range->bonus_interest+$range->board_rate) }}
                                                     %</span></h2> @php } elseif(!isset($search_filter['search_value'])) { $placement_value = $range->max_range; if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') { $placement_value = $search_filter['search_value']; } $P = $placement_value; $PI = $range->board_rate/100; @endphp @if($key==0)
-                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}</h4> @endif @php if($key==0) { $BI = $range->bonus_interest/100; $TD = $interval_spent->format('%a'); $calc = eval('return '.$promotion_product->formula.';'); @endphp
-                                <h2>{{ $currency_symbol.' ' . round($calc, 2) }} <br>
+                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}</h4> @endif @php if($key==0) { $BI = $range->bonus_interest/100; $TD = $interval_spent->format('%a'); $calc = eval('return '.$promotion_product->formula.';'); @endphp
+                                <h2>{{ $currency_symbol.' ' . Helper::inThousand(round($calc, 2)) }} <br>
                                                 <span>Total interest rate {{ ($range->bonus_interest+$range->board_rate) }}
                                                     %</span></h2> @php } } @endphp @endforeach
                         </div>
@@ -314,7 +314,7 @@
                                                         @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
                                         @endif
                                                         @endif">
-                                            <td>{{ $currency_symbol.' ' . $range->min_range . ' - ' . $currency_symbol.' ' . $range->max_range }}</td>
+                                            <td>{{ $currency_symbol.' ' . Helper::inThousand($range->min_range) . ' - ' . $currency_symbol.' ' . Helper::inThousand($range->max_range) }}</td>
                                             @if($key==0)
                                             <td rowspan="{{ count($product_range) }}" class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $search_filter['search_value']==$range->tenor)) highlight
                                         @endif">{{ $range->tenor. ' ' . $days_type }}</td>@endif
@@ -341,16 +341,16 @@
                         <div class="ps-product__panel">
                             @foreach($product_range as $key => $range) @php if(isset($search_filter['search_value']) && ($search_filter['filter']=='Placement') && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']
                             <=$range->max_range)) { $placement_value = $range->max_range; if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') { $placement_value = $search_filter['search_value']; } $P = $placement_value; $PI = $range->board_rate/100; @endphp @if($key==0)
-                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}</h4> @endif @php $BI = $range->bonus_interest/100; $TM = $range->tenor; $calc = eval('return '.$promotion_product->formula.';'); @endphp @if($key==0)
-                                <h2>{{ $currency_symbol.' ' . round($calc, 2) }} <br>
+                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}</h4> @endif @php $BI = $range->bonus_interest/100; $TM = $range->tenor; $calc = eval('return '.$promotion_product->formula.';'); @endphp @if($key==0)
+                                <h2>{{ $currency_symbol.' ' . Helper::inThousand(round($calc, 2)) }} <br>
                                                         <span>Total interest rate {{ ($range->bonus_interest + $range->board_rate) }}
                                                             %</span></h2> @endif @php } elseif(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor') { $placement_value = max($max_range_arr); $P = $placement_value; $PI = $range->board_rate/100; @endphp @if($key==0)
-                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}</h4> @endif @php $BI = $range->bonus_interest/100; $TM = $range->tenor; $calc = eval('return '.$promotion_product->formula.';'); @endphp @if($key==0)
-                                <h2>{{ $currency_symbol.' ' . round($calc, 2) }} <br>
+                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}</h4> @endif @php $BI = $range->bonus_interest/100; $TM = $range->tenor; $calc = eval('return '.$promotion_product->formula.';'); @endphp @if($key==0)
+                                <h2>{{ $currency_symbol.' ' . Helper::inThousand(round($calc, 2)) }} <br>
                                                         <span>Total interest rate {{ ($range->bonus_interest + $range->board_rate) }}
                                                             %</span></h2> @endif @php } elseif(!isset($search_filter['search_value'])) { $placement_value = $range->max_range; if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') { $placement_value = $search_filter['search_value']; } $P = $placement_value; $PI = $range->board_rate/100; @endphp @if($key==0)
-                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}</h4> @endif @php if($key==0) { $BI = $range->bonus_interest/100; $TM = $range->tenor; $calc = eval('return '.$promotion_product->formula.';'); @endphp @if($key==0)
-                                <h2>{{ $currency_symbol.' ' . round($calc, 2) }} <br>
+                                <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}</h4> @endif @php if($key==0) { $BI = $range->bonus_interest/100; $TM = $range->tenor; $calc = eval('return '.$promotion_product->formula.';'); @endphp @if($key==0)
+                                <h2>{{ $currency_symbol.' ' . Helper::inThousand(round($calc, 2)) }} <br>
                                                         <span>Total interest rate {{ ($range->bonus_interest + $range->board_rate) }}
                                                             %</span></h2> @endif @php } } @endphp @endforeach
 
@@ -395,9 +395,9 @@
                         @php } @endphp @endif
                         <div class="ps-product__panel">
                             @foreach($product_range as $key => $range) @php $P = $range->max_range; if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement') { $P = $search_filter['search_value']; } $AIR = $range->air/100; $SBR = $range->sibor_rate/100; $calc = eval('return '.$promotion_product->formula.';'); @endphp
-                            <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}</h4>
+                            <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}</h4>
 
-                            <h2>{{ $currency_symbol.' ' . $calc }}<br>
+                            <h2>{{ $currency_symbol.' ' . Helper::inThousand($calc) }}<br>
                                                     <span>Total interest rate {{ (($range->sibor_rate/100)+end($counters)) }}
                                                         %</span></h2> @endforeach
                         </div>
@@ -419,7 +419,7 @@
                                     <tbody>
                                         @foreach($product_range as $key => $range)
                                         <tr>
-                                            <td>@if($key==0) 1st - @else NEXT - @endif{{ $currency_symbol.' ' . $range->max_range }}</td>
+                                            <td>@if($key==0) 1st - @else NEXT - @endif{{ $currency_symbol.' ' . Helper::inThousand($range->max_range) }}</td>
                                             <td>@php echo $range->board_rate . '%
                                                 <small>p.a.</small> '; @endphp</td>
                                             <td>@php echo $range->bonus_interest . '%
@@ -442,11 +442,11 @@
                         @php } @endphp @endif
                         <div class="ps-product__panel">
                             @php $placement_value = 15000;$calc = []; @endphp @foreach($product_range as $key => $range) @php if(isset($search_filter['search_value']) && ($search_filter['filter']=='Placement')) { if(isset($search_filter['search_value']) && $search_filter['filter']=='Placement' && $key==0) { $placement_value = $search_filter['search_value']; } if($key==0) { $P = $placement_value; @endphp
-                            <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $P }}</h4> @php } $TIE = $range->bonus_interest+$range->board_rate; if($placement_value>0) { if($placement_value>=$product_range[$key]->account_balance) { $P = $product_range[$key]->account_balance; $calc[] = eval('return '.$promotion_product->formula.';'); $P = $placement_value-$product_range[$key]->account_balance; $placement_value = $P; } else { $calc[] = eval('return '.$promotion_product->formula.';'); $placement_value = 0; } } if($key==(count($product_range)-1)) { @endphp
-                            <h2>{{ $currency_symbol.' ' . array_sum($calc)  }}
+                            <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($P) }}</h4> @php } $TIE = $range->bonus_interest+$range->board_rate; if($placement_value>0) { if($placement_value>=$product_range[$key]->account_balance) { $P = $product_range[$key]->account_balance; $calc[] = eval('return '.$promotion_product->formula.';'); $P = $placement_value-$product_range[$key]->account_balance; $placement_value = $P; } else { $calc[] = eval('return '.$promotion_product->formula.';'); $placement_value = 0; } } if($key==(count($product_range)-1)) { @endphp
+                            <h2>{{ $currency_symbol.' ' . Helper::inThousand(array_sum($calc))  }}
                                                             <br> {{--<span>Total interest rate 1%</span>--}}</h2> @php } } elseif(!isset($search_filter['search_value'])) { $TIE = $range->bonus_interest+$range->board_rate; if($key==0) { @endphp
-                            <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . $placement_value }}</h4> @php } if($placement_value>0) { if($placement_value>=$product_range[$key]->max_range) { $P = $product_range[$key]->account_balance; $calc[] = eval('return '.$promotion_product->formula.';'); $P = $placement_value-$product_range[$key]->max_range; $placement_value = $P; } else { $calc[] = eval('return '.$promotion_product->formula.';'); $placement_value = 0; } } if($key==(count($product_range)-1)) { @endphp
-                            <h2>{{ $currency_symbol.' ' . array_sum($calc)  }}
+                            <h4>Possible interest(s) earned for {{ $currency_symbol.' ' . Helper::inThousand($placement_value) }}</h4> @php } if($placement_value>0) { if($placement_value>=$product_range[$key]->max_range) { $P = $product_range[$key]->account_balance; $calc[] = eval('return '.$promotion_product->formula.';'); $P = $placement_value-$product_range[$key]->max_range; $placement_value = $P; } else { $calc[] = eval('return '.$promotion_product->formula.';'); $placement_value = 0; } } if($key==(count($product_range)-1)) { @endphp
+                            <h2>{{ $currency_symbol.' ' . Helper::inThousand(array_sum($calc))  }}
                                                             <br> {{--<span>Total interest rate 1%</span>--}}</h2> @php } } @endphp @endforeach
                         </div>
                         <div class="clearfix"></div>
@@ -487,22 +487,22 @@
                                             <tr>
                                                 <td>{{ $data }}</td>
                                                 @if($key==0) @foreach($product_range as $key => $range) @foreach($months as $month)
-                                                <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $month==$search_filter['search_value']) highlight  @endif">{{ $currency_symbol.' ' . ($range->min_range*$month) }}</td>
+                                                <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $month==$search_filter['search_value']) highlight  @endif">{{ $currency_symbol.' ' . Helper::inThousand(($range->min_range*$month)) }}</td>
                                                 @endforeach
-                                                <td>{{ $currency_symbol.' ' . ($range->min_range*end($months)) }}</td>
+                                                <td>{{ $currency_symbol.' ' . Helper::inThousand(($range->min_range*end($months))) }}</td>
                                                 @endforeach @php $total_sum[] = ($range->min_range*end($months)); @endphp @elseif($key==1) @foreach($product_range as $key => $range) @php $IEB_formula = '($BI * (($PM + $CM)) * 31/365)'; $calc = []; $BI = $range->bonus_interest/100; $CM = 0; @endphp @for($i=1;$i
                                                 <=($range->placement_month);$i++) @php $PM = $range->min_range; $calc[] = round(eval('return '.$IEB_formula.';'), 2); @endphp @if(in_array($i, $months))
-                                                    <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $i==$search_filter['search_value']) highlight  @endif">{{ $currency_symbol.' ' . round(eval('return '.$IEB_formula.';'), 2) }}</td>
+                                                    <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $i==$search_filter['search_value']) highlight  @endif">{{ $currency_symbol.' ' . Helper::inThousand(round(eval('return '.$IEB_formula.';'), 2)) }}</td>
                                                     @endif @php $CM = $CM+$PM; @endphp @endfor
-                                                    <td>{{ $currency_symbol.' ' . array_sum($calc) }}</td>
+                                                    <td>{{ $currency_symbol.' ' . Helper::inThousand(array_sum($calc)) }}</td>
                                                     @endforeach @php $total_sum[] = array_sum($calc); @endphp @elseif($key==2) @foreach($product_range as $key => $range) @php $IEA_formula = '($AI * (($PM + $CM) + $PMIE) * 31/365)'; $calc = []; $BI = $range->bonus_interest/100; $CM = 0; $AI = 2/100; $PMIE = 0; @endphp @for($i=1;$i
                                                     <=($range->placement_month);$i++) @php $PM = $range->min_range; $calc[] = round(eval('return '.$IEA_formula.';'), 2); @endphp @if(in_array($i, $months ))
-                                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $i==$search_filter['search_value']) highlight  @endif">{{ $currency_symbol.' ' . round(eval('return '.$IEA_formula.';'), 2) }}</td>
+                                                        <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $i==$search_filter['search_value']) highlight  @endif">{{ $currency_symbol.' ' . Helper::inThousand(round(eval('return '.$IEA_formula.';'), 2)) }}</td>
                                                         @endif @php $CM = $CM+$PM;$PMIE = round(eval('return '.$IEA_formula.';'), 2); @endphp @endfor
-                                                        <td>{{ $currency_symbol.' ' . array_sum($calc) }}</td>
+                                                        <td>{{ $currency_symbol.' ' . Helper::inThousand(array_sum($calc)) }}</td>
                                                         @endforeach @php $total_sum[] = array_sum($calc); @endphp @elseif($key==3)
                                                         <td colspan="{{count($months)}}"></td>
-                                                        <td>{{ $currency_symbol.' ' . array_sum($total_sum) }}</td>
+                                                        <td>{{ $currency_symbol.' ' . Helper::inThousand(array_sum($total_sum)) }}</td>
                                                         @endif
                                             </tr>
                                             @endforeach
