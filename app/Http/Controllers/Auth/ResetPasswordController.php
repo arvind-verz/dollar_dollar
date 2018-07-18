@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Http\Request;
+use Password;
+use Auth;
 
 class ResetPasswordController extends Controller
 {
@@ -37,4 +40,10 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    public function showLinkRequestForm($token=null) {
+        return view('auth.passwords.reset-new-password', ['token' => $token]);
+    }
+
 }
+ 

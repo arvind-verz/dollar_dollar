@@ -100,7 +100,7 @@
                             <div class="ps-block--feature">
                                 <div class="ps-block__thumbnail"><img src="{{ asset($blog->blog_image) }}" alt=""></div>
                                 <div class="ps-block__content">
-                                    <h4><a href="{{ url('get-blog-by-category/' . $blog->menu_id)}}">{{$blog->menu_title}}</a></h4>
+                                    <h4><a href="{{ url($blog->slug)}}">{{$blog->name}}</a></h4>
 
                                     <p>{!!  $short_description !!}</p>
                                 </div>
