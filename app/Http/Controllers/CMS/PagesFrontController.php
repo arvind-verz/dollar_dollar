@@ -291,41 +291,36 @@ class PagesFrontController extends Controller
         }
         //dd($promotion_products);
         if (empty($request)) {
-           /* $orginalProducts = $promotion_products;
-        //dd($filterProducts);
+            $orginalProducts = $promotion_products;
+//dd($filterProducts);
             foreach ($orginalProducts as $product) {
                 $promotion_product_id = $product->promotion_product_id;
-                $sort_by_arr = $result_data_old = [];
-                $product_range = json_decode($product->product_range);
-                $tenures = json_decode($product->tenure);
-                $P = $defaultPlacement;
+                $sort_by_arr          = $result_data_old          = [];
+                $product_range        = json_decode($product->product_range);
+                $tenures              = json_decode($product->tenure);
+                $P                    = $product_range[0]->max_range;
                 foreach ($product_range as $key => $range) {
                     if ($P >= $range->min_range && $P <= $range->max_range) {
                         for ($i = 0; $i < count($tenures); $i++) {
-                            $BI = ($range->bonus_interest[$i] / 100);
-                            $TM = $tenures[$i];
-                            $calc = eval('return ' . $product->formula . ';');
+                            $BI        = ($range->bonus_interest[$i] / 100);
+                            $TM        = $tenures[$i];
+                            $calc      = eval('return ' . $product->formula . ';');
                             $days_type = \Helper::days_or_month_or_year(2, $tenures[$i]);
 //print_r($calc);echo '<br>';
-                            $sort_by_arr[] = $calc;
+                            $sort_by_arr[]     = $calc;
                             $result_data_old[] = [
-                                'calc' => $calc,
+                                'calc'     => $calc,
                                 'interest' => $range->bonus_interest[$i],
-                                'amount' => $P,
+                                'amount'   => $P,
                             ];
                         }
                         $result_data_old['tenor'] = $tenures;
                     }
                 }
                 $result_data[$promotion_product_id] = $result_data_old;
-            }*/
-            $request['search_value'] = $defaultPlacement;
-            $request['filter'] = PLACEMENT;
-            $request['sort_by'] = MAXIMUM;
-            $search_filter = $request;
-
+            }
         }
-        if (!empty($request)) {
+        else {
             foreach ($promotion_products as $product) {
                 $status = false;
                 $product_range = json_decode($product->product_range);
@@ -464,7 +459,7 @@ class PagesFrontController extends Controller
             }
         }
         $promotion_products = $orginalProducts;
-//dd($legendtable);
+
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "result_data", "legendtable"));
     }
 
