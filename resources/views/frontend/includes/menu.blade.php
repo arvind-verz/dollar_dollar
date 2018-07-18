@@ -23,7 +23,7 @@
             @if (isset($menus[$menu['id']]) && (count($menus[$menu['id']]) > 0) )
 
                 <li class="menu-item-has-children"><a
-                            href="@if($menu['slug'] != null) {{route('slug',[$menu['slug']]) }} @else # @endif"><i class="{{ $menu['icon'] }}"></i>{{$menu['title']}}</a>
+                            href="@if($menu['slug'] != null) {{route('slug',[$menu['slug']]) }} @else javascript:void(0) @endif"><i class="{{ $menu['icon'] }}"></i>{{$menu['title']}}</a>
 
                     @if($menu['slug'] == BLOG_URL)
                         <ul class="sub-menu">
