@@ -14,7 +14,7 @@
     <link rel="shortcut icon" type="image/ico" href="{{ asset('favicon.ico') }}"/>
     <link rel="apple-touch-icon" type="image/ico" href="{{ asset('favicon.png') }}"/>
     <link href="{{ asset('images/favicon.ico') }}" rel="icon">
-    <title>Speedo Marine (Pte) Ltd.</title>
+    <title>Dollar Dollar</title>
     {{--<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">--}}
 
     <link href="{{ asset('frontend/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
