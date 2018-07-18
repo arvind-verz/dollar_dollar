@@ -25,8 +25,19 @@ class ForgotPasswordController extends Controller
      *
      * @return void
      */
-    public function __construct()
+
+    /**
+     * Create a notification instance.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function __construct($token)
     {
         $this->middleware('guest');
     }
+
+    
+
+
 }
