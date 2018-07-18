@@ -36,9 +36,9 @@ Auth::routes();
 
 // Password Reset Routes...
 
-    Route::get('/userpassword/reset', 'Auth\ResetPasswordController@showLinkRequestForm')->name('user.password.reset');
+/*    Route::get('/userpassword/reset', 'Auth\ResetPasswordController@showLinkRequestForm')->name('user.password.reset');
     Route::post('/userpassword/email/{token}', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('user.password.email');
-
+*/
 
 Route::get('/users/resetpassword/{id}', 'Auth\LoginController@resetPassword')->name('user.resetpassword');
 Route::post('/users/resetpassword/update/{id}', 'Auth\LoginController@resetPasswordUpdate')->name('user.resetpassword.update');
