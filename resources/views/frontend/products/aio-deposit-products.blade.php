@@ -228,7 +228,7 @@
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
             @if($page->slug=='all-in-one-deposit-mode')
-                    <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}" target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
+                    <div class="ps-poster"><a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}" target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
             @endif
             <div class="ps-product ps-product--2">
                 <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
@@ -240,7 +240,17 @@
                     <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}}
                             :</strong> Fulfil each criteria and earn up
                         to {{ $promotion_product->maximum_interest_rate }}%</h4>
-
+                    @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
                     <div class="ps-table-wrap">
                         <table class="ps-table ps-table--product ps-table--product-3">
                             <thead>
@@ -280,25 +290,25 @@
                                     <td class="text-center @if($promotion_product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
                                             - @else  {{ $range->bonus_interest }}% @endif
                                         on
-                                        first {{ $range->first_cap_amount }} if account more
-                                        than {{ $range->bonus_amount }}</td>
+                                        first {{ Helper::inThousand($range->first_cap_amount) }} if account more
+                                        than {{ Helper::inThousand($range->bonus_amount) }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Total Bonus Interest Earned for ${{$range->placement}}</td>
+                                    <td colspan="2">Total Bonus Interest Earned for ${{Helper::inThousand($range->placement)}}</td>
                                     <td class="text-center @if($promotion_product->highlight==true ) highlight @endif"
                                         colspan="4">
                                         @if($range->placement > $range->first_cap_amount)
                                             First
-                                            ${{ $range->first_cap_amount }} -
-                                            ${{ ($range->first_cap_amount*($promotion_product->total_interest/100)) }} (
+                                            ${{ Helper::inThousand($range->first_cap_amount) }} -
+                                            ${{ Helper::inThousand(($range->first_cap_amount*($promotion_product->total_interest/100))) }} (
                                             {{ $promotion_product->total_interest }}%), next
-                                            ${{ ($range->placement-$range->first_cap_amount) }} -
-                                            ${{ (($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount)) }}
+                                            ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }} -
+                                            ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
                                             ({{ $range->bonus_interest_remaining_amount }}%) Total =
-                                            ${{ $promotion_product->interest_earned }}
+                                            ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                         @else
                                             Total =
-                                            ${{ $promotion_product->interest_earned }}
+                                            ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                         @endif
                                     </td>
                                 </tr>
@@ -306,11 +316,24 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="clearfix"></div>
+                    @if(count($promotion_product->ads_placement))
+                        @php
+                        $ads = json_decode($promotion_product->ads_placement);
+                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                        @endphp
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+
+                            <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""  target="_blank"></a>
+
+                        </div>
+                        @php } @endphp
+                    @endif
                     <div class="ps-product__detail">
                         {!! $promotion_product->product_footer !!}
-                    </div>
-                    <div class="ps-poster">
-                        <a href="#"><img src="img/poster/medium/" alt=""></a>
                     </div>
                     <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
                                     class="fa fa-angle-down"></i></a></div>
@@ -327,13 +350,35 @@
                                 Now</a></div>--}}
                     </div>
                     <div class="ps-product__content">
+
                         <h4 class="ps-product__heading"><strong
                                     class="highlight">{{$promotion_product->product_name}} :</strong>
                             Meet either of Criteria and earn up to @if($promotion_product->maximum_interest_rate<=0)
                                 - @else  {{ $promotion_product->maximum_interest_rate }}% @endif
                         </h4>
-
-                        <div class="ps-product__poster"><img src="img/poster/product-2.jpg" alt=""></div>
+                        @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
+                        @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
+                        
                         <div class="ps-table-wrap">
                             <table class="ps-table ps-table--product ps-table--product-2">
                                 <thead>
@@ -342,7 +387,7 @@
                                     <th>Criteria a (spend)</th>
                                     <th>Criteria b (Spend + Salary/Giro)</th>
                                     <th>Interest Earned for each Tier</th>
-                                    <th>Total Interest Earned for {{ $promotion_product->placement }}</th>
+                                    <th>Total Interest Earned for {{ Helper::inThousand($promotion_product->placement) }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -352,13 +397,13 @@
                                             <?php
                                             if ($key == 0) {
                                                 echo "First ";
-                                                echo "$" . $range->max_range;
+                                                echo "$" . Helper::inThousand($range->max_range);
                                             } elseif ($range->above_range == true) {
                                                 echo "Above ";
-                                                echo "$" . ($range->min_range - 1);
+                                                echo "$" . Helper::inThousand(($range->min_range - 1));
                                             } else {
                                                 echo "Next ";
-                                                echo "$" . $range->max_range;
+                                                echo "$" . Helper::inThousand($range->max_range);
                                             }?>
                                         </td>
                                         <td class="text-center @if($promotion_product->highlight_index>=$key &&($promotion_product->criteria_a_highlight==true) ) highlight @endif">
@@ -373,21 +418,21 @@
                                             <?php
                                             if ($key == 0) {
                                                 echo "First ";
-                                                echo "$" . $range->max_range;
+                                                echo "$" . Helper::inThousand($range->max_range);
                                             } elseif ($range->above_range == true) {
                                                 echo "REMAINING BALANCE ";
                                                // echo "$" . ($range->min_range - 1);
                                             } else {
                                                 echo "Next ";
-                                                echo "$" . $range->max_range;
+                                                echo "$" . Helper::inThousand($range->max_range);
                                             }?>
-                                            -${{ $range->interest_earn }}
+                                            -${{ Helper::inThousand($range->interest_earn) }}
                                             ({{ $range->criteria }}%)
                                         </td>
                                         @if($key==0)
                                             <td class="text-center  @if($promotion_product->highlight==true) highlight @endif"
                                                 rowspan="4">
-                                                ${{ $promotion_product->interest_earned }}
+                                                ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                                 <br> Effective Interest
                                                 Rate {{ $promotion_product->total_interest }}%
                                             </td>
@@ -414,13 +459,33 @@
                                     Now</a></div>--}}
                         </div>
                         <div class="ps-product__content">
-
+                            @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
                             <h4 class="ps-product__heading"><strong
                                         class="highlight">{{$promotion_product->product_name}} :</strong>
                                 Fulfil up to 3 criteria and earn up
                                 to @if($promotion_product->maximum_interest_rate<=0)
                                     - @else  {{ $promotion_product->maximum_interest_rate }}% @endif</h4>
-
+                            @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product ps-table--product-3">
                                     <thead>
@@ -494,23 +559,23 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2">Total Bonus Interest Earned for
-                                                ${{ $range->placement }}</td>
+                                                ${{ Helper::inThousand($range->placement) }}</td>
                                             <td class=" text-center @if($promotion_product->highlight==true ) highlight @endif"
                                                 colspan="8">
 
                                                 @if($range->placement > $range->first_cap_amount)
                                                     First
-                                                    ${{ $range->first_cap_amount }} -
-                                                    ${{ ($range->first_cap_amount*($promotion_product->total_interest/100)) }}
+                                                    ${{ Helper::inThousand($range->first_cap_amount) }} -
+                                                    ${{ Helper::inThousand(($range->first_cap_amount*($promotion_product->total_interest/100))) }}
                                                     (
                                                     {{ $promotion_product->total_interest }}%), next
-                                                    ${{ ($range->placement-$range->first_cap_amount) }} -
-                                                    ${{ (($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount)) }}
+                                                    ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }} -
+                                                    ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
                                                     ({{ $range->bonus_interest_remaining_amount }}%) Total =
-                                                    ${{ $promotion_product->interest_earned }}
+                                                    ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                                 @else
                                                     Total =
-                                                    ${{ $promotion_product->interest_earned }}
+                                                    ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                                 @endif
                                             </td>
                                             </td>
@@ -522,9 +587,22 @@
                             <div class="ps-product__detail">
                                 {!! $promotion_product->product_footer !!}
                             </div>
-                            <div class="ps-poster">
-                                <a href="#"><img src="img/poster/medium/" alt=""></a>
-                            </div>
+                            <div class="clearfix"></div>
+                            @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                @endphp
+                                <div class="ps-poster-popup">
+                                    <div class="close-popup">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div>
+
+                                    <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""  target="_blank"></a>
+
+                                </div>
+                                @php } @endphp
+                            @endif
                             <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
                                             class="fa fa-angle-down"></i></a></div>
                         </div>
@@ -545,7 +623,17 @@
                                             class="highlight">{{$promotion_product->product_name}}: </strong> Meet
                                     either Criteria and earn up to {{$promotion_product->maximum_interest_rate}}%
                                 </h4>
-
+                                @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
                                 <div class="ps-table-wrap">
                                     <table class="ps-table ps-table--product">
                                         <thead>
@@ -553,7 +641,7 @@
                                             <th>Monthly Transaction</th>
                                             <th>Criteria a (Salary + 1 category)</th>
                                             <th>Criteria b (Salary + 2 OR more Cateogry)</th>
-                                            <th>Total Interest Earned for ${{ $promotion_product->placement }}</th>
+                                            <th>Total Interest Earned for ${{ Helper::inThousand($promotion_product->placement) }}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -565,12 +653,12 @@
                                             <tr>
                                                 <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
                                                     style="width: 30%">@if($key==0)
-                                                        <${{ $range->max_range+1 }}
+                                                        <${{ Helper::inThousand($range->max_range+1) }}
                                                     @elseif((count($product_range)-1)==$key)
-                                                         >${{ $range->min_range }}
+                                                         >${{ Helper::inThousand($range->min_range) }}
                                                     @else
-                                                         ${{ $range->min_range }} TO
-                                                        <${{ $range->max_range+1 }} @endif</td>
+                                                         ${{ Helper::inThousand($range->min_range) }} TO
+                                                        <${{ Helper::inThousand($range->max_range+1) }} @endif</td>
                                                 <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
                                                     @if($range->bonus_interest_criteria_a<=0)
                                                         - @else  {{ $range->bonus_interest_criteria_a }}% @endif
@@ -585,7 +673,7 @@
                                                     <td class=" text-center @if($promotion_product->highlight==true ) highlight @endif"
                                                         rowspan="6">
                                                         Total=
-                                                        ${{ $promotion_product->interest_earned.' ( '.$promotion_product->total_interest.'%) ' }}</td>
+                                                        ${{ Helper::inThousand($promotion_product->interest_earned).' ( '.$promotion_product->total_interest.'%) ' }}</td>
                                                 @endif
                                             </tr>
                                             @php $i++; @endphp
@@ -593,6 +681,22 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="clearfix"></div>
+                    @if(count($promotion_product->ads_placement))
+                        @php
+                        $ads = json_decode($promotion_product->ads_placement);
+                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                        @endphp
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+
+                            <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""  target="_blank"></a>
+
+                        </div>
+                        @php } @endphp
+                    @endif
                                 <div class="ps-product__detail">
                                     {!! $promotion_product->product_footer !!}
                                 </div>

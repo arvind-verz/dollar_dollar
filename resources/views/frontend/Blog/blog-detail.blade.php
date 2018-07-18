@@ -68,25 +68,7 @@
     {{--Page content start--}}
     <main class="ps-main">
         <div class="container">            
-            <div class="col-lg-4 col-md-12 {{--col-lg-pull-7--}}">
-                <div class="ps-post--feature">
-                    <div class="ps-post__thumbnail"><img src="{{ asset($page->blog_image) }}" alt=""></div>
-                    @if(count($relatedBlog))
-                        @foreach($relatedBlog as $blog)
-
-                            <div class="ps-block--feature">
-                                <div class="ps-block__thumbnail"><img src="{{ asset($blog->blog_image) }}" alt=""></div>
-                                <div class="ps-block__content">
-                                    <h4>{{$blog->menu_title}}</h4>
-
-                                    <p>{!!  $blog->short_description!!}</p>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                    <div class="ps-fanpage"><img src="img/post/share.jpg" alt=""></div>
-                </div>
-            </div>
+            
             <div class="col-lg-8 col-md-12{{-- col-lg-push-5--}}">
                 <div class="ps-post--detail">
                     <div class="ps-post__header">
@@ -107,6 +89,25 @@
                         </p>
                         @endif
                     </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 {{--col-lg-pull-7--}}">
+                <div class="ps-post--feature">
+                    <div class="ps-post__thumbnail"><img src="{{ asset($page->blog_image) }}" alt=""></div>
+                    @if(count($relatedBlog))
+                        @foreach($relatedBlog as $blog)
+                            @php $short_description = substr($blog->short_description, 0, 70).'...'; @endphp
+                            <div class="ps-block--feature">
+                                <div class="ps-block__thumbnail"><img src="{{ asset($blog->blog_image) }}" alt=""></div>
+                                <div class="ps-block__content">
+                                    <h4><a href="{{ url('get-blog-by-category/' . $blog->menu_id)}}">{{$blog->menu_title}}</a></h4>
+
+                                    <p>{!!  $short_description !!}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                    <div class="ps-fanpage"><img src="img/post/share.jpg" alt=""></div>
                 </div>
             </div>
         </div>

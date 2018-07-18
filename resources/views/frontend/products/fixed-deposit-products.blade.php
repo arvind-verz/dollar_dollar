@@ -204,7 +204,7 @@
                 <div class="close-popup">
                     <i class="fa fa-times" aria-hidden="true"></i>
                 </div>
-                <a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}"target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a>
+                <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}" target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a>
             </div>
             @endif
                     <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
@@ -290,7 +290,7 @@
                                                 @if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight
                                                     @endif
                                                 @endforeach
-                                                        ">{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+                                                        ">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
                                                 @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
                                                     <td class="
                                                     @if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && sprintf('%.1f', $search_filter['search_value'])==$bonus_interest) highlight
@@ -326,10 +326,10 @@
                                                 @php $type = Helper::days_or_month_or_year(2, $value); @endphp
                                                 @if($key2==0)
                                                     <h4>Possible interest(s) earned for SGD
-                                                        ${{ $result[$key2]['amount'] }}</h4>
+                                                        ${{ Helper::inThousand($result[$key2]['amount']) }}</h4>
                                                 @endif
                                                 <p><strong>{{ $value . ' ' . $type }}</strong>-
-                                                    ${{ $result[$key2]['calc'] }}
+                                                    ${{ Helper::inThousand($result[$key2]['calc']) }}
                                                     ({{ $result[$key2]['interest'] . '%' }})</p>
                                             @endforeach
                                         @endif

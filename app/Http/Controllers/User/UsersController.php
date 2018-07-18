@@ -13,6 +13,7 @@ use App\ProductManagement;
 use App\ContactEnquiry;
 use App\HealthInsuranceEnquiry;
 use App\LifeInsuranceEnquiry;
+use App\PromotionProducts;
 use DB;
 
 
@@ -431,6 +432,19 @@ class UsersController extends Controller
                 }
                 elseif($type=='bulk_user_status_update') {
                     $users = User::find($id);
+                    if($select_type=='active') {
+                        $users->status = 1;
+                    }
+                    else {
+                        $users->status = 0;
+                    }
+                }
+                elseif($type=='bulk_product_remove') {
+                    $users = PromotionProducts::find($id);
+                    $users->delete_status = 1;
+                }
+                elseif($type=='bulk_product_status_update') {
+                    $users = PromotionProducts::find($id);
                     if($select_type=='active') {
                         $users->status = 1;
                     }

@@ -193,7 +193,7 @@
                     $ads = json_decode($promotion_product->ads_placement);
                     @endphp
                     @if($page->slug=='wealth-deposit-mode')
-                        <div class="ps-poster"><a href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}" target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
+                        <div class="ps-poster"><a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}" target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
                     @endif
                     <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
@@ -243,7 +243,7 @@
                                                     @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
                                         @endif
                                                     @endif">
-                                                        <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+                                                        <td>{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
                                                         <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->bonus_interest) highlight
                                         @endif">{{ $range->bonus_interest . '%' }}</td>
                                                         <td class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && $search_filter['search_value']==$range->board_rate) highlight
@@ -284,13 +284,13 @@
                                             $P = $placement_value;
                                             $PI = $range->board_rate/100;
                                             @endphp
-                                            <h4>Possible interest(s) earned for SGD ${{ $P }}k</h4>
+                                            <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($P) }}k</h4>
                                             @php
                                             $BI = $range->bonus_interest/100;
                                             $TD = $interval_spent->format('%a');
                                             $calc = eval('return '.$promotion_product->formula.';');
                                             @endphp
-                                            <h2>${{ round($calc, 2) }} <br>
+                                            <h2>${{ Helper::inThousand(round($calc, 2)) }} <br>
                                                 <span>Total interest rate {{ ($range->bonus_interest+$range->board_rate) }}
                                                     %</span></h2>
                                             @php
@@ -305,7 +305,7 @@
                                             $PI = $range->board_rate/100;
                                             @endphp
                                             @if($key==0)
-                                                <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                                <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($P) }}</h4>
                                             @endif
                                             @php
                                             if($key==0) {
@@ -313,7 +313,7 @@
                                             $TD = $interval_spent->format('%a');
                                             $calc = eval('return '.$promotion_product->formula.';');
                                             @endphp
-                                            <h2>${{ round($calc, 2) }} <br>
+                                            <h2>${{ Helper::inThousand(round($calc, 2)) }} <br>
                                                 <span>Total interest rate {{ ($range->bonus_interest+$range->board_rate) }}
                                                     %</span></h2>
                                             @php
@@ -346,7 +346,7 @@
                                                         @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
                                         @endif
                                                         @endif">
-                                                            <td>{{ '$' . $range->min_range . ' - $' . $range->max_range }}</td>
+                                                            <td>{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
                                                             @if($key==0)
                                                                 <td rowspan="{{ count($product_range) }}"
                                                                     class="@if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && $search_filter['search_value']==$range->tenor)) highlight
@@ -392,7 +392,7 @@
                                                 $PI = $range->board_rate/100;
                                                 @endphp
                                                 @if($key==0)
-                                                        <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                                        <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($P) }}</h4>
                                                     @endif
                                                 @php
                                                 $BI = $range->bonus_interest/100;
@@ -400,7 +400,7 @@
                                                 $calc = eval('return '.$promotion_product->formula.';');
                                                 @endphp
                                                 @if($key==0)
-                                                    <h2>${{ round($calc, 2) }} <br>
+                                                    <h2>${{ Helper::inThousand(round($calc, 2)) }} <br>
                                                         <span>Total interest rate {{ ($range->bonus_interest + $range->board_rate) }}
                                                             %</span></h2>
                                                     @endif
@@ -412,7 +412,7 @@
                                                     $PI = $range->board_rate/100;
                                                     @endphp
                                                     @if($key==0)
-                                                        <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                                        <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($P) }}</h4>
                                                     @endif
                                                     @php
                                                     $BI = $range->bonus_interest/100;
@@ -420,7 +420,7 @@
                                                     $calc = eval('return '.$promotion_product->formula.';');
                                                     @endphp
                                                     @if($key==0)
-                                                    <h2>${{ round($calc, 2) }} <br>
+                                                    <h2>${{ Helper::inThousand(round($calc, 2)) }} <br>
                                                         <span>Total interest rate {{ ($range->bonus_interest + $range->board_rate) }}
                                                             %</span></h2>
                                                     @endif
@@ -436,7 +436,7 @@
                                                     $PI = $range->board_rate/100;
                                                     @endphp
                                                     @if($key==0)
-                                                        <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                                        <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($P) }}</h4>
                                                     @endif
                                                     @php
                                                     if($key==0) {
@@ -445,7 +445,7 @@
                                                     $calc = eval('return '.$promotion_product->formula.';');
                                                     @endphp
                                                     @if($key==0)
-                                                    <h2>${{ round($calc, 2) }} <br>
+                                                    <h2>${{ Helper::inThousand(round($calc, 2)) }} <br>
                                                         <span>Total interest rate {{ ($range->bonus_interest + $range->board_rate) }}
                                                             %</span></h2>
                                                     @endif
@@ -519,9 +519,9 @@
                                                     $SBR = $range->sibor_rate/100;
                                                     $calc = eval('return '.$promotion_product->formula.';');
                                                     @endphp
-                                                    <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                                    <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($P) }}</h4>
 
-                                                    <h2>{{ '$' . $calc }}<br>
+                                                    <h2>{{ '$' . Helper::inThousand($calc) }}<br>
                                                     <span>Total interest rate {{ (($range->sibor_rate/100)+end($counters)) }}
                                                         %</span></h2>
                                                 @endforeach
@@ -545,7 +545,7 @@
                                                             @foreach($product_range as $key => $range)
                                                                 <tr>
                                                                     <td>@if($key==0) 1st - @else NEXT
-                                                                        - @endif{{ '$' . $range->max_range }}</td>
+                                                                        - @endif{{ '$' . Helper::inThousand($range->max_range) }}</td>
                                                                     <td>@php echo $range->board_rate . '%
                                                                         <small>p.a.</small>
                                                                         '; @endphp</td>
@@ -588,7 +588,7 @@
                                                         if($key==0) {
                                                         $P = $placement_value;
                                                         @endphp
-                                                        <h4>Possible interest(s) earned for SGD ${{ $P }}</h4>
+                                                        <h4>Possible interest(s) earned for SGD ${{ Helper::inThousand($P) }}</h4>
                                                         @php
                                                         }
                                                         $TIE = $range->bonus_interest+$range->board_rate;
@@ -606,7 +606,7 @@
                                                         }
                                                         if($key==(count($product_range)-1)) {
                                                         @endphp
-                                                        <h2>{{ '$' . array_sum($calc)  }}
+                                                        <h2>{{ '$' . Helper::inThousand(array_sum($calc))  }}
                                                             <br> {{--<span>Total interest rate 1%</span>--}}</h2>
                                                         @php
                                                         }
@@ -616,7 +616,7 @@
                                                         if($key==0) {
                                                         @endphp
                                                         <h4>Possible interest(s) earned for SGD
-                                                            ${{ $placement_value }}</h4>
+                                                            ${{ Helper::inThousand($placement_value) }}</h4>
                                                         @php
                                                         }
                                                         if($placement_value>0) {
@@ -633,7 +633,7 @@
                                                         }
                                                         if($key==(count($product_range)-1)) {
                                                         @endphp
-                                                        <h2>{{ '$' . array_sum($calc)  }}
+                                                        <h2>{{ '$' . Helper::inThousand(array_sum($calc)) }}
                                                             <br> {{--<span>Total interest rate 1%</span>--}}</h2>
                                                         @php
                                                         }
@@ -751,7 +751,7 @@
                                                                             array_sum($calc); @endphp
                                                                         @elseif($key==3)
                                                                             <td colspan="{{count($months)}}"></td>
-                                                                            <td>{{ '$' . array_sum($total_sum) }}</td>
+                                                                            <td>{{ '$' . Helper::inThousand(array_sum($total_sum)) }}</td>
                                                                         @endif
                                                                     </tr>
                                                                 @endforeach

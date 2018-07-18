@@ -2058,17 +2058,13 @@ button {
     .ps-block--desposit {
         padding: 50px 0;
     }
-
-    .ps-block--desposit .ps-block__header {
-        margin-bottom: 40px;
-    }
 }
 
 @media (max-width: 767px) {
     .ps-block--desposit {
         padding: 40px 0;
     }
-
+    .ps-block--desposit .ps-block__header {        margin-bottom: 40px;    }
     .ps-block--desposit .ps-block__header h3 {
         display: block;
         margin-right: 0;
@@ -5255,5 +5251,5 @@ span.ps-post__meta a {
 
 .ps-slider--home.owl-carousel .bg--cover {
     height: 428px;
-}
-
+}.display_fixed .col-lg-3{width:100%;}.display_fixed.owl-slider.nav-outside .owl-nav{top:-50px;}.display_fixed.owl-slider.nav-outside .owl-nav .owl-next{margin-right:0;}
+.display_fixed.owl-slider.nav-outside .owl-nav .owl-prev{right: 50px;position: absolute;}
