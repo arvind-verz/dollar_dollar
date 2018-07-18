@@ -69,7 +69,7 @@
                         </div>
                         <div class="form-group mb0">
                             <div class="col-md-12">
-                                <button type="submit" class="button btn-light-alt btn-block"> Reset Password</button>
+                                <button type="submit" class="button btn-primary btn-block"> Reset Password</button>
                             </div>
                         </div>
 
