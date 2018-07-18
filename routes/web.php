@@ -33,6 +33,13 @@ Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCall
 
 /*User Module*/
 Auth::routes();
+
+// Password Reset Routes...
+
+    Route::get('/userpassword/reset', 'Auth\ResetPasswordController@showLinkRequestForm')->name('user.password.reset');
+    Route::post('/userpassword/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('user.password.email');
+
+
 Route::get('/users/resetpassword/{id}', 'Auth\LoginController@resetPassword')->name('user.resetpassword');
 Route::post('/users/resetpassword/update/{id}', 'Auth\LoginController@resetPasswordUpdate')->name('user.resetpassword.update');
 
@@ -244,7 +251,10 @@ Route::group(array('prefix' => 'admin'), function () {
 Route::get('{slug}', 'CMS\PagesFrontController@show')->name('slug');
 
 /* FRONT END PRODUCT MANAGEMENT */
+Route::get('product-management/edit/{id}', 'User\ProductManagementController@edit')->name('product-management.edit');
+Route::post('product-management/update/{id}', 'User\ProductManagementController@update')->name('product-management.update');
 Route::post('product-management/store', 'User\ProductManagementController@store')->name('product-management.store');
+Route::get('product-management/delete/{id}', 'User\ProductManagementController@destroy')->name('product-management.delete');
 
 /* ACCOUNT INFORMATION */
 Route::get('/account-information/edit/{id}', 'User\AccountInformationController@edit')->name('account-information.edit');
