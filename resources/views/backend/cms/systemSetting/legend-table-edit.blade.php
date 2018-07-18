@@ -2,13 +2,13 @@
 @section('content')
     <section class="content-header">
         <h1>
-            {{strtoupper( SYSTEM_SETTING_LEGEND_MODULE )}}
-            <small>{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.EDIT_ACTION}}</small>
+            {{strtoupper( SYSTEM_SETTING_LEGEND_MODULE_SINGLE )}}
+            <small>{{EDIT_ACTION}}</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
             <li><a href="{{ route('system-setting-legend-table.index') }}">{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE}}</a></li>
-            <li class="active">{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
+            <li class="active">{{EDIT_ACTION}}</li>
         </ol>
     </section>
 
@@ -20,11 +20,9 @@
                 @if(count($systemSetting))
                 <div class="box box-warning ">
                     <!-- form start -->
-                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-legend-table', $systemSetting->id], 'method' => 'POST']) !!}
+                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-legend-table', $systemSetting->id], 'method' => 'POST' , 'enctype' => 'multipart/form-data']) !!}
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs pull-right">
-                            <li><a href="#homepage_links" data-toggle="tab">Homepage Links</a></li>
-                            
                             <li class="pull-left header"><i class="fa fa-edit"></i>
                                 {{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
                         </ul>
@@ -55,11 +53,22 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('icon', 'Icon',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            <input type="file" name="icon" class="form-control" >
+                                        {{Form::label('icon', ' Icon',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="@if(isset($systemSetting->icon) && ($systemSetting->icon != ''))col-sm-8 @else col-sm-10 @endif">
+                                            {{Form::file('icon', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
+                                        @if(isset($systemSetting->icon) && ($systemSetting->icon != ''))
+                                            <div class=" col-sm-2">
+                                                <div class="attachment-block clearfix">
+                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $systemSetting->id }}');"><i class="fas fa-times fa-lg"></i></a>
+                                                    <img class="attachment-img" src="{!! asset($systemSetting->icon) !!}"
+                                                         alt="Icon">
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 40*25 for better display</div>
                                     </div>
+
                                 </div>
                             </div>
                             <!-- /.tab-content -->
@@ -67,7 +76,7 @@
                         </div>
                         <!-- nav-tabs-custom -->
                         <div class="box-footer">
-                            <a href="{{ url('/admin') }}"
+                            <a href="{{ route('system-setting-legend-table.index') }}"
                                class="btn btn-default"><i class="fa fa-close">
                                 </i> Cancel</a>
 
@@ -93,5 +102,19 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
-
+    <script>
+        function removeImage(ref, id) {
+            $.ajax({
+                method: "POST",
+                url: "<?php echo e(route('remove-image')); ?>",
+                data: "type=<?php echo SYSTEM_SETTING_LEGEND_MODULE_SINGLE; ?>&id="+id,
+                cache: false,
+                success: function(data) {
+                    if(data.trim()=='success') {
+                        $(ref).parents(".col-sm-2").remove();
+                    }
+                }
+            });
+        }
+    </script>
 @endsection
