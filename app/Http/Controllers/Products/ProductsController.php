@@ -15,6 +15,7 @@ use DB;
 use Illuminate\Http\Request;
 use Validator;
 use App\DefaultSearch;
+use App\systemSettingLegendTable;
 
 class ProductsController extends Controller
 {
@@ -36,12 +37,13 @@ class ProductsController extends Controller
     public function promotion_products_add($productTypeId)
     {
         //dd($productTypeId);
+        $legends = systemSettingLegendTable::where('delete_status', 0)->where('page_type', $productTypeId)->get();
         $promotion_types = \Helper::getPromotionType($productTypeId);
         $formulas = \Helper::getAllFormula($productTypeId);
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
         $productType = $this->productType($productTypeId);
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId'));
+        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends'));
     }
 
     public function promotion_products_get_formula(Request $request)
@@ -146,10 +148,12 @@ class ProductsController extends Controller
         if (in_array($product->formula_id, [FIX_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F1])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
+                $legends = $request->legend;
                 $bonusInterest = $request->bonus_interest;
                 $range = [];
                 $range['min_range'] = (int)$v;
                 $range['max_range'] = (int)$max[$k];
+                $range['legend'] = (int)$legends[$k];
                 $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
                 $ranges[] = $range;
 
@@ -367,6 +371,7 @@ class ProductsController extends Controller
 
     public function promotion_products_edit($id, Request $request)
     {
+        $legends = systemSettingLegendTable::where('delete_status', 0)->where('page_type', $request->product_type_id)->get();
         $promotion_types = \Helper::getPromotionType($request->product_type_id);
         $product = \Helper::getProduct($id);
         if (!$product) {
@@ -378,7 +383,7 @@ class ProductsController extends Controller
         $formula = \Helper::productType($id);
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType'));
+        return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends'));
 
     }
 
@@ -473,10 +478,12 @@ class ProductsController extends Controller
         if (in_array($product->formula_id, [FIX_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F1])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
+                $legends = $request->legend;
                 $bonusInterest = $request->bonus_interest;
                 $range = [];
                 $range['min_range'] = (int)$v;
                 $range['max_range'] = (int)$max[$k];
+                $range['legend'] = (int)$legends[$k];
                 $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
                 $ranges[] = $range;
 
@@ -1076,495 +1083,536 @@ class ProductsController extends Controller
 
     public function addMorePlacementRange(Request $request)
     {
-        if  (in_array($request->formula, [FIX_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F1]))
-        {
-            $teunre = $request->detail;
-            //return $teunre[0]['value'];
-            ?>
-            <div id="placement_range_<?php echo $request->range_id; ?>">
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label"></label>
+        if (in_array($request->formula, [FIX_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F1])) {
+            $tenure = $request->detail;
+            $productType = $request->product_type;
 
-                    <div class="col-sm-4">
-                        <div class="input-group date">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-success">Min
-                                    Placement
-                                </button>
-                            </div>
-                            <input type="text" class="form-control pull-right only_numeric"
-                                   name="min_placement[<?php echo $request->range_id; ?>]"
-                                   value="">
+            function intVal($x)
+            {
+                return (int)$x;
+            }
 
-                        </div>
-                    </div>
+            $legends = systemSettingLegendTable::where('delete_status', 0)
+                ->where('page_type', $productType)
+                ->get();
+            //return $legends->count();
+            if ($legends->count()) {
+                ?>
 
-                    <div class="col-sm-4 ">
-
-                        <div class="input-group date ">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger">Max Placement
-                                </button>
-                            </div>
-                            <input type="text" class="form-control pull-right only_numeric"
-                                   name="max_placement[<?php echo $request->range_id; ?>]"
-                                   value="">
-
-                        </div>
-
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button"
-                                class="btn btn-danger -pull-right  remove-placement-range-button "
-                                data-range-id="<?php echo $request->range_id; ?>" onClick="removePlacementRange(this);">
-                            <i
-                                class="fa fa-minus"> </i>
-                        </button>
-                    </div>
-
-                </div>
-                <?php for ($i = 0; $i < count($request->detail); $i++) { ?>
-                    <div class="form-group  <?php echo $i; ?>"
-                         id="formula_detail_<?php echo $request->range_id . $i; ?>">
+                <div id="placement_range_<?php echo $request->range_id; ?>">
+                    <div class="form-group">
                         <label for="title" class="col-sm-2 control-label"></label>
 
-                        <div class="col-sm-6 ">
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="">Tenur</label>
-                                    <input type="text" class="form-control only_numeric tenure-<?php echo $i; ?>" id=""
-                                           onchange="changeTenureValue(this)" data-formula-detail-id="<?php echo $i; ?>"
-                                           name="tenure[<?php echo $request->range_id; ?>][<?php echo $i; ?>]"
-                                           value="<?php echo $teunre[$i]['value']; ?>"
-                                           placeholder="" readonly="readonly">
+                        <div class="col-sm-4">
+                            <div class="input-group date">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-success">Min
+                                        Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric"
+                                       name="min_placement[<?php echo $request->range_id; ?>]"
+                                       value="">
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 ">
+
+                            <div class="input-group date ">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-danger">Max Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric"
+                                       name="max_placement[<?php echo $request->range_id; ?>]"
+                                       value="">
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button"
+                                    class="btn btn-danger -pull-right  remove-placement-range-button "
+                                    data-range-id="<?php echo $request->range_id; ?>"
+                                    onClick="removePlacementRange(this);">
+                                <i
+                                    class="fa fa-minus"> </i>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="form-group ">
+                        <label for="title" class="col-sm-2 control-label">Legend Type</label>
+
+                        <div class="col-sm-8">
+                            <select class="form-control" name="legend[<?php echo $request->range_id; ?>]">
+                                <option value="">None</option>
+                                <?php
+                                foreach ($legends as $legend) { ?>
+                                    <option value="<?php echo $legend->id; ?>"><?php echo $legend->title; ?></option>
+                                    <?php
+                                } ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+                    <?php for ($i = 0; $i < count($request->detail); $i++) { ?>
+                        <div class="form-group  <?php echo $i; ?>"
+                             id="formula_detail_<?php echo $request->range_id . $i; ?>">
+                            <label for="title" class="col-sm-2 control-label"></label>
+
+                            <div class="col-sm-6 ">
+                                <div class="form-row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Tenur</label>
+                                        <input type="text" class="form-control only_numeric tenure-<?php echo $i; ?>"
+                                               id=""
+                                               onchange="changeTenureValue(this)"
+                                               data-formula-detail-id="<?php echo $i; ?>"
+                                               name="tenure[<?php echo $request->range_id; ?>][<?php echo $i; ?>]"
+                                               value="<?php echo $tenure[$i]['value']; ?>"
+                                               placeholder="" readonly="readonly">
+
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Bonus Interest</label>
+                                        <input type="text" class="form-control only_numeric" id=""
+                                               name="bonus_interest[<?php echo $request->range_id; ?>][<?php echo $i; ?>]"
+                                               placeholder="">
+
+                                    </div>
 
                                 </div>
+                            </div>
+                            <div class="col-sm-1 col-sm-offset-1 ">
+                            </div>
+                            <div class="col-sm-2">&emsp;</div>
+                        </div>
+
+                    <?php } ?>
+                    <div id="new-formula-detail-<?php echo $request->range_id; ?>"></div>
+                </div>
+                <?php }
+            } elseif (in_array($request->formula, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+                ?>
+                <div id="saving_placement_range_f1_<?php echo $request->range_id; ?>">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-4">
+                            <div class="input-group date">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-success">Min
+                                        Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric"
+                                       name="min_placement_sdp1[<?php echo $request->range_id; ?>]"
+                                       value="">
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 ">
+
+                            <div class="input-group date ">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-danger">Max Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric"
+                                       name="max_placement_sdp1[<?php echo $request->range_id; ?>]"
+                                       value="">
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button"
+                                    class="btn btn-danger -pull-right  remove-placement-range-button "
+                                    data-range-id="<?php echo $request->range_id; ?>"
+                                    onClick="removePlacementRange(this);">
+                                <i
+                                    class="fa fa-minus"> </i>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-8 ">
+                            <div class="form-row">
                                 <div class="col-md-6 mb-3">
                                     <label for="">Bonus Interest</label>
-                                    <input type="text" class="form-control only_numeric" id=""
-                                           name="bonus_interest[<?php echo $request->range_id; ?>][<?php echo $i; ?>]"
+                                    <input type="text" class="form-control only_numeric"
+                                           id="bonus_interest_<?php echo $request->range_id; ?>"
+                                           name="bonus_interest_sdp1[<?php echo $request->range_id; ?>]"
                                            placeholder="">
 
                                 </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="">Board Rate</label>
+                                    <input type="text" class="form-control only_numeric"
+                                           id="board_rate_<?php echo $request->range_id; ?>"
+                                           name="board_rate_sdp1[<?php echo $request->range_id; ?>]"
+                                           placeholder="">
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-1 col-sm-offset-1 ">
                         </div>
                         <div class="col-sm-2">&emsp;</div>
                     </div>
-
-                <?php } ?>
-                <div id="new-formula-detail-<?php echo $request->range_id; ?>"></div>
-            </div>
-            <?php
-        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2,WEALTH_DEPOSIT_F1,WEALTH_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F3])) {
-            ?>
-            <div id="saving_placement_range_f1_<?php echo $request->range_id; ?>">
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label"></label>
-
-                    <div class="col-sm-4">
-                        <div class="input-group date">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-success">Min
-                                    Placement
-                                </button>
-                            </div>
-                            <input type="text" class="form-control pull-right only_numeric"
-                                   name="min_placement_sdp1[<?php echo $request->range_id; ?>]"
-                                   value="">
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 ">
-
-                        <div class="input-group date ">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger">Max Placement
-                                </button>
-                            </div>
-                            <input type="text" class="form-control pull-right only_numeric"
-                                   name="max_placement_sdp1[<?php echo $request->range_id; ?>]"
-                                   value="">
-
-                        </div>
-
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button"
-                                class="btn btn-danger -pull-right  remove-placement-range-button "
-                                data-range-id="<?php echo $request->range_id; ?>" onClick="removePlacementRange(this);">
-                            <i
-                                class="fa fa-minus"> </i>
-                        </button>
-                    </div>
-
                 </div>
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label"></label>
+                <?php
+            } elseif (in_array($request->formula, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+                ?>
+                <div id="placement_range_<?php echo $request->range_id; ?>">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"></label>
 
-                    <div class="col-sm-8 ">
-                        <div class="form-row">
-                            <div class="col-md-6 mb-3">
-                                <label for="">Bonus Interest</label>
-                                <input type="text" class="form-control only_numeric"
-                                       id="bonus_interest_<?php echo $request->range_id; ?>"
-                                       name="bonus_interest_sdp1[<?php echo $request->range_id; ?>]"
-                                       placeholder="">
+                        <div class="col-sm-8 ">
+
+                            <div class="input-group date ">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-danger">Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric"
+                                       name="max_placement_sdp4[<?php echo $request->range_id; ?>]"
+                                       value="">
 
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="">Board Rate</label>
-                                <input type="text" class="form-control only_numeric"
-                                       id="board_rate_<?php echo $request->range_id; ?>"
-                                       name="board_rate_sdp1[<?php echo $request->range_id; ?>]"
-                                       placeholder="">
 
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button"
+                                    class="btn btn-danger -pull-right  remove-placement-range-button "
+                                    data-range-id="<?php echo $request->range_id; ?>"
+                                    onClick="removePlacementRange(this);">
+                                <i
+                                    class="fa fa-minus"> </i>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-8 ">
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="">Bonus Interest</label>
+                                    <input type="text" class="form-control only_numeric"
+                                           id="bonus_interest_<?php echo $request->range_id; ?>"
+                                           name="bonus_interest_sdp4[<?php echo $request->range_id; ?>]"
+                                           placeholder="">
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="">Board Rate</label>
+                                    <input type="text" class="form-control only_numeric"
+                                           id="board_rate_<?php echo $request->range_id; ?>"
+                                           name="board_rate_sdp4[<?php echo $request->range_id; ?>]"
+                                           placeholder="">
+
+                                </div>
                             </div>
                         </div>
+                        <div class="col-sm-2">&emsp;</div>
                     </div>
-                    <div class="col-sm-2">&emsp;</div>
                 </div>
-            </div>
-            <?php
-        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
-            ?>
-            <div id="placement_range_<?php echo $request->range_id; ?>">
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label"></label>
+                <?php
+            } elseif (in_array($request->formula, [ALL_IN_ONE_ACCOUNT_F2])) {
+                ?>
+                <div id="aioa_placement_range_f2_<?php echo $request->range_id; ?>">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"></label>
 
-                    <div class="col-sm-8 ">
+                        <div class="col-sm-8">
 
-                        <div class="input-group date ">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger">Placement
-                                </button>
+                            <div class="input-group date ">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-danger">Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric"
+                                       name="max_placement_aioa2[<?php echo $request->range_id; ?>]"
+                                       value="">
+
                             </div>
-                            <input type="text" class="form-control pull-right only_numeric"
-                                   name="max_placement_sdp4[<?php echo $request->range_id; ?>]"
-                                   value="">
 
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button"
+                                    class="btn btn-danger -pull-right  remove-placement-range-button "
+                                    data-range-id="<?php echo $request->range_id; ?>"
+                                    onClick="removePlacementRange(this);">
+                                <i
+                                    class="fa fa-minus"> </i>
+                            </button>
                         </div>
 
                     </div>
-                    <div class="col-sm-2">
-                        <button type="button"
-                                class="btn btn-danger -pull-right  remove-placement-range-button "
-                                data-range-id="<?php echo $request->range_id; ?>" onClick="removePlacementRange(this);">
-                            <i
-                                class="fa fa-minus"> </i>
-                        </button>
-                    </div>
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"></label>
 
+                        <div class="col-sm-8 ">
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="">Bonus Interest (A)</label>
+                                    <input type="text" class="form-control only_numeric"
+                                           id="bonus_interest_<?php echo $request->range_id; ?>"
+                                           name="bonus_interest_criteria_a_aioa2[<?php echo $request->range_id; ?>]"
+                                           placeholder="">
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="">Bonus Interest (B)</label>
+                                    <input type="text" class="form-control only_numeric"
+                                           id="board_rate_<?php echo $request->range_id; ?>"
+                                           name="bonus_interest_criteria_b_aioa2[<?php echo $request->range_id; ?>]"
+                                           placeholder="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">&emsp;</div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label"></label>
+                <?php
+            } elseif (in_array($request->formula, [ALL_IN_ONE_ACCOUNT_F4])) {
+                ?>
+                <div id="aioa_placement_range_f4_<?php echo $request->range_id; ?>">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"></label>
 
-                    <div class="col-sm-8 ">
-                        <div class="form-row">
-                            <div class="col-md-6 mb-3">
-                                <label for="">Bonus Interest</label>
-                                <input type="text" class="form-control only_numeric"
-                                       id="bonus_interest_<?php echo $request->range_id; ?>"
-                                       name="bonus_interest_sdp4[<?php echo $request->range_id; ?>]"
-                                       placeholder="">
-
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="">Board Rate</label>
-                                <input type="text" class="form-control only_numeric"
-                                       id="board_rate_<?php echo $request->range_id; ?>"
-                                       name="board_rate_sdp4[<?php echo $request->range_id; ?>]"
-                                       placeholder="">
+                        <div class="col-sm-4">
+                            <div class="input-group date">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-success">Min
+                                        Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric"
+                                       name="min_placement_aioa4[<?php echo $request->range_id; ?>]"
+                                       value="">
 
                             </div>
                         </div>
+
+                        <div class="col-sm-4 ">
+
+                            <div class="input-group date ">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-danger">Max Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric"
+                                       name="max_placement_aioa4[<?php echo $request->range_id; ?>]"
+                                       value="">
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button"
+                                    class="btn btn-danger   remove-placement-range-button "
+                                    data-range-id="<?php echo $request->range_id; ?>"
+                                    onClick="removePlacementRange(this);">
+                                <i
+                                    class="fa fa-minus"> </i>
+                            </button>
+                        </div>
+
                     </div>
-                    <div class="col-sm-2">&emsp;</div>
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-8 ">
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="">Bonus Interest (A)</label>
+                                    <input type="text" class="form-control only_numeric"
+                                           id="bonus_interest_<?php echo $request->range_id; ?>"
+                                           name="bonus_interest_criteria_a_aioa4[<?php echo $request->range_id; ?>]"
+                                           placeholder="">
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="">Bonus Interest (B)</label>
+                                    <input type="text" class="form-control only_numeric"
+                                           id="board_rate_<?php echo $request->range_id; ?>"
+                                           name="bonus_interest_criteria_b_aioa4[<?php echo $request->range_id; ?>]"
+                                           placeholder="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">&emsp;</div>
+                    </div>
                 </div>
-            </div>
-            <?php
-        } elseif (in_array($request->formula, [ALL_IN_ONE_ACCOUNT_F2])) {
-            ?>
-            <div id="aioa_placement_range_f2_<?php echo $request->range_id; ?>">
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label"></label>
-
-                    <div class="col-sm-8">
-
-                        <div class="input-group date ">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger">Placement
-                                </button>
-                            </div>
-                            <input type="text" class="form-control pull-right only_numeric"
-                                   name="max_placement_aioa2[<?php echo $request->range_id; ?>]"
-                                   value="">
-
-                        </div>
-
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button"
-                                class="btn btn-danger -pull-right  remove-placement-range-button "
-                                data-range-id="<?php echo $request->range_id; ?>" onClick="removePlacementRange(this);">
-                            <i
-                                class="fa fa-minus"> </i>
-                        </button>
-                    </div>
-
-                </div>
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label"></label>
-
-                    <div class="col-sm-8 ">
-                        <div class="form-row">
-                            <div class="col-md-6 mb-3">
-                                <label for="">Bonus Interest (A)</label>
-                                <input type="text" class="form-control only_numeric"
-                                       id="bonus_interest_<?php echo $request->range_id; ?>"
-                                       name="bonus_interest_criteria_a_aioa2[<?php echo $request->range_id; ?>]"
-                                       placeholder="">
-
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="">Bonus Interest (B)</label>
-                                <input type="text" class="form-control only_numeric"
-                                       id="board_rate_<?php echo $request->range_id; ?>"
-                                       name="bonus_interest_criteria_b_aioa2[<?php echo $request->range_id; ?>]"
-                                       placeholder="">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">&emsp;</div>
-                </div>
-            </div>
-            <?php
-        } elseif (in_array($request->formula, [ALL_IN_ONE_ACCOUNT_F4])) {
-            ?>
-            <div id="aioa_placement_range_f4_<?php echo $request->range_id; ?>">
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label"></label>
-
-                    <div class="col-sm-4">
-                        <div class="input-group date">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-success">Min
-                                    Placement
-                                </button>
-                            </div>
-                            <input type="text" class="form-control pull-right only_numeric"
-                                   name="min_placement_aioa4[<?php echo $request->range_id; ?>]"
-                                   value="">
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 ">
-
-                        <div class="input-group date ">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger">Max Placement
-                                </button>
-                            </div>
-                            <input type="text" class="form-control pull-right only_numeric"
-                                   name="max_placement_aioa4[<?php echo $request->range_id; ?>]"
-                                   value="">
-
-                        </div>
-
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button"
-                                class="btn btn-danger   remove-placement-range-button "
-                                data-range-id="<?php echo $request->range_id; ?>" onClick="removePlacementRange(this);">
-                            <i
-                                class="fa fa-minus"> </i>
-                        </button>
-                    </div>
-
-                </div>
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label"></label>
-
-                    <div class="col-sm-8 ">
-                        <div class="form-row">
-                            <div class="col-md-6 mb-3">
-                                <label for="">Bonus Interest (A)</label>
-                                <input type="text" class="form-control only_numeric"
-                                       id="bonus_interest_<?php echo $request->range_id; ?>"
-                                       name="bonus_interest_criteria_a_aioa4[<?php echo $request->range_id; ?>]"
-                                       placeholder="">
-
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="">Bonus Interest (B)</label>
-                                <input type="text" class="form-control only_numeric"
-                                       id="board_rate_<?php echo $request->range_id; ?>"
-                                       name="bonus_interest_criteria_b_aioa4[<?php echo $request->range_id; ?>]"
-                                       placeholder="">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">&emsp;</div>
-                </div>
-            </div>
-            <?php
+                <?php
+            }
         }
-    }
 
-    public function addCounter(Request $request)
-    {
-        if ($request->counter_value > 0) {
+        public
+        function addCounter(Request $request)
+        {
+            if ($request->counter_value > 0) {
 
-            for ($i = 0; $i < $request->counter_value; $i++) {
-                $j = $i + 1; ?>
+                for ($i = 0; $i < $request->counter_value; $i++) {
+                    $j = $i + 1; ?>
+                    <div class="form-row">
+                        <div class="col-md-2 mb-3">
+                            <label for="">Counter <?php echo $j; ?></label>
+                            <input type="text" class="form-control only_numeric" id="counter_<?php echo $i; ?>"
+                                   name="counter_sdp3[<?php echo $i; ?>]" value=""
+                                   placeholder="">
+                        </div>
+                    </div>
+                    <?php
+                }
+
+            } else { ?>
                 <div class="form-row">
                     <div class="col-md-2 mb-3">
-                        <label for="">Counter <?php echo $j; ?></label>
-                        <input type="text" class="form-control only_numeric" id="counter_<?php echo $i; ?>"
-                               name="counter_sdp3[<?php echo $i; ?>]" value=""
+                        <label for="">Counter 1</label>
+                        <input type="text" class="form-control only_numeric" id="counter_1"
+                               name="counter[]" value=""
                                placeholder="">
                     </div>
                 </div>
                 <?php
             }
-
-        } else { ?>
-            <div class="form-row">
-                <div class="col-md-2 mb-3">
-                    <label for="">Counter 1</label>
-                    <input type="text" class="form-control only_numeric" id="counter_1"
-                           name="counter[]" value=""
-                           placeholder="">
-                </div>
-            </div>
-            <?php
-        }
-    }
-
-    public function checkProduct(Request $request)
-    {
-
-        $query = PromotionProducts::where('product_name', $request->name)
-            ->where('bank_id', $request->bank)
-            ->where('promotion_type_id', $request->productType)
-            ->where('delete_status', 0)
-            ->where('formula_id', $request->formula);
-
-
-        if (!empty($request->product_id)) {
-            dd("Hello");
-            $query = $query->whereNotIn('id', [$request->product_id]);
-        }
-        $product = $query->first();
-        if ($product) {
-            return 1;
-        } else {
-            return 0;
         }
 
-    }
+        public
+        function checkProduct(Request $request)
+        {
 
-    public function checkRange(Request $request)
-    {
+            $query = PromotionProducts::where('product_name', $request->name)
+                ->where('bank_id', $request->bank)
+                ->where('promotion_type_id', $request->productType)
+                ->where('delete_status', 0)
+                ->where('formula_id', $request->formula);
 
-        foreach ($request->min_placement as $key => $value) {
-            $key = count($request->min_placement) - 1 - $key;
+            return $request->product_id;
+            if (!empty($request->product_id)) {
+                $query = $query->whereNotIn('id', [$request->product_id]);
+            }
+            $product = $query->first();
+            if ($product) {
+                return 1;
+            } else {
+                return 0;
+            }
 
-            for ($i = 0; $i <= (count($request->min_placement) - 1); $i++) {
-                if (!is_null($request->min_placement[$key]) && !is_null($request->min_placement[$i]) && !is_null($request->max_placement[$i]) && ($key != $i)) {
-                    if ($this->numberBetween($request->min_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
-                        return 1;
-                    } elseif ($this->numberBetween($request->max_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
-                        return 1;
+        }
+
+        public
+        function checkRange(Request $request)
+        {
+
+            foreach ($request->min_placement as $key => $value) {
+                $key = count($request->min_placement) - 1 - $key;
+
+                for ($i = 0; $i <= (count($request->min_placement) - 1); $i++) {
+                    if (!is_null($request->min_placement[$key]) && !is_null($request->min_placement[$i]) && !is_null($request->max_placement[$i]) && ($key != $i)) {
+                        if ($this->numberBetween($request->min_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
+                            return 1;
+                        } elseif ($this->numberBetween($request->max_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
+                            return 1;
+                        }
                     }
                 }
             }
+            return 0;
         }
-        return 0;
-    }
 
-    public function numberBetween($varToCheck, $low, $high)
-    {
-        if ($varToCheck > $high) return false;
-        if ($varToCheck < $low) return false;
-        return true;
-    }
+        public
+        function numberBetween($varToCheck, $low, $high)
+        {
+            if ($varToCheck > $high) return false;
+            if ($varToCheck < $low) return false;
+            return true;
+        }
 
-    public function checkTenure(Request $request)
-    {
-        foreach ($request->tenures as $tenure) {
-            if (1 < count(array_keys($request->tenures, $tenure))) {
-                return 1;
+        public
+        function checkTenure(Request $request)
+        {
+            foreach ($request->tenures as $tenure) {
+                if (1 < count(array_keys($request->tenures, $tenure))) {
+                    return 1;
+                }
             }
+            return 0;
         }
-        return 0;
+
+        public
+        function productType($productTypeId)
+        {
+            if ($productTypeId == SAVING_DEPOSIT) {
+                $productType = SAVING_DEPOSIT_MODULE;
+            } elseif ($productTypeId == ALL_IN_ONE_ACCOUNT) {
+                $productType = ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE;
+            } elseif ($productTypeId == FOREIGN_CURRENCY_DEPOSIT) {
+                $productType = FOREIGN_CURRENCY_DEPOSIT_MODULE;
+            } elseif ($productTypeId == WEALTH_DEPOSIT) {
+                $productType = WEALTH_DEPOSIT_MODULE;
+            } else {
+                $productType = FIX_DEPOSIT_MODULE;
+            }
+            return $productType;
+        }
+
+        public
+        function defaultSearch($productTypeId)
+        {
+            $defaultSearch = DefaultSearch::where('promotion_id', $productTypeId)->first();
+            $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
+            $productType = $this->productType($productTypeId);
+
+            return view('backend.products.formulaDetail.default_search_value', compact('CheckLayoutPermission', 'productType', 'productTypeId', 'defaultSearch'));
+
+        }
+
+        public
+        function defaultSearchUpdate(Request $request)
+        {
+            $validate = ['placement' => 'required'];
+            if ($request->promotion_id == ALL_IN_ONE_ACCOUNT) {
+                $validate['salary'] = 'required';
+                $validate['payment'] = 'required';
+                $validate['spend'] = 'required';
+                $validate['wealth'] = 'required';
+            }
+
+            $validator = Validator::make($request->all(), $validate);
+            if ($validator->getMessageBag()->count()) {
+                return back()->withInput()->withErrors($validator->errors());
+            }
+            $defaultSearch = DefaultSearch::where('promotion_id', $request->promotion_id)->first();
+            $msg = UPDATED_ALERT;
+            if (!$defaultSearch) {
+                $defaultSearch = new DefaultSearch();
+                $msg = ADDED_ALERT;
+            }
+            $defaultSearch->placement = $request->placement;
+            $defaultSearch->promotion_id = $request->promotion_id;
+
+            if ($request->promotion_id == ALL_IN_ONE_ACCOUNT) {
+                $defaultSearch->salary = $request->salary;
+                $defaultSearch->payment = $request->payment;
+                $defaultSearch->spend = $request->spend;
+                $defaultSearch->wealth = $request->wealth;
+                $defaultSearch->loan = $request->loan;
+            }
+            $defaultSearch->save();
+
+            return redirect()->route('promotion-products', ["productTypeId" => $request->promotion_id])->with('success', 'Default Search values ' . $msg);
+
+        }
     }
-
-    public function productType($productTypeId)
-    {
-        if ($productTypeId == SAVING_DEPOSIT) {
-            $productType = SAVING_DEPOSIT_MODULE;
-        } elseif ($productTypeId == ALL_IN_ONE_ACCOUNT) {
-            $productType = ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE;
-        } elseif ($productTypeId == FOREIGN_CURRENCY_DEPOSIT) {
-            $productType = FOREIGN_CURRENCY_DEPOSIT_MODULE;
-        } elseif ($productTypeId == WEALTH_DEPOSIT) {
-            $productType = WEALTH_DEPOSIT_MODULE;
-        } else {
-            $productType = FIX_DEPOSIT_MODULE;
-        }
-        return $productType;
-    }
-
-    public function defaultSearch($productTypeId)
-    {
-        $defaultSearch = DefaultSearch::where('promotion_id', $productTypeId)->first();
-        $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        $productType = $this->productType($productTypeId);
-
-        return view('backend.products.formulaDetail.default_search_value', compact('CheckLayoutPermission', 'productType', 'productTypeId', 'defaultSearch'));
-
-    }
-
-    public function defaultSearchUpdate(Request $request)
-    {
-        $validate = ['placement' => 'required'];
-        if ($request->promotion_id == ALL_IN_ONE_ACCOUNT) {
-            $validate['salary'] = 'required';
-            $validate['payment'] = 'required';
-            $validate['spend'] = 'required';
-            $validate['wealth'] = 'required';
-        }
-
-        $validator = Validator::make($request->all(), $validate);
-        if ($validator->getMessageBag()->count()) {
-            return back()->withInput()->withErrors($validator->errors());
-        }
-        $defaultSearch = DefaultSearch::where('promotion_id', $request->promotion_id)->first();
-        $msg = UPDATED_ALERT;
-        if (!$defaultSearch) {
-            $defaultSearch = new DefaultSearch();
-            $msg = ADDED_ALERT;
-        }
-        $defaultSearch->placement = $request->placement;
-        $defaultSearch->promotion_id = $request->promotion_id;
-
-        if ($request->promotion_id == ALL_IN_ONE_ACCOUNT) {
-            $defaultSearch->salary = $request->salary;
-            $defaultSearch->payment = $request->payment;
-            $defaultSearch->spend = $request->spend;
-            $defaultSearch->wealth = $request->wealth;
-            $defaultSearch->loan = $request->loan;
-        }
-        $defaultSearch->save();
-
-        return redirect()->route('promotion-products', ["productTypeId" => $request->promotion_id])->with('success', 'Default Search values ' . $msg);
-
-    }
-}

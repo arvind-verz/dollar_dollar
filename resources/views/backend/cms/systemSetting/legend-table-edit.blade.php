@@ -38,11 +38,11 @@
                                         <div class="col-sm-10">
                                             <select name="page_type" class="form-control">
                                                 <option value="">Select</option>
-                                                <option value="Fixed Deposit" @if($systemSetting->page_type=='Fixed Deposit') selected @endif>Fixed Deposit</option>
-                                                <option value="Saving Deposit" @if($systemSetting->page_type=='Saving Deposit') selected @endif>Saving Deposit</option>
-                                                <option value="Wealth Deposit" @if($systemSetting->page_type=='Wealth Deposit') selected @endif>Wealth Deposit</option>
-                                                <option value="AIO Deposit" @if($systemSetting->page_type=='AIO Deposit') selected @endif>All in One Deposit</option>
-                                                <option value="Foreign Currency Deposit" @if($systemSetting->page_type=='Foreign Currency Deposit') selected @endif>Foreign Currency Deposit</option>
+                                                <option value="{{FIX_DEPOSIT}}" @if($systemSetting->page_type==FIX_DEPOSIT) selected @endif>{{FIX_DEPOSIT_MODULE}}</option>
+                                                <option value="{{SAVING_DEPOSIT}}" @if($systemSetting->page_type==SAVING_DEPOSIT) selected @endif>{{SAVING_DEPOSIT_MODULE}}</option>
+                                                <option value="{{ALL_IN_ONE_ACCOUNT}}" @if($systemSetting->page_type==ALL_IN_ONE_ACCOUNT) selected @endif>{{ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE}}</option>
+                                                <option value="{{WEALTH_DEPOSIT}}" @if($systemSetting->page_type==WEALTH_DEPOSIT) selected @endif>{{WEALTH_DEPOSIT_MODULE}}</option>
+                                                <option value="{{FOREIGN_CURRENCY_DEPOSIT}}" @if($systemSetting->page_type==FOREIGN_CURRENCY_DEPOSIT) selected @endif>{{FOREIGN_CURRENCY_DEPOSIT_MODULE}}</option>
                                             </select>
                                         </div>
                                     </div>

@@ -434,6 +434,7 @@
 
             'tabClass': 'nav nav-pills',
             'onPrevious': function (tab, navigation, index) {
+                //alert(index);
                 $("#error-div").addClass('display-none');
                 var product_id = $.trim($("#product-id").val());
                 var errorSection = document.getElementById("js-errors");
@@ -480,6 +481,7 @@
                             cache: false,
                             async: false,
                             success: function (data) {
+                                console.log(data);
                                 if (data == 1) {
                                     errors[i] = 'This detail has already been taken';
                                     i++;
@@ -514,6 +516,7 @@
                     }
                 }
                 if (index == 0) {
+
                     if (jQuery.inArray(formula, FDP1) !== -1) {
                         var minPlacements = $('#fixDepositF1').find('input[name^="min_placement"]').map(function () {
                             return $.trim($(this).val());
@@ -1305,13 +1308,21 @@
 
 
         if (jQuery.inArray(formula, FDP1) !== -1) {
+
             var data = $('#fixDepositF1').find('input[name^="tenure[0]"]').serializeArray();
+            var productType = $("#product-type").val();
+            /*var legends = new Array();
+            var data = $('#fixDepositF1').find('select[name^="legend[0]"]').serializeArray();
+            $.each($('select[name^="legend"]'), function() {
+                legends.push($(this).val());
+            });*/
             var formula_detail_id = data.length - 1;
             jQuery.ajax({
                 type: "POST",
                 url: "{{url('/admin/add-more-placement-range')}}",
-                data: {detail: data, range_id: range_id, formula: formula}
+                data: {detail: data, range_id: range_id, formula: formula, product_type:productType}
             }).done(function (data) {
+                console.log(data);
                 $('#new-placement-range').append(data);
                 var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
                 $('#add-placement-range-button').html(addMoreRangeButton);

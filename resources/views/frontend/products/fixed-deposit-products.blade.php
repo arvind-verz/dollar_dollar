@@ -189,25 +189,29 @@
             @endphp
             @if(count($promotion_products))
 
-            @php $j = 1; @endphp
-            @foreach($promotion_products as $promotion_product)
-            @php
-            $promotion_product_id = $promotion_product->promotion_product_id;
-            $product_tenures = json_decode($promotion_product->product_tenure);
-            $product_range = json_decode($promotion_product->product_range);
-            $tenures = json_decode($promotion_product->tenure);
-            $key = $interest_key = $sort_array = array();
-            $ads = json_decode($promotion_product->ads_placement);
-            @endphp
-            @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
-            <div class="ps-poster-popup">
-                <div class="close-popup">
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-                <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}" target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a>
-            </div>
-            @endif
-                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
+                @php $j = 1; @endphp
+                @foreach($promotion_products as $promotion_product)
+                    @php
+                    $promotion_product_id = $promotion_product->promotion_product_id;
+                    $product_tenures = json_decode($promotion_product->product_tenure);
+                    $product_range = json_decode($promotion_product->product_range);
+                    $tenures = json_decode($promotion_product->tenure);
+                    $key = $interest_key = $sort_array = array();
+                    $ads = json_decode($promotion_product->ads_placement);
+                    @endphp
+                    @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
+                               target="_blank"><img
+                                        src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
+                                        alt=""></a>
+                        </div>
+                    @endif
+                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                         id="{{ $j }}">
 
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
                             <?php
@@ -222,19 +226,20 @@
                                     @elseif($promotion_product->promotion_end < $todayStartDate)
                                         ENDED
                                     @elseif($promotion_product->promotion_end > $todayStartDate)
-                               {{ date('M d, Y', strtotime($promotion_product->promotion_start)) . ' to ' . date('M d, Y', strtotime($promotion_product->promotion_end)) }}
-                                     @endif
+                                        {{ date('M d, Y', strtotime($promotion_product->promotion_start)) . ' to ' . date('M d, Y', strtotime($promotion_product->promotion_end)) }}
+                                    @endif
                                 </p>
-                                    <p class="text-uppercase">
-                                        <?php
-                                        if ($promotion_product->promotion_end > $todayStartDate) {
-                                            $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                            $end_date = new DateTime(date("Y-m-d",
-                                                    strtotime($promotion_product->promotion_end)));
-                                            $interval = date_diff($end_date, $start_date);
-                                            echo $interval->format('%a days left');
-                                        }
-                                        ?>
+
+                                <p class="text-uppercase">
+                                    <?php
+                                    if ($promotion_product->promotion_end > $todayStartDate) {
+                                        $start_date = new DateTime(date("Y-m-d", strtotime("now")));
+                                        $end_date = new DateTime(date("Y-m-d",
+                                                strtotime($promotion_product->promotion_end)));
+                                        $interval = date_diff($end_date, $start_date);
+                                        echo $interval->format('%a days left');
+                                    }
+                                    ?>
                                 </p>
                             </div>
                         </div>
@@ -245,7 +250,8 @@
                                 if(!empty($ads[0]->ad_image_horizontal)) {
                                 @endphp
                                 <div class="ps-product__poster"><a
-                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}" target="_blank"><img
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"
+                                            target="_blank"><img
                                                 src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
                                                 alt=""></a></div>
                                 @php } @endphp
@@ -282,7 +288,20 @@
                                             @if(isset($search_filter['search_value']) && ($search_filter['search_value']>=$range->min_range && $search_filter['search_value']<=$range->max_range)) highlight
                                                         @endif
                                             @endif">
-                                                <td><img src="{{ asset('img/icons/ff.png') }}" alt=""></td>
+                                                <td>
+                                                    <?php
+                                                    $legendImage = null;
+                                                    if (isset($range->legend)) {
+                                                        $legend = DB::table('system_setting_legend_table')->find($range->legend);
+                                                        if ($legend) {
+                                                            $legendImage = $legend->icon;
+                                                        }
+                                                    }
+                                                    ?>
+                                                    @if($legendImage)
+                                                        <img src="{{ asset($legendImage) }}" alt="">
+                                                    @endif
+                                                </td>
                                                 <td class="
                                                 @if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && in_array(sprintf('%.1f', $search_filter['search_value']), $range->bonus_interest)) highlight
                                                 @endif
@@ -311,7 +330,8 @@
                                 if(!empty($ads[1]->ad_image_vertical)) {
                                 @endphp
                                 <div class="ps-product__poster">
-                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
+                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"
+                                       target="_blank"><img
                                                 src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                 alt=""></a>
                                 </div>
@@ -347,7 +367,9 @@
                                         <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
 
-                                    <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt=""  target="_blank"></a>
+                                    <a href="#"><img
+                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                alt="" target="_blank"></a>
 
                                 </div>
                                 @php } @endphp
