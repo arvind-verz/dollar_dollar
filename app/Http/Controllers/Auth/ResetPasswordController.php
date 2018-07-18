@@ -41,8 +41,9 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    public function showLinkRequestForm() {
-        return view('auth.passwords.reset-new-password');
+    public function showLinkRequestForm($token=null) {
+        return view('auth.passwords.reset-new-password', ['token' => $token]);
     }
 
 }
+ 
