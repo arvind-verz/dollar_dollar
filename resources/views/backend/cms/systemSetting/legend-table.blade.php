@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
             <li>{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE}}</li>
-             </ol>
+        </ol>
     </section>
 
     <!-- Main content -->
@@ -34,11 +34,11 @@
                                         <div class="col-sm-10">
                                             <select name="page_type" class="form-control">
                                                 <option value="">Select</option>
-                                                <option value="Fixed Deposit">Fixed Deposit</option>
-                                                <option value="Saving Deposit">Saving Currency Deposit</option>
-                                                <option value="Wealth Deposit">Wealth Deposit</option>
-                                                <option value="AIO Deposit">All in One Deposit</option>
-                                                <option value="Foreign Currency Deposit">Foreign Currency Deposit</option>
+                                                <option value="{{FIX_DEPOSIT}}">{{FIX_DEPOSIT_MODULE}}</option>
+                                                <option value="{{SAVING_DEPOSIT}}">{{SAVING_DEPOSIT_MODULE}}</option>
+                                                <option value="{{ALL_IN_ONE_ACCOUNT}}">{{ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE}}</option>
+                                                <option value="{{WEALTH_DEPOSIT}}">{{WEALTH_DEPOSIT_MODULE}}</option>
+                                                <option value="{{FOREIGN_CURRENCY_DEPOSIT}}">{{FOREIGN_CURRENCY_DEPOSIT_MODULE}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -75,35 +75,51 @@
                         <div class="box-body table-responsive">
                             <table class="table table-bordered">
                                 <thead>
-                                    <tr>
-                                        <th>Type</th>
-                                        <th>Icon</th>
-                                        <th>Title</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Icon</th>
+                                    <th>Title</th>
+                                    <th>Action</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @if(count($systemSetting))
-                                        @foreach($systemSetting as $setting)
-                                    <tr>
-                                        <td>{{ $setting->page_type }}</td>
-                                        <td class=""><div class="attachment-block clearfix ">
-                                                <img class="attachment-img"
-                                                     src="{!! asset($setting->icon) !!}"
-                                                     alt="Banner Image">
-                                            </div></td>
-                                        <td>{{ $setting->title }}</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-app edit" title="Edit Page" href="{{ route("system-setting-legend-table.edit",["id"=>$setting->id]) }}"><i class="fa fa-edit"></i> Edit</a>
-                                            <a class="btn btn-app delete" title="Delete Brand"
-                                                                   onclick="return confirm('Are you sure to delete this?')"
-                                                                   href="{{ route("system-setting-legend-table-destory",["id"=>$setting->id]) }}">
-                                                                    <i class="fa fa-trash"></i> Delete
-                                                                </a>
-                                                            </td>
-                                    </tr>
-                                        @endforeach
-                                    @endif
+                                @if(count($systemSetting))
+                                    @foreach($systemSetting as $setting)
+                                        <tr>
+                                            <td>
+                                                @if($setting->page_type == FIX_DEPOSIT)
+                                                    {{FIX_DEPOSIT_MODULE}}
+                                                @elseif($setting->page_type == SAVING_DEPOSIT)
+                                                    {{SAVING_DEPOSIT_MODULE}}
+                                                @elseif($setting->page_type == ALL_IN_ONE_ACCOUNT)
+                                                    {{ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE}}
+                                                @elseif($setting->page_type == WEALTH_DEPOSIT)
+                                                    {{WEALTH_DEPOSIT_MODULE}}
+                                                @elseif($setting->page_type == FOREIGN_CURRENCY_DEPOSIT)
+                                                    {{FOREIGN_CURRENCY_DEPOSIT_MODULE}}
+                                                @endif
+                                            </td>
+                                            <td class="">
+                                                <div class="attachment-block clearfix ">
+                                                    <img class="attachment-img"
+                                                         src="{!! asset($setting->icon) !!}"
+                                                         alt="Banner Image">
+                                                </div>
+                                            </td>
+                                            <td>{{ $setting->title }}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-app edit" title="Edit Page"
+                                                   href="{{ route("system-setting-legend-table.edit",["id"=>$setting->id]) }}"><i
+                                                            class="fa fa-edit"></i> Edit</a>
+                                                <a class="btn btn-app delete" title="Delete Brand"
+                                                   onclick="return confirm('Are you sure to delete this?')"
+                                                   href="{{ route("system-setting-legend-table-destory",["id"=>$setting->id]) }}">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                                 </tbody>
                             </table>
                         </div>
@@ -114,7 +130,7 @@
                 <!-- /.box -->
 
             </div>
-            
+
             <!-- /.col -->
         </div>
         <!-- /.row -->

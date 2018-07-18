@@ -56,6 +56,22 @@
                         </div>
 
                     </div>
+                    <div class="form-group " id="">
+                        {{Form::label('legend', 'Legend Type',['class'=>'col-sm-2 control-label'])}}
+                        <div class="col-sm-8">
+                            <select class="form-control" name="legend[{{$key}}]" id="legend">
+                                <option value="">None</option>
+                                @if($legends->count())
+                                    @foreach($legends as $legend)
+                                        <option value="{{$legend->id}}"
+                                                @if($value->legend == $legend->id) selected="selected" @endif>{{$legend->title}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
                     <?php $bonusInterest = $value->bonus_interest;
                     $tenures = json_decode($product->tenure); ?>
                     @if(count($product->tenure))
@@ -162,13 +178,29 @@
                 </div>
 
             </div>
+            <div class="form-group " >
+                <label for="title" class="col-sm-2 control-label">Legend Type</label>
+                <div class="col-sm-8">
+                    <select class="form-control" name="legend[0]">
+                        <option value="">None</option>
+                        @if($legends->count())
+                            @foreach($legends as $legend)
+                                <option value="{{$legend->id}}"
+                                        @if(old('legend')==$legend->id) selected="selected" @endif>{{$legend->title}}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                </div>
+            </div>
             <div class="form-group 0" id="formula_detail_00">
                 <label for="title" class="col-sm-2 control-label"></label>
 
                 <div class="col-sm-6 ">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Tenur</label>
+                            <label for="">Tenure</label>
                             <input type="text" class="form-control tenure-0 only_numeric" id=""
                                    data-formula-detail-id="0"
                                    name="tenure[0][]"
