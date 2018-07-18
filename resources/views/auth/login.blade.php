@@ -104,7 +104,7 @@
                             <div class="ps-checkbox ps-checkbox--inline">
                                 <input class="form-control" type="checkbox" id="remember" name="remember" />
                                 <label for="remember">Remember Me</label>
-                            </div><a href="{{ route('user.password.reset') }}">Forgot password</a>
+                            </div><a href="{{ route('password.request') }}">Forgot password</a>
                         </div>
                        <div class="form-group recaptcha">{!! app('captcha')->display($attributes = [],
                                                    $lang = []) !!}

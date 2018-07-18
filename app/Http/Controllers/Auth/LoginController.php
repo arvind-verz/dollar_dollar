@@ -137,7 +137,7 @@ class LoginController extends Controller
 
             //get slug
             $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
-        return view('auth.passwords.reset', compact("brands", "page", "systemSetting", "banners"));
+        return view('frontend.user.change-password', compact("brands", "page", "systemSetting", "banners"));
         }
     }
 
