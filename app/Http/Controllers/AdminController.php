@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Banner;
 use App\PromotionProducts;
 use App\Page;
+use App\systemSettingLegendTable;
 
 class AdminController extends Controller
 {
@@ -39,6 +40,13 @@ class AdminController extends Controller
 
             $upd_query->banner_image = null;
             $upd_query->save();
+            echo "success";
+        }
+        if($type==SYSTEM_SETTING_LEGEND_MODULE_SINGLE) {
+            $legend = systemSettingLegendTable::find($id);
+
+            $legend->icon = null;
+            $legend->save();
             echo "success";
         }
         elseif($type=='blog') {

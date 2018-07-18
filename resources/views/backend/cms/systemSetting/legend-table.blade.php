@@ -2,14 +2,13 @@
 @section('content')
     <section class="content-header">
         <h1>
-            {{strtoupper( SYSTEM_SETTING_LEGEND_MODULE )}}
-            <small>{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.EDIT_ACTION}}</small>
+            {{strtoupper( SYSTEM_SETTING_LEGEND_MODULE_SINGLE )}}
+            <small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('system-setting-legend-table.index') }}">{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE}}</a></li>
-            <li class="active">{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
-        </ol>
+            <li>{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE}}</li>
+             </ol>
     </section>
 
     <!-- Main content -->
@@ -17,15 +16,13 @@
         <div class="row">
             @include('backend.inc.messages')
             <div class="col-xs-12">
-                <div class="box box-warning ">
+                <div class="box box-info ">
                     <!-- form start -->
-                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-legend-table'], 'method' => 'POST']) !!}
+                    {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting-legend-table'], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs pull-right">
-                            <li><a href="#homepage_links" data-toggle="tab">Homepage Links</a></li>
-                            
                             <li class="pull-left header"><i class="fa fa-edit"></i>
-                                {{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
+                                {{SYSTEM_SETTING_LEGEND_MODULE_SINGLE.' '.ADD_ACTION}}</li>
                         </ul>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -68,8 +65,8 @@
                                class="btn btn-default"><i class="fa fa-close">
                                 </i> Cancel</a>
 
-                            <button type="submit" class="btn btn-warning pull-right"><i class="fa  fa-check"></i>
-                                Update
+                            <button type="submit" class="btn btn-info pull-right"><i class="fa  fa-check"></i>
+                                Add
                             </button>
                         </div>
                         <!-- /.box-footer -->
@@ -90,7 +87,11 @@
                                         @foreach($systemSetting as $setting)
                                     <tr>
                                         <td>{{ $setting->page_type }}</td>
-                                        <td>{{ $setting->icon }}</td>
+                                        <td class=""><div class="attachment-block clearfix ">
+                                                <img class="attachment-img"
+                                                     src="{!! asset($setting->icon) !!}"
+                                                     alt="Banner Image">
+                                            </div></td>
                                         <td>{{ $setting->title }}</td>
                                         <td class="text-center">
                                             <a class="btn btn-app edit" title="Edit Page" href="{{ route("system-setting-legend-table.edit",["id"=>$setting->id]) }}"><i class="fa fa-edit"></i> Edit</a>

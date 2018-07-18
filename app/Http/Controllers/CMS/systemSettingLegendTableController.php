@@ -25,22 +25,55 @@ class systemSettingLegendTableController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
         $systemSetting = systemSettingLegendTable::where('delete_status', 0)
             ->get();
 
         $this->validate($request, [
             'page_type' => 'required',
-            'title' => 'required'
+            'title' => 'required',
+            'icon' => 'required|image|max:1999'
         ]);
-        
-        $oldSystemSetting = new systemSettingLegendTable;
-        $oldSystemSetting->page_type = $request->page_type;
-        $oldSystemSetting->title = $request->title;
-        $oldSystemSetting->icon = $request->icon;
-        $oldSystemSetting->created_at = Carbon::now()->toDateTimeString();
-        $oldSystemSetting->save();
+        if (!is_dir('uploads')) {
+            mkdir('uploads');
+        }
 
-        return redirect()->back()->with('success', "System setting" . ADDED_ALERT);
+        if (!is_dir('uploads/legends')) {
+            mkdir('uploads/legends');
+        }
+        $destinationPath = 'uploads/legends'; // upload path
+        $legendIcon = '';
+        if ($request->hasFile('icon')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('icon')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('icon')->getClientOriginalExtension();
+            // Filename to store
+            $legendIcon = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('icon')->move($destinationPath, $legendIcon);
+        }
+        $legend = new systemSettingLegendTable;
+        $legend->page_type = $request->page_type;
+        $legend->title = $request->title;
+        $legend->icon = $destinationPath . "/" .$legendIcon;
+        $legend->created_at = Carbon::now()->toDateTimeString();
+        $legend->save();
+        //store activity log
+        activity()
+            ->performedOn($legend)
+            ->withProperties([
+                'ip' => \Request::ip(),
+                'module' => SYSTEM_SETTING_LEGEND_MODULE,
+                'msg' => strip_tags($legend->title) . ' ' . ADDED_ALERT,
+                'old' => $legend,
+                'new' => null
+            ])
+            ->log(CREATE);
+        return redirect()->back()->with('success', strip_tags($legend->title) . ' ' . ADDED_ALERT);
     }
 
     public function edit(Request $request, $id)
@@ -53,22 +86,61 @@ class systemSettingLegendTableController extends Controller
 
     public function update(Request $request, $id)
     {
-        $oldSystemSetting = systemSettingLegendTable::where('delete_status', 0)
-            ->find($id);
-
+        $legend = systemSettingLegendTable::where('delete_status', 0)
+            ->where('id',$id)->first();
+        $oldLegend = $legend;
         $this->validate($request, [
             'page_type' => 'required',
-            'title' => 'required'
+            'title' => 'required',
+            'icon' => 'image|nullable|max:1999',
         ]);
+
+        if (!is_dir('uploads')) {
+            mkdir('uploads');
+        }
+
+        if (!is_dir('uploads/legends')) {
+            mkdir('uploads/legends');
+        }
+        $destinationPath = 'uploads/legends'; // upload path
+        $legendIcon = '';
+        if ($request->hasFile('icon')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('icon')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('icon')->getClientOriginalExtension();
+            // Filename to store
+            $legendIcon = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('icon')->move($destinationPath, $legendIcon);
+        }
+        if ($request->hasFile('icon')) {
+            if (!$legend->icon ) {
+                \File::delete($legend->icon);
+            }
+            $legend->icon = $destinationPath . '/' . $legendIcon;
+        }
         
-        $oldSystemSetting->page_type = $request->page_type;
-        $oldSystemSetting->title = $request->title;
-        $oldSystemSetting->icon = $request->icon;
-        $oldSystemSetting->updated_at = Carbon::now()->toDateTimeString();
+        $legend->page_type = $request->page_type;
+        $legend->title = $request->title;
+        $legend->updated_at = Carbon::now()->toDateTimeString();
 
-        $oldSystemSetting->save();
+        $legend->save();
 
-        return redirect('admin/system-setting-legend-table')->with('success', "Legend Table Setting" . UPDATED_ALERT);
+        activity()
+            ->performedOn($legend)
+            ->withProperties([
+                'ip' => \Request::ip(),
+                'module' => SYSTEM_SETTING_LEGEND_MODULE,
+                'msg' => strip_tags($legend->title) . ' ' . UPDATED_ALERT,
+                'old' => $oldLegend,
+                'new' => $legend
+            ])
+            ->log(UPDATE);
+        return redirect('admin/system-setting-legend-table')->with('success', strip_tags($legend->title) . ' ' . UPDATED_ALERT);
     }
 
     public function destroy($id)
