@@ -188,10 +188,7 @@
                 //dd($ads);
                 ?>
                 @if(isset($ads[3]))
-                    <div class="ps-poster"><a
-                                href="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? $ads[3]->ad_horizontal_image_popup_top : '' }}" target="_blank"><img
-                                    src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
-                                    alt=""></a></div>
+                    <div class="ps-poster"><a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}" target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
                 @endif
                 <div class="ps-product  @if($product->featured==1) featured-1 @endif" id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
