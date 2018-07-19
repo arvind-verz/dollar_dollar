@@ -176,6 +176,7 @@
             </div>
 
             @if(count($promotion_products))
+                    <?php $featuredProducts = $promotion_products->sortByDesc('featured');?>
                 <div class="ps-slider--feature-product nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true"
                      data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="5"
                      data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="5"
@@ -183,7 +184,7 @@
                      data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
                      data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                     @php $i = 1; @endphp
-                    @foreach($promotion_products as $promotion_product)
+                    @foreach($featuredProducts as $promotion_product)
                         <div class="ps-block--short-product second @if($promotion_product->featured==1) highlight @endif"
                              data-mh="product"><img
                                     src="{{ asset($promotion_product->brand_logo) }}" alt="">
