@@ -1009,7 +1009,7 @@ class PagesFrontController extends Controller
 
         //dd($searchValue,$searchFilter);
         DB::connection()->enableQueryLog();
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'Saving Deposit')
+        $legendtable = systemSettingLegendTable::where('page_type', '=', SAVING_DEPOSIT)
             ->where('delete_status', 0)
             ->get();
 
@@ -1603,7 +1603,7 @@ class PagesFrontController extends Controller
 
 
         DB::connection()->enableQueryLog();
-        $legendtable = systemSettingLegendTable::where('page_type', '=', 'AIO Deposit')
+        $legendtable = systemSettingLegendTable::where('page_type', '=', ALL_IN_ONE_ACCOUNT)
             ->where('delete_status', 0)
             ->get();
 
