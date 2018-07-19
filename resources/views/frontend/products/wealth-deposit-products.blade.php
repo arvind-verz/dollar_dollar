@@ -192,10 +192,18 @@
                     $max_range_arr = array();
                     $ads = json_decode($promotion_product->ads_placement);
                     @endphp
-                    @if($page->slug=='wealth-deposit-mode')
-                        <div class="ps-poster"><a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}" target="_blank"><img src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}" alt=""></a></div>
+                    @if($page->slug=='wealth-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
+                               target="_blank"><img
+                                        src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
+                                        alt=""></a>
+                        </div>
                     @endif
-                    <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
+                    <div class="ps-product  @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='wealth-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                             <div class="ps-product__promo">
