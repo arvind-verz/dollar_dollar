@@ -234,13 +234,18 @@
             ?>
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
-                @if($page->slug=='all-in-one-deposit-mode')
-                    <div class="ps-poster"><a
-                                href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
-                                target="_blank"><img
-                                    src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
-                                    alt=""></a></div>
-                @endif
+                    @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
+                               target="_blank"><img
+                                        src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
+                                        alt=""></a>
+                        </div>
+                    @endif
+
                 <div class="ps-product ps-product--2">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
@@ -359,6 +364,17 @@
 
                         <!-- TIER BASE -->
                 @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
+                            @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+                                <div class="ps-poster-popup">
+                                    <div class="close-popup">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div>
+                                    <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
+                                       target="_blank"><img
+                                                src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
+                                                alt=""></a>
+                                </div>
+                            @endif
                     <div class="ps-product ps-product--2">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
@@ -449,6 +465,24 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="clearfix"></div>
+                            @if(count($promotion_product->ads_placement))
+                                @php
+                                $ads = json_decode($promotion_product->ads_placement);
+                                if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                @endphp
+                                <div class="ps-poster-popup">
+                                    <div class="close-popup">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div>
+
+                                    <a href="#"><img
+                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                alt="" target="_blank"></a>
+
+                                </div>
+                                @php } @endphp
+                            @endif
                             <div class="ps-product__detail">
                                 {!! $promotion_product->product_footer !!}
                             </div>
