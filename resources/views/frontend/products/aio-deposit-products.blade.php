@@ -383,17 +383,7 @@
                                                 alt=""></a></div>
                                 @php } @endphp
                             @endif
-                            @if(count($promotion_product->ads_placement))
-                                @php
-                                $ads = json_decode($promotion_product->ads_placement);
-                                if(!empty($ads[0]->ad_image_horizontal)) {
-                                @endphp
-                                <div class="ps-product__poster"><a
-                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
-                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                alt=""></a></div>
-                                @php } @endphp
-                            @endif
+
 
                             <div class="ps-table-wrap">
                                 <table class="ps-table ps-table--product ps-table--product-2">
@@ -493,8 +483,8 @@
                                     Fulfil up to 3 criteria and earn up
                                     to @if($promotion_product->maximum_interest_rate<=0)
                                         - @else  {{ $promotion_product->maximum_interest_rate }}% @endif</h4>
-                                <div class="ps-table-wrap" id='{{$promotion_product->id}}'>
-                                    <form id="form-{{$promotion_product->id}}" class="ps-form--filter" method="post">
+                                <div class="ps-table-wrap" id='{{$promotion_product->product_id}}'>
+                                    <form id="form-{{$promotion_product->product_id}}" class="ps-form--filter" method="post">
                                     <table class="ps-table ps-table--product ps-table--product-3" >
                                         <thead>
                                         <tr>
@@ -505,11 +495,11 @@
                                             <th>
                                                 <div class="ps-checkbox">
                                                     <input class="form-control" type="checkbox"
-                                                           data-product-id = "{{$promotion_product->id}}"
+                                                           data-product-id = "{{$promotion_product->product_id}}"
                                                            name="life_insurance" onchange="changeCriteria(this);"
                                                            @if($promotion_product->life_insurance) checked=checked
-                                                           @endif value="true" id="life-insurance-{{$promotion_product->id}}"/>
-                                                    <label for="life-insurance-{{$promotion_product->id}}">Life Insurance</label>
+                                                           @endif value="true" id="life-insurance-{{$promotion_product->product_id}}"/>
+                                                    <label for="life-insurance-{{$promotion_product->product_id}}">Life Insurance</label>
                                                 </div>
                                             </th>
                                             <th>
@@ -517,47 +507,47 @@
                                                     <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
                                                            @if($promotion_product->housing_loan) checked=checked @endif
                                                            name="housing_loan"
-                                                           data-product-id = "{{$promotion_product->id}}"
-                                                           value="true" id="housing-loan-{{$promotion_product->id}}">
-                                                    <label for="housing-loan-{{$promotion_product->id}}">Housing Loan</label>
+                                                           data-product-id = "{{$promotion_product->product_id}}"
+                                                           value="true" id="housing-loan-{{$promotion_product->product_id}}">
+                                                    <label for="housing-loan-{{$promotion_product->product_id}}">Housing Loan</label>
                                                 </div>
                                             </th>
                                             <th>
                                                 <div class="ps-checkbox">
                                                     <input class="form-control" type="checkbox"
                                                            name="education_loan" onchange="changeCriteria(this);"
-                                                           data-product-id = "{{$promotion_product->id}}"
-                                                           value="true" id='education-loan-{{$promotion_product->id}}'
+                                                           data-product-id = "{{$promotion_product->product_id}}"
+                                                           value="true" id='education-loan-{{$promotion_product->product_id}}'
                                                            @if($promotion_product->education_loan) checked=checked @endif/>
-                                                    <label for="education-loan-{{$promotion_product->id}}">Education Loan</label>
+                                                    <label for="education-loan-{{$promotion_product->product_id}}">Education Loan</label>
                                                 </div>
                                             </th>
                                             <th>
                                                 <div class="ps-checkbox">
                                                     <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
                                                            name="hire_loan" value="true"
-                                                           data-product-id = "{{$promotion_product->id}}" id="hire-loan-{{$promotion_product->id}}"
+                                                           data-product-id = "{{$promotion_product->product_id}}" id="hire-loan-{{$promotion_product->product_id}}"
                                                            @if($promotion_product->hire_loan) checked=checked @endif/>
-                                                    <label  for="hire-loan-{{$promotion_product->id}}">Hire Purchase loan</label>
+                                                    <label  for="hire-loan-{{$promotion_product->product_id}}">Hire Purchase loan</label>
                                                 </div>
                                             </th>
                                             <th>
                                                 <div class="ps-checkbox">
                                                     <input class="form-control" type="checkbox"
                                                            name="renovation_loan" onchange="changeCriteria(this);"
-                                                           data-product-id = "{{$promotion_product->id}}"
-                                                           value="true" id="renovation-loan-{{$promotion_product->id}}"
+                                                           data-product-id = "{{$promotion_product->product_id}}"
+                                                           value="true" id="renovation-loan-{{$promotion_product->product_id}}"
                                                            @if($promotion_product->renovation_loan) checked=checked @endif/>
-                                                    <label for="renovation-loan-{{$promotion_product->id}}">Renovation loan</label>
+                                                    <label for="renovation-loan-{{$promotion_product->product_id}}">Renovation loan</label>
                                                 </div>
                                             </th>
                                             <th>
                                                 <div class="ps-checkbox">
                                                     <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
                                                            name="unit_trust" value="true"
-                                                           data-product-id = "{{$promotion_product->id}}" id="unit-trust-{{$promotion_product->id}}"
+                                                           data-product-id = "{{$promotion_product->product_id}}" id="unit-trust-{{$promotion_product->product_id}}"
                                                            @if($promotion_product->unit_trust) checked=checked @endif/>
-                                                    <label for="unit-trust-{{$promotion_product->id}}">Unit Trust</label>
+                                                    <label for="unit-trust-{{$promotion_product->product_id}}">Unit Trust</label>
                                                 </div>
                                             </th>
                                         </tr>
@@ -567,41 +557,28 @@
                                             <tr>
                                                 <td>Bonus Interest PA</td>
                                                 <td class="text-center @if($promotion_product->criteria_1==true ) highlight @endif"
-                                                    colspan="3">1 Criteria Met
-                                                    – @if($range->bonus_interest_criteria1<=0)
-                                                        - @else  {{ $range->bonus_interest_criteria1 }}% @endif
+                                                    colspan="3">1 Criteria Met - @if($range->bonus_interest_criteria1<=0) - @else  {{ $range->bonus_interest_criteria1 }}% @endif
                                                 </td>
                                                 <td class=" text-center @if($promotion_product->criteria_2==true ) highlight @endif"
-                                                    colspan="3">2 Criteria
-                                                    – @if($range->bonus_interest_criteria2<=0)
-                                                        - @else  {{ $range->bonus_interest_criteria2 }}% @endif
+                                                    colspan="3">2 Criteria - @if($range->bonus_interest_criteria2<=0) - @else  {{ $range->bonus_interest_criteria2 }}% @endif
                                                 </td>
                                                 <td class="text-center @if($promotion_product->criteria_3==true ) highlight @endif"
-                                                    colspan="3">3
-                                                    Criteria @if($range->bonus_interest_criteria3<=0)
-                                                        - @else  {{ $range->bonus_interest_criteria3 }}% @endif
+                                                    colspan="3">3 Criteria @if($range->bonus_interest_criteria3<=0) - @else  {{ $range->bonus_interest_criteria3 }}% @endif
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2">Total Bonus Interest Earned for
-                                                    ${{ Helper::inThousand($range->placement) }}</td>
+                                                <td colspan="2">Total Bonus Interest Earned for ${{ Helper::inThousand($range->placement) }}</td>
                                                 <td class=" text-center @if($promotion_product->highlight==true ) highlight @endif"
                                                     colspan="8">
 
                                                     @if($range->placement > $range->first_cap_amount)
-                                                        First
-                                                        ${{ Helper::inThousand($range->first_cap_amount) }} -
-                                                        ${{ Helper::inThousand(($range->first_cap_amount*($promotion_product->total_interest/100))) }}
+                                                        First ${{ Helper::inThousand($range->first_cap_amount) }} - ${{ Helper::inThousand(($range->first_cap_amount*($promotion_product->total_interest/100))) }}
                                                         (
-                                                        {{ $promotion_product->total_interest }}%), next
-                                                        ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
-                                                        -
+                                                        {{ $promotion_product->total_interest }}%), next ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }} -
                                                         ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                        ({{ $range->bonus_interest_remaining_amount }}%) Total =
-                                                        ${{ Helper::inThousand($promotion_product->interest_earned) }}
+                                                        ({{ $range->bonus_interest_remaining_amount }}%) Total = ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                                     @else
-                                                        Total =
-                                                        ${{ Helper::inThousand($promotion_product->interest_earned) }}
+                                                        Total = ${{ Helper::inThousand($promotion_product->interest_earned) }}
                                                     @endif
                                                 </td>
                                                 </td>
@@ -760,6 +737,12 @@
             var data = $('#search-form').serialize();
             //console.log(data);
             var checkBoxForm = $('#form-'+product_id).serialize();
+            if(checkBoxForm.length==0)
+            {
+                alert(" At least one criteria always required!");
+                $(id).prop("checked", true);
+                return false;
+            }
             $.ajax({
                 method: "POST",
                 url: "{{url('/combine-criteria-filter')}}",
@@ -772,7 +755,7 @@
                 async: false,
                 success: function (data) {
                     console.log(data);
-                    $('#'+product_id).append(data);
+                    $('#'+product_id).html(data);
                 }
             });
         }
