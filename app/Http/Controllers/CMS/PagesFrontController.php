@@ -1371,7 +1371,7 @@ class PagesFrontController extends Controller
             //->where('promotion_products.promotion_end', '>=', $end_date)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
-            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*','promotion_products.id as product_id')
             ->get();
 
         $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
@@ -1643,11 +1643,11 @@ class PagesFrontController extends Controller
                         if ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
                         }
-                        if ($spend > 0 && $productRange->minimum_insurance <= ($wealth / 12)) {
+                        if ($wealth > 0 && $productRange->minimum_insurance <= ($wealth / 12)) {
                             $criteriaMatchCount++;
                             $product->life_insurance = true;
                         }
-                        if ($spend > 0 && $productRange->minimum_unit_trust <= ($wealth / 12)) {
+                        if ($wealth > 0 && $productRange->minimum_unit_trust <= ($wealth / 12)) {
                             $criteriaMatchCount++;
                             $product->unit_trust = true;
                         }
@@ -1821,15 +1821,13 @@ class PagesFrontController extends Controller
         $product = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            //->where('promotion_products.formula_id', '=', 8)
             ->where('promotion_formula.promotion_id', '=', ALL_IN_ONE_ACCOUNT)
-            //->where('promotion_products.promotion_start', '<=', $start_date)
-            //->where('promotion_products.promotion_end', '>=', $end_date)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->where('promotion_products.id', '=', $request->product_id)
-            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*','promotion_products.id as product_id')
             ->first();
+
 
         if ($product) {
             $defaultSearch = DefaultSearch::where('promotion_id', ALL_IN_ONE_ACCOUNT)->first();
@@ -1906,11 +1904,11 @@ class PagesFrontController extends Controller
                         if ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
                         }
-                        if ((isset($checkBoxDetail['life_insurance'])) && ($spend > 0 && $productRange->minimum_insurance <= ($wealth / 12))) {
+                        if ((isset($checkBoxDetail['life_insurance'])) && ($wealth > 0 && $productRange->minimum_insurance <= ($wealth / 12))) {
                             $criteriaMatchCount++;
                             $product->life_insurance = true;
                         }
-                        if ((isset($checkBoxDetail['unit_trust'])) && ($spend > 0 && $productRange->minimum_unit_trust <= ($wealth / 12))) {
+                        if ((isset($checkBoxDetail['unit_trust'])) && ($wealth > 0 && $productRange->minimum_unit_trust <= ($wealth / 12))) {
                             $criteriaMatchCount++;
                             $product->unit_trust = true;
                         }
@@ -1959,9 +1957,8 @@ class PagesFrontController extends Controller
                     $product->interest_earned = array_sum($interestEarns);
                     $product->product_range = $productRanges;
                 }
-
                 ?>
-                <form id="form-<?php echo $product->id; ?>" class="ps-form--filter" method="post">
+                <form id="form-<?php echo $product->product_id; ?>" class="ps-form--filter" method="post">
                     <table class="ps-table ps-table--product ps-table--product-3">
                         <thead>
                         <tr>
@@ -1972,12 +1969,12 @@ class PagesFrontController extends Controller
                             <th>
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox"
-                                           data-product-id="<?php echo $product->id; ?>"
+                                           data-product-id="<?php echo $product->product_id; ?>"
                                            name="life_insurance" onchange="changeCriteria(this);"
                                         <?php if ($product->life_insurance) {
                                             echo "checked = checked";
-                                        } ?> value="true" id="life-insurance-<?php echo $product->id; ?>"/>
-                                    <label for="life-insurance-<?php echo $product->id; ?>">Life Insurance</label>
+                                        } ?> value="true" id="life-insurance-<?php echo $product->product_id; ?>"/>
+                                    <label for="life-insurance-<?php echo $product->product_id; ?>">Life Insurance</label>
                                 </div>
                             </th>
                             <th>
@@ -1987,55 +1984,55 @@ class PagesFrontController extends Controller
                                             echo "checked = checked";
                                         } ?>
                                     name="housing_loan"
-                                    data-product-id = "<?php echo $product->id; ?>"
-                                    value="true" id="housing-loan-<?php echo $product->id; ?>">
-                                    <label for="housing-loan-<?php echo $product->id; ?>">Housing Loan</label>
+                                    data-product-id = "<?php echo $product->product_id; ?>"
+                                    value="true" id="housing-loan-<?php echo $product->product_id; ?>">
+                                    <label for="housing-loan-<?php echo $product->product_id; ?>">Housing Loan</label>
                                 </div>
                             </th>
                             <th>
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox"
                                            name="education_loan" onchange="changeCriteria(this);"
-                                           data-product-id="<?php echo $product->id; ?>"
-                                           value="true" id='education-loan-<?php echo $product->id; ?>'
+                                           data-product-id="<?php echo $product->product_id; ?>"
+                                           value="true" id='education-loan-<?php echo $product->product_id; ?>'
                                         <?php if ($product->education_loan) {
                                             echo "checked = checked";
                                         } ?>/>
-                                    <label for="education-loan-<?php echo $product->id; ?>">Education Loan</label>
+                                    <label for="education-loan-<?php echo $product->product_id; ?>">Education Loan</label>
                                 </div>
                             </th>
                             <th>
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
                                            name="hire_loan" value="true"
-                                           data-product-id="<?php echo $product->id; ?>" id="hire-loan-<?php echo $product->id; ?>"
+                                           data-product-id="<?php echo $product->product_id; ?>" id="hire-loan-<?php echo $product->product_id; ?>"
                                            <?php if ($product->hire_loan) {
                                                echo "checked = checked";
                                            } ?>/>
-                                    <label for="hire-loan-<?php echo $product->id; ?>">Hire Purchase loan</label>
+                                    <label for="hire-loan-<?php echo $product->product_id; ?>">Hire Purchase loan</label>
                                 </div>
                             </th>
                             <th>
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox"
                                            name="renovation_loan" onchange="changeCriteria(this);"
-                                           data-product-id="<?php echo $product->id; ?>"
-                                           value="true" id="renovation-loan-<?php echo $product->id; ?>"
+                                           data-product-id="<?php echo $product->product_id; ?>"
+                                           value="true" id="renovation-loan-<?php echo $product->product_id; ?>"
                                         <?php if ($product->renovation_loan) {
                                             echo "checked = checked";
                                         } ?>/>
-                                    <label for="renovation-loan-<?php echo $product->id; ?>">Renovation loan</label>
+                                    <label for="renovation-loan-<?php echo $product->product_id; ?>">Renovation loan</label>
                                 </div>
                             </th>
                             <th>
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
                                            name="unit_trust" value="true"
-                                           data-product-id="<?php echo $product->id; ?>" id="unit-trust-<?php echo $product->id; ?>"
+                                           data-product-id="<?php echo $product->product_id; ?>" id="unit-trust-<?php echo $product->product_id; ?>"
                                         <?php if ($product->unit_trust) {
                                             echo "checked = checked";
                                         } ?>/>
-                                    <label for="unit-trust-<?php echo $product->id; ?>">Unit Trust</label>
+                                    <label for="unit-trust-<?php echo $product->product_id; ?>">Unit Trust</label>
                                 </div>
                             </th>
                         </tr>
@@ -2044,42 +2041,41 @@ class PagesFrontController extends Controller
                         <?php foreach($productRanges as $range) { ?>
                         <tr>
                             <td>Bonus Interest PA</td>
-                            <td class="text-center @if($product->criteria_1==true ) highlight @endif"
+                            <td class="text-center <?php if($product->criteria_1==true ) { echo "highlight";} ?> "
                                 colspan="3">1 Criteria Met
-                                – <?php if($range->bonus_interest_criteria1<=0) { echo "-";}
+                                - <?php if($range->bonus_interest_criteria1<=0) { echo "-";}
                                 else { echo "$range->bonus_interest_criteria1".'%'; } ?>
                             </td>
-                            <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
+                            <td class=" text-center  <?php if($product->criteria_2==true ) { echo "highlight";} ?> "
                                 colspan="3">2 Criteria
-                                – <?php if($range->bonus_interest_criteria2<=0) { echo "-";}
+                                - <?php if($range->bonus_interest_criteria2<=0) { echo "-";}
                                 else { echo "$range->bonus_interest_criteria2".'%'; } ?>
 
                             </td>
-                            <td class="text-center @if($product->criteria_3==true ) highlight @endif"
-                                colspan="3">3
-                                Criteria - <?php if($range->bonus_interest_criteria3<=0) { echo "-";}
+                            <td class="text-center  <?php if($product->criteria_3==true ) { echo "highlight";} ?>"
+                                colspan="3">3 Criteria - <?php if($range->bonus_interest_criteria3<=0) { echo " - ";}
                                 else { echo "$range->bonus_interest_criteria3".'%'; } ?>
 
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">Total Bonus Interest Earned for
-                                <?php echo "$".Helper::inThousand($range->placement); ?>
+                                <?php echo "$".\Helper::inThousand($range->placement); ?>
                                 </td>
                             <td class=" text-center @if($product->highlight==true ) highlight @endif"
                                 colspan="8">
 
                                 <?php if($range->placement > $range->first_cap_amount) {
-                                echo "First";
-                                echo"$".Helper::inThousand($range->first_cap_amount).' - '.
-                                '$'.Helper::inThousand(($range->first_cap_amount*($product->total_interest/100))).
-                                '('.$product->total_interest.'%), next $'.
-                                    Helper::inThousand(($range->placement-$range->first_cap_amount)).' - '
-                                .'$'.Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))).
-                                '('.$range->bonus_interest_remaining_amount.'%) Total = $'
-                                .Helper::inThousand($product->interest_earned); }
+                                echo "First ";
+                                echo"$".\Helper::inThousand($range->first_cap_amount).' - '.
+                                '$'.\Helper::inThousand(($range->first_cap_amount*($product->total_interest/100))).
+                                ' ('.$product->total_interest.'%), next $'.
+                                    \Helper::inThousand(($range->placement-$range->first_cap_amount)).' - '
+                                .'$'.\Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))).
+                                ' ('.$range->bonus_interest_remaining_amount.'%) Total = $'
+                                .\Helper::inThousand($product->interest_earned); }
                                 else {
-                                    echo"Total = $".Helper::inThousand($product->interest_earned);
+                                    echo"Total = $".\Helper::inThousand($product->interest_earned);
                                 } ?>
                             </td>
                             </td>
