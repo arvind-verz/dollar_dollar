@@ -331,6 +331,23 @@
                                         @endforeach
                                     </div>
                                     <div class="clearfix"></div>
+                                    @if(count($promotion_product->ads_placement))
+                                        @php
+                                        $ads = json_decode($promotion_product->ads_placement);
+                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        @endphp
+                                        <div class="ps-poster-popup">
+                                            <div class="close-popup">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </div>
+
+                                            <a href="#"><img
+                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                        alt="" target="_blank"></a>
+
+                                        </div>
+                                        @php } @endphp
+                                    @endif
                                     @endif
                                             <!-- FORMULA 2 -->
                                     @if($promotion_product->promotion_formula_id==12)
@@ -467,6 +484,23 @@
 
                                         </div>
                                         <div class="clearfix"></div>
+                                        @if(count($promotion_product->ads_placement))
+                                        @php
+                                        $ads = json_decode($promotion_product->ads_placement);
+                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        @endphp
+                                        <div class="ps-poster-popup">
+                                            <div class="close-popup">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </div>
+
+                                            <a href="#"><img
+                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                        alt="" target="_blank"></a>
+
+                                        </div>
+                                        @php } @endphp
+                                    @endif
                                         @endif
 
 
@@ -535,6 +569,23 @@
                                                 @endforeach
                                             </div>
                                             <div class="clearfix"></div>
+                                            @if(count($promotion_product->ads_placement))
+                                        @php
+                                        $ads = json_decode($promotion_product->ads_placement);
+                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        @endphp
+                                        <div class="ps-poster-popup">
+                                            <div class="close-popup">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </div>
+
+                                            <a href="#"><img
+                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                        alt="" target="_blank"></a>
+
+                                        </div>
+                                        @php } @endphp
+                                    @endif
                                             @endif
                                                     <!-- FORMULA 4 -->
                                             @if($promotion_product->promotion_formula_id==14)
@@ -650,6 +701,23 @@
                                                     @endforeach
                                                 </div>
                                                 <div class="clearfix"></div>
+                                                @if(count($promotion_product->ads_placement))
+                                        @php
+                                        $ads = json_decode($promotion_product->ads_placement);
+                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        @endphp
+                                        <div class="ps-poster-popup">
+                                            <div class="close-popup">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </div>
+
+                                            <a href="#"><img
+                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                        alt="" target="_blank"></a>
+
+                                        </div>
+                                        @php } @endphp
+                                    @endif
                                                 @endif
 
                                                         <!-- FORMULA 5 -->
@@ -768,21 +836,24 @@
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
+                                                    @if(count($promotion_product->ads_placement))
+                                        @php
+                                        $ads = json_decode($promotion_product->ads_placement);
+                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        @endphp
+                                        <div class="ps-poster-popup">
+                                            <div class="close-popup">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </div>
+
+                                            <a href="#"><img
+                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                        alt="" target="_blank"></a>
+
+                                        </div>
+                                        @php } @endphp
+                                    @endif
                                                 @endif
-                                                <div class="clearfix"></div>
-                                                @if(count($promotion_product->ads_placement))
-                                                    @php
-                                                    $ads = json_decode($promotion_product->ads_placement);
-                                                    if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                                                    @endphp
-                                                    <div class="ps-poster-popup">
-                                                        <div class="close-popup">
-                                                            <i class="fa fa-times" aria-hidden="true"></i>
-                                                        </div>
-                                                        <a href="#"><img src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}" alt="" target="_blank"></a>
-                                                    </div>
-                                                    @php } @endphp
-                                                    @endif
 
                                                 <div class="ps-product__detail">
                                                     {!! $promotion_product->product_footer !!}
