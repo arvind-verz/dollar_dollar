@@ -921,7 +921,7 @@ class PagesFrontController extends Controller
                     $productRange->total_interest_highlight = false;
                     $productRange->placement_value = false;
 
-                    $allInterests = (array)$productRange->counter;
+                    $allInterests = [];
                     $allInterests[] = $productRange->sibor_rate;
                     $allInterests[] = $productRange->air;
 
