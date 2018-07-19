@@ -185,8 +185,7 @@ class PagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = \Helper::getProduct($id);
-        $ads = $product->ads_placement;
+
         $adHorizontalPopupImage = $adHorizontalPopup = null;
         $destinationPath = 'uploads/products';
         $page = Page::find($id);
