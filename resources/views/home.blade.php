@@ -347,6 +347,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="clearfix"></div>
                 <div class="ps-section__footer view_all_types"><a href="{{ url('fixed-deposit-mode') }}">View all bank
                         rates</a></div>
             </div>
