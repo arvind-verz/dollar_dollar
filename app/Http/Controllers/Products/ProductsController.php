@@ -1499,7 +1499,6 @@ class ProductsController extends Controller
                 ->where('delete_status', 0)
                 ->where('formula_id', $request->formula);
 
-            return $request->product_id;
             if (!empty($request->product_id)) {
                 $query = $query->whereNotIn('id', [$request->product_id]);
             }

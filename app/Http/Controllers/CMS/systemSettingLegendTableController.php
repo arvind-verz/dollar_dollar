@@ -148,6 +148,7 @@ class systemSettingLegendTableController extends Controller
         $systemSetting = systemSettingLegendTable::where('id', $id)->first();
         $systemSetting->delete_status = 1;
         $systemSetting->save();
+
         return redirect('admin/system-setting-legend-table')->with('success', "Legend Table Setting" . DELETED_ALERT);
     }
 }

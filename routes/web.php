@@ -71,6 +71,7 @@ Route::post('/post-life-enquiry', 'Enquiry\EnquiryFrontController@postLifeEnquir
 /*Blog module end*/
 Route::get('/get-blog-by-category/{id}', 'CMS\PagesFrontController@getBlogByCategories')->name('get-blog-by-category');
 Route::get('/blog-list', 'CMS\PagesFrontController@getBlogByCategories')->name('blog-list');
+Route::post('/combine-criteria-filter', 'CMS\PagesFrontController@combineCriteriaFilter')->name('combine-criteria-filter');
 
 /* TAGS FRONTEND */
 Route::get('/tags/{slug}', 'CMS\PagesFrontController@search_tags');
@@ -231,6 +232,7 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/add-formula-detail', 'Products\ProductsController@addFormulaDetail')->name('add-formula-detail');
     Route::post('/get-placement-range', 'Products\ProductsController@getPlacementRange')->name('get-placement-range');
     Route::post('/get-formula-detail', 'Products\ProductsController@getFormulaDetail')->name('get-formula-detail');
+
 
     Route::post('/promotion-products/get-formula', 'Products\ProductsController@promotion_products_get_formula')->name('promotion-products-get-formula');
 
