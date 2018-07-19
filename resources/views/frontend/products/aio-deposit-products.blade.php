@@ -47,16 +47,23 @@
     {{--Page content start--}}
     <div class="ps-page--deposit">
         <div class="container">
-            <div class="ps-block--image">
-                <div class="ps-block__content">
-                    <h3 class="ps-heading"><span> <i class="fa fa-area-chart"></i> All in One </span> Deposit</h3>
+            <?php
 
-                    <p>Fixed Deposit offers higher interest rates than saving account whereby customer deposit a sum of
-                        money for a fixed period of time, E.g. 6, 9, 12 months for a promised interest upon
-                        maturity.</p>
-                </div>
-                <img src="img/block/fixed.png" alt="">
-            </div>
+            $pageName = explode(' ', trim($page->name));
+            $details = [];
+            $details['first_heading'] = $pageName[0];
+            // $a =  array_shift($arr);
+            unset($pageName[0]);
+            $details['second_heading'] = implode(' ', $pageName);
+            $string = $page->contents;
+            $output = preg_replace_callback('~\{{(.*?)\}}~',
+                    function ($key) use ($details) {
+                        $variable[$key[1]] = $details[$key[1]];
+                        return $variable[$key[1]];
+                    },
+                    $string);
+            ?>
+            {!! $output !!}
             <div class="ps-block--deposit-filter mb-60">
                 <div class="ps-block__content">
                     <form id="search-form" class="ps-form--filter" action="{{ route('aioa-deposit-mode.search') }}" method="post">
