@@ -7,7 +7,7 @@
         </h1>
         <ol class="breadcrumb">
             <ol class="breadcrumb">
-                <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
+                <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
                 @if(isset($parent))
                     <li class=""><a href="{{ route('menu.index') }}">{{MENU_MODULE}}</a></li>
                     <?php

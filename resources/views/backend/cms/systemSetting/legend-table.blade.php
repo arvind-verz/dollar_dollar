@@ -6,7 +6,7 @@
             <small></small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
+            <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
             <li>{{SYSTEM_SETTING_LEGEND_MODULE_SINGLE}}</li>
         </ol>
     </section>
