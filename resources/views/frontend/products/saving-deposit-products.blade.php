@@ -200,6 +200,8 @@
 
                     @if($legend->page_type=='Fixed Deposit')
                     <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                    @if($legend->page_type==SAVING_DEPOSIT)
+                    <p><img src="{{ asset($legend->icon) }}" alt=""> = {{ $legend->title }}</p>
                     @endif
                     @endforeach
                 </div>
