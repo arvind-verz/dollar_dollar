@@ -174,7 +174,7 @@
                 <div class="ps-block__content">
                     @foreach($legendtable as $legend)
                     @if($legend->page_type==SAVING_DEPOSIT)
-                    <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                    <p><img src="{{ asset($legend->icon) }}" alt=""> = {{ $legend->title }}</p>
                     @endif
                     @endforeach
                 </div>

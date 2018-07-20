@@ -6,7 +6,7 @@
             <small>{{ENQUIRY_MODULE.' '.VIEW_ACTION}}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
+            <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
             <li><a href="{{ route('contact-enquiry.index') }}">{{CONTACT_ENQUIRY_MODULE}}</a></li>
             <li class="active">{{CONTACT_ENQUIRY_MODULE.' '.VIEW_ACTION}}</li>
         </ol>
