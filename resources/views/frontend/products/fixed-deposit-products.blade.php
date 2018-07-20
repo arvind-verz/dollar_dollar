@@ -179,7 +179,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ ($featured+$i) }}">More info</a>
+                                    <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
                                 </div>
                                 @php $i++; @endphp
                                 @endif

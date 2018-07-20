@@ -434,7 +434,7 @@ class PagesFrontController extends Controller
             }
         //dd($orginalProducts);
         $promotion_products = $orginalProducts;
-
+//dd($promotion_products);
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "result_data", "legendtable"));
     }
 
@@ -1616,6 +1616,7 @@ class PagesFrontController extends Controller
             //->where('promotion_products.promotion_end', '>=', $end_date)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
+            ->orderBy('promotion_products.featured', 'DESC')
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*','promotion_products.id as product_id')
             ->get();
 

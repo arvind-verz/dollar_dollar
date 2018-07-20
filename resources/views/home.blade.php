@@ -100,259 +100,239 @@
     {{--Brand section end--}}
 
     <input type="hidden" name="deposit_type" value="Fixed Deposit">
+
     <div class="ps-home-fixed-deposit ps-tabs-root">
-        <div class="ps-section__header">
-            <div class="container">
-                <ul class="ps-tab-list">
-                    <li class="current"><a href="#tab-1">Fixed Deposit</a></li>
-                    <li><a href="#tab-2">Saving Deposit</a></li>
-                    <li><a href="#tab-3">Wealth Deposit</a></li>
-                    <li><a href="#tab-4">All In One Account</a></li>
-                    <li><a href="#tab-5">Foreign Currency</a></li>
-                </ul>
-            </div>
+      <div class="ps-section__header">
+        <div class="container">
+          <ul class="ps-tab-list">
+            <li class="current"><a href="#tab-1">Fixed Deposit</a></li>
+            <li><a href="#tab-2">Saving Deposit</a></li>
+            <li><a href="#tab-3">Wealth Deposit</a></li>
+            <li><a href="#tab-4">All In One Account</a></li>
+            <li><a href="#tab-5">Foreign Currency</a></li>
+          </ul>
         </div>
+      </div>
+      <div class="ps-section__content bg--cover" data-background="img/bg/home-bg.jpg">
+        <div class="container">
+          <div class="ps-tabs">
+            <div class="ps-tab active" id="tab-1">
+              <div class="ps-block--desposit">
+                <div class="ps-block__header">
+                  <h3><strong>Fixed Deposit</strong></h3>
+                  <div class="ps-block__actions">
+                      <ul class="catListing clearfix">
+                          <li id="catList1" class="selected"><a class="aboutpage" target="showContent-container-1" id="showContent-1">Interest</a></li>
+                          <li id="catList2" class=""><a class="aboutpage" target="showContent-container-2" id="showContent-2">Placement</a></li>
+                          <li id="catList3" class=""><a class="aboutpage" target="showContent-container-3" id="showContent-3">Tenor</a></li>
+                      </ul>
+                  </div>
+                </div>
+                <div class="productGridContainer target-content" id="showContent-container-1">
+                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                            @php $i = 1; @endphp
+                            @foreach($promotion_products as $products)
+                                @if($products->promotion_type_id==1 && $i<=4)
+                                        <div class="ps-block--short-product"><img
+                                                    src="{{ asset($products->brand_logo) }}" alt="">
+                                            <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                    %</strong></h4>
 
-        <div class="ps-section__content bg--cover" data-background="img/bg/home-bg.jpg">
-            <div class="container">
-                <div class="ps-tabs">
-                    <div class="ps-tab active" id="tab-1">
-                        <div class="ps-block--desposit">
-                            <div class="ps-block__header">
-                                <h3><strong>Fixed</strong>Deposit</h3>
+                                            <div class="ps-block__info">
+                                                <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__actions">
-                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
-                                </div>
-                            </div>
-                            <span class="display_fixed nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                            @if(count($promotion_products))
-                                    <div class="row">
-                                        @php $i = 1; @endphp
-                                        @foreach($promotion_products as $products)
-                                            @if($products->promotion_type_id==1 && $i<=4)
-                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 abc">
-                                                    <div class="ps-block--short-product"><img
-                                                                src="{{ asset($products->brand_logo) }}" alt="">
-                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
-                                                                %</strong></h4>
+                                                <p><strong>Min:</strong> SGD
+                                                    ${{ $products->minimum_placement_amount }}</p>
 
-                                                        <div class="ps-block__info">
-                                                            <p><strong> rate: </strong>1.3%</p>
-
-                                                            <p><strong>Min:</strong> SGD
-                                                                ${{ $products->minimum_placement_amount }}</p>
-
-                                                            <p class="highlight">{{ $products->promotion_period }}
-                                                                Months</p>
-                                                        </div>
-                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
-                                                            info</a>
-                                                    </div>
-                                                </div>
-                                                @php $i++; @endphp
-                                            @endif
-
-                                        @endforeach
-                                    </div>
+                                                <p class="highlight">{{ $products->promotion_period }}
+                                                    Months</p>
+                                            </div>
+                                            <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                info</a>
+                                        </div>
+                                    @php $i++; @endphp
                                 @endif
-                            </span>
-                        </div>
-                    </div>
 
-                    <div class="ps-tab" id="tab-2">
-                        <div class="ps-block--desposit">
-                            <div class="ps-block__header">
-                                <h3><strong>Saving</strong>Deposit</h3>
-
-                                <div class="ps-block__actions">
-                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
-                                </div>
-                            </div>
-                            <span class="display_saving">
-                             @if(count($promotion_products))
-                                    <div class="row">
-                                        @php $i = 1; @endphp
-                                        @foreach($promotion_products as $products)
-                                            @if($products->promotion_type_id==2 && $i<=4)
-
-                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                                    <div class="ps-block--short-product"><img
-                                                                src="{{ asset($products->brand_logo) }}" alt="">
-                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
-                                                                %</strong></h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p><strong> rate: </strong>1.3%</p>
-
-                                                            <p><strong>Min:</strong> SGD
-                                                                ${{ $products->minimum_placement_amount }}</p>
-
-                                                            <p class="highlight">{{ $products->promotion_period }}
-                                                                Months</p>
-                                                        </div>
-                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
-                                                            info</a>
-                                                    </div>
-                                                </div>
-                                                @php if($i==4) {break;} $i++; @endphp
-                                            @endif
-
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </span>
-                        </div>
-                    </div>
-                    <div class="ps-tab" id="tab-3">
-                        <div class="ps-block--desposit">
-                            <div class="ps-block__header">
-                                <h3><strong>Wealth</strong>Deposit</h3>
-
-                                <div class="ps-block__actions">
-                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
-                                </div>
-                            </div>
-                            <span class="display_wealth">
-                            @if(count($promotion_products))
-                                    <div class="row">
-                                        @php $i = 1; @endphp
-                                        @foreach($promotion_products as $products)
-                                            @if($products->promotion_type_id==WEALTH_DEPOSIT && $i<=4)
-
-                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                                    <div class="ps-block--short-product"><img
-                                                                src="{{ asset($products->brand_logo) }}" alt="">
-                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
-                                                                %</strong></h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p><strong> rate: </strong>1.3%</p>
-
-                                                            <p><strong>Min:</strong> SGD
-                                                                ${{ $products->minimum_placement_amount }}</p>
-
-                                                            <p class="highlight">{{ $products->promotion_period }}
-                                                                Months</p>
-                                                        </div>
-                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
-                                                            info</a>
-                                                    </div>
-                                                </div>
-                                                @php if($i==4) {break;} $i++; @endphp
-                                            @endif
-
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </span>
-                        </div>
-                    </div>
-                    <div class="ps-tab" id="tab-4">
-                        <div class="ps-block--desposit">
-                            <div class="ps-block__header">
-                                <h3><strong>All In One Account</strong></h3>
-
-                                <div class="ps-block__actions">
-                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
-                                </div>
-                            </div>
-                            <span class="display_aio">
-                            @if(count($promotion_products))
-                                    <div class="row">
-                                        @php $i = 1; @endphp
-                                        @foreach($promotion_products as $products)
-                                            @if($products->promotion_type_id==ALL_IN_ONE_ACCOUNT && $i<=4)
-
-                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                                    <div class="ps-block--short-product"><img
-                                                                src="{{ asset($products->brand_logo) }}" alt="">
-                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
-                                                                %</strong></h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p><strong> rate: </strong>1.3%</p>
-
-                                                            <p><strong>Min:</strong> SGD
-                                                                ${{ $products->minimum_placement_amount }}</p>
-
-                                                            <p class="highlight">{{ $products->promotion_period }}
-                                                                Months</p>
-                                                        </div>
-                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
-                                                            info</a>
-                                                    </div>
-                                                </div>
-                                                @php if($i==4) {break;} $i++; @endphp
-                                            @endif
-
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </span>
-                        </div>
-                    </div>
-                    <div class="ps-tab" id="tab-5">
-                        <div class="ps-block--desposit">
-                            <div class="ps-block__header">
-                                <h3><strong>Foreign Currency</strong></h3>
-
-                                <div class="ps-block__actions">
-                                    <a class="ps-btn active deposit_value" href="javascript:void(0);">Interest</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Placement</a>
-                                    <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
-                                </div>
-                            </div>
-                            <span class="display_foreign_currency">
-                            @if(count($promotion_products))
-                                    <div class="row">
-                                        @php $i = 1; @endphp
-                                        @foreach($promotion_products as $products)
-                                            @if($products->promotion_type_id==FOREIGN_CURRENCY_DEPOSIT && $i<=4)
-
-                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
-                                                    <div class="ps-block--short-product"><img
-                                                                src="{{ asset($products->brand_logo) }}" alt="">
-                                                        <h4>up to <strong> {{ $products->maximum_interest_rate }}
-                                                                %</strong></h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p><strong> rate: </strong>1.3%</p>
-
-                                                            <p><strong>Min:</strong> SGD
-                                                                ${{ $products->minimum_placement_amount }}</p>
-
-                                                            <p class="highlight">{{ $products->promotion_period }}
-                                                                Months</p>
-                                                        </div>
-                                                        <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
-                                                            info</a>
-                                                    </div>
-                                                </div>
-                                                @php if($i==4) {break;} $i++; @endphp
-                                            @endif
-
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </span>
-                        </div>
+                            @endforeach
                     </div>
                 </div>
-                <div class="clearfix"></div>
-                <div class="ps-section__footer view_all_types"><a href="{{ url('fixed-deposit-mode') }}">View all bank
-                        rates</a></div>
+              </div>
             </div>
+            <div class="ps-tab" id="tab-2">
+              <div class="ps-block--desposit">
+                <div class="ps-block__header">
+                  <h3><strong>Saving Deposit</strong></h3>
+                  <div class="ps-block__actions">
+                      <ul class="catListing clearfix">
+                          <li id="catList1" class="selected"><a class="aboutpage" target="showContent-container-1" id="showContent-1">Interest</a></li>
+                          <li id="catList2" class=""><a class="aboutpage" target="showContent-container-2" id="showContent-2">Placement</a></li>
+                          <li id="catList3" class=""><a class="aboutpage" target="showContent-container-3" id="showContent-3">Tenor</a></li>
+                      </ul>
+                  </div>
+                </div>
+                <div class="productGridContainer target-content" id="showContent-container-1">
+                    <div class="display_saving nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                            @php $i = 1; @endphp
+                            @foreach($promotion_products as $products)
+                                @if($products->promotion_type_id==2 && $i<=4)
+                                        <div class="ps-block--short-product"><img
+                                                    src="{{ asset($products->brand_logo) }}" alt="">
+                                            <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                    %</strong></h4>
+
+                                            <div class="ps-block__info">
+                                                <p><strong> rate: </strong>1.3%</p>
+
+                                                <p><strong>Min:</strong> SGD
+                                                    ${{ $products->minimum_placement_amount }}</p>
+
+                                                <p class="highlight">{{ $products->promotion_period }}
+                                                    Months</p>
+                                            </div>
+                                            <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                info</a>
+                                        </div>
+                                    @php $i++; @endphp
+                                @endif
+
+                            @endforeach
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="ps-tab" id="tab-3">
+              <div class="ps-block--desposit">
+                <div class="ps-block__header">
+                  <h3><strong>Wealth Deposit</strong></h3>
+                  <div class="ps-block__actions">
+                      <ul class="catListing clearfix">
+                          <li id="catList1" class="selected"><a class="aboutpage" target="showContent-container-1" id="showContent-1">Interest</a></li>
+                          <li id="catList2" class=""><a class="aboutpage" target="showContent-container-2" id="showContent-2">Placement</a></li>
+                          <li id="catList3" class=""><a class="aboutpage" target="showContent-container-3" id="showContent-3">Tenor</a></li>
+                      </ul>
+                  </div>
+                </div>
+                <div class="productGridContainer target-content" id="showContent-container-1">
+                    <div class="display_wealth nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                            @php $i = 1; @endphp
+                            @foreach($promotion_products as $products)
+                                @if($products->promotion_type_id==WEALTH_DEPOSIT && $i<=4)
+                                        <div class="ps-block--short-product"><img
+                                                    src="{{ asset($products->brand_logo) }}" alt="">
+                                            <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                    %</strong></h4>
+
+                                            <div class="ps-block__info">
+                                                <p><strong> rate: </strong>1.3%</p>
+
+                                                <p><strong>Min:</strong> SGD
+                                                    ${{ $products->minimum_placement_amount }}</p>
+
+                                                <p class="highlight">{{ $products->promotion_period }}
+                                                    Months</p>
+                                            </div>
+                                            <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                info</a>
+                                        </div>
+                                    @php $i++; @endphp
+                                @endif
+
+                            @endforeach
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="ps-tab" id="tab-4">
+              <div class="ps-block--desposit">
+                <div class="ps-block__header">
+                  <h3><strong>All In One Account</strong></h3>
+                  <div class="ps-block__actions">
+                      <ul class="catListing clearfix">
+                          <li id="catList1" class="selected"><a class="aboutpage" target="showContent-container-1" id="showContent-1">Interest</a></li>
+                          <li id="catList2" class=""><a class="aboutpage" target="showContent-container-2" id="showContent-2">Placement</a></li>
+                          <li id="catList3" class=""><a class="aboutpage" target="showContent-container-3" id="showContent-3">Tenor</a></li>
+                      </ul>
+                  </div>
+                </div>
+                <div class="productGridContainer target-content" id="showContent-container-1">
+                    <div class="display_aio nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                            @php $i = 1; @endphp
+                            @foreach($promotion_products as $products)
+                                @if($products->promotion_type_id==ALL_IN_ONE_ACCOUNT && $i<=4)
+                                        <div class="ps-block--short-product"><img
+                                                    src="{{ asset($products->brand_logo) }}" alt="">
+                                            <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                    %</strong></h4>
+
+                                            <div class="ps-block__info">
+                                                <p><strong> rate: </strong>1.3%</p>
+
+                                                <p><strong>Min:</strong> SGD
+                                                    ${{ $products->minimum_placement_amount }}</p>
+
+                                                <p class="highlight">{{ $products->promotion_period }}
+                                                    Months</p>
+                                            </div>
+                                            <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                info</a>
+                                        </div>
+                                    @php $i++; @endphp
+                                @endif
+
+                            @endforeach
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="ps-tab" id="tab-5">
+              <div class="ps-block--desposit">
+                <div class="ps-block__header">
+                  <h3><strong>Foreign Currency</strong></h3>
+                  <div class="ps-block__actions">
+                      <ul class="catListing clearfix">
+                          <li id="catList1" class="selected"><a class="aboutpage" target="showContent-container-1" id="showContent-1">Interest</a></li>
+                          <li id="catList2" class=""><a class="aboutpage" target="showContent-container-2" id="showContent-2">Placement</a></li>
+                          <li id="catList3" class=""><a class="aboutpage" target="showContent-container-3" id="showContent-3">Tenor</a></li>
+                      </ul>
+                  </div>
+                </div>
+                <div class="productGridContainer target-content" id="showContent-container-1">
+                    <div class="display_foreign_currency nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                            @php $i = 1; @endphp
+                            @foreach($promotion_products as $products)
+                                @if($products->promotion_type_id==FOREIGN_CURRENCY_DEPOSIT && $i<=4)
+                                        <div class="ps-block--short-product"><img
+                                                    src="{{ asset($products->brand_logo) }}" alt="">
+                                            <h4>up to <strong> {{ $products->maximum_interest_rate }}
+                                                    %</strong></h4>
+
+                                            <div class="ps-block__info">
+                                                <p><strong> rate: </strong>1.3%</p>
+
+                                                <p><strong>Min:</strong> SGD
+                                                    ${{ $products->minimum_placement_amount }}</p>
+
+                                                <p class="highlight">{{ $products->promotion_period }}
+                                                    Months</p>
+                                            </div>
+                                            <a class="ps-btn" href="{{ url('fixed-deposit-mode') }}">More
+                                                info</a>
+                                        </div>
+                                    @php $i++; @endphp
+                                @endif
+
+                            @endforeach
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ps-section__footer"><a href="#">View all bank rates</a></div>
         </div>
+      </div>
     </div>
+
+
 
     {{--Blog section start--}}
 
@@ -426,10 +406,13 @@
             })
         });
 
-        $(".ps-tab-list li").on("click", function () {
-            $(".ps-tab-list li").removeClass("current");
-            $(this).on("click").addClass("current");
-            var title = $(this).on("click").addClass("current a").text();
+
+        $("a.aboutpage").on("click", function () {
+            $("a.aboutpage").parent().removeClass("selected");
+            $(this).on("click").parent().addClass("selected");
+            var title = $(this).on("click").parent().addClass("selected a").text();
+            var target = $(this).attr("target");
+            $(this).parents(".ps-block__header").next().attr("id", target);
             //alert(title);
             $("input[name='deposit_type']").val(title);
             if (title == 'Fixed Deposit') {
@@ -459,11 +442,11 @@
             cache: false,
             success: function (data) {
                 //alert(data);
-                $("span.display_fixed").html(data);
+                $("div.display_fixed").html(data);
             }
         });
-        $("a.deposit_value").on("click", function () {
-            $("a.deposit_value").removeClass("active");
+        $("a.aboutpage").on("click", function () {
+            $("a.aboutpage").removeClass("active");
             $(this).addClass("active");
             var title = $("input[name='deposit_type']").val();
             var value = $(this).text();
@@ -475,7 +458,7 @@
                     cache: false,
                     success: function (data) {
                         //alert(data);
-                        $("span.display_fixed").html(data);
+                        $("div.display_fixed").html(data);
                     }
                 });
             }
@@ -487,7 +470,7 @@
                     data: {type: value, promotion_type:'<?php echo SAVING_DEPOSIT ; ?>'},
                     cache: false,
                     success: function (data) {
-                        $("span.display_saving").html(data);
+                        $("div.display_saving").html(data);
                     }
                 });
             }
@@ -499,7 +482,7 @@
                     cache: false,
                     success: function (data) {
                         //alert(data);
-                        $("span.display_fixed").html(data);
+                        $("div.display_fixed").html(data);
                     }
                 });
             }
@@ -511,7 +494,7 @@
                     cache: false,
                     success: function (data) {
                         //alert(data);
-                        $("span.display_fixed").html(data);
+                        $("div.display_fixed").html(data);
                     }
                 });
             }
@@ -523,7 +506,7 @@
                     cache: false,
                     success: function (data) {
                         //alert(data);
-                        $("span.display_fixed").html(data);
+                        $("div.display_fixed").html(data);
                     }
                 });
             }
@@ -535,7 +518,7 @@
                     cache: false,
                     success: function (data) {
                         //alert(data);
-                        $("span.display_fixed").html(data);
+                        $("div.display_fixed").html(data);
                     }
                 });
             }

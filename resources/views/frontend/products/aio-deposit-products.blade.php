@@ -218,7 +218,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ ($featured+$i) }}">More info</a>
+                                    <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
                                 </div>
                                 @php $i++; @endphp
                                 @endif
@@ -236,7 +236,7 @@
                         @foreach($legendtable as $legend)
                             @if($legend->page_type=='Fixed Deposit')
                                 <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
-
+                            @endif
                             @if($legend->page_type==ALL_IN_ONE_ACCOUNT)
                                 <p><img src="{{ asset($legend->icon) }}" alt=""> = {{ $legend->title }}</p>
                             @endif
@@ -274,7 +274,7 @@
                         </div>
                     @endif
 
-                <div class="ps-product ps-product--2">
+                <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                         {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
@@ -392,18 +392,7 @@
 
                         <!-- TIER BASE -->
                 @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
-                            @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
-                                <div class="ps-poster-popup">
-                                    <div class="close-popup">
-                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                    </div>
-                                    <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
-                                                alt=""></a>
-                                </div>
-                            @endif
-                    <div class="ps-product ps-product--2">
+                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                             {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
@@ -521,7 +510,7 @@
                     @endif
                             <!-- COMBINE TIER BASE -->
                     @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
-                        <div class="ps-product ps-product--2" >
+                        <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif"  id="{{ $j }}">
                             <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}"
                                                                  alt="">
 
@@ -679,7 +668,7 @@
                                 <!-- DBS CRITERIA -->
                         @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
 
-                            <div class="ps-product ps-product--2 no-border">
+                            <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                                 <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}"
                                                                      alt="">
 
