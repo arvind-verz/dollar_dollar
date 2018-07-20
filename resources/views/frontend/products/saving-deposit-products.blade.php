@@ -164,7 +164,7 @@
                     @php $i++; @endphp
                     @endif
                 @endforeach
-                @php $featured_item = 5-count($featured); @endphp
+                @php $i = 1;$featured_item = 5-count($featured); @endphp
                 <div class="product-col-0{{ count($featured)+1 }}">
                     <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                         @php $i = 1; @endphp
@@ -200,6 +200,7 @@
 
                     @if($legend->page_type=='Fixed Deposit')
                     <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                    @endif
                     @if($legend->page_type==SAVING_DEPOSIT)
                     <p><img src="{{ asset($legend->icon) }}" alt=""> = {{ $legend->title }}</p>
                     @endif
