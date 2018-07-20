@@ -21,7 +21,7 @@
         <li>
             <a href="{{ route('admin.dashboard') }}" onclick="location.href='{{ route('admin.dashboard') }}'">
 
-                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                <i class="fa fa-home"></i> <span>Dashboard</span>
             </a>
         </li>
         @foreach($menus as $menu)

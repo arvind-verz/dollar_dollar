@@ -6,7 +6,7 @@
             <small>{{ENQUIRY_MODULE.' '.VIEW_ACTION}}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
+            <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
             <li><a href="{{ route('health-insurance-enquiry.index') }}">{{HEALTH_INSURANCE_ENQUIRY_MODULE}}</a></li>
             <li class="active">{{HEALTH_INSURANCE_ENQUIRY_MODULE.' '.VIEW_ACTION}}</li>
         </ol>
