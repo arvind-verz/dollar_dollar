@@ -233,13 +233,11 @@
                     </div>
                     <div class="ps-block__content">
                         @foreach($legendtable as $legend)
-<<<<<<< HEAD
                             @if($legend->page_type=='Fixed Deposit')
                                 <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
-=======
+
                             @if($legend->page_type==ALL_IN_ONE_ACCOUNT)
                                 <p><img src="{{ asset($legend->icon) }}" alt=""> = {{ $legend->title }}</p>
->>>>>>> master
                             @endif
                         @endforeach
                     </div>
