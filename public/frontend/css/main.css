@@ -5239,6 +5239,68 @@ html .bg--parallax {
     padding: 10px 0;
 }
 
+.ps-block--desposit .ps-block__header .ps-block__actions {
+    vertical-align:top;
+    }
+
+.catListing {
+    font-family:"Montserrat", sans-serif;
+    position:relative;
+    padding:0px;
+    z-index:100;
+    font-size:0px;
+    display:block;
+    font-weight:700;
+    margin:0px -10px;
+    text-align:center;
+    list-style-type:none;
+    text-transform:uppercase;
+    }
+    
+.catListing>li {
+    position:relative;
+    padding:0px;
+    font-size:14px;
+    text-align:center;
+    vertical-align:top;
+    display:inline-block;
+    margin:10px 10px 10px;
+    }
+    
+.catListing>li>a {
+    min-width:125px;
+    color:#909090;
+    cursor:pointer;
+    line-height:20px;
+    text-align:center;
+    display:inline-block;
+    background-color:#fff;
+    padding:10px 20px 10px;
+    border:1px solid #d4d6d8;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    -ms-border-radius:4px;
+    border-radius:4px;
+    -webkit-transition:all 0.4s ease;
+    -moz-transition:all 0.4s ease;
+    -o-transition:all 0.4s ease;
+    transition:all 0.4s ease;
+    }
+    
+.catListing>li>a:hover, .catListing>li>a:hover, .catListing>li.selected>a {
+    color:#fff;
+    border-color:#0d6ec9;
+    background-color:#0d6ec9;
+    }
+
+.productGridContainer {
+    position:relative;
+    display:block;
+    width:100%;
+    margin:0px auto;
+    padding:0px 0px;
+    }
+    
 .ps-home--partners .owl-carousel .owl-stage-outer {
     z-index:5;
     }
@@ -5275,6 +5337,17 @@ html .bg--parallax {
     
 .product-col-05 {
     width:20%;
+    }
+    
+.product-row-01 .ps-block--short-product {
+    padding:50px 10px;
+    }
+    
+.ps-block--short-product img {
+    width:auto !important;
+    max-width:100% !important;
+    margin-left:auto;
+    margin-right:auto;
     }
     
 @media (max-width: 1199px) {
