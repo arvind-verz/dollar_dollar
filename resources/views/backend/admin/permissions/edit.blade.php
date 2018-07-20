@@ -6,7 +6,7 @@
             <small>{{PERMISSION_MODULE_SINGLE.' '.EDIT_ACTION}}</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i>{{DASHBOARD}}</a></li>
+            <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
             <li><a href="{{ route('admins.index') }}">{{USER_MODULE}}</a></li>
             <li class="active">{{PERMISSION_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
         </ol>

@@ -127,7 +127,7 @@
                                     <a class="ps-btn deposit_value" href="javascript:void(0);">Tenor</a>
                                 </div>
                             </div>
-                            <span class="display_fixed nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>"> 
+                            <span class="display_fixed nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
                             @if(count($promotion_products))
                                     <div class="row">
                                         @php $i = 1; @endphp
