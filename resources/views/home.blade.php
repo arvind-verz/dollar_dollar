@@ -406,14 +406,17 @@
             })
         });
 
-
+        $(".ps-tab-list li").on("click", function() {
+            $(".ps-tab-list li").removeClass("current");
+            $(this).addClass("current");
+        });
         $("a.aboutpage").on("click", function () {
             $("a.aboutpage").parent().removeClass("selected");
-            $(this).on("click").parent().addClass("selected");
-            var title = $(this).on("click").parent().addClass("selected a").text();
+            $(this).parent().addClass("selected");
+            var title = $(this).parents(".ps-block__header").find("h3 strong").text();
             var target = $(this).attr("target");
             $(this).parents(".ps-block__header").next().attr("id", target);
-            //alert(title);
+            
             $("input[name='deposit_type']").val(title);
             if (title == 'Fixed Deposit') {
                 $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');
@@ -457,7 +460,7 @@
                     data: {type: value, promotion_type:'<?php echo FIX_DEPOSIT ; ?>'},
                     cache: false,
                     success: function (data) {
-                        //alert(data);
+                        
                         $("div.display_fixed").html(data);
                     }
                 });
