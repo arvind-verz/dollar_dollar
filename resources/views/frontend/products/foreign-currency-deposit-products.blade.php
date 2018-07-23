@@ -140,8 +140,20 @@
                         @php $i++; @endphp
                         @endif
                     @endforeach
-                    @php $i = 1;$featured_item = 5-count($featured); @endphp
-                    <div class="product-col-0{{ count($featured)+1 }}">
+                    @php $i = 1;$featured_item = 5-count($featured);
+                    $featured_count = count($featured);
+                    $featured_width = 12;
+                    if($featured_count==1) {
+                        $featured_width = 2;
+                    }
+                    elseif($featured_count==2) {
+                        $featured_width = 3;
+                    }
+                    elseif($featured_count==3) {
+                        $featured_width = 4;
+                    }
+                    @endphp
+                    <div class="product-col-0{{ $featured_width }}">
                         <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                           @php $i = 1; @endphp
                             @foreach($promotion_products as $promotion_product)
