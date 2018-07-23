@@ -139,30 +139,30 @@
             </div>
         </div>
         @if($products->count())
-            <div class="product-row-01">
-                @php $i = 1;$featured = []; @endphp
-                @foreach($products as $product)
-                    @if($product->featured==1)
-                    @php $featured[] = $i; @endphp
-                    <div class="product-col-01">
-                        <div class="ps-slider--feature-product saving">
-                          <div class="ps-block--short-product second highlight" data-mh="product"><img
+            <?php $featuredProducts = $products->sortByDesc('featured');?>
+            <div class="ps-slider--feature-product nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true"
+                 data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="5"
+                 data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="5"
+                 data-owl-duration="1000" data-owl-mousedrag="on"
+                 data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
+                 data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
+                @php $i = 1; @endphp
+                @foreach($featuredProducts as $product)
+                    <div class="ps-block--short-product second @if($product->featured==1) highlight @endif"
+                         data-mh="product"><img
                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong></h4>
+                        <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong></h4>
 
-                                <div class="ps-block__info">
-                                    <p><strong> rate: </strong>1.3%</p>
+                        <div class="ps-block__info">
+                            <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD ${{ $product->minimum_placement_amount }}</p>
+                            <p><strong>Min:</strong> SGD ${{ $product->minimum_placement_amount }}</p>
 
-                                    <p class="highlight">{{ $product->promotion_period }} Months</p>
-                                </div>
-                                <a class="ps-btn" href="#{{ $i }}">More info</a>
-                            </div>
+                            <p class="highlight">{{ $product->promotion_period }} Months</p>
                         </div>
+                        <a class="ps-btn" href="#{{ $i }}">More info</a>
                     </div>
                     @php $i++; @endphp
-                    @endif
                 @endforeach
                 @php $i = 1;$featured_item = 5-count($featured);
                     $featured_count = count($featured);
