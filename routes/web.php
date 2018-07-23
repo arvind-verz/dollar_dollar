@@ -222,6 +222,7 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/bank-products', 'Products\ProductsController@bank_products')->name('bank-products');
 
     Route::post('/add-more-placement-range', 'Products\ProductsController@addMorePlacementRange')->name('add-more-placement-range');
+    Route::post('/add-more-currency-range', 'Products\ProductsController@addMoreCurrencyRange')->name('add-more-currency-range');
     Route::post('/add-counter', 'Products\ProductsController@addCounter')->name('addCounter');
     Route::post('/check-product', 'Products\ProductsController@checkProduct')->name('check-product');
     Route::post('/check-range', 'Products\ProductsController@checkRange')->name('check-range');
