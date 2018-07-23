@@ -100,18 +100,19 @@
     {{--Brand section end--}}
 
     <input type="hidden" name="deposit_type" value="Fixed Deposit">
-
     <div class="ps-home-fixed-deposit ps-tabs-root">
-      <div class="ps-section__header">
-        <div class="container">
-          <ul class="ps-tab-list">
-            <li class="current"><a href="#tab-1">Fixed Deposit</a></li>
-            <li><a href="#tab-2">Saving Deposit</a></li>
-            <li><a href="#tab-3">Wealth Deposit</a></li>
-            <li><a href="#tab-4">All In One Account</a></li>
-            <li><a href="#tab-5">Foreign Currency</a></li>
-          </ul>
+        <div class="ps-section__header">
+            <div class="container">
+                <ul class="ps-tab-list">
+                    <li class="current"><a href="#tab-1">Fixed Deposit</a></li>
+                    <li><a href="#tab-2">Saving Deposit</a></li>
+                    <li><a href="#tab-3">Wealth Deposit</a></li>
+                    <li><a href="#tab-4">All In One Account</a></li>
+                    <li><a href="#tab-5">Foreign Currency</a></li>
+                </ul>
+            </div>
         </div>
+
       </div>
       <div class="ps-section__content bg--cover" data-background="img/bg/home-bg.jpg">
         <div class="container">
@@ -713,11 +714,9 @@
             </div>
           </div>
           <div class="ps-section__footer view_all_types"><a href="fixed-deposit-mode">View all bank rates</a></div>
+
         </div>
-      </div>
     </div>
-
-
 
     {{--Blog section start--}}
 
@@ -791,6 +790,7 @@
             })
         });
 
+
         $("a.aboutpage").on("click", function() {
             $("a.aboutpage").parent().removeClass("selected");
             $(this).parent().addClass("selected");
@@ -802,7 +802,7 @@
             $("div"+id).find("ul.catListing li:first a").click();
 
             var title = $(this).find("a").text();
-            
+           
             $("input[name='deposit_type']").val(title);
             if (title == 'Fixed Deposit') {
                 $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');
@@ -831,11 +831,11 @@
             cache: false,
             success: function (data) {
                 //alert(data);
-                $("div.display_fixed").html(data);
+                $("span.display_fixed").html(data);
             }
         });
-        $("a.aboutpage").on("click", function () {
-            $("a.aboutpage").removeClass("active");
+        $("a.deposit_value").on("click", function () {
+            $("a.deposit_value").removeClass("active");
             $(this).addClass("active");
             var title = $("input[name='deposit_type']").val();
             var value = $(this).text();
@@ -846,8 +846,8 @@
                     data: {type: value, promotion_type:'<?php echo FIX_DEPOSIT ; ?>'},
                     cache: false,
                     success: function (data) {
-                        
-                        $("div.display_fixed").html(data);
+                        //alert(data);
+                        $("span.display_fixed").html(data);
                     }
                 });
             }
@@ -859,7 +859,7 @@
                     data: {type: value, promotion_type:'<?php echo SAVING_DEPOSIT ; ?>'},
                     cache: false,
                     success: function (data) {
-                        $("div.display_saving").html(data);
+                        $("span.display_saving").html(data);
                     }
                 });
             }
@@ -871,7 +871,7 @@
                     cache: false,
                     success: function (data) {
                         //alert(data);
-                        $("div.display_fixed").html(data);
+                        $("span.display_fixed").html(data);
                     }
                 });
             }
@@ -883,7 +883,7 @@
                     cache: false,
                     success: function (data) {
                         //alert(data);
-                        $("div.display_fixed").html(data);
+                        $("span.display_fixed").html(data);
                     }
                 });
             }
@@ -895,7 +895,7 @@
                     cache: false,
                     success: function (data) {
                         //alert(data);
-                        $("div.display_fixed").html(data);
+                        $("span.display_fixed").html(data);
                     }
                 });
             }
@@ -907,7 +907,7 @@
                     cache: false,
                     success: function (data) {
                         //alert(data);
-                        $("div.display_fixed").html(data);
+                        $("span.display_fixed").html(data);
                     }
                 });
             }
