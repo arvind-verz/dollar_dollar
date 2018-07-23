@@ -5339,6 +5339,18 @@ html .bg--parallax {
     width:20%;
     }
     
+.product-col-02 .owl-slider.nav-outside .owl-prev {
+    margin-left:-292px;
+    }
+    
+.product-col-03 .owl-slider.nav-outside .owl-prev {
+    margin-left:-522px;
+    }
+    
+.product-col-04 .owl-slider.nav-outside .owl-prev {
+    margin-left:-752px;
+    }
+    
 .product-row-01 .ps-block--short-product {
     padding:50px 10px;
     }

@@ -175,11 +175,9 @@
                                 @endif
                             @endforeach
                         </div>
-                        <a class="ps-btn" href="#{{ $i }}">More info</a>
                     </div>
-                    @php $i++; @endphp @endforeach
                 </div>
-                @endif
+            @endif
                 @if(count($legendtable))
                 <div class="ps-block--legend-table">
                     <div class="ps-block__header">
