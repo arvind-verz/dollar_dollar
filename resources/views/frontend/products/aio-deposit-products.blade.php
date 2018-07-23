@@ -176,31 +176,67 @@
             </div>
 
             @if(count($promotion_products))
-                    <?php $featuredProducts = $promotion_products->sortByDesc('featured');?>
-                <div class="ps-slider--feature-product nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true"
-                     data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="5"
-                     data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="5"
-                     data-owl-duration="1000" data-owl-mousedrag="on"
-                     data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
-                     data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
-                    @php $i = 1; @endphp
-                    @foreach($featuredProducts as $promotion_product)
-                        <div class="ps-block--short-product second @if($promotion_product->featured==1) highlight @endif"
-                             data-mh="product"><img
-                                    src="{{ asset($promotion_product->brand_logo) }}" alt="">
-                            <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                <div class="product-row-01">
+                  @php $i = 1;$featured = []; @endphp
+                    @foreach($promotion_products as $promotion_product)
+                        @if($promotion_product->featured==1)
+                        @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img
+                                            src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
 
-                            <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
+                                        <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
 
-                                <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                </div>
                             </div>
-                            <a class="ps-btn" href="#{{ $i }}">More info</a>
                         </div>
                         @php $i++; @endphp
+                        @endif
                     @endforeach
+                    @php $i = 1;$featured_item = 5-count($featured);
+                    $featured_count = count($featured);
+                    $featured_width = 12;
+                    if($featured_count==1) {
+                        $featured_width = 2;
+                    }
+                    elseif($featured_count==2) {
+                        $featured_width = 3;
+                    }
+                    elseif($featured_count==3) {
+                        $featured_width = 4;
+                    }
+                    @endphp
+                    <div class="product-col-0{{ $featured_width }}">
+                        <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
+                          @php $i = 1; @endphp
+                            @foreach($promotion_products as $promotion_product)
+                                @if($promotion_product->featured==0)
+                                <div class="ps-block--short-product second" data-mh="product"><img
+                                            src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
+
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
+                                </div>
+                                @php $i++; @endphp
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             @endif
             @if(count($legendtable))
@@ -210,6 +246,9 @@
                     </div>
                     <div class="ps-block__content">
                         @foreach($legendtable as $legend)
+                            @if($legend->page_type=='Fixed Deposit')
+                                <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                            @endif
                             @if($legend->page_type==ALL_IN_ONE_ACCOUNT)
                                 <p><img src="{{ asset($legend->icon) }}" alt=""> = {{ $legend->title }}</p>
                             @endif
@@ -233,7 +272,9 @@
             $product_range = $promotion_product->product_range;
 
             ?>
-            @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+                    <!-- INDIVIDUAL CRITERIA BASE -->
+            @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
+                    @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
                                 <i class="fa fa-times" aria-hidden="true"></i>
@@ -244,12 +285,8 @@
                                         alt=""></a>
                         </div>
                     @endif
-                    <!-- INDIVIDUAL CRITERIA BASE -->
-            @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
-                    
 
-                <div class="ps-product ps-product--2 @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
-                         id="{{ $j }}">
+                <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                         {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
@@ -367,8 +404,7 @@
 
                         <!-- TIER BASE -->
                 @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
-                    <div class="ps-product ps-product--2 @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
-                         id="{{ $j }}">
+                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                             {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
@@ -486,8 +522,7 @@
                     @endif
                             <!-- COMBINE TIER BASE -->
                     @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
-                        <div class="ps-product ps-product--2 @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
-                         id="{{ $j }}" >
+                        <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif"  id="{{ $j }}">
                             <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}"
                                                                  alt="">
 
@@ -645,8 +680,7 @@
                                 <!-- DBS CRITERIA -->
                         @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
 
-                            <div class="ps-product ps-product--2 no-border @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
-                         id="{{ $j }}">
+                            <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
                                 <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}"
                                                                      alt="">
 
