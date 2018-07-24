@@ -176,29 +176,27 @@
             </div>
 
             @if(count($promotion_products))
-                <div class="product-row-01">
-                  @php $i = 1;$featured = []; @endphp
+                <div class="product-row-01 clearfix">
+                    @php $i = 1;$featured = []; @endphp
                     @foreach($promotion_products as $promotion_product)
                         @if($promotion_product->featured==1)
                         @php $featured[] = $i; @endphp
-                        <div class="product-col-01">
-                            <div class="ps-slider--feature-product saving">
-                                <div class="ps-block--short-product second highlight" data-mh="product"><img
-                                            src="{{ asset($promotion_product->brand_logo) }}" alt="">
-                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                    <div class="product-col-01">
+                        <div class="ps-slider--feature-product saving">
+                            <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                <div class="ps-block__info">
+                                    <p><strong> rate: </strong>1.3%</p>
 
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
+                                    <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
 
-                                        <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
-
-                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
-                                    </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                 </div>
+                                <a class="ps-btn" href="#{{ $i }}">More info</a>
                             </div>
                         </div>
-                        @php $i++; @endphp
+                    </div>
+                    @php $i++; @endphp
                         @endif
                     @endforeach
                     @php $i = 1;$featured_item = 5-count($featured);
@@ -215,7 +213,7 @@
                     }
                     @endphp
                     <div class="product-col-0{{ $featured_width }}">
-                        <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
+                        <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                           @php $i = 1; @endphp
                             @foreach($promotion_products as $promotion_product)
                                 @if($promotion_product->featured==0)
