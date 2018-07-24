@@ -5403,3 +5403,7 @@ span.ps-post__meta a {
     height: 428px;
 }.display_fixed .owl-item .col-lg-3{width:100%;}.display_fixed.owl-slider.nav-outside .owl-nav{top:-50px;}.display_fixed.owl-slider.nav-outside .owl-nav .owl-next{margin-right:0;}
 .display_fixed.owl-slider.nav-outside .owl-nav .owl-prev{right: 50px;position: absolute;}
+.prefix_dollar { padding-left:30px; background:#ffffff url(../img/dollar-sign.png) 12px center no-repeat; }
+.ps-home-fixed-deposit .ps-section__footer { position:relative; }
+.ps-section__footer:before { position:absolute; left:0px; top:10px; width:38%; height:1px; overflow:hidden; content:''; background:#909090; }
+.ps-section__footer:after { position:absolute; right:0px; top:10px; width:38%; height:1px; overflow:hidden; content:''; background:#909090; }
