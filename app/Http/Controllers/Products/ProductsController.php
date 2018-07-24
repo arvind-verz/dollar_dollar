@@ -1624,36 +1624,9 @@ class ProductsController extends Controller
     {
         if (in_array($request->formula, [FOREIGN_CURRENCY_DEPOSIT_F1])) {
             ?>
-            <div class="row " style="padding: 10px;" id="1">
+            <div class="row panel" style="padding: 10px;">
                 <div class="col-md-11 ">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Monthly Recap Report</h3>
 
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget=" collapse"><i
-                                        class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="row">
-
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- ./box-body -->
-                        <div class="box-footer">
-                            <div class="row">
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.box-footer -->
-                    </div>
-                    <!-- /.box -->
                 </div>
                 <div class="col-md-1 " id="add-formula-detail-button">
                     <button type="button"
@@ -1666,6 +1639,7 @@ class ProductsController extends Controller
 
                 </div>
             </div>
+
             <?php
         }
     }
