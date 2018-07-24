@@ -1300,7 +1300,7 @@
                 data: {formula: formula}
             }).done(function (data) {
                 $('#new-foreign-currency-range-f1').append(data);
-                $(".collapse").collapse();
+
                 /*var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 saving-placement-range-f1-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
                  $('#add-saving-placement-range-f1-button').html(addMoreRangeButton);*/
 
