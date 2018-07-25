@@ -151,7 +151,7 @@
                                 <div class="ps-block__info">
                                     <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
+                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
                                     <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                 </div>
@@ -187,7 +187,7 @@
                                     <div class="ps-block__info">
                                         <p><strong> rate: </strong>1.3%</p>
 
-                                        <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
@@ -274,6 +274,7 @@
                             </div>
                         </div>
                         <div class="ps-product__content">
+                            <h4 class="ps-product__heading">{!! $promotion_product->bank_sub_title !!}</h4>
                             @if(count($promotion_product->ads_placement))
                                 @php
                                 $ads = json_decode($promotion_product->ads_placement);

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
-class BannerController extends Controller
+class BannerInnerController extends Controller
 {
 
     /**
@@ -30,22 +30,12 @@ class BannerController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index($type=NULL)
+    public function index()
     {
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, BANNER_MODULE_ID);
 
-        if($type=='home-page') {
+
         $banners = Banner::join('pages', 'banners.page_id', '=', 'pages.id')
-            ->where('banners.delete_status', 0)
-            ->where('pages.delete_status', 0)
-            ->where('pages.slug', '=', 'home')
-            ->select('banners.*', 'pages.name as label')
-            ->orderBy('page_id', 'ASC')
-            ->orderBy('view_order', 'ASC')
-            ->get();
-        }
-        else {
-            $banners = Banner::join('pages', 'banners.page_id', '=', 'pages.id')
             ->where('banners.delete_status', 0)
             ->where('pages.delete_status', 0)
             ->where('pages.slug', '!=', 'home')
@@ -53,7 +43,6 @@ class BannerController extends Controller
             ->orderBy('page_id', 'ASC')
             ->orderBy('view_order', 'ASC')
             ->get();
-        }
 
         return view("backend.banner.index", compact("banners", "CheckLayoutPermission"));
 
@@ -219,7 +208,7 @@ class BannerController extends Controller
             $pages[$pagesDetail->id] = $pagesDetail->label;
         }*/
 
-        return view("backend.banner.edit", compact("banner", "pages"));
+        return view("backend.banner.inner-edit", compact("banner", "pages"));
     }
 
     /**
@@ -336,7 +325,7 @@ class BannerController extends Controller
                 'new' => $newBanner
             ])
             ->log(UPDATE);
-        return redirect(route('banner.index'))->with('success', strip_tags($newBanner->title) . ' ' . UPDATED_ALERT);
+        return redirect(route('banner-inner-page.index'))->with('success', strip_tags($newBanner->title) . ' ' . UPDATED_ALERT);
 
 
     }
@@ -368,7 +357,7 @@ class BannerController extends Controller
             ])
             ->log(DELETE);
 
-        return redirect(route('banner.index'))->with('success', strip_tags($Banner->title) . ' ' . DELETED_ALERT);
+        return redirect(route('banner.index-inner'))->with('success', strip_tags($Banner->title) . ' ' . DELETED_ALERT);
 
     }
 
@@ -389,6 +378,6 @@ class BannerController extends Controller
             ->orderBy('view_order', 'ASC')
             ->get();
 
-        return view("backend.banner.index-inner", compact("banners", "CheckLayoutPermission"));
+        return view("backend.banner.index", compact("banners", "CheckLayoutPermission"));
     }
 }

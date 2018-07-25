@@ -1884,7 +1884,7 @@ button {
 }
 
 .ps-block--deposit-filter {
-    padding: 20px;
+    padding: 0 20px;
     background-color: #d0e8f6;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -2409,7 +2409,7 @@ button {
     }
 }
 
-.ps-table--product thead tr th {
+.ps-table--product thead tr th, td {
     font-family: "Montserrat", sans-serif;
     padding: 10px;
     background-color: #0d6ec9;
@@ -5317,6 +5317,7 @@ html .bg--parallax {
     float:left;
     width:20%;
     padding:0px 10px;
+    margin: 10px 0;
     }
     
 .product-col-02, .product-col-03, .product-col-04, .product-col-05 {
@@ -5352,7 +5353,7 @@ html .bg--parallax {
     }
     
 .product-row-01 .ps-block--short-product {
-    padding:50px 10px;
+    padding: 40px 10px;
     }
     
 .ps-block--short-product img {
@@ -5407,3 +5408,10 @@ span.ps-post__meta a {
 .ps-home-fixed-deposit .ps-section__footer { position:relative; }
 .ps-section__footer:before { position:absolute; left:0px; top:10px; width:38%; height:1px; overflow:hidden; content:''; background:#909090; }
 .ps-section__footer:after { position:absolute; right:0px; top:10px; width:38%; height:1px; overflow:hidden; content:''; background:#909090; }
+
+.ps-product__header img {
+    width: 200px;
+}
+.pt-2 {
+    padding-top: 2rem;
+}

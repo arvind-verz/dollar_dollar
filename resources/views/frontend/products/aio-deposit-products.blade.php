@@ -188,7 +188,7 @@
                                 <div class="ps-block__info">
                                     <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
+                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
                                     <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                 </div>
@@ -224,7 +224,7 @@
                                     <div class="ps-block__info">
                                         <p><strong> rate: </strong>1.3%</p>
 
-                                        <p><strong>Min:</strong> SGD ${{ $promotion_product->minimum_placement_amount }}</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
@@ -291,9 +291,7 @@
                                 Now</a></div>--}}
                     </div>
                     <div class="ps-product__content">
-                        <h4 class="ps-product__heading"><strong class="highlight">{{$promotion_product->product_name}}
-                                :</strong> Fulfil each criteria and earn up
-                            to {{ $promotion_product->maximum_interest_rate }}%</h4>
+                        <h4 class="ps-product__heading">{!! $promotion_product->bank_sub_title !!}</h4>
                         @if(count($promotion_product->ads_placement))
                             @php
                             $ads = json_decode($promotion_product->ads_placement);
@@ -410,11 +408,7 @@
                         </div>
                         <div class="ps-product__content">
 
-                            <h4 class="ps-product__heading"><strong
-                                        class="highlight">{{$promotion_product->product_name}} :</strong>
-                                Meet either of Criteria and earn up to @if($promotion_product->maximum_interest_rate<=0)
-                                    - @else  {{ $promotion_product->maximum_interest_rate }}% @endif
-                            </h4>
+                            <h4 class="ps-product__heading">{!! $promotion_product->bank_sub_title !!}</h4>
                             @if(count($promotion_product->ads_placement))
                                 @php
                                 $ads = json_decode($promotion_product->ads_placement);
@@ -528,6 +522,7 @@
                                         Now</a></div>--}}
                             </div>
                             <div class="ps-product__content">
+                                <h4 class="ps-product__heading">{!! $promotion_product->bank_sub_title !!}</h4>
                                 @if(count($promotion_product->ads_placement))
                                     @php
                                     $ads = json_decode($promotion_product->ads_placement);
@@ -686,10 +681,7 @@
                                             Now</a></div>--}}
                                 </div>
                                 <div class="ps-product__content">
-                                    <h4 class="ps-product__heading"><strong
-                                                class="highlight">{{$promotion_product->product_name}}: </strong> Meet
-                                        either Criteria and earn up to {{$promotion_product->maximum_interest_rate}}%
-                                    </h4>
+                                    <h4 class="ps-product__heading">{!! $promotion_product->bank_sub_title !!}</h4>
                                     @if(count($promotion_product->ads_placement))
                                         @php
                                         $ads = json_decode($promotion_product->ads_placement);

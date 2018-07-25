@@ -151,7 +151,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -186,7 +186,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -221,7 +221,7 @@
                                     <div class="ps-block__info">
                                     <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                     <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                     </div>
@@ -270,7 +270,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -305,7 +305,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -340,7 +340,7 @@
                                     <div class="ps-block__info">
                                     <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                     <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                     </div>
@@ -389,7 +389,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -424,7 +424,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -459,7 +459,7 @@
                                     <div class="ps-block__info">
                                     <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                     <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                     </div>
@@ -508,7 +508,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -543,7 +543,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -578,7 +578,7 @@
                                     <div class="ps-block__info">
                                     <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                     <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                     </div>
@@ -627,7 +627,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -662,7 +662,7 @@
                                 <div class="ps-block__info">
                                 <p><strong> rate: </strong>1.3%</p>
 
-                                <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                 <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                 </div>
@@ -697,7 +697,7 @@
                                     <div class="ps-block__info">
                                     <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD $<?php echo $products->minimum_placement_amount; ?></p>
+                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
 
                                     <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                     </div>
