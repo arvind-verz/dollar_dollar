@@ -445,6 +445,7 @@
                 var i = 0;
 
                 var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+                var FCDP1 = [ '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
                 var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
                 var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
                 var SDP1 = [
@@ -588,6 +589,92 @@
                                 }
                             });
                         }
+                    }
+                    if (jQuery.inArray(formula, FCDP1) !== -1) {
+                        var currencies = $('#foreignCurrencyF1').find('select[name^="currency"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        $.each(currencies, function (k, v) {
+                            if (currencies[k] == '' ) {
+                                errors[i] = 'The currency is required.';
+                                i++;
+
+                                return false;
+                            }
+                        });
+                        $.each(currencies, function (currency, currencyValue) {
+                            var foreignCurrencyF1 = $('#foreignCurrencyF1-'+currency);
+                            var minPlacements = foreignCurrencyF1.find('input[name^="min_placement"]').map(function () {
+                                return $.trim($(this).val());
+                            }).get();
+                            var maxPlacements = foreignCurrencyF1.find('input[name^="max_placement"]').map(function () {
+                                return $.trim($(this).val());
+                            }).get();
+                            var tenures = foreignCurrencyF1.find('input[name^="tenure[0]"]').map(function () {
+                                return $.trim($(this).val());
+                            }).get();
+                            var interests = foreignCurrencyF1.find('input[name^="bonus_interest"]').map(function () {
+                                return $.trim($(this).val());
+                            }).get();
+                            var tenureError = false;
+                            var rangeError = false;
+                            $.each(minPlacements, function (k, v) {
+                                if (minPlacements[k] == '' || maxPlacements[k] == '') {
+                                    errors[i] = 'The placement range is required.';
+                                    i++;
+
+                                    return false;
+                                }
+
+                            });
+                            $.each(tenures, function (k, v) {
+                                if (tenures[k] == '') {
+                                    errors[i] = 'The tenure is required.';
+                                    i++;
+                                    tenureError = true;
+                                    return false;
+                                }
+
+                            });
+                            $.each(interests, function (k, v) {
+                                if (interests[k] == '') {
+                                    errors[i] = 'The bonus interest is required.';
+                                    i++;
+                                    return false;
+                                }
+
+                            });
+                            if (rangeError == false) {
+                                $.ajax({
+                                    method: "POST",
+                                    url: "{{url('/admin/check-range')}}",
+                                    data: {max_placement: maxPlacements, min_placement: minPlacements},
+                                    cache: false,
+                                    async: false,
+                                    success: function (data) {
+                                        if (data == 1) {
+                                            errors[i] = 'Please check your placement range ';
+                                            i++;
+                                        }
+                                    }
+                                });
+                            }
+                            if (tenureError == false) {
+                                $.ajax({
+                                    method: "POST",
+                                    url: "{{url('/admin/check-tenure')}}",
+                                    data: {tenures: tenures},
+                                    cache: false,
+                                    async: false,
+                                    success: function (data) {
+                                        if (data == 1) {
+                                            errors[i] = 'Please check tenure you input duplicate tenure';
+                                            i++;
+                                        }
+                                    }
+                                });
+                            }
+                        });
                     }
                     if (jQuery.inArray(formula, SDP1) !== -1) {
                         var minPlacements = $('#savingDepositF1').find('input[name^="min_placement_sdp1"]').map(function () {
@@ -1292,17 +1379,19 @@
     }
     function addMoreCurrencyRange(id) {
         var formula = $("#formula").val();
+        var currency_id = $(id).data('currency-id');
+        currency_id++;
         var FCDP1 = ['<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
         if (jQuery.inArray(formula, FCDP1) !== -1) {
             jQuery.ajax({
                 type: "POST",
                 url: "{{url('/admin/add-more-currency-range')}}",
-                data: {formula: formula}
+                data: {formula: formula,currency_id :currency_id}
             }).done(function (data) {
                 $('#new-foreign-currency-range-f1').append(data);
 
-                /*var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 saving-placement-range-f1-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
-                 $('#add-saving-placement-range-f1-button').html(addMoreRangeButton);*/
+                var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 saving-placement-range-f1-button" data-currency-id= ' + currency_id + ' onClick="addMoreCurrencyRange(this);"><i class="fa fa-plus"></i> </button>';
+                 $('#add-foreign-currency-f1-detail-button').html(addMoreRangeButton);
 
             });
         }
@@ -1313,6 +1402,7 @@
         var range_id = $(id).data('range-id');
         range_id++;
         var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>'];
+        var FCDP1 = ['<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
 
         var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
         var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
@@ -1345,7 +1435,25 @@
                 $('#new-placement-range').append(data);
                 var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
                 $('#add-placement-range-button').html(addMoreRangeButton);
-                var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
+                var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '"  id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
+                $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
+            });
+        }
+        if (jQuery.inArray(formula, FCDP1) !== -1) {
+            var currency_id = $(id).data('currency-id');
+            var data = $('#f1-currency-range-0').find('input[name^="tenure[0]"]').serializeArray();
+            var productType = $("#product-type").val();
+            var formula_detail_id = data.length - 1;
+            jQuery.ajax({
+                type: "POST",
+                url: "{{url('/admin/add-more-placement-range')}}",
+                data: {detail: data, range_id: range_id, formula: formula, product_type:productType,currency_id:currency_id}
+            }).done(function (data) {
+                //console.log(data);
+                $('#new-fcdp-f1-range-'+currency_id).append(data);
+                var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= ' + range_id + ' data-currency-id="' + currency_id + '" onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
+                $('#add-placement-range-button').html(addMoreRangeButton);
+                var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" data-currency-id="' + currency_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
                 $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
             });
         }
@@ -1427,6 +1535,7 @@
     function removePlacementRange(id) {
         var formula = $("#formula").val();
         var range_id = $(id).data('range-id');
+        var FCDP1 = ['<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
         var SDP1 = [
             '<?php echo SAVING_DEPOSIT_F1; ?>', '<?php echo SAVING_DEPOSIT_F2; ?>',
             '<?php echo WEALTH_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>',
@@ -1446,8 +1555,23 @@
         }
         if (formula == 10) {
             $("#aioa_placement_range_f4_" + range_id).remove();
-        } else {
+        }if (jQuery.inArray(formula, FCDP1) !== -1) {
+            $("#fcdp-f1-range-" + range_id).remove();
+        }
+        else {
             $("#placement_range_" + range_id).remove();
+        }
+
+
+    }
+    function removeCurrencyRange(id) {
+        var formula = $("#formula").val();
+        var currency_id = $(id).data('currency-id');
+
+
+        var FCDP1 = ['<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+        if (jQuery.inArray(formula, FCDP1) !== -1) {
+            $("#f1-currency-range-" + currency_id).remove();
         }
 
 
@@ -1456,6 +1580,7 @@
     function addMoreFormulaDetail(id) {
 
         var formula_detail_id = $(id).data('formula-detail-id');
+        var currency_id = $(id).data('currency-id');
         var range_id = $(id).data('range-id');
         /*$(id).addClass('display-none');*/
 
