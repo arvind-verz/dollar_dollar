@@ -160,27 +160,32 @@ $banners = Helper::getBanners($slug);
                         </span>
                         @endif
                     </div>
-                    <div class="form-group recaptcha">
-                        {!! app('captcha')->display($attributes = [],
-$lang = []) !!}
-                        <span class="captcha-err">
-                        </span>
-                        @if ($errors->has('g-recaptcha-response'))
-                        <span class="text-danger">
-                            <strong>
-                                {{ $errors->first('g-recaptcha-response') }}
-                            </strong>
-                        </span>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <button class="ps-btn" type="submit">
-                            Submit
-                        </button>
-                    </div>
+                    
                 </div>
             </div>
+            <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12 ">
             {!!$page->contents!!}
+            <div class="ps-form__content">
+                <div class="form-group recaptcha">
+                    {!! app('captcha')->display($attributes = [],
+$lang = []) !!}
+                    <span class="captcha-err">
+                    </span>
+                    @if ($errors->has('g-recaptcha-response'))
+                    <span class="text-danger">
+                        <strong>
+                            {{ $errors->first('g-recaptcha-response') }}
+                        </strong>
+                    </span>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <button class="ps-btn" type="submit">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
         </div>
         {!! Form::close() !!}
     </div>

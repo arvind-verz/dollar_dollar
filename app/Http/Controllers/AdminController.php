@@ -56,6 +56,13 @@ class AdminController extends Controller
             $upd_query->save();
             echo "success";
         }
+        elseif($type=='blogads') {
+            $upd_query = Page::find($id);
+
+            $upd_query->blog_image_ads = null;
+            $upd_query->save();
+            echo "success";
+        }
         elseif($type=='product') {
             $upd_query = PromotionProducts::find($id);
             $ads_placement = json_decode($upd_query['ads_placement']);

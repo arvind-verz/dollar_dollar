@@ -63,6 +63,13 @@
                                     </div>
 
                                     <div class="form-group">
+                                        {{Form::label('bank_sub_title', 'Bank Sub Title',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::textarea('bank_sub_title', old('bank_sub_title'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Product Type</label>
 
                                         <div class="col-sm-10">
@@ -212,7 +219,7 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_horizontal_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1136*140 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*160 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link', 'Ad Horizontal Link',['class'=>'col-sm-2 control-label'])}}
@@ -225,7 +232,7 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_image_vertical', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 278*140 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 280*140 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_vertical_link', 'Ad Vertical Link',['class'=>'col-sm-2 control-label'])}}
