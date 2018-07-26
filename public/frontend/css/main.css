@@ -5443,3 +5443,11 @@ span.ps-post__meta a {
         display: none;
     }
 }
+
+.ps-home-fixed-deposit.ps-tabs-root .ps-section__content.bg--cover .product-row-01.clearfix .owl-nav{
+    top: -70px;
+}
+.ps-home-fixed-deposit.ps-tabs-root .ps-section__content.bg--cover .product-row-01.clearfix .owl-nav .owl-prev, .ps-home-fixed-deposit.ps-tabs-root .ps-section__content.bg--cover .product-row-01.clearfix .owl-nav .owl-next{
+    position: absolute;
+    right: 70px;
+}
