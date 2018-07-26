@@ -56,7 +56,23 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 495*250 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 500*250 for better display</div>
+                                    </div>
+                                    <div class="form-group">
+                                        {{Form::label('blog_image_ads', ' Image Ads',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="@if(isset($page->blog_image_ads) && ($page->blog_image_ads != ''))col-sm-8 @else col-sm-10 @endif">
+                                            {{Form::file('blog_image_ads', ['class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                        @if(isset($page->blog_image_ads) && ($page->blog_image_ads != ''))
+                                            <div class=" col-sm-2">
+                                                <div class="attachment-block clearfix">
+                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImageads(this, '{{ $page->id }}');"><i class="fas fa-times fa-lg"></i></a>
+                                                    <img class="attachment-img" src="{!! asset($page->blog_image) !!}"
+                                                         alt="Blog Image ads">
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 500*250 for better display</div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('short_description', 'Short Description',['class'=>'col-sm-2 control-label'])}}
@@ -235,6 +251,19 @@ function removeImage(ref, id) {
                     method: "POST",
                     url: "{{ route('remove-image') }}",
                     data: "type=blog&id="+id,
+                    cache: false,
+                    success: function(data) {
+                        if(data.trim()=='success') {
+                            $(ref).parents(".col-sm-2").remove();
+                        }
+                    }
+                });
+            }
+            function removeImageads(ref, id) {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('remove-image') }}",
+                    data: "type=blogads&id="+id,
                     cache: false,
                     success: function(data) {
                         if(data.trim()=='success') {

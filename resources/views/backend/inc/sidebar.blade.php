@@ -66,8 +66,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class=" "><a href="{{ route('banner-home') }}"> Home Page</a></li>
-                            <li class=" "><a href="{{ route('banner-inner') }}"> Inner Page</a></li>
+                            <li class=" "><a href="{{ route('banner.index', ['type'=>'home-page']) }}"> Home Page</a></li>
+                            <li class=" "><a href="{{ route('banner.index', ['type'=>'inner-page']) }}"> Inner Page</a></li>
                         </ul>
                     </li>
                     @elseif($menu->label == REPORT_MODULE)

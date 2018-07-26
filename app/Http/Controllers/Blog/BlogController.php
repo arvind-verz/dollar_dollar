@@ -127,6 +127,22 @@ class BlogController extends Controller
             $image->move($destinationPath, $imageName);
             $page->blog_image = $destinationPath . '/' . $imageName;
         }
+        if (isset($request->blog_image_ads)) {
+
+            $image = $request->blog_image_ads;
+            // Get filename with the extension
+            $filenameWithExt = $image->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+
+            // Get just ext
+            $extension = $image->getClientOriginalExtension();
+            // Filename to store
+            $imageName = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $image->move($destinationPath, $imageName);
+            $page->blog_image_ads = $destinationPath . '/' . $imageName;
+        }
 
         $tags = [];
         if (isset($request->tags)) {
@@ -284,6 +300,22 @@ class BlogController extends Controller
             // Upload Image
             $image->move($destinationPath, $imageName);
             $page->blog_image = $destinationPath . '/' . $imageName;
+        }
+        if (isset($request->blog_image_ads)) {
+
+            $image = $request->blog_image_ads;
+            // Get filename with the extension
+            $filenameWithExt = $image->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+
+            // Get just ext
+            $extension = $image->getClientOriginalExtension();
+            // Filename to store
+            $imageName = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $image->move($destinationPath, $imageName);
+            $page->blog_image_ads = $destinationPath . '/' . $imageName;
         }
 
         $tags = [];

@@ -40,6 +40,9 @@
                             <li class="current"><a href="{{ url('account-information') }}">Account Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
+                        <div class="pt-2">
+                            <a href="{{ isset($banners[0]->banner_link) ? asset($banners[0]->banner_link) : '' }}" target="_blank"><img src="{{ isset($banners[0]->banner_image) ? asset($banners[0]->banner_image) : '' }}" alt=""></a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">

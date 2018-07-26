@@ -145,6 +145,7 @@ class ProductsController extends Controller
 
         $product->product_name = $request->name;
         $product->bank_id = $request->bank;
+        $product->bank_sub_title = $request->bank_sub_title;
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
@@ -507,6 +508,7 @@ class ProductsController extends Controller
         //dd($adHorizontalPopupImageTop);
         $product->product_name = $request->name;
         $product->bank_id = $request->bank;
+        $product->bank_sub_title = $request->bank_sub_title;
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
