@@ -98,8 +98,8 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/banners/destroy/{id}', 'Banner\BannerController@destroy')->name('banner-destroy');
     Route::get('/banner/{type}', 'Banner\BannerController@index')->name('banner.index');
     Route::get('/banner-edit/{id}/{type}', 'Banner\BannerController@edit')->name('banner.edit');
-    Route::post('/banner-update/{id}/{type}', 'Banner\BannerController@update')->name('banner.update');
-    Route::get('/banne-create', 'Banner\BannerController@create')->name('banner.create');
+    Route::put('/banner-update/{id}/{type}', 'Banner\BannerController@update')->name('banner.update');
+    Route::get('/banner-create/{type}', 'Banner\BannerController@create')->name('banner.create');
     Route::post('/banner-store/{type}', 'Banner\BannerController@store')->name('banner.store');
     /*Route::resource('/banner-inner-page', 'Banner\BannerInnerController');
     Route::get('/banner-home', 'Banner\BannerController@bannerHome')->name('banner-home');

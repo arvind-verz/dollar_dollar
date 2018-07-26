@@ -65,12 +65,12 @@ class BannerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($type=NULL)
     {
         //get pages detail
         $pages = Helper::getPages();
 
-        return view("backend.banner.create", compact("pages"));
+        return view("backend.banner.create", compact("pages", "type"));
     }
 
     /**
@@ -79,9 +79,8 @@ class BannerController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $type)
     {
-        //dd($request->all());
         //
         $validatorFields = [
             'title' => 'required',
@@ -181,7 +180,13 @@ class BannerController extends Controller
                 'new' => null
             ])
             ->log(CREATE);
-        return redirect(route('banner.index'))->with('success', strip_tags($banner->title) . ' ' . ADDED_ALERT);
+
+        if($type=='inner-page') {
+            return $this->bannerInner()->with('success', strip_tags($banner->title) . ' ' . ADDED_ALERT);
+        }
+        else {
+            return $this->bannerHome()->with('success', strip_tags($banner->title) . ' ' . ADDED_ALERT);
+        }
 
     }
 
@@ -230,8 +235,9 @@ class BannerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public
-    function update(Request $request, $id)
+    function update(Request $request, $id, $type)
     {
+        //dd($type);
         $banner = Banner::find($id);
 
         //dd($request->all(),$id,$banner);
@@ -336,7 +342,12 @@ class BannerController extends Controller
                 'new' => $newBanner
             ])
             ->log(UPDATE);
-        return redirect(route('banner.index'))->with('success', strip_tags($newBanner->title) . ' ' . UPDATED_ALERT);
+        if($type=='inner-page') {
+            return $this->bannerInner()->with('success', strip_tags($newBanner->title) . ' ' . UPDATED_ALERT);
+        }
+        else {
+            return $this->bannerHome()->with('success', strip_tags($newBanner->title) . ' ' . UPDATED_ALERT);
+        }
 
 
     }
@@ -372,11 +383,11 @@ class BannerController extends Controller
 
     }
 
-    public function bannerHome() {
-        return $this->index();
+    public function bannerHome($type='home-page') {
+        return $this->index($type);
     }
 
-    public function bannerInner() {
+    public function bannerInner($type='inner-page') {
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, BANNER_MODULE_ID);
 
 
@@ -389,6 +400,6 @@ class BannerController extends Controller
             ->orderBy('view_order', 'ASC')
             ->get();
 
-        return view("backend.banner.index-inner", compact("banners", "CheckLayoutPermission"));
+        return view("backend.banner.index", compact("banners", "CheckLayoutPermission", "type"));
     }
 }
