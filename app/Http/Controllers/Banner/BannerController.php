@@ -55,7 +55,7 @@ class BannerController extends Controller
             ->get();
         }
 
-        return view("backend.banner.index", compact("banners", "CheckLayoutPermission"));
+        return view("backend.banner.index", compact("banners", "CheckLayoutPermission", "type"));
 
 
     }
@@ -204,7 +204,7 @@ class BannerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public
-    function edit($id)
+    function edit($id, $type=NULL)
     {
         $banner = Banner::find($id);
         if (!$banner) {
@@ -219,7 +219,7 @@ class BannerController extends Controller
             $pages[$pagesDetail->id] = $pagesDetail->label;
         }*/
 
-        return view("backend.banner.edit", compact("banner", "pages"));
+        return view("backend.banner.edit", compact("banner", "pages", "type"));
     }
 
     /**

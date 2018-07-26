@@ -26,7 +26,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <!-- form start -->
-                        {!! Form::open(['class' => 'form-horizontal','url' => ['admin/banner', $banner->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::open(['class' => 'form-horizontal','url' => ['admin/banner', $banner->id, $type], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Page</label>
