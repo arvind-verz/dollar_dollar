@@ -97,7 +97,7 @@
 
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Banner"
-                                                                   href="{{ route("banner.edit",["id"=>$banner->id]) }}">
+                                                                   href="{{ route("banner.edit",["id"=>$banner->id, 'type'=>$type]) }}">
                                                                     <i class="fa fa-edit"></i> Edit
                                                                 </a>
                                                             @endif
