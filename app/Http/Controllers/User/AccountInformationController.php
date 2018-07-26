@@ -109,7 +109,13 @@ class AccountInformationController extends Controller
             'last_name'     =>  'required',
             'tel_phone'       =>  'numeric|nullable'
         ]);
-
+        $email_notification = $adviser = 0;
+            if(!empty($request->email_notification)) {
+              $email_notification = 1;
+            }
+            if(!empty($request->adviser)) {
+              $adviser = 1;
+            }
         if($validate->fails()) {
             return redirect()->route('account-information.edit')->withErrors($validate)->withInput();
         }
@@ -117,6 +123,9 @@ class AccountInformationController extends Controller
             $account_information->first_name    =   $request->first_name;
             $account_information->last_name     =   $request->last_name;
             $account_information->tel_phone     =   $request->tel_phone;
+            $account_information->notification    =   $request->privacy;
+            $account_information->email_notification     =   $email_notification;
+            $account_information->adviser     =   $adviser;
             $account_information->save();
         }
         return redirect('account-information')->with('success', 'Data ' . UPDATED_ALERT);

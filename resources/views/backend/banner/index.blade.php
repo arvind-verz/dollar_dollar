@@ -23,7 +23,7 @@
 
                         <h3 class="box-title">{{BANNER_MODULE_SINGLE.'s'}}</h3>
                         @if($CheckLayoutPermission[0]->create==1)
-                            <a href="{{ route("banner.create") }}" class="">
+                            <a href="{{ route("banner.create", ['type'=>$type]) }}" class="">
                                 <button type="submit" class="btn btn-info pull-right"><i
                                             class="fa  fa-plus"></i> {{ADD_ACTION.' '.BANNER_MODULE_SINGLE}}
                                 </button>
@@ -97,7 +97,7 @@
 
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Banner"
-                                                                   href="{{ route("banner.edit",["id"=>$banner->id]) }}">
+                                                                   href="{{ route("banner.edit",["id"=>$banner->id, 'type'=>$type]) }}">
                                                                     <i class="fa fa-edit"></i> Edit
                                                                 </a>
                                                             @endif
