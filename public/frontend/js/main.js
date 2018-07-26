@@ -192,13 +192,13 @@ function backToTop() {
         if (scrollCur > scrollPos) {
             // scroll down
             if (scrollCur > 500) {
-                element.addClass('active');
+                element.parent().addClass('active');
             } else {
-                element.removeClass('active');
+                element.parent().removeClass('active');
             }
         } else {
             // scroll up
-            element.removeClass('active');
+            element.parent().removeClass('active');
         }
 
         scrollPos = scrollCur;

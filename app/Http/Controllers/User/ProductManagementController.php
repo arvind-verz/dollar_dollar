@@ -45,7 +45,6 @@ class ProductManagementController extends Controller
             'amount'            =>  'required|numeric',
             'interest_earned'   =>  'numeric|nullable'
         ]);
-
         if ($validate->fails()) {
             return redirect('product-management')
                         ->withErrors($validate)
@@ -55,16 +54,16 @@ class ProductManagementController extends Controller
             $product_management                     =   new ProductManagement();
             $product_management->user_id            =   Auth::user()->id;
             $product_management->bank_id            =   $request->bank_id;
+            $product_management->other_bank = $request->bank_id_other;
             $product_management->account_name       =   $request->account_name;
             $product_management->amount             =   $request->amount;
             $product_management->tenure             =   $request->tenure;
-            $product_management->privacy            =   $request->privacy;
             $product_management->start_date         =   $request->start_date;
             $product_management->end_date           =   $request->end_date;
             $product_management->interest_earned    =   $request->interest_earned;
             $product_management->save();
         }
-        return redirect('product-management')->with('success',  'Data ' . ADDED_ALERT);
+        return redirect('profile-dashboard')->with('success',  'Data ' . ADDED_ALERT);
     }
 
     /**
@@ -116,7 +115,6 @@ class ProductManagementController extends Controller
             'amount'            =>  'required|numeric',
             'interest_earned'   =>  'numeric|nullable'
         ]);
-
         if ($validate->fails()) {
             return redirect('product-management')
                         ->withErrors($validate)
@@ -124,16 +122,16 @@ class ProductManagementController extends Controller
         }
         else {
             $product_management->bank_id            =   $request->bank_id;
+            $product_management->other_bank = $request->bank_id_other;
             $product_management->account_name       =   $request->account_name;
             $product_management->amount             =   $request->amount;
             $product_management->tenure             =   $request->tenure;
-            $product_management->privacy            =   $request->privacy;
             $product_management->start_date         =   $request->start_date;
             $product_management->end_date           =   $request->end_date;
             $product_management->interest_earned    =   $request->interest_earned;
             $product_management->save();
         }
-        return redirect('product-management')->with('success',  'Data ' . UPDATED_ALERT);
+        return redirect('profile-dashboard')->with('success',  'Data ' . UPDATED_ALERT);
     }
 
     /**
@@ -144,8 +142,9 @@ class ProductManagementController extends Controller
      */
     public function destroy($id)
     {
+        //dd($id);
         $product_management = ProductManagement::find($id);
         $product_management->delete();
-        return redirect('product-management')->with('success',  'Data ' . DELETED_ALERT);
+        return redirect('profile-dashboard')->with('success',  'Data ' . DELETED_ALERT);
     }
 }

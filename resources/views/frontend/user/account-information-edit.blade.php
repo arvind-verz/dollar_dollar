@@ -61,7 +61,17 @@
                                     <h5>Contact Information</h5>
                                     <p><strong> First Name: </strong> <input type="text" class="form-control" name="first_name" placeholder="Enter first name" value="{{ AUTH::user()->first_name }}"></p>
                                     <p><strong> Last Name: </strong><input type="text" class="form-control" name="last_name" placeholder="Enter last name" value="{{ AUTH::user()->last_name }}"></p>
+                                    
                                     <p><strong> Contact Number: </strong><input type="text" class="form-control only_numeric" name="tel_phone" placeholder="Enter contact number" value="{{ AUTH::user()->tel_phone }}"></p>
+                                    <p><strong> Privacy: </strong>
+                                        <select class="form-control" name="privacy">
+                                                <option value="1" @if(1==AUTH::user()->notification) selected  @endif>DOD</option>
+                                                <option value="2" @if(2==AUTH::user()->notification) selected @endif>Anytime</option>
+                                                <option value="3" @if(3==AUTH::user()->notification) selected @endif>Occasionally</option>
+                                            </select>
+                                    </p>
+                                    <p><strong> Email Notification for newsletter: </strong><input type="checkbox" class="form-control" name="email_notification" @if(AUTH::user()->email_notification==1) checked @endif></p>
+                                    <p><strong> Allow a financial adviser to contact you: </strong><input type="checkbox" class="form-control" name="adviser" @if(AUTH::user()->adviser==1) checked @endif></p>
                                     <button type="submit" class="btn btn-success">Save</button>
                                     {!! Form::close() !!}
                                 </div>

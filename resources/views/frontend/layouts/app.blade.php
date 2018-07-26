@@ -24,7 +24,7 @@ if (!$systemSetting) {
     <link href="{{ asset('frontend/plugins/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('frontend/css/custom.css') }}" rel="stylesheet">
-    
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!--WARNING: Respond.js doesn't work if you view the page via file://-->
     <!--[if lt IE 9]>
@@ -62,7 +62,12 @@ if (!$systemSetting) {
 <!-- Footer -->
 @include('frontend.includes.footer')
         <!-- Footer END -->
-<div id="totop"><span>backtotop<i class="fa fa-arrow-right"></i></span></div>
+<div class="totop">
+      <div id="totop"><span>backtotop<i class="fa fa-arrow-right"></i></span></div>
+      <a class="profile" href=""><span>profile page<i class="fa fa-arrow-right"></i></span></a>
+      <a class="placement" href=""><span>placement amount<i class="fa fa-arrow-right"></i></span></a>
+    </div>
+
 <script type="text/javascript">
     $(document).ready(function() {
         $(".only_numeric").numeric();
@@ -90,6 +95,7 @@ if (!$systemSetting) {
 <script src="{{ asset('frontend/plugins/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('frontend/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('frontend/js/main.js') }}"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afe3db1c821ae18"></script>
 
