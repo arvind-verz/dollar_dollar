@@ -659,7 +659,7 @@
                                     }
                                 });
                             }
-                            if (tenureError == false) {
+                            /*if (tenureError == false) {
                                 $.ajax({
                                     method: "POST",
                                     url: "{{url('/admin/check-tenure')}}",
@@ -673,7 +673,7 @@
                                         }
                                     }
                                 });
-                            }
+                            }*/
                         });
                     }
                     if (jQuery.inArray(formula, SDP1) !== -1) {
@@ -1420,6 +1420,7 @@
 
             var data = $('#fixDepositF1').find('input[name^="tenure[0]"]').serializeArray();
             var productType = $("#product-type").val();
+
             /*var legends = new Array();
             var data = $('#fixDepositF1').find('select[name^="legend[0]"]').serializeArray();
             $.each($('select[name^="legend"]'), function() {
@@ -1441,20 +1442,21 @@
         }
         if (jQuery.inArray(formula, FCDP1) !== -1) {
             var currency_id = $(id).data('currency-id');
-            var data = $('#f1-currency-range-0').find('input[name^="tenure[0]"]').serializeArray();
+            var data = $('#foreignCurrencyF1-'+currency_id).find('input[name^="tenure"]').serializeArray();
             var productType = $("#product-type").val();
             var formula_detail_id = data.length - 1;
+            //console.log(data);
             jQuery.ajax({
                 type: "POST",
                 url: "{{url('/admin/add-more-placement-range')}}",
                 data: {detail: data, range_id: range_id, formula: formula, product_type:productType,currency_id:currency_id}
             }).done(function (data) {
-                //console.log(data);
+                console.log(data);
                 $('#new-fcdp-f1-range-'+currency_id).append(data);
                 var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= ' + range_id + ' data-currency-id="' + currency_id + '" onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
-                $('#add-placement-range-button').html(addMoreRangeButton);
-                var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" data-currency-id="' + currency_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
-                $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
+                $('#add-placement-range-button-'+currency_id).html(addMoreRangeButton);
+                var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" data-currency-id="' + currency_id + '" id="add-formula-detail-'+currency_id+'-'+ range_id +'-'+ formula_detail_id + '" onClick="addMoreFCDPFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
+                $('#add-formula-detail-button-'+currency_id).html(addMoreFormulaDetailButton);
             });
         }
         if (jQuery.inArray(formula, SDP1) !== -1) {
@@ -1556,7 +1558,8 @@
         if (formula == 10) {
             $("#aioa_placement_range_f4_" + range_id).remove();
         }if (jQuery.inArray(formula, FCDP1) !== -1) {
-            $("#fcdp-f1-range-" + range_id).remove();
+            var currency_id = $(id).data('currency-id');
+            $("#fcdp-f1-range-"+currency_id+'-'+ range_id).remove();
         }
         else {
             $("#placement_range_" + range_id).remove();
@@ -1632,15 +1635,84 @@
         }
 
     }
-    function removeFormulaDetail(id) {
+    function addMoreFCDPFormulaDetail(id) {
 
         var formula_detail_id = $(id).data('formula-detail-id');
-        $("." + formula_detail_id).remove();
+        var currency_id = $(id).data('currency-id');
+        var range_id = $(id).data('range-id');
+        /*$(id).addClass('display-none');*/
+
+        $("#remove-formula-detail-" + range_id + formula_detail_id).removeClass('display-none');
+        formula_detail_id++;
+        //alert(range_id + ' ' + formula_detail_id);
+        $('#add-formula-detail-'+currency_id+'-'+ range_id +'-'+formula_detail_id).remove();
+        // Layout options
+
+
+        for (var i = 0; i <= parseInt(range_id); i++) {
+
+            var $newTextArea = $('<div />', {
+                'id': 'formula-detail-'+currency_id+'-'+ i,
+                'class': 'form-group ' +currency_id+'-'+formula_detail_id
+            });
+            $newTextArea.append(
+                    '<label for="title" class="col-sm-2 control-label">'
+                    + '</label>'
+                    + '<div class="col-sm-6 ">'
+                    + ' <div class="form-row">'
+                    + ' <div class="col-md-6 mb-3">'
+                    + ' <label for="">Tenure</label>'
+                    + '<input type="text" class="form-control only_numeric tenure-'+currency_id+'-'+ formula_detail_id + '" id="" name="tenure['+ currency_id + '][' + i + '][' + formula_detail_id + ']" placeholder="" data-formula-detail-id="'+formula_detail_id+'" data-currency-id="'+currency_id+'" onchange="changeTenureFCDPValue(this)">'
+                    + '</div>'
+                    + '<div class="col-md-6 mb-3">'
+                    + '<label for="">Bonus Interest</label>'
+                    + '<input type="text" class="form-control only_numeric" id="" name="bonus_interest['+ currency_id + '][' + i + '][' + formula_detail_id + ']" placeholder="" >'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>'
+                    + '  <div class="col-sm-1 col-sm-offset-1 " id="remove-formula-detail-'+currency_id+'-'+ i +'-'+ formula_detail_id + '">'
+
+                    + ' </div>'
+                    + ' <div class="col-sm-2">&emsp;</div>'
+            );
+            $('#new-formula-detail-'+currency_id+'-'+ i).append($newTextArea);
+            if (i == 0) {
+                var removeFormulaDetailButton = '<button type="button" class="btn btn-danger -pull-right" data-formula-detail-id ="' + formula_detail_id
+                        + '" data-range-id ="' + range_id + ' " data-currency-id ="'+currency_id+'" id="remove-formula-detail-'+currency_id+'-'+ i +'-'+ formula_detail_id + '" onClick="removeFormulaDetail(this);" >'
+                        + '<i class="fa fa-minus"> </i>'
+                        + ' </button>';
+                $('#remove-formula-detail-'+currency_id+'-'+ i +'-'+ formula_detail_id).append(removeFormulaDetailButton);
+            } else {
+                $('input[name="tenure['+ currency_id + '][' + i + '][' + formula_detail_id + ']"]').prop('readonly', true);
+            }
+            var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + ' " data-currency-id ="' + currency_id + '" id="add-formula-detail-' +currency_id+'-'+ i +'-'+ formula_detail_id + '" onClick="addMoreFCDPFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
+            $('#add-formula-detail-button-'+currency_id).html(addMoreFormulaDetailButton);
+        }
+
+    }
+    function removeFormulaDetail(id) {
+        var formula = $("#formula").val();
+        var formula_detail_id = $(id).data('formula-detail-id');
+        var FCDP1 = ['<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+        if (jQuery.inArray(formula, FCDP1) !== -1) {
+            var currency_id = $(id).data('currency-id');
+            $("." +currency_id+'-'+formula_detail_id).remove();
+        }else{
+
+            $("." + formula_detail_id).remove();
+        }
+
     }
     function changeTenureValue(id) {
 
         var formula_detail_id = $(id).data('formula-detail-id');
         $(".tenure-" + formula_detail_id).val($(id).val());
+    }
+    function changeTenureFCDPValue(id) {
+
+        var formula_detail_id = $(id).data('formula-detail-id');
+        var currency_id = $(id).data('currency-id');
+        $(".tenure-"+currency_id+'-'+ formula_detail_id).val($(id).val());
     }
 
     $(document).ready(function () {
