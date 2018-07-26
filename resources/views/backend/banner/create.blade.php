@@ -7,7 +7,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('banner.index') }}">{{BANNER_MODULE}}</a></li>
+            <li><a href="{{ route('banner.index', ['type'=>$type]) }}">{{BANNER_MODULE}}</a></li>
             <li class="active">{{BANNER_MODULE_SINGLE.' '.ADD_ACTION}}</li>
         </ol>
     </section>
@@ -26,7 +26,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <!-- form start -->
-                        {!! Form::open(['class' => 'form-horizontal','url' => 'admin/banner', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::open(['class' => 'form-horizontal','url' => ['admin/banner-store', $type], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="box-body">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Page</label>
@@ -102,9 +102,10 @@
                             </div>
 
                         </div>
+                        <input type="hidden" name="type" value="{{ $type }}">
                         <!-- /.box-body -->
                         <div class="box-footer">
-                            <a href="{{route("brand.index")}}"
+                            <a href="{{route("brand.index", ["type"=>$type])}}"
                                class="btn btn-default"><i class="fa fa-close">
                                 </i> Cancel</a>
 
