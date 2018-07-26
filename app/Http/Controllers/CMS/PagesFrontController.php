@@ -59,15 +59,24 @@ class PagesFrontController extends Controller
      */
     public function show($slug)
     {
+         DB::enableQueryLog();
         $user_products = null;
         if (Auth::check()) {
-            $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
+            $user_products = ProductManagement::leftjoin('brands', 'product_managements.bank_id', '=', 'brands.id')
+                ->where('user_id', Auth::user()->id)
+                ->orderBy('product_managements.id', 'DESC')
+                ->select('product_managements.id as product_id', 'brands.*', 'product_managements.*')
+                ->get();
+
+            $user_products_ending = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
                 ->where('user_id', Auth::user()->id)
                 ->get();
         }
+//dd(DB::getQueryLog());
+        //dd($user_products);
 
 
-        DB::enableQueryLog();
+       
         $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
             ->where('pages.slug', $slug)
             ->where('pages.delete_status', 0)
@@ -103,7 +112,7 @@ class PagesFrontController extends Controller
                     return view('frontend.CMS.registration', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == PROFILEDASHBOARD) {
                     if (AUTH::check()) {
-                        return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners"));
+                        return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners", "user_products", "user_products_ending"));
                     } else {
                         return redirect('/login');
                     }
@@ -116,7 +125,7 @@ class PagesFrontController extends Controller
 
                 } elseif ($slug == PRODUCTMANAGEMENT) {
                     if (AUTH::check()) {
-                        return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners", "user_products"));
+                        return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners"));
                     } else {
                         return redirect('/login');
                     }

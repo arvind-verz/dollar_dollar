@@ -142,8 +142,15 @@ class RegisterController extends Controller
                 $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
             }
             $notification = 1;
+            $email_notification = $adviser = 0;
             if(!empty($request->notification)) {
               $notification = 3;
+            }
+            if(!empty($request->email_notification)) {
+              $email_notification = 1;
+            }
+            if(!empty($request->adviser)) {
+              $adviser = 1;
             }
             $registration = new User();
             $registration->salutation   =   $request->salutation;
@@ -153,6 +160,8 @@ class RegisterController extends Controller
             $registration->tel_phone    =   $request->contact;
             $registration->password     =   Hash::make($request->password);
             $registration->notification     =   $notification;
+            $registration->email_notification     =   $email_notification;
+            $registration->adviser     =   $adviser;
             $registration->save();
 
 

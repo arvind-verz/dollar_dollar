@@ -59,10 +59,12 @@
                                             <select class="form-control" name="bank_id" required="required">
                                                 <option value="">Please select</option>
                                                 @foreach($brands as $bank)
-
                                                     <option value="{{ $bank->id }}" @if($bank->id==old('bank_id')) selected @endif>{{ $bank->title }}</option>
+                                                    
                                                 @endforeach
+                                                <option value="0">Other</option>
                                             </select>
+                                            <input type="text" class="form-control hide" name="bank_id_other" value="" placeholder="Enter bank name">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
@@ -74,26 +76,16 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Amount <sup>*</sup></label>
-                                            <input class="form-control" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ old('amount') }}">
+                                            <input class="form-control prefix_dollar" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ (old('amount')) ? old('amount') : '0.000' }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Tenor</label>
                                             <select class="form-control" name="tenure">
                                                 <option value="">Please select</option>
                                                 <option value="1" @if(1==old('tenure')) selected @endif>1</option>
                                                 <option value="2" @if(2==old('tenure')) selected @endif>2</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
-                                        <div class="form-group">
-                                            <label>Privacy</label>
-                                            <select class="form-control" name="privacy">
-                                                <option value="DOD" @if('DOD'==old('DOD')) selected  @endif>DOD</option>
-                                                <option value="Anytime" @if('Anytime'==old('Anytime')) selected @endif>Anytime</option>
-                                                <option value="Occasionally" @if('Occasionally'==old('Occasionally')) selected @endif>Occasionally</option>
                                             </select>
                                         </div>
                                     </div>
@@ -125,61 +117,29 @@
                                     <button type="submit" class="ps-btn">Submit</button>
                                 </div>
                             {{ Form::close() }}
-                            <div class="ps-table-wrap">
-                                <table class="ps-table ps-table--product-managerment">
-                                    <thead>
-                                        <tr>
-                                            <th>Bank</th>
-                                            <th>Account
-                                                <br> Name</th>
-                                            <th>Amount</th>
-                                            <th>Tenor
-                                                <br> (M= months,
-                                                <br> D = Days)</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Interest Earned</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if(count($user_products))
-                                            @foreach($user_products as $value)
-                                                @php
-                                                    $curr_date = date("Y-m-d", strtotime('now'));
-                                                    $start_date = date("Y-m-d", strtotime($value->start_date));
-                                                    $end_date = date("Y-m-d", strtotime($value->end_date));
-                                                @endphp
-                                            <tr>
-                                                <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
-                                                <td>{{ $value->account_name }}</td>
-                                                <td>{{ $value->amount }}</td>
-                                                <td>{{ $value->tenure }}</td>
-                                                <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
-                                                <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
-                                                <td>{{ $value->interest_earned }}</td>
-                                                <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
-                                                <td>
-                                                    <a href="{{ route('product-management.edit', ['id'  =>  $value->id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
-                                                    <a href="{{ route('product-management.delete', ['id'  =>  $value->id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        @else
-                                        <tr>
-                                            <td class="text-center" cols="9">No data found.</td>
-                                        </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+    <script type="text/javascript">
+        $("select[name='bank_id']").on("change", function() {
+            var value = $(this).val();
+            
+            if(value==0) {
+                $(this).attr("required", false);
+                $("input[name='bank_id_other']").removeClass("hide").attr("required", true);
+            }
+            else {
+                $(this).attr("required", true);
+                $("input[name='bank_id_other']").addClass("hide").attr("required", false);
+            }
+        });
+
+        
+    </script>
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}
     @if(isset($page->contact_or_offer) && isset($systemSetting->{$page->contact_or_offer}))

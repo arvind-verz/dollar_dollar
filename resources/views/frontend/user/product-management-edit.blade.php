@@ -59,10 +59,12 @@
                                             <select class="form-control" name="bank_id" required="required">
                                                 <option value="">Please select</option>
                                                 @foreach($brands as $bank)
-
                                                     <option value="{{ $bank->id }}" @if($bank->id==$product_management->bank_id) selected @endif>{{ $bank->title }}</option>
+
                                                 @endforeach
+                                                <option value="0"  @if(0==$product_management->bank_id) selected @endif>Other</option>
                                             </select>
+                                            <input type="text" class="form-control hide" name="bank_id_other" value="{{ $product_management->other_bank }}" placeholder="Enter bank name">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
@@ -77,7 +79,7 @@
                                             <input class="form-control" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ $product_management->amount }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Tenor</label>
                                             <select class="form-control" name="tenure">
@@ -87,16 +89,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
-                                        <div class="form-group">
-                                            <label>Privacy</label>
-                                            <select class="form-control" name="privacy">
-                                                <option value="DOD" @if('DOD'==$product_management->privacy) selected  @endif>DOD</option>
-                                                <option value="Anytime" @if('Anytime'==$product_management->privacy) selected @endif>Anytime</option>
-                                                <option value="Occasionally" @if('Occasionally'==$product_management->privacy) selected @endif>Occasionally</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="row">
                                             <div class="col-xs-6">
@@ -131,6 +124,31 @@
             </div>
         </div>
     </main>
+    <script type="text/javascript">
+        $("select[name='bank_id']").on("change", function() {
+            var value = $(this).val();
+            
+            if(value==0) {
+                $(this).attr("required", false);
+                $("input[name='bank_id_other']").removeClass("hide").attr("required", true);
+            }
+            else {
+                $(this).attr("required", true);
+                $("input[name='bank_id_other']").addClass("hide").attr("required", false);
+            }
+        });
+
+        var value = $("select[name='bank_id']").val();
+            
+        if(value==0) {
+            $("select[name='bank_id']").attr("required", false);
+            $("input[name='bank_id_other']").removeClass("hide").attr("required", true);
+        }
+        else {
+            $("select[name='bank_id']").attr("required", true);
+            $("input[name='bank_id_other']").addClass("hide").attr("required", false);
+        }
+    </script>
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}
     @if(isset($page->contact_or_offer) && isset($systemSetting->{$page->contact_or_offer}))

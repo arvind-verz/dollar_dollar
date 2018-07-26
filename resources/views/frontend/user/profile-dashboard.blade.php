@@ -61,12 +61,94 @@
                                     <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
                                 </div>
                             </div>
+                            @if(count($user_products))
+                            <div class="ps-block--box recommended-product">
+                                <div class="ps-block__header">
+                                    <h5><img src="img/icons/file.png" alt="">recommended products</h5><a href="#">View all</a>
+                                </div>
+                                <div class="ps-block__content">
+                                    
+                                    @foreach($user_products as $promotion_product)
+                                    <div class="ps-block--short-product second"><img src="img/logo/1.png" alt="">
+                                        <h4>up to <strong> 1.3%</strong></h4>
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
+                                            <p><strong>Min:</strong> SGD $20,000</p>
+                                            <p class="highlight">12 Months</p>
+                                        </div><a class="ps-btn" href="#">More info</a>
+                                    </div>
+                                    @endforeach
+                                    
+                                </div>
+                            </div>.
+                            @endif
+                            <div class="ps-block--box no-border">
+                                <div class="ps-block__header">
+                                    <h5><img src="img/icons/file.png" alt="">Recently Added Products</h5><a href="#">View all</a>
+                                </div>
+                                <div class="ps-block__content">
+                                    <div class="ps-table-wrap">
+                                        <table class="ps-table ps-table--product-managerment" id="datatable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Bank</th>
+                                                    <th>Account
+                                                        <br> Name</th>
+                                                    <th>Amount</th>
+                                                    <th>Tenor
+                                                        <br> (M= months,
+                                                        <br> D = Days)</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Interest Earned</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                        @if(count($user_products))
+                                                    @foreach($user_products as $value)
+                                                        @php
+                                                            $curr_date = date("Y-m-d", strtotime('now'));
+                                                            $start_date = date("Y-m-d", strtotime($value->start_date));
+                                                            $end_date = date("Y-m-d", strtotime($value->end_date));
+                                                        @endphp
+                                                    <tr>
+                                                        <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
+                                                        <td>{{ $value->account_name }}</td>
+                                                        <td>{{ $value->amount }}</td>
+                                                        <td>{{ $value->tenure }}</td>
+                                                        <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
+                                                        <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
+                                                        <td>{{ $value->interest_earned }}</td>
+                                                        <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
+                                                        <td>
+                                                            <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
+                                                            <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                @else
+                                                <tr>
+                                                    <td class="text-center" cols="9">No data found.</td>
+                                                </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#datatable, #datatable1').DataTable();
+        } );
+    </script>
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}
     @if(isset($page->contact_or_offer) && isset($systemSetting->{$page->contact_or_offer}))
