@@ -97,6 +97,12 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $( ".only_numeric" ).on( "keydown", function( event ) {
+           if(event.keyCode==189)
+           {
+            event.preventDefault();
+           }
+        })
         $(".only_numeric").numeric();
     });
 
