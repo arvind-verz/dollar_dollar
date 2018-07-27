@@ -270,21 +270,20 @@
             $product_range = $promotion_product->product_range;
 
             ?>
+                @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+                    <div class="ps-poster-popup">
+                        <div class="close-popup">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </div>
+                        <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
+                           target="_blank"><img
+                                    src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
+                                    alt=""></a>
+                    </div>
+                    @endif
                     <!-- INDIVIDUAL CRITERIA BASE -->
             @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
-                    @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
-                        <div class="ps-poster-popup">
-                            <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                            </div>
-                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
-                               target="_blank"><img
-                                        src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
-                                        alt=""></a>
-                        </div>
-                    @endif
-
-                <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
+                <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                         {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
@@ -298,7 +297,7 @@
                             if(!empty($ads[0]->ad_image_horizontal)) {
                             @endphp
                             <div class="ps-product__poster"><a
-                                        href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                        href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}" target="_blank"><img
                                             src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
                                             alt=""></a></div>
                             @php } @endphp
@@ -382,7 +381,7 @@
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div>
 
-                                <a href="#"><img
+                                <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}" ><img
                                             src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                             alt="" target="_blank"></a>
 
@@ -400,7 +399,7 @@
 
                         <!-- TIER BASE -->
                 @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
-                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
+                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
 
                             {{--<div class="ps-product__action"><a class="ps-btn ps-btn--red" href="#">Apply
@@ -415,7 +414,7 @@
                                 if(!empty($ads[0]->ad_image_horizontal)) {
                                 @endphp
                                 <div class="ps-product__poster"><a
-                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}" target="_blank"><img
                                                 src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
                                                 alt=""></a></div>
                                 @php } @endphp
@@ -497,7 +496,7 @@
                                         <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
 
-                                    <a href="#"><img
+                                    <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}" ><img
                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                 alt="" target="_blank"></a>
 
@@ -514,7 +513,7 @@
                     @endif
                             <!-- COMBINE TIER BASE -->
                     @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
-                        <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif"  id="{{ $j }}">
+                        <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"  id="{{ $j }}">
                             <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}"
                                                                  alt="">
 
@@ -529,7 +528,7 @@
                                     if(!empty($ads[0]->ad_image_horizontal)) {
                                     @endphp
                                     <div class="ps-product__poster"><a
-                                                href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}" target="_blank"><img
                                                     src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
                                                     alt=""></a></div>
                                     @php } @endphp
@@ -658,7 +657,7 @@
                                             <i class="fa fa-times" aria-hidden="true"></i>
                                         </div>
 
-                                        <a href="#"><img
+                                        <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}" ><img
                                                     src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                     alt="" target="_blank"></a>
 
@@ -673,7 +672,7 @@
                                 <!-- DBS CRITERIA -->
                         @if($promotion_product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
 
-                            <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif" id="{{ $j }}">
+                            <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif" id="{{ $j }}">
                                 <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}"
                                                                      alt="">
 
@@ -688,7 +687,7 @@
                                         if(!empty($ads[0]->ad_image_horizontal)) {
                                         @endphp
                                         <div class="ps-product__poster"><a
-                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
+                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}" target="_blank"><img
                                                         src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
                                                         alt=""></a></div>
                                         @php } @endphp
@@ -752,7 +751,7 @@
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </div>
 
-                                            <a href="#"><img
+                                            <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}" ><img
                                                         src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                         alt="" target="_blank"></a>
 
