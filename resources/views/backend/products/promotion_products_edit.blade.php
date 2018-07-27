@@ -25,9 +25,9 @@
                     <div class="nav-tabs-custom" id="rootwizard">
                         <ul class="nav nav-tabs pull-right">
 
-                            <li><a href="#basic-detail" data-toggle="tab">Other Detail</a></li>
-                            <li><a href="#formula-detail" data-toggle="tab">Formula Detail</a></li>
-                            <li class="active"><a href="#product-detail" data-toggle="tab">Product Detail</a></li>
+                            <li><a href="#basic-detail" data-toggle="tab" class="pointer-disable">Other Detail</a></li>
+                            <li><a href="#formula-detail" data-toggle="tab" class="pointer-disable">Formula Detail</a></li>
+                            <li class="active"><a href="#product-detail" data-toggle="tab" class="pointer-disable">Product Detail</a></li>
                             <li class="pull-left header"><i class="fa fa-edit"></i>
                                 {{'Product '.EDIT_ACTION}}</li>
 

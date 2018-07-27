@@ -6699,3 +6699,6 @@ table.text-center th {
 ol.breadcrumb>li.active {
     font-weight: bold;
 }
+.pointer-disable{
+    pointer-events: none;
+}
