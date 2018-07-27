@@ -347,7 +347,7 @@
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </div>
 
-                                            <a href="#"><img
+                                            <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}" ><img
                                                         src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                         alt="" target="_blank"></a>
 
@@ -420,7 +420,7 @@
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </div>
 
-                                            <a href="#"><img
+                                            <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
                                                         src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                         alt="" target="_blank"></a>
 
@@ -506,7 +506,7 @@
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </div>
 
-                                            <a href="#"><img
+                                            <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
                                                         src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                         alt="" target="_blank"></a>
 
@@ -583,7 +583,7 @@
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </div>
 
-                                            <a href="#"><img
+                                            <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
                                                         src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                         alt="" target="_blank"></a>
 
@@ -654,7 +654,7 @@
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </div>
 
-                                            <a href="#"><img
+                                            <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
                                                         src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                         alt="" target="_blank"></a>
 
