@@ -15,7 +15,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            @include('backend.inc.messages')
+            @include('backend.inc.messages') 
             <div class="col-xs-12">
                 <div class="box box-info ">
                     <div class="box-header with-border">
