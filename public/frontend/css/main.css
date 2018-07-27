@@ -2412,7 +2412,7 @@ button {
 .ps-table--product thead tr th, td {
     font-family: "Montserrat", sans-serif;
     padding: 10px;
-    background-color: transparent;
+    background-color: #0d6ec9;
     border: none;
     text-align: center;
     color: #fff;
@@ -2536,6 +2536,7 @@ button {
     border: 1px solid #eaeaea;
     font-size: 15px;
     color: #303030;
+    background: transparent;
 }
 
 .ps-table--product-managerment tbody tr td:last-child button {
@@ -5344,7 +5345,7 @@ span.ps-post__meta a {
 
 .ps-slider--home.owl-carousel .bg--cover {
     height: 428px;
-}.display_fixed .owl-item .col-lg-3{width:100%;}.display_fixed.owl-slider.nav-outside .owl-nav{top:-50px;}.display_fixed.owl-slider.nav-outside .owl-nav .owl-next{margin-right:0;}
+}.display_fixed .owl-item .col-lg-3{width:100%;}.display_fixed.owl-slider.nav-outside .owl-nav{top: -75px;}.display_fixed.owl-slider.nav-outside .owl-nav .owl-next{margin-right:0;}
 .display_fixed.owl-slider.nav-outside .owl-nav .owl-prev{right: 50px;position: absolute;}
 .prefix_dollar { padding-left:30px; background:#ffffff url(../img/dollar-sign.png) 12px center no-repeat; }
 .ps-home-fixed-deposit .ps-section__footer { position:relative; }
@@ -5444,13 +5445,7 @@ span.ps-post__meta a {
     }
 }
 
-.ps-home-fixed-deposit.ps-tabs-root .ps-section__content.bg--cover .product-row-01.clearfix .owl-nav{
-    top: -70px;
-}
-.ps-home-fixed-deposit.ps-tabs-root .ps-section__content.bg--cover .product-row-01.clearfix .owl-nav .owl-prev, .ps-home-fixed-deposit.ps-tabs-root .ps-section__content.bg--cover .product-row-01.clearfix .owl-nav .owl-next{
-    position: absolute;
-    right: 70px;
-}
+
 
 .ps-main .ps-dashboard .ps-block__content p{
     width: 100%;
@@ -5460,4 +5455,14 @@ span.ps-post__meta a {
    float: right;
    width: 40px;
    height: 40px;
+}
+
+.owl-slider.nav-outside .owl-nav{ z-index: 999;}
+
+.ps-home-fixed-deposit.ps-tabs-root .ps-section__content.bg--cover .product-row-01.clearfix .owl-nav .owl-prev{
+    position: absolute;
+    right: 70px;
+} .ps-home-fixed-deposit.ps-tabs-root .ps-section__content.bg--cover .product-row-01.clearfix .owl-nav .owl-next{
+    position: absolute;
+    right: 0px;
 }
