@@ -105,6 +105,7 @@ class AccountInformationController extends Controller
     {
         $account_information = User::find($id);
         $validate = Validator::make($request->all(), [
+            'email'         =>  'required|email'
             'first_name'    =>  'required',
             'last_name'     =>  'required',
             'tel_phone'       =>  'numeric|nullable'
@@ -120,6 +121,7 @@ class AccountInformationController extends Controller
             return redirect()->route('account-information.edit')->withErrors($validate)->withInput();
         }
         else {
+            $account_information->email    =   $request->email;
             $account_information->first_name    =   $request->first_name;
             $account_information->last_name     =   $request->last_name;
             $account_information->tel_phone     =   $request->tel_phone;
