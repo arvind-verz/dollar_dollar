@@ -559,7 +559,13 @@ class Helper
 
     public static function inThousand($amount) {
         //dd($amount);
-        return $amount > 999 ? ($amount/1000) . 'k' : $amount;
+        if($amount > 999)
+        {
+            $amount =  round(($amount/1000),3) . 'k';
+        }else{
+            $amount = round($amount,2);
+        }
+        return $amount;
     }
 
 }
