@@ -113,7 +113,7 @@
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content"><span class="prefix_holder">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                                         $@elseif(!isset($searchFilter['filter']))$@endif</span>
-                                                <input class="form-control" name="search_value" type="text"
+                                                <input class="form-control only_numeric" name="search_value" type="text"
                                                        placeholder=""
                                                        value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}">
                                             </div>
