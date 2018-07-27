@@ -5451,3 +5451,13 @@ span.ps-post__meta a {
     position: absolute;
     right: 70px;
 }
+
+.ps-main .ps-dashboard .ps-block__content p{
+    width: 100%;
+    display: inline-block;
+}
+.ps-main .ps-dashboard .ps-block__content p input[type="checkbox"]{
+   float: right;
+   width: 40px;
+   height: 40px;
+}
