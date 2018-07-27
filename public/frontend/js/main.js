@@ -20,7 +20,7 @@ var isMobile = {
 }
 $(".ps-poster-popup .close-popup").click(function(){
     $(this).parent().slideUp();
-    $(".product-popup").slideDown();
+    $(this).parent().next(".product-popup").slideDown();
 });
 function backgroundImage() {
     var databackground = $('[data-background]');
