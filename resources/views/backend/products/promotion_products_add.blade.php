@@ -129,8 +129,8 @@
                                                         Date
                                                     </button>
                                                 </div>
-                                                <input type="text" class="form-control pull-right datepicker1"
-                                                       name="promotion_start_date" id="promotion_start_date"
+                                                <input type="text" class="form-control pull-right datepicker1" data-date="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}"
+                                                       name="promotion_start_date" id="promotion_start_date" onchange="dateChange(this);"
                                                        value="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}">
 
                                                 <div class="input-group-addon ">
@@ -147,14 +147,17 @@
                                                         Date
                                                     </button>
                                                 </div>
-                                                <input type="text" class="form-control pull-right datepicker1"
-                                                       name="promotion_end_date" id="promotion_end_date"
+                                                <input type="text" class="form-control pull-right datepicker1" data-date="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}"
+                                                       name="promotion_end_date" id="promotion_end_date" onchange="dateChange(this);"
                                                        value="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-sm-2 " id="ongoing">
+                                            <button type="button" data-status="false" id="ongoing" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>
                                         </div>
                                     </div>
                                     <div class="form-group">

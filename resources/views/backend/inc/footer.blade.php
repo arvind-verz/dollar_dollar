@@ -1758,4 +1758,50 @@
     });
 
     $('.iconpicker').iconpicker();
+
+    function dateChange(obj)
+    {
+        var ongoingButton;
+        var startDate = $("#promotion_start_date").val();
+        var endDate = $("#promotion_end_date").val();
+        if((startDate.length == 0)&&(endDate.length == 0))
+        {
+            ongoingButton = '<button type="button" data-status="true" id="ongoing" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
+        }else{
+            ongoingButton = '<button type="button" data-status="false" id="ongoing" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
+        }
+        $('#ongoing').html(ongoingButton);
+    }
+    function changeOnGoingStatus(obj)
+    {
+        var ongoingButton;
+        var status = $(obj).data('status');
+        var startDate = $("#promotion_start_date").data('date');
+        var endDate = $("#promotion_end_date").data('date');
+
+        if(status==true)
+        {
+            if((startDate.length==0)&&(endDate.length==0))
+            {
+                var d = new Date();
+
+                var month = d.getMonth()+1;
+                var day = d.getDate();
+
+                var output = d.getFullYear() + '-' +
+                        ((''+month).length<2 ? '0' : '') + month + '-' +
+                        ((''+day).length<2 ? '0' : '') + day;
+                startDate = endDate = output ;
+            }
+            $("#promotion_start_date").val(startDate);
+            $("#promotion_end_date").val(endDate);
+            ongoingButton = '<button type="button" data-status="false" id="ongoing" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
+        }else{
+            $("#promotion_start_date").val(null);
+            $("#promotion_end_date").val(null);
+            ongoingButton = '<button type="button" data-status="true" id="ongoing" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
+        }
+        $('#ongoing').html(ongoingButton);
+
+    }
 </script>

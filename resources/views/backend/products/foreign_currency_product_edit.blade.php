@@ -122,8 +122,8 @@
                                                         Date
                                                     </button>
                                                 </div>
-                                                <input type="text" class="form-control pull-right datepicker1"
-                                                       name="promotion_start_date" id="promotion_start_date"
+                                                <input type="text" class="form-control pull-right datepicker1" data-date="{{ $product->promotion_start ? date('Y-m-d', strtotime($product->promotion_start )) : null }}"
+                                                       name="promotion_start_date" id="promotion_start_date" onchange="dateChange(this);"
                                                        value="{{ $product->promotion_start? date('Y-m-d',strtotime($product->promotion_start )) : null}}">
 
                                                 <div class="input-group-addon ">
@@ -141,13 +141,20 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       name="promotion_end_date" id="promotion_end_date"
+                                                       name="promotion_end_date" id="promotion_end_date" onchange="dateChange(this);" data-date="{{ $product->promotion_end ? date('Y-m-d', strtotime($product->promotion_end )) : null }}"
                                                        value="{{ $product->promotion_end ? date('Y-m-d', strtotime($product->promotion_end )) : null }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-sm-2 " id="ongoing">
+                                            @if(($product->promotion_start==null) && ($product->promotion_end==null))
+                                                <button type="button" data-status="true" id="ongoing" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>
+                                            @else
+                                                <button type="button" data-status="false" id="ongoing" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
