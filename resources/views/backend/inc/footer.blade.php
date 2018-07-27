@@ -565,21 +565,6 @@
                             }
 
                         });
-                        if (rangeError == false) {
-                            $.ajax({
-                                method: "POST",
-                                url: "{{url('/admin/check-range')}}",
-                                data: {max_placement: maxPlacements, min_placement: minPlacements},
-                                cache: false,
-                                async: false,
-                                success: function (data) {
-                                    if (data == 1) {
-                                        errors[i] = 'Please check your placement range ';
-                                        i++;
-                                    }
-                                }
-                            });
-                        }
                         if (tenureError == false) {
                             $.ajax({
                                 method: "POST",
@@ -595,6 +580,42 @@
                                 }
                             });
                         }
+                        /*if (rangeError == false) {
+                            $.ajax({
+                                method: "POST",
+                                url: "{{url('/admin/check-range')}}",
+                                data: {max_placement: maxPlacements, min_placement: minPlacements},
+                                cache: false,
+                                async: false,
+                                success: function (data) {
+                                    //
+                                    if (data == 1) {
+                                        errors[i] = 'Please check your placement range ';
+                                        i++;
+                                    }
+                                    if (data == 2) {
+                                        errors[i] = 'Max Placement must be greater than Min Placement';
+                                        i++;
+                                    }
+                                }
+                            });
+                        }*/
+
+                        $.each(minPlacements, function (k, v) {
+
+                            if (Number(v) < Number(minPlacementAmount)) {
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                            if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                        });
                     }
                     if (jQuery.inArray(formula, FCDP1) !== -1) {
                         var currencies = $('#foreignCurrencyF1').find('select[name^="currency"]').map(function () {
@@ -650,7 +671,7 @@
                                 }
 
                             });
-                            if (rangeError == false) {
+                            /*if (rangeError == false) {
                                 $.ajax({
                                     method: "POST",
                                     url: "{{url('/admin/check-range')}}",
@@ -658,13 +679,35 @@
                                     cache: false,
                                     async: false,
                                     success: function (data) {
+
                                         if (data == 1) {
                                             errors[i] = 'Please check your placement range ';
                                             i++;
                                         }
+                                        if (data == 2) {
+                                            errors[i] = 'Max Placement must be greater than Min Placement';
+                                            i++;
+                                        }
                                     }
                                 });
-                            }
+                            }*/
+
+                            $.each(minPlacements, function (k, v) {
+
+                                if (Number(v) < Number(minPlacementAmount)) {
+
+                                    errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                    i++;
+
+                                    return false;
+                                }
+                                if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
+                                    errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                    i++;
+
+                                    return false;
+                                }
+                            });
                             /*if (tenureError == false) {
                                 $.ajax({
                                     method: "POST",
@@ -746,9 +789,30 @@
                                         errors[i] = 'Please check your placement range ';
                                         i++;
                                     }
+                                    if (data == 2) {
+                                        errors[i] = 'Max Placement must be greater than Min Placement';
+                                        i++;
+                                    }
                                 }
                             });
                         }
+
+                        $.each(minPlacements, function (k, v) {
+
+                            if (Number(v) < Number(minPlacementAmount)) {
+
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                            if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                        });
                     }
                     if (jQuery.inArray(formula, SDP6) !== -1) {
                         var maxPlacements = $('#savingDepositF4').find('input[name^="max_placement_sdp4"]').map(function () {
@@ -802,13 +866,35 @@
                                 cache: false,
                                 async: false,
                                 success: function (data) {
+
                                     if (data == 1) {
-                                        errors[i] = 'Please check your placement ';
+                                        errors[i] = 'Please check your placement range ';
+                                        i++;
+                                    }
+                                    if (data == 2) {
+                                        errors[i] = 'Max Placement must be greater than Min Placement';
                                         i++;
                                     }
                                 }
                             });
                         }
+
+                        $.each(minPlacements, function (k, v) {
+
+                            if (Number(v) < Number(minPlacementAmount)) {
+
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                            if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                        });
                     }
                     if (jQuery.inArray(formula, SDP3) !== -1) {
                         var minPlacement = $('#savingDepositF3').find('input[name="min_placement_sdp3"]').map(function () {
@@ -834,6 +920,12 @@
                         }
                         if (siborRate == '') {
                             errors[i] = 'The sibor rate is required.';
+                            i++;
+
+                        }
+                        if (Number(minPlacement) < Number(minPlacementAmount) || Number(maxPlacement) < Number(minPlacementAmount)) {
+
+                            errors[i] = 'All placement must be greater than or equal minimum placement amount.';
                             i++;
 
                         }
@@ -884,6 +976,12 @@
                         if (parseInt(displayMonth) > parseInt(placementMonth)) {
                             errors[i] = 'The display month interval is not greater than placement month.';
                             i++;
+                        }
+                        if (Number(minPlacement) < Number(minPlacementAmount) || Number(maxPlacement) < Number(minPlacementAmount)) {
+
+                            errors[i] = 'All placement must be greater than or equal minimum placement amount.';
+                            i++;
+
                         }
 
                     }
@@ -940,15 +1038,17 @@
                         }).get();
 
 
-                        if (parseInt(minPlacementAmount) > parseInt(minPlacement)) {
-                            errors[i] = 'The  minimum placement range  is not greater than or equal to minimum placement amount.';
+                        if (Number(minPlacement) < Number(minPlacementAmount) || Number(maxPlacement) < Number(minPlacementAmount)) {
+
+                            errors[i] = 'All placement must be greater than or equal minimum placement amount.';
                             i++;
-                        } else {
-                            if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
-                                errors[i] = 'Please check your placement range. ';
-                                i++;
-                            }
+
                         }
+                        if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
+                            errors[i] = 'Please check your placement range. ';
+                            i++;
+                        }
+
                         if (SalaryMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Salary) is required.';
                             i++;
@@ -1089,13 +1189,35 @@
                                 cache: false,
                                 async: false,
                                 success: function (data) {
+
                                     if (data == 1) {
                                         errors[i] = 'Please check your placement range ';
+                                        i++;
+                                    }
+                                    if (data == 2) {
+                                        errors[i] = 'Max Placement must be greater than Min Placement';
                                         i++;
                                     }
                                 }
                             });
                         }
+
+                        $.each(minPlacements, function (k, v) {
+
+                            if (Number(v) < Number(minPlacementAmount)) {
+
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                            if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                        });
 
                     }
                     if (formula == 9) {
@@ -1159,14 +1281,15 @@
                         }).get();
 
 
-                        if (parseInt(minPlacementAmount) > parseInt(minPlacement)) {
-                            errors[i] = 'The  minimum placement range  is not greater than or equal to minimum placement amount.';
+                        if (Number(minPlacement) < Number(minPlacementAmount) || Number(maxPlacement) < Number(minPlacementAmount)) {
+
+                            errors[i] = 'All placement must be greater than or equal minimum placement amount.';
                             i++;
-                        } else {
-                            if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
-                                errors[i] = 'Please check your placement range. ';
-                                i++;
-                            }
+
+                        }
+                        if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
+                            errors[i] = 'Please check your placement range. ';
+                            i++;
                         }
                         if (SalaryMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Salary) is required.';
@@ -1333,14 +1456,35 @@
                                 cache: false,
                                 async: false,
                                 success: function (data) {
+
                                     if (data == 1) {
                                         errors[i] = 'Please check your placement range ';
+                                        i++;
+                                    }
+                                    if (data == 2) {
+                                        errors[i] = 'Max Placement must be greater than Min Placement';
                                         i++;
                                     }
                                 }
                             });
                         }
 
+                        $.each(minPlacements, function (k, v) {
+
+                            if (Number(v) < Number(minPlacementAmount)) {
+
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                            if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
+                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                i++;
+
+                                return false;
+                            }
+                        });
                     }
                 }
                 if (errors.length) {

@@ -231,6 +231,13 @@ $(document).ready(function() {
     productCollapse();
     backToTop();
     tabs();
+    $( ".only_numeric" ).on( "keydown", function( event ) {
+        if(event.keyCode==189)
+        {
+            event.preventDefault();
+        }
+    })
+    $(".only_numeric").numeric();
 });
 
 $(window).on('load resize', function() {

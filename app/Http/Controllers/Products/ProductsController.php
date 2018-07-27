@@ -1732,6 +1732,10 @@ class ProductsController extends Controller
             $key = count($request->min_placement) - 1 - $key;
 
             for ($i = 0; $i <= (count($request->min_placement) - 1); $i++) {
+                if($request->min_placement[$key] > $request->max_placement[$key])
+                {
+                    return 2;
+                }
                 if (!is_null($request->min_placement[$key]) && !is_null($request->min_placement[$i]) && !is_null($request->max_placement[$i]) && ($key != $i)) {
                     if ($this->numberBetween($request->min_placement[$key], $request->min_placement[$i], $request->max_placement[$i])) {
                         return 1;

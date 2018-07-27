@@ -250,9 +250,9 @@
                             <p>
                                 <span class="highlight"> Promo: </span>
                                 @if($product->promotion_end == null)
-                                    ONGOING
+                                    {{ONGOING}}
                                 @elseif($product->promotion_end < $todayStartDate)
-                                    ENDED
+                                    {{EXPIRED}}
                                 @elseif($product->promotion_end > $todayStartDate)
                                     {{ date('M d, Y', strtotime($product->promotion_start)) . ' to ' . date('M d, Y', strtotime($product->promotion_end)) }}
                                 @endif
@@ -522,7 +522,7 @@
                                                             <thead>
                                                             <tr>
                                                                 <th>Account Balance in Stash account</th>
-                                                                <th>Base Interest/Prevailing Rate (PA)</th>
+                                                                <th>Base Interest (PA)</th>
                                                                 <th>Bonus Interest (PA)</th>
                                                                 <th>Total Interest (PA)</th>
                                                             </tr>
@@ -604,7 +604,7 @@
                                                                     @foreach($product->months as $month)
                                                                         <th>{{ 'MONTH ' . $month }}</th>
                                                                     @endforeach
-                                                                    <th>{{ 'END OF YEARS' }}</th>
+                                                                    <th>{{ 'END OF 2 YEARS' }}</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
