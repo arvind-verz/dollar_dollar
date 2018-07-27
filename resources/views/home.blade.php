@@ -160,7 +160,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +234,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -309,7 +309,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -397,7 +397,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('saving-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -432,7 +432,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('saving-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -472,7 +472,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('saving-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -507,7 +507,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('saving-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -547,7 +547,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('saving-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -582,7 +582,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('saving-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -635,7 +635,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('wealth-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -670,7 +670,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('wealth-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -710,7 +710,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('wealth-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -745,7 +745,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('wealth-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -785,7 +785,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('wealth-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -820,7 +820,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('wealth-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -873,7 +873,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('all-in-one-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -908,7 +908,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('all-in-one-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -948,7 +948,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('all-in-one-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -983,7 +983,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('all-in-one-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -1023,7 +1023,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('all-in-one-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -1058,7 +1058,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('all-in-one-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -1111,7 +1111,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('foreign-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -1146,7 +1146,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('foreign-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -1186,7 +1186,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('foreign-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -1221,7 +1221,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('foreign-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -1261,7 +1261,7 @@
 
                                         <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('foreign-deposit-mode'); ?>">More info</a>
                                 </div>
                             </div>
                         </div>
@@ -1296,7 +1296,7 @@
 
                                         <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
                                         </div>
-                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="<?php echo url('foreign-deposit-mode'); ?>">More info</a>
                                     </div>
                                   @endif
                                 @endforeach
@@ -1395,28 +1395,6 @@
             $(this).addClass("current");
             var id = $(this).find("a").attr("href");
             $("div"+id).find("ul.catListing li:first a").click();
-
-            var title = $(this).find("a").text();
-           
-            $("input[name='deposit_type']").val(title);
-            if (title == 'Fixed Deposit') {
-                $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');
-            }
-            else if (title == 'Saving Deposit') {
-                $(".view_all_types a").attr("href", '{{ url("saving-deposit-mode") }}');
-            }
-            else if (title == 'Wealth Deposit') {
-                $(".view_all_types a").attr("href", '{{ url("wealth-deposit-mode") }}');
-            }
-            else if (title == 'All In One Account') {
-                $(".view_all_types a").attr("href", '{{ url("all-in-one-deposit-mode") }}');
-            }
-            else if (title == 'Foreign Currency') {
-                $(".view_all_types a").attr("href", '{{ url("foreign-currency-deposit-mode") }}');
-            }
-            else {
-                $(".view_all_types a").attr("href", '{{ url("fixed-deposit-mode") }}');
-            }
         });
 
         /*$.ajax({
