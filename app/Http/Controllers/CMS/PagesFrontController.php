@@ -1425,10 +1425,11 @@ class PagesFrontController extends Controller
     {
 //dd($request->all());
         $account_type = $request->account_type;
+        $search_value = !empty($request->search_value) ? $request->search_value : '100000';
 
         $request = [
             'filter' => 'Placement',
-            'search_value' => $request->search_value,
+            'search_value' => $search_value,
         ];
 
         if ($account_type == 1) {

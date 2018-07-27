@@ -232,7 +232,7 @@
                     </div>
                     <div class="ps-product__content">
                         <h4 class="ps-product__heading">{!! $promotion_product->bank_sub_title !!}</h4>
-                        @if(count($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[0]->ad_image_horizontal)) { @endphp
+                        @if(!empty($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[0]->ad_image_horizontal)) { @endphp
                         <div class="ps-product__poster"><a href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"><img
                                                 src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
                                                 alt=""></a></div>
@@ -272,7 +272,7 @@
                                 </table>
                             </div>
                         </div>
-                        @if(count($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
+                        @if(!empty($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
                         <div class="ps-product__poster">
                             <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}" alt=""></a>
                         </div>
@@ -299,7 +299,7 @@
                                             @php }} } @endphp @endforeach
                         </div>
                         <div class="clearfix"></div>
-                        @if(count($promotion_product->ads_placement))
+                        @if(!empty($promotion_product->ads_placement))
                                         @php
                                         $ads = json_decode($promotion_product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -351,7 +351,7 @@
                                 </table>
                             </div>
                         </div>
-                        @if(count($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
+                        @if(!empty($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
                         <div class="ps-product__poster">
                             <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
                                                         src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
@@ -372,7 +372,7 @@
                                                     %</span></h2> @php } } @endphp @endforeach
                         </div>
                         <div class="clearfix"></div>
-                        @if(count($promotion_product->ads_placement))
+                        @if(!empty($promotion_product->ads_placement))
                                         @php
                                         $ads = json_decode($promotion_product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -427,7 +427,7 @@
                                 </table>
                             </div>
                         </div>
-                        @if(count($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
+                        @if(!empty($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
                         <div class="ps-product__poster">
                             <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
                                                             src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
@@ -453,7 +453,7 @@
 
                         </div>
                         <div class="clearfix"></div>
-                        @if(count($promotion_product->ads_placement))
+                        @if(!empty($promotion_product->ads_placement))
                                         @php
                                         $ads = json_decode($promotion_product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -499,7 +499,7 @@
                                 </table>
                             </div>
                         </div>
-                        @if(count($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
+                        @if(!empty($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
                         <div class="ps-product__poster">
                             <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
                                                                 src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
@@ -516,7 +516,7 @@
                                                         %</span></h2> @endforeach
                         </div>
                         <div class="clearfix"></div>
-                        @if(count($promotion_product->ads_placement))
+                        @if(!empty($promotion_product->ads_placement))
                                         @php
                                         $ads = json_decode($promotion_product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -563,7 +563,7 @@
                                 </table>
                             </div>
                         </div>
-                        @if(count($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
+                        @if(!empty($promotion_product->ads_placement)) @php $ads = json_decode($promotion_product->ads_placement); if(!empty($ads[1]->ad_image_vertical)) { @endphp
                         <div class="ps-product__poster">
                             <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}" target="_blank"><img
                                                                     src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
@@ -581,7 +581,7 @@
                                                             <br> {{--<span>Total interest rate 1%</span>--}}</h2> @php } } @endphp @endforeach
                         </div>
                         <div class="clearfix"></div>
-                        @if(count($promotion_product->ads_placement))
+                        @if(!empty($promotion_product->ads_placement))
                                         @php
                                         $ads = json_decode($promotion_product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -659,7 +659,7 @@
                                 </div>
                             </div>
                             <div class="clearfix"></div>
-                            @if(count($promotion_product->ads_placement))
+                            @if(!empty($promotion_product->ads_placement))
                                         @php
                                         $ads = json_decode($promotion_product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -695,9 +695,11 @@
             $(".search_type").removeClass("active");
             $("input[type='radio']").prop("checked", false);
             $(this).addClass("active").find("input[type='radio']").prop("checked", true);
-            var value = $(this).find("input[type='radio']").val();
+            var value = $(this).find("input[name='filter']").val();
+            $("input[name='search_value']").val('');
             if (value == 'Placement') {
                 prefix_holder = '$';
+                $("input[name='search_value']").val('100000');
             }
             $("span.prefix_holder").text(prefix_holder);
         });
