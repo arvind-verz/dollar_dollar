@@ -7,6 +7,7 @@
     $slug = HOME_SLUG;
     //get banners
     $banners = \Helper::getBanners($slug);
+    $datetime = Helper::todayDate();
     ?>
     {{--Banner section start--}}
 
@@ -128,110 +129,229 @@
                   </div>
                 </div>
                 <div class="productGridContainer target-content" id="showContent-container-1">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
-                      $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                    ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                    ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                    ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
-                    //->where('promotion_products.promotion_start', '<=', $start_date)
-                    //->where('promotion_products.promotion_end', '>=', $end_date)
-                    ->where('promotion_products.delete_status', '=', 0)
-                    ->where('promotion_products.status', '=', 1)
-                    ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
-                    ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                    ->get();
+                    <div class="product-row-01 clearfix">
+                        @php
+                        
+                          $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+                        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+                        ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+                        ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
+                        ->where('promotion_products.promotion_start', '<=', $datetime)
+                        ->where('promotion_products.promotion_end', '>=', $datetime)
+                        ->where('promotion_products.delete_status', '=', 0)
+                        ->where('promotion_products.status', '=', 1)
+                        ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
+                        ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+                        ->get();
+                        //dd($promotion_products);
+                          @endphp
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                      @endphp
-                        @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==FIX_DEPOSIT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
-
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==FIX_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-2" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
-                      $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
-                //->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
-                ->where('promotion_products.delete_status', '=', 0)
-                ->where('promotion_products.status', '=', 1)
-                ->orderBy('promotion_products.minimum_placement_amount', 'ASC')
-                ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                ->get();
+                    <div class="product-row-01 clearfix">
+                        @php
+                          $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+                        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+                        ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+                        ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
+                        ->where('promotion_products.promotion_start', '<=', $datetime)
+                        ->where('promotion_products.promotion_end', '>=', $datetime)
+                        ->where('promotion_products.delete_status', '=', 0)
+                        ->where('promotion_products.status', '=', 1)
+                        ->orderBy('promotion_products.minimum_placement_amount', 'ASC')
+                        ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+                        ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==FIX_DEPOSIT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==FIX_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-3" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                        @php
                         $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
-               // ->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
-                ->where('promotion_products.delete_status', '=', 0)
-                ->where('promotion_products.status', '=', 1)
-                ->orderBy('promotion_products.promotion_period', 'ASC')
-                ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                ->get();
+                        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+                        ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+                        ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
+                        ->where('promotion_products.promotion_start', '<=', $datetime)
+                        ->where('promotion_products.promotion_end', '>=', $datetime)
+                        ->where('promotion_products.delete_status', '=', 0)
+                        ->where('promotion_products.status', '=', 1)
+                        ->orderBy('promotion_products.promotion_period', 'ASC')
+                        ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+                        ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                            @if ($products->promotion_type_id ==FIX_DEPOSIT)
-                                <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                    <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
-
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
                                     <div class="ps-block__info">
-                                    <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                    <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                              @endif
-                            @endforeach
+                            </div>
+                        </div>
+                        @php $i++; @endphp
+                            @endif
+                        @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==FIX_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
               </div>
             </div>
             <div class="ps-tab" id="tab-2">
@@ -247,14 +367,14 @@
                   </div>
                 </div>
                 <div class="productGridContainer target-content" id="showContent-container-4">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                        @php
                       $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                     ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                     ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                     ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
-                    //->where('promotion_products.promotion_start', '<=', $start_date)
-                    //->where('promotion_products.promotion_end', '>=', $end_date)
+                    ->where('promotion_products.promotion_start', '<=', $datetime)
+                    ->where('promotion_products.promotion_end', '>=', $datetime)
                     ->where('promotion_products.delete_status', '=', 0)
                     ->where('promotion_products.status', '=', 1)
                     ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
@@ -262,95 +382,214 @@
                     ->get();
 
                       @endphp
-                        @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==SAVING_DEPOSIT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==SAVING_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-5" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                       $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
-                //->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
-                ->where('promotion_products.delete_status', '=', 0)
-                ->where('promotion_products.status', '=', 1)
-                ->orderBy('promotion_products.minimum_placement_amount', 'ASC')
-                ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                ->get();
+                        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+                        ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+                        ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
+                        ->where('promotion_products.promotion_start', '<=', $datetime)
+                        ->where('promotion_products.promotion_end', '>=', $datetime)
+                        ->where('promotion_products.delete_status', '=', 0)
+                        ->where('promotion_products.status', '=', 1)
+                        ->orderBy('promotion_products.minimum_placement_amount', 'ASC')
+                        ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+                        ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==SAVING_DEPOSIT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==SAVING_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-6" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                         $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
-               // ->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
-                ->where('promotion_products.delete_status', '=', 0)
-                ->where('promotion_products.status', '=', 1)
-                ->orderBy('promotion_products.promotion_period', 'ASC')
-                ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                ->get();
+                        ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+                        ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+                        ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
+                        ->where('promotion_products.promotion_start', '<=', $datetime)
+                        ->where('promotion_products.promotion_end', '>=', $datetime)
+                        ->where('promotion_products.delete_status', '=', 0)
+                        ->where('promotion_products.status', '=', 1)
+                        ->orderBy('promotion_products.promotion_period', 'ASC')
+                        ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+                        ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                            @if ($products->promotion_type_id ==SAVING_DEPOSIT)
-                                <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                    <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
-
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
                                     <div class="ps-block__info">
-                                    <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                    <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                              @endif
-                            @endforeach
+                            </div>
+                        </div>
+                        @php $i++; @endphp
+                            @endif
+                        @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==SAVING_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
               </div>
             </div>
             <div class="ps-tab" id="tab-3">
@@ -366,14 +605,14 @@
                   </div>
                 </div>
                 <div class="productGridContainer target-content" id="showContent-container-7">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                       $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                     ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                     ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                     ->where('promotion_products.promotion_type_id', '=', WEALTH_DEPOSIT)
-                    //->where('promotion_products.promotion_start', '<=', $start_date)
-                    //->where('promotion_products.promotion_end', '>=', $end_date)
+                    ->where('promotion_products.promotion_start', '<=', $datetime)
+                    ->where('promotion_products.promotion_end', '>=', $datetime)
                     ->where('promotion_products.delete_status', '=', 0)
                     ->where('promotion_products.status', '=', 1)
                     ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
@@ -381,34 +620,74 @@
                     ->get();
 
                       @endphp
-                        @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==WEALTH_DEPOSIT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==WEALTH_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-8" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                       $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                 ->where('promotion_products.promotion_type_id', '=', WEALTH_DEPOSIT)
-                //->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
+                ->where('promotion_products.promotion_start', '<=', $datetime)
+                ->where('promotion_products.promotion_end', '>=', $datetime)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->orderBy('promotion_products.minimum_placement_amount', 'ASC')
@@ -416,34 +695,74 @@
                 ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==WEALTH_DEPOSIT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==WEALTH_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-9" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                         $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                 ->where('promotion_products.promotion_type_id', '=', WEALTH_DEPOSIT)
-               // ->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
+                ->where('promotion_products.promotion_start', '<=', $datetime)
+                ->where('promotion_products.promotion_end', '>=', $datetime)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->orderBy('promotion_products.promotion_period', 'ASC')
@@ -451,25 +770,64 @@
                 ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                            @if ($products->promotion_type_id ==WEALTH_DEPOSIT)
-                                <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                    <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
-
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
                                     <div class="ps-block__info">
-                                    <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                    <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                              @endif
-                            @endforeach
+                            </div>
+                        </div>
+                        @php $i++; @endphp
+                            @endif
+                        @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==WEALTH_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
               </div>
             </div>
             <div class="ps-tab" id="tab-4">
@@ -485,14 +843,14 @@
                   </div>
                 </div>
                 <div class="productGridContainer target-content" id="showContent-container-10">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                       $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                     ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                     ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                     ->where('promotion_products.promotion_type_id', '=', ALL_IN_ONE_ACCOUNT)
-                    //->where('promotion_products.promotion_start', '<=', $start_date)
-                    //->where('promotion_products.promotion_end', '>=', $end_date)
+                    ->where('promotion_products.promotion_start', '<=', $datetime)
+                    ->where('promotion_products.promotion_end', '>=', $datetime)
                     ->where('promotion_products.delete_status', '=', 0)
                     ->where('promotion_products.status', '=', 1)
                     ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
@@ -500,34 +858,74 @@
                     ->get();
 
                       @endphp
-                        @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==ALL_IN_ONE_ACCOUNT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==ALL_IN_ONE_ACCOUNT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-11" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                       $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                 ->where('promotion_products.promotion_type_id', '=', ALL_IN_ONE_ACCOUNT)
-                //->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
+                ->where('promotion_products.promotion_start', '<=', $datetime)
+                ->where('promotion_products.promotion_end', '>=', $datetime)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->orderBy('promotion_products.minimum_placement_amount', 'ASC')
@@ -535,34 +933,74 @@
                 ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==ALL_IN_ONE_ACCOUNT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==ALL_IN_ONE_ACCOUNT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-12" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                         $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                 ->where('promotion_products.promotion_type_id', '=', ALL_IN_ONE_ACCOUNT)
-               // ->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
+                ->where('promotion_products.promotion_start', '<=', $datetime)
+                ->where('promotion_products.promotion_end', '>=', $datetime)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->orderBy('promotion_products.promotion_period', 'ASC')
@@ -570,25 +1008,64 @@
                 ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                            @if ($products->promotion_type_id ==ALL_IN_ONE_ACCOUNT)
-                                <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                    <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
-
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
                                     <div class="ps-block__info">
-                                    <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                    <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                              @endif
-                            @endforeach
+                            </div>
+                        </div>
+                        @php $i++; @endphp
+                            @endif
+                        @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==ALL_IN_ONE_ACCOUNT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
               </div>
             </div>
             <div class="ps-tab" id="tab-5">
@@ -604,14 +1081,14 @@
                   </div>
                 </div>
                 <div class="productGridContainer target-content" id="showContent-container-13">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                       $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                     ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                     ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                     ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
-                    //->where('promotion_products.promotion_start', '<=', $start_date)
-                    //->where('promotion_products.promotion_end', '>=', $end_date)
+                    ->where('promotion_products.promotion_start', '<=', $datetime)
+                    ->where('promotion_products.promotion_end', '>=', $datetime)
                     ->where('promotion_products.delete_status', '=', 0)
                     ->where('promotion_products.status', '=', 1)
                     ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
@@ -619,34 +1096,74 @@
                     ->get();
 
                       @endphp
-                        @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-14" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                       $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                 ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
-                //->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
+                ->where('promotion_products.promotion_start', '<=', $datetime)
+                ->where('promotion_products.promotion_end', '>=', $datetime)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->orderBy('promotion_products.minimum_placement_amount', 'ASC')
@@ -654,34 +1171,74 @@
                 ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                        @if ($products->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT)
-                            <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                <div class="ps-block__info">
-                                <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
-
-                                <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                    </div>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                            <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
                             </div>
-                          @endif
+                        </div>
+                        @php $i++; @endphp
+                            @endif
                         @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="productGridContainer target-content" id="showContent-container-15" style="display:none;">
-                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="4" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
-                      @php
+                    <div class="product-row-01 clearfix">
+                       @php
                         $promotion_products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                 ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
-               // ->where('promotion_products.promotion_start', '<=', $start_date)
-                //->where('promotion_products.promotion_end', '>=', $end_date)
+                ->where('promotion_products.promotion_start', '<=', $datetime)
+                ->where('promotion_products.promotion_end', '>=', $datetime)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->orderBy('promotion_products.promotion_period', 'ASC')
@@ -689,25 +1246,64 @@
                 ->get();
 
                       @endphp
-                            @foreach ($promotion_products as $products)
-                            @if ($products->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT)
-                                <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
-                                    <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
-
+                        @php $i = 1;$featured = []; @endphp
+                        @foreach($promotion_products as $promotion_product)
+                            @if($promotion_product->featured==1)
+                            @php $featured[] = $i; @endphp
+                        <div class="product-col-01">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
                                     <div class="ps-block__info">
-                                    <p><strong> rate: </strong>1.3%</p>
+                                        <p><strong> rate: </strong>1.3%</p>
 
-                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
 
-                                    <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
                                     </div>
-                                <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    <a class="ps-btn" href="#{{ $i }}">More info</a>
                                 </div>
-                              @endif
-                            @endforeach
+                            </div>
+                        </div>
+                        @php $i++; @endphp
+                            @endif
+                        @endforeach
+                        @php $i = 1;$featured_item = 5-count($featured);
+                        $featured_count = count($featured);
+                        $featured_width = 12;
+                        if($featured_count==1) {
+                            $featured_width = 2;
+                        }
+                        elseif($featured_count==2) {
+                            $featured_width = 3;
+                        }
+                        elseif($featured_count==3) {
+                            $featured_width = 4;
+                        }
+                        @endphp
+                        <div class="product-col-0{{ $featured_width }}">
+                            <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="20" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="<i class='fa fa-angle-left'></i>" data-owl-nav-right="<i class='fa fa-angle-right'></i>">
+                              
+                                @foreach ($promotion_products as $products)
+                                @if ($products->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT && $products->featured==0)
+                                    <div class="ps-block--short-product"><img src="<?php echo asset($products->brand_logo); ?>" alt="">
+                                        <h4>up to <strong> <?php echo $products->maximum_interest_rate; ?>%</strong></h4>
+
+                                        <div class="ps-block__info">
+                                        <p><strong> rate: </strong>1.3%</p>
+
+                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($products->minimum_placement_amount) }}</p>
+
+                                        <p class="highlight"><?php echo $products->promotion_period; ?> Months</p>
+                                        </div>
+                                    <a class="ps-btn" href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
+                                    </div>
+                                  @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
               </div>
             </div>
           </div>

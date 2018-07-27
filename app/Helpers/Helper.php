@@ -562,4 +562,8 @@ class Helper
         return $amount > 999 ? ($amount/1000) . 'k' : $amount;
     }
 
+    public static function todayDate() {
+        return Carbon::now()->format('Y-m-d');
+    }
+
 }

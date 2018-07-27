@@ -64,8 +64,8 @@ if (!$systemSetting) {
         <!-- Footer END -->
 <div class="totop">
       <div id="totop"><span>backtotop<i class="fa fa-arrow-right"></i></span></div>
-      <a class="profile" href=""><span>profile page<i class="fa fa-arrow-right"></i></span></a>
-      <a class="placement" href=""><span>placement amount<i class="fa fa-arrow-right"></i></span></a>
+      <a class="profile" href="{{ url(PROFILEDASHBOARD) }}"><span>profile page<i class="fa fa-arrow-right"></i></span></a>
+      <a class="placement" href="javascript:void(0)"><span>placement amount<i class="fa fa-arrow-right"></i></span></a>
     </div>
 
 <script type="text/javascript">
@@ -89,7 +89,11 @@ if (!$systemSetting) {
         });
     });
     
+    $('a.placement').click(function() {
+        $("input[name='search_value']").focus();
+    });    
 </script>
+
 <script src="{{ asset('frontend/js/plugin.js') }}"></script>
 <script src="{{ asset('frontend/js/jquery.numeric.js') }}"></script>
 <script src="{{ asset('frontend/plugins/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
