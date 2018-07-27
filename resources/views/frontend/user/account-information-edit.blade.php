@@ -59,6 +59,7 @@
                                 <div class="ps-block__content">
                                     {!! Form::open(['route' => ['account-information.update', AUTH::user()->id], 'method'   => 'POST']) !!}
                                     <h5>Contact Information</h5>
+                                    <p><strong> Email: </strong> <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{ AUTH::user()->email }}"></p>
                                     <p><strong> First Name: </strong> <input type="text" class="form-control" name="first_name" placeholder="Enter first name" value="{{ AUTH::user()->first_name }}"></p>
                                     <p><strong> Last Name: </strong><input type="text" class="form-control" name="last_name" placeholder="Enter last name" value="{{ AUTH::user()->last_name }}"></p>
                                     
