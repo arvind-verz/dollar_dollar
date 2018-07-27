@@ -82,11 +82,7 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Tenor</label>
-                                            <select class="form-control" name="tenure">
-                                                <option value="">Please select</option>
-                                                <option value="1" @if(1==$product_management->tenure) selected @endif>1</option>
-                                                <option value="2" @if(2==$product_management->tenure) selected @endif>2</option>
-                                            </select>
+                                            <input type="text" class="form-control only_numeric" name="tenure" value="{{ $product_management->tenure }}">
                                         </div>
                                     </div>
                                     
