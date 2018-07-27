@@ -302,7 +302,10 @@ class PagesFrontController extends Controller
             $search_filter['search_value'] = $defaultPlacement;
             $search_filter['filter'] = PLACEMENT;
             $search_filter['sort_by'] = MAXIMUM;
+        }else{
+            $search_filter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value']*1000) : 0;
         }
+
         //dd($search_filter);
             foreach ($promotion_products as $product) {
                 $status = false;
@@ -443,7 +446,7 @@ class PagesFrontController extends Controller
             }
         //dd($orginalProducts);
         $promotion_products = $orginalProducts;
-
+        $search_filter['search_value'] = $search_filter['search_value']/1000 ;
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "result_data", "legendtable"));
     }
 
@@ -652,7 +655,8 @@ class PagesFrontController extends Controller
             } else {
                 $placement = 0;
                 $searchFilter = $request;
-                $searchValue = isset($request['search_value']) ? $request['search_value'] : 0;
+                $searchFilter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value']*1000) : 0;
+                $searchValue =$searchFilter['search_value'];
             }
             $productRanges = json_decode($product->product_range);
             $todayDate = Carbon::today();
@@ -995,6 +999,7 @@ class PagesFrontController extends Controller
             }
 
         }
+        $searchFilter['search_value'] = $searchFilter['search_value']/1000 ;
         return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
 
     }
@@ -1049,6 +1054,7 @@ class PagesFrontController extends Controller
             $searchFilter = [];
         } else {
             $searchFilter = $request;
+
         }
         foreach ($products as $key => &$product) {
             //dd($product);
@@ -1067,7 +1073,8 @@ class PagesFrontController extends Controller
             } else {
                 $placement = 0;
                 $searchFilter = $request;
-                $searchValue = isset($request['search_value']) ? $request['search_value'] : 0;
+                $searchFilter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value']*1000) : 0;
+                $searchValue = $searchFilter['search_value'];
             }
             $productRanges = json_decode($product->product_range);
             $todayDate = Carbon::today();
@@ -1410,6 +1417,7 @@ class PagesFrontController extends Controller
             }
 
         }
+        $searchFilter['search_value'] = $searchFilter['search_value']/1000 ;
         return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
     }
 
@@ -1672,7 +1680,8 @@ class PagesFrontController extends Controller
             } else {
                 $placement = 0;
                 $search_filter = $request;
-                $searchValue = isset($search_filter['search_value']) ? $search_filter['search_value'] : 0;
+                $search_filter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value']*1000) : 0;
+                $searchValue =  $search_filter['search_value'];
                 $salary = (int)$search_filter['salary'];
                 $giro = (int)$search_filter['giro'];
                 $spend = (int)$search_filter['spend'];
@@ -2057,6 +2066,7 @@ class PagesFrontController extends Controller
             }
 
         }
+        $search_filter['search_value'] = $search_filter['search_value']/1000 ;
         //dd($promotion_products);
         return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable"));
     }

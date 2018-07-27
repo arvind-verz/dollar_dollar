@@ -248,9 +248,9 @@
                             <p>
                                 <span class="highlight"> Promo: </span>
                                 @if($product->promotion_end == null)
-                                    ONGOING
+                                    {{ONGOING}}
                                 @elseif($product->promotion_end < $todayStartDate)
-                                    ENDED
+                                    {{EXPIRED}}
                                 @elseif($product->promotion_end > $todayStartDate)
                                     {{ date('M d, Y', strtotime($product->promotion_start)) . ' to ' . date('M d, Y', strtotime($product->promotion_end)) }}
                                 @endif
@@ -269,7 +269,7 @@
                         </div>
                     </div>
                     <div class="ps-product__content">
-                        <h4 class="ps-product__heading">{!! $promotion_product->bank_sub_title !!}</h4>
+                        <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
                         @if(count($product->ads))
                             @if(!empty($ads[0]->ad_image_horizontal))
 

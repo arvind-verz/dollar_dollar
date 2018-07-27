@@ -252,9 +252,9 @@
                                 <p>
                                     <span class="highlight"> Promo: </span>
                                     @if($promotion_product->promotion_end == null)
-                                        ONGOING
+                                        {{ONGOING}}
                                     @elseif($promotion_product->promotion_end < $todayStartDate)
-                                        ENDED
+                                        {{EXPIRED}}
                                     @elseif($promotion_product->promotion_end > $todayStartDate)
                                         {{ date('M d, Y', strtotime($promotion_product->promotion_start)) . ' to ' . date('M d, Y', strtotime($promotion_product->promotion_end)) }}
                                     @endif

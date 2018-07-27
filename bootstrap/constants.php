@@ -256,3 +256,7 @@ define('TOTAL_AMOUNT', "TOTAL AMOUNT");
 //sort by constants
 define('MINIMUM', "1");
 define('MAXIMUM', "2");
+
+//words
+define('ONGOING', "ONGOING");
+define('EXPIRED', "EXPIRED");
