@@ -5245,7 +5245,7 @@ html .bg--parallax {
     }
     
 .ps-home--partners .owl-carousel .owl-stage-outer {
-    z-index:5;
+    z-index: 9999;
     }
     
 .product-row-01 {
