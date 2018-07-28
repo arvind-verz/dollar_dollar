@@ -337,7 +337,7 @@
                                         </h2>
                                     </div>
                                     <div class="clearfix"></div>
-                                    @if(count($product->ads_placement))
+                                    @if(!empty($product->ads_placement))
                                         @php
                                         $ads = json_decode($product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -410,7 +410,7 @@
                                             </h2>
                                         </div>
                                         <div class="clearfix"></div>
-                                        @if(count($product->ads_placement))
+                                        @if(!empty($product->ads_placement))
                                         @php
                                         $ads = json_decode($product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -496,7 +496,7 @@
                                                 </h2>
                                             </div>
                                             <div class="clearfix"></div>
-                                            @if(count($product->ads_placement))
+                                            @if(!empty($product->ads_placement))
                                         @php
                                         $ads = json_decode($product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -573,7 +573,7 @@
                                                     </h2>
                                                 </div>
                                                 <div class="clearfix"></div>
-                                                @if(count($product->ads_placement))
+                                                @if(!empty($product->ads_placement))
                                         @php
                                         $ads = json_decode($product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -644,7 +644,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div>
-                                                    @if(count($product->ads_placement))
+                                                    @if(!empty($product->ads_placement))
                                         @php
                                         $ads = json_decode($product->ads_placement);
                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
@@ -684,8 +684,10 @@
             $("input[name='filter']").prop("checked", false);
             $(this).addClass("active").find("input[name='filter']").prop("checked", true);
             var value = $(this).find("input[name='filter']").val();
+            $("input[name='search_value']").val('');
             if (value == 'Placement') {
                 prefix_holder = '$';
+                $("input[name='search_value']").val('100000');
             }
             $("span.prefix_holder").text(prefix_holder);
         });

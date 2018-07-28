@@ -275,7 +275,7 @@
                         </div>
                         <div class="ps-product__content">
                             <h4 class="ps-product__heading">{!! $promotion_product->bank_sub_title !!}</h4>
-                            @if(count($promotion_product->ads_placement))
+                            @if(!empty($promotion_product->ads_placement))
                                 @php
                                 $ads = json_decode($promotion_product->ads_placement);
                                 if(!empty($ads[0]->ad_image_horizontal)) {
@@ -355,7 +355,7 @@
                                     </table>
                                 </div>
                             </div>
-                            @if(count($promotion_product->ads_placement))
+                            @if(!empty($promotion_product->ads_placement))
                                 @php
                                 $ads = json_decode($promotion_product->ads_placement);
                                 if(!empty($ads[1]->ad_image_vertical)) {
@@ -388,7 +388,7 @@
                                 @endif
                             </div>
                             <div class="clearfix"></div>
-                            @if(count($promotion_product->ads_placement))
+                            @if(!empty($promotion_product->ads_placement))
                                 @php
                                 $ads = json_decode($promotion_product->ads_placement);
 
@@ -425,8 +425,10 @@
             $("input[name='filter']").prop("checked", false);
             $(this).addClass("active").find("input[name='filter']").prop("checked", true);
             var value = $(this).find("input[name='filter']").val();
+            $("input[name='search_value']").val('');
             if (value == 'Placement') {
                 prefix_holder = '$';
+                $("input[name='search_value']").val('100000');
             }
             $("span.prefix_holder").text(prefix_holder);
         });
