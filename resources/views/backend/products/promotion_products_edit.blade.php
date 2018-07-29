@@ -68,7 +68,6 @@
                                             {{Form::textarea('bank_sub_title', $product->bank_sub_title, ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Product Type</label>
 
@@ -81,6 +80,12 @@
                                                     @endforeach
                                                 @endif
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group display-none" id="apply-link">
+                                        {{Form::label('apply_link', 'Apply Button Link',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('apply_link', $product->apply_link, ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -363,7 +368,10 @@
                 });
 
             }
-
+            if(promotion_type=='<?php echo ALL_IN_ONE_ACCOUNT ; ?>')
+            {
+                $('#apply-link').removeClass('display-none');
+            }else{ $('#apply-link').addClass('display-none');}
 
             var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
@@ -542,6 +550,10 @@
                     $("select[name='formula']").html(data);
                 }
             });
+            if(promotion_type=='<?php echo ALL_IN_ONE_ACCOUNT ; ?>')
+            {
+                $('#apply-link').removeClass('display-none');
+            }else{ $('#apply-link').addClass('display-none');}
 
         });
 

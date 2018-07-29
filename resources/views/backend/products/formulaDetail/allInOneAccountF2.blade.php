@@ -1,7 +1,7 @@
 <div class="display-none" id="allInOneAccountF2">
     @if(isset($product) && (in_array($product->formula_id,[ALL_IN_ONE_ACCOUNT_F2])))
         @if(count($product->product_range))
-            <?php //dd(old('min_placement')[0]); ?>
+            <?php $prevMax = 0 ?>
             @foreach($product->product_range as $key => $value)
                 @if($key==0)
                     <div class="form-group ">
@@ -45,12 +45,12 @@
 
                             <div class="input-group date ">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-danger">Placement
+                                    <button type="button" class="btn btn-danger">@if($key==0)First @else Next @endif
                                     </button>
                                 </div>
                                 <input type="text" class="form-control pull-right only_numeric"
                                        name="max_placement_aioa2[{{$key}}]"
-                                       value="{{ $value->max_range  }}">
+                                       value="{{ ($value->max_range - $prevMax)  }}">
 
                             </div>
 
@@ -74,6 +74,7 @@
 
                     </div>
                     <?php
+                    $prevMax=$value->max_range;
                     $bonusInterestCriteriaA = $value->bonus_interest_criteria_a;
                     $bonusInterestCriteriaB = $value->bonus_interest_criteria_b;
                     ?>
