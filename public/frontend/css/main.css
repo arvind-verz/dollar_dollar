@@ -825,7 +825,7 @@ button {
     left: 7px;
     width: 6px;
     height: 10px;
-    border: 2px solid #3db54a;
+    border: 2px solid #ffffff;
     border-top: none;
     border-left: none;
     z-index: 5;
@@ -842,7 +842,7 @@ button {
 }
 
 .ps-checkbox input[type=checkbox]:checked ~ label:before {
-    border-color: #3db54a;
+    border-color: #ffffff;
 }
 
 .ps-checkbox input[type=checkbox]:checked ~ label:after {
