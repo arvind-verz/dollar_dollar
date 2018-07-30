@@ -528,10 +528,14 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody>
+                                                            <?php $prevMaxRange = 0;  $totalRange = 0; ?>
                                                             @foreach($product->product_ranges as $key => $productRange)
                                                                 <tr class="@if($product->highlight>=$key) highlight @endif">
-                                                                    <td>@if($key==0) 1st - @else NEXT
-                                                                        - @endif{{ '$' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                    <td>@if($key==0) FIRST - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }}
+                                                                        @elseif($key == (count($product->product_ranges) - 1))
+                                                                            ABOVE {{ '$' . Helper::inThousand($prevMaxRange) }}
+                                                                        @else NEXT
+                                                                        - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }} @endif</td>
                                                                     <td>@if($productRange->board_rate <=0 )
                                                                             - @else {{ $productRange->board_rate }}% @endif
                                                                     </td>
@@ -544,6 +548,9 @@
 
                                                                     </td>
                                                                 </tr>
+                                                                <?php if ($key != (count($product->product_ranges) - 1)) {
+                                                                $prevMaxRange = $productRange->max_range;
+                                                                } ?>
                                                             @endforeach
                                                             </tbody>
                                                         </table>
@@ -563,7 +570,8 @@
                                                 @endif
                                                 <div class="ps-product__panel">
                                                     <h4>Possible interest(s) earned for SGD
-                                                        ${{ Helper::inThousand($product->placement) }}</h4>
+                                                        ${{ Helper::inThousand($product->placement) }} <br/>
+                                                        Base on effective interest rate</h4>
 
                                                     <h2>@if($product->total_interest_earn <=0 )
                                                             - @else ${{ Helper::inThousand($product->total_interest_earn) }} @endif   <br>
@@ -610,7 +618,7 @@
                                                                 <tbody>
                                                                 @foreach($product->row_headings as $key => $heading)
                                                                     <tr class="@if($product->highlight==true ) highlight @endif">
-                                                                        <td>{{ $heading }}</td>
+                                                                        <td style=" @if($key==3) background-color: #D3D3D3; @endif ">{{ $heading }}</td>
                                                                         @if($key==0)
                                                                             @foreach($product->monthly_saving_amount as $amount)
                                                                                 <td class="">{{ '$' . $amount }}</td>
@@ -621,15 +629,14 @@
                                                                                 <td class="">@if($baseInterest <=0 )
                                                                                         - @else {{ '$' .$baseInterest }} @endif   </td>
                                                                             @endforeach
-
                                                                         @elseif($key==2)
                                                                             @foreach($product->additional_interests as $additionalInterest)
                                                                                 <td>@if($additionalInterest <=0 )
                                                                                         - @else {{ '$' .$additionalInterest }} @endif  </td>
                                                                             @endforeach
                                                                         @elseif($key==3)
-                                                                            <td colspan="{{count($product->months)}}"></td>
-                                                                            <td>@if($product->total_interest_earn <=0 )
+                                                                            <td  style=" background-color: #D3D3D3; " colspan="{{count($product->months)}}"></td>
+                                                                            <td style=" background-color: #D3D3D3; ">@if($product->total_interest_earn <=0 )
                                                                                     - @else {{ '$' . $product->total_interest_earn }} @endif
                                                                                 {{-- <br/>
                                                                                  <span>

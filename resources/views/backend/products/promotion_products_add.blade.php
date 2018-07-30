@@ -84,6 +84,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group display-none" id="apply-link">
+                                        {{Form::label('apply_link', 'Apply Button Link',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('apply_link', old('Apply Link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Formula</label>
 
@@ -308,7 +315,6 @@
             var promotion_type = $("#product-type").val();
             var formula = $("#hidden-formula").val();
             //var product_id = $("#product-id").val();
-            //alert(product_name_id);
             if ((promotion_type.length != 0) && (formula.length != 0)) {
                 //alert(formula);
                 $.ajax({
@@ -322,7 +328,10 @@
                 });
 
             }
-
+            if(promotion_type=='<?php echo ALL_IN_ONE_ACCOUNT ; ?>')
+            {
+                $('#apply-link').removeClass('display-none');
+            }else{ $('#apply-link').addClass('display-none');}
 
             var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
@@ -411,6 +420,10 @@
                     $("select[name='formula']").html(data);
                 }
             });
+            if(promotion_type=='<?php echo ALL_IN_ONE_ACCOUNT ; ?>')
+            {
+                $('#apply-link').removeClass('display-none');
+            }else{ $('#apply-link').addClass('display-none');}
 
         });
         $("select[name='formula']").on("change", function () {

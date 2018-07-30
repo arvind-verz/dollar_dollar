@@ -2,7 +2,8 @@
     @if(isset($product) && (in_array($product->formula_id,[SAVING_DEPOSIT_F4,  WEALTH_DEPOSIT_F4,  FOREIGN_CURRENCY_DEPOSIT_F5])))
 
         @if(count($product->product_range))
-            @foreach($product->product_range as $key => $value)
+            <?php $prevMax = 0 ?>
+        @foreach($product->product_range as $key => $value)
 
                 <div id="saving_placement_range_f4_{{$key}}">
                     <div class="form-group">
@@ -14,12 +15,12 @@
                             <div class="input-group date ">
                                 <div class="input-group-btn">
                                     <button type="button" class="btn btn-danger">
-                                        Placement
+                                        @if($key==0)First @else Next @endif
                                     </button>
                                 </div>
                                 <input type="text" class="form-control pull-right only_numeric"
                                        name="max_placement_sdp4[{{$key}}]"
-                                       value="{{ $value->max_range  }}">
+                                       value="{{ ($value->max_range - $prevMax)  }}">
 
                             </div>
 
@@ -43,6 +44,7 @@
 
                     </div>
                     <?php
+                    $prevMax=$value->max_range;
                     $bonusInterest = $value->bonus_interest;
                     $boardRate = $value->board_rate;
                     ?>

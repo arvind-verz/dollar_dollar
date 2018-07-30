@@ -146,6 +146,7 @@ class ProductsController extends Controller
         $product->product_name = $request->name;
         $product->bank_id = $request->bank;
         $product->bank_sub_title = $request->bank_sub_title;
+        $product->apply_link = $request->apply_link;
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
@@ -239,16 +240,18 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             $min = 0;
+            $previousMax=0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
                 $bonusInterest = $request->bonus_interest_sdp4;
                 $boardInterest = $request->board_rate_sdp4;
                 $range = [];
                 $range['min_range'] = (int)$min;
-                $range['max_range'] = (int)$v;
+                $range['max_range'] = (int)$v + $previousMax;
                 $range['bonus_interest'] = (float)$bonusInterest[$k];
                 $range['board_rate'] = (float)$boardInterest[$k];
                 $ranges[] = $range;
-                $min = $v + 1;
+                $min = $range['max_range'] + 1;
+                $previousMax = $range['max_range'];
             }
             $ranges = json_encode($ranges);
 
@@ -287,6 +290,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
             $min = 0;
+            $previousMax=0;
             foreach ($request->max_placement_aioa2 as $k => $v) {
 
                 $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
@@ -296,11 +300,12 @@ class ProductsController extends Controller
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
                 $range['min_range'] = (int)$min;
-                $range['max_range'] = (int)$v;
+                $range['max_range'] = (int)$v + $previousMax;
                 $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
                 $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
                 $ranges[] = $range;
-                $min = $v + 1;
+                $min = $range['max_range'] + 1;
+                $previousMax = $range['max_range'];
             }
             $ranges = json_encode($ranges);
         }
@@ -520,6 +525,7 @@ class ProductsController extends Controller
         $product->product_name = $request->name;
         $product->bank_id = $request->bank;
         $product->bank_sub_title = $request->bank_sub_title;
+        $product->apply_link = $request->apply_link;
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
@@ -613,16 +619,18 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             $min = 0;
+            $previousMax=0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
                 $bonusInterest = $request->bonus_interest_sdp4;
                 $boardInterest = $request->board_rate_sdp4;
                 $range = [];
                 $range['min_range'] = (int)$min;
-                $range['max_range'] = (int)$v;
+                $range['max_range'] = (int)$v + $previousMax;
                 $range['bonus_interest'] = (float)$bonusInterest[$k];
                 $range['board_rate'] = (float)$boardInterest[$k];
                 $ranges[] = $range;
-                $min = $v + 1;
+                $min = $range['max_range'] + 1;
+                $previousMax = $range['max_range'];
             }
             $ranges = json_encode($ranges);
 
@@ -661,6 +669,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
             $min = 0;
+            $previousMax=0;
             foreach ($request->max_placement_aioa2 as $k => $v) {
 
                 $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
@@ -670,11 +679,12 @@ class ProductsController extends Controller
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
                 $range['min_range'] = (int)$min;
-                $range['max_range'] = (int)$v;
+                $range['max_range'] = (int)$v + $previousMax;
                 $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
                 $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
                 $ranges[] = $range;
-                $min = $v + 1;
+                $min = $range['max_range'] + 1;
+                $previousMax = $range['max_range'];
             }
             $ranges = json_encode($ranges);
         }
@@ -1490,7 +1500,7 @@ class ProductsController extends Controller
 
                         <div class="input-group date ">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger">Placement
+                                <button type="button" class="btn btn-danger">Next
                                 </button>
                             </div>
                             <input type="text" class="form-control pull-right only_numeric"
@@ -1548,7 +1558,7 @@ class ProductsController extends Controller
 
                         <div class="input-group date ">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-danger">Placement
+                                <button type="button" class="btn btn-danger">Next
                                 </button>
                             </div>
                             <input type="text" class="form-control pull-right only_numeric"
