@@ -79,13 +79,22 @@
                                             <input class="form-control" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ $product_management->amount }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Tenor</label>
                                             <input type="text" class="form-control only_numeric" name="tenure" value="{{ $product_management->tenure }}">
                                         </div>
                                     </div>
-                                    
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                        <div class="form-group">
+                                            <label>Reminder</label>
+                                            <select class="form-control select2" name="reminder[]" multiple="multiple">
+                                                <option value="1 Day" @if($product_management->product_reminder=='1 Day') selected @endif>1 Day</option>
+                                                <option value="1 Week" @if($product_management->product_reminder=='1 Week') selected @endif>1 Week</option>
+                                                <option value="2 Week" @if($product_management->product_reminder=='2 Week') selected @endif>2 Week</option>
+                                            </select>
+                                        </div>
+                                    </div>                                    
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="row">
                                             <div class="col-xs-6">
@@ -144,6 +153,11 @@
             $("select[name='bank_id']").attr("required", true);
             $("input[name='bank_id_other']").addClass("hide").attr("required", false);
         }
+    </script>
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('.select2').select2();
+        } );
     </script>
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}
