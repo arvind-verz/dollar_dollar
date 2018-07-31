@@ -124,7 +124,7 @@ class PagesFrontController extends Controller
 
                 } elseif ($slug == PRODUCTMANAGEMENT) {
                     if (AUTH::check()) {
-                        return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners"));
+                        return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners", "user_products"));
                     } else {
                         return redirect('/login');
                     }

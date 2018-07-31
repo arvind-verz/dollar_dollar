@@ -46,7 +46,23 @@
     {{--Page content start--}}
     <main class="ps-main">
         <div class="container">
-            {!!$page->contents!!}
+            <?php
+            //$pageName = strtok($page->name, " ");;
+            $pageName = explode(' ', trim($page->name));
+            $pageHeading = $pageName[0];
+            // $a =  array_shift($arr);
+            unset($pageName[0]);
+            ?>
+            {{--Page content start--}}
+            @if($page->slug!=THANK_SLUG)
+                        <h3 class="ps-heading mb-35">
+                            <span><i class="fa fa-umbrella"></i> {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                        </h3>
+
+                        {!!  $page->contents !!}
+            @else
+                {!!  $page->contents !!}
+            @endif
             {!! Form::open(['url' => ['post-health-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
             <div class="form-group">

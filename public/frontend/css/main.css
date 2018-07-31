@@ -1733,6 +1733,7 @@ button {
 .ps-block--image > img {
     float: right;
     max-width: 50%;
+    margin-top: -80px;
 }
 
 .ps-block--image .ps-heading {
