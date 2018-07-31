@@ -105,7 +105,7 @@ class AccountInformationController extends Controller
     {
         $account_information = User::find($id);
         $validate = Validator::make($request->all(), [
-            'email'         =>  'required|email'
+            'email'         =>  'required|email',
             'first_name'    =>  'required',
             'last_name'     =>  'required',
             'tel_phone'       =>  'numeric|nullable'
