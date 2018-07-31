@@ -40,7 +40,7 @@
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         <div class="pt-2">
-                            <a href="{{ isset($banners[0]->banner_link) ? asset($banners[0]->banner_link) : '' }}" target="_blank"><img src="{{ isset($banners[0]->banner_image) ? asset($banners[0]->banner_image) : '' }}" alt=""></a>
+                            <a href="{{ isset($systemSetting->profile_ads_link) ? asset($systemSetting->profile_ads_link) : '#' }}" target="_blank"><img src="{{ isset($systemSetting->profile_ads) ? asset($systemSetting->profile_ads) : '' }}" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -79,10 +79,20 @@
                                             <input class="form-control prefix_dollar" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ (old('amount')) ? old('amount') : '0.000' }}">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Tenor</label>
                                             <input type="text" class="form-control only_numeric" name="tenure" value="{{ old('tenure') }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                        <div class="form-group">
+                                            <label>Reminder</label>
+                                            <select class="form-control select2" name="reminder" multiple="multiple">
+                                                <option value="1 Day">1 Day</option>
+                                                <option value="1 Week">1 Week</option>
+                                                <option value="2 Week">2 Week</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
@@ -113,7 +123,55 @@
                                     <button type="submit" class="ps-btn">Submit</button>
                                 </div>
                             {{ Form::close() }}
-                            
+                            <div class="ps-table-wrap">
+                                <table class="ps-table ps-table--product-managerment" id="datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Bank</th>
+                                            <th>Account
+                                                <br> Name</th>
+                                            <th>Amount</th>
+                                            <th>Tenor
+                                                <br> (M= months,
+                                                <br> D = Days)</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Interest Earned</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if(count($user_products))
+                                            @foreach($user_products as $value)
+                                                @php
+                                                    $curr_date = date("Y-m-d", strtotime('now'));
+                                                    $start_date = date("Y-m-d", strtotime($value->start_date));
+                                                    $end_date = date("Y-m-d", strtotime($value->end_date));
+                                                @endphp
+                                            <tr>
+                                                <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
+                                                <td>{{ $value->account_name }}</td>
+                                                <td>{{ $value->amount }}</td>
+                                                <td>{{ $value->tenure }}</td>
+                                                <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
+                                                <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
+                                                <td>{{ $value->interest_earned.'%' }}</td>
+                                                <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
+                                                <td>
+                                                    <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
+                                                    <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @else
+                                        <tr>
+                                            <td class="text-center" rows="9">No data found.</td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -135,6 +193,12 @@
         });
 
         
+    </script>
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#datatable').DataTable();
+            $('.select2').select2();
+        } );
     </script>
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}

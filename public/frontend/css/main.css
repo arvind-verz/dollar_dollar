@@ -1733,6 +1733,7 @@ button {
 .ps-block--image > img {
     float: right;
     max-width: 50%;
+    margin-top: -80px;
 }
 
 .ps-block--image .ps-heading {
@@ -5245,7 +5246,7 @@ html .bg--parallax {
     }
     
 .ps-home--partners .owl-carousel .owl-stage-outer {
-    z-index:5;
+    z-index: 9999;
     }
     
 .product-row-01 {
@@ -5353,7 +5354,7 @@ span.ps-post__meta a {
 .ps-section__footer:after { position:absolute; right:0px; top:10px; width:38%; height:1px; overflow:hidden; content:''; background:#909090; }
 
 .ps-product__header img {
-    width: 200px;
+    width: 180px;
 }
 .pt-2 {
     padding-top: 2rem;
@@ -5457,7 +5458,7 @@ span.ps-post__meta a {
    height: 40px;
 }
 
-.owl-slider.nav-outside .owl-nav{ z-index: 999;}
+.owl-slider.nav-outside .owl-nav{z-index: 999;}
 
 .ps-home-fixed-deposit.ps-tabs-root .ps-section__content.bg--cover .product-row-01.clearfix .owl-nav .owl-prev{
     position: absolute;
