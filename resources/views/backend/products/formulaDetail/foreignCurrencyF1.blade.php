@@ -125,11 +125,11 @@ $formulaDetailId = 0;
                                                     <div class="col-md-6 mb-3">
                                                         <label for="">Tenure</label>
                                                         <input type="text"
-                                                               class="form-control tenure-{{$currencyId}}-{{$rangeId}} only_numeric"
+                                                               class="form-control tenure-{{$currencyId}}-{{$formulaDetailId}} only_numeric"
                                                                id="" value="{{$v}}"
                                                                data-formula-detail-id="{{$formulaDetailId}}"
                                                                data-currency-id="{{$currencyId}}"
-                                                               name="tenure[{{$currencyId}}][{{$rangeId}}][]"
+                                                               name="tenure[{{$currencyId}}][{{$rangeId}}][]" @if($rangeId!=0) readonly="readonly"@endif
                                                                placeholder="" onchange="changeTenureFCDPValue(this)">
 
                                                     </div>
