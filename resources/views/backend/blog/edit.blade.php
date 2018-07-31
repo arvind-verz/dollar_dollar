@@ -75,6 +75,12 @@
                                         <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 500*250 for better display</div>
                                     </div>
                                     <div class="form-group">
+                                        {{Form::label('blog_image_ads_link', 'Image Ads Link',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('blog_image_ads_link', $page->blog_image_ads_link, ['class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         {{Form::label('short_description', 'Short Description',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::textarea('short_description', $page->short_description, ['id' => 'article-ckeditor', 'class' => 'form-control page-contents', 'placeholder' => ''])}}

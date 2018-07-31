@@ -102,6 +102,7 @@ class BlogController extends Controller
 
         $page = new Page();
         $page->name = ucfirst($request->name);
+        $page->blog_image_ads_link = $request->blog_image_ads_link;
         $page->title = ucfirst($request->title);
         $page->slug = str_slug($request->slug);
 
@@ -272,6 +273,7 @@ class BlogController extends Controller
 
         $oldPage = $page;
         $page->name = ucfirst($request->name);
+        $page->blog_image_ads_link = $request->blog_image_ads_link;
         $page->title = ucfirst($request->title);
         if (isset($request->slug)) {
             $page->slug = str_slug($request->slug);
