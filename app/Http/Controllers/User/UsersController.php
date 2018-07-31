@@ -92,7 +92,10 @@ class UsersController extends Controller
             $fields = array_add($fields, 'password', 'min:8|confirmed');
             $user->password = bcrypt($request->password);
         }
-        if (User::where('email', $request->email)->where('delete_status', 0)->exists()) {
+        if (User::where('email', $request->email)->where('delete_status', 0)
+            ->whereNotIn('id', [$id])
+            ->exists()
+        ) {
             $fields = array_add($fields, 'email', "required|email|max:255|unique:users");
         } else {
             $fields = array_add($fields, 'email', "required|email|max:255");
@@ -402,73 +405,66 @@ class UsersController extends Controller
         })->download($type);
     }
 
-    public function productView($id) {
+    public function productView($id)
+    {
         DB::enableQueryLog();
-        $product_reports   =   ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
-        ->join('users', 'product_managements.user_id', '=', 'users.id')
-        ->where('users.id', '=', $id)
-        ->get();
+        $product_reports = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
+            ->join('users', 'product_managements.user_id', '=', 'users.id')
+            ->where('users.id', '=', $id)
+            ->get();
         //dd(DB::getQueryLog());
         return view('backend.reports.product-report.index', [
-            'product_reports'      =>  $product_reports
+            'product_reports' => $product_reports
         ]);
     }
 
-    public function bulkRemove(Request $request) {
+    public function bulkRemove(Request $request)
+    {
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, CUSTOMER_MODULE_ID);
         $ids = isset($request->id) ? $request->id : '';
         $type = isset($request->type) ? $request->type : '';
         $select_type = isset($request->select_type) ? $request->select_type : '';
         //return $type;
-        if(count($ids)) {
-            foreach($ids as $id) {
-                if($type=='bulk_customer_remove') {
+        if (count($ids)) {
+            foreach ($ids as $id) {
+                if ($type == 'bulk_customer_remove') {
                     $users = User::find($id);
                     $users->delete_status = 1;
-                }
-                elseif($type=='bulk_user_remove') {
+                } elseif ($type == 'bulk_user_remove') {
                     $users = Admin::find($id);
                     $users->delete_status = 1;
-                }
-                elseif($type=='bulk_user_status_update') {
+                } elseif ($type == 'bulk_user_status_update') {
                     $users = User::find($id);
-                    if($select_type=='active') {
+                    if ($select_type == 'active') {
                         $users->status = 1;
-                    }
-                    else {
+                    } else {
                         $users->status = 0;
                     }
-                }
-                elseif($type=='bulk_product_remove') {
+                } elseif ($type == 'bulk_product_remove') {
                     $users = PromotionProducts::find($id);
                     $users->delete_status = 1;
-                }
-                elseif($type=='bulk_product_status_update') {
+                } elseif ($type == 'bulk_product_status_update') {
                     $users = PromotionProducts::find($id);
-                    if($select_type=='active') {
+                    if ($select_type == 'active') {
                         $users->status = 1;
-                    }
-                    else {
+                    } else {
                         $users->status = 0;
                     }
-                }
-                elseif($type=='bulk_enquiry_remove') {
+                } elseif ($type == 'bulk_enquiry_remove') {
                     $users = ContactEnquiry::find($id);
                     $users->delete_status = 1;
-                }
-                elseif($type=='bulk_health_insurance_remove') {
+                } elseif ($type == 'bulk_health_insurance_remove') {
                     $users = HealthInsuranceEnquiry::find($id);
                     $users->delete_status = 1;
-                }
-                elseif($type=='bulk_life_insurance_remove') {
+                } elseif ($type == 'bulk_life_insurance_remove') {
                     $users = LifeInsuranceEnquiry::find($id);
                     $users->delete_status = 1;
                 }
                 //return $users;
-                
+
                 $users->save();
             }
-            
+
             echo "success";
         }
     }
