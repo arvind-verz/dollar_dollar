@@ -73,17 +73,19 @@ class Reminder extends Command
                     foreach ($detail->product_reminder as $dayKey => $reminderDay) {
                         $reminderDate = null;
                         if ($reminderDay == '1 Day') {
-                            $reminderDate =date('Y-m-d H:i:s', strtotime($endDate. ' + 1 days'));
+                            $reminderDate = date('Y-m-d H:i:s', strtotime($endDate . ' + 1 days'));
                         } elseif ($reminderDay == '1 Week') {
-                            $reminderDate =date('Y-m-d H:i:s', strtotime($endDate. ' + 7 days'));
-                        }elseif($reminderDay == '2 Week'){
-                            $reminderDate =date('Y-m-d H:i:s', strtotime($endDate. ' + 14 days'));
+                            $reminderDate = date('Y-m-d H:i:s', strtotime($endDate . ' + 7 days'));
+                        } elseif ($reminderDay == '2 Week') {
+                            $reminderDate = date('Y-m-d H:i:s', strtotime($endDate . ' + 14 days'));
                         }
-                        if(!is_null($reminderDate) && ($reminderDate==$detail->end_date ))
-                        {
-
-                            $reminder = (array)$detail;
-                            Mail::to($reminder['email'])->send(new RM($reminder));
+                        if (!is_null($reminderDate) && ($reminderDate == $detail->end_date)) {
+                            Mail::send('frontend.emails.reminder', [
+                                'account_name' => $detail->account_name,
+                                'end_date' => $detail->end_date
+                            ], function ($message) use ($detail) {
+                                $message->to($detail->email)->subject('A Product reminder');
+                            });
 
                         }
                     }
