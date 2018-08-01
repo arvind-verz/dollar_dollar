@@ -94,6 +94,11 @@ if (!$systemSetting) {
         $("input[name='search_value']").focus();
     });    
 </script>
+<script type="text/javascript">
+        $(document).ready( function () {
+            $('#datatable').DataTable();
+        } );
+    </script>
 
 <script src="{{ asset('frontend/js/plugin.js') }}"></script>
 <script src="{{ asset('frontend/js/jquery.numeric.js') }}"></script>
