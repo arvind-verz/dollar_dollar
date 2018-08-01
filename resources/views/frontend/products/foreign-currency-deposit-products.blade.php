@@ -99,10 +99,11 @@
                                 <div class="row ps-col-tiny">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group form-group--nest">
-                                            <div class="form-group__content"><span class="prefix_holder">@if(isset($search_filter['filter']) && $search_filter['filter']=='Placement')
-                                                        $@elseif(!isset($search_filter['filter']))$@endif</span>
-                                                <input class="form-control" name="search_value" type="text" placeholder="" value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}">
+                                            <div class="form-group__content">@if(isset($search_filter['filter']) && $search_filter['filter']=='Placement')
+                                                        @elseif(!isset($search_filter['filter']))$@endif</span>
+                                                <input class="form-control prefix_dollar only_numeric" name="search_value" type="text" placeholder="" value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}">
                                             </div>
+                                            <span class="suffix_ko">k</span>
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
