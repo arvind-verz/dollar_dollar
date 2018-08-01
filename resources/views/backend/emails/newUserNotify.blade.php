@@ -5,29 +5,19 @@
 @component('mail::table')
 <table>
     <tr>
-        <td>User Name</td>
-        <td>:</td>
-        <td>{{Auth::user()->first_name.' '.Auth::user()->first_name}}</td>
+        <td>Hi, {{Auth::user()->first_name.' '.Auth::user()->first_name}}</td>
     </tr>
     <tr>
-        <td>Email</td>
-        <td>:</td>
-        <td>{{Auth::user()->email}}</td>
+        <td>
+            <p>Welcome to Dollar Dollar.</p>
+            <p>Thank you for entrusting us to help you grow your money easily. Get the best deals with us, as we show you how you can manage your wealth smarter.</p>
+            <p>Rest assured that all your personal information will not be shared with any third party vendors.</p>
+            <p>For more information, you may read some of our useful tips and tricks in our blog here. [Link blog]</p>
+            Have a good rest of your day!
+        </td>
     </tr>
-    @if(Auth::user()->created_at)
-        <tr>
-            <td>Created on</td>
-            <td>:</td>
-            <td>{{   date("Y-m-d h:i A", strtotime(Auth::user()->created_at))  }}</td>
-        </tr>
-    @endif
 </table>
 @endcomponent
 
-@component('mail::button', ['url' => env('APP_URL').'/admin'])
-View Dashboard
-@endcomponent
-
-Thanks,<br>
 {{ config('app.name') }}
 @endcomponent
