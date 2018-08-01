@@ -77,6 +77,7 @@
                                         <div class="form-group">
                                             <label>Amount <sup>*</sup></label>
                                             <input class="form-control" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ $product_management->amount }}">
+                                            <span class="suffix_k">K</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
