@@ -41,15 +41,15 @@ class Reminder extends Command
      */
     public function handle()
     {
-        /*Mail::raw('Text', function ($message){
+       /* Mail::raw('Text', function ($message){
             $message->to('nicckk3@gmail.com');
         });*/
-        /*$date = Carbon::now()->addDay(1);
-        $endDate=Carbon::createFromFormat('Y-m-d H:i:s', $date)->endOfDay()->toDateTimeString();*/
+        $date = Carbon::now()->addDay(1);
+        $endDate=Carbon::createFromFormat('Y-m-d H:i:s', $date)->endOfDay()->toDateTimeString();
 
         $reminderData = \DB::table('product_managements')
             ->join('users', 'product_managements.user_id', 'users.id')
-            ->where('product_managements.end_date', '2018-08-02 21:29:59')->get()->toArray();
+            ->where('product_managements.end_date', $endDate)->get()->toArray();
         //dd($reminderData);
         if(count($reminderData)){
             //$reminderData=$reminderData->toArray();
