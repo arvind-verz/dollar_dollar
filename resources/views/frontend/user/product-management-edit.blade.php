@@ -85,7 +85,7 @@
                                             <input type="text" class="form-control only_numeric" name="tenure" value="{{ $product_management->tenure }}">
                                         </div>
                                     </div>
-                                    @php $product_reminder = json_decode($product_management->product_reminder); @endphp
+                                    @php $product_reminder = json_decode($product_management->product_reminder);if(!$product_reminder) {$product_reminder=[];} @endphp
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder</label>
