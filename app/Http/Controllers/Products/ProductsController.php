@@ -22,6 +22,7 @@ use App\ProductManagement;
 use Carbon\Carbon;
 use Mail;
 use Exception;
+use DateTime;
 
 class ProductsController extends Controller
 {
@@ -211,7 +212,7 @@ class ProductsController extends Controller
             foreach ($request->currency as $currencyKey => $v) {
                 $tenures[] = array_values(array_map('intVal', $tenure[$currencyKey][0]));
             }
-            $tenure=json_encode($tenures);
+            $tenure = json_encode($tenures);
 
             $ranges = json_encode(array_values($currencies));
             $product->tenure = $tenure;
@@ -245,7 +246,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             $min = 0;
-            $previousMax=0;
+            $previousMax = 0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
                 $bonusInterest = $request->bonus_interest_sdp4;
                 $boardInterest = $request->board_rate_sdp4;
@@ -295,7 +296,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
             $min = 0;
-            $previousMax=0;
+            $previousMax = 0;
             foreach ($request->max_placement_aioa2 as $k => $v) {
 
                 $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
@@ -440,9 +441,9 @@ class ProductsController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         if ($request->product_type_id == FOREIGN_CURRENCY_DEPOSIT) {
             $currencies = Currency::where('delete_status', 0)->get();
-            return view('backend.products.foreign_currency_product_edit', compact('CheckLayoutPermission', 'promotion_types','product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+            return view('backend.products.foreign_currency_product_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
         } else {
-            return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types','product', 'formula', 'banks', 'productType', 'legends'));
+            return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends'));
         }
 
 
@@ -590,7 +591,7 @@ class ProductsController extends Controller
             foreach ($request->currency as $currencyKey => $v) {
                 $tenures[] = array_values(array_map('intVal', $tenure[$currencyKey][0]));
             }
-            $tenure=json_encode($tenures);
+            $tenure = json_encode($tenures);
 
             $ranges = json_encode(array_values($currencies));
             $product->tenure = $tenure;
@@ -624,7 +625,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             $min = 0;
-            $previousMax=0;
+            $previousMax = 0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
                 $bonusInterest = $request->bonus_interest_sdp4;
                 $boardInterest = $request->board_rate_sdp4;
@@ -674,7 +675,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
             $min = 0;
-            $previousMax=0;
+            $previousMax = 0;
             foreach ($request->max_placement_aioa2 as $k => $v) {
 
                 $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
@@ -1395,8 +1396,9 @@ class ProductsController extends Controller
                                 <div class="form-row">
                                     <div class="col-md-6 mb-3">
                                         <label for="">Tenure</label>
-                                        <input type="text" class="form-control only_numeric tenure-<?php echo $currencyId; ?>-<?php echo $i; ?>"
-                                               id=""  data-currency-id="<?php echo $currencyId; ?>"
+                                        <input type="text"
+                                               class="form-control only_numeric tenure-<?php echo $currencyId; ?>-<?php echo $i; ?>"
+                                               id="" data-currency-id="<?php echo $currencyId; ?>"
                                                onchange="changeTenureFCDPValue(this)"
                                                data-formula-detail-id="<?php echo $i; ?>"
                                                name="tenure[<?php echo $currencyId; ?>][<?php echo $request->range_id; ?>][<?php echo $i; ?>]"
@@ -1747,8 +1749,7 @@ class ProductsController extends Controller
             $key = count($request->min_placement) - 1 - $key;
 
             for ($i = 0; $i <= (count($request->min_placement) - 1); $i++) {
-                if($request->min_placement[$key] > $request->max_placement[$key])
-                {
+                if ($request->min_placement[$key] > $request->max_placement[$key]) {
                     return 2;
                 }
                 if (!is_null($request->min_placement[$key]) && !is_null($request->min_placement[$i]) && !is_null($request->max_placement[$i]) && ($key != $i)) {
@@ -1890,7 +1891,7 @@ class ProductsController extends Controller
                                             if ($currencies->count()) {
                                                 foreach ($currencies as $currency) { ?>
                                                     <option
-                                                        value="<?php echo $currency->id; ?>"><?php echo $currency->currency.' ('.($currency->code.')'); ?></option>
+                                                        value="<?php echo $currency->id; ?>"><?php echo $currency->currency . ' (' . ($currency->code . ')'); ?></option>
                                                     <?php
                                                 }
                                             } ?>
@@ -2035,21 +2036,60 @@ class ProductsController extends Controller
             <?php
         }
     }
-    public function reminder()
+
+    static public function reminder()
     {
-        $endDate = \Helper::endOfDayAfter(Carbon::now()->addDay(1));
+        /* Mail::raw('Text', function ($message){
+             $message->to('nicckk3@gmail.com');
+         });*/
+        $dtNow = new DateTime();
 
-       $reminderData = ProductManagement::join('users','product_managements.user_id','users.id')
-       ->where('product_managements.end_date',$endDate)->get();
+        $beginOfDay = clone $dtNow;
 
-        if($reminderData->count()){
-            foreach($reminderData as $reminder)
-            {   try {
-                    Mail::to($reminder->email)->send(new Reminder($reminder));
-                } catch (Exception $exception) {
-                    //dd($exception);
-                return "Error";
+        // Go to midnight.  ->modify('midnight') does not do this for some reason
+        $beginOfDay->modify('today');
+
+        $endOfDay = clone $beginOfDay;
+        $endOfDay->modify('tomorrow');
+
+        // adjust from the next day to the end of the day, per original question
+        $endDate = $endOfDay->modify('1 second ago');
+        $endDate = $endDate->format('Y-m-d H:i:s');
+        $reminderData = \DB::table('product_managements')
+            ->join('users', 'product_managements.user_id', 'users.id')
+            ->where('product_managements.end_date', '>', $endDate)->get()->toArray();
+        //dd($reminderData);
+        if (count($reminderData)) {
+            foreach ($reminderData as $k => $detail) {
+                if (!$detail->product_reminder) {
+                    $detail->product_reminder = [];
+                } else {
+                    $detail->product_reminder = json_decode($detail->product_reminder);
                 }
+                if (count($detail->product_reminder)) {
+                    foreach ($detail->product_reminder as $dayKey => $reminderDay) {
+                        $reminderDate = null;
+                        if ($reminderDay == '1 Day') {
+                            $reminderDate =date('Y-m-d H:i:s', strtotime($endDate. ' + 1 days'));
+                        } elseif ($reminderDay == '1 Week') {
+                            $reminderDate =date('Y-m-d H:i:s', strtotime($endDate. ' + 7 days'));
+                        }elseif($reminderDay == '2 Week'){
+                            $reminderDate =date('Y-m-d H:i:s', strtotime($endDate. ' + 14 days'));
+                        }
+                        if(!is_null($reminderDate) && ($reminderDate==$detail->end_date ))
+                        {
+                            try{
+                                $reminder = (array)$detail;
+                                Mail::to($reminder['email'])->send(new \App\Mail\Reminder($reminder));
+                            }
+                            catch(\Exception $e){
+                                // Never reached
+                            }
+
+                        }
+                    }
+                }
+
             }
         }
 

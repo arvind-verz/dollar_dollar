@@ -1,26 +1,61 @@
 @component('mail::message')
 # Reminder mail from Dollar Dollar.
 
+Dear {{$data['account_name']}},
+
 @component('mail::table')
 <table>
-    @if($reminder->account_name)
+    @if($data['account_name'])
         <tr>
-            <td>Greetings {{$reminder->account_name}}</td>
+            <td>Account Name</td>
+            <td>:</td>
+            <td>{{$data['account_name']}}</td>
+        </tr>
+    @endif
+    @if($data['amount'])
+        <tr>
+            <td>Amount</td>
+            <td>:</td>
+            <td>{{$data['amount']}}</td>
+        </tr>
+    @endif
+    @if($data['tenure'])
+        <tr>
+            <td>Tenure</td>
+            <td>:</td>
+            <td>{{$data['tenure']}}</td>
+        </tr>
+    @endif
+    @if($data['start_date'])
+        <tr>
+            <td>Start Date</td>
+            <td>:</td>
+            <td>{{date("Y-m-d", strtotime($data['start_date']))}}</td>
         </tr>
     @endif
 
-    @if($reminder->end_date)
+    @if($data['end_date'])
         <tr>
-            <td>
-                <p>This serves as your friendly reminder that you have until {{date("Y-m-d", strtotime($reminder->end_date))}} before your purchased products expire.</p>
-                <p>See product details attached.</p><br/><br/><br/>
-                <p>Have a good day!</p>
-            </td>
+            <td>End Date</td>
+            <td>:</td>
+            <td>{{date("Y-m-d", strtotime($data['end_date']))}}</td>
+        </tr>
+    @endif
+    @if($data['interest_earned'])
+        <tr>
+            <td>Interest Earned</td>
+            <td>:</td>
+            <td>{{$data['interest_earned']}}</td>
         </tr>
     @endif
 
 </table>
 @endcomponent
 
+@component('mail::button', ['url' => env('APP_URL').'/login'])
+View Account
+@endcomponent
+
+Thanks,<br>
 {{ config('app.name') }}
 @endcomponent
