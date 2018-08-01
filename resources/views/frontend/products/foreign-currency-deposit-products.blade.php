@@ -103,7 +103,7 @@
                                                         @elseif(!isset($search_filter['filter']))$@endif</span>
                                                 <input class="form-control prefix_dollar only_numeric" name="search_value" type="text" placeholder="" value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}">
                                             </div>
-                                            <span class="suffix_ko">k</span>
+                                            <span class="suffix_ko">K</span>
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>

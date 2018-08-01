@@ -71,7 +71,7 @@
             </div>
             <div class="form-group">
                 <input class="form-control prefix_dollar" type="text" name="search_value" placeholder="Enter Placement" value="000.00" required>
-                <span class="suffix_k">k</span>
+                <span class="suffix_k">K</span>
             </div>
             <div class="form-group submit">
                 <button type="submit" class="ps-btn">Search Now<i class="fa fa-search"></i></button>
