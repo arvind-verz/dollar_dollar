@@ -117,7 +117,7 @@
                                                        placeholder=""
                                                        value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}">
                                             </div>
-                                            <span class="suffix_ko">k</span>
+                                            <span class="suffix_ko">K</span>
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>

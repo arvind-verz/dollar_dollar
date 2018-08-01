@@ -117,7 +117,7 @@
                                                        value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}">
                                                 
                                             </div>
-                                            <span class="suffix_ko">k</span>
+                                            <span class="suffix_ko">K</span>
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
