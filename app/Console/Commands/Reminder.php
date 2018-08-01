@@ -57,7 +57,6 @@ class Reminder extends Command
                 }
                 if (count($detail->product_reminder)) {
                     foreach ($detail->product_reminder as $dayKey => $reminderDay) {
-                       
                         $reminderDate = null;
                         if ($reminderDay == '1 Day') {
                             $reminderDate =Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now()->addDay(1))->endOfDay()->toDateTimeString();
