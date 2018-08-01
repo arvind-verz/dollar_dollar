@@ -67,13 +67,19 @@
             <div class="ps-block--deposit-filter">
                 <form class="ps-form--filter" action="{{ route('fixed-deposit-mode.search') }}" method="post">
                     <div class="ps-block__header">
-                        <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="15" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
+                        <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
+                             data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="10"
+                             data-owl-item-xs="5" data-owl-item-sm="6" data-owl-item-md="7" data-owl-item-lg="10"
+                             data-owl-duration="1000" data-owl-mousedrag="on">
                             @if(count($brands))
                                 @foreach($brands as $brand)
                                     <span class="brand">
-                                        <input type="radio" name="brand_id" value="@if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) {{ $search_filter['brand_id'] }} @else {{ $brand->id }} @endif"
-                                               style="opacity: 0;position: absolute;" @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) checked  @endif>
-                                        <img src="{{ asset($brand->brand_logo) }}" width="100px"
+                                        <input type="radio" name="brand_id"
+                                               value="@if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) {{ $search_filter['brand_id'] }} @else {{ $brand->id }} @endif"
+                                               style="opacity: 0;position: absolute;"
+                                               @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) checked @endif>
+                                        <img src="{{ asset($brand->brand_logo) }}"
+                                             style="padding-right:20px; min-width: 80px;"
                                              class="brand_img @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) selected_img @endif">
                                     </span>
                                 @endforeach
@@ -111,11 +117,12 @@
                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">@if(isset($search_filter['filter']) && $search_filter['filter']=='Placement')
-                                                        @elseif(!isset($search_filter['filter']))$@endif</span>
-                                                <input class="form-control prefix_dollar only_numeric" name="search_value" type="text"
-                                                       placeholder=""
-                                                       value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}">
-                                                
+                                                @elseif(!isset($search_filter['filter']))$@endif</span>
+                                                    <input class="form-control prefix_dollar only_numeric"
+                                                           name="search_value" type="text"
+                                                           placeholder=""
+                                                           value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}">
+
                                             </div>
                                             <span class="suffix_ko">K</span>
                                             <button type="submit">Go</button>
@@ -145,57 +152,71 @@
                     @php $i = 1;$featured = []; @endphp
                     @foreach($promotion_products as $promotion_product)
                         @if($promotion_product->featured==1)
-                        @php $featured[] = $i; @endphp
-                    <div class="product-col-01">
-                        <div class="ps-slider--feature-product saving">
-                            <div class="ps-block--short-product second highlight" data-mh="product"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">
-                                <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
-                                <div class="ps-block__info">
-                                    <p><strong> rate: </strong>1.3%</p>
+                            @php $featured[] = $i; @endphp
+                            <div class="product-col-01">
+                                <div class="ps-slider--feature-product saving">
+                                    <div class="ps-block--short-product second highlight" data-mh="product"><img
+                                                src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                        <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong>
+                                        </h4>
 
-                                    <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
 
-                                    <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                            <p><strong>Min:</strong> SGD
+                                                ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}
+                                            </p>
+
+                                            <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                    </div>
                                 </div>
-                                <a class="ps-btn" href="#{{ $i }}">More info</a>
                             </div>
-                        </div>
-                    </div>
-                    @php $i++; @endphp
+                            @php $i++; @endphp
                         @endif
                     @endforeach
                     @php $i = 1;$featured_item = 5-count($featured);
                     $featured_count = count($featured);
                     $featured_width = 12;
                     if($featured_count==1) {
-                        $featured_width = 2;
+                    $featured_width = 2;
                     }
                     elseif($featured_count==2) {
-                        $featured_width = 3;
+                    $featured_width = 3;
                     }
                     elseif($featured_count==3) {
-                        $featured_width = 4;
+                    $featured_width = 4;
                     }
                     @endphp
                     <div class="product-col-0{{ $featured_width }}">
-                        <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
-                          @php $i = 1; @endphp
+                        <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true"
+                             data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true"
+                             data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
+                             data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}"
+                             data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on"
+                             data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
+                             data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
+                            @php $i = 1; @endphp
                             @foreach($promotion_products as $promotion_product)
                                 @if($promotion_product->featured==0)
-                                <div class="ps-block--short-product second" data-mh="product"><img
-                                            src="{{ asset($promotion_product->brand_logo) }}" alt="">
-                                    <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong></h4>
+                                    <div class="ps-block--short-product second" data-mh="product"><img
+                                                src="{{ asset($promotion_product->brand_logo) }}" alt="">
+                                        <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong>
+                                        </h4>
 
-                                    <div class="ps-block__info">
-                                        <p><strong> rate: </strong>1.3%</p>
+                                        <div class="ps-block__info">
+                                            <p><strong> rate: </strong>1.3%</p>
 
-                                        <p><strong>Min:</strong> SGD ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}</p>
+                                            <p><strong>Min:</strong> SGD
+                                                ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}
+                                            </p>
 
-                                        <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                            <p class="highlight">{{ $promotion_product->promotion_period }} Months</p>
+                                        </div>
+                                        <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
                                     </div>
-                                    <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
-                                </div>
-                                @php $i++; @endphp
+                                    @php $i++; @endphp
                                 @endif
                             @endforeach
                         </div>
@@ -401,7 +422,8 @@
                                         <i class="fa fa-times" aria-hidden="true"></i>
                                     </div>
 
-                                    <a target="_blank" href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
+                                    <a target="_blank"
+                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                 alt="" target="_blank"></a>
 

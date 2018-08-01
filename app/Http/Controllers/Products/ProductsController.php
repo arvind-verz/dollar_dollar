@@ -244,7 +244,7 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
-            $min = 0;
+            $min = 1;
             $previousMax=0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
                 $bonusInterest = $request->bonus_interest_sdp4;
@@ -294,7 +294,7 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
-            $min = 0;
+            $min = 1;
             $previousMax=0;
             foreach ($request->max_placement_aioa2 as $k => $v) {
 
@@ -623,7 +623,7 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
-            $min = 0;
+            $min = 1;
             $previousMax=0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
                 $bonusInterest = $request->bonus_interest_sdp4;
@@ -673,7 +673,7 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
-            $min = 0;
+            $min = 1;
             $previousMax=0;
             foreach ($request->max_placement_aioa2 as $k => $v) {
 
