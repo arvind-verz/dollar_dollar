@@ -41,22 +41,45 @@ class Reminder extends Command
      */
     public function handle()
     {
-       /* Mail::raw('Text', function ($message){
-            $message->to('nicckk3@gmail.com');
-        });*/
-        $date = Carbon::now()->addDay(1);
-        $endDate=Carbon::createFromFormat('Y-m-d H:i:s', $date)->endOfDay()->toDateTimeString();
+        $date = Carbon::now();
+        $endDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->endOfDay()->toDateTimeString();
 
         $reminderData = \DB::table('product_managements')
             ->join('users', 'product_managements.user_id', 'users.id')
-            ->where('product_managements.end_date', $endDate)->get()->toArray();
+            ->where('product_managements.end_date', '>', $endDate)->get()->toArray();
         //dd($reminderData);
-        if(count($reminderData)){
-            //$reminderData=$reminderData->toArray();
-            foreach($reminderData as $reminder)
-            {
-                $reminder =(array) $reminder;
-                Mail::to($reminder['email'])->send(new \App\Mail\Reminder($reminder));
+        if (count($reminderData)) {
+            foreach ($reminderData as $k => $detail) {
+                if (!$detail->product_reminder) {
+                    $detail->product_reminder = [];
+                } else {
+                    $detail->product_reminder = \GuzzleHttp\json_decode($detail->product_reminder);
+                }
+                if (count($detail->product_reminder)) {
+                    foreach ($detail->product_reminder as $dayKey => $reminderDay) {
+                        if($dayKey==1){dd($reminderDay);}
+                        $reminderDate = null;
+                        if ($reminderDay == '1 Day') {
+                            $reminderDate =Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now()->addDay(1))->endOfDay()->toDateTimeString();
+                        } elseif ($reminderDay == '1 Week') {
+                            $reminderDate =Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now()->addDay(7))->endOfDay()->toDateTimeString();
+                        }elseif($reminderDay == '2 Week'){
+                            $reminderDate =Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now()->addDay(14))->endOfDay()->toDateTimeString();
+                        }
+                        if(!is_null($reminderDate) && ($reminderDate==$detail->end_date ))
+                        {
+                            try{
+                                $reminder = (array)$detail;
+                                Mail::to($reminder['email'])->send(new \App\Mail\Reminder($reminder));
+                            }
+                            catch(\Exception $e){
+                                // Never reached
+                            }
+
+                        }
+                    }
+                }
+
             }
         }
     }
