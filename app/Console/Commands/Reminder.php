@@ -41,15 +41,18 @@ class Reminder extends Command
      */
     public function handle()
     {
-        $endDate = \Helper::endOfDayAfter(Carbon::now()->addDay(1));
+        $date = Carbon::now()->addDay(1);
+        $endDate=Carbon::createFromFormat('Y-m-d H:i:s', $date)->endOfDay()->toDateTimeString();
 
         $reminderData = \DB::table('product_managements')
             ->join('users', 'product_managements.user_id', 'users.id')
             ->where('product_managements.end_date', $endDate)->get();
 
-        if ($reminderData->count()) {
-            foreach ($reminderData as $reminder) {
-                Mail::to($reminder->email)->send(new Reminder($reminder));
+        if($reminderData->count()){
+            $reminderData=$reminderData->toArray();
+            foreach($reminderData as $reminder)
+            {
+                Mail::to($reminder['email'])->send(new Reminder($reminder));
             }
         }
     }

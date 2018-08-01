@@ -1,53 +1,53 @@
 @component('mail::message')
 # Reminder mail from Dollar Dollar.
 
-Dear {{$reminder->account_name}},
+Dear {{$data['account_name']}},
 
 @component('mail::table')
 <table>
-    @if($reminder->account_name)
+    @if($data['account_name'])
         <tr>
             <td>Account Name</td>
             <td>:</td>
-            <td>{{$reminder->account_name}}</td>
+            <td>{{$data['account_name']}}</td>
         </tr>
     @endif
-    @if($reminder->amount)
+    @if($data['amount'])
         <tr>
             <td>Amount</td>
             <td>:</td>
-            <td>{{$reminder->amount}}</td>
+            <td>{{$data['amount']}}</td>
         </tr>
     @endif
-    @if($reminder->tenure)
+    @if($data['tenure'])
         <tr>
             <td>Tenure</td>
             <td>:</td>
-            <td>{{$reminder->tenure}}</td>
+            <td>{{$data['tenure']}}</td>
         </tr>
     @endif
-    @if($reminder->start_date)
+    @if($data['start_date'])
         <tr>
             <td>Start Date</td>
             <td>:</td>
-            <td>{{date("Y-m-d", strtotime($reminder->start_date))}}</td>
+            <td>{{date("Y-m-d", strtotime($data['start_date']))}}</td>
         </tr>
     @endif
 
-    @if($reminder->end_date)
+    @if($data['end_date'])
         <tr>
             <td>End Date</td>
             <td>:</td>
-            <td>{{date("Y-m-d", strtotime($reminder->end_date))}}</td>
+            <td>{{date("Y-m-d", strtotime($data['end_date']))}}</td>
         </tr>
     @endif
-        @if($reminder->interest_earned)
-            <tr>
-                <td>Interest Earned</td>
-                <td>:</td>
-                <td>{{$reminder->interest_earned}}</td>
-            </tr>
-        @endif
+    @if($data['interest_earned'])
+        <tr>
+            <td>Interest Earned</td>
+            <td>:</td>
+            <td>{{$data['interest_earned']}}</td>
+        </tr>
+    @endif
 
 </table>
 @endcomponent
