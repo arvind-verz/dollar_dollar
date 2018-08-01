@@ -111,12 +111,13 @@
                                 <div class="row ps-col-tiny">
                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">
                                         <div class="form-group form-group--nest">
-                                            <div class="form-group__content"><span class="prefix_holder">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
-                                                        $@elseif(!isset($searchFilter['filter']))$@endif</span>
-                                                <input class="form-control only_numeric" name="search_value" type="text"
+                                            <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
+                                                        @elseif(!isset($searchFilter['filter']))$@endif</span>
+                                                <input class="form-control prefix_dollar only_numeric" name="search_value" type="text"
                                                        placeholder=""
                                                        value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}">
                                             </div>
+                                            <span class="suffix_ko">k</span>
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
