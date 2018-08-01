@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Products;
 use App\Brand;
 use App\FormulaVariable;
 use App\Http\Controllers\Controller;
+use App\Mail\Reminder;
 use App\PlacementRange;
 use App\ProductName;
 use App\PromotionFormula;
@@ -17,6 +18,10 @@ use Validator;
 use App\DefaultSearch;
 use App\systemSettingLegendTable;
 use App\Currency;
+use App\ProductManagement;
+use Carbon\Carbon;
+use Mail;
+use Exception;
 
 class ProductsController extends Controller
 {
@@ -2029,5 +2034,24 @@ class ProductsController extends Controller
 
             <?php
         }
+    }
+    public function reminder()
+    {
+        $endDate = \Helper::endOfDayAfter(Carbon::now()->addDay(1));
+
+       $reminderData = ProductManagement::join('users','product_managements.user_id','users.id')
+       ->where('product_managements.end_date',$endDate)->get();
+
+        if($reminderData->count()){
+            foreach($reminderData as $reminder)
+            {   try {
+                    Mail::to($reminder->email)->send(new Reminder($reminder));
+                } catch (Exception $exception) {
+                    //dd($exception);
+                return "Error";
+                }
+            }
+        }
+
     }
 }

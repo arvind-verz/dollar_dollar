@@ -374,9 +374,9 @@
                                                         <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                             <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                             <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenor. ' Months' }}</td>
-                                                            <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($product->bonus_interest)<=0)
+                                                            <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
-                                                            <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if(($product->board_rate)<=0)
+                                                            <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if(($productRange->board_rate)<=0)
                                                                     - @else {{ $productRange->board_rate . '%' }} @endif</td>
                                                             <td class="@if($productRange->total_interest_highlight==true ) highlight @endif">@if(($productRange->bonus_interest+$productRange->board_rate)<=0)
                                                                     - @else {{ ($productRange->bonus_interest+$productRange->board_rate). '%' }} @endif</td>
