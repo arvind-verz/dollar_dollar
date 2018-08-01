@@ -70,7 +70,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <input class="form-control prefix_dollar" type="text" name="search_value" placeholder="Enter Placement" value="000.00" required>
+                <input class="form-control prefix_dollar" type="text" name="search_value" placeholder="Enter Placement" value="100" required>
                 <span class="suffix_k">K</span>
             </div>
             <div class="form-group submit">
@@ -92,7 +92,7 @@
                      data-owl-mousedrag="on">
                     @foreach($brands as $brand)
                         <a href="{{isset($brand->brand_link) ? $brand->brand_link : '#'}}" target="_blank"><img
-                                    src="{{ asset($brand->brand_logo) }}" alt=""></a>
+                                    src="{{ asset($brand->brand_logo) }}" style="padding:19px;" alt=""></a>
                     @endforeach
 
                 </div>

@@ -1885,7 +1885,7 @@ button {
 }
 
 .ps-block--deposit-filter {
-    padding: 0 20px;
+    padding: 10px 20px;
     background-color: #d0e8f6;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -1895,6 +1895,7 @@ button {
 
 .ps-block--deposit-filter .ps-block__header {
     padding-bottom: 15px;
+    padding-top: 10px;
 }
 
 .ps-block--legend-table {
