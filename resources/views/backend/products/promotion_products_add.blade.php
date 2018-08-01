@@ -122,7 +122,7 @@
                                     <div class="form-group">
                                         {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                            {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 
