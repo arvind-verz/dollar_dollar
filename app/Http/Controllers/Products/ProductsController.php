@@ -2043,11 +2043,14 @@ class ProductsController extends Controller
        ->where('product_managements.end_date',$endDate)->get();
 
         if($reminderData->count()){
+            $reminderData=$reminderData->toArray();
             foreach($reminderData as $reminder)
-            {   try {
-                    Mail::to($reminder->email)->send(new Reminder($reminder));
+            {
+
+                try {
+                    Mail::to($reminder['email'])->send(new Reminder($reminder));
                 } catch (Exception $exception) {
-                    //dd($exception);
+                    dd($exception);
                 return "Error";
                 }
             }
