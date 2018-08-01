@@ -88,7 +88,7 @@
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder</label>
-                                            <select class="form-control select2" name="reminder" multiple="multiple">
+                                            <select class="form-control select2" name="reminder[]" multiple="multiple">
                                                 <option value="1 Day">1 Day</option>
                                                 <option value="1 Week">1 Week</option>
                                                 <option value="2 Week">2 Week</option>

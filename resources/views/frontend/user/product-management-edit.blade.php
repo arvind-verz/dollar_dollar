@@ -85,13 +85,14 @@
                                             <input type="text" class="form-control only_numeric" name="tenure" value="{{ $product_management->tenure }}">
                                         </div>
                                     </div>
+                                    @php $product_reminder = json_decode($product_management->product_reminder); @endphp
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder</label>
                                             <select class="form-control select2" name="reminder[]" multiple="multiple">
-                                                <option value="1 Day" @if($product_management->product_reminder=='1 Day') selected @endif>1 Day</option>
-                                                <option value="1 Week" @if($product_management->product_reminder=='1 Week') selected @endif>1 Week</option>
-                                                <option value="2 Week" @if($product_management->product_reminder=='2 Week') selected @endif>2 Week</option>
+                                                <option value="1 Day" @if(in_array('1 Day', $product_reminder)) selected @endif>1 Day</option>
+                                                <option value="1 Week" @if(in_array('1 Week', $product_reminder)) selected @endif>1 Week</option>
+                                                <option value="2 Week" @if(in_array('2 Week', $product_reminder)) selected @endif>2 Week</option>
                                             </select>
                                         </div>
                                     </div>                                    
