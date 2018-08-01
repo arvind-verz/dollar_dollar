@@ -77,6 +77,7 @@
                                         <div class="form-group">
                                             <label>Amount <sup>*</sup></label>
                                             <input class="form-control prefix_dollar" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ (old('amount')) ? old('amount') : '0.000' }}">
+                                            <span class="suffix_k">K</span>
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
@@ -196,7 +197,6 @@
     </script>
     <script type="text/javascript">
         $(document).ready( function () {
-            $('#datatable').DataTable();
             $('.select2').select2();
         } );
     </script>
