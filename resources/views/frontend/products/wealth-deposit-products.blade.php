@@ -72,14 +72,15 @@
                              data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="10"
                              data-owl-item-xs="5" data-owl-item-sm="6" data-owl-item-md="7" data-owl-item-lg="10"
                              data-owl-duration="1000" data-owl-mousedrag="on">
-                        @if(count($brands))
+                            @if(count($brands))
                                 @foreach($brands as $brand)
                                     <span class="brand">
                                         <input type="radio" name="brand_id"
                                                value="@if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) {{ $search_filter['brand_id'] }} @else {{ $brand->id }} @endif"
                                                style="opacity: 0;position: absolute;"
                                                @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) checked @endif>
-                                        <img src="{{ asset($brand->brand_logo) }}" style="padding-right:20px; min-width: 80px;"
+                                        <img src="{{ asset($brand->brand_logo) }}"
+                                             style="padding-right:20px; min-width: 80px;"
                                              class="brand_img @if(!empty($search_filter['brand_id']) && $brand->id==$search_filter['brand_id']) selected_img @endif">
                                     </span>
                                 @endforeach
@@ -297,39 +298,65 @@
                                                 alt=""></a></div>
                                 @endif
                                 @endif
+
+
                                         <!-- FORMULA 1 -->
-                                @if($product->promotion_formula_id==WEALTH_DEPOSIT_F1)
+                                @if($product->promotion_formula_id==WEALTH_DEPOSIT_F6)
+                                    <?php
+                                    $product_id = $product->promotion_product_id;
+                                    $tenures = $product->tenure;
+                                    $productRanges = $product->product_ranges;
+                                    $ads = $product->ads_placement;
+                                    $interestEarns = $product->interest_earns;
+                                    $bonusInterests = $product->bonus_interests;
+                                    ?>
                                     <div class="ps-product__table">
                                         <div class="ps-table-wrap">
                                             <table class="ps-table ps-table--product">
                                                 <thead>
                                                 <tr>
-                                                    <th>DEPOSIT BALANCE TIER</th>
-                                                    <th>BONUS RATE</th>
-                                                    <th>BOARD RATE</th>
-                                                    <th>TOTAL INTEREST</th>
+                                                    <th>Type</th>
+                                                    <th>Account</th>
+                                                    @foreach($tenures as  $tenure)
+                                                        <?php
+                                                        $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
+                                                        ?>
+                                                        <th>{{ $tenure . ' ' . $monthSuffix }}</th>
+                                                    @endforeach
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach($product->product_ranges as $productRange)
-
-                                                    <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
-                                                        <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
-                                                        <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if($productRange->bonus_interest<=0)
-                                                                - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
-                                                        <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if($productRange->board_rate<=0)
-                                                                - @else {{ $productRange->board_rate . '%' }} @endif </td>
-                                                        <td class="@if($productRange->total_interest_highlight==true ) highlight @endif">
-                                                            @if(($productRange->bonus_interest+$productRange->board_rate)<=0)
-                                                                - @else {{ ($productRange->bonus_interest+$productRange->board_rate) . '%' }} @endif
+                                                @foreach($productRanges as $rangeKey => $range)
+                                                    <?php
+                                                    $bonusInterestHighlight = $range->bonus_interest_highlight;
+                                                    ?>
+                                                    <tr class="@if($range->placement_highlight==true)highlight @endif">
+                                                        <td>
+                                                            <?php
+                                                            $legendImage = null;
+                                                            if (isset($range->legend)) {
+                                                                $legend = DB::table('system_setting_legend_table')->find($range->legend);
+                                                                if ($legend) {
+                                                                    $legendImage = $legend->icon;
+                                                                }
+                                                            }
+                                                            ?>
+                                                            @if($legendImage)
+                                                                <img src="{{ asset($legendImage) }}" alt="">
+                                                            @endif
                                                         </td>
+                                                        <td class="@if($range->placement_value==true)highlight @endif">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
+                                                        @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
+                                                            <td class="@if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
+                                                                    - @else {{ $bonus_interest . '%' }} @endif </td>
+                                                        @endforeach
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                    @if(count($product->ads))
+                                    @if(!empty($product->ads_placement))
                                         <?php
                                         if(!empty($ads[1]->ad_image_vertical)) {
                                         ?>
@@ -343,46 +370,49 @@
                                         <?php } ?>
                                     @endif
                                     <div class="ps-product__panel">
-                                        <h4>Possible interest(s) earned for SGD
-                                            ${{ Helper::inThousand($product->placement) }}</h4>
+                                        @if(count($interestEarns))
+                                            @foreach($tenures as $tenureKey => $value)
+                                                <?php $type = Helper::days_or_month_or_year(2, $value); ?>
+                                                @if($tenureKey==0)
+                                                    <h4>Possible interest(s) earned for SGD
+                                                        ${{ Helper::inThousand($product->placement) }}</h4>
+                                                @endif
+                                                <p><strong>{{ $value . ' ' . $type }}</strong>-
+                                                    ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
+                                                    ({{ $bonusInterests[$tenureKey] . '%' }})</p>
+                                            @endforeach
 
-                                        <h2> @if(($product->total_interest_earn)<=0)
-                                                - @else ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                            <br>
-                                                <span>
-                                                    Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else {{ $product->total_interest }}% @endif
-                                                </span>
-                                        </h2>
+                                        @endif
                                     </div>
                                     <div class="clearfix"></div>
                                     @if(!empty($product->ads_placement))
-                                        @php
-                                        $ads = json_decode($product->ads_placement);
-                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                                        @endphp
+                                        <?php
+                                        if (!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        ?>
                                         <div class="ps-poster-popup">
                                             <div class="close-popup">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </div>
 
-                                            <a href="#"><img
+                                            <a target="_blank"
+                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
                                                         src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                         alt="" target="_blank"></a>
 
                                         </div>
-                                        @php } @endphp
+                                        <?php } ?>
                                         @endif
                                         @endif
-                                                <!-- FORMULA 2 -->
-                                        @if($product->promotion_formula_id==WEALTH_DEPOSIT_F2)
+
+
+                                                <!-- FORMULA 1 -->
+                                        @if($product->promotion_formula_id==WEALTH_DEPOSIT_F1)
                                             <div class="ps-product__table">
                                                 <div class="ps-table-wrap">
                                                     <table class="ps-table ps-table--product">
                                                         <thead>
                                                         <tr>
                                                             <th>DEPOSIT BALANCE TIER</th>
-                                                            <th>TENOR</th>
                                                             <th>BONUS RATE</th>
                                                             <th>BOARD RATE</th>
                                                             <th>TOTAL INTEREST</th>
@@ -390,15 +420,17 @@
                                                         </thead>
                                                         <tbody>
                                                         @foreach($product->product_ranges as $productRange)
+
                                                             <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                                 <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
-                                                                <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenor. ' Months' }}</td>
-                                                                <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($product->bonus_interest)<=0)
+                                                                <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if($productRange->bonus_interest<=0)
                                                                         - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
-                                                                <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if(($product->board_rate)<=0)
-                                                                        - @else {{ $productRange->board_rate . '%' }} @endif</td>
-                                                                <td class="@if($productRange->total_interest_highlight==true ) highlight @endif">@if(($productRange->bonus_interest+$productRange->board_rate)<=0)
-                                                                        - @else {{ ($productRange->bonus_interest+$productRange->board_rate). '%' }} @endif</td>
+                                                                <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if($productRange->board_rate<=0)
+                                                                        - @else {{ $productRange->board_rate . '%' }} @endif </td>
+                                                                <td class="@if($productRange->total_interest_highlight==true ) highlight @endif">
+                                                                    @if(($productRange->bonus_interest+$productRange->board_rate)<=0)
+                                                                        - @else {{ ($productRange->bonus_interest+$productRange->board_rate) . '%' }} @endif
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                         </tbody>
@@ -422,13 +454,13 @@
                                                 <h4>Possible interest(s) earned for SGD
                                                     ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                <h2>@if(($product->total_interest_earn)<=0)
+                                                <h2> @if(($product->total_interest_earn)<=0)
                                                         - @else
                                                         ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                     <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else ${{ $product->total_interest }}% @endif
+                                                        - @else {{ $product->total_interest }}% @endif
                                                 </span>
                                                 </h2>
                                             </div>
@@ -451,46 +483,32 @@
                                                 @php } @endphp
                                                 @endif
                                                 @endif
-                                                        <!-- FORMULA 3 -->
-                                                @if($product->promotion_formula_id==WEALTH_DEPOSIT_F3)
+                                                        <!-- FORMULA 2 -->
+                                                @if($product->promotion_formula_id==WEALTH_DEPOSIT_F2)
                                                     <div class="ps-product__table">
                                                         <div class="ps-table-wrap">
-                                                            <table class="ps-table ps-table--product text-center">
+                                                            <table class="ps-table ps-table--product">
                                                                 <thead>
                                                                 <tr>
-                                                                    <th>BASE RATE# (P.A.)</th>
-                                                                    <th>BONUS RATE^ (P.A.)</th>
-                                                                    <th>TOTAL INTEREST* (P.A.)</th>
+                                                                    <th>DEPOSIT BALANCE TIER</th>
+                                                                    <th>TENOR</th>
+                                                                    <th>BONUS RATE</th>
+                                                                    <th>BOARD RATE</th>
+                                                                    <th>TOTAL INTEREST</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                 @foreach($product->product_ranges as $productRange)
-                                                                    <?php //$i = 1;   $counters = 12;?>
-                                                                    @for($i=1;$i<=12;$i++)
-                                                                        @if(!((4 <= $i) && ($i < 11)))
-                                                                            <tr class="@if($productRange->high_light==true ) highlight @endif">
-                                                                                @endif
-                                                                                @if($i==1)
-                                                                                    <td rowspan="6"
-                                                                                        style="border: none; font-size: 30px; background-color: #faf9f9"> @if(($productRange->sibor_rate)<=0)
-                                                                                            - @else {{ $productRange->sibor_rate. '%' }} @endif</td>
-                                                                                @endif
-                                                                                @if($i==4)
-                                                                                    <td>TO</td>
-                                                                                @elseif(!((4 < $i) && ($i < 11)))
-                                                                                    <td>{{ 'COUNTER ' . $i . ' - ' . ($i*0.1). '%' }}</td>
-                                                                                @endif
-                                                                                @if($i==4)
-                                                                                    <td>TO</td>
-                                                                                @elseif(!((4 <= $i) && ($i <= 10)))
-                                                                                    <td> @if((($i*0.1)+($productRange->sibor_rate)) <=0)
-                                                                                            - @else {{ (($i*0.1)+($productRange->sibor_rate)) . '%' }} @endif </td>
-                                                                                @endif
-                                                                                @if(!((4 <= $i) && ($i < 11)))
-                                                                            </tr>
-                                                                        @endif
-
-                                                                    @endfor
+                                                                    <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
+                                                                        <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                        <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenor. ' Months' }}</td>
+                                                                        <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($product->bonus_interest)<=0)
+                                                                                - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
+                                                                        <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if(($product->board_rate)<=0)
+                                                                                - @else {{ $productRange->board_rate . '%' }} @endif</td>
+                                                                        <td class="@if($productRange->total_interest_highlight==true ) highlight @endif">@if(($productRange->bonus_interest+$productRange->board_rate)<=0)
+                                                                                - @else {{ ($productRange->bonus_interest+$productRange->board_rate). '%' }} @endif</td>
+                                                                    </tr>
                                                                 @endforeach
                                                                 </tbody>
                                                             </table>
@@ -513,13 +531,13 @@
                                                         <h4>Possible interest(s) earned for SGD
                                                             ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                        <h2>@if($product->total_interest_earn <=0)
+                                                        <h2>@if(($product->total_interest_earn)<=0)
                                                                 - @else
                                                                 ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                             <br>
                                                 <span>
-                                                    Total interest rate @if($product->total_interest <=0)
-                                                        - @else {{ $product->total_interest }}% @endif
+                                                    Total interest rate @if(($product->total_interest)<=0)
+                                                        - @else ${{ $product->total_interest }}% @endif
                                                 </span>
                                                         </h2>
                                                     </div>
@@ -542,39 +560,46 @@
                                                         @php } @endphp
                                                         @endif
                                                         @endif
-                                                                <!-- FORMULA 4 -->
-                                                        @if($product->promotion_formula_id==WEALTH_DEPOSIT_F4)
+                                                                <!-- FORMULA 3 -->
+                                                        @if($product->promotion_formula_id==WEALTH_DEPOSIT_F3)
                                                             <div class="ps-product__table">
                                                                 <div class="ps-table-wrap">
                                                                     <table class="ps-table ps-table--product text-center">
                                                                         <thead>
                                                                         <tr>
-                                                                            <th>Account Balance in Stash account</th>
-                                                                            <th>Base Interest/Prevailing Rate (PA)</th>
-                                                                            <th>Bonus Interest (PA)</th>
-                                                                            <th>Total Interest (PA)</th>
+                                                                            <th>BASE RATE# (P.A.)</th>
+                                                                            <th>BONUS RATE^ (P.A.)</th>
+                                                                            <th>TOTAL INTEREST* (P.A.)</th>
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        @foreach($product->product_ranges as $key => $productRange)
-                                                                            <tr class="@if($product->highlight>=$key) highlight @endif">
-                                                                                <td>@if($key==0) 1st - @else NEXT
-                                                                                    - @endif{{ '$' . Helper::inThousand($productRange->max_range) }}</td>
-                                                                                <td>@if($productRange->board_rate <=0 )
-                                                                                        - @else {{ $productRange->board_rate }}
-                                                                                        % @endif
-                                                                                </td>
-                                                                                <td>@if($productRange->bonus_interest <=0 )
-                                                                                        - @else {{ $productRange->bonus_interest }}
-                                                                                        % @endif
+                                                                        @foreach($product->product_ranges as $productRange)
+                                                                            <?php //$i = 1;   $counters = 12;?>
+                                                                            @for($i=1;$i<=12;$i++)
+                                                                                @if(!((4 <= $i) && ($i < 11)))
+                                                                                    <tr class="@if($productRange->high_light==true ) highlight @endif">
+                                                                                        @endif
+                                                                                        @if($i==1)
+                                                                                            <td rowspan="6"
+                                                                                                style="border: none; font-size: 30px; background-color: #faf9f9"> @if(($productRange->sibor_rate)<=0)
+                                                                                                    - @else {{ $productRange->sibor_rate. '%' }} @endif</td>
+                                                                                        @endif
+                                                                                        @if($i==4)
+                                                                                            <td>TO</td>
+                                                                                        @elseif(!((4 < $i) && ($i < 11)))
+                                                                                            <td>{{ 'COUNTER ' . $i . ' - ' . ($i*0.1). '%' }}</td>
+                                                                                        @endif
+                                                                                        @if($i==4)
+                                                                                            <td>TO</td>
+                                                                                        @elseif(!((4 <= $i) && ($i <= 10)))
+                                                                                            <td> @if((($i*0.1)+($productRange->sibor_rate)) <=0)
+                                                                                                    - @else {{ (($i*0.1)+($productRange->sibor_rate)) . '%' }} @endif </td>
+                                                                                        @endif
+                                                                                        @if(!((4 <= $i) && ($i < 11)))
+                                                                                    </tr>
+                                                                                @endif
 
-                                                                                </td>
-                                                                                <td>@if($productRange->total_interest <=0 )
-                                                                                        - @else {{ $productRange->total_interest }}
-                                                                                        % @endif
-
-                                                                                </td>
-                                                                            </tr>
+                                                                            @endfor
                                                                         @endforeach
                                                                         </tbody>
                                                                     </table>
@@ -597,13 +622,14 @@
                                                                 <h4>Possible interest(s) earned for SGD
                                                                     ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                                <h2>@if($product->total_interest_earn <=0 )
+                                                                <h2>@if($product->total_interest_earn <=0)
                                                                         - @else
                                                                         ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                     <br>
-                                                                    {{-- <span>
-                                                                        Total interest rate {{ $product->total_interest }}%
-                                                                    </span>--}}
+                                                <span>
+                                                    Total interest rate @if($product->total_interest <=0)
+                                                        - @else {{ $product->total_interest }}% @endif
+                                                </span>
                                                                 </h2>
                                                             </div>
                                                             <div class="clearfix"></div>
@@ -625,57 +651,74 @@
                                                                 @php } @endphp
                                                                 @endif
                                                                 @endif
-
-                                                                        <!-- FORMULA 5 -->
-                                                                @if($product->promotion_formula_id==WEALTH_DEPOSIT_F5 )
-
-                                                                    <div class="ps-product__table fullwidth">
+                                                                        <!-- FORMULA 4 -->
+                                                                @if($product->promotion_formula_id==WEALTH_DEPOSIT_F4)
+                                                                    <div class="ps-product__table">
                                                                         <div class="ps-table-wrap">
-                                                                            <table class="ps-table ps-table--product">
+                                                                            <table class="ps-table ps-table--product text-center">
                                                                                 <thead>
                                                                                 <tr>
-                                                                                    <th></th>
-                                                                                    @foreach($product->months as $month)
-                                                                                        <th>{{ 'MONTH ' . $month }}</th>
-                                                                                    @endforeach
-                                                                                    <th>{{ 'END OF YEARS' }}</th>
+                                                                                    <th>Account Balance in Stash
+                                                                                        account
+                                                                                    </th>
+                                                                                    <th>Base Interest/Prevailing Rate
+                                                                                        (PA)
+                                                                                    </th>
+                                                                                    <th>Bonus Interest (PA)</th>
+                                                                                    <th>Total Interest (PA)</th>
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
-                                                                                @foreach($product->row_headings as $key => $heading)
-                                                                                    <tr class="@if($product->highlight==true ) highlight @endif">
-                                                                                        <td>{{ $heading }}</td>
-                                                                                        @if($key==0)
-                                                                                            @foreach($product->monthly_saving_amount as $amount)
-                                                                                                <td class="">{{ '$' . $amount }}</td>
-                                                                                            @endforeach
+                                                                                @foreach($product->product_ranges as $key => $productRange)
+                                                                                    <tr class="@if($product->highlight>=$key) highlight @endif">
+                                                                                        <td>@if($key==0) 1st - @else
+                                                                                                NEXT
+                                                                                                - @endif{{ '$' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                                        <td>@if($productRange->board_rate <=0 )
+                                                                                                - @else {{ $productRange->board_rate }}
+                                                                                                % @endif
+                                                                                        </td>
+                                                                                        <td>@if($productRange->bonus_interest <=0 )
+                                                                                                - @else {{ $productRange->bonus_interest }}
+                                                                                                % @endif
 
-                                                                                        @elseif($key==1)
-                                                                                            @foreach($product->base_interests as $baseInterest )
-                                                                                                <td class="">@if($baseInterest <=0 )
-                                                                                                        - @else {{ '$' .$baseInterest }} @endif   </td>
-                                                                                            @endforeach
+                                                                                        </td>
+                                                                                        <td>@if($productRange->total_interest <=0 )
+                                                                                                - @else {{ $productRange->total_interest }}
+                                                                                                % @endif
 
-                                                                                        @elseif($key==2)
-                                                                                            @foreach($product->additional_interests as $additionalInterest)
-                                                                                                <td>@if($additionalInterest <=0 )
-                                                                                                        - @else {{ '$' .$additionalInterest }} @endif  </td>
-                                                                                            @endforeach
-                                                                                        @elseif($key==3)
-                                                                                            <td colspan="{{count($product->months)}}"></td>
-                                                                                            <td>@if($product->total_interest_earn <=0 )
-                                                                                                    - @else {{ '$' . $product->total_interest_earn }} @endif
-                                                                                                {{-- <br/>
-                                                                                                 <span>
-                                                                                                     Total interest rate {{ $product->total_interest }}%
-                                                                                                 </span>--}}
-                                                                                            </td>
-                                                                                        @endif
+                                                                                        </td>
                                                                                     </tr>
                                                                                 @endforeach
                                                                                 </tbody>
                                                                             </table>
                                                                         </div>
+                                                                    </div>
+                                                                    @if(count($product->ads))
+                                                                        <?php
+                                                                        if(!empty($ads[1]->ad_image_vertical)) {
+                                                                        ?>
+                                                                        <div class="ps-product__poster">
+                                                                            <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"
+                                                                               target="_blank"><img
+                                                                                        src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
+                                                                                        alt=""></a>
+                                                                        </div>
+                                                                        <div class="clearfix"></div>
+                                                                        <?php } ?>
+                                                                    @endif
+                                                                    <div class="ps-product__panel">
+                                                                        <h4>Possible interest(s) earned for SGD
+                                                                            ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                                                        <h2>@if($product->total_interest_earn <=0 )
+                                                                                - @else
+                                                                                ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                            <br>
+                                                                            {{-- <span>
+                                                                                Total interest rate {{ $product->total_interest }}%
+                                                                            </span>--}}
+                                                                        </h2>
                                                                     </div>
                                                                     <div class="clearfix"></div>
                                                                     @if(!empty($product->ads_placement))
@@ -695,17 +738,92 @@
 
                                                                         </div>
                                                                         @php } @endphp
-                                                                    @endif
-                                                                @endif
+                                                                        @endif
+                                                                        @endif
+
+                                                                                <!-- FORMULA 5 -->
+                                                                        @if($product->promotion_formula_id==WEALTH_DEPOSIT_F5 )
+
+                                                                            <div class="ps-product__table fullwidth">
+                                                                                <div class="ps-table-wrap">
+                                                                                    <table class="ps-table ps-table--product">
+                                                                                        <thead>
+                                                                                        <tr>
+                                                                                            <th></th>
+                                                                                            @foreach($product->months as $month)
+                                                                                                <th>{{ 'MONTH ' . $month }}</th>
+                                                                                            @endforeach
+                                                                                            <th>{{ 'END OF YEARS' }}</th>
+                                                                                        </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                        @foreach($product->row_headings as $key => $heading)
+                                                                                            <tr class="@if($product->highlight==true ) highlight @endif">
+                                                                                                <td>{{ $heading }}</td>
+                                                                                                @if($key==0)
+                                                                                                    @foreach($product->monthly_saving_amount as $amount)
+                                                                                                        <td class="">{{ '$' . $amount }}</td>
+                                                                                                    @endforeach
+
+                                                                                                @elseif($key==1)
+                                                                                                    @foreach($product->base_interests as $baseInterest )
+                                                                                                        <td class="">@if($baseInterest <=0 )
+                                                                                                                - @else {{ '$' .$baseInterest }} @endif   </td>
+                                                                                                    @endforeach
+
+                                                                                                @elseif($key==2)
+                                                                                                    @foreach($product->additional_interests as $additionalInterest)
+                                                                                                        <td>@if($additionalInterest <=0 )
+                                                                                                                - @else {{ '$' .$additionalInterest }} @endif  </td>
+                                                                                                    @endforeach
+                                                                                                @elseif($key==3)
+                                                                                                    <td colspan="{{count($product->months)}}"></td>
+                                                                                                    <td>@if($product->total_interest_earn <=0 )
+                                                                                                            - @else {{ '$' . $product->total_interest_earn }} @endif
+                                                                                                        {{-- <br/>
+                                                                                                         <span>
+                                                                                                             Total interest rate {{ $product->total_interest }}%
+                                                                                                         </span>--}}
+                                                                                                    </td>
+                                                                                                @endif
+                                                                                            </tr>
+                                                                                        @endforeach
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="clearfix"></div>
+                                                                            @if(!empty($product->ads_placement))
+                                                                                @php
+                                                                                $ads =
+                                                                                json_decode($product->ads_placement);
+                                                                                if(!empty($ads[2]->ad_horizontal_image_popup))
+                                                                                {
+                                                                                @endphp
+                                                                                <div class="ps-poster-popup">
+                                                                                    <div class="close-popup">
+                                                                                        <i class="fa fa-times"
+                                                                                           aria-hidden="true"></i>
+                                                                                    </div>
+
+                                                                                    <a href="#"><img
+                                                                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                                                                alt="" target="_blank"></a>
+
+                                                                                </div>
+                                                                                @php } @endphp
+                                                                            @endif
+                                                                        @endif
 
 
-                                                                <div class="ps-product__detail">
-                                                                    {!! $product->product_footer !!}
-                                                                </div>
-                                                                <div class="ps-product__footer"><a
-                                                                            class="ps-product__more" href="#">More
-                                                                        Detail<i
-                                                                                class="fa fa-angle-down"></i></a></div>
+                                                                        <div class="ps-product__detail">
+                                                                            {!! $product->product_footer !!}
+                                                                        </div>
+                                                                        <div class="ps-product__footer"><a
+                                                                                    class="ps-product__more" href="#">More
+                                                                                Detail<i
+                                                                                        class="fa fa-angle-down"></i></a>
+                                                                        </div>
                     </div>
                 </div>
                 @php $j++; @endphp
@@ -737,7 +855,7 @@
                 $("input[name='brand_id']").prop("checked", false);
                 $("span.brand img").css("border", "none");
                 $(this).prev().prop("checked", true);
-                $(this).css({"border":"1px solid #000", "padding":"4px 20px"});
+                $(this).css({"border": "1px solid #000", "padding": "4px 20px"});
             }
         });
     </script>
