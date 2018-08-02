@@ -1,5 +1,5 @@
 <div class="display-none" id="fixDepositF1">
-    @if(isset($product) && (in_array($product->formula_id,[FIX_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F1])))
+    @if(isset($product) && (in_array($product->formula_id,[FIX_DEPOSIT_F1, WEALTH_DEPOSIT_F6])))
         @if(count($product->product_range))
             @foreach($product->product_range as $key => $value)
 

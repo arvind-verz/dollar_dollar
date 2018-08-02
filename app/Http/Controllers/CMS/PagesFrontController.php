@@ -633,7 +633,7 @@ class PagesFrontController extends Controller
                 {
                     $searchFilter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
                 }
-                
+
                 $searchValue = $searchFilter['search_value'];
             }
             $productRanges = json_decode($product->product_range);
@@ -649,7 +649,9 @@ class PagesFrontController extends Controller
             $product->remaining_days = $tenure; // remaining in days
             $status = false;
 
+            if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F6])) {
 
+            }
             if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2])) {
                 $maxPlacements = [];
 
@@ -1057,7 +1059,7 @@ class PagesFrontController extends Controller
                 {
                     $searchFilter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
                 }
-                
+
                 $searchValue = $searchFilter['search_value'];
             }
             $productRanges = json_decode($product->product_range);
@@ -1285,7 +1287,7 @@ class PagesFrontController extends Controller
                 }
 
             } elseif (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F5])) {
-
+                $extraMonth=null;
                 $rowHeadings = [CUMMULATED_MONTHLY_SAVINGS_AMOUNT, BASE_INTEREST,
                     ADDITIONAL_INTEREST, TOTAL_AMOUNT];
                 $product->highlight = false;
@@ -1322,8 +1324,6 @@ class PagesFrontController extends Controller
                             $status = true;
 
                         }
-
-
                     }
                     $x = (int)$productRange->placement_month;
                     $y = (int)$productRange->display_month;
@@ -1340,7 +1340,7 @@ class PagesFrontController extends Controller
                         }
                         $j++;
                     } while ($z != $x);
-                    if(!in_array($extraMonth,$months))
+                    if(!in_array($extraMonth,$months) && (!is_null($extraMonth)))
                     {
                        $months[] = $extraMonth;
                     }
@@ -1641,8 +1641,8 @@ class PagesFrontController extends Controller
         }
         //dd($orginalProducts);
         $promotion_products = $orginalProducts;
-        if ($searchFilter['search_value'] > 0 && $search_filter['filter'] == PLACEMENT) {
-            $searchFilter['search_value'] = $searchFilter['search_value'] / 1000;
+        if ($search_filter['search_value'] > 0 && $search_filter['filter'] == PLACEMENT) {
+            $searchFilter['search_value'] = $search_filter['search_value'] / 1000;
         }
         return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "result_data", "currency_list", "search_currency", "legendtable"));
     }
@@ -1729,7 +1729,7 @@ class PagesFrontController extends Controller
                 {
                     $search_filter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
                 }
-                
+
                 $searchValue = $search_filter['search_value'];
                 $salary = $search_filter['salary'] = isset($search_filter['salary']) ? (int)$search_filter['salary'] : $defaultSalary;
                 $giro = $search_filter['giro'] = isset($search_filter['giro']) ? (int)$search_filter['giro'] : $defaultGiro;
@@ -2176,7 +2176,7 @@ class PagesFrontController extends Controller
             {
                 $searchDetail['search_value'] = isset($searchDetail['search_value']) ? ((int)$searchDetail['search_value'] * 1000) : 0;
             }
-            
+
             $searchValue = $searchDetail['search_value'];
 
             $salary = (int)$searchDetail['salary'];
