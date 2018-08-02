@@ -628,6 +628,7 @@ class PagesFrontController extends Controller
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
                 $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
                 $searchFilter = $request;
@@ -650,9 +651,105 @@ class PagesFrontController extends Controller
             $product->remaining_days = $tenure; // remaining in days
             $status = false;
 
+
+
+
             if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F6])) {
+                $tenures = json_decode($product->tenure);
+                //including end day so 1 day add in end date
+                $remainingDays = $todayDate->diffInDays($endDate); // tenure in days
+                $monthSuffix = \Helper::days_or_month_or_year(2, $startDate->diffInMonths($endDate->copy()->addDay()));
+                $product->ads = json_decode($product->ads_placement);
 
+                $product->tenure = $tenures;
+                $product->remaining_days = $remainingDays; // remaining in days
+                $totalInterestPercent = 0;
+                $totalInterest = 0;
+                $ranges = [];
+                $resultKey = null;
+                foreach ($productRanges as $k => $productRange) {
+                    $bonusInterestHighlight = [];
+                    $interestEarnedArray = [];
+                    $bonusInterests = $productRange->bonus_interest;
+                    $productRange->placement_highlight = false;
+                    $productRange->placement_value = false;
+                    $interestEarn = 0;
+                    $interestPercent = 0;
+                    if (count($searchFilter)) {
+                        if (count($tenures)) {
 
+                            foreach ($tenures as $tenureKey => $tenure) {
+
+                                $bonusInterestHighlight[$tenureKey] = false;
+                                if ($filter == PLACEMENT && ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range)) {
+                                    $productRange->placement_highlight = true;
+                                    $productRange->placement_value = true;
+                                    $placement = (int)$searchValue;
+                                    $resultKey = $tenureKey;
+                                    $status = true;
+                                } elseif ($filter == INTEREST && ($searchValue == $bonusInterests[$tenureKey])) {
+                                    $bonusInterestHighlight[$tenureKey] = true;
+                                    $productRange->placement_value = true;
+                                    $resultKey = $tenureKey;
+                                    $placement = $productRange->max_range;
+                                    $status = true;
+                                } elseif ($filter == TENURE && ($searchValue == $tenure)) {
+                                    $bonusInterestHighlight[$tenureKey] = true;
+                                    $productRange->placement_value = true;
+                                    $placement = $productRange->max_range;
+                                    $resultKey = $tenureKey;
+                                    $status = true;
+
+                                }
+
+                                if (empty($placement)) {
+                                    $amount = $productRange->max_range;
+                                } else {
+                                    $amount = $placement;
+                                }
+                                $interestEarn = ($amount * $bonusInterests[$tenureKey] * $tenure) / (100 * 12);
+                                $interestEarnedArray[$tenureKey] = round($interestEarn, 2);
+                            }
+
+                        }
+
+                        $productRange->bonus_interest_highlight = $bonusInterestHighlight;
+                        $productRange->interest_earns = $interestEarnedArray;
+                    }
+                    $ranges[] = $productRange;
+
+                }
+                $product->interest_earns = [];
+                $product->bonus_interests = [];
+                $resultInterestEarn = 0;
+                $resultInterestEarnPercent = 0;
+                foreach ($ranges as $range) {
+
+                    if ($placement >= $range->min_range && $placement <= $range->max_range) {
+                        $product->interest_earns = $range->interest_earns;
+                        $product->bonus_interests = $range->bonus_interest;
+                    }
+                }
+                if (count($product->interest_earns)) {
+                    $resultInterestEarnArray = $product->interest_earns;
+                    $resultInterestEarn = $resultInterestEarnArray[$resultKey];
+
+                }
+                if (count($product->bonus_interests)) {
+                    $resultInterestEarnPercentArray = $product->interest_earns;
+                    $resultInterestEarnPercent = $resultInterestEarnPercentArray[$resultKey];
+                }
+                $product->product_ranges = $ranges;
+                $product->total_interest = $resultInterestEarnPercent;
+                $product->total_interest_earn = round($resultInterestEarn, 2);
+                $product->placement = $placement;
+                if (!is_null($brandId) && ($brandId != $product->bank_id)) {
+                    $status = false;
+                }
+                if ($status == true) {
+                    //dd($product);
+                    $filterProducts[] = $product;
+                }
             }
             if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2])) {
                 $maxPlacements = [];
