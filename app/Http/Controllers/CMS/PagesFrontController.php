@@ -301,7 +301,7 @@ class PagesFrontController extends Controller
             $search_filter['search_value'] = $defaultPlacement;
             $search_filter['filter'] = PLACEMENT;
             $search_filter['sort_by'] = MAXIMUM;
-        } else {
+        } elseif($search_filter['filter'] == PLACEMENT) {
             $search_filter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
         }
 
@@ -445,7 +445,7 @@ class PagesFrontController extends Controller
         }
         //dd($orginalProducts);
         $promotion_products = $orginalProducts;
-        if ($search_filter['search_value'] > 0) {
+        if ($search_filter['search_value'] > 0 && $search_filter['filter'] == PLACEMENT) {
             $search_filter['search_value'] = $search_filter['search_value'] / 1000;
         }
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "result_data", "legendtable"));
@@ -629,7 +629,11 @@ class PagesFrontController extends Controller
             } else {
                 $placement = 0;
                 $searchFilter = $request;
-                $searchFilter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
+                if($searchFilter['filter'] == PLACEMENT)
+                {
+                    $searchFilter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
+                }
+                
                 $searchValue = $searchFilter['search_value'];
             }
             $productRanges = json_decode($product->product_range);
@@ -973,7 +977,7 @@ class PagesFrontController extends Controller
             }
 
         }
-        if ($searchFilter['search_value'] > 0) {
+        if ($searchFilter['search_value'] > 0 && $searchFilter['filter'] == PLACEMENT) {
             $searchFilter['search_value'] = $searchFilter['search_value'] / 1000;
         }
         return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
@@ -1049,7 +1053,11 @@ class PagesFrontController extends Controller
             } else {
                 $placement = 0;
                 $searchFilter = $request;
-                $searchFilter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
+                if($searchFilter['filter'] == PLACEMENT)
+                {
+                    $searchFilter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
+                }
+                
                 $searchValue = $searchFilter['search_value'];
             }
             $productRanges = json_decode($product->product_range);
@@ -1399,7 +1407,7 @@ class PagesFrontController extends Controller
             }
 
         }
-        if ($searchFilter['search_value'] > 0) {
+        if ($searchFilter['search_value'] > 0 && $searchFilter['filter'] == PLACEMENT) {
             $searchFilter['search_value'] = $searchFilter['search_value'] / 1000;
         }
         return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
@@ -1481,7 +1489,8 @@ class PagesFrontController extends Controller
             $search_filter['search_value'] = $defaultPlacement;
             $search_filter['filter'] = PLACEMENT;
             $search_filter['sort_by'] = MAXIMUM;
-        } else {
+        } elseif($search_filter['filter'] == PLACEMENT) {
+
             $search_filter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
         }
         foreach ($promotion_products as $product) {
@@ -1628,7 +1637,7 @@ class PagesFrontController extends Controller
         }
         //dd($orginalProducts);
         $promotion_products = $orginalProducts;
-        if ($searchFilter['search_value'] > 0) {
+        if ($searchFilter['search_value'] > 0 && $search_filter['filter'] == PLACEMENT) {
             $searchFilter['search_value'] = $searchFilter['search_value'] / 1000;
         }
         return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "result_data", "currency_list", "search_currency", "legendtable"));
@@ -1712,7 +1721,11 @@ class PagesFrontController extends Controller
             } else {
                 $placement = 0;
                 $search_filter = $request;
-                $search_filter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
+                if($search_filter['filter'] == PLACEMENT)
+                {
+                    $search_filter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
+                }
+                
                 $searchValue = $search_filter['search_value'];
                 $salary = $search_filter['salary'] = isset($search_filter['salary']) ? (int)$search_filter['salary'] : $defaultSalary;
                 $giro = $search_filter['giro'] = isset($search_filter['giro']) ? (int)$search_filter['giro'] : $defaultGiro;
@@ -2106,10 +2119,10 @@ class PagesFrontController extends Controller
             }
 
         }
-        if ($search_filter['search_value'] > 0) {
+        if ($search_filter['search_value'] > 0 && $search_filter['filter'] == PLACEMENT) {
             $search_filter['search_value'] = $search_filter['search_value'] / 1000;
         }
-        //dd($promotion_products);
+        //dd($search_filter);
         return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable"));
     }
 
@@ -2155,7 +2168,11 @@ class PagesFrontController extends Controller
 
             }
             $placement = 0;
-            $searchDetail['search_value'] = isset($searchDetail['search_value']) ? ((int)$searchDetail['search_value'] * 1000) : 0;
+            if($searchDetail['filter'] == PLACEMENT)
+            {
+                $searchDetail['search_value'] = isset($searchDetail['search_value']) ? ((int)$searchDetail['search_value'] * 1000) : 0;
+            }
+            
             $searchValue = $searchDetail['search_value'];
 
             $salary = (int)$searchDetail['salary'];
