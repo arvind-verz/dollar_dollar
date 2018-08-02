@@ -1318,7 +1318,7 @@ class PagesFrontController extends Controller
                             $status = true;
                         } elseif ($filter == TENURE && ($searchValue > 0 && $searchValue <= $productRange->placement_month)) {
                             $product->highlight = true;
-                            $months[] = (int)$searchValue;
+                            $extraMonth = (int)$searchValue;
                             $status = true;
 
                         }
@@ -1340,6 +1340,10 @@ class PagesFrontController extends Controller
                         }
                         $j++;
                     } while ($z != $x);
+                    if(!in_array($extraMonth,$months))
+                    {
+                       $months[] = $extraMonth;
+                    }
                     $product->months = array_sort($months);
 
 
@@ -1349,7 +1353,7 @@ class PagesFrontController extends Controller
                     $additionalInterests = [];
                     $totalInterestAmount = 0;
 
-                    foreach ($months as $month) {
+                    foreach ($product->months as $month) {
                         $monthlySavingAmount[$month] = $placement * $month;
                     }
                     $monthlySavingAmount[] = $placement * end($months);
@@ -1358,7 +1362,7 @@ class PagesFrontController extends Controller
 
                         $baseInterest = round($productRange->base_interest * $placement * $i * 31 / (365 * 100), 2);
                         $AdditionalInterest = round($productRange->bonus_interest * ($placement + $baseInterest) * $i * 31 / (365 * 100), 2);
-                        if (in_array($i, $months)) {
+                        if (in_array($i, $product->months)) {
                             $baseInterests[$i] = $baseInterest;
                             $additionalInterests[$i] = $AdditionalInterest;
                         }
@@ -1367,7 +1371,6 @@ class PagesFrontController extends Controller
                     $additionalInterests[] = array_sum($additionalInterests);
                     $totalInterestAmount = end($baseInterests) + end($additionalInterests);
                     $product->row_headings = $rowHeadings;
-                    $product->months = $months;
                     $product->monthly_saving_amount = $monthlySavingAmount;
                     $product->base_interests = $baseInterests;
                     $product->additional_interests = $additionalInterests;
