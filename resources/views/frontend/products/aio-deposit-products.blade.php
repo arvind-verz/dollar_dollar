@@ -151,8 +151,8 @@
                                                 <input class="form-control only_numeric" type="text" placeholder=""
                                                        name="search_value" id="search_value"
                                                        value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}"/>
-                                                <span class="suffix_k">k</span>
                                             </div>
+                                            <span class="suffix_ko">K</span>
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>

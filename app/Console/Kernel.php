@@ -29,9 +29,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('ProductReminder:productReminder')
-            //->hourly();
-            //->daily();
-        ->everyMinute();
+            ->daily();
     }
 
     /**
