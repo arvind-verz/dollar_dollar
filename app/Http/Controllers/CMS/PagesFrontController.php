@@ -1294,7 +1294,7 @@ class PagesFrontController extends Controller
 
                     $months = [1];
                     $allInterests = [$productRange->base_interest, $productRange->bonus_interest];
-                    //$placement = $productRange->max_range;
+                    $placement = $productRange->max_range;
                     if ($filter == PLACEMENT) {
                         $searchValue = round($searchValue / ((int)$productRange->placement_month), 2);
                     } else {
@@ -1318,8 +1318,9 @@ class PagesFrontController extends Controller
                             $status = true;
                         } elseif ($filter == TENURE && ($searchValue > 0 && $searchValue <= $productRange->placement_month)) {
                             $product->highlight = true;
-                            $months[] = $searchValue;
+                            $months[] = (int)$searchValue;
                             $status = true;
+
                         }
 
 
@@ -1342,7 +1343,7 @@ class PagesFrontController extends Controller
                     $product->months = array_sort($months);
 
 
-                    //dd($productRange, $months);
+                    //dd($product->months);
                     $monthlySavingAmount = [];
                     $baseInterests = [];
                     $additionalInterests = [];
