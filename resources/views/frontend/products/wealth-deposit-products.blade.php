@@ -720,12 +720,12 @@
             $("input[name='filter']").prop("checked", false);
             $(this).addClass("active").find("input[name='filter']").prop("checked", true);
             var value = $(this).find("input[name='filter']").val();
-            $("input[name='search_value']").val('');
+            $("input[name='search_value']").val('').removeClass("prefix_dollar");
             if (value == 'Placement') {
                 prefix_holder = '$';
-                $("input[name='search_value']").val('100000');
+                $("input[name='search_value']").val('100').addClass("prefix_dollar");
             }
-            $("span.prefix_holder").text(prefix_holder);
+            $("span.suffix_ko").text(prefix_holder);
         });
 
         $("img.brand_img").on("click", function () {
