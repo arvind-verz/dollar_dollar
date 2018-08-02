@@ -159,7 +159,7 @@ class ProductsController extends Controller
         $product->minimum_placement_amount = $request->minimum_placement_amount;
 
         $ranges = [];
-        if (in_array($product->formula_id, [FIX_DEPOSIT_F1])) {
+        if (in_array($product->formula_id, [FIX_DEPOSIT_F1,WEALTH_DEPOSIT_F6])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
                 $legends = $request->legend;
@@ -538,7 +538,7 @@ class ProductsController extends Controller
         $product->minimum_placement_amount = $request->minimum_placement_amount;
 
         $ranges = [];
-        if (in_array($product->formula_id, [FIX_DEPOSIT_F1])) {
+        if (in_array($product->formula_id, [FIX_DEPOSIT_F1,WEALTH_DEPOSIT_F6])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
                 $legends = $request->legend;
@@ -1187,7 +1187,7 @@ class ProductsController extends Controller
 
     public function addMorePlacementRange(Request $request)
     {
-        if (in_array($request->formula, [FIX_DEPOSIT_F1])) {
+        if (in_array($request->formula, [FIX_DEPOSIT_F1,WEALTH_DEPOSIT_F6])) {
             $tenure = $request->detail;
             $productType = $request->product_type;
 
