@@ -868,12 +868,12 @@
             $("input[type='radio']").prop("checked", false);
             $(this).addClass("active").find("input[type='radio']").prop("checked", true);
             var value = $(this).find("input[type='radio']").val();
-            $("input[name='search_value']").val('');
+            $("input[name='search_value']").val('').removeClass("prefix_dollar");
             if (value == 'Placement') {
-                prefix_holder = '$';
-                $("input[name='search_value']").val('100000');
+                prefix_holder = 'K';
+                $("input[name='search_value']").val('100').addClass("prefix_dollar");
             }
-            $("span.prefix_holder").text(prefix_holder);
+            $("span.suffix_ko").text(prefix_holder);
         });
         function changeCriteria(id) {
             var product_id = $(id).data('product-id');
