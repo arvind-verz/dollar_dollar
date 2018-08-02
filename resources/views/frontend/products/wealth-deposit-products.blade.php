@@ -728,7 +728,7 @@
             $("span.suffix_ko").text(prefix_holder);
         });
 
-        $("img.brand_img").on("click", function () {
+        $("body").on("click", "img.brand_img", function () {
             if ($(this).prev().prop("checked")) {
                 $("input[name='brand_id']").prop("checked", false);
                 $("span.brand img").css("border", "none");
@@ -737,7 +737,7 @@
                 $("input[name='brand_id']").prop("checked", false);
                 $("span.brand img").css("border", "none");
                 $(this).prev().prop("checked", true);
-                $(this).css("border", "1px solid #000");
+                $(this).css({"border":"1px solid #000", "padding":"4px 20px"});
             }
         });
     </script>
