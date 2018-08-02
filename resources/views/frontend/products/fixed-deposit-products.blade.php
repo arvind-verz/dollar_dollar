@@ -457,7 +457,7 @@
             $("span.suffix_ko").text(prefix_holder);
         });
 
-        $("img.brand_img").on("click", function () {
+        $("body").on("click", "img.brand_img", function () {
             if ($(this).prev().prop("checked")) {
                 $("input[name='brand_id']").prop("checked", false);
                 $("span.brand img").css("border", "none");
