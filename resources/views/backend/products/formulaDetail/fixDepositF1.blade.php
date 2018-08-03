@@ -1,5 +1,5 @@
 <div class="display-none" id="fixDepositF1">
-    @if(isset($product) && (in_array($product->formula_id,[FIX_DEPOSIT_F1, WEALTH_DEPOSIT_F6,FOREIGN_CURRENCY_DEPOSIT_F1])))
+    @if(isset($product) && (in_array($product->formula_id,[FIX_DEPOSIT_F1, WEALTH_DEPOSIT_F6])))
         @if(count($product->product_range))
             @foreach($product->product_range as $key => $value)
 
@@ -177,9 +177,8 @@
                 </div>
 
             </div>
-            <div class="form-group ">
+            <div class="form-group " >
                 <label for="title" class="col-sm-2 control-label">Legend Type</label>
-
                 <div class="col-sm-8">
                     <select class="form-control" name="legend[0]">
                         <option value="">None</option>

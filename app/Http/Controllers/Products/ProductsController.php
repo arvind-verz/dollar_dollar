@@ -49,8 +49,13 @@ class ProductsController extends Controller
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
         $productType = $this->productType($productTypeId);
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        $currencies = Currency::where('delete_status', 0)->get();
-        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
+        if ($productTypeId == FOREIGN_CURRENCY_DEPOSIT) {
+            $currencies = Currency::where('delete_status', 0)->get();
+            return view('backend.products.foreign_currency_product_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
+        } else {
+            return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends'));
+        }
+
     }
 
     public function promotion_products_get_formula(Request $request)
@@ -152,11 +157,9 @@ class ProductsController extends Controller
         $product->promotion_period = $request->promotion_period;
         $product->maximum_interest_rate = $request->maximum_interest_rate;
         $product->minimum_placement_amount = $request->minimum_placement_amount;
+
         $ranges = [];
-        if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
-            $product->currency = $request->currency;
-        }
-        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, WEALTH_DEPOSIT_F6,FOREIGN_CURRENCY_DEPOSIT_F1])) {
+        if (in_array($product->formula_id, [FIX_DEPOSIT_F1,WEALTH_DEPOSIT_F6])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
                 $legends = $request->legend;
@@ -174,6 +177,43 @@ class ProductsController extends Controller
             $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
             $ranges = json_encode(array_values($ranges));
             //dd($ranges);
+            $product->tenure = $tenure;
+        }
+        if (in_array($product->formula_id, [FOREIGN_CURRENCY_DEPOSIT_F1])) {
+            //dd($request->all());
+            $currencies = [];
+            foreach ($request->currency as $currencyKey => $v) {
+                $currency = [];
+                $currency['currency'] = $v;
+                $minPlacements = $request->min_placement;
+                $maxPlacements = $request->max_placement;
+                $legends = $request->legend;
+                $bonusInterests = $request->bonus_interest;
+                $ranges = [];
+                foreach ($minPlacements[$currencyKey] as $k => $v) {
+                    $max = $maxPlacements[$currencyKey];
+                    $legend = $legends[$currencyKey];
+                    $bonusInterest = $bonusInterests[$currencyKey];
+                    $range = [];
+                    $range['min_range'] = (int)$v;
+                    $range['max_range'] = (int)$max[$k];
+                    $range['legend'] = (int)$legend[$k];
+                    $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
+                    $ranges[] = $range;
+
+                }
+                $currency['ranges'] = $ranges;
+                $currencies[] = $currency;
+            }
+
+            $tenure = $request->tenure;
+            $tenures = [];
+            foreach ($request->currency as $currencyKey => $v) {
+                $tenures[] = array_values(array_map('intVal', $tenure[$currencyKey][0]));
+            }
+            $tenure=json_encode($tenures);
+
+            $ranges = json_encode(array_values($currencies));
             $product->tenure = $tenure;
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
@@ -205,7 +245,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             $min = 1;
-            $previousMax = 0;
+            $previousMax=0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
                 $bonusInterest = $request->bonus_interest_sdp4;
                 $boardInterest = $request->board_rate_sdp4;
@@ -255,7 +295,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
             $min = 1;
-            $previousMax = 0;
+            $previousMax=0;
             foreach ($request->max_placement_aioa2 as $k => $v) {
 
                 $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
@@ -398,8 +438,14 @@ class ProductsController extends Controller
         $formula = \Helper::productType($id);
         $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        $currencies = Currency::where('delete_status', 0)->get();
-        return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+        if ($request->product_type_id == FOREIGN_CURRENCY_DEPOSIT) {
+            $currencies = Currency::where('delete_status', 0)->get();
+            return view('backend.products.foreign_currency_product_edit', compact('CheckLayoutPermission', 'promotion_types','product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+        } else {
+            return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types','product', 'formula', 'banks', 'productType', 'legends'));
+        }
+
+
     }
 
     public function promotion_products_update(Request $request, $id)
@@ -490,11 +536,9 @@ class ProductsController extends Controller
         $product->promotion_period = $request->promotion_period;
         $product->maximum_interest_rate = $request->maximum_interest_rate;
         $product->minimum_placement_amount = $request->minimum_placement_amount;
+
         $ranges = [];
-        if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
-            $product->currency = $request->currency;
-        }
-        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, WEALTH_DEPOSIT_F6,FOREIGN_CURRENCY_DEPOSIT_F1])) {
+        if (in_array($product->formula_id, [FIX_DEPOSIT_F1,WEALTH_DEPOSIT_F6])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
                 $legends = $request->legend;
@@ -512,6 +556,43 @@ class ProductsController extends Controller
             $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
             $ranges = json_encode(array_values($ranges));
             //dd($ranges);
+            $product->tenure = $tenure;
+        }
+        if (in_array($product->formula_id, [FOREIGN_CURRENCY_DEPOSIT_F1])) {
+            //dd($request->all());
+            $currencies = [];
+            foreach ($request->currency as $currencyKey => $v) {
+                $currency = [];
+                $currency['currency'] = $v;
+                $minPlacements = $request->min_placement;
+                $maxPlacements = $request->max_placement;
+                $legends = $request->legend;
+                $bonusInterests = $request->bonus_interest;
+                $ranges = [];
+                foreach ($minPlacements[$currencyKey] as $k => $v) {
+                    $max = $maxPlacements[$currencyKey];
+                    $legend = $legends[$currencyKey];
+                    $bonusInterest = $bonusInterests[$currencyKey];
+                    $range = [];
+                    $range['min_range'] = (int)$v;
+                    $range['max_range'] = (int)$max[$k];
+                    $range['legend'] = (int)$legend[$k];
+                    $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
+                    $ranges[] = $range;
+
+                }
+                $currency['ranges'] = $ranges;
+                $currencies[] = $currency;
+            }
+
+            $tenure = $request->tenure;
+            $tenures = [];
+            foreach ($request->currency as $currencyKey => $v) {
+                $tenures[] = array_values(array_map('intVal', $tenure[$currencyKey][0]));
+            }
+            $tenure=json_encode($tenures);
+
+            $ranges = json_encode(array_values($currencies));
             $product->tenure = $tenure;
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
@@ -543,7 +624,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             $min = 1;
-            $previousMax = 0;
+            $previousMax=0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
                 $bonusInterest = $request->bonus_interest_sdp4;
                 $boardInterest = $request->board_rate_sdp4;
@@ -593,7 +674,7 @@ class ProductsController extends Controller
         }
         if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
             $min = 1;
-            $previousMax = 0;
+            $previousMax=0;
             foreach ($request->max_placement_aioa2 as $k => $v) {
 
                 $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
@@ -1106,7 +1187,7 @@ class ProductsController extends Controller
 
     public function addMorePlacementRange(Request $request)
     {
-        if (in_array($request->formula, [FIX_DEPOSIT_F1, WEALTH_DEPOSIT_F6, FOREIGN_CURRENCY_DEPOSIT_F1])) {
+        if (in_array($request->formula, [FIX_DEPOSIT_F1,WEALTH_DEPOSIT_F6])) {
             $tenure = $request->detail;
             $productType = $request->product_type;
 
@@ -1216,6 +1297,130 @@ class ProductsController extends Controller
 
                     <?php } ?>
                     <div id="new-formula-detail-<?php echo $request->range_id; ?>"></div>
+                </div>
+            <?php }
+        }
+        if (in_array($request->formula, [FOREIGN_CURRENCY_DEPOSIT_F1])) {
+            $tenure = $request->detail;
+            $currencyId = $request->currency_id;
+            $productType = $request->product_type;
+            $rangeId = $request->range_id;
+            $details = [];
+            foreach ($tenure as $t) {
+
+                if (stripos($t['name'], "tenure[$currencyId][0]") !== FALSE) {
+                    $details[] = $t;
+                }
+
+            }
+
+            function intVal($x)
+            {
+                return (int)$x;
+            }
+
+            $legends = systemSettingLegendTable::where('delete_status', 0)
+                ->where('page_type', $productType)
+                ->get();
+            //return $legends->count();
+            if ($legends->count()) {
+                ?>
+
+                <div id="fcdp-f1-range-<?php echo $currencyId; ?>-<?php echo $request->range_id; ?>">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-4">
+                            <div class="input-group date">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-success">Min
+                                        Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric "
+                                       name="min_placement[<?php echo $currencyId; ?>][<?php echo $rangeId; ?>]"
+                                       value="">
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 ">
+
+                            <div class="input-group date ">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-danger">Max Placement
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control pull-right only_numeric"
+                                       name="max_placement[<?php echo $currencyId; ?>][<?php echo $rangeId; ?>]"
+                                       value="">
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button"
+                                    class="btn btn-danger pull-left mr-15 remove-placement-range-button"
+                                    data-currency-id="<?php echo $currencyId; ?>"
+                                    data-range-id="<?php echo $rangeId; ?>" onClick="removePlacementRange(this);"><i
+                                    class="fa fa-minus"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="form-group ">
+                        <label for="title" class="col-sm-2 control-label">Legend Type</label>
+
+                        <div class="col-sm-8">
+                            <select class="form-control"
+                                    name="legend[<?php echo $currencyId; ?>][<?php echo $request->range_id; ?>]">
+                                <option value="">None</option>
+                                <?php
+                                foreach ($legends as $legend) { ?>
+                                    <option value="<?php echo $legend->id; ?>"><?php echo $legend->title; ?></option>
+                                    <?php
+                                } ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+                    <?php for ($i = 0; $i < count($details); $i++) { ?>
+
+                        <div class="form-group  <?php echo $currencyId; ?>-<?php echo $i; ?>"
+                             id="formula-detail-<?php echo $currencyId; ?>-<?php echo $rangeId; ?>-<?php echo $i; ?>">
+                            <label for="title" class="col-sm-2 control-label"></label>
+
+                            <div class="col-sm-6 ">
+                                <div class="form-row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Tenure</label>
+                                        <input type="text" class="form-control only_numeric tenure-<?php echo $currencyId; ?>-<?php echo $i; ?>"
+                                               id=""  data-currency-id="<?php echo $currencyId; ?>"
+                                               onchange="changeTenureFCDPValue(this)"
+                                               data-formula-detail-id="<?php echo $i; ?>"
+                                               name="tenure[<?php echo $currencyId; ?>][<?php echo $request->range_id; ?>][<?php echo $i; ?>]"
+                                               value="<?php echo $details[$i]['value']; ?>"
+                                               placeholder="" readonly="readonly">
+
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Bonus Interest</label>
+                                        <input type="text" class="form-control only_numeric" id=""
+                                               name="bonus_interest[<?php echo $currencyId; ?>][<?php echo $request->range_id; ?>][<?php echo $i; ?>]"
+                                               placeholder="">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-1 col-sm-offset-1 ">
+                            </div>
+                            <div class="col-sm-2">&emsp;</div>
+                        </div>
+
+                    <?php } ?>
+                    <div id="new-formula-detail-<?php echo $currencyId; ?>-<?php echo $rangeId; ?>"></div>
                 </div>
             <?php }
         } elseif (in_array($request->formula, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
@@ -1542,7 +1747,8 @@ class ProductsController extends Controller
             $key = count($request->min_placement) - 1 - $key;
 
             for ($i = 0; $i <= (count($request->min_placement) - 1); $i++) {
-                if ($request->min_placement[$key] > $request->max_placement[$key]) {
+                if($request->min_placement[$key] > $request->max_placement[$key])
+                {
                     return 2;
                 }
                 if (!is_null($request->min_placement[$key]) && !is_null($request->min_placement[$i]) && !is_null($request->max_placement[$i]) && ($key != $i)) {
@@ -1641,20 +1847,208 @@ class ProductsController extends Controller
 
     }
 
+    public function addMoreCurrencyRange(Request $request)
+    {
+        if (in_array($request->formula, [FOREIGN_CURRENCY_DEPOSIT_F1])) {
+            $currencyId = $request->currency_id ? $request->currency_id : 1;
+            $legends = systemSettingLegendTable::where('delete_status', 0)->where('page_type', FOREIGN_CURRENCY_DEPOSIT)->get();
+            $currencies = Currency::where('delete_status', 0)->get();
+
+            $rangeId = 0;
+            $formulaDetailId = 0;
+            ?>
+            <div class="row " style="padding: 10px;" id="f1-currency-range-<?php echo $currencyId; ?>">
+                <div class="col-md-11 ">
+                    <div class="box box-info">
+                        <div class="box-header with-border ">
+
+                            <a href="" class="" role="button"
+                               data-toggle="collapse"
+                               aria-expanded="true"
+                                ><h3 class="box-title">Currency Detail </h3></a>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool"
+                                        aria-controls="#foreignCurrencyF1-<?php echo $currencyId; ?>"
+                                        onclick="showHide(this);"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row collapse in" id="foreignCurrencyF1-<?php echo $currencyId; ?>"
+                                 aria-expanded="true" style="">
+
+                                <div class="form-group ">
+                                    <label for="title" class="col-sm-2 control-label">Currency Type</label>
+
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="currency[<?php echo $currencyId; ?>]">
+                                            <option value="">None</option>
+                                            <?php
+                                            if ($currencies->count()) {
+                                                foreach ($currencies as $currency) { ?>
+                                                    <option
+                                                        value="<?php echo $currency->id; ?>"><?php echo $currency->currency.' ('.($currency->code.')'); ?></option>
+                                                    <?php
+                                                }
+                                            } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                    </div>
+                                </div>
+                                <!-- Fixed Deposit Formula for ForeignCurrency -->
+                                <div id="fcdp-f1-range-<?php echo $rangeId; ?>">
+                                    <div class="form-group">
+                                        <label for="title" class="col-sm-2 control-label">Formula Detail</label>
+
+                                        <div class="col-sm-4">
+                                            <div class="input-group date">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-success">Min
+                                                        Placement
+                                                    </button>
+                                                </div>
+                                                <input type="text" class="form-control pull-right only_numeric "
+                                                       name="min_placement[<?php echo $currencyId; ?>][<?php echo $rangeId; ?>]"
+                                                       value="">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4 ">
+
+                                            <div class="input-group date ">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-danger">Max Placement
+                                                    </button>
+                                                </div>
+                                                <input type="text" class="form-control pull-right only_numeric"
+                                                       name="max_placement[<?php echo $currencyId; ?>][<?php echo $rangeId; ?>]"
+                                                       value="">
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-2"
+                                             id="add-placement-range-button-<?php echo $currencyId; ?>">
+                                            <button type="button"
+                                                    class="btn btn-info pull-left mr-15 add-placement-range-button"
+                                                    data-currency-id="<?php echo $currencyId; ?>"
+                                                    data-range-id="<?php echo $rangeId; ?>"
+                                                    onClick="addMorePlacementRange(this);"><i
+                                                    class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="title" class="col-sm-2 control-label">Legend Type</label>
+
+                                        <div class="col-sm-8">
+                                            <select class="form-control"
+                                                    name="legend[<?php echo $currencyId; ?>][<?php echo $rangeId; ?>]">
+                                                <option value="">None</option>
+
+                                                <?php
+                                                if ($legends->count()) {
+                                                    foreach ($legends as $legend) { ?>
+                                                        <option
+                                                            value="<?php echo $legend->id; ?>"><?php echo $legend->title; ?></option>
+                                                        <?php
+                                                    }
+                                                } ?>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                        </div>
+                                    </div>
+                                    <div class="form-group <?php echo $currencyId; ?>-<?php echo $rangeId; ?>"
+                                         id="formula-detail-<?php echo $currencyId; ?>-<?php echo $rangeId; ?>-<?php echo $formulaDetailId; ?>">
+                                        <label for="title" class="col-sm-2 control-label"></label>
+
+                                        <div class="col-sm-6 ">
+                                            <div class="form-row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="">Tenure</label>
+                                                    <input type="text"
+                                                           class="form-control tenure-<?php echo $currencyId; ?>-<?php echo $rangeId; ?> only_numeric"
+                                                           id="" data-currency-id="<?php echo $currencyId; ?>"
+                                                           data-formula-detail-id="<?php echo $formulaDetailId; ?>"
+                                                           name="tenure[<?php echo $currencyId; ?>][<?php echo $rangeId; ?>][]"
+                                                           placeholder="" onchange="changeTenureFCDPValue(this)">
+
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="">Bonus Interest</label>
+                                                    <input type="text" class="form-control only_numeric" id=""
+                                                           name="bonus_interest[<?php echo $currencyId; ?>][<?php echo $rangeId; ?>][]"
+                                                           placeholder="">
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1 col-sm-offset-1 "
+                                             id="add-formula-detail-button-<?php echo $currencyId; ?>">
+                                            <button type="button"
+                                                    class="btn btn-info pull-left mr-15"
+                                                    id="add-formula-detail-<?php echo $currencyId; ?>-<?php echo $rangeId; ?>-<?php echo $formulaDetailId; ?>"
+                                                    data-currency-id="<?php echo $currencyId; ?>"
+                                                    data-formula-detail-id="<?php echo $formulaDetailId; ?>"
+                                                    data-range-id="<?php echo $rangeId; ?>"
+                                                    onClick="addMoreFCDPFormulaDetail(this);"><i
+                                                    class="fa fa-plus"></i>
+                                            </button>
+
+                                        </div>
+                                        <div class="col-sm-2">&emsp;</div>
+                                    </div>
+                                    <div
+                                        id="new-formula-detail-<?php echo $currencyId; ?>-<?php echo $rangeId; ?>"></div>
+                                </div>
+
+                                <div id="new-fcdp-f1-range-<?php echo $currencyId; ?>"></div>
+                                <!-- /End Fixed Deposit Formula for Foreign Currency -->
+
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- ./box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <div class="col-md-1 " id="add-foreign-currency-f1-detail-button">
+                    <button type="button"
+                            class="btn btn-danger pull-left mr-15"
+                            data-currency-id="<?php echo $currencyId; ?>"
+                            onClick="removeCurrencyRange(this);"><i
+                            class="fa fa-minus"></i>
+                    </button>
+
+                </div>
+            </div>
+
+            <?php
+        }
+    }
     public function reminder()
     {
         $endDate = \Helper::endOfDayAfter(Carbon::now()->addDay(1));
 
-        $reminderData = ProductManagement::join('users', 'product_managements.user_id', 'users.id')
-            ->where('product_managements.end_date', $endDate)->get();
+       $reminderData = ProductManagement::join('users','product_managements.user_id','users.id')
+       ->where('product_managements.end_date',$endDate)->get();
 
-        if ($reminderData->count()) {
-            foreach ($reminderData as $reminder) {
-                try {
+        if($reminderData->count()){
+            foreach($reminderData as $reminder)
+            {   try {
                     Mail::to($reminder->email)->send(new Reminder($reminder));
                 } catch (Exception $exception) {
                     //dd($exception);
-                    return "Error";
+                return "Error";
                 }
             }
         }

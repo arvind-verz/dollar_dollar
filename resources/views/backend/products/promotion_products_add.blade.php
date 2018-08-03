@@ -206,23 +206,6 @@
                                 <!-- /.tab-pane -->
 
                                 <div class="tab-pane" id="formula-detail">
-                                    <div class="form-group display-none " id="currencyDiv">
-                                        <label for="title" class="col-sm-2 control-label">Currency Type</label>
-                                        <?php $currencyId = isset($product->currency) ? $product->currency : null; ?>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" name="currency" id="currency">
-                                                <option value="">None</option>
-                                                @if($currencies->count())
-                                                    @foreach($currencies as $currency)
-                                                        <option value="{{$currency->id}}"
-                                                                @if($currencyId ==$currency->id) selected="selected" @endif>{{$currency->currency.' ('.($currency->code.')')}}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-2">
-                                        </div>
-                                    </div>
                                     @include('backend.products.formulaDetail.fixDepositF1')
                                     @include('backend.products.formulaDetail.savingDepositF1')
                                     @include('backend.products.formulaDetail.savingDepositF3')
@@ -349,12 +332,8 @@
             {
                 $('#apply-link').removeClass('display-none');
             }else{ $('#apply-link').addClass('display-none');}
-            if(promotion_type=='<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>')
-            {
-                $('#currencyDiv').removeClass('display-none');
-            }else{ $('#currencyDiv').addClass('display-none');}
 
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
             var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
@@ -447,11 +426,6 @@
                 $('#apply-link').removeClass('display-none');
             }else{ $('#apply-link').addClass('display-none');}
 
-            if(promotion_type=='<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>')
-            {
-                $('#currencyDiv').removeClass('display-none');
-            }else{ $('#currencyDiv').addClass('display-none');}
-
         });
         $("select[name='formula']").on("change", function () {
             var formula = $(this).val();
@@ -465,7 +439,7 @@
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
 
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
             var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
