@@ -270,7 +270,7 @@
                                         alt=""></a>
                         </div>
                     @endif
-                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif @if($page->slug=='fixed-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                    <div class="ps-product @if($promotion_product->featured==1) featured-1 @endif"
                          id="{{ $j }}">
 
                         <div class="ps-product__header"><img src="{{ asset($promotion_product->brand_logo) }}" alt="">

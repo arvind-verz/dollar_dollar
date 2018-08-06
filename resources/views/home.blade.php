@@ -1357,7 +1357,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                     <div class="ps-section__right">
-                        <div class="ps-fanpage"><img src="{{ asset('frontend/img/fanpage.png') }}" alt="" width="100%"></div>
+                        <div class="ps-fanpage"><div class="fb-page" data-href="https://www.facebook.com/VerzDesignSingapore/" data-tabs="timeline" data-width="500" data-height="280" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/VerzDesignSingapore/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/VerzDesignSingapore/">Verz Design</a></blockquote></div></div>
                         <div class="ps-block--home-signup">
                             <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a
                                     class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i

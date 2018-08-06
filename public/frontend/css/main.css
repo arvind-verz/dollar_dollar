@@ -2978,6 +2978,7 @@ button {
 
 .ps-tab.active {
     display: block;
+    padding-bottom: 20px;
 }
 
 .ps-banner {
@@ -3762,7 +3763,7 @@ button {
 }
 
 .ps-home-fixed-deposit .ps-section__content {
-    padding-bottom: 40px;
+    padding-bottom: 20px;
 }
 
 .ps-home-fixed-deposit .ps-section__footer {
@@ -5486,4 +5487,8 @@ span.ps-post__meta a {
     font-weight: bold;
     color: #555555;
     position: absolute;
+}
+
+.ps-post__thumbnail.ads {
+    padding-top: 20px;
 }
