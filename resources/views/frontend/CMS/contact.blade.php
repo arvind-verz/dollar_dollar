@@ -149,9 +149,7 @@ $banners = Helper::getBanners($slug);
                         <label>
                             Description
                         </label>
-                        <textarea class="form-control sm" cols="" name="message" rows="6">
-                            {{old('message')}}
-                        </textarea>
+                        <textarea class="form-control sm" cols="" name="message" rows="6">{{ old('message') ? old('message') : '' }}</textarea>
                         @if ($errors->has('message'))
                         <span class="text-danger">
                             <strong>

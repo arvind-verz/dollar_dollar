@@ -111,6 +111,12 @@
                                                     <input class="form-control datepicker" name="end_date" type="text" placeholder="" autocomplete="off" value="{{ date("Y-m-d", strtotime($product_management->end_date)) }}">
                                                 </div>
                                             </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                <div class="form-group">
+                                                    <label>Don’t Send Reminders</label>
+                                                    <input type="checkbox" class="form-control" name="dod_reminder" @if($product_management->dod_reminder==1) checked @endif>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
