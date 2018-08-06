@@ -56,6 +56,14 @@ if (!$systemSetting) {
 
 </head>
 <body>
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 @include('frontend.includes.menu')
         <!-- Content Containers start -->
 @yield('content')
@@ -65,8 +73,8 @@ if (!$systemSetting) {
         <!-- Footer END -->
 <div class="totop">
       <div id="totop"><span>backtotop<i class="fa fa-arrow-right"></i></span></div>
-      <a class="profile" href="{{ url(PROFILEDASHBOARD) }}"><span>profile page<i class="fa fa-arrow-right"></i></span></a>
-      <a class="placement" href="javascript:void(0)"><span>placement amount<i class="fa fa-arrow-right"></i></span></a>
+      <a class="profile" href="{{ url(PROFILEDASHBOARD) }}"><span>profile page<i class="fa fa-arrow-right"></i></span></a><!-- 
+      <a class="placement" href="javascript:void(0)"><span>placement amount<i class="fa fa-arrow-right"></i></span></a> -->
     </div>
 
 <script type="text/javascript">
