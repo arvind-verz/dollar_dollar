@@ -45,6 +45,10 @@ class ProductManagementController extends Controller
             'amount' => 'required|numeric',
             'interest_earned' => 'numeric|nullable'
         ]);
+        $dod_reminder = 0;
+            if(!empty($request->dod_reminder)) {
+              $dod_reminder = 1;
+            }
         if ($validate->fails()) {
             return redirect('product-management')
                 ->withErrors($validate)
@@ -58,6 +62,7 @@ class ProductManagementController extends Controller
             $product_management->account_name = $request->account_name;
             $product_management->amount = $request->amount;
             $product_management->tenure = $request->tenure;
+            $product_management->dod_reminder = $dod_reminder;
             $product_management->product_reminder = json_encode($request->reminder);
             if ($request->start_date) {
                 $product_management->start_date = \Helper::startOfDayBefore($request->start_date);
@@ -118,12 +123,17 @@ class ProductManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $product_management = ProductManagement::find($id);
         $validate = Validator::make($request->all(), [
             'bank_id' => 'required',
             'amount' => 'required|numeric',
             'interest_earned' => 'numeric|nullable'
         ]);
+        $dod_reminder = 0;
+            if(!empty($request->dod_reminder)) {
+              $dod_reminder = 1;
+            }
         if ($validate->fails()) {
             return redirect('product-management')
                 ->withErrors($validate)
@@ -134,6 +144,7 @@ class ProductManagementController extends Controller
             $product_management->account_name = $request->account_name;
             $product_management->amount = $request->amount;
             $product_management->tenure = $request->tenure;
+            $product_management->dod_reminder = $dod_reminder;
             $product_management->product_reminder = json_encode($request->reminder);
             if ($request->start_date) {
                 $product_management->start_date = \Helper::startOfDayBefore($request->start_date);

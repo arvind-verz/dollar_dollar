@@ -118,6 +118,12 @@
                                             <input class="form-control" name="interest_earned" type="text" placeholder="Enter Interest Earned" value="{{ old('interest_earned') }}">
                                         </div>
                                     </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                        <div class="form-group">
+                                            <label>Don’t Send Reminders</label>
+                                            <input type="checkbox" class="form-control" name="dod_reminder" @if(old('dod_reminder')==1) checked @endif>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group submit">
                                     <p>"<span>*</span>" are mandatory fields.</p>
