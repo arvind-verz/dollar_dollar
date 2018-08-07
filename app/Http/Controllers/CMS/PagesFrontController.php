@@ -289,6 +289,7 @@ class PagesFrontController extends Controller
         $banners = $details['banners'];
 
         $filterProducts = [];
+        $remainingProducts = [];
         //dd($products);
 
         if (!count($request)) {
@@ -306,8 +307,8 @@ class PagesFrontController extends Controller
             } else {
                 $defaultPlacement = 0;
             }
-            if (!count($request)) {
 
+            if (!count($request)) {
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
@@ -316,12 +317,11 @@ class PagesFrontController extends Controller
             } else {
                 $placement = 0;
                 $searchFilter = $request;
-                if ($searchFilter['filter'] == PLACEMENT) {
-                    $searchFilter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
-                }
+                $searchValue = str_replace(',', '', $searchFilter['search_value']);
+                $searchFilter['search_value'] = $searchValue;
 
-                $searchValue = $searchFilter['search_value'];
             }
+
             $productRanges = json_decode($product->product_range);
             $tenures = json_decode($product->tenure);
             $todayDate = Carbon::today();
@@ -356,29 +356,19 @@ class PagesFrontController extends Controller
                             foreach ($tenures as $tenureKey => $tenure) {
 
                                 $bonusInterestHighlight[$tenureKey] = false;
-                                if ($filter == PLACEMENT && ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range)) {
+                                if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
                                     $productRange->placement_highlight = true;
                                     $productRange->placement_value = true;
-                                    $placement = (int)$searchValue;
+                                    $placement = (float)$searchValue;
                                     $resultKey = $tenureKey;
                                     $status = true;
-                                } elseif ($filter == INTEREST && ($searchValue == $bonusInterests[$tenureKey])) {
-                                    $bonusInterestHighlight[$tenureKey] = true;
-                                    $productRange->placement_value = true;
-                                    $resultKey = $tenureKey;
-                                    $placement = $productRange->max_range;
-                                    $status = true;
-                                } elseif ($filter == TENURE && ($searchValue == $tenure)) {
-                                    $bonusInterestHighlight[$tenureKey] = true;
-                                    $productRange->placement_value = true;
-                                    $placement = $productRange->max_range;
-                                    $resultKey = $tenureKey;
-                                    $status = true;
-
                                 }
-
                                 if (empty($placement)) {
                                     $amount = $productRange->max_range;
+                                    if (((count($tenures) - 1) == ($tenureKey)) && ((count($productRanges) - 1) == ($k))) {
+                                        $placement = $productRange->max_range;
+                                        $resultKey = $tenureKey;
+                                    }
                                 } else {
                                     $amount = $placement;
                                 }
@@ -394,17 +384,24 @@ class PagesFrontController extends Controller
                     $ranges[] = $productRange;
 
                 }
+
                 $product->interest_earns = [];
                 $product->bonus_interests = [];
                 $resultInterestEarn = 0;
                 $resultInterestEarnPercent = 0;
                 foreach ($ranges as $range) {
-
                     if ($placement >= $range->min_range && $placement <= $range->max_range) {
                         $product->interest_earns = $range->interest_earns;
                         $product->bonus_interests = $range->bonus_interest;
                     }
+
                 }
+                if (count($tenures)) {
+                    $product->max_tenure = max($tenures);
+                } else {
+                    $product->max_tenure = 0;
+                }
+
                 if (count($product->interest_earns)) {
                     $resultInterestEarnArray = $product->interest_earns;
                     $resultInterestEarn = $resultInterestEarnArray[$resultKey];
@@ -424,36 +421,39 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     //dd($product);
                     $filterProducts[] = $product;
+                } else {
+                    $remainingProducts[] = $product;
                 }
             }
         }
+
         if (count($searchFilter)) {
+
             $products = collect($filterProducts);
         }
         if ($products->count()) {
 
             if ($sortBy == MINIMUM) {
-                if ($filter == PLACEMENT || $filter == TENURE) {
+                if ($filter == PLACEMENT) {
                     $products = $products->sortBy('total_interest_earn');
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('total_interest');
-
+                } elseif ($filter == TENURE) {
+                    $products = $products->sortBy('max_tenure');
                 }
             } else {
                 if ($filter == PLACEMENT || $filter == TENURE) {
                     $products = $products->sortByDesc('total_interest_earn');
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortByDesc('total_interest');
+                } elseif ($filter == TENURE) {
+                    $products = $products->sortByDesc('max_tenure');
 
                 }
             }
 
         }
-        //dd($searchFilter);
-        if ($searchFilter['search_value'] > 0 && $searchFilter['filter'] == PLACEMENT) {
-            $searchFilter['search_value'] = $searchFilter['search_value'] / 1000;
-        }
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable","remainingProducts"));
 
     }
 
