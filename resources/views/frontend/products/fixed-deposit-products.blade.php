@@ -117,8 +117,8 @@
                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
-                                                @elseif(!isset($searchFilter['filter']))$@endif</span>
-                                                    <input class="form-control prefix_dollar only_numeric"
+                                                @elseif(!isset($searchFilter['filter']))$@endif
+                                                    <input class="form-control prefix_dollar search"
                                                            name="search_value" type="text"
                                                            placeholder=""
                                                            value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}">
