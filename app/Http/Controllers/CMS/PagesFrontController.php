@@ -1560,6 +1560,7 @@ class PagesFrontController extends Controller
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
             // ->where('promotion_products.formula_id', '=', 6)
@@ -1568,7 +1569,7 @@ class PagesFrontController extends Controller
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
-            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*','currency.code as currency_code','currency.icon as currency_icon','currency.currency as currency_name')
             ->get();
 
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);

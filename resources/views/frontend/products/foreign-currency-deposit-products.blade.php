@@ -65,7 +65,8 @@
         {!! $output !!}
         <div class="container">
             <div class="ps-block--deposit-filter">
-                <form class="ps-form--filter" action="{{ route('foreign-currency-deposit-mode.search') }}" method="post">
+                <form class="ps-form--filter" action="{{ route('foreign-currency-deposit-mode.search') }}"
+                      method="post">
                     <div class="ps-block__header">
                         <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
                              data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="10"
@@ -118,10 +119,10 @@
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                                 @elseif(!isset($searchFilter['filter']))$@endif
-                                                    <input class="form-control prefix_dollar only_numeric"
-                                                           name="search_value" type="text"
-                                                           placeholder=""
-                                                           value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}">
+                                                <input class="form-control prefix_dollar only_numeric"
+                                                       name="search_value" type="text"
+                                                       placeholder=""
+                                                       value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}">
                                             </div>
                                             <span class="suffix_ko">K</span>
                                             <button type="submit">Go</button>
@@ -162,8 +163,9 @@
                                     <div class="ps-block__info">
                                         <p><strong> rate: </strong>1.3%</p>
 
-                                        <p><strong>Min:</strong> SGD
-                                            ${{ Helper::inThousand($product->minimum_placement_amount) }}</p>
+                                        <p>
+                                            <strong>Min:</strong> {{$product->currency_code}} {{$product->currency_icon}}{{ Helper::inThousand($product->minimum_placement_amount) }}
+                                        </p>
 
                                         <p class="highlight">{{ $product->promotion_period }} Months</p>
                                     </div>
@@ -174,17 +176,15 @@
                         @php $i++; @endphp
                     @endif
                 @endforeach
-                <?php $i = 1;$featured_item = 5-count($featured);
+                <?php $i = 1;$featured_item = 5 - count($featured);
                 $featured_count = count($featured);
                 $featured_width = 12;
-                if($featured_count==1) {
-                $featured_width = 2;
-                }
-                elseif($featured_count==2) {
-                $featured_width = 3;
-                }
-                elseif($featured_count==3) {
-                $featured_width = 4;
+                if ($featured_count == 1) {
+                    $featured_width = 2;
+                } elseif ($featured_count == 2) {
+                    $featured_width = 3;
+                } elseif ($featured_count == 3) {
+                    $featured_width = 4;
                 }
                 ?>
                 <div class="product-col-0{{ $featured_width }}">
@@ -205,8 +205,9 @@
                                     <div class="ps-block__info">
                                         <p><strong> rate: </strong>1.3%</p>
 
-                                        <p><strong>Min:</strong> SGD
-                                            ${{ Helper::inThousand($product->minimum_placement_amount) }}</p>
+                                        <p>
+                                            <strong>Min:</strong> {{$product->currency_code}} {{$product->currency_icon}}{{ Helper::inThousand($product->minimum_placement_amount) }}
+                                        </p>
 
                                         <p class="highlight">{{ $product->promotion_period }} Months</p>
                                     </div>
@@ -239,7 +240,6 @@
             @foreach($products as $product)
                 <?php
                 $ads = $product->ads;
-                //dd($ads);
                 ?>
                 @if($page->slug==FOREIGN_CURRENCY_DEPOSIT && isset($ads[3]->ad_horizontal_image_popup_top))
                     <div class="ps-poster-popup">
@@ -260,8 +260,8 @@
                         $todayStartDate = \Helper::startOfDayBefore();
                         $todayEndDate = \Helper::endOfDayAfter();
                         ?>
-                        <div class="ps-product__promo">
-                            <p>
+                        <div class="ps-product__promo left">
+                            <p style="text-align: left !important;">
                                 <span class="highlight"> Promo: </span>
                                 @if($product->promotion_end == null)
                                     {{ONGOING}}
@@ -272,16 +272,22 @@
                                 @endif
                             </p>
 
-                            <p class="text-uppercase">
-                                <?php
-                                if ($product->promotion_end > $todayStartDate) {
-                                    $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                    $end_date = new DateTime(date("Y-m-d",
-                                            strtotime($product->promotion_end)));
-                                    $interval = date_diff($end_date, $start_date);
-                                    echo $interval->format('%a days left');
-                                }
-                                ?>
+
+                            <?php
+                            if ($product->promotion_end > $todayStartDate) {
+                                echo "<p class='text-uppercase'>";
+                                $start_date = new DateTime(date("Y-m-d", strtotime("now")));
+                                $end_date = new DateTime(date("Y-m-d",
+                                        strtotime($product->promotion_end)));
+                                $interval = date_diff($end_date, $start_date);
+                                echo $interval->format('%a days left');
+                                echo "</p>";
+                            }
+                            ?>
+
+                            <p>
+                                <span class="highlight">Currency: </span>
+                                {{$product->currency_name}} ({{$product->currency_code}} {{$product->currency_icon}})
                             </p>
                         </div>
                     </div>
@@ -344,7 +350,8 @@
                                                                 <img src="{{ asset($legendImage) }}" alt="">
                                                             @endif
                                                         </td>
-                                                        <td class="@if($range->placement_value==true)highlight @endif">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
+                                                        <td class="@if($range->placement_value==true)highlight @endif">{{$product->currency_icon}}{{Helper::inThousand($range->min_range)}}
+                                                            - {{$product->currency_icon}}{{Helper::inThousand($range->max_range) }}</td>
                                                         @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
                                                             <td class="@if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
                                                                     - @else {{ $bonus_interest . '%' }} @endif </td>
@@ -373,11 +380,11 @@
                                             @foreach($tenures as $tenureKey => $value)
                                                 <?php $type = Helper::days_or_month_or_year(2, $value); ?>
                                                 @if($tenureKey==0)
-                                                    <h4>Possible interest(s) earned for SGD
-                                                        ${{ Helper::inThousand($product->placement) }}</h4>
+                                                    <h4>Possible interest(s) earned
+                                                        for {{$product->currency_code}} {{$product->currency_icon}}{{ Helper::inThousand($product->placement) }}</h4>
                                                 @endif
                                                 <p><strong>{{ $value . ' ' . $type }}</strong>-
-                                                    ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
+                                                    {{$product->currency_icon}}{{ Helper::inThousand($interestEarns[$tenureKey]) }}
                                                     ({{ $bonusInterests[$tenureKey] . '%' }})</p>
                                             @endforeach
 
@@ -421,7 +428,8 @@
                                                         @foreach($product->product_ranges as $productRange)
 
                                                             <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
-                                                                <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                <td class="@if($productRange->placement_highlight==true ) highlight @endif"> {{$product->currency_icon}}{{Helper::inThousand($productRange->min_range)}}
+                                                                    - {{$product->currency_icon}}{{Helper::inThousand($productRange->max_range) }}</td>
                                                                 <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if($productRange->bonus_interest<=0)
                                                                         - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                                 <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if($productRange->board_rate<=0)
@@ -450,12 +458,12 @@
                                                 <?php } ?>
                                             @endif
                                             <div class="ps-product__panel">
-                                                <h4>Possible interest(s) earned for SGD
-                                                    ${{ Helper::inThousand($product->placement) }}</h4>
+                                                <h4>Possible interest(s) earned
+                                                    for {{$product->currency_code}} {{$product->currency_icon}}{{ Helper::inThousand($product->placement) }}</h4>
 
                                                 <h2> @if(($product->total_interest_earn)<=0)
                                                         - @else
-                                                        ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                        {{$product->currency_icon}}{{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                     <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
@@ -499,7 +507,8 @@
                                                                 <tbody>
                                                                 @foreach($product->product_ranges as $productRange)
                                                                     <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
-                                                                        <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                        <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{$product->currency_icon}}{{Helper::inThousand($productRange->min_range)}}
+                                                                            - {{$product->currency_icon}}{{Helper::inThousand($productRange->max_range) }}</td>
                                                                         <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenor. ' Months' }}</td>
                                                                         <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($product->bonus_interest)<=0)
                                                                                 - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
@@ -527,12 +536,12 @@
                                                         <?php } ?>
                                                     @endif
                                                     <div class="ps-product__panel">
-                                                        <h4>Possible interest(s) earned for SGD
-                                                            ${{ Helper::inThousand($product->placement) }}</h4>
+                                                        <h4>Possible interest(s) earned
+                                                            for {{$product->currency_code}} {{$product->currency_icon}}{{ Helper::inThousand($product->placement) }}</h4>
 
                                                         <h2>@if(($product->total_interest_earn)<=0)
                                                                 - @else
-                                                                ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                {{$product->currency_icon}}{{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                             <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
@@ -618,12 +627,12 @@
                                                                 <?php } ?>
                                                             @endif
                                                             <div class="ps-product__panel">
-                                                                <h4>Possible interest(s) earned for SGD
-                                                                    ${{ Helper::inThousand($product->placement) }}</h4>
+                                                                <h4>Possible interest(s) earned
+                                                                    for {{$product->currency_code}} {{$product->currency_icon}}{{ Helper::inThousand($product->placement) }}</h4>
 
                                                                 <h2>@if($product->total_interest_earn <=0)
                                                                         - @else
-                                                                        ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                        {{$product->currency_icon}}{{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                     <br>
                                                 <span>
                                                     Total interest rate @if($product->total_interest <=0)
@@ -672,7 +681,7 @@
                                                                                     <tr class="@if($product->highlight>=$key) highlight @endif">
                                                                                         <td>@if($key==0) 1st - @else
                                                                                                 NEXT
-                                                                                                - @endif{{ '$' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                                                - @endif{{$product->currency_icon}}{{Helper::inThousand($productRange->max_range) }}</td>
                                                                                         <td>@if($productRange->board_rate <=0 )
                                                                                                 - @else {{ $productRange->board_rate }}
                                                                                                 % @endif
@@ -707,12 +716,12 @@
                                                                         <?php } ?>
                                                                     @endif
                                                                     <div class="ps-product__panel">
-                                                                        <h4>Possible interest(s) earned for SGD
-                                                                            ${{ Helper::inThousand($product->placement) }}</h4>
+                                                                        <h4>Possible interest(s) earned
+                                                                            for {{$product->currency_code}} {{$product->currency_icon}}{{ Helper::inThousand($product->placement) }}</h4>
 
                                                                         <h2>@if($product->total_interest_earn <=0 )
                                                                                 - @else
-                                                                                ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                                {{$product->currency_icon}}{{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                             <br>
                                                                             {{-- <span>
                                                                                 Total interest rate {{ $product->total_interest }}%
@@ -761,24 +770,24 @@
                                                                                                 <td>{{ $heading }}</td>
                                                                                                 @if($key==0)
                                                                                                     @foreach($product->monthly_saving_amount as $amount)
-                                                                                                        <td class="">{{ '$' . $amount }}</td>
+                                                                                                        <td class="">{{$product->currency_icon}}{{$amount}}</td>
                                                                                                     @endforeach
 
                                                                                                 @elseif($key==1)
                                                                                                     @foreach($product->base_interests as $baseInterest )
                                                                                                         <td class="">@if($baseInterest <=0 )
-                                                                                                                - @else {{ '$' .$baseInterest }} @endif   </td>
+                                                                                                                - @else{{$product->currency_icon}}{{$baseInterest}} @endif   </td>
                                                                                                     @endforeach
 
                                                                                                 @elseif($key==2)
                                                                                                     @foreach($product->additional_interests as $additionalInterest)
                                                                                                         <td>@if($additionalInterest <=0 )
-                                                                                                                - @else {{ '$' .$additionalInterest }} @endif  </td>
+                                                                                                                - @else {{$product->currency_icon}}{{$additionalInterest}} @endif  </td>
                                                                                                     @endforeach
                                                                                                 @elseif($key==3)
                                                                                                     <td colspan="{{count($product->months)}}"></td>
                                                                                                     <td>@if($product->total_interest_earn <=0 )
-                                                                                                            - @else {{ '$' . $product->total_interest_earn }} @endif
+                                                                                                            - @else{{$product->currency_icon}}{{$product->total_interest_earn }} @endif
                                                                                                         {{-- <br/>
                                                                                                          <span>
                                                                                                              Total interest rate {{ $product->total_interest }}%
