@@ -265,3 +265,6 @@ define('MAXIMUM', "2");
 //words
 define('ONGOING', "ONGOING");
 define('EXPIRED', "EXPIRED");
+
+//Error Message
+define('CRITERIA_ERROR', "Sorry. Products do not meet your search criteria");

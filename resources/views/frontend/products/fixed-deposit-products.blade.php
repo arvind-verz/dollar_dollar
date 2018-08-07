@@ -64,6 +64,8 @@
         ?>
         {!! $output !!}
         <div class="container">
+
+            <!-- Search form start -->
             <div class="ps-block--deposit-filter">
                 <form class="ps-form--filter" action="{{ route('fixed-deposit-mode.search') }}" method="post">
                     <div class="ps-block__header">
@@ -118,13 +120,12 @@
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                                 @elseif(!isset($searchFilter['filter']))$@endif
-                                                    <input class="form-control prefix_dollar search"
-                                                           name="search_value" type="text"
-                                                           placeholder=""
-                                                           value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}">
+                                                <input class="form-control prefix_dollar only_numeric"
+                                                       name="search_value" type="text"
+                                                       placeholder=""
+                                                       value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}">
 
                                             </div>
-                                            <span class="suffix_ko">K</span>
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
@@ -133,11 +134,11 @@
                                             <option value="">Sort by</option>
                                             <option value="1"
                                                     @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
-                                                Minimum
+                                                Ascending
                                             </option>
                                             <option value="2"
                                                     @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
-                                                Maximum
+                                                Descending
                                             </option>
                                         </select>
                                     </div>
@@ -147,6 +148,8 @@
                     </div>
                 </form>
             </div>
+            <!-- Search form end -->
+
             @if(count($products))
                 <div class="product-row-01 clearfix">
                     @php $i = 1;$featured = []; @endphp
@@ -241,6 +244,185 @@
 
                 @php $j = 1; @endphp
                 @foreach($products as $product)
+                    <?php
+                    $product_id = $product->promotion_product_id;
+                    $tenures = $product->tenure;
+                    $productRanges = $product->product_ranges;
+                    $ads = $product->ads_placement;
+                    $interestEarns = $product->interest_earns;
+                    $bonusInterests = $product->bonus_interests;
+                    ?>
+                    @if($page->slug==FIXED_DEPOSIT_MODE && isset($ads[3]->ad_horizontal_image_popup_top))
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
+                               target="_blank"><img
+                                        src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
+                                        alt=""></a>
+                        </div>
+                    @endif
+                    <div class="ps-product @if($product->featured==1) featured-1 @endif @if($page->slug==FIXED_DEPOSIT_MODE && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                         id="{{ $j }}">
+
+                        <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
+                            <?php
+                            $todayStartDate = \Helper::startOfDayBefore();
+                            $todayEndDate = \Helper::endOfDayAfter();
+                            ?>
+                            <div class="ps-product__promo">
+                                <p>
+                                    <span class="highlight"> Promo: </span>
+                                    @if($product->promotion_end == null)
+                                        {{ONGOING}}
+                                    @elseif($product->promotion_end < $todayStartDate)
+                                        {{EXPIRED}}
+                                    @elseif($product->promotion_end > $todayStartDate)
+                                        {{ date('M d, Y', strtotime($product->promotion_start)) . ' to ' . date('M d, Y', strtotime($product->promotion_end)) }}
+                                    @endif
+                                </p>
+
+                                <p class="text-uppercase">
+                                    <?php
+                                    if ($product->promotion_end > $todayStartDate) {
+                                        $start_date = new DateTime(date("Y-m-d", strtotime("now")));
+                                        $end_date = new DateTime(date("Y-m-d",
+                                                strtotime($product->promotion_end)));
+                                        $interval = date_diff($end_date, $start_date);
+                                        echo $interval->format('%a days left');
+                                    }
+                                    ?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ps-product__content">
+                            <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
+                            @if(!empty($product->ads_placement))
+                                <?php
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                ?>
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"
+                                            target="_blank"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                <?php } ?>
+                            @endif
+                            <div class="ps-product__table">
+                                <div class="ps-table-wrap">
+                                    <table class="ps-table ps-table--product">
+                                        <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Account</th>
+                                            @foreach($tenures as  $tenure)
+                                                <?php
+                                                $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
+                                                ?>
+                                                <th>{{ $tenure . ' ' . $monthSuffix }}</th>
+                                            @endforeach
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($productRanges as $rangeKey => $range)
+                                            <?php
+                                            $bonusInterestHighlight = $range->bonus_interest_highlight;
+                                            ?>
+                                            <tr class="@if($range->placement_highlight==true)highlight @endif">
+                                                <td>
+                                                    <?php
+                                                    $legendImage = null;
+                                                    if (isset($range->legend)) {
+                                                        $legend = DB::table('system_setting_legend_table')->find($range->legend);
+                                                        if ($legend) {
+                                                            $legendImage = $legend->icon;
+                                                        }
+                                                    }
+                                                    ?>
+                                                    @if($legendImage)
+                                                        <img src="{{ asset($legendImage) }}" alt="">
+                                                    @endif
+                                                </td>
+                                                <td class="@if($range->placement_value==true)highlight @endif">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
+                                                @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
+                                                    <td class="@if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
+                                                            - @else {{ $bonus_interest . '%' }} @endif </td>
+                                                @endforeach
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @if(!empty($product->ads_placement))
+                                <?php
+                                if(!empty($ads[1]->ad_image_vertical)) {
+                                ?>
+                                <div class="ps-product__poster">
+                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"
+                                       target="_blank"><img
+                                                src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
+                                                alt=""></a>
+                                </div>
+                                <div class="clearfix"></div>
+                                <?php } ?>
+                            @endif
+                            <div class="ps-product__panel">
+                                @if(count($interestEarns))
+                                    @foreach($tenures as $tenureKey => $value)
+                                        <?php $type = Helper::days_or_month_or_year(2, $value); ?>
+                                        @if($tenureKey==0)
+                                            <h4>Possible interest(s) earned for SGD
+                                                ${{ Helper::inThousand($product->placement) }}</h4>
+                                        @endif
+                                        <p><strong>{{ $value . ' ' . $type }}</strong>-
+                                            ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
+                                            ({{ $bonusInterests[$tenureKey] . '%' }})</p>
+                                    @endforeach
+
+                                @endif
+                            </div>
+                            <div class="clearfix"></div>
+                            @if(!empty($product->ads_placement))
+                                <?php
+                                if (!empty($ads[2]->ad_horizontal_image_popup)) {
+                                ?>
+                                <div class="ps-poster-popup">
+                                    <div class="close-popup">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div>
+
+                                    <a target="_blank"
+                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
+                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                alt="" target="_blank"></a>
+
+                                </div>
+                                <?php } ?>
+                            @endif
+                            <div class="ps-product__detail">
+                                {!! $product->product_footer !!}
+                            </div>
+                            <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
+                                            class="fa fa-angle-down"></i></a></div>
+                        </div>
+                    </div>
+                    @php $j++; @endphp
+                @endforeach
+            @else
+                <div class="ps-block--legend-table">
+                    <div class="ps-block__header">
+                    </div>
+                    <div class="ps-block__content">
+                                <p>{{CRITERIA_ERROR}}</p>
+                    </div>
+                </div>
+            @endif
+            @if(count($remainingProducts))
+
+                @php $j = 1; @endphp
+                @foreach($remainingProducts as $product)
                     <?php
                     $product_id = $product->promotion_product_id;
                     $tenures = $product->tenure;
