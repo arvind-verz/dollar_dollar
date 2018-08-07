@@ -70,6 +70,21 @@
                             <li class=" "><a href="{{ route('banner.index', ['type'=>'inner-page']) }}"> Inner Page</a></li>
                         </ul>
                     </li>
+                    @elseif($menu->label == ADS_MANAGEMENT)
+                    <li class="treeview ">
+                        <a href="#" >
+                            <i class="{{$menu->icon}}"></i> <span>{{$menu->label}}</span>
+                             <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class=" "><a href="{{ route('ads.index', ['type'=>'account']) }}"> Account</a></li>
+                            <li class=" "><a href="{{ route('ads.index', ['type'=>'blog']) }}"> Blog</a></li>
+                            <li class=" "><a href="{{ route('ads.index', ['type'=>'product']) }}"> Product</a></li>
+                            <li class=" "><a href="{{ route('ads.index', ['type'=>'email']) }}"> Email</a></li>
+                        </ul>
+                    </li>
                     @elseif($menu->label == REPORT_MODULE)
                     <li class="treeview ">
                         <a href="#" >

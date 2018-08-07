@@ -5517,3 +5517,7 @@ span.ps-post__meta a {
     justify-content: center;
     align-items: center;
 }
+
+.ps-block--box.recommended-product .c-list .ps-block--short-product{
+    width: auto;
+}

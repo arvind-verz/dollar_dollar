@@ -79,10 +79,13 @@ define('ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE', "All in One Account Deposit");
 define('WEALTH_DEPOSIT_MODULE', "Wealth Deposit");
 define('FOREIGN_CURRENCY_DEPOSIT_MODULE', "Foreign Currency Deposit");
 
+define('ADS_MANAGEMENT', "Ads Management");
+
 //Single Module Name for action
 define('PRODUCT_MODULE_SINGLE', "Product");
 define('CATEGORY_MODULE_SINGLE', "Category");
 define('BANNER_MODULE_SINGLE', "Banner");
+define('ADS_MODULE_SINGLE', "Ads");
 define('BRAND_MODULE_SINGLE', "Brand");
 define('USER_MODULE_SINGLE', "User");
 define('REPORT_MODULE_SINGLE', "Report");
@@ -129,6 +132,7 @@ define('ACTIVITY_LOG_MODULE_ID', 24);
 define('MENU_MODULE_ID', 25);
 define('PAGE_MODULE_ID', 26);
 define('BANNER_MODULE_ID', 27);
+define('ADS_MODULE_ID', 39);
 define('BRAND_MODULE_ID', 28);
 define('CATEGORY_MODULE_ID', 29);
 define('PRODUCT_MODULE_ID', 30);
