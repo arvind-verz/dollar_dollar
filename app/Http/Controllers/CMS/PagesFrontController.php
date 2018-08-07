@@ -280,6 +280,10 @@ class PagesFrontController extends Controller
 
         $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
         $brands = $details['brands'];
+        if ($products->count() && $brands->count()) {
+            $productsBrandIds = $products->pluck('bank_id')->all();
+            $brands = $brands->whereIn('id', $productsBrandIds);
+        }
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
@@ -602,6 +606,10 @@ class PagesFrontController extends Controller
 
         $details = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
         $brands = $details['brands'];
+        if ($products->count() && $brands->count()) {
+            $productsBrandIds = $products->pluck('bank_id')->all();
+            $brands = $brands->whereIn('id', $productsBrandIds);
+        }
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
@@ -1121,6 +1129,10 @@ class PagesFrontController extends Controller
 
         $details = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
         $brands = $details['brands'];
+        if ($products->count() && $brands->count()) {
+            $productsBrandIds = $products->pluck('bank_id')->all();
+            $brands = $brands->whereIn('id', $productsBrandIds);
+        }
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
@@ -1569,11 +1581,15 @@ class PagesFrontController extends Controller
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
-            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*','currency.code as currency_code','currency.icon as currency_icon','currency.currency as currency_name')
+            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'currency.code as currency_code', 'currency.icon as currency_icon', 'currency.currency as currency_namer')
             ->get();
 
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands = $details['brands'];
+        if ($products->count() && $brands->count()) {
+            $productsBrandIds = $products->pluck('bank_id')->all();
+            $brands = $brands->whereIn('id', $productsBrandIds);
+        }
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
@@ -2093,6 +2109,10 @@ class PagesFrontController extends Controller
 
         $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
         $brands = $details['brands'];
+        if ($promotion_products->count() && $brands->count()) {
+            $productsBrandIds = $promotion_products->pluck('bank_id')->all();
+            $brands = $brands->whereIn('id', $productsBrandIds);
+        }
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
         $banners = $details['banners'];
