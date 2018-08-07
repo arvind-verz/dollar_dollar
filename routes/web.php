@@ -112,6 +112,12 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Brand Module End*/
 
 
+    /* ADS MANAGEMENT */
+    Route::get('/ads/{type}', 'Ads\AdsController@index')->name('ads.index');
+    Route::get('/ads/{type}/create', 'Ads\AdsController@create')->name('ads.create');
+    Route::post('/ads/store/{type}', 'Ads\AdsController@store')->name('ads.store');
+
+
     /*Customer  Module Start*/
     Route::get('/user-destroy/{id}', 'User\UsersController@destroy')->name('user-destroy');
     Route::resource('/users', 'User\UsersController');

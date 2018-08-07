@@ -5492,3 +5492,32 @@ span.ps-post__meta a {
 .ps-post__thumbnail.ads {
     padding-top: 20px;
 }
+
+.ps-block__header .owl-nav .owl-prev{
+    display: flex !important;
+    position: absolute;
+    top: -5px;
+    left: -75px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #dde3e5;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
+.ps-block__header .owl-nav .owl-next{
+    display: flex !important;
+    position: absolute;
+    top: -5px;
+    right: -75px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #dde3e5;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+.ps-block--box.recommended-product .c-list .ps-block--short-product{
+    width: auto;
+}
