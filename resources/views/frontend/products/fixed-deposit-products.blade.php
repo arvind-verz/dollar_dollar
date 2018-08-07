@@ -67,7 +67,7 @@
 
             <!-- Search form start -->
             <div class="ps-block--deposit-filter">
-                <form class="ps-form--filter" action="{{ route('fixed-deposit-mode.search') }}" method="post">
+                <form class="ps-form--filter" id="search-form" action="{{ route('fixed-deposit-mode.search') }}" method="post">
                     <div class="ps-block__header">
                         <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
                              data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="10"
@@ -94,20 +94,20 @@
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="ps-form__option">
                                     <button type="button"
-                                            class="ps-btn filter search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Interest') active @endif">
+                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Interest') active @endif">
                                         <input type="radio" name="filter" value="Interest"
                                                style="opacity: 0;position: absolute;"
                                                @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Interest') checked @endif>Interest
                                     </button>
                                     <button type="button"
-                                            class="ps-btn filter search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement') active @elseif(empty($searchFilter)) active @endif">
+                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement') active @elseif(empty($searchFilter)) active @endif">
                                         <input type="radio" name="filter" value="Placement"
                                                style="opacity: 0;position: absolute;"
                                                @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement') checked
                                                @elseif(empty($searchFilter)) checked @endif>Placement
                                     </button>
                                     <button type="button"
-                                            class="ps-btn filter search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Tenor') active @endif">
+                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Tenor') active @endif">
                                         <input type="radio" name="filter" value="Tenor"
                                                style="opacity: 0;position: absolute;"
                                                @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Tenor') checked @endif>Tenor
@@ -594,17 +594,10 @@
     </div>
     <script type="text/javascript">
         $(".search_type").on("click", function () {
-            var prefix_holder = '';
             $(".search_type").removeClass("active");
             $("input[name='filter']").prop("checked", false);
             $(this).addClass("active").find("input[name='filter']").prop("checked", true);
-            var value = $(this).find("input[name='filter']").val();
-            $("input[name='search_value']").val('').removeClass("prefix_dollar");
-            if (value == 'Placement') {
-                $("input[name='search_value']").val('100').addClass("prefix_dollar");
-                prefix_holder = 'K';
-            }
-            $("span.suffix_ko").text(prefix_holder);
+
         });
 
         $("body").on("click", "img.brand_img", function () {
@@ -619,6 +612,10 @@
                 $(this).css({"border": "1px solid #000", "padding": "4px 20px"});
             }
         });
+        $( ".submit-search" ).on( "click", function() {
+            document.getElementById('search-form').submit();
+        });
+
     </script>
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}
