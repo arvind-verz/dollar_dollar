@@ -414,12 +414,12 @@
                 <div class="ps-block--legend-table">
                     <div class="ps-block__header">
                     </div>
-                    <div class="ps-block__content">
-                                <p>{{CRITERIA_ERROR}}</p>
+                    <div class="ps-block__content text-center">
+                        <p>{{CRITERIA_ERROR}}</p>
                     </div>
                 </div>
             @endif
-            @if(count($remainingProducts))
+            @if($remainingProducts->count())
 
                 @php $j = 1; @endphp
                 @foreach($remainingProducts as $product)
