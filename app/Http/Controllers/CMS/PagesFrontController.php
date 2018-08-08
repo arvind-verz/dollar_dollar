@@ -286,6 +286,7 @@ class PagesFrontController extends Controller
         $ads_manage = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
                     ->where('page', 'product')
+                    ->where('page_type', FIXED_DEPOSIT_MODE)
                     ->inRandomOrder()
                     ->limit(1)
                     ->get();
@@ -634,6 +635,13 @@ class PagesFrontController extends Controller
 
     public function wealth($request)
     {
+        $ads_manage = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'product')
+                    ->where('page_type', WEALTH_DEPOSIT_MODE)
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
 
@@ -1145,7 +1153,7 @@ class PagesFrontController extends Controller
         if ($searchFilter['search_value'] > 0 && $searchFilter['filter'] == PLACEMENT) {
             $searchFilter['search_value'] = $searchFilter['search_value'] / 1000;
         }
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
+        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage"));
 
     }
 
@@ -1156,7 +1164,13 @@ class PagesFrontController extends Controller
 
     public function saving($request)
     {
-
+        $ads_manage = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'product')
+                    ->where('page_type', SAVING_DEPOSIT_MODE)
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
 
@@ -1570,7 +1584,7 @@ class PagesFrontController extends Controller
             }
 
         }
-        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts"));
+        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", "ads_manage"));
     }
 
     public function product_search_homepage(Request $request)
@@ -1604,6 +1618,13 @@ class PagesFrontController extends Controller
 
     public function foreign_currency($request)
     {
+        $ads_manage = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'product')
+                    ->where('page_type', FOREIGN_CURRENCY_DEPOSIT_MODE)
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
 
@@ -2118,7 +2139,7 @@ class PagesFrontController extends Controller
         }
 
 
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage"));
 
     }
 
@@ -2131,6 +2152,13 @@ class PagesFrontController extends Controller
     public
     function aio($request)
     {
+        $ads_manage = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'product')
+                    ->where('page_type', AIO_DEPOSIT_MODE)
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
@@ -2605,11 +2633,12 @@ class PagesFrontController extends Controller
             $search_filter['search_value'] = $search_filter['search_value'] / 1000;
         }
         //dd($search_filter);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable", "ads_manage"));
     }
 
     public function combineCriteriaFilter(Request $request)
     {
+
         $searchDetail = [];
         $checkBoxDetail = [];
         parse_str($request->search_detail, $searchDetail);
