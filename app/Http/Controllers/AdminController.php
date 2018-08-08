@@ -7,6 +7,7 @@ use App\Banner;
 use App\PromotionProducts;
 use App\Page;
 use App\systemSettingLegendTable;
+use App\AdsManagement;
 
 class AdminController extends Controller
 {
@@ -53,6 +54,13 @@ class AdminController extends Controller
             $upd_query = Page::find($id);
 
             $upd_query->blog_image = null;
+            $upd_query->save();
+            echo "success";
+        }
+        elseif($type=='ads') {
+            $upd_query = AdsManagement::find($id);
+
+            $upd_query->ad_image = null;
             $upd_query->save();
             echo "success";
         }

@@ -40,7 +40,7 @@
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         <div class="pt-2">
-                            <a href="{{ isset($systemSetting->profile_ads_link) ? asset($systemSetting->profile_ads_link) : '#' }}" target="_blank"><img src="{{ isset($systemSetting->profile_ads) ? asset($systemSetting->profile_ads) : '' }}" alt=""></a>
+                            <a href="{{ isset($ads->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                             @if(count($user_products))
                             <div class="ps-block--box recommended-product">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">recommended products</h5><a href="#">View all</a>
+                                    <h5><img src="img/icons/file.png" alt="">recommended products</h5><!-- <a href="#">View all</a> -->
                                 </div>
                                 <div class="ps-block__content">
                                     <div class="c-list ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="2" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
