@@ -258,6 +258,26 @@ function addCommas(nStr)
 $( ".submit-search" ).on( "click", function() {
     document.getElementById('search-form').submit();
 });
+$(".search_type").on("click", function () {
+    $(".search_type").removeClass("active");
+    $("input[name='filter']").prop("checked", false);
+    $(this).addClass("active").find("input[name='filter']").prop("checked", true);
+
+});
+
+$("body").on("click", "img.brand_img", function () {
+    if ($(this).prev().prop("checked")) {
+        $("input[name='brand_id']").prop("checked", false);
+        $("span.brand img").css("border", "none");
+    }
+    else {
+        $("input[name='brand_id']").prop("checked", false);
+        $("span.brand img").css("border", "none");
+        $(this).prev().prop("checked", true);
+        $(this).css({"border": "1px solid #000", "padding": "4px 20px"});
+    }
+    document.getElementById('search-form').submit();
+});
 $(window).on('load resize', function() {
     resizeHeader();
 });

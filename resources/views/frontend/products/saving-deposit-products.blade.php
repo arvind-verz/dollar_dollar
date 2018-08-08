@@ -1273,28 +1273,6 @@
 
         </div>
     </div>
-    <script type="text/javascript">
-        $(".search_type").on("click", function () {
-            $(".search_type").removeClass("active");
-            $("input[name='filter']").prop("checked", false);
-            $(this).addClass("active").find("input[name='filter']").prop("checked", true);
-
-        });
-
-        $("body").on("click", "img.brand_img", function () {
-            if ($(this).prev().prop("checked")) {
-                $("input[name='brand_id']").prop("checked", false);
-                $("span.brand img").css("border", "none");
-            }
-            else {
-                $("input[name='brand_id']").prop("checked", false);
-                $("span.brand img").css("border", "none");
-                $(this).prev().prop("checked", true);
-                $(this).css({"border": "1px solid #000", "padding": "4px 20px"});
-            }
-            document.getElementById('search-form').submit();
-        });
-    </script>
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}
     @if(isset($page->contact_or_offer) && isset($systemSetting->{$page->contact_or_offer}))
