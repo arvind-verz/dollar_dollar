@@ -63,11 +63,11 @@
                 $string);
         ?>
         {!! $output !!}
-        <div class="container">
+        <div class="container" id="logo-detail">
 
             <!-- Search form start -->
             <div class="ps-block--deposit-filter">
-                <form class="ps-form--filter" id="search-form" action="{{ route('fixed-deposit-mode.search') }}" method="post">
+                <form class="ps-form--filter" id="search-form" action="{{ URL::route('fixed-deposit-mode.search') }}#logo-detail" method="post">
                     <div class="ps-block__header">
                         <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
                              data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="10"
@@ -75,14 +75,14 @@
                              data-owl-duration="1000" data-owl-mousedrag="on">
                             @if(count($brands))
                                 @foreach($brands as $brand)
-                                    <span class="brand">
+                                    <span class="brand ">
                                         <input type="radio" name="brand_id"
                                                value="@if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) {{ $searchFilter['brand_id'] }} @else {{ $brand->id }} @endif"
                                                style="opacity: 0;position: absolute;"
                                                @if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) checked @endif>
                                         <img src="{{ asset($brand->brand_logo) }}"
                                              style="padding-right:20px; min-width: 80px;"
-                                             class="brand_img @if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) selected_img @endif">
+                                             class="brand_img  @if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) selected_img @endif">
                                     </span>
                                 @endforeach
                             @endif
@@ -611,10 +611,9 @@
                 $(this).prev().prop("checked", true);
                 $(this).css({"border": "1px solid #000", "padding": "4px 20px"});
             }
-        });
-        $( ".submit-search" ).on( "click", function() {
             document.getElementById('search-form').submit();
         });
+
 
     </script>
     {{--Page content end--}}

@@ -256,6 +256,7 @@ class PagesFrontController extends Controller
 
     public function fixed($request)
     {
+        //dd($request);
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
@@ -442,7 +443,7 @@ class PagesFrontController extends Controller
                     $products = $products->sortBy('max_tenure');
                 }
             } else {
-                if ($filter == PLACEMENT || $filter == TENURE) {
+                if ($filter == PLACEMENT) {
                     $products = $products->sortByDesc('total_interest_earn');
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortByDesc('total_interest');
@@ -464,7 +465,7 @@ class PagesFrontController extends Controller
                     $remainingProducts = $remainingProducts->sortBy('max_tenure');
                 }
             } else {
-                if ($filter == PLACEMENT || $filter == TENURE) {
+                if ($filter == PLACEMENT ) {
                     $remainingProducts = $remainingProducts->sortByDesc('total_interest_earn');
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortByDesc('total_interest');
