@@ -118,7 +118,7 @@
                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
-                                                @elseif(!isset($searchFilter['filter']))$@endif</span>
+                                                @elseif(!isset($searchFilter['filter']))$@endif
                                                     <input class="form-control prefix_dollar only_numeric"
                                                            name="search_value" type="text"
                                                            placeholder=""
@@ -253,7 +253,7 @@
                                     alt=""></a>
                     </div>
                 @endif
-                <div class="ps-product  @if($product->featured==1) featured-1 @endif"
+                <div class="ps-product  @if($product->featured==1) featured-1 @endif @if($page->slug=='wealth-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
                      id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 

@@ -257,7 +257,7 @@
                                     alt=""></a>
                     </div>
                 @endif
-                <div class="ps-product  @if($product->featured==1) featured-1 @endif"
+                <div class="ps-product  @if($product->featured==1) featured-1 @endif @if($page->slug=='saving-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
                      id="{{ $j }}">
                     <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 
@@ -734,17 +734,10 @@
     </div>
     <script type="text/javascript">
         $(".search_type").on("click", function () {
-            var prefix_holder = '';
             $(".search_type").removeClass("active");
             $("input[name='filter']").prop("checked", false);
             $(this).addClass("active").find("input[name='filter']").prop("checked", true);
-            var value = $(this).find("input[name='filter']").val();
-            $("input[name='search_value']").val('').removeClass("prefix_dollar");
-            if (value == 'Placement') {
-                prefix_holder = 'K';
-                $("input[name='search_value']").val('100').addClass("prefix_dollar");
-            }
-            $("span.suffix_ko").text(prefix_holder);
+
         });
 
         $("body").on("click", "img.brand_img", function () {
