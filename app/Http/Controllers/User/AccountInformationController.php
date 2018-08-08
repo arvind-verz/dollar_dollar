@@ -10,6 +10,7 @@ use App\Page;
 use App\ProductManagement;
 use App\User;
 use Validator;
+use App\AdsManagement;
 
 class AccountInformationController extends Controller
 {
@@ -63,6 +64,12 @@ class AccountInformationController extends Controller
      */
     public function edit($id)
     {
+        $ads = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'account')
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
         $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
         ->get();
         //dd($user_products);
@@ -90,7 +97,7 @@ class AccountInformationController extends Controller
 
             //get slug
             $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
-        return view('frontend.user.account-information-edit', compact("brands", "page", "systemSetting", "banners"));
+        return view('frontend.user.account-information-edit', compact("brands", "page", "systemSetting", "banners", 'ads'));
         }
     }
 

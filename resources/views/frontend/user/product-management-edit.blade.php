@@ -40,7 +40,7 @@
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                        <div class="pt-2">
-                            <a href="{{ isset($systemSetting->profile_ads_link) ? asset($systemSetting->profile_ads_link) : '#' }}" target="_blank"><img src="{{ isset($systemSetting->profile_ads) ? asset($systemSetting->profile_ads) : '' }}" alt=""></a>
+                            <a href="{{ isset($ads->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
                         </div>
                     </div>
                 </div>
