@@ -108,7 +108,9 @@
                         @endforeach
                     @endif
                     <div class="ps-fanpage"><img src="img/post/share.jpg" alt=""></div>
+                    @if(count($ads))
                     <div class="ps-post__thumbnail ads"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a></div>
+                    @endif
                 </div>
             </div>
         </div>
