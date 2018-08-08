@@ -20,7 +20,7 @@
                 <div class="box box-info ">
                     <div class="box-header with-border">
                         <i class="fa fa-pie-chart"></i>
-                        @php if($type=='index') {$type='account';} @endphp
+                        
                         <h3 class="box-title">{{ ucfirst($type) . ' ' . ADS_MODULE_SINGLE}}</h3>
                         @if($CheckLayoutPermission[0]->create==1)
                             <a href="{{ route("ads.create", ['type'=>$type]) }}" class="">
@@ -57,7 +57,11 @@
                                                             {{  $ad->title  }}
                                                         </td>
                                                         <td>
-                                                            {{ $ad->ad_image }}
+                                                            @if(!empty($ad->ad_image))
+                                                            <img src="{{ asset($ad->ad_image) }}" alt="" width="100px">
+                                                            @else
+                                                            Not available
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             @if ($ad->created_at == null)
@@ -76,7 +80,7 @@
 
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Banner"
-                                                                   href="{{ route("banner.edit",["id"=>$ad->id, 'type'=>$type]) }}">
+                                                                   href="{{ route("ads.edit",["id"=>$ad->id, 'type'=>$type]) }}">
                                                                     <i class="fa fa-edit"></i> Edit
                                                                 </a>
                                                             @endif
@@ -84,7 +88,7 @@
                                                             @if($CheckLayoutPermission[0]->delete==1)
                                                                     <a class="btn btn-app delete" title="Delete Banner"
                                                                        onclick="return confirm('Are you sure to delete this?')"
-                                                                       href="{{ route("banner-destroy",["id"=>$ad->id]) }}">
+                                                                       href="{{ route("ads.destroy",["id"=>$ad->id, "type"=>$type]) }}">
                                                                         <i class="fa fa-trash"></i> Delete
                                                                     </a>
                                                             @endif

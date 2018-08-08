@@ -116,6 +116,9 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/ads/{type}', 'Ads\AdsController@index')->name('ads.index');
     Route::get('/ads/{type}/create', 'Ads\AdsController@create')->name('ads.create');
     Route::post('/ads/store/{type}', 'Ads\AdsController@store')->name('ads.store');
+    Route::get('/ads/edit/{id}/{type}', 'Ads\AdsController@edit')->name('ads.edit');
+    Route::post('/ads/update/{id}/{type}', 'Ads\AdsController@update')->name('ads.update');
+    Route::get('/ads/destroy/{id}/{type}', 'Ads\AdsController@destroy')->name('ads.destroy');
 
 
     /*Customer  Module Start*/
