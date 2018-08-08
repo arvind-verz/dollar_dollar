@@ -842,7 +842,7 @@ button {
 }
 
 .ps-checkbox input[type=checkbox]:checked ~ label:before {
-    border-color: #ffffff;
+    /* border-color: #ffffff; */
 }
 
 .ps-checkbox input[type=checkbox]:checked ~ label:after {
@@ -5520,4 +5520,17 @@ span.ps-post__meta a {
 
 .ps-block--box.recommended-product .c-list .ps-block--short-product{
     width: auto;
+}
+
+.ps-dashboard .ps-form--product-management .col-lg-12 .form-group > label{
+ float: left;
+ margin: 15px 50px 0 0;
+}
+.ps-dashboard .ps-form--product-management .col-lg-12 .form-group > input{
+ width: 40px;
+    height: 40px;
+    float: left;
+}
+.ps-checkbox.ps-checkbox--inline label:after{
+ border-color: #3db54a;
 }
