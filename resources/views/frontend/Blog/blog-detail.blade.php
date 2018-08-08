@@ -108,7 +108,7 @@
                         @endforeach
                     @endif
                     <div class="ps-fanpage"><img src="img/post/share.jpg" alt=""></div>
-                    <div class="ps-post__thumbnail ads"><a href="{{ $page->blog_image_ads_link }}" target="_blank"><img src="{{ asset($page->blog_image_ads) }}" alt=""></a></div>
+                    <div class="ps-post__thumbnail ads"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a></div>
                 </div>
             </div>
         </div>

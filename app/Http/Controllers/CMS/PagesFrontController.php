@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\AdsManagement;
 
 class PagesFrontController extends Controller
 {
@@ -110,21 +111,39 @@ class PagesFrontController extends Controller
                 } elseif ($slug == REGISTRATION) {
                     return view('frontend.CMS.registration', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == PROFILEDASHBOARD) {
+                    $ads = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'account')
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
                     if (AUTH::check()) {
-                        return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners", "user_products", "user_products_ending"));
+                        return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners", "user_products", "user_products_ending", "ads"));
                     } else {
                         return redirect('/login');
                     }
                 } elseif ($slug == ACCOUNTINFO) {
+                    $ads = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'account')
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
                     if (AUTH::check()) {
-                        return view('frontend.user.account-information', compact("brands", "page", "systemSetting", "banners"));
+                        return view('frontend.user.account-information', compact("brands", "page", "systemSetting", "banners", 'ads'));
                     } else {
                         return redirect('/login');
                     }
 
                 } elseif ($slug == PRODUCTMANAGEMENT) {
+                    $ads = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'account')
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
                     if (AUTH::check()) {
-                        return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners", "user_products"));
+                        return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners", "user_products", 'ads'));
                     } else {
                         return redirect('/login');
                     }
@@ -205,6 +224,13 @@ class PagesFrontController extends Controller
                     $details = $query->get();
                 }
 
+                $ads = AdsManagement::where('delete_status', 0)
+                ->where('display', 1)
+                ->where('page', 'blog')
+                ->inRandomOrder()
+                ->limit(1)
+                ->get();
+
 //unserialize tags
                 $tags = [];
                 if ($page->tags != null) {
@@ -225,7 +251,7 @@ class PagesFrontController extends Controller
                     }
                 }
                 $relatedBlog = array_random($relatedBlog, 3);
-                return view("frontend.Blog.blog-detail", compact("page", "systemSetting", "banners", "relatedBlog", 'tags'));
+                return view("frontend.Blog.blog-detail", compact("page", "systemSetting", "banners", "relatedBlog", 'tags', 'ads'));
             } else {
                 return view("frontend.CMS.page", compact("page", "systemSetting", "banners"));
             }
@@ -256,6 +282,12 @@ class PagesFrontController extends Controller
 
     public function fixed($request)
     {
+        $ads = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'account')
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
@@ -449,7 +481,7 @@ class PagesFrontController extends Controller
         if ($searchFilter['search_value'] > 0 && $searchFilter['filter'] == PLACEMENT) {
             $searchFilter['search_value'] = $searchFilter['search_value'] / 1000;
         }
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", 'ads'));
 
     }
 
