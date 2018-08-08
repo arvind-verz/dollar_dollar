@@ -510,6 +510,7 @@ class PagesFrontController extends Controller
 
         }
 
+
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable","remainingProducts", 'ads_manage'));
 
     }
