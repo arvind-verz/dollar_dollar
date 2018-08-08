@@ -426,7 +426,7 @@ class PagesFrontController extends Controller
                 }
             }
         }
-
+        $remainingProducts = collect($remainingProducts);
         if (count($searchFilter)) {
 
             $products = collect($filterProducts);
@@ -448,6 +448,28 @@ class PagesFrontController extends Controller
                     $products = $products->sortByDesc('total_interest');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortByDesc('max_tenure');
+
+                }
+            }
+
+        }
+        if ($remainingProducts->count()) {
+
+            if ($sortBy == MINIMUM) {
+                if ($filter == PLACEMENT) {
+                    $remainingProducts = $remainingProducts->sortBy('total_interest_earn');
+                } elseif ($filter == INTEREST) {
+                    $remainingProducts = $remainingProducts->sortBy('total_interest');
+                } elseif ($filter == TENURE) {
+                    $remainingProducts = $remainingProducts->sortBy('max_tenure');
+                }
+            } else {
+                if ($filter == PLACEMENT || $filter == TENURE) {
+                    $remainingProducts = $remainingProducts->sortByDesc('total_interest_earn');
+                } elseif ($filter == INTEREST) {
+                    $remainingProducts = $remainingProducts->sortByDesc('total_interest');
+                } elseif ($filter == TENURE) {
+                    $remainingProducts = $remainingProducts->sortByDesc('max_tenure');
 
                 }
             }
