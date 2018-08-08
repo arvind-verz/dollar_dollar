@@ -933,7 +933,7 @@ class PagesFrontController extends Controller
             } elseif (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F4])) {
                 $status = false;
                 $maxPlacements = [0];
-                $highlight = 0;
+                $highlight = -1;
                 $maxRanges = [];
 
                 foreach ($productRanges as $k => $productRange) {
@@ -1361,7 +1361,7 @@ class PagesFrontController extends Controller
             } elseif (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F4])) {
                 $status = false;
                 $maxPlacements = [0];
-                $highlight = 0;
+                $highlight = -1;
                 $maxRanges = [];
 
                 foreach ($productRanges as $k => $productRange) {
@@ -1626,6 +1626,7 @@ class PagesFrontController extends Controller
 
 
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
+        $currency = isset($request['currency']) ? $request['currency'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : 1;
         $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
 
@@ -1652,9 +1653,13 @@ class PagesFrontController extends Controller
 
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands = $details['brands'];
+        $currencies = null;
         if ($products->count() && $brands->count()) {
             $productsBrandIds = $products->pluck('bank_id')->all();
+            $currencyIds = $products->pluck('currency')->all();
+            $currencies = Currency::whereIn('id',$currencyIds)->get();
             $brands = $brands->whereIn('id', $productsBrandIds);
+
         }
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
@@ -1732,7 +1737,7 @@ class PagesFrontController extends Controller
 
                                 $bonusInterestHighlight[$tenureKey] = false;
                                 if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
-                                    if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                                    if ((is_null($brandId) || ($brandId == $product->bank_id))&&(is_null($currency) || ($currency == $product->currency))) {
                                         $productRange->placement_highlight = true;
                                         $productRange->placement_value = true;
                                         $status = true;
@@ -1824,7 +1829,7 @@ class PagesFrontController extends Controller
 
                     if (count($searchFilter)) {
                         if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
-                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                            if ((is_null($brandId) || ($brandId == $product->bank_id))&&(is_null($currency) || ($currency == $product->currency))) {
                                 $productRange->placement_highlight = true;
                                 $productRange->placement_value = true;
                                 $status = true;
@@ -1880,7 +1885,7 @@ class PagesFrontController extends Controller
 
                     if (count($searchFilter)) {
                         if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
-                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                            if ((is_null($brandId) || ($brandId == $product->bank_id))&&(is_null($currency) || ($currency == $product->currency))) {
                                 $productRange->high_light = true;
                                 $status = true;
                             }
@@ -1910,7 +1915,7 @@ class PagesFrontController extends Controller
             } elseif (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F5])) {
                 $status = false;
                 $maxPlacements = [0];
-                $highlight = 0;
+                $highlight = -1;
                 $maxRanges = [];
 
                 foreach ($productRanges as $k => $productRange) {
@@ -1919,7 +1924,7 @@ class PagesFrontController extends Controller
                     $maxRanges[] = $productRange->max_range;
                     if (count($searchFilter)) {
                         if ($searchValue >= $productRange->min_range) {
-                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                            if ((is_null($brandId) || ($brandId == $product->bank_id))&&(is_null($currency) || ($currency == $product->currency))) {
                                 $highlight = $k;
                                 $status = true;
                             }
@@ -2011,7 +2016,7 @@ class PagesFrontController extends Controller
                             } else {
                                 $placement = $searchValue;
                             }
-                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                            if ((is_null($brandId) || ($brandId == $product->bank_id))&&(is_null($currency) || ($currency == $product->currency))) {
                                 $product->highlight = true;
                                 $status = true;
                             }
@@ -2129,7 +2134,7 @@ class PagesFrontController extends Controller
             }
 
         }
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage","remainingProducts"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage","remainingProducts","currencies"));
 
     }
 

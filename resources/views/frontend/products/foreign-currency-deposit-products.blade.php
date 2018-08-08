@@ -117,7 +117,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                                 @elseif(!isset($searchFilter['filter']))$@endif
@@ -130,7 +130,20 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                                        <select class="form-control" name="currency">
+                                            <option value="">Currency</option>
+                                            @if(count($currencies))
+                                                @foreach($currencies as $currency)
+                                                    <option value="{{$currency->id}}"
+                                                            @if(isset($searchFilter['currency']) && $searchFilter['currency']==$currency->id) selected @endif>
+                                                        {{$currency->code}}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
                                         <select class="form-control" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
@@ -718,6 +731,7 @@
                                                                                     </thead>
                                                                                     <tbody>
                                                                                     @foreach($product->product_ranges as $key => $productRange)
+
                                                                                         <tr class="@if($product->highlight>=$key) highlight @endif">
                                                                                             <td>@if($key==0) 1st - @else
                                                                                                     NEXT
@@ -1323,7 +1337,8 @@
                                                                     @endif
                                                                             <!-- FORMULA 5 -->
                                                                     @if($product->promotion_formula_id==FOREIGN_CURRENCY_DEPOSIT_F5)
-                                                                        <div class="ps-product__table">
+
+                                                                            <div class="ps-product__table">
                                                                             <div class="ps-table-wrap">
                                                                                 <table class="ps-table ps-table--product text-center">
                                                                                     <thead>
@@ -1508,7 +1523,7 @@
                     </div>
                     @php $j++; @endphp
                 @endforeach
-                @endif
+            @endif
         </div>
     </div>
     {{--Page content end--}}
