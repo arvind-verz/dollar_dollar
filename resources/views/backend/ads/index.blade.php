@@ -42,6 +42,9 @@
                                         <table id="banners" class="table ">
                                             <thead>
                                             <tr>
+                                                @if($type=='product')
+                                                <th>Product Page</th>
+                                                @endif
                                                 <th>Title</th>
                                                 <th>Ad Image</th>
                                                 <th>Created on</th>
@@ -53,6 +56,11 @@
                                             @if($ads->count())
                                                 @foreach($ads as $ad)
                                                     <tr>
+                                                        @if($type=='product')
+                                                            <td>
+                                                                {{  $ad->page_type  }}
+                                                            </td>
+                                                        @endif
                                                         <td>
                                                             {{  $ad->title  }}
                                                         </td>

@@ -91,6 +91,12 @@ class AdsController extends Controller
         }
 
         $ads = new AdsManagement;
+        $page_type = NULL;
+        if($request->page=='product')
+        {
+            $page_type = $request->page_type;
+        }
+        $ads->page_type = $page_type;
         $ads->page = $request->page;
         $ads->title = $request->title;
         $ads->ad_image = $destinationPath . "/" . $ad_image;
@@ -200,7 +206,12 @@ class AdsController extends Controller
             $banner->ad_image = $destinationPath . '/' . $ad_image;
         }
 
-
+        $page_type = NULL;
+        if($request->page=='product')
+        {
+            $page_type = $request->page_type;
+        }
+        $ads->page_type = $page_type;
         $ads->page = $request->page;
         $ads->title = $request->title;
         $ads->ad_link = $request->ad_link;

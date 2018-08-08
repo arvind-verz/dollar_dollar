@@ -252,6 +252,15 @@
                     $interestEarns = $product->interest_earns;
                     $bonusInterests = $product->bonus_interests;
                     ?>
+                    @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE)
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                            <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                        alt=""></a>
+                        </div>
+                    @endif
                     @if($page->slug==FIXED_DEPOSIT_MODE && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
@@ -263,6 +272,7 @@
                                         alt=""></a>
                         </div>
                     @endif
+                    
                     <div class="ps-product @if($product->featured==1) featured-1 @endif @if($page->slug==FIXED_DEPOSIT_MODE && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
                          id="{{ $j }}">
 
