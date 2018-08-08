@@ -734,17 +734,10 @@
     </div>
     <script type="text/javascript">
         $(".search_type").on("click", function () {
-            var prefix_holder = '';
             $(".search_type").removeClass("active");
             $("input[name='filter']").prop("checked", false);
             $(this).addClass("active").find("input[name='filter']").prop("checked", true);
-            var value = $(this).find("input[name='filter']").val();
-            $("input[name='search_value']").val('').removeClass("prefix_dollar");
-            if (value == 'Placement') {
-                prefix_holder = 'K';
-                $("input[name='search_value']").val('100').addClass("prefix_dollar");
-            }
-            $("span.suffix_ko").text(prefix_holder);
+
         });
 
         $("body").on("click", "img.brand_img", function () {

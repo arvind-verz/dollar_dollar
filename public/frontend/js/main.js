@@ -255,6 +255,9 @@ function addCommas(nStr)
 
     return x1 + x2;
 }
+$( ".submit-search" ).on( "click", function() {
+    document.getElementById('search-form').submit();
+});
 $(window).on('load resize', function() {
     resizeHeader();
 });
