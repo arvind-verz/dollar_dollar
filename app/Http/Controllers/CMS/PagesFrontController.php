@@ -392,11 +392,15 @@ class PagesFrontController extends Controller
 
                                 $bonusInterestHighlight[$tenureKey] = false;
                                 if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
-                                    $productRange->placement_highlight = true;
-                                    $productRange->placement_value = true;
+                                    if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                                        $productRange->placement_highlight = true;
+                                        $productRange->placement_value = true;
+                                        $status = true;
+                                    }
+
                                     $placement = (float)$searchValue;
                                     $resultKey = $tenureKey;
-                                    $status = true;
+
                                 }
                                 if (empty($placement)) {
                                     $amount = $productRange->max_range;
@@ -450,13 +454,12 @@ class PagesFrontController extends Controller
                 $product->total_interest = $resultInterestEarnPercent;
                 $product->total_interest_earn = round($resultInterestEarn, 2);
                 $product->placement = $placement;
-                if (!is_null($brandId) && ($brandId != $product->bank_id)) {
-                    $status = false;
-                }
+
                 if ($status == true) {
                     //dd($product);
                     $filterProducts[] = $product;
                 } else {
+
                     $remainingProducts[] = $product;
                 }
             }
@@ -1276,10 +1279,13 @@ class PagesFrontController extends Controller
 
                     if (count($searchFilter)) {
                         if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
-                            $productRange->placement_highlight = true;
-                            $productRange->placement_value = true;
+                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                                $productRange->placement_highlight = true;
+                                $productRange->placement_value = true;
+                                $status = true;
+                            }
                             $placement = (int)$searchValue;
-                            $status = true;
+
                         }
                         if (empty($placement) && (count($productRanges) - 1) == ($k)) {
                             $placement = $productRange->max_range;
@@ -1303,9 +1309,6 @@ class PagesFrontController extends Controller
                     }
                 }
 
-                if (!is_null($brandId) && ($brandId != $product->bank_id)) {
-                    $status = false;
-                }
 
                 if ($status == true) {
                     $filterProducts[] = $product;
@@ -1332,15 +1335,15 @@ class PagesFrontController extends Controller
 
                     if (count($searchFilter)) {
                         if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
-                            $productRange->high_light = true;
+                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                                $productRange->high_light = true;
+                                $status = true;
+                            }
                             $placement = (int)$searchValue;
-                            $status = true;
                         }
                         if (empty($placement) && (count($productRanges) - 1) == ($k)) {
                             $placement = $productRange->max_range;
                         }
-
-
                     }
 
                     if ($placement >= $productRange->min_range &&
@@ -1351,10 +1354,6 @@ class PagesFrontController extends Controller
                         $product->total_interest_earn = round($totalInterest, 2);
                         $product->placement = $placement;
                     }
-                }
-
-                if (!is_null($brandId) && ($brandId != $product->bank_id)) {
-                    $status = false;
                 }
 
                 if ($status == true) {
@@ -1375,9 +1374,12 @@ class PagesFrontController extends Controller
                     $maxRanges[] = $productRange->max_range;
                     if (count($searchFilter)) {
                         if ($searchValue >= $productRange->min_range) {
-                            $highlight = $k;
+                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                                $highlight = $k;
+                                $status = true;
+                            }
                             $maxPlacements[] = (int)$searchValue;
-                            $status = true;
+
                         }
                         if (count($maxPlacements) == 0 && (count($productRanges) - 1) == ($k)) {
                             $maxPlacements[] = $productRange->max_range;
@@ -1428,10 +1430,6 @@ class PagesFrontController extends Controller
 
 
                 }
-                if (!is_null($brandId) && ($brandId != $product->bank_id)) {
-                    $status = false;
-                }
-
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
@@ -1464,9 +1462,11 @@ class PagesFrontController extends Controller
                             } else {
                                 $placement = $searchValue;
                             }
-                            $product->highlight = true;
+                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                                $product->highlight = true;
+                                $status = true;
+                            }
 
-                            $status = true;
                         } else {
                             $placement = $productRange->max_range;
                         }
@@ -1522,10 +1522,6 @@ class PagesFrontController extends Controller
                     $product->total_interest_earn = $totalInterestAmount + ($placement * $productRange->placement_month);
                     $product->placement = $placement;
                     $product->total_interest = 0;
-                }
-
-                if (!is_null($brandId) && ($brandId != $product->bank_id)) {
-                    $status = false;
                 }
 
                 if ($status == true) {
