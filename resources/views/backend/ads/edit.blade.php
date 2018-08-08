@@ -31,6 +31,19 @@
                         <div class="box-body">
                             <div class="col-md-12">
                                 <input type="hidden" name="page" value="{{ $type }}">
+                                @if($type=='product')
+                                <div class="form-group">
+                                    <label>Product Page</label>
+                                    <select class="form-control" name="page_type">
+                                        <option value="">Select</option>
+                                        <option value="fixed-deposit-mode" @if($ads->page_type=='fixed-deposit-mode') selected @endif>Fixed Deposit</option>
+                                        <option value="saving-deposit-mode" @if($ads->page_type=='saving-deposit-mode') selected @endif>Saving Deposit</option>
+                                        <option value="wealth-deposit-mode" @if($ads->page_type=='wealth-deposit-mode') selected @endif>Wealth Deposit</option>
+                                        <option value="foreign-currency-deposit-mode" @if($ads->page_type=='foreign-currency-deposit-mode') selected @endif>Foreign Currency Deposit</option>
+                                        <option value="all-in-one-deposit-mode" @if($ads->page_type=='all-in-one-deposit-mode') selected @endif>All in One Deposit</option>
+                                    </select>
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     <label>Title</label>
                                     <input type="text" name="title" class="form-control" placeholder="Enter title" value="{{ $ads->title }}">

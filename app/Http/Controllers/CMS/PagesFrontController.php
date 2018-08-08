@@ -283,13 +283,13 @@ class PagesFrontController extends Controller
     public function fixed($request)
     {
 
-        $ads = AdsManagement::where('delete_status', 0)
+        $ads_manage = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
-                    ->where('page', 'account')
+                    ->where('page', 'product')
                     ->inRandomOrder()
                     ->limit(1)
                     ->get();
-
+//dd($ads_manage);
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
@@ -510,8 +510,7 @@ class PagesFrontController extends Controller
 
         }
 
-
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable","remainingProducts", 'ads'));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable","remainingProducts", 'ads_manage'));
 
 
 
