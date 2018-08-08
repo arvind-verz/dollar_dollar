@@ -51,27 +51,6 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('profile_ads', 'Profile Ads',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="@if(isset($systemSetting->profile_ads) && ($systemSetting->profile_ads != ''))col-sm-8 @else col-sm-10 @endif">
-                                            {{Form::file('profile_ads', ['class' => 'form-control', 'placeholder' => ''])}}
-                                        </div>
-                                        @if(isset($systemSetting->profile_ads) && ($systemSetting->profile_ads != ''))
-                                            <div class=" col-sm-2">
-                                                <div class="attachment-block clearfix">
-                                                    <img class="attachment-img"
-                                                         src="{!! asset($systemSetting->profile_ads) !!}"
-                                                         alt=" Profile Ads">
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        {{Form::label('profile_ads_link', 'Profile Ads Link',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::text('profile_ads_link', $systemSetting->profile_ads_link, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         {{Form::label('footer', 'Footer',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::textarea('footer', $systemSetting->footer, ['class' => 'form-control', 'placeholder' => ''])}}

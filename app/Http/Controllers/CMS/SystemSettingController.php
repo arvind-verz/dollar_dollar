@@ -115,7 +115,6 @@ class SystemSettingController extends Controller
         $oldSystemSetting->contact_phone = $request->contact_phone;
         $oldSystemSetting->contact_email = $request->contact_email;
         $oldSystemSetting->footer = $request->footer;
-        $oldSystemSetting->profile_ads_link = $request->profile_ads_link;
         $oldSystemSetting->contact_us_section = $request->contact_us_section;
         $oldSystemSetting->offer_section = $request->offer_section;
         $oldSystemSetting->created_at = Carbon::now()->toDateTimeString();
@@ -142,23 +141,6 @@ class SystemSettingController extends Controller
             // Upload Image
             $image->move($destinationPath, $imageName);
             $oldSystemSetting->logo = $destinationPath . '/' . $imageName;
-
-
-        }
-        if (isset($request->profile_ads)) {
-
-            $image = $request->profile_ads;
-            // Get filename with the extension
-            $filenameWithExt = $image->getClientOriginalName();
-            // Get just filename
-             $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
-            // Get just ext
-            $extension = $image->getClientOriginalExtension();
-            // Filename to store
-            $imageName = $filename . '_' . time() . '.' . $extension;
-            // Upload Image
-            $image->move($destinationPath, $imageName);
-            $oldSystemSetting->profile_ads = $destinationPath . '/' . $imageName;
 
 
         }
