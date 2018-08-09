@@ -88,6 +88,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                     <div class="ps-form__content">
+                        <input type="hidden" name="redirect_url" value="{{ isset($redirect_url) ? $redirect_url : '/' }}">
                         <div class="form-group">
                             <label>Email</label>
                             <div class="form-icon"><i class="fa fa-envelope"></i>
