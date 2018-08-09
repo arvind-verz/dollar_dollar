@@ -33,6 +33,7 @@ Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCall
 
 /*User Module*/
 Auth::routes();
+Route::get('registration_page/{redirect_url}', 'Auth\RegisterController@registration_page');
 
 // Password Reset Routes...
 

@@ -5534,3 +5534,8 @@ span.ps-post__meta a {
 .ps-checkbox.ps-checkbox--inline label:after{
  border-color: #3db54a;
 }
+
+.ps-home--links .container{
+ width: 100%;
+ text-align: center;
+}

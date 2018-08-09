@@ -68,6 +68,7 @@
             {!! Form::open(['route' => ['registration-add'], 'class'=>'ps-form--contact ps-form--register', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 ">
+                    <input type="hidden" name="redirect_url" value="{{ isset($redirect_url) ? $redirect_url : '/home' }}">
                     <div class="ps-form__content">
                         <div class="form-group">
                             <label>Salutation</label>
