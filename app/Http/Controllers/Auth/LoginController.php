@@ -37,6 +37,7 @@ class LoginController extends Controller
      *
      * @var string
      */
+    
     protected $redirectTo = '/';
 
     /**
@@ -71,11 +72,10 @@ class LoginController extends Controller
      */
     protected function sendLoginResponse(Request $request)
     {
-      
         $request->session()->regenerate();
 
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect('profile-dashboard');
+                ?: redirect($request->redirect_url);
     }
 
     protected function authenticated(Request $request, $user)
