@@ -255,9 +255,9 @@
                     @if(count($products)>4)
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==4)
                             <div class="ps-poster-popup">
-                                <div class="close-popup">
+                                <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
-                                </div>
+                                </div> -->
                                 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
@@ -265,9 +265,9 @@
                     @else
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==1)
                             <div class="ps-poster-popup">
-                                <div class="close-popup">
+                                <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
-                                </div>
+                                </div> -->
                                 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>

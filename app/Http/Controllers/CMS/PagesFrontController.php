@@ -92,7 +92,7 @@ class PagesFrontController extends Controller
             if (!$systemSetting) {
                 return back()->with('error', OPPS_ALERT);
             }
-
+            $redirect_url = "profile-dashboard";
             $slug = $page->slug;
 //get banners
             $banners = \Helper::getBanners($slug);
@@ -105,9 +105,21 @@ class PagesFrontController extends Controller
                 if ($slug == CONTACT_SLUG) {
                     return view('frontend.CMS.contact', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == HEALTH_INSURANCE_ENQUIRY) {
-                    return view('frontend.CMS.health-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+                    $redirect_url = 'health-insurance-enquiry';
+                    if (Auth::check()) {
+                        return view('frontend.CMS.health-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+                    }
+                    else {
+                        return view('auth.login', compact("redirect_url"));
+                    }
                 } elseif ($slug == LIFE_INSURANCE_ENQUIRY) {
-                    return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+                    $redirect_url = 'life-insurance-enquiry';
+                    if (Auth::check()) {
+                        return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+                    }
+                    else {
+                        return view('auth.login', compact("redirect_url"));
+                    }
                 } elseif ($slug == REGISTRATION) {
                     return view('frontend.CMS.registration', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == PROFILEDASHBOARD) {
