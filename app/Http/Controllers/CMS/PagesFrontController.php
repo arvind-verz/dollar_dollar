@@ -1553,7 +1553,6 @@ class PagesFrontController extends Controller
                     $products = $products->sortByDesc('total_interest');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortByDesc('max_tenure');
-
                 }
             }
 
@@ -2170,7 +2169,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            //->where('promotion_products.formula_id', '=', 8)
+            ->where('promotion_products.formula_id', '=', 7)
             ->where('promotion_formula.promotion_id', '=', ALL_IN_ONE_ACCOUNT)
             //->where('promotion_products.promotion_start', '<=', $start_date)
             //->where('promotion_products.promotion_end', '>=', $end_date)
@@ -2190,6 +2189,7 @@ class PagesFrontController extends Controller
         $banners = $details['banners'];
 
         $filterProducts = [];
+        $remainingProducts = [];
         foreach ($promotion_products as $key => $product) {
             $defaultSearch = DefaultSearch::where('promotion_id', ALL_IN_ONE_ACCOUNT)->first();
             if ($defaultSearch) {
@@ -2227,11 +2227,8 @@ class PagesFrontController extends Controller
             } else {
                 $placement = 0;
                 $search_filter = $request;
-                if ($search_filter['filter'] == PLACEMENT) {
-                    $search_filter['search_value'] = isset($request['search_value']) ? ((int)$request['search_value'] * 1000) : 0;
-                }
-
-                $searchValue = $search_filter['search_value'];
+                $searchValue = str_replace(',', '', $search_filter['search_value']);
+                $search_filter['search_value'] = $searchValue;
                 $salary = $search_filter['salary'] = isset($search_filter['salary']) ? (int)$search_filter['salary'] : $defaultSalary;
                 $giro = $search_filter['giro'] = isset($search_filter['giro']) ? (int)$search_filter['giro'] : $defaultGiro;
                 $spend = $search_filter['spend'] = isset($search_filter['spend']) ? (int)$search_filter['spend'] : $defaultSpend;
@@ -2254,7 +2251,7 @@ class PagesFrontController extends Controller
                 $product->bonus_highlight = false;
                 $criteriaMatchCount = 0;
 
-                foreach ($productRanges as $productRange) {
+                foreach ($productRanges as $k => $productRange) {
                     //dd($productRange);
                     $allInterests = [
                         $productRange->bonus_interest_salary,
@@ -2265,46 +2262,50 @@ class PagesFrontController extends Controller
                         $productRange->bonus_interest,
                         $productRange->bonus_interest_remaining_amount,
                     ];
-                    if (($filter == PLACEMENT) && ($searchValue >= $productRange->min_range)) {
+                    if  ($searchValue >= $productRange->min_range) {
                         $placement = (int)$searchValue;
                         $status = true;
-                    } elseif ($filter == INTEREST && (in_array((float)$searchValue, $allInterests))) {
-                        $placement = $defaultPlacement;
-                        $status = true;
-                    } elseif ($filter == TENURE) {
-                        //$placement = $productRange->bonus_amount;
-                        $status = false;
                     }
+                    if (empty($placement) && (count($productRanges) - 1) == ($k)) {
+                        $placement = $productRange->max_range;
+                    }
+
                     if ($status == true) {
+                        if ($salary > 0 && $productRange->minimum_salary <= $salary) {
+                            $product->salary_highlight = true;
+                        }
+                        if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
+                            $product->payment_highlight = true;
+                        }
+                        if ($spend > 0 && $productRange->minimum_spend <= $spend) {
+                            $product->spend_highlight = true;
+                        }
+                        if ($wealth > 0 && $productRange->minimum_wealth_pa <= $wealth / 12) {
+                            $product->wealth_highlight = true;
+                        }
+                         if ($placement > 0 && $productRange->bonus_amount <= $placement) {
+                            $product->bonus_highlight = true;
+                        }
+                    }
 
                         $totalInterest = 0;
                         if ($salary > 0 && $productRange->minimum_salary <= $salary) {
-                            $product->salary_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
                             $criteriaMatchCount++;
                         }
                         if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
-                            $product->payment_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest_giro_payment;
                             $criteriaMatchCount++;
                         }
                         if ($spend > 0 && $productRange->minimum_spend <= $spend) {
-                            $product->spend_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest_spend;
                             $criteriaMatchCount++;
                         }
                         if ($wealth > 0 && $productRange->minimum_wealth_pa <= $wealth / 12) {
-                            $product->wealth_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest_wealth;
                             $criteriaMatchCount++;
                         }
-                        /*if ($loan > 0 && $productRange->bonus_interest_loan <= $loan) {
-                            $product->loan_highlight = true;
-                            $totalInterest = $totalInterest + $productRange->bonus_interest_loan;
-                            $criteriaMatchCount++;
-                        }*/
                         if ($placement > 0 && $productRange->bonus_amount <= $placement) {
-                            $product->bonus_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest;
                             $criteriaMatchCount++;
                         }
@@ -2315,19 +2316,17 @@ class PagesFrontController extends Controller
                             $interestEarns[] = $placement * ($totalInterest / 100);
                         }
                         $productRange->placement = $placement;
-                    }
                 }
+                $product->criteriaCount = $criteriaMatchCount;
                 $product->total_interest = array_sum($totalInterests);
                 $product->interest_earned = array_sum($interestEarns);
                 $product->placement = $placement;
-                if (!is_null($brandId) && ($brandId != $product->bank_id)) {
-                    $status = false;
-                }
+                $product->product_range = $productRanges;
                 if ($status == true && $criteriaMatchCount > 0) {
                     $product->highlight = true;
-                    $product->product_range = $productRanges;
                     $filterProducts[] = $product;
-
+                } else {
+                    $remainingProducts[] = $product;
                 }
 
             } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F2) {
@@ -2597,38 +2596,52 @@ class PagesFrontController extends Controller
                     $product->placement = $placement * 12;
                     $product->product_range = $productRanges;
                     $filterProducts[] = $product;
-
                 }
-
-
             }
-
         }
-        $promotion_products = $filterProducts;
-        if (count($promotion_products)) {
-            $promotion_products = collect($promotion_products);
+        $products = collect($filterProducts);
+        $remainingProducts = collect($remainingProducts);
+        if ($products->count()) {
             if ($sortBy == MINIMUM) {
-                if ($filter == PLACEMENT || $filter == TENURE) {
-                    $promotion_products = $promotion_products->sortBy('interest_earned');
+                if ($filter == PLACEMENT) {
+                    $products = $products->sortBy('interest_earned');
                 } elseif ($filter == INTEREST) {
-                    $promotion_products = $promotion_products->sortBy('total_interest');
-
+                    $products = $products->sortBy('total_interest');
+                } elseif ($filter == CRITERIA) {
+                    $products = $products->sortBy('criteriaCount');
                 }
             } else {
-                if ($filter == PLACEMENT || $filter == TENURE) {
-                    $promotion_products = $promotion_products->sortByDesc('interest_earned');
+                if ($filter == PLACEMENT) {
+                    $products = $products->sortByDesc('interest_earned');
                 } elseif ($filter == INTEREST) {
-                    $promotion_products = $promotion_products->sortByDesc('total_interest');
-
+                    $products = $products->sortByDesc('total_interest');
+                } elseif ($filter == CRITERIA) {
+                    $products = $products->sortByDesc('criteriaCount');
                 }
             }
+        }
+        if ($remainingProducts->count()) {
+            if ($sortBy == MINIMUM) {
+                if ($filter == PLACEMENT) {
+                    $remainingProducts = $remainingProducts->sortBy('interest_earned');
+                } elseif ($filter == INTEREST) {
+                    $remainingProducts = $remainingProducts->sortBy('total_interest');
+                } elseif ($filter == CRITERIA) {
+                    $remainingProducts = $remainingProducts->sortBy('criteriaCount');
+                }
+            } else {
+                if ($filter == PLACEMENT) {
+                    $remainingProducts = $remainingProducts->sortByDesc('interest_earned');
+                } elseif ($filter == INTEREST) {
+                    $remainingProducts = $remainingProducts->sortByDesc('total_interest');
+                } elseif ($filter == CRITERIA) {
+                    $remainingProducts = $remainingProducts->sortByDesc('criteriaCount');
+                }
+            }
+        }
 
-        }
-        if ($search_filter['search_value'] > 0 && $search_filter['filter'] == PLACEMENT) {
-            $search_filter['search_value'] = $search_filter['search_value'] / 1000;
-        }
         //dd($search_filter);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "promotion_products", "search_filter", "legendtable", "ads_manage"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products","remainingProducts", "search_filter", "legendtable", "ads_manage"));
     }
 
     public function combineCriteriaFilter(Request $request)
