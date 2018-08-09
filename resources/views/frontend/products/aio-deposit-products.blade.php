@@ -148,13 +148,12 @@
                                 <div class="row ps-col-tiny">
                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">
                                         <div class="form-group form-group--nest">
-                                            <div class="form-group__content"><span class="prefix_holder">@if(isset($search_filter['filter']) && $search_filter['filter']=='Placement')
-                                                        $@elseif(!isset($search_filter['filter']))$@endif</span>
+                                            <div class="form-group__content">
                                                 <input class="form-control only_numeric" type="text" placeholder=""
                                                        name="search_value" id="search_value"
                                                        value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}"/>
                                             </div>
-                                            <span class="suffix_ko">K</span>
+
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
