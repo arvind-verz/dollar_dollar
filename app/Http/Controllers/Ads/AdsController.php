@@ -200,10 +200,10 @@ class AdsController extends Controller
         }
 
         if ($request->hasFile('ad_image')) {
-            if ($banner->ad_image != 'noimage.jpg') {
-                \File::delete($banner->ad_image);
+            if ($ads->ad_image != 'noimage.jpg') {
+                \File::delete($ads->ad_image);
             }
-            $banner->ad_image = $destinationPath . '/' . $ad_image;
+            $ads->ad_image = $destinationPath . '/' . $ad_image;
         }
 
         $page_type = NULL;
