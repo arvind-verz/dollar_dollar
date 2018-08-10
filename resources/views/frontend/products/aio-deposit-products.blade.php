@@ -161,11 +161,11 @@
                                         <select class="form-control" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
+                                                    @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==1) selected @endif>
                                                 Ascending
                                             </option>
                                             <option value="2"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
+                                                    @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==2) selected @endif>
                                                 Descending
                                             </option>
                                         </select>
@@ -842,7 +842,7 @@
                                                                         ${{ Helper::inThousand($product->interest_earned).' ( '.$product->total_interest.'%) ' }}</td>
                                                                 @endif
                                                             </tr>
-                                                            @php $i++; @endphp
+
                                                         @endforeach
                                                         </tbody>
                                                     </table>
@@ -1222,6 +1222,7 @@
                                                                                                type="checkbox"
                                                                                                data-product-id="{{$product->product_id}}"
                                                                                                name="life_insurance"
+                                                                                               data-status ="0"
                                                                                                onchange="changeCriteria(this);"
                                                                                                @if($product->life_insurance) checked=checked
                                                                                                @endif value="true"
@@ -1239,7 +1240,7 @@
                                                                                                @endif
                                                                                                name="housing_loan"
                                                                                                data-product-id="{{$product->product_id}}"
-                                                                                               value="true"
+                                                                                               value="true" data-status ="0"
                                                                                                id="housing-loan-{{$product->product_id}}">
                                                                                         <label for="housing-loan-{{$product->product_id}}">Housing
                                                                                             Loan</label>
@@ -1252,7 +1253,7 @@
                                                                                                name="education_loan"
                                                                                                onchange="changeCriteria(this);"
                                                                                                data-product-id="{{$product->product_id}}"
-                                                                                               value="true"
+                                                                                               value="true" data-status ="0"
                                                                                                id='education-loan-{{$product->product_id}}'
                                                                                                @if($product->education_loan) checked=checked @endif/>
                                                                                         <label for="education-loan-{{$product->product_id}}">Education
@@ -1265,7 +1266,7 @@
                                                                                                type="checkbox"
                                                                                                onchange="changeCriteria(this);"
                                                                                                name="hire_loan"
-                                                                                               value="true"
+                                                                                               value="true" data-status ="0"
                                                                                                data-product-id="{{$product->product_id}}"
                                                                                                id="hire-loan-{{$product->product_id}}"
                                                                                                @if($product->hire_loan) checked=checked @endif/>
@@ -1280,7 +1281,7 @@
                                                                                                name="renovation_loan"
                                                                                                onchange="changeCriteria(this);"
                                                                                                data-product-id="{{$product->product_id}}"
-                                                                                               value="true"
+                                                                                               value="true" data-status ="0"
                                                                                                id="renovation-loan-{{$product->product_id}}"
                                                                                                @if($product->renovation_loan) checked=checked @endif/>
                                                                                         <label for="renovation-loan-{{$product->product_id}}">Renovation
@@ -1293,7 +1294,7 @@
                                                                                                type="checkbox"
                                                                                                onchange="changeCriteria(this);"
                                                                                                name="unit_trust"
-                                                                                               value="true"
+                                                                                               value="true" data-status ="0"
                                                                                                data-product-id="{{$product->product_id}}"
                                                                                                id="unit-trust-{{$product->product_id}}"
                                                                                                @if($product->unit_trust) checked=checked @endif/>
@@ -1467,7 +1468,7 @@
                                                                                             ${{ Helper::inThousand($product->interest_earned).' ( '.$product->total_interest.'%) ' }}</td>
                                                                                     @endif
                                                                                 </tr>
-                                                                                @php $i++; @endphp
+
                                                                             @endforeach
                                                                             </tbody>
                                                                         </table>
@@ -1510,6 +1511,7 @@
     <script type="text/javascript">
         function changeCriteria(id) {
             var product_id = $(id).data('product-id');
+            var status = $(id).data('status');
             var data = $('#search-form').serialize();
             //console.log(data);
             var checkBoxForm = $('#form-' + product_id).serialize();
@@ -1524,7 +1526,8 @@
                 data: {
                     search_detail: data,
                     product_id: product_id,
-                    check_box_detail: checkBoxForm
+                    check_box_detail: checkBoxForm,
+                    status:status
                 },
                 cache: false,
                 async: false,
