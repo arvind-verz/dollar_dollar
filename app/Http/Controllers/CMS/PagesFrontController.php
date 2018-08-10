@@ -1173,6 +1173,7 @@ class PagesFrontController extends Controller
 
     public function saving($request)
     {
+        //dd($request);
         $ads_manage = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
@@ -2156,6 +2157,7 @@ class PagesFrontController extends Controller
     public
     function aio($request)
     {
+        //dd($request);
         $ads_manage = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
@@ -2227,25 +2229,26 @@ class PagesFrontController extends Controller
                 $spend = $defaultSpend;
                 $loan = $defaultLoan;
                 $wealth = $defaultWealth;
-                $search_filter['search_value'] = $defaultPlacement;
-                $search_filter['salary'] = $defaultSalary;
-                $search_filter['giro'] = $defaultGiro;
-                $search_filter['spend'] = $defaultSpend;
-                $search_filter['wealth'] = $defaultLoan;
-                $search_filter['loan'] = $defaultWealth;
-                $search_filter['filter'] = PLACEMENT;
-                $search_filter['sort_by'] = MAXIMUM;
+                $searchFilter['search_value'] = $defaultPlacement;
+                $searchFilter['salary'] = $defaultSalary;
+                $searchFilter['giro'] = $defaultGiro;
+                $searchFilter['spend'] = $defaultSpend;
+                $searchFilter['wealth'] = $defaultLoan;
+                $searchFilter['loan'] = $defaultWealth;
+                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
-                $search_filter = $request;
-                $searchValue = str_replace(',', '', $search_filter['search_value']);
-                $search_filter['search_value'] = $searchValue;
-                $salary = $search_filter['salary'] = isset($search_filter['salary']) ? (int)$search_filter['salary'] : $defaultSalary;
-                $giro = $search_filter['giro'] = isset($search_filter['giro']) ? (int)$search_filter['giro'] : $defaultGiro;
-                $spend = $search_filter['spend'] = isset($search_filter['spend']) ? (int)$search_filter['spend'] : $defaultSpend;
-                $loan = $search_filter['loan'] = isset($search_filter['loan']) ? (int)$search_filter['loan'] : $defaultLoan;
-                $wealth = $search_filter['wealth'] = isset($search_filter['wealth']) ? (int)$search_filter['wealth'] : $defaultWealth;
-                $search_filter['filter'] = $search_filter['filter'] ? $search_filter['filter'] : PLACEMENT;
+                $searchFilter = $request;
+                $searchValue = str_replace(',', '', $searchFilter['search_value']);
+                $searchFilter['search_value'] = $searchValue;
+                $salary = $searchFilter['salary'] = isset($searchFilter['salary']) ? (int)$searchFilter['salary'] : $defaultSalary;
+                $giro = $searchFilter['giro'] = isset($searchFilter['giro']) ? (int)$searchFilter['giro'] : $defaultGiro;
+                $spend = $searchFilter['spend'] = isset($searchFilter['spend']) ? (int)$searchFilter['spend'] : $defaultSpend;
+                $loan = $searchFilter['loan'] = isset($searchFilter['loan']) ? (int)$searchFilter['loan'] : $defaultLoan;
+                $wealth = $searchFilter['wealth'] = isset($searchFilter['wealth']) ? (int)$searchFilter['wealth'] : $defaultWealth;
+                $searchFilter['filter'] = $searchFilter['filter'] ? $searchFilter['filter'] : PLACEMENT;
+
             }
             $status = false;
             $productRanges = json_decode($product->product_range);
@@ -2692,8 +2695,8 @@ class PagesFrontController extends Controller
             }
         }
 
-        //dd($search_filter);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "search_filter", "legendtable", "ads_manage"));
+        //dd($products);
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage"));
     }
 
     public function combineCriteriaFilter(Request $request)
