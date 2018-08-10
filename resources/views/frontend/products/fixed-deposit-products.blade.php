@@ -242,17 +242,17 @@
             @endif
             @if(count($products))
 
-                @php $j = 1; @endphp
-                @foreach($products as $product)
+               <?php $j = 1; ?>
+                @foreach($products as $q=> $product)
                     <?php
                     $product_id = $product->promotion_product_id;
                     $tenures = $product->tenure;
                     $productRanges = $product->product_ranges;
-                    $ads = $product->ads_placement;
+                    $ads = $product->ads;
                     $interestEarns = $product->interest_earns;
                     $bonusInterests = $product->bonus_interests;
                     ?>
-                    @if(count($products)>4)
+                   {{-- @if(count($products)>4)
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==4)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -272,7 +272,7 @@
                                             alt=""></a>
                             </div>
                         @endif
-                    @endif
+                    @endif--}}
                     @if($page->slug==FIXED_DEPOSIT_MODE && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
@@ -320,7 +320,8 @@
                         </div>
                         <div class="ps-product__content">
                             <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                            @if(!empty($product->ads_placement))
+
+                            @if(isset($ads[0]))
                                 <?php
                                 if(!empty($ads[0]->ad_image_horizontal)) {
                                 ?>
@@ -377,7 +378,7 @@
                                     </table>
                                 </div>
                             </div>
-                            @if(!empty($product->ads_placement))
+                            @if(isset($ads[1]))
                                 <?php
                                 if(!empty($ads[1]->ad_image_vertical)) {
                                 ?>
@@ -406,7 +407,7 @@
                                 @endif
                             </div>
                             <div class="clearfix"></div>
-                            @if(!empty($product->ads_placement))
+                            @if(isset($ads[2]))
                                 <?php
                                 if (!empty($ads[2]->ad_horizontal_image_popup)) {
                                 ?>
@@ -430,7 +431,7 @@
                                             class="fa fa-angle-down"></i></a></div>
                         </div>
                     </div>
-                    @php $j++; @endphp
+                    <?php $j++; ?>
                 @endforeach
             @else
                 <div class="ps-block--legend-table">
@@ -449,7 +450,7 @@
                     $product_id = $product->promotion_product_id;
                     $tenures = $product->tenure;
                     $productRanges = $product->product_ranges;
-                    $ads = $product->ads_placement;
+                    $ads = $product->ads;
                     $interestEarns = $product->interest_earns;
                     $bonusInterests = $product->bonus_interests;
                     ?>
@@ -499,7 +500,7 @@
                         </div>
                         <div class="ps-product__content">
                             <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                            @if(!empty($product->ads_placement))
+                            @if(isset($ads[0]))
                                 <?php
                                 if(!empty($ads[0]->ad_image_horizontal)) {
                                 ?>
@@ -556,7 +557,7 @@
                                     </table>
                                 </div>
                             </div>
-                            @if(!empty($product->ads_placement))
+                            @if(isset($ads[1]))
                                 <?php
                                 if(!empty($ads[1]->ad_image_vertical)) {
                                 ?>
@@ -585,7 +586,7 @@
                                 @endif
                             </div>
                             <div class="clearfix"></div>
-                            @if(!empty($product->ads_placement))
+                            @if(isset($ads[2]))
                                 <?php
                                 if (!empty($ads[2]->ad_horizontal_image_popup)) {
                                 ?>

@@ -149,7 +149,7 @@
                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">
-                                                <input class="form-control only_numeric" type="text" placeholder=""
+                                                <input class="form-control only_numeric prefix_dollar" type="text" placeholder=""
                                                        name="search_value" id="search_value"
                                                        value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}"/>
                                             </div>
