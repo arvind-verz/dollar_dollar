@@ -52,6 +52,7 @@
                                         {{Form::label('icon', 'Icon',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             <input type="file" name="icon" class="form-control">
+                                            <p class="text-muted"><strong>Note:</strong> Icon size should be 40*25 for better display</p>
                                         </div>
                                     </div>
                                 </div>
