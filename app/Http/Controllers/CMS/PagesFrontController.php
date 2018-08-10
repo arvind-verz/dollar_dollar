@@ -424,16 +424,13 @@ class PagesFrontController extends Controller
                                 $interestEarn = ($amount * $bonusInterests[$tenureKey] * $tenure) / (100 * 12);
                                 $interestEarnedArray[$tenureKey] = round($interestEarn, 2);
                             }
-
                         }
-
                         $productRange->bonus_interest_highlight = $bonusInterestHighlight;
                         $productRange->interest_earns = $interestEarnedArray;
                     }
                     $ranges[] = $productRange;
 
                 }
-
                 $product->interest_earns = [];
                 $product->bonus_interests = [];
                 $resultInterestEarn = 0;
