@@ -1395,6 +1395,23 @@
             $(".ps-tab-list li").removeClass("current");
             $(this).addClass("current");
             var id = $(this).find("a").attr("href");
+            
+            var title = $(this).find("a").html();
+            if(title=='Fixed Deposit') {
+                $("div.view_all_types a").attr("href", "fixed-deposit-mode");
+            }
+            else if(title=='Saving Deposit') {
+                $("div.view_all_types a").attr("href", "saving-deposit-mode");
+            }
+            else if(title=='Wealth Deposit') {
+                $("div.view_all_types a").attr("href", "wealth-deposit-mode");
+            }
+            else if(title=='All In One Account') {
+                $("div.view_all_types a").attr("href", "all-in-one-deposit-mode");
+            }
+            else if(title=='Foreign Currency') {
+                $("div.view_all_types a").attr("href", "foreign-currency-deposit-mode");
+            }
             $("div"+id).find("ul.catListing li:first a").click();
         });
 

@@ -33,6 +33,7 @@ Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCall
 
 /*User Module*/
 Auth::routes();
+Route::get('registration_page/{redirect_url}', 'Auth\RegisterController@registration_page');
 
 // Password Reset Routes...
 
@@ -95,7 +96,7 @@ Route::group(array('prefix' => 'admin'), function () {
 
 
     /*Banner Module Start*/
-    Route::get('/banners/destroy/{id}', 'Banner\BannerController@destroy')->name('banner-destroy');
+    Route::get('/banners/destroy/{id}/{type}', 'Banner\BannerController@destroy')->name('banner-destroy');
     Route::get('/banner/{type}', 'Banner\BannerController@index')->name('banner.index');
     Route::get('/banner-edit/{id}/{type}', 'Banner\BannerController@edit')->name('banner.edit');
     Route::put('/banner-update/{id}/{type}', 'Banner\BannerController@update')->name('banner.update');

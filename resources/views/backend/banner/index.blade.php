@@ -105,7 +105,7 @@
                                                             @if($CheckLayoutPermission[0]->delete==1)
                                                                     <a class="btn btn-app delete" title="Delete Banner"
                                                                        onclick="return confirm('Are you sure to delete this?')"
-                                                                       href="{{ route("banner-destroy",["id"=>$banner->id]) }}">
+                                                                       href="{{ route("banner-destroy",["id"=>$banner->id, 'type'=>$type]) }}">
                                                                         <i class="fa fa-trash"></i> Delete
                                                                     </a>
                                                             @endif

@@ -105,7 +105,7 @@
                             <div class="ps-checkbox ps-checkbox--inline">
                                 <input class="form-control" type="checkbox" id="remember" name="remember" />
                                 <label for="remember">Remember Me</label>
-                            </div><a href="{{ route('password.request') }}">Forgot password</a>
+                            </div><a href="{{ route('password.request') }}" target="_blank">Forgot password</a>
                         </div>
                        <div class="form-group recaptcha">{!! app('captcha')->display($attributes = [],
                                                    $lang = []) !!}
@@ -120,7 +120,7 @@
                                 <div class="col-xs-6">
                                     <button type="submit" class="ps-btn">Login</button>
                                 </div>
-                                <div class="col-xs-6"><a class="ps-btn ps-btn--outline" href="{{ url('registration') }}">Signup</a></div>
+                                <div class="col-xs-6"><a class="ps-btn ps-btn--outline" href="@if(!empty($redirect_url)) {{ url('registration_page', ['redirect_url' => $redirect_url]) }} @else {{ url('registration') }} @endif">Signup</a></div>
                             </div><a class="ps-btn ps-btn--blue" href="{{ url('login/facebook') }}">Connect with Facebook</a>
                         </div>
                     </div>

@@ -164,9 +164,44 @@ class RegisterController extends Controller
             $registration->adviser     =   $adviser;
             $registration->save();
 
-
-            return redirect(url(REGISTRATION))->with('success','Data ' . ADDED_ALERT);
+            $redirect_url = $request->redirect_url;
+            if(empty($redirect_url)) {
+                $redirect_url = REGISTRATION;
+            }
+            if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+        
+                // if successful, then redirect to their intended location
+                return redirect(url($redirect_url))->with('success','Data ' . ADDED_ALERT);
+              }
+            return redirect(url($redirect_url))->with('success','Data ' . ADDED_ALERT);
         }
         //$registration = new User();
+    }
+
+    public function registration_page($redirect_url=NULL) {
+        $slug = REGISTRATION;
+        $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
+            ->where('pages.slug', $slug)
+            ->where('pages.delete_status', 0)
+            ->where('pages.status', 1)
+            ->select('pages.*', 'menus.title as menu_title', 'menus.id as menu_id')
+            ->first();
+//dd(DB::getQueryLog());
+        //dd($page,$slug);
+        if (!$page) {
+            return redirect(url('/'))->with('error', "Opps! page not found");
+        } else {
+            $systemSetting = \Helper::getSystemSetting();
+            if (!$systemSetting) {
+                return back()->with('error', OPPS_ALERT);
+            }
+            
+//get banners
+            $banners = \Helper::getBanners($slug);
+
+//get slug
+            $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+        return view('frontend.CMS.registration', compact("redirect_url", "brands", "page", "systemSetting", "banners"));
+        }
     }
 }

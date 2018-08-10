@@ -68,6 +68,7 @@
             {!! Form::open(['route' => ['registration-add'], 'class'=>'ps-form--contact ps-form--register', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 ">
+                    <input type="hidden" name="redirect_url" value="{{ isset($redirect_url) ? $redirect_url : '/home' }}">
                     <div class="ps-form__content">
                         <div class="form-group">
                             <label>Salutation</label>
@@ -101,14 +102,14 @@
                             <label>Confirm Password</label>
                             <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password Here">
                         </div>
-                        <div class="checkbox">
+                        <!-- <div class="checkbox">
                             <label><input type="checkbox" name="notification"> Do you like to receive product notifications?</label>
+                        </div> -->
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="email_notification" checked="checked"> Subscribe to our weekly newsletter</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" name="email_notification"> Would you like to receive email notification for newsletter?</label>
-                        </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox" name="adviser"> Allow a financial adviser to contact you?</label>
+                            <label><input type="checkbox" name="adviser" checked="checked"> I would like to be informed of products, services, offers provided by dollardollar.sg and it’s business partners. I have consent to have marketing information sent to me via the various communication (SMS, voice call and emails).</label>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="ps-btn">Submit</button>

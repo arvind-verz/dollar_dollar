@@ -1899,7 +1899,7 @@ button {
 }
 
 .ps-block--legend-table {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .ps-block--legend-table .ps-block__header {
@@ -5533,4 +5533,9 @@ span.ps-post__meta a {
 }
 .ps-checkbox.ps-checkbox--inline label:after{
  border-color: #3db54a;
+}
+
+.ps-home--links .container{
+ width: 100%;
+ text-align: center;
 }

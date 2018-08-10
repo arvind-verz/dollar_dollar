@@ -66,7 +66,7 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 40*25 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Icon size should be 40*25 for better display</div>
                                     </div>
 
                                 </div>

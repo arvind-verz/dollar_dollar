@@ -358,7 +358,7 @@ class BannerController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $type=NULL)
     {
         $Banner = Banner::where('id', $id)->first();
         if (!$Banner) {
@@ -378,9 +378,12 @@ class BannerController extends Controller
                 'new' => null
             ])
             ->log(DELETE);
-
-        return redirect(route('banner.index'))->with('success', strip_tags($Banner->title) . ' ' . DELETED_ALERT);
-
+        if($type=='inner-page') {
+            return $this->bannerInner()->with('success', strip_tags($Banner->title) . ' ' . DELETED_ALERT);
+        }
+        else {
+            return $this->bannerHome()->with('success', strip_tags($Banner->title) . ' ' . DELETED_ALERT);
+        }
     }
 
     public function bannerHome($type='home-page') {

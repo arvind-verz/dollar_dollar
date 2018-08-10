@@ -38,10 +38,19 @@
                                             style="width: 100%;">
                                         <option value="null">Select Page</option>
                                         @if($pages->count())
-                                            @foreach ($pages as $page)
-                                                <option value="{{ $page->id }}"
-                                                         @if($page->id == old('page')) selected="selected" @endif>{{ $page->name }}</option>
-                                            @endforeach
+                                            @if($type=='home-page')
+                                                @foreach ($pages as $page)
+                                                    @if($page->slug=='home')
+                                                    <option value="{{ $page->id }}"
+                                                             @if($page->id == old('page')) selected="selected" @endif>{{ $page->name }}</option>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                @foreach ($pages as $page)
+                                                    <option value="{{ $page->id }}"
+                                                             @if($page->id == old('page')) selected="selected" @endif>{{ $page->name }}</option>
+                                                @endforeach
+                                            @endif
                                         @endif
                                     </select>
                                 </div>
