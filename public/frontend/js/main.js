@@ -255,13 +255,13 @@ function addCommas(nStr)
 
     return x1 + x2;
 }
-$( ".submit-search" ).on( "click", function() {
-    document.getElementById('search-form').submit();
-});
+
 $(".search_type").on("click", function () {
+
     $(".search_type").removeClass("active");
     $("input[name='filter']").prop("checked", false);
     $(this).addClass("active").find("input[name='filter']").prop("checked", true);
+    document.getElementById('search-form').submit();
 
 });
 

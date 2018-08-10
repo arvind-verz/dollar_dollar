@@ -2,7 +2,7 @@
 @section('title', $page->title)
 @section('content')
     <?php
-    $search_filter = isset($search_filter) ? $search_filter : "";
+    $searchFilter = isset($searchFilter) ? $searchFilter : "";
     $slug = CONTACT_SLUG;
     //get banners
     $banners = Helper::getBanners($slug);
@@ -78,7 +78,7 @@
                                 <div class="form-group__content">
                                     <label>Salary</label>
                                     <input class="form-control" type="text" placeholder="" name="salary" id="salary"
-                                           value="{{ isset($search_filter['salary']) ? $search_filter['salary'] : '' }}">
+                                           value="{{ isset($searchFilter['salary']) ? $searchFilter['salary'] : '' }}">
                                 </div>
                                 <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
                                             class="fa fa-exclamation-circle"></i></a>
@@ -87,7 +87,7 @@
                                 <div class="form-group__content">
                                     <label>Payment</label>
                                     <input class="form-control" type="text" placeholder="" name="giro" id="giro"
-                                           value="{{ isset($search_filter['giro']) ? $search_filter['giro'] : '' }}">
+                                           value="{{ isset($searchFilter['giro']) ? $searchFilter['giro'] : '' }}">
                                 </div>
                                 <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
                                             class="fa fa-exclamation-circle"></i></a>
@@ -96,7 +96,7 @@
                                 <div class="form-group__content">
                                     <label>Spending</label>
                                     <input class="form-control" type="text" placeholder="" name="spend" id='spend'
-                                           value="{{ isset($search_filter['spend']) ? $search_filter['spend'] : '' }}">
+                                           value="{{ isset($searchFilter['spend']) ? $searchFilter['spend'] : '' }}">
                                 </div>
                                 <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
                                             class="fa fa-exclamation-circle"></i></a>
@@ -105,7 +105,7 @@
                                 <div class="form-group__content">
                                     <label>Wealth</label>
                                     <input class="form-control" type="text" placeholder="" name="wealth" id='wealth'
-                                           value="{{ isset($search_filter['wealth']) ? $search_filter['wealth'] : '' }}">
+                                           value="{{ isset($searchFilter['wealth']) ? $searchFilter['wealth'] : '' }}">
                                 </div>
                                 <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
                                             class="fa fa-exclamation-circle"></i></a>
@@ -114,7 +114,7 @@
                                 <div class="form-group__content">
                                     <label>Loan</label>
                                     <input class="form-control" type="text" placeholder="" name="loan" id="loan"
-                                           value="{{ isset($search_filter['loan']) ? $search_filter['loan'] : '' }}">
+                                           value="{{ isset($searchFilter['loan']) ? $searchFilter['loan'] : '' }}">
                                 </div>
                                 <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
                                             class="fa fa-exclamation-circle"></i></a>
@@ -137,10 +137,10 @@
                                                @elseif(empty($searchFilter)) checked @endif>Placement
                                     </button>
                                     <button type="button"
-                                            class="ps-btn submit-search filter search_type @if(isset($search_filter['filter']) && $search_filter['filter']=='Criteria') active @endif">
+                                            class="ps-btn submit-search filter search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Criteria') active @endif">
                                         <input type="radio" name="filter" value="Criteria"
                                                style="opacity: 0;position: absolute;"
-                                               @if(isset($search_filter['filter']) && $search_filter['filter']=='Criteria') checked @endif>Criteria
+                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Criteria') checked @endif>Criteria
                                     </button>
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                                             <div class="form-group__content">
                                                 <input class="form-control only_numeric" type="text" placeholder=""
                                                        name="search_value" id="search_value"
-                                                       value="{{ isset($search_filter['search_value']) ? $search_filter['search_value'] : '' }}"/>
+                                                       value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}"/>
                                             </div>
 
                                             <button type="submit">Go</button>
@@ -161,11 +161,11 @@
                                         <select class="form-control" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
-                                                    @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==1) selected @endif>
+                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
                                                 Ascending
                                             </option>
                                             <option value="2"
-                                                    @if(isset($search_filter['sort_by']) && $search_filter['sort_by']==2) selected @endif>
+                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
                                                 Descending
                                             </option>
                                         </select>
