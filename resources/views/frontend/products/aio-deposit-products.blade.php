@@ -284,7 +284,7 @@
                     $ads = $product->ads_placement;
                     ?>
                     @if(count($products)>4)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==4)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==4)
                             <div class="ps-poster-popup">
 
                                 <!-- <div class="close-popup">
@@ -294,7 +294,7 @@
                             </div>
                         @endif
                     @else
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==1)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==1)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
