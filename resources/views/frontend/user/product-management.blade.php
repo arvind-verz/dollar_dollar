@@ -79,7 +79,7 @@
                                         <div class="form-group">
                                             <label>Amount <sup>*</sup></label>
                                             <input class="form-control prefix_dollar" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ (old('amount')) ? old('amount') : '0.000' }}">
-                                            <span class="suffix_k">K</span>
+                                            <!-- <span class="suffix_k">K</span> -->
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
@@ -165,7 +165,7 @@
                                                 <td>{{ $value->tenure }}</td>
                                                 <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
                                                 <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
-                                                <td>{{ $value->interest_earned.'%' }}</td>
+                                                <td>{{ isset($value->interest_earned) ? $value->interest_earned.'%' : '-' }}</td>
                                                 <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
                                                 <td>
                                                     <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
