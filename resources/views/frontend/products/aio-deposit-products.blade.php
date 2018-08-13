@@ -378,10 +378,10 @@
                                                         than {{ Helper::inThousand($range->bonus_amount) }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">Total Bonus Interest Earned for
+                                                    <td colspan="1">Total Bonus Interest Earned for
                                                         ${{Helper::inThousand($range->placement)}}</td>
                                                     <td class="text-center @if($product->highlight==true ) highlight @endif"
-                                                        colspan="4">
+                                                        colspan="5">
                                                         @if($range->placement > $range->first_cap_amount)
                                                             First
                                                             ${{ Helper::inThousand($range->first_cap_amount) }} -
@@ -685,31 +685,31 @@
                                                         <tbody>
                                                         @foreach($productRanges as $range)
                                                             <tr>
-                                                                <td>Bonus Interest PA</td>
+                                                                <td colspan="4">Bonus Interest PA</td>
                                                                 <td class="text-center @if($product->criteria_1==true ) highlight @endif"
-                                                                    colspan="3">1 Criteria Met
+                                                                    colspan="2">1 Criteria Met
                                                                     - @if($range->bonus_interest_criteria1<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria1 }}
                                                                         % @endif
                                                                 </td>
                                                                 <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
-                                                                    colspan="3">2 Criteria
+                                                                    colspan="2">2 Criteria
                                                                     - @if($range->bonus_interest_criteria2<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria2 }}
                                                                         % @endif
                                                                 </td>
                                                                 <td class="text-center @if($product->criteria_3==true ) highlight @endif"
-                                                                    colspan="3">3
+                                                                    colspan="2">3
                                                                     Criteria @if($range->bonus_interest_criteria3<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria3 }}
                                                                         % @endif
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="2">Total Bonus Interest Earned for
+                                                                <td colspan="4">Total Bonus Interest Earned for
                                                                     ${{ Helper::inThousand($range->placement) }}</td>
                                                                 <td class=" text-center @if($product->highlight==true ) highlight @endif"
-                                                                    colspan="8">
+                                                                    colspan="6">
 
                                                                     @if($range->placement > $range->first_cap_amount)
                                                                         First
