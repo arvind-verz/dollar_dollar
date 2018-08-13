@@ -517,6 +517,7 @@
                                                     Total interest rate @if(($product->total_interest)<=0)
                                                         - @else {{ $product->total_interest }}% @endif
                                                 </span>
+                                                        <span>Based the Effective interest Rate</span>
                                                     </h2>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -598,6 +599,7 @@
                                                     Total interest rate @if(($product->total_interest)<=0)
                                                         - @else ${{ $product->total_interest }}% @endif
                                                 </span>
+                                                                <span>Based the Effective interest Rate</span>
                                                             </h2>
                                                         </div>
                                                         <div class="clearfix"></div>
@@ -690,6 +692,7 @@
                                                     Total interest rate @if($product->total_interest <=0)
                                                         - @else {{ $product->total_interest }}% @endif
                                                 </span>
+                                                                        <span>Based the Effective interest Rate</span>
                                                                     </h2>
                                                                 </div>
                                                                 <div class="clearfix"></div>
