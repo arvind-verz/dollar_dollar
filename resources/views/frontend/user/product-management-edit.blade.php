@@ -41,7 +41,7 @@
                         </ul>
                        @if(count($ads))
                         <div class="pt-2">
-                            <a href="{{ isset($ads->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                            <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
                         </div>
                         @endif
                     </div>
@@ -79,7 +79,7 @@
                                         <div class="form-group">
                                             <label>Amount <sup>*</sup></label>
                                             <input class="form-control" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ $product_management->amount }}">
-                                            <span class="suffix_k">K</span>
+                                            <!-- <span class="suffix_k">K</span> -->
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
