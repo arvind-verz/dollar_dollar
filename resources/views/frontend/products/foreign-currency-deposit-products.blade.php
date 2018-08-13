@@ -132,7 +132,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
                                         <select class="form-control" name="currency">
-                                            <option value="">Currency</option>
+                                            <option value="">All</option>
                                             @if(count($currencies))
                                                 @foreach($currencies as $currency)
                                                     <option value="{{$currency->id}}"
@@ -173,10 +173,11 @@
                                 <div class="ps-slider--feature-product saving">
                                     <div class="ps-block--short-product second highlight" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong></h4>
+                                        <h4>up to <strong> {{ $product->upto_interest_rate  }}%</strong>
+                                        </h4>
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                            <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
                                             <p>
                                                 <strong>Min:</strong> {{$product->currency_code}}
@@ -216,10 +217,11 @@
                                 @if($product->featured==0)
                                     <div class="ps-block--short-product second" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong></h4>
+                                        <h4>up to <strong> {{ $product->upto_interest_rate  }}%</strong>
+                                        </h4>
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                            <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
                                             <p>
                                                 <strong>Min:</strong> {{$product->currency_code}}
@@ -427,8 +429,7 @@
                                                             for {{$product->currency_code}}
                                                             ${{ Helper::inThousand($product->placement) }}</h4>
                                                     @endif
-                                                    <p><strong>{{ $value . ' ' . $type }}</strong>-
-                                                        ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
+                                                    <p><strong>{{ $value . ' ' . $type }}</strong> - {{$product->currency_code}} ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
                                                         ({{ $bonusInterests[$tenureKey] . '%' }})</p>
                                                 @endforeach
 
@@ -510,7 +511,7 @@
 
                                                     <h2> @if(($product->total_interest_earn)<=0)
                                                             - @else
-                                                            ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                            {{$product->currency_code}} ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                         <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
@@ -591,7 +592,7 @@
 
                                                             <h2>@if(($product->total_interest_earn)<=0)
                                                                     - @else
-                                                                    ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                    {{$product->currency_code}} ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                 <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
@@ -683,7 +684,7 @@
 
                                                                     <h2>@if($product->total_interest_earn <=0)
                                                                             - @else
-                                                                            ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                            {{$product->currency_code}} ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                         <br>
                                                 <span>
                                                     Total interest rate @if($product->total_interest <=0)
@@ -777,7 +778,7 @@
 
                                                                             <h2>@if($product->total_interest_earn <=0 )
                                                                                     - @else
-                                                                                    ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                                    {{$product->currency_code}} ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
                                                                                 {{-- <span>
                                                                                     Total interest rate {{ $product->total_interest }}%
@@ -848,7 +849,7 @@
                                                                                                         <td colspan="{{count($product->months)}}"></td>
                                                                                                         <td>@if($product->total_interest_earn <=0 )
                                                                                                                 - @else
-                                                                                                                ${{$product->total_interest_earn }} @endif
+                                                                                                                {{$product->currency_code}} ${{$product->total_interest_earn }} @endif
                                                                                                             {{-- <br/>
                                                                                                              <span>
                                                                                                                  Total interest rate {{ $product->total_interest }}%
@@ -1051,8 +1052,8 @@
                                                             for {{$product->currency_code}}
                                                             ${{ Helper::inThousand($product->placement) }}</h4>
                                                     @endif
-                                                    <p><strong>{{ $value . ' ' . $type }}</strong>-
-                                                        ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
+                                                    <p><strong>{{ $value . ' ' . $type }}</strong> -
+                                                        {{$product->currency_code}} ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
                                                         ({{ $bonusInterests[$tenureKey] . '%' }})</p>
                                                 @endforeach
 
@@ -1134,7 +1135,7 @@
 
                                                     <h2> @if(($product->total_interest_earn)<=0)
                                                             - @else
-                                                            ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                            {{$product->currency_code}} ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                         <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
@@ -1215,7 +1216,7 @@
 
                                                             <h2>@if(($product->total_interest_earn)<=0)
                                                                     - @else
-                                                                    ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                    {{$product->currency_code}} ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                 <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
@@ -1307,7 +1308,7 @@
 
                                                                     <h2>@if($product->total_interest_earn <=0)
                                                                             - @else
-                                                                            ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                            {{$product->currency_code}} ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                         <br>
                                                 <span>
                                                     Total interest rate @if($product->total_interest <=0)
@@ -1401,7 +1402,7 @@
 
                                                                             <h2>@if($product->total_interest_earn <=0 )
                                                                                     - @else
-                                                                                    ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                                    {{$product->currency_code}} ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
                                                                                 {{-- <span>
                                                                                     Total interest rate {{ $product->total_interest }}%
@@ -1472,7 +1473,7 @@
                                                                                                         <td colspan="{{count($product->months)}}"></td>
                                                                                                         <td>@if($product->total_interest_earn <=0 )
                                                                                                                 - @else
-                                                                                                                ${{$product->total_interest_earn }} @endif
+                                                                                                                {{$product->currency_code}} ${{$product->total_interest_earn }} @endif
                                                                                                             {{-- <br/>
                                                                                                              <span>
                                                                                                                  Total interest rate {{ $product->total_interest }}%

@@ -123,30 +123,24 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="ps-form__option">
-                                    <button type="button"
+                                    <button type="button" style="width: calc((100% / 2) - 10px) !important;"
                                             class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Interest') active @endif">
                                         <input type="radio" name="filter" value="Interest"
                                                style="opacity: 0;position: absolute;"
                                                @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Interest') checked @endif>Interest
                                     </button>
-                                    <button type="button"
+                                    <button type="button" style="width: calc((100% / 2) - 10px) !important;"
                                             class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement') active @elseif(empty($searchFilter)) active @endif">
                                         <input type="radio" name="filter" value="Placement"
                                                style="opacity: 0;position: absolute;"
                                                @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement') checked
                                                @elseif(empty($searchFilter)) checked @endif>Placement
                                     </button>
-                                    <button type="button"
-                                            class="ps-btn submit-search filter search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Criteria') active @endif">
-                                        <input type="radio" name="filter" value="Criteria"
-                                               style="opacity: 0;position: absolute;"
-                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Criteria') checked @endif>Criteria
-                                    </button>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 ">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">
                                                 <input class="form-control only_numeric prefix_dollar" type="text" placeholder=""
@@ -157,7 +151,7 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                                    <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
                                         <select class="form-control" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
@@ -188,11 +182,11 @@
                                 <div class="ps-slider--feature-product saving">
                                     <div class="ps-block--short-product second highlight" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                        <h4>up to <strong> {{ $product->upto_interest_rate  }}%</strong>
                                         </h4>
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                            <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
                                             <p><strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
@@ -231,11 +225,11 @@
                                 @if($product->featured==0)
                                     <div class="ps-block--short-product second" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                        <h4>up to <strong> {{ $product->upto_interest_rate  }}%</strong>
                                         </h4>
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                            <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
                                             <p><strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}

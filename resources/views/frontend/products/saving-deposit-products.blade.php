@@ -161,11 +161,11 @@
                                 <div class="ps-slider--feature-product saving">
                                     <div class="ps-block--short-product second highlight" data-mh="product"><img
                                                 src="{{ asset($promotion_product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong>
+                                        <h4>up to <strong> {{ $promotion_product->upto_interest_rate  }}%</strong>
                                         </h4>
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                            <p><strong> rate: </strong>{{ $promotion_product->maximum_interest_rate }}%</p>
 
                                             <p><strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}
@@ -205,11 +205,11 @@
                                     <div class="ps-block--short-product second" data-mh="product"><img
                                                 src="{{ asset($promotion_product->brand_logo) }}"
                                                 style="width: 180px !important;" alt="">
-                                        <h4>up to <strong> {{ $promotion_product->maximum_interest_rate }}%</strong>
+                                        <h4>up to <strong> {{ $promotion_product->upto_interest_rate  }}%</strong>
                                         </h4>
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
+                                            <p><strong> rate: </strong>{{ $promotion_product->maximum_interest_rate }}%</p>
 
                                             <p><strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}
