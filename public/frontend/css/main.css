@@ -5455,9 +5455,10 @@ span.ps-post__meta a {
     display: inline-block;
 }
 .ps-main .ps-dashboard .ps-block__content p input[type="checkbox"]{
-   float: right;
-   width: 40px;
-   height: 40px;
+   float: left;
+   margin-right: 5px;
+   width: initial;
+   height: initial;
 }
 
 .owl-slider.nav-outside .owl-nav{z-index: 999;}
@@ -5539,3 +5540,5 @@ span.ps-post__meta a {
  width: 100%;
  text-align: center;
 }
+
+.hasDatepicker {position: relative; z-index:100;}
