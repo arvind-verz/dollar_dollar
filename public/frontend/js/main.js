@@ -239,7 +239,7 @@ $(document).ready(function() {
     })
     $(".only_numeric").numeric();
     $("input[name='search_value']").each(function(c, obj){
-        $(obj).val(addCommas(parseFloat($(obj).val()).toFixed(2))).val();
+        $(obj).val(addCommas(parseFloat($(obj).val()).toFixed(0))).val();
     });
 });
 function addCommas(nStr)
@@ -253,7 +253,7 @@ function addCommas(nStr)
         x1 = x1.replace(rgx, '$1' + ',' + '$2');
     }
 
-    return x1 + x2;
+    return x1 /*+ x2*/;
 }
 
 $(".search_type").on("click", function () {

@@ -151,6 +151,7 @@ class ProductsController extends Controller
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
         $product->maximum_interest_rate = $request->maximum_interest_rate;
+        $product->upto_interest_rate = $request->upto_interest_rate;
         $product->minimum_placement_amount = $request->minimum_placement_amount;
         $ranges = [];
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
@@ -489,6 +490,7 @@ class ProductsController extends Controller
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
         $product->maximum_interest_rate = $request->maximum_interest_rate;
+        $product->upto_interest_rate = $request->upto_interest_rate;
         $product->minimum_placement_amount = $request->minimum_placement_amount;
         $ranges = [];
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {

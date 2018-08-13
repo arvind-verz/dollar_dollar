@@ -467,6 +467,7 @@
                     var productType = $.trim($('#product-type').val());
                     var currency = $.trim($('#currency').val());
                     var maxInterestRate = $.trim($('#maximum-interest-rate').val());
+                    var uptoInterestRate = $.trim($('#upto-interest-rate').val());
                     var promotionPeriod = $.trim($('#promotion-period').val());
                     var startDate = $.trim($('#promotion_start_date').val());
                     var endDate = $.trim($('#promotion_end_date').val());
@@ -511,6 +512,10 @@
 
                     if (!minPlacementAmount) {
                         errors[i] = 'The minimum placement is required.';
+                        i++;
+                    }
+                    if (!uptoInterestRate) {
+                        errors[i] = 'The upto interest rate is required.';
                         i++;
                     }
                     if (!maxInterestRate) {
