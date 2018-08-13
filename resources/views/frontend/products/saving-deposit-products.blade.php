@@ -165,7 +165,8 @@
                                         </h4>
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>{{ $promotion_product->maximum_interest_rate }}%</p>
+                                            <p><strong> rate: </strong>{{ $promotion_product->maximum_interest_rate }}%
+                                            </p>
 
                                             <p><strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}
@@ -209,7 +210,8 @@
                                         </h4>
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>{{ $promotion_product->maximum_interest_rate }}%</p>
+                                            <p><strong> rate: </strong>{{ $promotion_product->maximum_interest_rate }}%
+                                            </p>
 
                                             <p><strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($promotion_product->minimum_placement_amount) }}
@@ -252,14 +254,16 @@
                     $ads = $product->ads;
                     //dd($product);
                     ?>
-                       {{-- {{$product->total_interest}} {{$product->total_interest_earn}} {{$product->max_tenure}}--}}
+                    {{-- {{$product->total_interest}} {{$product->total_interest_earn}} {{$product->max_tenure}}--}}
                     @if(count($products)>4)
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==4)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
@@ -269,7 +273,9 @@
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
@@ -387,6 +393,7 @@
                                                     Total interest rate @if(($product->total_interest)<=0)
                                                         - @else {{ $product->total_interest }}% @endif
                                                 </span>
+                                                    <span>Based the Effective interest Rate</span>
                                             </h2>
                                         </div>
                                         <div class="clearfix"></div>
@@ -465,6 +472,7 @@
                                                     Total interest rate @if(($product->total_interest)<=0)
                                                         - @else ${{ $product->total_interest }}% @endif
                                                 </span>
+                                                        <span>Based the Effective interest Rate</span>
                                                     </h2>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -557,6 +565,8 @@
                                                     Total interest rate @if($product->total_interest <=0)
                                                         - @else {{ $product->total_interest }}% @endif
                                                 </span>
+                                                                <span>Based the Effective interest Rate</span>
+
                                                             </h2>
                                                         </div>
                                                         <div class="clearfix"></div>
@@ -652,6 +662,8 @@
                                                                         {{-- <span>
                                                                             Total interest rate {{ $product->total_interest }}%
                                                                         </span>--}}
+                                                                        {{--<span>Based the Effective interest Rate</span>--}}
+
                                                                     </h2>
                                                                 </div>
                                                                 <div class="clearfix"></div>
@@ -719,6 +731,8 @@
                                                                                                      <span>
                                                                                                          Total interest rate {{ $product->total_interest }}%
                                                                                                      </span>--}}
+                                                                                                    {{--<span>Based the Effective interest Rate</span>--}}
+
                                                                                                 </td>
                                                                                             @endif
                                                                                         </tr>
@@ -893,6 +907,7 @@
                                                     Total interest rate @if(($product->total_interest)<=0)
                                                         - @else {{ $product->total_interest }}% @endif
                                                 </span>
+                                                <span>Based the Effective interest Rate</span>
                                             </h2>
                                         </div>
                                         <div class="clearfix"></div>
@@ -971,6 +986,7 @@
                                                     Total interest rate @if(($product->total_interest)<=0)
                                                         - @else ${{ $product->total_interest }}% @endif
                                                 </span>
+                                                        <span>Based the Effective interest Rate</span>
                                                     </h2>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -1063,6 +1079,8 @@
                                                     Total interest rate @if($product->total_interest <=0)
                                                         - @else {{ $product->total_interest }}% @endif
                                                 </span>
+                                                                <span>Based the Effective interest Rate</span>
+
                                                             </h2>
                                                         </div>
                                                         <div class="clearfix"></div>
@@ -1158,6 +1176,8 @@
                                                                         {{-- <span>
                                                                             Total interest rate {{ $product->total_interest }}%
                                                                         </span>--}}
+                                                                        {{--<span>Based the Effective interest Rate</span>--}}
+
                                                                     </h2>
                                                                 </div>
                                                                 <div class="clearfix"></div>
@@ -1225,6 +1245,8 @@
                                                                                                      <span>
                                                                                                          Total interest rate {{ $product->total_interest }}%
                                                                                                      </span>--}}
+                                                                                                    {{--<span>Based the Effective interest Rate</span>--}}
+
                                                                                                 </td>
                                                                                             @endif
                                                                                         </tr>
