@@ -9,6 +9,7 @@ use App\ProductManagement;
 use App\Page;
 use App\Brand;
 use Auth;
+use App\AdsManagement;
 
 class ProductManagementController extends Controller
 {
@@ -77,7 +78,7 @@ class ProductManagementController extends Controller
             $product_management->interest_earned = $request->interest_earned;
             $product_management->save();
         }
-        return redirect('profile-dashboard')->with('success', 'Data ' . ADDED_ALERT);
+        return back()->with('success', 'Data ' . ADDED_ALERT);
     }
 
     /**
@@ -99,6 +100,12 @@ class ProductManagementController extends Controller
      */
     public function edit($id)
     {
+        $ads = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'account')
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
         $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
             ->where('pages.slug', 'product-management')
             ->where('pages.delete_status', 0)
@@ -111,7 +118,7 @@ class ProductManagementController extends Controller
         $product_management = ProductManagement::find($id);
         //dd($product_management);
 
-        return view('frontend.user.product-management-edit', compact("product_management", "page", "brands"));
+        return view('frontend.user.product-management-edit', compact("product_management", "page", "brands", "ads"));
     }
 
     /**
@@ -159,7 +166,7 @@ class ProductManagementController extends Controller
             $product_management->interest_earned = $request->interest_earned;
             $product_management->save();
         }
-        return redirect('profile-dashboard')->with('success', 'Data ' . UPDATED_ALERT);
+        return back()->with('success', 'Data ' . UPDATED_ALERT);
     }
 
     /**
@@ -173,6 +180,6 @@ class ProductManagementController extends Controller
         //dd($id);
         $product_management = ProductManagement::find($id);
         $product_management->delete();
-        return redirect('profile-dashboard')->with('success', 'Data ' . DELETED_ALERT);
+        return back()->with('success', 'Data ' . DELETED_ALERT);
     }
 }

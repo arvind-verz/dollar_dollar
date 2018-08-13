@@ -337,7 +337,7 @@
                                         <thead>
                                         <tr>
                                             <th>Type</th>
-                                            <th>Account</th>
+                                            <th>Placement</th>
                                             @foreach($tenures as  $tenure)
                                                 <?php
                                                 $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
