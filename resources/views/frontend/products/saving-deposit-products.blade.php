@@ -255,7 +255,7 @@
                     //dd($product);
                     ?>
                     {{-- {{$product->total_interest}} {{$product->total_interest_earn}} {{$product->max_tenure}}--}}
-                    @if(count($products)>4)
+                    @if(count($products)>=4)
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==4)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">

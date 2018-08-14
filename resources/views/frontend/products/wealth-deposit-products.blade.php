@@ -245,9 +245,9 @@
                 @foreach($products as $product)
                     <?php
                     $ads = $product->ads;
-                    //dd($ads);
+                    //dd($products);
                     ?>
-                    @if(count($products)>4)
+                    @if(count($products)>=4)
                         @if(count($ads_manage) && $ads_manage[0]->page_type==WEALTH_DEPOSIT_MODE && $j==4)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
