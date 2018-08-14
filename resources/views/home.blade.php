@@ -1899,12 +1899,12 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                     <div class="ps-section__right">
                         <div class="ps-fanpage">
-                            <div class="fb-page" data-href="https://www.facebook.com/VerzDesignSingapore/"
+                            <div class="fb-page" data-href="https://www.facebook.com/dollardollar.sg/"
                                  data-tabs="timeline" data-width="500" data-height="280" data-small-header="false"
                                  data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                                <blockquote cite="https://www.facebook.com/VerzDesignSingapore/"
+                                <blockquote cite="https://www.facebook.com/dollardollar.sg/"
                                             class="fb-xfbml-parse-ignore"><a
-                                            href="https://www.facebook.com/VerzDesignSingapore/">Verz Design</a>
+                                            href="https://www.facebook.com/dollardollar.sg/">DollarDollar</a>
                                 </blockquote>
                             </div>
                         </div>
