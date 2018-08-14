@@ -97,7 +97,7 @@
                                                     <th>Account
                                                         <br> Name</th>
                                                     <th>Amount</th>
-                                                    <th>tenure
+                                                    <th>Tenure
                                                         <br> (M= months,
                                                         <br> D = Days)</th>
                                                     <th>Start Date</th>
@@ -129,6 +129,64 @@
                                                             <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>
                                                         </td>
                                                     </tr>
+                                                    @endforeach
+                                                @else
+                                                <tr>
+                                                    <td class="text-center" colspan="9">No data found.</td>
+                                                </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ps-block--box no-border">
+                                <div class="ps-block__header">
+                                    <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><!-- <a href="#">View all</a> -->
+                                </div>
+                                <div class="ps-block__content">
+                                    <div class="ps-table-wrap">
+                                        <table class="ps-table ps-table--product-managerment" id="datatable1">
+                                            <thead>
+                                                <tr>
+                                                    <th>Bank</th>
+                                                    <th>Account
+                                                        <br> Name</th>
+                                                    <th>Amount</th>
+                                                    <th>Tenure
+                                                        <br> (M= months,
+                                                        <br> D = Days)</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Interest Earned</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                        @if(count($user_products))
+                                                    @foreach($user_products as $value)
+                                                        @php
+                                                            $curr_date = date("Y-m-d", strtotime('now'));
+                                                            $start_date = date("Y-m-d", strtotime($value->start_date));
+                                                            $end_date = date("Y-m-d", strtotime($value->end_date));
+                                                        @endphp
+                                                        @if(strtotime('now')>=strtotime('-2 week', strtotime($value->end_date)))
+                                                    <tr>
+                                                        <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
+                                                        <td>{{ $value->account_name }}</td>
+                                                        <td>{{ $value->amount }}</td>
+                                                        <td>{{ $value->tenure }}</td>
+                                                        <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
+                                                        <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
+                                                        <td>{{ isset($value->interest_earned) ? $value->interest_earned.'%' : '-' }}</td>
+                                                        <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
+                                                        <td>
+                                                            <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
+                                                            <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>
+                                                        </td>
+                                                    </tr>
+                                                    @endif
                                                     @endforeach
                                                 @else
                                                 <tr>

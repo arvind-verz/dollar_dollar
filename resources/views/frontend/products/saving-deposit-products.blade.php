@@ -255,7 +255,7 @@
                     //dd($product);
                     ?>
                     {{-- {{$product->total_interest}} {{$product->total_interest_earn}} {{$product->max_tenure}}--}}
-                    @if(count($products)>4)
+                    @if(count($products)>=4)
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==4)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -291,7 +291,7 @@
                                         alt=""></a>
                         </div>
                     @endif
-                    <div class="ps-product  @if($product->featured==1) featured-1 @endif @if($page->slug=='saving-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                    <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 
@@ -804,7 +804,7 @@
                                         alt=""></a>
                         </div>
                     @endif
-                    <div class="ps-product  @if($product->featured==1) featured-1 @endif @if($page->slug=='saving-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                    <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 

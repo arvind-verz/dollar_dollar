@@ -143,7 +143,7 @@
         $("select[name='bank_id']").on("change", function() {
             var value = $(this).val();
             
-            if(value==0) {
+            if(value==0 && value!='') {
                 $(this).attr("required", false);
                 $("input[name='bank_id_other']").removeClass("hide").attr("required", true);
             }
