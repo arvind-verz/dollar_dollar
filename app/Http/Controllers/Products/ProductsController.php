@@ -184,7 +184,7 @@ class ProductsController extends Controller
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
                 if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
-                    $range['tenor'] = $request->tenure_sdp1;
+                    $range['tenure'] = $request->tenure_sdp1;
 
                 }
                 $range['min_range'] = (int)$v;
@@ -523,7 +523,7 @@ class ProductsController extends Controller
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
                 if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
-                    $range['tenor'] = $request->tenure_sdp1;
+                    $range['tenure'] = $request->tenure_sdp1;
 
                 }
                 $range['min_range'] = (int)$v;

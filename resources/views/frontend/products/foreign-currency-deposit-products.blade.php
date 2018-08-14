@@ -108,10 +108,10 @@
                                                @elseif(empty($searchFilter)) checked @endif>Placement
                                     </button>
                                     <button type="button"
-                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Tenor') active @endif">
-                                        <input type="radio" name="filter" value="Tenor"
+                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='tenure') active @endif">
+                                        <input type="radio" name="filter" value="tenure"
                                                style="opacity: 0;position: absolute;"
-                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Tenor') checked @endif>Tenor
+                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']=='tenure') checked @endif>tenure
                                     </button>
                                 </div>
                             </div>
@@ -547,7 +547,7 @@
                                                                     <thead>
                                                                     <tr>
                                                                         <th>DEPOSIT BALANCE TIER</th>
-                                                                        <th>TENOR</th>
+                                                                        <th>tenure</th>
                                                                         <th>BONUS RATE</th>
                                                                         <th>BOARD RATE</th>
                                                                         <th>TOTAL INTEREST</th>
@@ -560,7 +560,7 @@
                                                                                 ${{Helper::inThousand($productRange->min_range)}}
                                                                                 -
                                                                                 ${{Helper::inThousand($productRange->max_range) }}</td>
-                                                                            <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenor. ' Months' }}</td>
+                                                                            <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure. ' Months' }}</td>
                                                                             <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($product->bonus_interest)<=0)
                                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                                             <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if(($product->board_rate)<=0)
@@ -1173,7 +1173,7 @@
                                                                     <thead>
                                                                     <tr>
                                                                         <th>DEPOSIT BALANCE TIER</th>
-                                                                        <th>TENOR</th>
+                                                                        <th>tenure</th>
                                                                         <th>BONUS RATE</th>
                                                                         <th>BOARD RATE</th>
                                                                         <th>TOTAL INTEREST</th>
@@ -1186,7 +1186,7 @@
                                                                                 ${{Helper::inThousand($productRange->min_range)}}
                                                                                 -
                                                                                 ${{Helper::inThousand($productRange->max_range) }}</td>
-                                                                            <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenor. ' Months' }}</td>
+                                                                            <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure. ' Months' }}</td>
                                                                             <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                                             <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if(($productRange->board_rate)<=0)

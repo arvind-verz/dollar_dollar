@@ -107,10 +107,10 @@
                                                @elseif(empty($searchFilter)) checked @endif>Placement
                                     </button>
                                     <button type="button"
-                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Tenor') active @endif">
-                                        <input type="radio" name="filter" value="Tenor"
+                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='tenure') active @endif">
+                                        <input type="radio" name="filter" value="tenure"
                                                style="opacity: 0;position: absolute;"
-                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Tenor') checked @endif>Tenor
+                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']=='tenure') checked @endif>tenure
                                     </button>
                                 </div>
                             </div>

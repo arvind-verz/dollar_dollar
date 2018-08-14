@@ -97,7 +97,7 @@
                                                     <th>Account
                                                         <br> Name</th>
                                                     <th>Amount</th>
-                                                    <th>Tenor
+                                                    <th>tenure
                                                         <br> (M= months,
                                                         <br> D = Days)</th>
                                                     <th>Start Date</th>

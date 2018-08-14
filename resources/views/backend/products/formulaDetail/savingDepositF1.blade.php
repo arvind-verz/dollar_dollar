@@ -164,7 +164,7 @@
     <div class="form-group display-none" id="savingDepositF2Tenure">
         {{Form::label('Tenure', 'Tenure',['class'=>'col-sm-2 control-label'])}}
         <div class="col-sm-8">
-            {{Form::text('tenure_sdp1', isset($range)?$range->tenor:'', ['id'=>'tenure_0','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+            {{Form::text('tenure_sdp1', isset($range)?$range->tenure:'', ['id'=>'tenure_0','class' => 'form-control only_numeric', 'placeholder' => ''])}}
         </div>
         <div class="col-sm-8">
         </div>

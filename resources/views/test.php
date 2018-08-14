@@ -335,7 +335,7 @@ class PagesFrontController extends Controller
                             $status = true;
                         }
                     }
-                } elseif ($search_filter['filter'] == 'Tenor') {
+                } elseif ($search_filter['filter'] == 'tenure') {
                     if (!empty($brand_id)) {
                         if (!empty($search_filter['search_value']) && (in_array($search_filter['search_value'], $tenures)) && (!empty($brand_id) && $brand_id == $product->brand_id) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
                             $status = true;
@@ -399,7 +399,7 @@ class PagesFrontController extends Controller
                             ];
                         }
                     }
-                } elseif ($search_filter['filter'] == 'Tenor') {
+                } elseif ($search_filter['filter'] == 'tenure') {
                     $P = $product_range[0]->max_range;
                     if ($P >= $range->min_range && $P <= $range->max_range) {
                         for ($i = 0; $i < count($tenures); $i++) {
@@ -417,7 +417,7 @@ class PagesFrontController extends Controller
                         }
                     }
                 }
-                $result_data_old['tenor'] = $tenures;
+                $result_data_old['tenure'] = $tenures;
             }
 //dd($result_data);
             if (count($sort_by_arr)) {
@@ -694,7 +694,7 @@ class PagesFrontController extends Controller
                             $status = true;
                         } elseif ($filter == TENURE) {
 
-                            if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F2]) && $searchValue == $productRange->tenor) {
+                            if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F2]) && $searchValue == $productRange->tenure) {
                                 $productRange->tenure_highlight = true;
                                 $productRange->placement_highlight = true;
                                 $placement = $productRange->max_range;
@@ -713,7 +713,7 @@ class PagesFrontController extends Controller
                         $placement <= $productRange->max_range
                     ) {
                         if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F2])) {
-                            $tenure = $productRange->tenor;
+                            $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                         }
 
@@ -1118,7 +1118,7 @@ class PagesFrontController extends Controller
                             $status = true;
                         } elseif ($filter == TENURE) {
 
-                            if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F2]) && $searchValue == $productRange->tenor) {
+                            if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F2]) && $searchValue == $productRange->tenure) {
                                 $productRange->tenure_highlight = true;
                                 $productRange->placement_highlight = true;
                                 $placement = $productRange->max_range;
@@ -1137,7 +1137,7 @@ class PagesFrontController extends Controller
                         $placement <= $productRange->max_range
                     ) {
                         if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F2])) {
-                            $tenure = $productRange->tenor;
+                            $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                         }
 
@@ -1527,7 +1527,7 @@ class PagesFrontController extends Controller
                                     $status = true;
                                 }
                             }
-                        } elseif ($search_filter['filter'] == 'Tenor') {
+                        } elseif ($search_filter['filter'] == 'tenure') {
                             if (!empty($brand_id)) {
                                 if (!empty($search_filter['search_value']) && (in_array($search_filter['search_value'], $tenures)) && (!empty($brand_id) && $brand_id == $product->brand_id) && (!empty($brand_id) && $brand_id == $product->brand_id)) {
                                     $status = true;
@@ -1594,7 +1594,7 @@ class PagesFrontController extends Controller
                                     ];
                                 }
                             }
-                        } elseif ($search_filter['filter'] == 'Tenor') {
+                        } elseif ($search_filter['filter'] == 'tenure') {
                             $P = $product_range[0]->max_range;
                             if ($P >= $range->min_range && $P <= $range->max_range) {
                                 for ($i = 0; $i < count($tenures[$currencyId]); $i++) {
@@ -1612,7 +1612,7 @@ class PagesFrontController extends Controller
                                 }
                             }
                         }
-                        $result_data_old[$currencyId]['tenor'] = $tenures[$currencyId];
+                        $result_data_old[$currencyId]['tenure'] = $tenures[$currencyId];
                     }
                 }
 //dd($result_data);
