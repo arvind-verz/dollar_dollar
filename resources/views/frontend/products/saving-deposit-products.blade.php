@@ -562,8 +562,8 @@
                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                 <br>
                                                 <span>
-                                                    Total interest rate @if($product->total_interest <=0)
-                                                        - @else {{ $product->total_interest }}% @endif
+                                                    AVERAGE INTEREST RATE FOR 1 YEAR @if($product->total_interest <=0)
+                                                        - @else {{ $product->total_interest }}%<sup>*</sup> @endif
                                                 </span>
                                                                 <span>Based the Effective interest Rate</span>
 
@@ -598,9 +598,9 @@
                                                                             <tr>
                                                                                 <th>Account Balance in Stash account
                                                                                 </th>
-                                                                                <th>Base Interest (PA)</th>
-                                                                                <th>Bonus Interest (PA)</th>
-                                                                                <th>Total Interest (PA)</th>
+                                                                                <th>Base Interest</th>
+                                                                                <th>Bonus Interest</th>
+                                                                                <th>Total Interest</th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -652,8 +652,7 @@
                                                                 <div class="ps-product__panel">
                                                                     <h4>Possible interest(s) earned for SGD
                                                                         ${{ Helper::inThousand($product->placement) }}
-                                                                        <br/>
-                                                                        Base on effective interest rate</h4>
+                                                                        </h4>
 
                                                                     <h2>@if($product->total_interest_earn <=0 )
                                                                             - @else
@@ -1076,8 +1075,8 @@
                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                 <br>
                                                 <span>
-                                                    Total interest rate @if($product->total_interest <=0)
-                                                        - @else {{ $product->total_interest }}% @endif
+                                                    AVERAGE INTEREST RATE FOR 1 YEAR @if($product->total_interest <=0)
+                                                        - @else {{ $product->total_interest }}%<sup>*</sup> @endif
                                                 </span>
                                                                 <span>Based the Effective interest Rate</span>
 
@@ -1112,9 +1111,9 @@
                                                                             <tr>
                                                                                 <th>Account Balance in Stash account
                                                                                 </th>
-                                                                                <th>Base Interest (PA)</th>
-                                                                                <th>Bonus Interest (PA)</th>
-                                                                                <th>Total Interest (PA)</th>
+                                                                                <th>Base Interest</th>
+                                                                                <th>Bonus Interest</th>
+                                                                                <th>Total Interest</th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
