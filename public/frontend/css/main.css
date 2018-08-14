@@ -5524,13 +5524,14 @@ span.ps-post__meta a {
 }
 
 .ps-dashboard .ps-form--product-management .col-lg-12 .form-group > label{
- float: left;
- margin: 15px 50px 0 0;
+ /* float: left; */
+ /* margin: 15px 50px 0 0; */
 }
 .ps-dashboard .ps-form--product-management .col-lg-12 .form-group > input{
- width: 40px;
-    height: 40px;
-    float: left;
+ width: initial;
+ height: initial;
+ margin-right: 5px;
+ float: left;
 }
 .ps-checkbox.ps-checkbox--inline label:after{
  border-color: #3db54a;

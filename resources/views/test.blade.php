@@ -105,10 +105,10 @@
                                                @elseif(empty($search_filter)) checked @endif>Placement
                                     </button>
                                     <button type="button"
-                                            class="ps-btn filter search_type @if(isset($search_filter['filter']) && $search_filter['filter']=='Tenor') active @endif">
-                                        <input type="radio" name="filter" value="Tenor"
+                                            class="ps-btn filter search_type @if(isset($search_filter['filter']) && $search_filter['filter']=='tenure') active @endif">
+                                        <input type="radio" name="filter" value="tenure"
                                                style="opacity: 0;position: absolute;"
-                                               @if(isset($search_filter['filter']) && $search_filter['filter']=='Tenor') checked @endif>Tenor
+                                               @if(isset($search_filter['filter']) && $search_filter['filter']=='tenure') checked @endif>tenure
                                     </button>
                                 </div>
                             </div>
@@ -317,18 +317,18 @@
                                         <tr>
                                             <th>Type</th>
                                             <th>Account</th>
-                                            @foreach($tenures as $tenor_key => $tenure)
+                                            @foreach($tenures as $tenure_key => $tenure)
                                                 @php
 
                                                 $days_type = \Helper::days_or_month_or_year(2, $tenure);
                                                 @endphp
                                                 <th>{{ $tenure . ' ' . $days_type }}</th>
 
-                                                @if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor')
+                                                @if(isset($search_filter['search_value']) && $search_filter['filter']=='tenure')
                                                     @if($search_filter['search_value']==$tenure)
                                                         @php
 
-                                                        $key[] = $tenor_key;
+                                                        $key[] = $tenure_key;
                                                         @endphp
                                                     @endif
                                                 @endif
@@ -360,7 +360,7 @@
                                                 @if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && in_array(sprintf('%.1f', $search_filter['search_value']), $range->bonus_interest)) highlight
                                                 @endif
                                                 @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
-                                                @if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight
+                                                @if(isset($search_filter['search_value']) && $search_filter['filter']=='tenure' && in_array($bonus_key, $key)) highlight
                                                     @endif
                                                 @endforeach
                                                         ">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
@@ -368,7 +368,7 @@
                                                     <td class="
                                                     @if(isset($search_filter['search_value']) && $search_filter['filter']=='Interest' && sprintf('%.1f', $search_filter['search_value'])==$bonus_interest) highlight
                                                     @endif
-                                                    @if(isset($search_filter['search_value']) && $search_filter['filter']=='Tenor' && in_array($bonus_key, $key)) highlight
+                                                    @if(isset($search_filter['search_value']) && $search_filter['filter']=='tenure' && in_array($bonus_key, $key)) highlight
                                                     @endif">@if($bonus_interest<=0)
                                                             - @else {{ $bonus_interest . '%' }} @endif </td>
                                                 @endforeach
@@ -396,7 +396,7 @@
                                 @if(count($result_data))
                                     @foreach($result_data as $key => $result)
                                         @if($promotion_product_id==$key)
-                                            @foreach($result['tenor'] as $key2 => $value)
+                                            @foreach($result['tenure'] as $key2 => $value)
                                                 @php $type = Helper::days_or_month_or_year(2, $value); @endphp
                                                 @if($key2==0)
                                                     <h4>Possible interest(s) earned for SGD

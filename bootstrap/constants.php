@@ -250,7 +250,7 @@ define('WEALTH_DEPOSIT_F6', 22);
 //search value
 define('PLACEMENT', "Placement");
 define('INTEREST', "Interest");
-define('TENURE', "Tenor");
+define('TENURE', "Tenure");
 define('CRITERIA', "Criteria");
 
 //Row Heading for Saving Deposit Formula 5

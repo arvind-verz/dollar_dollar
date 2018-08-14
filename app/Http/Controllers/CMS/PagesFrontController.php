@@ -900,7 +900,7 @@ class PagesFrontController extends Controller
                         $placement <= $productRange->max_range
                     ) {
                         if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F2])) {
-                            $tenure = $productRange->tenor;
+                            $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                             $product->max_tenure = $tenure;
                         }
@@ -1378,7 +1378,7 @@ class PagesFrontController extends Controller
                         $placement <= $productRange->max_range
                     ) {
                         if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F2])) {
-                            $tenure = $productRange->tenor;
+                            $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                             //$product->max_tenure = $tenure;
                         }
@@ -1998,7 +1998,7 @@ class PagesFrontController extends Controller
                         $placement <= $productRange->max_range
                     ) {
                         if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F2])) {
-                            $tenure = $productRange->tenor;
+                            $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                             $product->max_tenure = $tenure;
                         }

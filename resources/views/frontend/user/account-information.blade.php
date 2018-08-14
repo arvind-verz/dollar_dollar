@@ -106,7 +106,7 @@
                                                 <tr>
                                                     <th>Product</th>
                                                     <th>Amount</th>
-                                                    <th>Tenor (Months)</th>
+                                                    <th>tenure (Months)</th>
                                                     <th>Start Date</th>
                                                     <th>End Date</th>
                                                     <th>Interested Earned</th>
@@ -170,7 +170,7 @@
                                                 <tr>
                                                     <th>Product</th>
                                                     <th>Amount</th>
-                                                    <th>Tenor (Months)</th>
+                                                    <th>tenure (Months)</th>
                                                     <th>Start Date</th>
                                                     <th>End Date</th>
                                                     <th>Interested Earned</th>

@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group">
-                                            <label>Tenor</label>
+                                            <label>tenure</label>
                                             <input type="text" class="form-control only_numeric" name="tenure" value="{{ old('tenure') }}">
                                         </div>
                                     </div>
@@ -140,7 +140,7 @@
                                             <th>Account
                                                 <br> Name</th>
                                             <th>Amount</th>
-                                            <th>Tenor
+                                            <th>tenure
                                                 <br> (M= months,
                                                 <br> D = Days)</th>
                                             <th>Start Date</th>
