@@ -5137,7 +5137,7 @@ html .bg--parallax {
 
 .ps-poster-popup {
     position: relative;
-    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .ps-poster-popup .close-popup {
