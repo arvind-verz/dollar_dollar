@@ -291,7 +291,7 @@
                                         alt=""></a>
                         </div>
                     @endif
-                    <div class="ps-product  @if($product->featured==1) featured-1 @endif @if($page->slug=='saving-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                    <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 
@@ -805,7 +805,7 @@
                                         alt=""></a>
                         </div>
                     @endif
-                    <div class="ps-product  @if($product->featured==1) featured-1 @endif @if($page->slug=='saving-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                    <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 

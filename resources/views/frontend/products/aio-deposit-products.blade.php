@@ -317,7 +317,7 @@
                         @endif
                                 <!-- INDIVIDUAL CRITERIA BASE -->
                         @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
-                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="{{ $j }}">
                                 <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}"
                                                                      alt="">
@@ -439,7 +439,7 @@
 
                                     <!-- TIER BASE -->
                             @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
-                                <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                                <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                      id="{{ $j }}">
                                     <div class="ps-product__header"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
@@ -567,7 +567,7 @@
                                 @endif
                                         <!-- COMBINE TIER BASE -->
                                 @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
-                                    <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                                    <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="{{ $j }}">
                                         <div class="ps-product__header"><img
                                                     src="{{ asset($product->brand_logo) }}"
@@ -773,7 +773,7 @@
                                             <!-- DBS CRITERIA -->
                                     @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
 
-                                        <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                                        <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                              id="{{ $j }}">
                                             <div class="ps-product__header"><img
                                                         src="{{ asset($product->brand_logo) }}"
@@ -907,7 +907,7 @@
                                             @endif
                                                     <!-- INDIVIDUAL CRITERIA BASE -->
                                             @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
-                                                <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                                                <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                                      id="{{ $j }}">
                                                     <div class="ps-product__header"><img
                                                                 src="{{ asset($product->brand_logo) }}"
@@ -1039,7 +1039,7 @@
 
                                                         <!-- TIER BASE -->
                                                 @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
-                                                    <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                                                    <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                                          id="{{ $j }}">
                                                         <div class="ps-product__header"><img
                                                                     src="{{ asset($product->brand_logo) }}" alt="">
@@ -1171,7 +1171,7 @@
                                                     @endif
                                                             <!-- COMBINE TIER BASE -->
                                                     @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
-                                                        <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                                                        <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                                              id="{{ $j }}">
                                                             <div class="ps-product__header"><img
                                                                         src="{{ asset($product->brand_logo) }}"
@@ -1394,7 +1394,7 @@
                                                                 <!-- DBS CRITERIA -->
                                                         @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
 
-                                                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif @if($page->slug=='all-in-one-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top)) product-popup @endif"
+                                                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                                                  id="{{ $j }}">
                                                                 <div class="ps-product__header"><img
                                                                             src="{{ asset($product->brand_logo) }}"
