@@ -988,13 +988,16 @@ class PagesFrontController extends Controller
                 $maxPlacements = [];
                 $highlight = -1;
                 $maxRanges = [];
+                $minRanges = [];
 
                 foreach ($productRanges as $k => $productRange) {
                     //dd($productRanges);
                     $allInterests = [$productRange->bonus_interest, $productRange->board_rate, $productRange->bonus_interest + $productRange->board_rate];
                     $maxRanges[] = $productRange->max_range;
+                    $minRanges[] = $productRange->min_range;
                     if (count($searchFilter)) {
                         if (($searchValue >= $productRange->min_range) && ($searchValue > 0)) {
+
                             if (is_null($brandId) || ($brandId == $product->bank_id)) {
                                 $highlight = $k;
                                 $status = true;
@@ -1019,15 +1022,16 @@ class PagesFrontController extends Controller
                 $interestEarns = [];
                 $lastCalculatedAmount = 0;
                 $maxPlacement = array_last(array_sort($maxRanges));
+                $minPlacement = array_last(array_sort($minRanges));
 
                 foreach ($productRanges as $k => $productRange) {
                     $interestEarn = 0;
-                    if ($maxPlacement == $productRange->max_range && $maxPlacement < $placement) {
+                    if ($minPlacement == $productRange->min_range && $minPlacement <= $placement) {
                         $totalInterest = $productRange->bonus_interest + $productRange->board_rate;
                         if ($lastCalculatedAmount < $placement) {
                             $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
                             $interestEarns[] = $interestEarn;
-                            $totalInterests[] = $totalInterest;
+                            $lastCalculatedAmount = $placement;
                         }
                         $productRange->interest_earn = $interestEarn;
                         $productRange->total_interest = $totalInterest;
@@ -1036,10 +1040,18 @@ class PagesFrontController extends Controller
                     } else {
                         $totalInterest = $productRange->bonus_interest + $productRange->board_rate;
                         $productRange->total_interest = $totalInterest;
-                        if ($productRange->min_range < $placement) {
+                        if ($productRange->max_range < $placement) {
                             $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($totalInterest / 100), 2);
                             $interestEarns[] = $interestEarn;
                             $totalInterests[] = $totalInterest;
+                            $lastCalculatedAmount = $productRange->max_range;
+
+                        } elseif($lastCalculatedAmount < $placement) {
+
+                            $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
+                            $interestEarns[] = $interestEarn;
+                            $totalInterests[] = $totalInterest;
+                            $lastCalculatedAmount = $placement;
                         }
                         //if($k==2){dd($interestEarn);};
 
@@ -1047,7 +1059,6 @@ class PagesFrontController extends Controller
                         $productRange->total_interest = $totalInterest;
 
                     }
-                    $lastCalculatedAmount = $productRange->max_range;
 
 
                 }
@@ -1062,6 +1073,7 @@ class PagesFrontController extends Controller
                     $maxTenure = max($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
@@ -1498,7 +1510,7 @@ class PagesFrontController extends Controller
 
                 foreach ($productRanges as $k => $productRange) {
                     $interestEarn = 0;
-                    if ($minPlacement == $productRange->min_range && $minPlacement < $placement) {
+                    if ($minPlacement == $productRange->min_range && $minPlacement <= $placement) {
                         $totalInterest = $productRange->bonus_interest + $productRange->board_rate;
                         if ($lastCalculatedAmount < $placement) {
                             $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
@@ -1517,11 +1529,14 @@ class PagesFrontController extends Controller
                             $interestEarns[] = $interestEarn;
                             $totalInterests[] = $totalInterest;
                             $lastCalculatedAmount = $productRange->max_range;
+
                         } else {
-                            $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
-                            $interestEarns[] = $interestEarn;
-                            $totalInterests[] = $totalInterest;
-                            $lastCalculatedAmount = $placement;
+                            if ($lastCalculatedAmount < $placement) {
+                                $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
+                                $interestEarns[] = $interestEarn;
+                                $totalInterests[] = $totalInterest;
+                                $lastCalculatedAmount = $placement;
+                            }
                         }
                         //if($k==2){dd($interestEarn);};
 
@@ -2076,14 +2091,17 @@ class PagesFrontController extends Controller
                 $maxPlacements = [];
                 $highlight = -1;
                 $maxRanges = [];
+                $minRanges = [];
 
                 foreach ($productRanges as $k => $productRange) {
                     //dd($productRanges);
                     $allInterests = [$productRange->bonus_interest, $productRange->board_rate, $productRange->bonus_interest + $productRange->board_rate];
                     $maxRanges[] = $productRange->max_range;
+                    $minRanges[] = $productRange->min_range;
                     if (count($searchFilter)) {
                         if (($searchValue >= $productRange->min_range) && ($searchValue > 0)) {
-                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && (is_null($currency) || ($currency == $product->currency))) {
+
+                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
                                 $highlight = $k;
                                 $status = true;
                             }
@@ -2107,15 +2125,16 @@ class PagesFrontController extends Controller
                 $interestEarns = [];
                 $lastCalculatedAmount = 0;
                 $maxPlacement = array_last(array_sort($maxRanges));
+                $minPlacement = array_last(array_sort($minRanges));
 
                 foreach ($productRanges as $k => $productRange) {
                     $interestEarn = 0;
-                    if ($maxPlacement == $productRange->max_range && $maxPlacement < $placement) {
+                    if ($minPlacement == $productRange->min_range && $minPlacement <= $placement) {
                         $totalInterest = $productRange->bonus_interest + $productRange->board_rate;
                         if ($lastCalculatedAmount < $placement) {
                             $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
                             $interestEarns[] = $interestEarn;
-                            $totalInterests[] = $totalInterest;
+                            $lastCalculatedAmount = $placement;
                         }
                         $productRange->interest_earn = $interestEarn;
                         $productRange->total_interest = $totalInterest;
@@ -2124,10 +2143,17 @@ class PagesFrontController extends Controller
                     } else {
                         $totalInterest = $productRange->bonus_interest + $productRange->board_rate;
                         $productRange->total_interest = $totalInterest;
-                        if ($productRange->min_range < $placement) {
+                        if ($productRange->max_range < $placement) {
                             $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($totalInterest / 100), 2);
                             $interestEarns[] = $interestEarn;
                             $totalInterests[] = $totalInterest;
+                            $lastCalculatedAmount = $productRange->max_range;
+
+                        } elseif($lastCalculatedAmount < $placement) {
+                            $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
+                            $interestEarns[] = $interestEarn;
+                            $totalInterests[] = $totalInterest;
+                            $lastCalculatedAmount = $placement;
                         }
                         //if($k==2){dd($interestEarn);};
 
@@ -2135,7 +2161,6 @@ class PagesFrontController extends Controller
                         $productRange->total_interest = $totalInterest;
 
                     }
-                    $lastCalculatedAmount = $productRange->max_range;
 
 
                 }
@@ -2150,6 +2175,7 @@ class PagesFrontController extends Controller
                     $maxTenure = max($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
@@ -2523,6 +2549,7 @@ class PagesFrontController extends Controller
                 $product->criteria_a_highlight = false;
                 $product->criteria_b_highlight = false;
                 $maxRanges = [];
+                $minRanges = [];
                 $totalInterests = [];
                 $interestEarns = [];
                 $criteria = null;
@@ -2558,6 +2585,7 @@ class PagesFrontController extends Controller
                         $productRange->bonus_interest_criteria_b,
                     ];
                     $maxRanges[] = $productRange->max_range;
+                    $minRanges[] = $productRange->min_range;
                     if ($searchValue >= $productRange->min_range && $status == true) {
                         $placement = (int)$searchValue;
                     } elseif (empty($placement) && (count($productRanges) - 1) == ($key)) {
@@ -2570,30 +2598,47 @@ class PagesFrontController extends Controller
                     }
                 }
                 $maxPlacement = array_last(array_sort($maxRanges));
+                $minPlacement = array_last(array_sort($minRanges));
                 $lastRange = array_last($productRanges);
                 $lastCalculatedAmount = 0;
 
                 foreach ($productRanges as $k => $productRange) {
-                    if ($maxPlacement == $productRange->max_range && $maxPlacement < $placement) {
-                        $totalInterests[] = $lastRange->$criteria;
-                        $interestEarn = round(($placement - $lastCalculatedAmount) * ($lastRange->$criteria / 100), 2);
+                    $interestEarn = 0;
+                    if ($minPlacement == $productRange->min_range && $minPlacement <= $placement) {
+                        if ($lastCalculatedAmount < $placement) {
+                            $interestEarn = round(($placement - $lastCalculatedAmount) * ($lastRange->$criteria / 100), 2);
+                            $interestEarns[] = $interestEarn;
+                            $productRange->above_range = true;
+                            $product->highlight_index = $k;
+                            $lastCalculatedAmount = $placement;
+                        }
                         $productRange->interest_earn = $interestEarn;
                         $productRange->criteria = $productRange->$criteria;
-                        $interestEarns[] = $interestEarn;
-                        $productRange->above_range = true;
-                        $product->highlight_index = $k;
+
                     } else {
-                        $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->$criteria / 100), 2);
-                        $productRange->interest_earn = $interestEarn;
-                        $productRange->criteria = $productRange->$criteria;
-                        $productRange->above_range = false;
-                        if ($productRange->min_range < $placement) {
+
+                        if ($productRange->max_range < $placement) {
+                            $interestEarn = round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->$criteria / 100), 2);
                             $product->highlight_index = $k;
                             $interestEarns[] = $interestEarn;
                             $totalInterests[] = $productRange->$criteria;
+                            $lastCalculatedAmount = $productRange->max_range;
+
+
+                        } else {
+                            if ($lastCalculatedAmount < $placement) {
+                                $interestEarn = round(($placement - $lastCalculatedAmount) * ($productRange->$criteria / 100), 2);
+                                $product->highlight_index = $k;
+                                $interestEarns[] = $interestEarn;
+                                $totalInterests[] = $productRange->$criteria;
+                                $lastCalculatedAmount = $productRange->max_range;
+                            }
+
                         }
+                        $productRange->interest_earn = $interestEarn;
+                        $productRange->criteria = $productRange->$criteria;
+                        $productRange->above_range = false;
                     }
-                    $lastCalculatedAmount = $productRange->max_range;
                 }
 
                 $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
