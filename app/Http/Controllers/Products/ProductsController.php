@@ -36,9 +36,9 @@ class ProductsController extends Controller
         $defaultSearch = DefaultSearch::where('promotion_id', $productTypeId)->first();
         $products = \Helper::getProducts($productTypeId);
         $productType = $this->productType($productTypeId);
-
+        $toolTips = ToolTip::where('promotion_id', $productTypeId)->first();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products', compact('CheckLayoutPermission', 'defaultSearch', 'products', 'productType', 'productTypeId'));
+        return view('backend.products.promotion_products', compact('CheckLayoutPermission', 'defaultSearch', 'products', 'productType', 'productTypeId','toolTips'));
     }
 
     public function promotion_products_add($productTypeId)

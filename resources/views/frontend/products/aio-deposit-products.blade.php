@@ -81,7 +81,7 @@
                                            value="{{ isset($searchFilter['salary']) ? $searchFilter['salary'] : '' }}">
                                 </div>
                                 @if(isset($toolTips->salary))
-                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->salary}}"><i
+                                    <a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->salary}}"><i
                                                 class="fa fa-exclamation-circle"></i></a>
                                 @endif
                             </div>
@@ -92,7 +92,7 @@
                                            value="{{ isset($searchFilter['giro']) ? $searchFilter['giro'] : '' }}">
                                 </div>
                                 @if(isset($toolTips->payment))
-                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->payment}}"><i
+                                    <a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->payment}}"><i
                                                 class="fa fa-exclamation-circle"></i></a>
                                 @endif
                             </div>
@@ -103,7 +103,7 @@
                                            value="{{ isset($searchFilter['spend']) ? $searchFilter['spend'] : '' }}">
                                 </div>
                                 @if(isset($toolTips->spend))
-                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->spend}}"><i
+                                    <a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->spend}}"><i
                                                 class="fa fa-exclamation-circle"></i></a>
                                 @endif
                             </div>
@@ -114,7 +114,7 @@
                                            value="{{ isset($searchFilter['wealth']) ? $searchFilter['wealth'] : '' }}">
                                 </div>
                                 @if(isset($toolTips->wealth))
-                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->wealth}}"><i
+                                    <a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->wealth}}"><i
                                                 class="fa fa-exclamation-circle"></i></a>
                                 @endif
                             </div>
@@ -125,7 +125,7 @@
                                            value="{{ isset($searchFilter['loan']) ? $searchFilter['loan'] : '' }}">
                                 </div>
                                 @if(isset($toolTips->loan))
-                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->loan}}"><i
+                                    <a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->loan}}"><i
                                                 class="fa fa-exclamation-circle"></i></a>
                                 @endif
                             </div>
