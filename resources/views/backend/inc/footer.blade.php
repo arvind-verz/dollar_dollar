@@ -882,12 +882,12 @@
                         var WealthBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_wealth_aioa1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var LoanMinAmount = allInOneAccountF1.find('input[name="minimum_loan_pa_aioa1"]').map(function () {
+                        /*var LoanMinAmount = allInOneAccountF1.find('input[name="minimum_loan_pa_aioa1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var LoanBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_loan_aioa1"]').map(function () {
                             return $.trim($(this).val());
-                        }).get();
+                        }).get();*/
                         var BonusAmount = allInOneAccountF1.find('input[name="minimum_bonus_aioa1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -945,14 +945,14 @@
                             errors[i] = 'The  bonus interest (Wealth) is required.';
                             i++;
                         }
-                        if (LoanMinAmount == '') {
+                        /*if (LoanMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Loan) is required.';
                             i++;
                         }
                         if (LoanBonusInterest == '') {
                             errors[i] = 'The  bonus interest (Loan) is required.';
                             i++;
-                        }
+                        }*/
                         if (BonusAmount == '') {
                             errors[i] = 'The  first cap amount is required.';
                             i++;

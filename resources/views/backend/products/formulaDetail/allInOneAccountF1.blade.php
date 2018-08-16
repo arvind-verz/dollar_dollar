@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-sm-2">&emsp;</div>
                     </div>
-                    <div class="form-group ">
+                    {{--<div class="form-group ">
                         <label for="title" class="col-sm-2 control-label"></label>
 
                         <div class="col-sm-8 ">
@@ -150,7 +150,7 @@
                             </div>
                         </div>
                         <div class="col-sm-2">&emsp;</div>
-                    </div>
+                    </div>--}}
                     <div class="form-group ">
                         <label for="title" class="col-sm-2 control-label"></label>
 
@@ -325,7 +325,7 @@
                 </div>
                 <div class="col-sm-2">&emsp;</div>
             </div>
-            <div class="form-group ">
+           {{-- <div class="form-group ">
                 <label for="title" class="col-sm-2 control-label"></label>
 
                 <div class="col-sm-8 ">
@@ -346,7 +346,7 @@
                     </div>
                 </div>
                 <div class="col-sm-2">&emsp;</div>
-            </div>
+            </div>--}}
             <div class="form-group ">
                 <label for="title" class="col-sm-2 control-label"></label>
 

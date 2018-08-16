@@ -358,7 +358,7 @@
                                                 //dd($range);
                                                 @endphp
                                                 <tr>
-                                                    <td>Bonus Interest PA</td>
+                                                    <td class="text-left">Bonus Interest PA</td>
                                                     <td class="text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
                                                             - @else {{ $range->bonus_interest_salary }} % @endif
 
@@ -376,7 +376,7 @@
                                                         Up to @if($range->bonus_interest_wealth<=0)
                                                             - @else  {{ $range->bonus_interest_wealth }}% @endif
                                                     </td>
-                                                    <td class="text-center @if($product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
+                                                    <td class="text-left @if($product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
                                                             - @else  {{ $range->bonus_interest }}% @endif
                                                         on
                                                         first {{ Helper::inThousand($range->first_cap_amount) }} if
@@ -384,7 +384,7 @@
                                                         than {{ Helper::inThousand($range->bonus_amount) }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="1">Total Bonus Interest Earned for
+                                                    <td colspan="1" class="text-left">Total Bonus Interest Earned for
                                                         ${{Helper::inThousand($range->placement)}}</td>
                                                     <td class="text-center @if($product->highlight==true ) highlight @endif"
                                                         colspan="5">
@@ -469,11 +469,11 @@
                                             <table class="ps-table ps-table--product ps-table--product-2">
                                                 <thead>
                                                 <tr>
-                                                    <th>Balance</th>
-                                                    <th>Criteria a (spend)</th>
-                                                    <th>Criteria b (Spend + Salary/Giro)</th>
-                                                    <th>Interest Earned for each Tier</th>
-                                                    <th>Total Interest Earned
+                                                    <th class="text-left">Balance</th>
+                                                    <th class="text-left">Criteria a <br/><span class="subtitle">(spend)</span></th>
+                                                    <th class="text-left">Criteria b <br/><span class="subtitle">(Spend + Salary/Giro)</span></th>
+                                                    <th class="text-left">Interest Earned for each Tier</th>
+                                                    <th class="text-left">Total Interest Earned
                                                         for {{ Helper::inThousand($product->placement) }}</th>
                                                 </tr>
                                                 </thead>
@@ -605,11 +605,11 @@
                                                     <table class="ps-table ps-table--product ps-table--product-3">
                                                         <thead>
                                                         <tr>
-                                                            <th>CRITERIA</th>
-                                                            <th>SALARY</th>
-                                                            <th>Giro</th>
-                                                            <th>SPEND</th>
-                                                            <th>
+                                                            <th class="combine-criteria-padding">CRITERIA</th>
+                                                            <th class="combine-criteria-padding">SALARY</th>
+                                                            <th class="combine-criteria-padding">Giro</th>
+                                                            <th class="combine-criteria-padding">SPEND</th>
+                                                            <th class="combine-criteria-padding">
                                                                 <div class="ps-checkbox">
                                                                     <input class="form-control" type="checkbox"
                                                                            data-product-id="{{$product->product_id}}"
@@ -622,7 +622,7 @@
                                                                         Insurance</label>
                                                                 </div>
                                                             </th>
-                                                            <th>
+                                                            <th class="combine-criteria-padding">
                                                                 <div class="ps-checkbox">
                                                                     <input class="form-control" type="checkbox"
                                                                            onchange="changeCriteria(this);"
@@ -636,7 +636,7 @@
                                                                         Loan</label>
                                                                 </div>
                                                             </th>
-                                                            <th>
+                                                            <th class="combine-criteria-padding">
                                                                 <div class="ps-checkbox">
                                                                     <input class="form-control" type="checkbox"
                                                                            name="education_loan"
@@ -649,7 +649,7 @@
                                                                         Loan</label>
                                                                 </div>
                                                             </th>
-                                                            <th>
+                                                            <th class="combine-criteria-padding">
                                                                 <div class="ps-checkbox">
                                                                     <input class="form-control" type="checkbox"
                                                                            onchange="changeCriteria(this);"
@@ -661,7 +661,7 @@
                                                                         Purchase loan</label>
                                                                 </div>
                                                             </th>
-                                                            <th>
+                                                            <th class="combine-criteria-padding">
                                                                 <div class="ps-checkbox">
                                                                     <input class="form-control" type="checkbox"
                                                                            name="renovation_loan"
@@ -674,7 +674,7 @@
                                                                         loan</label>
                                                                 </div>
                                                             </th>
-                                                            <th>
+                                                            <th class="combine-criteria-padding">
                                                                 <div class="ps-checkbox">
                                                                     <input class="form-control" type="checkbox"
                                                                            onchange="changeCriteria(this);"
@@ -691,31 +691,31 @@
                                                         <tbody>
                                                         @foreach($productRanges as $range)
                                                             <tr>
-                                                                <td colspan="4">Bonus Interest PA</td>
+                                                                <td colspan="1" class="text-left">Bonus Interest PA</td>
                                                                 <td class="text-center @if($product->criteria_1==true ) highlight @endif"
-                                                                    colspan="2">1 Criteria Met
+                                                                    colspan="3">1 Criteria Met
                                                                     - @if($range->bonus_interest_criteria1<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria1 }}
                                                                         % @endif
                                                                 </td>
                                                                 <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
-                                                                    colspan="2">2 Criteria
+                                                                    colspan="3">2 Criteria
                                                                     - @if($range->bonus_interest_criteria2<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria2 }}
                                                                         % @endif
                                                                 </td>
                                                                 <td class="text-center @if($product->criteria_3==true ) highlight @endif"
-                                                                    colspan="2">3
+                                                                    colspan="3">3
                                                                     Criteria @if($range->bonus_interest_criteria3<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria3 }}
                                                                         % @endif
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="4">Total Bonus Interest Earned for
+                                                                <td colspan="1" class="text-left">Total Bonus Interest Earned for
                                                                     ${{ Helper::inThousand($range->placement) }}</td>
                                                                 <td class=" text-center @if($product->highlight==true ) highlight @endif"
-                                                                    colspan="6">
+                                                                    colspan="9">
 
                                                                     @if($range->placement > $range->first_cap_amount)
                                                                         First

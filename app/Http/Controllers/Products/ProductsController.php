@@ -244,8 +244,8 @@ class ProductsController extends Controller
             $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
             $range['minimum_wealth_pa'] = (int)$request->minimum_wealth_pa_aioa1;
             $range['bonus_interest_wealth'] = (float)$request->bonus_interest_wealth_aioa1;
-            $range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
-            $range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
+            //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
+            //$range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
             $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
             $range['bonus_interest'] = (float)$request->bonus_interest_bonus_aioa1;
             $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa1;
@@ -583,8 +583,8 @@ class ProductsController extends Controller
             $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
             $range['minimum_wealth_pa'] = (int)$request->minimum_wealth_pa_aioa1;
             $range['bonus_interest_wealth'] = (float)$request->bonus_interest_wealth_aioa1;
-            $range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
-            $range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
+            //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
+            //$range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
             $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
             $range['bonus_interest'] = (float)$request->bonus_interest_bonus_aioa1;
             $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa1;
