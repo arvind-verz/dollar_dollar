@@ -68,7 +68,12 @@ class BannerController extends Controller
     public function create($type=NULL)
     {
         //get pages detail
-        $pages = Helper::getPages();
+        if($type=='home-page') {
+            $pages = Helper::getPages();
+        }
+        else {
+            $pages = Helper::getPages()->where('slug', '!=', 'home');
+        }
 
         return view("backend.banner.create", compact("pages", "type"));
     }
@@ -216,7 +221,12 @@ class BannerController extends Controller
             return redirect()->action('Banner\BannerController@index')->with('error', OPPS_ALERT);
         }
 
-        $pages = Helper::getPages();
+        if($type=='home-page') {
+            $pages = Helper::getPages();
+        }
+        else {
+            $pages = Helper::getPages()->where('slug', '!=', 'home');
+        }
 
         /*$pages = [];
         foreach ($pagesDetails as $pagesDetail) {
