@@ -90,7 +90,7 @@
                                             <input type="hidden" id="apply-link-status" name="apply_link_status"
                                                    value="{{$product->apply_link_status}}"/>
                                         {{Form::label('apply_link', 'Apply Button Link',['class'=>'col-sm-2 control-label'])}}
-                                        @if($product->apply_link_status===0)
+                                        @if(empty($product->apply_link_status))
                                             <div class="col-sm-8">
                                                 {{Form::text('apply_link', $product->apply_link, ['id'=>'link_ad','class' => 'form-control', 'placeholder' => '', 'readonly'=>'readonly'])}}
                                             </div>
@@ -101,7 +101,7 @@
                                         @endif
 
                                         <div class="col-sm-2 " id="apply-status">
-                                            @if($product->apply_link_status===0)
+                                            @if(empty($product->apply_link_status))
                                                 <button type="button" data-status="false" id=""
                                                         class="btn btn-block btn-danger  btn-social"
                                                         onclick="changeApplyStatus(this)"><i class="fa fa-times"></i>Disable
@@ -143,12 +143,21 @@
                                             {{Form::text('maximum_interest_rate',  $product->maximum_interest_rate, ['id'=>'maximum-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::text('promotion_period',  $product->promotion_period, ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => '','onChange'=>"addCounter(this);"])}}
+                                    @if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT)
+                                        <div class="form-group">
+                                            {{Form::label('promotion_period', 'Criteria',['class'=>'col-sm-2 control-label'])}}
+                                            <div class="col-sm-10">
+                                                {{Form::text('promotion_period',  $product->promotion_period, ['id'=>'promotion-period','class' => 'form-control only_numeric', 'placeholder' => '','onChange'=>"addCounter(this);"])}}
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div class="form-group">
+                                            {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
+                                            <div class="col-sm-10">
+                                                {{Form::text('promotion_period',  $product->promotion_period, ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => '','onChange'=>"addCounter(this);"])}}
+                                            </div>
+                                        </div>
+                                    @endif
 
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Date Range</label>

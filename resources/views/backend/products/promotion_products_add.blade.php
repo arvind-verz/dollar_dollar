@@ -26,8 +26,10 @@
                         <ul class="nav nav-tabs pull-right">
 
                             <li><a href="#basic-detail" data-toggle="tab" class="pointer-disable">Other Detail</a></li>
-                            <li><a href="#formula-detail" data-toggle="tab" class="pointer-disable">Formula Detail</a></li>
-                            <li class="active"><a href="#product-detail" data-toggle="tab" class="pointer-disable">Product Detail</a></li>
+                            <li><a href="#formula-detail" data-toggle="tab" class="pointer-disable">Formula Detail</a>
+                            </li>
+                            <li class="active"><a href="#product-detail" data-toggle="tab" class="pointer-disable">Product
+                                    Detail</a></li>
                             <li class="pull-left header"><i class="fa fa-edit"></i>
                                 {{'Product '.ADD_ACTION}}</li>
 
@@ -91,7 +93,10 @@
                                             {{Form::text('apply_link', old('Apply Link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                         <div class="col-sm-2 " id="apply-status">
-                                            <button type="button" data-status="true" id="" class="btn btn-block btn-success btn-social" onclick="changeApplyStatus(this)"><i class="fa fa-check"></i> Enable</button>
+                                            <button type="button" data-status="true" id=""
+                                                    class="btn btn-block btn-success btn-social"
+                                                    onclick="changeApplyStatus(this)"><i class="fa fa-check"></i> Enable
+                                            </button>
                                         </div>
                                     </div>
 
@@ -130,12 +135,21 @@
                                             {{Form::text('maximum_interest_rate', old('maximum_interest_rate'), ['id'=>'maximum-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => ''])}}
+                                    @if($productTypeId==ALL_IN_ONE_ACCOUNT)
+                                        <div class="form-group">
+                                            {{Form::label('promotion_period', 'Criteria',['class'=>'col-sm-2 control-label'])}}
+                                            <div class="col-sm-10">
+                                                {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div class="form-group">
+                                            {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
+                                            <div class="col-sm-10">
+                                                {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => ''])}}
+                                            </div>
+                                        </div>
+                                    @endif
 
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Date Range</label>
@@ -147,8 +161,10 @@
                                                         Date
                                                     </button>
                                                 </div>
-                                                <input type="text" class="form-control pull-right datepicker1" data-date="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}"
-                                                       name="promotion_start_date" id="promotion_start_date" onchange="dateChange(this);"
+                                                <input type="text" class="form-control pull-right datepicker1"
+                                                       data-date="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}"
+                                                       name="promotion_start_date" id="promotion_start_date"
+                                                       onchange="dateChange(this);"
                                                        value="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}">
 
                                                 <div class="input-group-addon ">
@@ -165,8 +181,10 @@
                                                         Date
                                                     </button>
                                                 </div>
-                                                <input type="text" class="form-control pull-right datepicker1" data-date="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}"
-                                                       name="promotion_end_date" id="promotion_end_date" onchange="dateChange(this);"
+                                                <input type="text" class="form-control pull-right datepicker1"
+                                                       data-date="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}"
+                                                       name="promotion_end_date" id="promotion_end_date"
+                                                       onchange="dateChange(this);"
                                                        value="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}">
 
                                                 <div class="input-group-addon ">
@@ -175,7 +193,11 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2 " id="ongoing">
-                                            <button type="button" data-status="false" id="ongoing" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>
+                                            <button type="button" data-status="false" id="ongoing"
+                                                    class="btn btn-block btn-danger btn-social"
+                                                    onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i>
+                                                Ongoing
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -257,7 +279,9 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_horizontal_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*160 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 1140*160 for better display
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link', 'Ad Horizontal Link',['class'=>'col-sm-2 control-label'])}}
@@ -270,7 +294,9 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_image_vertical', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 280*140 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 280*140 for better display
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_vertical_link', 'Ad Vertical Link',['class'=>'col-sm-2 control-label'])}}
@@ -283,7 +309,9 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_horizontal_image_popup', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*500 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 1140*500 for better display
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link_popup', 'Ad Horizontal Link Popup Bottom',['class'=>'col-sm-2 control-label'])}}
@@ -296,7 +324,9 @@
                                         <div class="col-sm-10">
                                             {{Form::file('ad_horizontal_image_popup_top', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*500 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 1140*500 for better display
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link_popup_top', 'Ad Horizontal Link Popup Top',['class'=>'col-sm-2 control-label'])}}
@@ -356,16 +386,18 @@
                 });
 
             }
-            if(promotion_type=='<?php echo ALL_IN_ONE_ACCOUNT ; ?>')
-            {
+            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
                 $('#apply-link').removeClass('display-none');
-            }else{ $('#apply-link').addClass('display-none');}
-            if(promotion_type=='<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>')
-            {
+            } else {
+                $('#apply-link').addClass('display-none');
+            }
+            if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
-            }else{ $('#currencyDiv').addClass('display-none');}
+            } else {
+                $('#currencyDiv').addClass('display-none');
+            }
 
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
             var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
@@ -374,10 +406,10 @@
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
             var SDP6 = [
-                 '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+                '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
             ];
             var SDP4 = [
-                '<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
+                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
             if (jQuery.inArray(formula, FDP1) !== -1) {
 
@@ -453,15 +485,17 @@
                     $("select[name='formula']").html(data);
                 }
             });
-            if(promotion_type=='<?php echo ALL_IN_ONE_ACCOUNT ; ?>')
-            {
+            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
                 $('#apply-link').removeClass('display-none');
-            }else{ $('#apply-link').addClass('display-none');}
+            } else {
+                $('#apply-link').addClass('display-none');
+            }
 
-            if(promotion_type=='<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>')
-            {
+            if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
-            }else{ $('#currencyDiv').addClass('display-none');}
+            } else {
+                $('#currencyDiv').addClass('display-none');
+            }
 
         });
         $("select[name='formula']").on("change", function () {
@@ -476,7 +510,7 @@
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
 
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
             var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
@@ -488,7 +522,7 @@
                 '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
             ];
             var SDP4 = [
-                 '<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
+                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
             if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
