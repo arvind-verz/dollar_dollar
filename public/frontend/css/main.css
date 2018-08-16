@@ -2413,16 +2413,21 @@ button {
 
 .ps-table--product thead tr th, td {
     font-family: "Montserrat", sans-serif;
-    padding: 10px;
+    padding: 10px 10px 10px 25px;
     background-color: #0d6ec9;
     border: none;
-    text-align: center;
+    text-align: left;
     color: #fff;
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
 }
-
+.combine-criteria-padding{
+    padding: 10px !important;
+}
+.ps-table--product .subtitle {
+    font-weight: 600;font-size: 13px;
+}
 .ps-table--product thead tr th:first-child {
     -webkit-border-radius: 4px 0 0 4px;
     -moz-border-radius: 4px 0 0 4px;
