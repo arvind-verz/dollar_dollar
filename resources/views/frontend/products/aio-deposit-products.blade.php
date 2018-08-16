@@ -332,10 +332,10 @@
                                  id="{{ $j }}">
                                 <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}"
                                                                      alt="">
-
-                                    <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                       href="{{$product->apply_link}}">Apply
-                                            Now</a></div>
+                                    @if($product->apply_link_status!==0)
+                                        <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                           href="{{$product->apply_link}}">Apply
+                                                Now</a></div>@endif
                                 </div>
                                 <div class="ps-product__content">
                                     <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
@@ -455,9 +455,10 @@
                                     <div class="ps-product__header"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
 
-                                        <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                           href="{{$product->apply_link}}">Apply
-                                                Now</a></div>
+                                        @if($product->apply_link_status!==0)
+                                            <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                               href="{{$product->apply_link}}">Apply
+                                                    Now</a></div>@endif
                                     </div>
                                     <div class="ps-product__content">
 
@@ -586,9 +587,10 @@
                                                     src="{{ asset($product->brand_logo) }}"
                                                     alt="">
 
-                                            <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                               href="{{$product->apply_link}}">Apply
-                                                    Now</a></div>
+                                            @if($product->apply_link_status!==0)
+                                                <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                                   href="{{$product->apply_link}}">Apply
+                                                        Now</a></div>@endif
                                         </div>
                                         <div class="ps-product__content">
                                             <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
@@ -793,9 +795,10 @@
                                                         src="{{ asset($product->brand_logo) }}"
                                                         alt="">
 
-                                                <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                                   href="{{$product->apply_link}}">Apply
-                                                        Now</a></div>
+                                                @if($product->apply_link_status!==0)
+                                                    <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                                       href="{{$product->apply_link}}">Apply
+                                                            Now</a></div>@endif
                                             </div>
                                             <div class="ps-product__content">
                                                 <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
@@ -929,9 +932,10 @@
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
 
-                                                        <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                                           href="{{$product->apply_link}}">Apply
-                                                                Now</a></div>
+                                                        @if($product->apply_link_status!==0)
+                                                            <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                                               href="{{$product->apply_link}}">Apply
+                                                                    Now</a></div>@endif
                                                     </div>
                                                     <div class="ps-product__content">
                                                         <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
@@ -1060,10 +1064,10 @@
                                                         <div class="ps-product__header"><img
                                                                     src="{{ asset($product->brand_logo) }}" alt="">
 
-                                                            <div class="ps-product__action"><a
-                                                                        class="ps-btn ps-btn--red"
-                                                                        href="{{$product->apply_link}}">Apply
-                                                                    Now</a></div>
+                                                            @if($product->apply_link_status!==0)
+                                                                <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                                                   href="{{$product->apply_link}}">Apply
+                                                                        Now</a></div>@endif
                                                         </div>
                                                         <div class="ps-product__content">
 
@@ -1193,10 +1197,10 @@
                                                                         src="{{ asset($product->brand_logo) }}"
                                                                         alt="">
 
-                                                                <div class="ps-product__action"><a
-                                                                            class="ps-btn ps-btn--red"
-                                                                            href="{{$product->apply_link}}">Apply
-                                                                        Now</a></div>
+                                                                @if($product->apply_link_status!==0)
+                                                                    <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                                                       href="{{$product->apply_link}}">Apply
+                                                                            Now</a></div>@endif
                                                             </div>
                                                             <div class="ps-product__content">
                                                                 <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
@@ -1421,10 +1425,10 @@
                                                                             src="{{ asset($product->brand_logo) }}"
                                                                             alt="">
 
-                                                                    <div class="ps-product__action"><a
-                                                                                class="ps-btn ps-btn--red"
-                                                                                href="{{$product->apply_link}}">Apply
-                                                                            Now</a></div>
+                                                                    @if($product->apply_link_status!==0)
+                                                                        <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                                                           href="{{$product->apply_link}}">Apply
+                                                                                Now</a></div>@endif
                                                                 </div>
                                                                 <div class="ps-product__content">
                                                                     <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>

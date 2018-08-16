@@ -26,8 +26,10 @@
                         <ul class="nav nav-tabs pull-right">
 
                             <li><a href="#basic-detail" data-toggle="tab" class="pointer-disable">Other Detail</a></li>
-                            <li><a href="#formula-detail" data-toggle="tab" class="pointer-disable">Formula Detail</a></li>
-                            <li class="active"><a href="#product-detail" data-toggle="tab" class="pointer-disable">Product Detail</a></li>
+                            <li><a href="#formula-detail" data-toggle="tab" class="pointer-disable">Formula Detail</a>
+                            </li>
+                            <li class="active"><a href="#product-detail" data-toggle="tab" class="pointer-disable">Product
+                                    Detail</a></li>
                             <li class="pull-left header"><i class="fa fa-edit"></i>
                                 {{'Product '.EDIT_ACTION}}</li>
 
@@ -72,7 +74,8 @@
                                         <label for="title" class="col-sm-2 control-label">Product Type</label>
 
                                         <div class="col-sm-10">
-                                            <select class="form-control" name="product_type" id="product-type" readonly="readonly">
+                                            <select class="form-control" name="product_type" id="product-type"
+                                                    readonly="readonly">
                                                 @if($promotion_types->count())
                                                     @foreach($promotion_types as $product_type)
                                                         <option value="{{$product_type->id}}"
@@ -83,9 +86,33 @@
                                         </div>
                                     </div>
                                     <div class="form-group display-none" id="apply-link">
+
+                                            <input type="hidden" id="apply-link-status" name="apply_link_status"
+                                                   value="{{$product->apply_link_status}}"/>
                                         {{Form::label('apply_link', 'Apply Button Link',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::text('apply_link', $product->apply_link, ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                        @if($product->apply_link_status===0)
+                                            <div class="col-sm-8">
+                                                {{Form::text('apply_link', $product->apply_link, ['id'=>'link_ad','class' => 'form-control', 'placeholder' => '', 'readonly'=>'readonly'])}}
+                                            </div>
+                                        @else
+                                            <div class="col-sm-8">
+                                                {{Form::text('apply_link', $product->apply_link, ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                            </div>
+                                        @endif
+
+                                        <div class="col-sm-2 " id="apply-status">
+                                            @if($product->apply_link_status===0)
+                                                <button type="button" data-status="false" id=""
+                                                        class="btn btn-block btn-danger  btn-social"
+                                                        onclick="changeApplyStatus(this)"><i class="fa fa-times"></i>Disable
+                                                </button>
+                                            @else
+                                                <button type="button" data-status="true" id=""
+                                                        class="btn btn-block btn-success btn-social"
+                                                        onclick="changeApplyStatus(this)"><i class="fa fa-check"></i>
+                                                    Enable
+                                                </button>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -109,7 +136,8 @@
                                         <div class="col-sm-10">
                                             {{Form::text('upto_interest_rate',  $product->upto_interest_rate, ['id'=>'upto-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
-                                    </div><div class="form-group">
+                                    </div>
+                                    <div class="form-group">
                                         {{Form::label('maximum_interest_rate', 'Maximum Interest Rate',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('maximum_interest_rate',  $product->maximum_interest_rate, ['id'=>'maximum-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}
@@ -132,8 +160,10 @@
                                                         Date
                                                     </button>
                                                 </div>
-                                                <input type="text" class="form-control pull-right datepicker1" data-date="{{ $product->promotion_start ? date('Y-m-d', strtotime($product->promotion_start )) : null }}"
-                                                       name="promotion_start_date" id="promotion_start_date" onchange="dateChange(this);"
+                                                <input type="text" class="form-control pull-right datepicker1"
+                                                       data-date="{{ $product->promotion_start ? date('Y-m-d', strtotime($product->promotion_start )) : null }}"
+                                                       name="promotion_start_date" id="promotion_start_date"
+                                                       onchange="dateChange(this);"
                                                        value="{{ $product->promotion_start? date('Y-m-d',strtotime($product->promotion_start )) : null}}">
 
                                                 <div class="input-group-addon ">
@@ -151,7 +181,9 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       name="promotion_end_date" id="promotion_end_date" onchange="dateChange(this);" data-date="{{ $product->promotion_end ? date('Y-m-d', strtotime($product->promotion_end )) : null }}"
+                                                       name="promotion_end_date" id="promotion_end_date"
+                                                       onchange="dateChange(this);"
+                                                       data-date="{{ $product->promotion_end ? date('Y-m-d', strtotime($product->promotion_end )) : null }}"
                                                        value="{{ $product->promotion_end ? date('Y-m-d', strtotime($product->promotion_end )) : null }}">
 
                                                 <div class="input-group-addon ">
@@ -161,11 +193,19 @@
                                         </div>
                                         <div class="col-sm-2 " id="ongoing">
                                             @if(($product->promotion_start==null) && ($product->promotion_end==null))
-                                                <button type="button" data-status="true" id="ongoing" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>
-                                                @else
-                                                <button type="button" data-status="false" id="ongoing" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>
+                                                <button type="button" data-status="true" id="ongoing"
+                                                        class="btn btn-block btn-success btn-social"
+                                                        onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i>
+                                                    Ongoing
+                                                </button>
+                                            @else
+                                                <button type="button" data-status="false" id="ongoing"
+                                                        class="btn btn-block btn-danger btn-social"
+                                                        onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i>
+                                                    Ongoing
+                                                </button>
                                             @endif
-                                           </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Status</label>
@@ -254,13 +294,18 @@
                                         @if(isset($ads[0]->ad_image_horizontal) && ($ads[0]->ad_image_horizontal != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $product->id }}', 'horizontal');"><i class="fas fa-times fa-lg"></i></a><img class="attachment-img"
-                                                                            src="{!! asset($ads[0]->ad_image_horizontal) !!}"
-                                                                            alt="image"></a>
+                                                    <a href="javascript:void(0)" class="text-danger" title="close"
+                                                       onclick="removeImage(this, '{{ $product->id }}', 'horizontal');"><i
+                                                                class="fas fa-times fa-lg"></i></a><img
+                                                            class="attachment-img"
+                                                            src="{!! asset($ads[0]->ad_image_horizontal) !!}"
+                                                            alt="image"></a>
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*160 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 1140*160 for better display
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link', 'Ad Horizontal Link',['class'=>'col-sm-2 control-label'])}}
@@ -276,14 +321,18 @@
                                         @if(isset($ads[1]->ad_image_vertical) && ($ads[1]->ad_image_vertical != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $product->id }}', 'vertical');"><i class="fas fa-times fa-lg"></i></a><img
-                                                                class="attachment-img"
-                                                                src="{!! asset($ads[1]->ad_image_vertical) !!}"
-                                                                alt="image">
+                                                    <a href="javascript:void(0)" class="text-danger" title="close"
+                                                       onclick="removeImage(this, '{{ $product->id }}', 'vertical');"><i
+                                                                class="fas fa-times fa-lg"></i></a><img
+                                                            class="attachment-img"
+                                                            src="{!! asset($ads[1]->ad_image_vertical) !!}"
+                                                            alt="image">
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 280*140 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 280*140 for better display
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_vertical_link', 'Ad Vertical Link',['class'=>'col-sm-2 control-label'])}}
@@ -299,13 +348,18 @@
                                         @if(isset($ads[2]->ad_horizontal_image_popup) && ($ads[2]->ad_horizontal_image_popup != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $product->id }}', 'horizontal_popup');"><i class="fas fa-times fa-lg"></i></a><img class="attachment-img"
-                                                                            src="{!! asset($ads[2]->ad_horizontal_image_popup) !!}"
-                                                                            alt="image">
+                                                    <a href="javascript:void(0)" class="text-danger" title="close"
+                                                       onclick="removeImage(this, '{{ $product->id }}', 'horizontal_popup');"><i
+                                                                class="fas fa-times fa-lg"></i></a><img
+                                                            class="attachment-img"
+                                                            src="{!! asset($ads[2]->ad_horizontal_image_popup) !!}"
+                                                            alt="image">
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*500 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 1140*500 for better display
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link_popup', 'Ad Horizontal Link Popup Bottom',['class'=>'col-sm-2 control-label'])}}
@@ -321,14 +375,19 @@
                                         @if(isset($ads[3]->ad_horizontal_image_popup_top) && ($ads[3]->ad_horizontal_image_popup_top != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $product->id }}', 'vertical_popup');"><i class="fas fa-times fa-lg"></i></a><img class="attachment-img"
-                                                                            src="{!! asset($ads[3]->ad_horizontal_image_popup_top) !!}"
-                                                                            alt="image">
+                                                    <a href="javascript:void(0)" class="text-danger" title="close"
+                                                       onclick="removeImage(this, '{{ $product->id }}', 'vertical_popup');"><i
+                                                                class="fas fa-times fa-lg"></i></a><img
+                                                            class="attachment-img"
+                                                            src="{!! asset($ads[3]->ad_horizontal_image_popup_top) !!}"
+                                                            alt="image">
                                                 </div>
                                             </div>
-                                            
+
                                         @endif
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1140*500 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 1140*500 for better display
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_link_popup_top', 'Ad Horizontal Link Popup Top',['class'=>'col-sm-2 control-label'])}}
@@ -390,17 +449,19 @@
                 });
 
             }
-            if(promotion_type=='<?php echo ALL_IN_ONE_ACCOUNT ; ?>')
-            {
+            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
                 $('#apply-link').removeClass('display-none');
-            }else{ $('#apply-link').addClass('display-none');}
+            } else {
+                $('#apply-link').addClass('display-none');
+            }
 
-            if(promotion_type=='<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>')
-            {
+            if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
-            }else{ $('#currencyDiv').addClass('display-none');}
+            } else {
+                $('#currencyDiv').addClass('display-none');
+            }
 
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
             var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
@@ -412,7 +473,7 @@
                 '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
             ];
             var SDP4 = [
-                '<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
+                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
             if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
@@ -501,7 +562,7 @@
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
             var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
@@ -513,7 +574,7 @@
                 '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
             ];
             var SDP4 = [
-                '<?php echo SAVING_DEPOSIT_F2; ?>','<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
+                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
             if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
@@ -577,29 +638,31 @@
                     $("select[name='formula']").html(data);
                 }
             });
-            if(promotion_type=='<?php echo ALL_IN_ONE_ACCOUNT ; ?>')
-            {
+            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
                 $('#apply-link').removeClass('display-none');
-            }else{ $('#apply-link').addClass('display-none');}
-            if(promotion_type=='<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>')
-            {
+            } else {
+                $('#apply-link').addClass('display-none');
+            }
+            if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
-            }else{ $('#currencyDiv').addClass('display-none');}
+            } else {
+                $('#currencyDiv').addClass('display-none');
+            }
 
         });
 
-            function removeImage(ref, id, ad_type) {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('remove-image') }}",
-                    data: "type=product&id="+id+"&ad_type="+ad_type,
-                    cache: false,
-                    success: function(data) {
-                        if(data.trim()=='success') {
-                            $(ref).parents(".col-sm-2").remove();
-                        }
+        function removeImage(ref, id, ad_type) {
+            $.ajax({
+                method: "POST",
+                url: "{{ route('remove-image') }}",
+                data: "type=product&id=" + id + "&ad_type=" + ad_type,
+                cache: false,
+                success: function (data) {
+                    if (data.trim() == 'success') {
+                        $(ref).parents(".col-sm-2").remove();
                     }
-                });
-            }
+                }
+            });
+        }
     </script>
 @endsection
