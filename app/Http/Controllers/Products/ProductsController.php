@@ -16,6 +16,7 @@ use DB;
 use Illuminate\Http\Request;
 use Validator;
 use App\DefaultSearch;
+use App\ToolTip;
 use App\systemSettingLegendTable;
 use App\Currency;
 use App\ProductManagement;
@@ -1615,6 +1616,7 @@ class ProductsController extends Controller
             $validate['payment'] = 'required';
             $validate['spend'] = 'required';
             $validate['wealth'] = 'required';
+            $validate['loan'] = 'required';
         }
 
         $validator = Validator::make($request->all(), $validate);
@@ -1640,6 +1642,54 @@ class ProductsController extends Controller
         $defaultSearch->save();
 
         return redirect()->route('promotion-products', ["productTypeId" => $request->promotion_id])->with('success', 'Default Search values ' . $msg);
+
+    }
+
+    public
+    function toolTip($productTypeId)
+    {
+        $toolTips = ToolTip::where('promotion_id', $productTypeId)->first();
+        $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
+        $productType = $this->productType($productTypeId);
+
+        return view('backend.products.formulaDetail.tool_tips', compact('CheckLayoutPermission', 'productType', 'productTypeId', 'toolTips'));
+
+    }
+
+    public
+    function toolTipUpdate(Request $request)
+    {
+        $validate = [];
+        if ($request->promotion_id == ALL_IN_ONE_ACCOUNT) {
+            $validate['salary'] = 'required';
+            $validate['payment'] = 'required';
+            $validate['spend'] = 'required';
+            $validate['wealth'] = 'required';
+            $validate['loan'] = 'required';
+        }
+
+        $validator = Validator::make($request->all(), $validate);
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
+        $toolTips = ToolTip::where('promotion_id', $request->promotion_id)->first();
+        $msg = UPDATED_ALERT;
+        if (!$toolTips) {
+            $toolTips = new ToolTip();
+            $msg = ADDED_ALERT;
+        }
+        $toolTips->promotion_id = $request->promotion_id;
+
+        if ($request->promotion_id == ALL_IN_ONE_ACCOUNT) {
+            $toolTips->salary = $request->salary;
+            $toolTips->payment = $request->payment;
+            $toolTips->spend = $request->spend;
+            $toolTips->wealth = $request->wealth;
+            $toolTips->loan = $request->loan;
+        }
+        $toolTips->save();
+
+        return redirect()->route('promotion-products', ["productTypeId" => $request->promotion_id])->with('success', 'Tool Tips ' . $msg);
 
     }
 

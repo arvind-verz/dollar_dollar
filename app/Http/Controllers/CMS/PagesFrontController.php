@@ -10,6 +10,7 @@ use App\Page;
 use App\ProductManagement;
 use App\PromotionProducts;
 use App\systemSettingLegendTable;
+use App\ToolTip;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -2373,6 +2374,7 @@ class PagesFrontController extends Controller
         $legendtable = systemSettingLegendTable::where('page_type', '=', ALL_IN_ONE_ACCOUNT)
             ->where('delete_status', 0)
             ->get();
+        $toolTips = ToolTip::where('promotion_id', ALL_IN_ONE_ACCOUNT)->first();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
@@ -2913,7 +2915,7 @@ class PagesFrontController extends Controller
         }
 
         //dd($products);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage","toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)

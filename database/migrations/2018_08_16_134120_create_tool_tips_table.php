@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDefaultSearchTable extends Migration
+class CreateToolTipsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateDefaultSearchTable extends Migration
      */
     public function up()
     {
-        Schema::create('default_search', function (Blueprint $table) {
+        Schema::create('tool_tips', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('promotion_id');
-            $table->integer('placement');
-            $table->integer('salary');
-            $table->integer('payment');
-            $table->integer('spend');
-            $table->integer('wealth');
+            $table->string('salary')->nullable();
+            $table->string('payment')->nullable();
+            $table->string('spend')->nullable();
+            $table->string('wealth')->nullable();
+            $table->string('loan')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateDefaultSearchTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('default_search');
+        Schema::dropIfExists('tool_tips');
     }
 }

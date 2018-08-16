@@ -222,6 +222,10 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/default-search-update', 'Products\ProductsController@defaultSearchUpdate');
     Route::put('/default-search-update', 'Products\ProductsController@defaultSearchUpdate');
 
+    Route::get('/tool-tip/{productTypeId}', 'Products\ProductsController@toolTip')->name('tool-tip');
+    Route::post('/tool-tip-update', 'Products\ProductsController@toolTipUpdate');
+    Route::put('/tool-tip-update', 'Products\ProductsController@toolTipUpdate');
+
 
     /* PROMOTION FORMULA */
     Route::get('/promotion-formula', 'Products\ProductsController@promotion_formula')->name('promotion-formula');
