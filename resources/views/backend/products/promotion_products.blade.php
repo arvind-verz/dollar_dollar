@@ -25,7 +25,7 @@
                         @if($productTypeId==ALL_IN_ONE_ACCOUNT)
                             <a href="{{ route('tool-tip',['productTypeId'=>$productTypeId]) }}"
                                class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
-                                @if($defaultSearch)Edit Tool Tips @else  Add Tool Tips @endif
+                                @if($toolTips)Edit Tool Tips @else  Add Tool Tips @endif
                             </a>
                         @endif
                         <a href="{{ route('default-search',['productTypeId'=>$productTypeId]) }}"
