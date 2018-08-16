@@ -349,7 +349,7 @@
                                                 <th>PAYMENT</th>
                                                 <th>SPEND</th>
                                                 <th>WEALTH</th>
-                                                <th>BONUS(OPTIONAL)</th>
+                                                <th>BONUS  <br/><span class="subtitle">(OPTIONAL)</span></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -802,8 +802,8 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Monthly Transaction</th>
-                                                            <th>Criteria a (Salary + 1 category)</th>
-                                                            <th>Criteria b (Salary + 2 OR more Cateogry)</th>
+                                                            <th>Criteria A <br/><span class="subtitle">(Salary + 1 category)</span></th>
+                                                            <th>Criteria A <br/><span class="subtitle">(Salary + 2 OR more Cateogry)</span></th>
                                                             <th>Total Interest Earned for
                                                                 ${{ Helper::inThousand($product->placement) }}</th>
                                                         </tr>

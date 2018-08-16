@@ -2829,11 +2829,9 @@ class PagesFrontController extends Controller
                             $productRange->bonus_interest_criteria_a,
                             $productRange->bonus_interest_criteria_b,
                         ];
-                        $productRange->criteria_a_highlight = false;
-                        $productRange->criteria_b_highlight = false;
+
                         $maxRanges[] = $productRange->max_range;
                         if ($searchValue >= $productRange->min_range && $status == true) {
-                            $productRange->$highlight = true;
                             if ($searchValue > 0) {
                                 $placement = (int)$searchValue / 12;
                             } else {
@@ -2847,12 +2845,16 @@ class PagesFrontController extends Controller
                         }
                     }
                 }
-
+                //dd($placement);
                 if ($placement > 0) {
                     foreach ($productRanges as $productRange) {
-
-                        $totalInterest = $productRange->$criteria;
-                        $interestEarn = round(($placement * 12) * ($totalInterest / 100), 2);
+                        $productRange->criteria_a_highlight = false;
+                        $productRange->criteria_b_highlight = false;
+                        if ($placement >= $productRange->min_range && $placement <= $productRange->max_range) {
+                            $productRange->$highlight = true;
+                            $totalInterest = $productRange->$criteria;
+                            $interestEarn = round(($placement * 12) * ($totalInterest / 100), 2);
+                        }
                     }
 
                 }
