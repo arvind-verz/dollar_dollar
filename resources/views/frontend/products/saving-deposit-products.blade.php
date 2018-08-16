@@ -661,7 +661,7 @@
                                                                          <span>
                                                                             Total interest rate {{ $product->total_interest }}%
                                                                         </span>
-                                                                        <span>Based on effective interest Rate</span>
+                                                                        <span>Based on effective interest rate</span>
 
                                                                     </h2>
                                                                 </div>
@@ -1172,10 +1172,10 @@
                                                                             - @else
                                                                             ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                         <br>
-                                                                        {{-- <span>
+                                                                        <span>
                                                                             Total interest rate {{ $product->total_interest }}%
-                                                                        </span>--}}
-                                                                        {{--<span>Based the Effective interest Rate</span>--}}
+                                                                        </span>
+                                                                        <span>Based on effective interest rate</span>
 
                                                                     </h2>
                                                                 </div>

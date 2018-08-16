@@ -705,11 +705,15 @@
                                                                                     </tr>
                                                                                     </thead>
                                                                                     <tbody>
+                                                                                    <?php $prevMaxRange = 0;  $totalRange = 0; ?>
                                                                                     @foreach($product->product_ranges as $key => $productRange)
                                                                                         <tr class="@if($product->highlight>=$key) highlight @endif">
-                                                                                            <td>@if($key==0) 1st - @else
-                                                                                                    NEXT
-                                                                                                    - @endif{{ '$' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                                            <td>@if($key==0) FIRST
+                                                                                                - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }}
+                                                                                                @elseif($key == (count($product->product_ranges) - 1))
+                                                                                                    ABOVE {{ '$' . Helper::inThousand($prevMaxRange) }}
+                                                                                                @else NEXT
+                                                                                                    - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }} @endif</td>
                                                                                             <td>@if($productRange->board_rate <=0 )
                                                                                                     - @else {{ $productRange->board_rate }}
                                                                                                     % @endif
@@ -725,6 +729,9 @@
 
                                                                                             </td>
                                                                                         </tr>
+                                                                                        <?php if ($key != (count($product->product_ranges) - 1)) {
+                                                                                        $prevMaxRange = $productRange->max_range;
+                                                                                        } ?>
                                                                                     @endforeach
                                                                                     </tbody>
                                                                                 </table>
@@ -751,10 +758,11 @@
                                                                                     - @else
                                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
-                                                                                {{-- <span>
-                                                                                    Total interest rate {{ $product->total_interest }}%
-                                                                                </span>--}}
-                                                                                {{--<span>Based the Effective interest Rate</span>--}}
+                                                                                <span>
+                                                                            Total interest rate {{ $product->total_interest }}
+                                                                                    %
+                                                                        </span>
+                                                                                <span>Based on effective interest rate</span>
                                                                             </h2>
                                                                         </div>
                                                                         <div class="clearfix"></div>
@@ -1313,11 +1321,15 @@
                                                                                     </tr>
                                                                                     </thead>
                                                                                     <tbody>
+                                                                                    <?php $prevMaxRange = 0;  $totalRange = 0; ?>
                                                                                     @foreach($product->product_ranges as $key => $productRange)
                                                                                         <tr class="@if($product->highlight>=$key) highlight @endif">
-                                                                                            <td>@if($key==0) 1st - @else
-                                                                                                    NEXT
-                                                                                                    - @endif{{ '$' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                                            <td>@if($key==0) FIRST
+                                                                                                - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }}
+                                                                                                @elseif($key == (count($product->product_ranges) - 1))
+                                                                                                    ABOVE {{ '$' . Helper::inThousand($prevMaxRange) }}
+                                                                                                @else NEXT
+                                                                                                    - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }} @endif</td>
                                                                                             <td>@if($productRange->board_rate <=0 )
                                                                                                     - @else {{ $productRange->board_rate }}
                                                                                                     % @endif
@@ -1333,6 +1345,9 @@
 
                                                                                             </td>
                                                                                         </tr>
+                                                                                        <?php if ($key != (count($product->product_ranges) - 1)) {
+                                                                                        $prevMaxRange = $productRange->max_range;
+                                                                                        } ?>
                                                                                     @endforeach
                                                                                     </tbody>
                                                                                 </table>
@@ -1359,10 +1374,11 @@
                                                                                     - @else
                                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
-                                                                                {{-- <span>
-                                                                                    Total interest rate {{ $product->total_interest }}%
-                                                                                </span>--}}
-                                                                                {{--<span>Based the Effective interest Rate</span>--}}
+                                                                               <span>
+                                                                            Total interest rate {{ $product->total_interest }}
+                                                                                   %
+                                                                        </span>
+                                                                                <span>Based on effective interest rate</span>
                                                                             </h2>
                                                                         </div>
                                                                         <div class="clearfix"></div>
