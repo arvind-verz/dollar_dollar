@@ -2882,7 +2882,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('upto_interest_rate');
                 } elseif ($filter == CRITERIA) {
-                    $products = $products->sortBy('criteriaCount');
+                    $products = $products->sortBy('promotion_period');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -2890,7 +2890,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortByDesc('total_interest');
                 } elseif ($filter == CRITERIA) {
-                    $products = $products->sortByDesc('criteriaCount');
+                    $products = $products->sortByDesc('promotion_period');
                 }
             }
         }
@@ -2901,7 +2901,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
                 } elseif ($filter == CRITERIA) {
-                    $remainingProducts = $remainingProducts->sortBy('criteriaCount');
+                    $remainingProducts = $remainingProducts->sortBy('promotion_period');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -2909,7 +2909,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortByDesc('upto_interest_rate');
                 } elseif ($filter == CRITERIA) {
-                    $remainingProducts = $remainingProducts->sortByDesc('criteriaCount');
+                    $remainingProducts = $remainingProducts->sortByDesc('promotion_period');
                 }
             }
         }
