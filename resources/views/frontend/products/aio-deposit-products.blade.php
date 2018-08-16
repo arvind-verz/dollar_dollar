@@ -332,7 +332,7 @@
                                  id="{{ $j }}">
                                 <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}"
                                                                      alt="">
-                                    @if($product->apply_link_status!==0)
+                                    @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                            href="{{$product->apply_link}}">Apply
                                                 Now</a></div>@endif
@@ -454,8 +454,7 @@
                                      id="{{ $j }}">
                                     <div class="ps-product__header"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-
-                                        @if($product->apply_link_status!==0)
+                                        @if(!empty($product->apply_link_status))
                                             <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                                href="{{$product->apply_link}}">Apply
                                                     Now</a></div>@endif
@@ -587,7 +586,7 @@
                                                     src="{{ asset($product->brand_logo) }}"
                                                     alt="">
 
-                                            @if($product->apply_link_status!==0)
+                                            @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                                    href="{{$product->apply_link}}">Apply
                                                         Now</a></div>@endif
@@ -795,7 +794,7 @@
                                                         src="{{ asset($product->brand_logo) }}"
                                                         alt="">
 
-                                                @if($product->apply_link_status!==0)
+                                                @if(!empty($product->apply_link_status))
                                                     <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                                        href="{{$product->apply_link}}">Apply
                                                             Now</a></div>@endif
@@ -932,7 +931,7 @@
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
 
-                                                        @if($product->apply_link_status!==0)
+                                                        @if(!empty($product->apply_link_status))
                                                             <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                                                href="{{$product->apply_link}}">Apply
                                                                     Now</a></div>@endif
@@ -1064,7 +1063,7 @@
                                                         <div class="ps-product__header"><img
                                                                     src="{{ asset($product->brand_logo) }}" alt="">
 
-                                                            @if($product->apply_link_status!==0)
+                                                            @if(!empty($product->apply_link_status))
                                                                 <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                                                    href="{{$product->apply_link}}">Apply
                                                                         Now</a></div>@endif
@@ -1197,7 +1196,7 @@
                                                                         src="{{ asset($product->brand_logo) }}"
                                                                         alt="">
 
-                                                                @if($product->apply_link_status!==0)
+                                                                @if(!empty($product->apply_link_status))
                                                                     <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                                                        href="{{$product->apply_link}}">Apply
                                                                             Now</a></div>@endif
@@ -1425,7 +1424,7 @@
                                                                             src="{{ asset($product->brand_logo) }}"
                                                                             alt="">
 
-                                                                    @if($product->apply_link_status!==0)
+                                                                    @if(!empty($product->apply_link_status))
                                                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                                                            href="{{$product->apply_link}}">Apply
                                                                                 Now</a></div>@endif
