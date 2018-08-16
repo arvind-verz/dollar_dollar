@@ -1685,4 +1685,23 @@
         $('#ongoing').html(ongoingButton);
 
     }
+    function changeApplyStatus(obj)
+    {
+        var applyButton;
+        var status = $(obj).data('status');
+
+        if(status==true)
+        {
+            $('#link_ad').attr('readonly', 'readonly');
+            $("#apply-link-status").val("0");
+            applyButton = '<button type="button" data-status="false" id="" class="btn btn-block btn-danger  btn-social" onclick="changeApplyStatus(this)"><i class="fa fa-times"></i>Disable</button>';
+        }else{
+            $('#link_ad').removeAttr('readonly');
+            $("#apply-link-status").val("1");
+            applyButton = '<button type="button" data-status="true" id="" class="btn btn-block btn-success btn-social" onclick="changeApplyStatus(this)"><i class="fa fa-check"></i>Enable</button>';
+        }
+        $('#apply-status').html(applyButton);
+
+    }
+
 </script>
