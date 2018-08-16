@@ -11,7 +11,7 @@
             <li class="active"><a
                         href="{{ route('promotion-products',['productTypeId'=>$productTypeId]) }}">{{$productType}}</a>
             </li>
-            <li class="active">{{'Default Search Values '}}@if($defaultSearch){{EDIT_ACTION}}@else {{ADD_ACTION}}@endif</li>
+            <li class="active">{{'Tool Tips '}}@if($toolTips){{EDIT_ACTION}}@else {{ADD_ACTION}}@endif</li>
         </ol>
     </section>
     <!-- Main content -->
@@ -19,55 +19,49 @@
         <div class="row">
             @include('backend.inc.messages')
             <div class="col-xs-12">
-                <div class="box @if($defaultSearch) box-warning  @else box-info @endif ">
+                <div class="box @if($toolTips) box-warning  @else box-info @endif ">
                     <div class="box-header with-border">
                         <i class="fa fa-edit"></i>
 
-                        <h3 class="box-title">{{'Default Search Values '}}@if($defaultSearch){{EDIT_ACTION}}@else {{ADD_ACTION}}@endif</h3>
+                        <h3 class="box-title">{{'Tool Tips '}}@if($toolTips){{EDIT_ACTION}}@else {{ADD_ACTION}}@endif</h3>
                     </div>
 
-                    @if($defaultSearch)
+                    @if($toolTips)
                             <!-- /.box-header -->
                     <div class="box-body">
                         <!-- form start -->
-                        {!! Form::open(['class' => 'form-horizontal','url' => 'admin/default-search-update', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::open(['class' => 'form-horizontal','url' => 'admin/tool-tip-update', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="box-body">
-                            <div class="form-group">
-                                <input type="hidden" name="promotion_id" value="{{$productTypeId}}"/>
-                                {{Form::label('placement', 'Placement',['class'=>'col-sm-2 control-label '])}}
-                                <div class="col-sm-10">
-                                    {{Form::text('placement', $defaultSearch->placement, ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
-                                </div>
-                            </div>
                             @if($productTypeId == ALL_IN_ONE_ACCOUNT)
                                 <div class="form-group">
+                                    <input type="hidden" name="promotion_id" value="{{$productTypeId}}"/>
                                     {{Form::label('salary', 'Salary',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('salary', $defaultSearch->salary, ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('salary', $toolTips->salary, ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{Form::label('payment', 'Payment',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('payment',$defaultSearch->payment, ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('payment',$toolTips->payment, ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{Form::label('spend', 'Spend',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('spend', $defaultSearch->spend, ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('spend', $toolTips->spend, ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{Form::label('wealth', 'Wealth',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('wealth', $defaultSearch->wealth, ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('wealth', $toolTips->wealth, ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{Form::label('loan', 'Loan',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('loan', $defaultSearch->loan, ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('loan', $toolTips->loan, ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                             @endif
@@ -91,44 +85,38 @@
                             <!-- /.box-header -->
                     <div class="box-body">
                         <!-- form start -->
-                        {!! Form::open(['class' => 'form-horizontal','url' => 'admin/default-search-update', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                        {!! Form::open(['class' => 'form-horizontal','url' => 'admin/tool-tip-update', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                         <div class="box-body">
-                            <div class="form-group">
-                                <input type="hidden" name="promotion_id" value="{{$productTypeId}}"/>
-                                {{Form::label('placement', 'Placement',['class'=>'col-sm-2 control-label '])}}
-                                <div class="col-sm-10">
-                                    {{Form::text('placement', old('placement'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
-                                </div>
-                            </div>
                             @if($productTypeId == ALL_IN_ONE_ACCOUNT)
                                 <div class="form-group">
+                                    <input type="hidden" name="promotion_id" value="{{$productTypeId}}"/>
                                     {{Form::label('salary', 'Salary',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('salary', old('salary'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('salary', old('salary'), ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{Form::label('payment', 'Payment',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('payment', old('payment'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('payment', old('payment'), ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{Form::label('spend', 'Spend',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('spend', old('spend'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('spend', old('spend'), ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{Form::label('wealth', 'Wealth',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('wealth', old('wealth'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('wealth', old('wealth'), ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{Form::label('loan', 'Loan',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('loan', old('loan'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('loan', old('loan'), ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                             @endif

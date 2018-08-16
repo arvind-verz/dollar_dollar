@@ -22,7 +22,12 @@
                         <i class="fa fa-book"></i>
 
                         <h3 class="box-title">{{$productType}}</h3>
-
+                        @if($productTypeId==ALL_IN_ONE_ACCOUNT)
+                            <a href="{{ route('tool-tip',['productTypeId'=>$productTypeId]) }}"
+                               class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
+                                @if($defaultSearch)Edit Tool Tips @else  Add Tool Tips @endif
+                            </a>
+                        @endif
                         <a href="{{ route('default-search',['productTypeId'=>$productTypeId]) }}"
                            class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
                             @if($defaultSearch)Edit Default Search Values @else  Add Default Search Values @endif
@@ -35,15 +40,17 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
+                        <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i>
+                            <span class="badge"></span>Delete</a>
+
                         <div class="form-group col-md-2 bulk_status hide">
-                          <span class="badge"></span>
-                          <select class="form-control" name="select_type">
-                            <option value="">-- Select --</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                          </select>
-                        </div> 
+                            <span class="badge"></span>
+                            <select class="form-control" name="select_type">
+                                <option value="">-- Select --</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
                         <input type="hidden" name="bulk_remove_type" value="bulk_product_remove">
                         <input type="hidden" name="bulk_update_type" value="bulk_product_status_update">
                         <table style="table-layout: fixed; width: 100%;">
@@ -54,7 +61,9 @@
                                         <table id="products" class="table ">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete/Update</th>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort">
+                                                    Delete/Update
+                                                </th>
                                                 <th>Product Name</th>
                                                 <th>Bank Name</th>
                                                 <th>Product Type</th>
@@ -72,7 +81,8 @@
                                                 @foreach($products as $product)
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" name="bluk_remove[]" value="{{ $product->id }}">
+                                                            <input type="checkbox" name="bluk_remove[]"
+                                                                   value="{{ $product->id }}">
                                                         </td>
                                                         <td>{{ $product->product_name }}</td>
                                                         <td>{{ $product->bank_name }}</td>

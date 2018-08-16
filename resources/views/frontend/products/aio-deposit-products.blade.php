@@ -80,8 +80,10 @@
                                     <input class="form-control" type="text" placeholder="" name="salary" id="salary"
                                            value="{{ isset($searchFilter['salary']) ? $searchFilter['salary'] : '' }}">
                                 </div>
-                                <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
-                                            class="fa fa-exclamation-circle"></i></a>
+                                @if(isset($toolTips->salary))
+                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->salary}}"><i
+                                                class="fa fa-exclamation-circle"></i></a>
+                                @endif
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
@@ -89,8 +91,10 @@
                                     <input class="form-control" type="text" placeholder="" name="giro" id="giro"
                                            value="{{ isset($searchFilter['giro']) ? $searchFilter['giro'] : '' }}">
                                 </div>
-                                <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
-                                            class="fa fa-exclamation-circle"></i></a>
+                                @if(isset($toolTips->payment))
+                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->payment}}"><i
+                                                class="fa fa-exclamation-circle"></i></a>
+                                @endif
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
@@ -98,8 +102,10 @@
                                     <input class="form-control" type="text" placeholder="" name="spend" id='spend'
                                            value="{{ isset($searchFilter['spend']) ? $searchFilter['spend'] : '' }}">
                                 </div>
-                                <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
-                                            class="fa fa-exclamation-circle"></i></a>
+                                @if(isset($toolTips->spend))
+                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->spend}}"><i
+                                                class="fa fa-exclamation-circle"></i></a>
+                                @endif
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
@@ -107,8 +113,10 @@
                                     <input class="form-control" type="text" placeholder="" name="wealth" id='wealth'
                                            value="{{ isset($searchFilter['wealth']) ? $searchFilter['wealth'] : '' }}">
                                 </div>
-                                <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
-                                            class="fa fa-exclamation-circle"></i></a>
+                                @if(isset($toolTips->wealth))
+                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->wealth}}"><i
+                                                class="fa fa-exclamation-circle"></i></a>
+                                @endif
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
@@ -116,8 +124,10 @@
                                     <input class="form-control" type="text" placeholder="" name="loan" id="loan"
                                            value="{{ isset($searchFilter['loan']) ? $searchFilter['loan'] : '' }}">
                                 </div>
-                                <a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
-                                            class="fa fa-exclamation-circle"></i></a>
+                                @if(isset($toolTips->loan))
+                                    <a class="ps-tooltip" href="#" data-tooltip="{{$toolTips->loan}}"><i
+                                                class="fa fa-exclamation-circle"></i></a>
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -143,7 +153,8 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">
-                                                <input class="form-control only_numeric prefix_dollar" type="text" placeholder=""
+                                                <input class="form-control only_numeric prefix_dollar" type="text"
+                                                       placeholder=""
                                                        name="search_value" id="search_value"
                                                        value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}"/>
                                             </div>
@@ -349,7 +360,7 @@
                                                 <th>PAYMENT</th>
                                                 <th>SPEND</th>
                                                 <th>WEALTH</th>
-                                                <th>BONUS  <br/><span class="subtitle">(OPTIONAL)</span></th>
+                                                <th>BONUS <br/><span class="subtitle">(OPTIONAL)</span></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -470,8 +481,10 @@
                                                 <thead>
                                                 <tr>
                                                     <th class="text-left">Balance</th>
-                                                    <th class="text-left">Criteria a <br/><span class="subtitle">(spend)</span></th>
-                                                    <th class="text-left">Criteria b <br/><span class="subtitle">(Spend + Salary/Giro)</span></th>
+                                                    <th class="text-left">Criteria a <br/><span
+                                                                class="subtitle">(spend)</span></th>
+                                                    <th class="text-left">Criteria b <br/><span class="subtitle">(Spend + Salary/Giro)</span>
+                                                    </th>
                                                     <th class="text-left">Interest Earned for each Tier</th>
                                                     <th class="text-left">Total Interest Earned
                                                         for {{ Helper::inThousand($product->placement) }}</th>
@@ -712,7 +725,8 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td colspan="1" class="text-left">Total Bonus Interest Earned for
+                                                                <td colspan="1" class="text-left">Total Bonus Interest
+                                                                    Earned for
                                                                     ${{ Helper::inThousand($range->placement) }}</td>
                                                                 <td class=" text-center @if($product->highlight==true ) highlight @endif"
                                                                     colspan="9">
@@ -802,8 +816,10 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Monthly Transaction</th>
-                                                            <th>Criteria A <br/><span class="subtitle">(Salary + 1 category)</span></th>
-                                                            <th>Criteria A <br/><span class="subtitle">(Salary + 2 OR more Cateogry)</span></th>
+                                                            <th>Criteria A <br/><span class="subtitle">(Salary + 1 category)</span>
+                                                            </th>
+                                                            <th>Criteria A <br/><span class="subtitle">(Salary + 2 OR more Cateogry)</span>
+                                                            </th>
                                                             <th>Total Interest Earned for
                                                                 ${{ Helper::inThousand($product->placement) }}</th>
                                                         </tr>
@@ -1222,7 +1238,7 @@
                                                                                                type="checkbox"
                                                                                                data-product-id="{{$product->product_id}}"
                                                                                                name="life_insurance"
-                                                                                               data-status ="0"
+                                                                                               data-status="0"
                                                                                                onchange="changeCriteria(this);"
                                                                                                @if($product->life_insurance) checked=checked
                                                                                                @endif value="true"
@@ -1240,7 +1256,8 @@
                                                                                                @endif
                                                                                                name="housing_loan"
                                                                                                data-product-id="{{$product->product_id}}"
-                                                                                               value="true" data-status ="0"
+                                                                                               value="true"
+                                                                                               data-status="0"
                                                                                                id="housing-loan-{{$product->product_id}}">
                                                                                         <label for="housing-loan-{{$product->product_id}}">Housing
                                                                                             Loan</label>
@@ -1253,7 +1270,8 @@
                                                                                                name="education_loan"
                                                                                                onchange="changeCriteria(this);"
                                                                                                data-product-id="{{$product->product_id}}"
-                                                                                               value="true" data-status ="0"
+                                                                                               value="true"
+                                                                                               data-status="0"
                                                                                                id='education-loan-{{$product->product_id}}'
                                                                                                @if($product->education_loan) checked=checked @endif/>
                                                                                         <label for="education-loan-{{$product->product_id}}">Education
@@ -1266,7 +1284,8 @@
                                                                                                type="checkbox"
                                                                                                onchange="changeCriteria(this);"
                                                                                                name="hire_loan"
-                                                                                               value="true" data-status ="0"
+                                                                                               value="true"
+                                                                                               data-status="0"
                                                                                                data-product-id="{{$product->product_id}}"
                                                                                                id="hire-loan-{{$product->product_id}}"
                                                                                                @if($product->hire_loan) checked=checked @endif/>
@@ -1281,7 +1300,8 @@
                                                                                                name="renovation_loan"
                                                                                                onchange="changeCriteria(this);"
                                                                                                data-product-id="{{$product->product_id}}"
-                                                                                               value="true" data-status ="0"
+                                                                                               value="true"
+                                                                                               data-status="0"
                                                                                                id="renovation-loan-{{$product->product_id}}"
                                                                                                @if($product->renovation_loan) checked=checked @endif/>
                                                                                         <label for="renovation-loan-{{$product->product_id}}">Renovation
@@ -1294,7 +1314,8 @@
                                                                                                type="checkbox"
                                                                                                onchange="changeCriteria(this);"
                                                                                                name="unit_trust"
-                                                                                               value="true" data-status ="0"
+                                                                                               value="true"
+                                                                                               data-status="0"
                                                                                                data-product-id="{{$product->product_id}}"
                                                                                                id="unit-trust-{{$product->product_id}}"
                                                                                                @if($product->unit_trust) checked=checked @endif/>
@@ -1527,7 +1548,7 @@
                     search_detail: data,
                     product_id: product_id,
                     check_box_detail: checkBoxForm,
-                    status:status
+                    status: status
                 },
                 cache: false,
                 async: false,
