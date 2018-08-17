@@ -5268,7 +5268,7 @@ html .bg--parallax {
     float:left;
     width:20%;
     padding:0px 10px;
-    margin: 10px 0;
+    /* margin: 10px 0; */
     }
     
 .product-col-02, .product-col-03, .product-col-04, .product-col-05 {
