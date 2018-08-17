@@ -178,7 +178,7 @@ class RegisterController extends Controller
                     Mail::to($registration->email)->send(new NewUserWelcome($data));
                     Mail::to(ADMIN_EMAIL)->send(new NewUserNotify($data));
                 } catch (Exception $exception) {
-                    dd($exception);
+                    //dd($exception);
                 }
             }
 
