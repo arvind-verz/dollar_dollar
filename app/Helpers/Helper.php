@@ -570,5 +570,14 @@ class Helper
     public static function todayDate() {
         return Carbon::now()->format('Y-m-d');
     }
+    public static function base64_encode($str)
+    {
+        return strtr(base64_encode($str), '+/', '-_');
+    }
+
+    public static function base64_decode($str)
+    {
+        return base64_decode(strtr($str, '-_', '+/'));
+    }
 
 }

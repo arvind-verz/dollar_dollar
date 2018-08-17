@@ -187,6 +187,8 @@ define('TERMS_CONDITION', "terms-and-condition");
 define('PROFILEDASHBOARD', "profile-dashboard");
 define('ACCOUNTINFO', "account-information");
 define('PRODUCTMANAGEMENT', "product-management");
+define('FORGOT_PASSWORD', "forgot-password");
+define('FORGOT_PASSWORD_RESET', "forgot-password-reset");
 
 //display section contact or offer section
 define('CONTACT_US_SECTION', "Contact Us Now");

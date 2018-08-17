@@ -220,6 +220,17 @@ class PagesFrontController extends Controller
                     return $this->termsCondition($details);
 
                 }
+                elseif ($slug == FORGOT_PASSWORD) {
+                    $details = [];
+                    $details['brands'] = $brands;
+                    $details['page'] = $page;
+                    $details['systemSetting'] = $systemSetting;
+                    $details['banners'] = $banners;
+
+                    /*sent all pages detail into this function and than return to blade file*/
+                    return $this->forgotPassword($details);
+
+                }
 
             } elseif ($page->is_blog == 1) {
                 $query = Page::join('menus', 'pages.menu_id', '=', 'menus.id')
@@ -3290,5 +3301,16 @@ class PagesFrontController extends Controller
             }
         }
 
+    }
+
+    public function forgotPassword($details)
+    {
+//        $details = \Helper::get_page_detail(TERMS_CONDITION);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+
+        return view('frontend.user.forgot-password', compact("brands", "page", "systemSetting", "banners"));
     }
 }
