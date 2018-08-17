@@ -10,10 +10,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class NewUserNotify extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public function __construct()
+    private $data;
+    public function __construct(array $data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -23,6 +23,7 @@ class NewUserNotify extends Mailable
      */
     public function build()
     {
-        return $this->markdown('backend.emails.newUserNotify');
+        $data = $this->data;
+        return $this->subject('New user register')->markdown('backend.emails.newUserNotify', compact("data"));
     }
 }

@@ -8,13 +8,15 @@ use App\Admin;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\ProductManagement;
 use App\ContactEnquiry;
 use App\HealthInsuranceEnquiry;
 use App\LifeInsuranceEnquiry;
 use App\PromotionProducts;
-use DB;
+use Illuminate\Support\Facades\DB;
+use App\Mail\UpdateDetailNotify;
+use Illuminate\Support\Facades\Mail;
 
 
 class UsersController extends Controller
@@ -103,6 +105,7 @@ class UsersController extends Controller
         $this->validate($request, $fields);
 
         // update Post
+        $user->salutation = $request->input('salutation');
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
@@ -112,6 +115,17 @@ class UsersController extends Controller
         $user->save();
 
         $newUser = User::find($id);
+        if($newUser)
+        {
+            $data = $newUser->toArray();
+            $data['profile_url'] = url('/') . '/account-information';
+
+            try {
+                Mail::to($newUser->email)->send(new UpdateDetailNotify($data));
+            } catch (Exception $exception) {
+                dd($exception);
+            }
+        }
         activity()
             ->performedOn($newUser)
             ->withProperties([

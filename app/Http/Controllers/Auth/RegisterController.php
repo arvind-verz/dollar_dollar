@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Mail\NewUserNotify;
 use App\User;
 use App\Http\Controllers\Controller;
 
@@ -9,11 +10,14 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Database\Eloquent;
 use Illuminate\Http\Request;
 use Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Page;
 use App\Brand;
 use Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Exception;
+use App\Mail\NewUserWelcome;
 
 class RegisterController extends Controller
 {
@@ -163,6 +167,20 @@ class RegisterController extends Controller
             $registration->email_notification     =   $email_notification;
             $registration->adviser     =   $adviser;
             $registration->save();
+            $user = User::where('email',$registration->email)->where('delete_status',0)->first();
+            if($user)
+            {
+                $data = $user->toArray();
+                $data['blog_url'] = url('/') . '/blog-list';
+                $data['admin_url'] = url('/') . '/admin';
+
+                try {
+                    Mail::to($registration->email)->send(new NewUserWelcome($data));
+                    Mail::to(ADMIN_EMAIL)->send(new NewUserNotify($data));
+                } catch (Exception $exception) {
+                    //dd($exception);
+                }
+            }
 
             $redirect_url = $request->redirect_url;
             if(empty($redirect_url)) {
