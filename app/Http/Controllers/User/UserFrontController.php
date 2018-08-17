@@ -7,11 +7,14 @@ use App\Mail\ContactUs;
 use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Auth;
-use Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Response;
 use App\Mail\NewUserNotify;
 use Exception;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use App\Mail\ForgotPassword;
 
 
 class UserFrontController extends Controller
@@ -19,7 +22,7 @@ class UserFrontController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['logout', 'getLoginStatus', 'postContactUs']]);
+        $this->middleware('auth', ['except' => ['logout', 'getLoginStatus', 'postContactUs', 'postForgotPassword', 'postForgotPasswordReset', 'postResetPassword']]);
     }
 
     /**
@@ -226,4 +229,81 @@ class UserFrontController extends Controller
         }
         return redirect(url('contact-us'))->with('success', 'Your inquiry has been sent to the respective team.');
     }
+
+    public function postForgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator->errors())->with('form', 'forgot');
+        }
+        $user = User::where('email', $request->email)->where('delete_status', 0)->first();
+        if (!$user) {
+            $validator->getMessageBag()->add('email', 'We cant find a user with this e-mail address.');
+        }
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        } else {
+
+            DB::table('password_resets')->insert(['email' => $user->email, 'token' => str_random(80), 'created_at' => Carbon::now()->toDateTimeString()]);
+            $pw_reset = DB::table('password_resets')->where('email', $user->email)->first();
+            $token = \Helper::base64_encode($pw_reset->token);
+            $url = url('/') . '/password-reset/' . $token;
+            $contactUrl = url('/') . '/contact';
+
+            $data = ['first_name' => $user->first_name, 'last_name' => $user->last_name, 'url' => $url, 'contact_url' => $contactUrl];
+            try {
+                Mail::to(ADMIN_EMAIL)->send(new ForgotPassword($data));
+            } catch (Exception $exception) {
+                //dd($exception);
+                return redirect()->back()->with('error', 'Oops! Something wrong please try after sometime.');
+            }
+
+            return redirect()->back()->with(['status' => 'We have sent password reset link to your mail', 'form' => 'forgot']);
+        }
+    }
+
+    public function postForgotPasswordReset($token)
+    {
+        $decodeToken = \Helper::base64_decode($token);
+        $getToken = DB::table('password_resets')->where('token', $decodeToken)->first();
+        if ($getToken) {
+            return view('frontend.user.reset-password')->with(['token' => $token]);
+        } else {
+            return redirect('/home')->with(['error' => 'The Requested url is invalid']);
+        }
+    }
+
+    public function postResetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required|same:password',
+        ]);
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
+        $token = \Helper::base64_decode($request->token);
+        $detail = DB::table('password_resets')->where('token', $token)->first();
+        if ($detail) {
+            //dd($detail->email,$request->email);
+            if ($detail->email != $request->email) {
+                return back()->with(['error' => 'Email does not match with our records']);
+            }
+            $user = User::where('email', $detail->email);
+            $password = bcrypt($request->input('password'));
+            if ($user->update(['password' => $password])) {
+                DB::table('password_resets')->where('token', $token)->delete();
+                return redirect('/login')->with(['status' => 'Your password has been changed successfully. Please login again', 'form' => 'login']);
+            } else {
+                return back()->with(['error' => 'Unable to reset password. Please try again!']);
+            }
+        } else {
+            return back()->with(['error' => 'The Requested url is invalid']);
+        }
+    }
+
+
 }

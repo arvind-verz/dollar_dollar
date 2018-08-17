@@ -35,8 +35,12 @@ Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCall
 Auth::routes();
 Route::get('registration_page/{redirect_url}', 'Auth\RegisterController@registration_page');
 
+/*Forgot Password route*/
+    Route::post('/forgot-password', 'User\UserFrontController@postForgotPassword')->name('forgot-password');
+    Route::get('/password-reset/{token}', 'User\UserFrontController@postForgotPasswordReset')->name('password-reset');
+    Route::post('/forgot-password-reset', 'User\UserFrontController@postResetPassword')->name('forgot-password-reset');
+/*End Forgot password route*/
 // Password Reset Routes...
-
 /*    Route::get('/userpassword/reset', 'Auth\ResetPasswordController@showLinkRequestForm')->name('user.password.reset');
     Route::post('/userpassword/email/{token}', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('user.password.email');
 */

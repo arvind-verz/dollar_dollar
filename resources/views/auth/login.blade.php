@@ -80,6 +80,19 @@
         </div>
     </div>
     @endif
+    @if(session('status'))
+        <div class="col-md-12">
+            <div class="box-body">
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> Success!</h4>
+                    <p>
+                        {!! session('status') !!}
+                    </p>
+                </div>
+            </div>
+        </div>
+    @endif
     <main class="ps-main">
         <div class="container">
             <h3 class="ps-heading mb-35"><span> Login </span> to your account</h3>
@@ -105,7 +118,7 @@
                             <div class="ps-checkbox ps-checkbox--inline">
                                 <input class="form-control" type="checkbox" id="remember" name="remember" />
                                 <label for="remember">Remember Me</label>
-                            </div><a href="{{ route('password.request') }}" target="_blank">Forgot password</a>
+                            </div><a href="{{ url(FORGOT_PASSWORD) }}" target="_blank">Forgot password</a>
                         </div>
                        <div class="form-group recaptcha">{!! app('captcha')->display($attributes = [],
                                                    $lang = []) !!}
