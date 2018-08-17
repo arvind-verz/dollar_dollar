@@ -260,17 +260,6 @@
                     <?php
                     $ads = $product->ads;
                     ?>
-                    @if($products->count()>=4)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT && $j==4)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                            alt=""></a>
-                            </div>
-                        @endif
-                    @endif
                     @if($page->slug==FOREIGN_CURRENCY_DEPOSIT && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
@@ -900,6 +889,27 @@
                                                                             </div>
                         </div>
                     </div>
+                    @if(count($products)>=3)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT_MODE && $j==3)
+                            <div class="ps-poster-popup">
+                                <!-- <div class="close-popup">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </div> -->
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                            alt=""></a>
+                            </div>
+                        @endif
+                    @elseif(empty($remainingProducts->count()) && $j==$products->count())
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT_MODE)
+                            <div class="ps-poster-popup">
+                                <!-- <div class="close-popup">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </div> -->
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                            alt=""></a>
+                            </div>
+                        @endif
+                    @endif
                     @php $j++; @endphp
                 @endforeach
             @else
@@ -910,27 +920,7 @@
             @if($remainingProducts->count())
                 <?php $j = 1;?>
                 @foreach($remainingProducts as $product)
-                    @if($products->count()<4 && $remainingProducts->count()>=4)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT && $j==4)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                            alt=""></a>
-                            </div>
-                        @endif
-                    @else
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                            alt=""></a>
-                            </div>
-                        @endif
-                    @endif
+                    
                     @if($page->slug==FOREIGN_CURRENCY_DEPOSIT && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
@@ -1558,6 +1548,27 @@
                                                                             </div>
                         </div>
                     </div>
+                    @if($products->count()<3 && $remainingProducts->count()>=3)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT_MODE && $j==3)
+                            <div class="ps-poster-popup">
+                                <!-- <div class="close-popup">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </div> -->
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                            alt=""></a>
+                            </div>
+                        @endif
+                    @elseif(empty($products->count()) && $j==$remainingProducts->count())
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT_MODE)
+                            <div class="ps-poster-popup">
+                                <!-- <div class="close-popup">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </div> -->
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                            alt=""></a>
+                            </div>
+                        @endif
+                    @endif
                     @php $j++; @endphp
                 @endforeach
             @endif
