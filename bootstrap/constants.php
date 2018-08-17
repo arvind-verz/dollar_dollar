@@ -28,7 +28,7 @@ define('PROMOTION', 'Promotion');
 
 //set mail name
 define('ADMIN_EMAIL', 'nicckk3@gmail.com');
-define('ENQUIRY_EMAIL', 'enquiry@speedo.com.sg');
+define('ENQUIRY_EMAIL', '');
 
 //Activity log status
 define('CREATE', 'Created');
