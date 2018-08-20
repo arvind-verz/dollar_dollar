@@ -502,6 +502,7 @@ class PagesFrontController extends Controller
 
             $products = collect($filterProducts);
         }
+
         if ($products->count()) {
 
             if ($sortBy == MINIMUM) {
@@ -2886,6 +2887,7 @@ class PagesFrontController extends Controller
         }
         $products = collect($filterProducts);
         $remainingProducts = collect($remainingProducts);
+        //dd($sortBy,$filter);
         if ($products->count()) {
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
@@ -2899,7 +2901,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('total_interest');
+                    $products = $products->sortByDesc('upto_interest_rate');
                 } elseif ($filter == CRITERIA) {
                     $products = $products->sortByDesc('promotion_period');
                 }
