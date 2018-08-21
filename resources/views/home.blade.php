@@ -94,7 +94,7 @@
                      data-owl-item-sm="6" data-owl-item-md="7" data-owl-item-lg="8" data-owl-duration="1000"
                      data-owl-mousedrag="on">
                     @foreach($brands as $brand)
-                        <a href="{{isset($brand->brand_link) ? $brand->brand_link : '#'}}" target="_blank"><img
+                        <a href="{{isset($brand->brand_link) ? $brand->brand_link : '#'}}" target="_blank" class="active"><img
                                     src="{{ asset($brand->brand_logo) }}" style="padding:19px;" alt=""></a>
                     @endforeach
 
@@ -123,7 +123,7 @@
                     <div class="ps-tab active" id="tab-1">
                         <div class="ps-block--desposit">
                             <div class="ps-block__header">
-                                <h3><strong>Fixed</strong>Deposit</h3>
+                                <h3><strong>Fixed Deposit</strong></h3>
 
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
@@ -460,7 +460,7 @@
                     <div class="ps-tab" id="tab-2">
                         <div class="ps-block--desposit">
                             <div class="ps-block__header">
-                                <h3><strong>Saving</strong>Deposit</h3>
+                                <h3><strong>Saving Deposit</strong></h3>
 
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
@@ -805,7 +805,7 @@
                     <div class="ps-tab" id="tab-3">
                         <div class="ps-block--desposit">
                             <div class="ps-block__header">
-                                <h3><strong>Wealth</strong>Deposit</h3>
+                                <h3><strong>Wealth Deposit</strong></h3>
 
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
@@ -1151,7 +1151,7 @@
                     <div class="ps-tab" id="tab-4">
                         <div class="ps-block--desposit">
                             <div class="ps-block__header">
-                                <h3><strong>All in One</strong>Deposit</h3>
+                                <h3><strong>All in One Deposit</strong></h3>
 
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
@@ -1501,7 +1501,7 @@
                     <div class="ps-tab" id="tab-5">
                         <div class="ps-block--desposit">
                             <div class="ps-block__header">
-                                <h3><strong>Foreign Currency</strong>Deposit</h3>
+                                <h3><strong>Foreign Currency Deposit</strong></h3>
 
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">

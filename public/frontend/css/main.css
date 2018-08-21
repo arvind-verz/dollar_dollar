@@ -5561,3 +5561,15 @@ span.ps-post__meta a {
 .ps-slider--feature-product .ps-block--short-product{
         padding: 38px 10px;
 }
+
+ .ps-home--links .active .ps-block--home-link:before {
+    visibility: visible;
+    opacity: 1;
+}
+.ps-home--links a.active .ps-block--home-link {
+    color: #fdb515;
+}
+
+#logo-detail .product-row-01 {
+    margin-top: 20px;
+}
