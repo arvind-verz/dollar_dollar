@@ -2911,7 +2911,7 @@ class PagesFrontController extends Controller
                         $productRange->criteria_a_highlight = false;
                         $productRange->criteria_b_highlight = false;
                         if ($placement >= $productRange->min_range && $placement <= $productRange->max_range) {
-                            $productRange->$highlight = true;
+                            if ($status == true) {$productRange->$highlight = true;}
                             $totalInterest = $productRange->$criteria;
                             $interestEarn = round(($placement * 12) * ($totalInterest / 100), 2);
                         }
