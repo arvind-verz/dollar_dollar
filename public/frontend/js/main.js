@@ -264,8 +264,15 @@ $(".search_type").on("click", function () {
     document.getElementById('search-form').submit();
 
 });
+$(".sort-by").on("change", function () {
+    document.getElementById('search-form').submit();
 
-$("body").on("click", "img.brand_img", function () {
+});
+$(".currency").on("change", function () {
+    document.getElementById('search-form').submit();
+
+});
+/*$("body").on("click", "img.brand_img", function () {
     if ($(this).prev().prop("checked")) {
         $("input[name='brand_id']").prop("checked", false);
         $("span.brand img").css("border", "none");
@@ -277,7 +284,7 @@ $("body").on("click", "img.brand_img", function () {
         $(this).css({"border": "1px solid #000", "padding": "4px 20px"});
     }
     document.getElementById('search-form').submit();
-});
+});*/
 $(window).on('load resize', function() {
     resizeHeader();
 });
