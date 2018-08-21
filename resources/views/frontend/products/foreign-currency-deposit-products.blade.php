@@ -131,7 +131,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
-                                        <select class="form-control" name="currency">
+                                        <select class="form-control currency" name="currency">
                                             <option value="">All</option>
                                             @if(count($currencies))
                                                 @foreach($currencies as $currency)

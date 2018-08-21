@@ -219,8 +219,7 @@ class PagesFrontController extends Controller
                     /*sent all pages detail into this function and than return to blade file*/
                     return $this->termsCondition($details);
 
-                }
-                elseif ($slug == FORGOT_PASSWORD) {
+                } elseif ($slug == FORGOT_PASSWORD) {
                     $details = [];
                     $details['brands'] = $brands;
                     $details['page'] = $page;
@@ -375,8 +374,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if(empty($searchValue))
-                {
+                if (empty($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
@@ -751,8 +749,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if(empty($searchValue))
-                {
+                if (empty($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
@@ -1079,7 +1076,7 @@ class PagesFrontController extends Controller
                             $totalInterests[] = $totalInterest;
                             $lastCalculatedAmount = $productRange->max_range;
 
-                        } elseif($lastCalculatedAmount < $placement) {
+                        } elseif ($lastCalculatedAmount < $placement) {
 
                             $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
                             $interestEarns[] = $interestEarn;
@@ -1364,8 +1361,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if(empty($searchValue))
-                {
+                if (empty($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
@@ -1849,6 +1845,8 @@ class PagesFrontController extends Controller
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'currency.code as currency_code', 'currency.icon as currency_icon', 'currency.currency as currency_namer')
             ->get();
 
+
+
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands = $details['brands'];
         $currencies = null;
@@ -1872,6 +1870,9 @@ class PagesFrontController extends Controller
         } else {
             $searchFilter = $request;
         }
+        if ($currency) {
+            $products = $products->where('currency',$currency);
+        }
         foreach ($products as $key => &$product) {
             //dd($product);
             $defaultSearch = DefaultSearch::where('promotion_id', FOREIGN_CURRENCY_DEPOSIT)->first();
@@ -1891,8 +1892,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if(empty($searchValue))
-                {
+                if (empty($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
@@ -2170,7 +2170,7 @@ class PagesFrontController extends Controller
                     if (count($searchFilter)) {
                         if (($searchValue >= $productRange->min_range) && ($searchValue > 0)) {
 
-                            if (is_null($brandId) || ($brandId == $product->bank_id)) {
+                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && (is_null($currency) || ($currency == $product->currency))) {
                                 $highlight = $k;
                                 $status = true;
                             }
@@ -2218,7 +2218,7 @@ class PagesFrontController extends Controller
                             $totalInterests[] = $totalInterest;
                             $lastCalculatedAmount = $productRange->max_range;
 
-                        } elseif($lastCalculatedAmount < $placement) {
+                        } elseif ($lastCalculatedAmount < $placement) {
                             $interestEarn = round(($placement - $lastCalculatedAmount) * ($totalInterest / 100), 2);
                             $interestEarns[] = $interestEarn;
                             $totalInterests[] = $totalInterest;
@@ -2514,8 +2514,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if(empty($searchValue))
-                {
+                if (empty($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
@@ -2932,7 +2931,9 @@ class PagesFrontController extends Controller
                         $productRange->criteria_a_highlight = false;
                         $productRange->criteria_b_highlight = false;
                         if ($placement >= $productRange->min_range && $placement <= $productRange->max_range) {
-                            if ($status == true) {$productRange->$highlight = true;}
+                            if ($status == true) {
+                                $productRange->$highlight = true;
+                            }
                             $totalInterest = $productRange->$criteria;
                             $interestEarn = round(($placement * 12) * ($totalInterest / 100), 2);
                         }
@@ -2995,7 +2996,7 @@ class PagesFrontController extends Controller
         }
 
         //dd($products);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage","toolTips"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage", "toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)
