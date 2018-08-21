@@ -163,7 +163,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-                                        <select class="form-control" name="sort_by">
+                                        <select class="form-control sort-by" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
                                                     @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
@@ -287,6 +287,9 @@
                     <?php
                     $productRanges = $product->product_range;
                     $ads = $product->ads_placement;
+                    /*echo 'Interest: ' . $product->upto_interest_rate . '<br/>';
+                    echo 'Placement: ' . $product->minimum_placement_amount . '<br/>';
+                    echo 'Tenure: ' . $product->max_tenure . '<br/>'; */
                     //dd($products);
                     ?>
                     @if($page->slug==AIO_DEPOSIT_MODE && isset($ads[3]->ad_horizontal_image_popup_top))

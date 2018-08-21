@@ -109,10 +109,10 @@
                                                @elseif(empty($searchFilter)) checked @endif>Placement
                                     </button>
                                     <button type="button"
-                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='tenure') active @endif">
-                                        <input type="radio" name="filter" value="tenure"
+                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) active @endif">
+                                        <input type="radio" name="filter" value="{{TENURE}}"
                                                style="opacity: 0;position: absolute;"
-                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']=='tenure') checked @endif>tenure
+                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) checked @endif>tenure
                                     </button>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                        <select class="form-control" name="sort_by">
+                                        <select class="form-control sort-by" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
                                                     @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
