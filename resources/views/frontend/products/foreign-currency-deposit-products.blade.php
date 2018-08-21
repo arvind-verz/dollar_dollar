@@ -144,7 +144,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
-                                        <select class="form-control" name="sort_by">
+                                        <select class="form-control sort-by" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
                                                     @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
