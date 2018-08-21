@@ -39,7 +39,7 @@
                                         {{Form::label('logo', 'Logo',['class'=>'col-sm-2 control-label'])}}
                                         <div class="@if(isset($systemSetting->logo) && ($systemSetting->logo != ''))col-sm-8 @else col-sm-10 @endif">
                                             {{Form::file('logo', ['class' => 'form-control', 'placeholder' => ''])}}
-                                            <p class="text-muted"><strong>Note:</strong> Logo size should be 260*50 for better display</p>
+                                            <p class="text-muted"><strong>Note:</strong> Logo size should be 260*55 for better display</p>
                                         </div>
                                         @if(isset($systemSetting->logo) && ($systemSetting->logo != ''))
                                             <div class=" col-sm-2">
