@@ -5548,3 +5548,16 @@ span.ps-post__meta a {
 }
 
 .hasDatepicker {position: relative; z-index:100;}
+
+.ps-block--home-signup{
+    width: 100%;
+    max-width: 500px;
+    padding: 45px 20px;
+}
+.ps-block--home-signup .ps-btn{
+        padding: 15px 39px;
+}
+
+.ps-slider--feature-product .ps-block--short-product{
+        padding: 38px 10px;
+}
