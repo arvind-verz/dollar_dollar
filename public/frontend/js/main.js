@@ -302,3 +302,14 @@ $(document).ready(function() {
         window.dispatchEvent(new Event('resize'));
     });
 });
+
+$(document).ready(function() {
+ $(".ps-home--links a").eq(0).addClass("active");
+})
+$(window).on('load resize', function() {
+    $('.ps-slider--home').on('changed.owl.carousel', function(e) {
+        var n = $(".ps-slider--home .owl-dots .owl-dot.active").index();
+        $(".ps-home--links a").removeClass("active");
+        $(".ps-home--links a").eq(n).addClass("active");
+    });
+});
