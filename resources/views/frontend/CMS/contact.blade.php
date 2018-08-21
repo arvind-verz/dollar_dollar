@@ -103,7 +103,7 @@ $banners = Helper::getBanners($slug);
                                 <div class="form-icon">
                                     <i class="fa fa-globe">
                                     </i>
-                                    <input class="form-control" name="country_code" placeholder="+65" type="text">
+                                    <input class="form-control" name="country_code" placeholder="+65" type="text" value="+65">
                                     </input>
                                 </div>
                                 @if ($errors->has('country_code'))

@@ -1863,7 +1863,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                     <div class="ps-section__left">
                         <div class="ps-section__header">
-                            <h3 class="ps-heading">Lastest <strong> Blog</strong></h3>
+                            <a href="{{ url('blog-list') }}"><h3 class="ps-heading"><strong>Lastest  Blog</strong></h3></a>
 
                             <div class="ps-slider-navigation" data-slider="ps-slider--home-blog"><a class="ps-prev"
                                                                                                     href="javascript:void(0);"><i
