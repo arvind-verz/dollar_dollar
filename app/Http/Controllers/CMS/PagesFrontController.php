@@ -375,6 +375,10 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
+                if(empty($searchValue))
+                {
+                    $searchValue = $defaultPlacement;
+                }
                 $searchFilter['search_value'] = $searchValue;
 
             }
@@ -747,6 +751,10 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
+                if(empty($searchValue))
+                {
+                    $searchValue = $defaultPlacement;
+                }
                 $searchFilter['search_value'] = $searchValue;
             }
             $productRanges = json_decode($product->product_range);
@@ -1356,6 +1364,10 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
+                if(empty($searchValue))
+                {
+                    $searchValue = $defaultPlacement;
+                }
                 $searchFilter['search_value'] = $searchValue;
             }
             $productRanges = json_decode($product->product_range);
@@ -1879,6 +1891,10 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
+                if(empty($searchValue))
+                {
+                    $searchValue = $defaultPlacement;
+                }
                 $searchFilter['search_value'] = $searchValue;
             }
             $productRanges = json_decode($product->product_range);
@@ -2412,7 +2428,8 @@ class PagesFrontController extends Controller
     public
     function aio($request)
     {
-        //dd($request);
+
+
         $ads_manage = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
@@ -2497,6 +2514,10 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
+                if(empty($searchValue))
+                {
+                    $searchValue = $defaultPlacement;
+                }
                 $searchFilter['search_value'] = $searchValue;
                 $salary = $searchFilter['salary'] = isset($searchFilter['salary']) ? (int)$searchFilter['salary'] : $defaultSalary;
                 $giro = $searchFilter['giro'] = isset($searchFilter['giro']) ? (int)$searchFilter['giro'] : $defaultGiro;
