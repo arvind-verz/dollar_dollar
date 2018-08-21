@@ -12,7 +12,7 @@ use App\PromotionProducts;
 use App\systemSettingLegendTable;
 use App\ToolTip;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\AdsManagement;
@@ -486,14 +486,17 @@ class PagesFrontController extends Controller
             $placementPeriod = explode("|", $product->promotion_period);
 
             $maxTenure = 0;
+            $minTenure = 0;
             if (count($placementPeriod)) {
                 $placementTenures = [0];
                 foreach ($placementPeriod as $period) {
                     $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                 }
                 $maxTenure = max($placementTenures);
+                $minTenure = min($placementTenures);
             }
             $product->max_tenure = $maxTenure;
+            $product->min_tenure = $minTenure;
 
 
         }
@@ -511,7 +514,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('upto_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortBy('max_tenure');
+                    $products = $products->sortBy('min_tenure');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -533,7 +536,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortBy('max_tenure');
+                    $remainingProducts = $remainingProducts->sortBy('min_tenure');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -854,14 +857,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
 
                 if ($status == true) {
                     //dd($product);
@@ -908,7 +914,7 @@ class PagesFrontController extends Controller
                     if ($placement >= $productRange->min_range &&
                         $placement <= $productRange->max_range
                     ) {
-                        if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F2])) {
+                        if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F2])) {
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                             $product->max_tenure = $tenure;
@@ -925,14 +931,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
 
                 if ($status == true) {
                     $filterProducts[] = $product;
@@ -982,14 +991,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -1078,14 +1090,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
 
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
@@ -1187,14 +1202,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -1215,7 +1233,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('upto_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortBy('max_tenure');
+                    $products = $products->sortBy('min_tenure');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -1237,7 +1255,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortBy('max_tenure');
+                    $remainingProducts = $remainingProducts->sortBy('min_tenure');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -1408,14 +1426,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
 
                 if ($status == true) {
                     $filterProducts[] = $product;
@@ -1465,14 +1486,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
 
                 if ($status == true) {
                     $filterProducts[] = $product;
@@ -1563,14 +1587,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
 
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
@@ -1672,14 +1699,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -1700,7 +1730,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('upto_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortBy('max_tenure');
+                    $products = $products->sortBy('min_tenure');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -1722,7 +1752,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortBy('max_tenure');
+                    $remainingProducts = $remainingProducts->sortBy('min_tenure');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -1864,6 +1894,7 @@ class PagesFrontController extends Controller
             $product->remaining_days = $tenure; // remaining in days
             $status = false;
             $product->max_tenure = 0;
+            $product->min_tenure = 0;
 
             if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F1])) {
                 $tenures = json_decode($product->tenure);
@@ -1959,14 +1990,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
                 if ($status == true) {
                     //dd($product);
                     $filterProducts[] = $product;
@@ -2028,14 +2062,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
 
                 if ($status == true) {
                     $filterProducts[] = $product;
@@ -2085,14 +2122,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -2180,14 +2220,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
 
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
@@ -2289,14 +2332,17 @@ class PagesFrontController extends Controller
                 $placementPeriod = explode("|", $product->promotion_period);
 
                 $maxTenure = 0;
+                $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [0];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
                     $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
                 }
                 $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -2317,7 +2363,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('upto_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortBy('max_tenure');
+                    $products = $products->sortBy('min_tenure');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -2339,7 +2385,7 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortBy('max_tenure');
+                    $remainingProducts = $remainingProducts->sortBy('min_tenure');
                 }
             } else {
                 if ($filter == PLACEMENT) {
