@@ -132,23 +132,25 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                        <select class="form-control sort-by" name="sort_by">
-                                            <option value="">Sort by</option>
-                                            <option value="1"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
-                                                Ascending
-                                            </option>
-                                            <option value="2"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
-                                                Descending
-                                            </option>
-                                        </select>
+                                        <div class="form-group  ">
+                                            <select class="form-control sort-by" name="sort_by">
+                                                <option value="">Sort by</option>
+                                                <option value="1"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
+                                                    Ascending
+                                                </option>
+                                                <option value="2"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
+                                                    Descending
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group  ">
-                                            <a class="btn refresh form-control " href="{{url(WEALTH_DEPOSIT_MODE)}}/#logo-detail" > <i class="fa fa-refresh"></i></a>
-
-
+                                            <a class="btn refresh form-control "
+                                               href="{{url(WEALTH_DEPOSIT_MODE)}}/#logo-detail"> <i
+                                                        class="fa fa-refresh"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -158,8 +160,8 @@
                 </form>
             </div>
             <!-- Search form end -->
-            @if($products->count())
-                <div class="product-row-01">
+            @if(count($products))
+                <div class="product-row-01 clearfix">
                     @php $i = 1;$featured = []; @endphp
                     @foreach($products as $product)
                         @if($product->featured==1)
@@ -168,16 +170,38 @@
                                 <div class="ps-slider--feature-product saving">
                                     <div class="ps-block--short-product second highlight" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->upto_interest_rate  }}%</strong>
-                                        </h4>
+                                        @if(isset($searchFilter['filter']))
+                                            <h4>
+                                                @if($searchFilter['filter']==INTEREST)
+                                                    up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                                @endif
+                                                @if($searchFilter['filter']==PLACEMENT)
+                                                    Min: <strong>
+                                                        SGD
+                                                        ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                    </strong>
+                                                @endif
+                                                @if($searchFilter['filter']==TENURE)
+                                                    @if($product->promotion_end == null)
+                                                        <strong>{{ONGOING}}</strong>
+                                                    @else
+                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                    @endif
 
+                                                @endif
+                                                @if($searchFilter['filter']==CRITERIA)
+                                                    <strong> {{ $product->promotion_period }}</strong> Criteria
+                                                @endif
+                                            </h4>
+                                        @endif
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p><strong>Min:</strong> SGD
-                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}</p>
+                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong> SGD
+                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                            </p>
 
-                                            <p class="highlight">{{ $product->promotion_period }} Months</p>
+                                            <p class="@if($searchFilter['filter']==TENURE) highlight @endif">{{ $product->promotion_period }} {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
                                     </div>
@@ -203,8 +227,8 @@
                         <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true"
                              data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true"
                              data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
-                             data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}" data-owl-item-lg="1"
-                             data-owl-duration="1000" data-owl-mousedrag="on"
+                             data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}"
+                             data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on"
                              data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
                              data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                             @php $i = 1; @endphp
@@ -212,18 +236,41 @@
                                 @if($product->featured==0)
                                     <div class="ps-block--short-product second" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->upto_interest_rate  }}%</strong>
-                                        </h4>
+                                        @if(isset($searchFilter['filter']))
+                                            <h4>
+                                                @if($searchFilter['filter']==INTEREST)
+                                                    up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                                @endif
+                                                @if($searchFilter['filter']==PLACEMENT)
+                                                    Min: <strong>
+                                                        SGD
+                                                        ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                    </strong>
+                                                @endif
+                                                @if($searchFilter['filter']==TENURE)
+                                                    @if($product->promotion_end == null)
+                                                        <strong>{{ONGOING}}</strong>
+                                                    @else
+                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                    @endif
+
+                                                @endif
+                                                @if($searchFilter['filter']==CRITERIA)
+                                                    <strong> {{ $product->promotion_period }}</strong> Criteria
+                                                @endif
+                                            </h4>
+                                        @endif
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p><strong>Min:</strong> SGD
-                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}</p>
+                                            <p class=" @if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong> SGD
+                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                            </p>
 
-                                            <p class="highlight">{{ $product->promotion_period }} Months</p>
+                                            <p class=" @if($searchFilter['filter']==TENURE) highlight @endif">{{ $product->promotion_period }} {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                         </div>
-                                        <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                        <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
                                     </div>
                                     @php $i++; @endphp
                                 @endif
@@ -254,7 +301,7 @@
                     $ads = $product->ads;
                     //dd($products);
                     ?>
-                    
+
                     @if($page->slug=='wealth-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
@@ -864,7 +911,9 @@
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
@@ -874,7 +923,9 @@
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
@@ -893,7 +944,7 @@
             @if($remainingProducts->count())
                 <?php $j = 1;?>
                 @foreach($remainingProducts as $product)
-                    
+
                     @if($page->slug=='wealth-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
@@ -1502,7 +1553,9 @@
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
@@ -1512,7 +1565,9 @@
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
