@@ -117,11 +117,12 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                                 @elseif(!isset($searchFilter['filter']))$@endif
-                                                <input class="form-control prefix_dollar only_numeric"
+                                                <input class="form-control prefix_dollar only_numeric" style="padding-left: 10px;
+    padding-right: 30px;"
                                                        name="search_value" type="text"
                                                        placeholder=""
                                                        value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}">
@@ -130,7 +131,7 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <select class="form-control currency" name="currency">
                                             <option value="">All</option>
                                             @if(count($currencies))
@@ -155,6 +156,13 @@
                                                 Descending
                                             </option>
                                         </select>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
+                                        <div class="form-group  ">
+                                            <a class="btn refresh form-control " href="{{url(FOREIGN_CURRENCY_DEPOSIT_MODE)}}/#logo-detail" > <i class="fa fa-refresh"></i></a>
+
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
