@@ -169,23 +169,25 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                        <select class="form-control sort-by" name="sort_by">
-                                            <option value="">Sort by</option>
-                                            <option value="1"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
-                                                Ascending
-                                            </option>
-                                            <option value="2"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
-                                                Descending
-                                            </option>
-                                        </select>
+                                        <div class="form-group ">
+                                            <select class="form-control sort-by" name="sort_by">
+                                                <option value="">Sort by</option>
+                                                <option value="1"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
+                                                    Ascending
+                                                </option>
+                                                <option value="2"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
+                                                    Descending
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
-                                        <div class="form-group  ">
-                                            <a class="btn refresh form-control " style="width: 73px;" href="{{url(AIO_DEPOSIT_MODE)}}/#logo-detail" > <i class="fa fa-refresh"></i></a>
-
-
+                                        <div class="form-group ">
+                                            <a class="btn refresh form-control " style="width: 73px;"
+                                               href="{{url(AIO_DEPOSIT_MODE)}}/#logo-detail"> <i
+                                                        class="fa fa-refresh"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -884,26 +886,30 @@
                                         </div>
                                     @endif
                                     @if(count($products)>=3)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==3)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                            alt=""></a>
-                            </div>
-                        @endif
-                    @elseif(empty($remainingProducts->count()) && $j==$products->count())
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                            alt=""></a>
-                            </div>
-                        @endif
-                    @endif
+                                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==3)
+                                            <div class="ps-poster-popup">
+                                                <!-- <div class="close-popup">
+                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                </div> -->
+                                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                                   target="_blank"><img
+                                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                                            alt=""></a>
+                                            </div>
+                                        @endif
+                                    @elseif(empty($remainingProducts->count()) && $j==$products->count())
+                                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE)
+                                            <div class="ps-poster-popup">
+                                                <!-- <div class="close-popup">
+                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                </div> -->
+                                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                                   target="_blank"><img
+                                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                                            alt=""></a>
+                                            </div>
+                                        @endif
+                                    @endif
                                     @php $j++; @endphp
                                     @endforeach
                                 @else
@@ -944,8 +950,9 @@
                                                                 alt="">
 
                                                         @if(!empty($product->apply_link_status))
-                                                            <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                                               href="{{$product->apply_link}}">Apply
+                                                            <div class="ps-product__action"><a
+                                                                        class="ps-btn ps-btn--red"
+                                                                        href="{{$product->apply_link}}">Apply
                                                                     Now</a></div>@endif
                                                     </div>
                                                     <div class="ps-product__content">
@@ -1076,8 +1083,9 @@
                                                                     src="{{ asset($product->brand_logo) }}" alt="">
 
                                                             @if(!empty($product->apply_link_status))
-                                                                <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                                                   href="{{$product->apply_link}}">Apply
+                                                                <div class="ps-product__action"><a
+                                                                            class="ps-btn ps-btn--red"
+                                                                            href="{{$product->apply_link}}">Apply
                                                                         Now</a></div>@endif
                                                         </div>
                                                         <div class="ps-product__content">
@@ -1209,8 +1217,9 @@
                                                                         alt="">
 
                                                                 @if(!empty($product->apply_link_status))
-                                                                    <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                                                       href="{{$product->apply_link}}">Apply
+                                                                    <div class="ps-product__action"><a
+                                                                                class="ps-btn ps-btn--red"
+                                                                                href="{{$product->apply_link}}">Apply
                                                                             Now</a></div>@endif
                                                             </div>
                                                             <div class="ps-product__content">
@@ -1437,8 +1446,9 @@
                                                                             alt="">
 
                                                                     @if(!empty($product->apply_link_status))
-                                                                        <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                                                           href="{{$product->apply_link}}">Apply
+                                                                        <div class="ps-product__action"><a
+                                                                                    class="ps-btn ps-btn--red"
+                                                                                    href="{{$product->apply_link}}">Apply
                                                                                 Now</a></div>@endif
                                                                 </div>
                                                                 <div class="ps-product__content">
@@ -1540,26 +1550,30 @@
                                                             </div>
                                                         @endif
                                                         @if($products->count()<3 && $remainingProducts->count()>=3)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==3)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                            alt=""></a>
-                            </div>
-                        @endif
-                    @elseif(empty($products->count()) && $j==$remainingProducts->count())
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                            alt=""></a>
-                            </div>
-                        @endif
-                    @endif
+                                                            @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==3)
+                                                                <div class="ps-poster-popup">
+                                                                    <!-- <div class="close-popup">
+                                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                                    </div> -->
+                                                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                                                       target="_blank"><img
+                                                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                                                                alt=""></a>
+                                                                </div>
+                                                            @endif
+                                                        @elseif(empty($products->count()) && $j==$remainingProducts->count())
+                                                            @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE)
+                                                                <div class="ps-poster-popup">
+                                                                    <!-- <div class="close-popup">
+                                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                                    </div> -->
+                                                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                                                       target="_blank"><img
+                                                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                                                                alt=""></a>
+                                                                </div>
+                                                            @endif
+                                                        @endif
                                                         @php $j++; @endphp
                                                         @endforeach
                                                     @endif

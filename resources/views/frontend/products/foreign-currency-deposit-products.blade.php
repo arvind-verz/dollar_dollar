@@ -145,21 +145,25 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
-                                        <select class="form-control sort-by" name="sort_by">
-                                            <option value="">Sort by</option>
-                                            <option value="1"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
-                                                Ascending
-                                            </option>
-                                            <option value="2"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
-                                                Descending
-                                            </option>
-                                        </select>
+                                        <div class="form-group  ">
+                                            <select class="form-control sort-by" name="sort_by">
+                                                <option value="">Sort by</option>
+                                                <option value="1"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
+                                                    Ascending
+                                                </option>
+                                                <option value="2"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
+                                                    Descending
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group  ">
-                                            <a class="btn refresh form-control " href="{{url(FOREIGN_CURRENCY_DEPOSIT_MODE)}}/#logo-detail" > <i class="fa fa-refresh"></i></a>
+                                            <a class="btn refresh form-control "
+                                               href="{{url(FOREIGN_CURRENCY_DEPOSIT_MODE)}}/#logo-detail"> <i
+                                                        class="fa fa-refresh"></i></a>
 
 
                                         </div>
@@ -778,7 +782,8 @@
                                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
                                                                                 <span>
-                                                                            Total interest rate {{ $product->total_interest }}%
+                                                                            Total interest rate {{ $product->total_interest }}
+                                                                                    %
                                                                         </span>
                                                                                 <span>Based on effective interest Rate</span>
                                                                             </h2>
@@ -903,7 +908,9 @@
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
@@ -913,7 +920,9 @@
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
@@ -928,7 +937,7 @@
             @if($remainingProducts->count())
                 <?php $j = 1;?>
                 @foreach($remainingProducts as $product)
-                    
+
                     @if($page->slug==FOREIGN_CURRENCY_DEPOSIT && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
@@ -1437,7 +1446,8 @@
                                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
                                                                                  <span>
-                                                                            Total interest rate {{ $product->total_interest }}%
+                                                                            Total interest rate {{ $product->total_interest }}
+                                                                                     %
                                                                         </span>
                                                                                 <span>Based on effective interest Rate</span>
                                                                             </h2>
@@ -1562,7 +1572,9 @@
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
@@ -1572,7 +1584,9 @@
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}" target="_blank"><img src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                   target="_blank"><img
+                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
                             </div>
                         @endif
