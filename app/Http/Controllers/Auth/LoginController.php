@@ -15,6 +15,7 @@ use DB;
 use App\Page;
 use App\ProductManagement;
 use App\User;
+use App\AdsManagement;
 
 
 class LoginController extends Controller
@@ -113,6 +114,12 @@ class LoginController extends Controller
       $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
         ->get();
         //dd($user_products);
+        $ads = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'account')
+                    ->inRandomOrder()
+                    ->limit(1)
+                    ->get();
 
         DB::enableQueryLog();
         $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
@@ -137,7 +144,7 @@ class LoginController extends Controller
 
             //get slug
             $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
-        return view('frontend.user.change-password', compact("brands", "page", "systemSetting", "banners"));
+        return view('frontend.user.change-password', compact("brands", "page", "systemSetting", "banners", 'ads'));
         }
     }
 

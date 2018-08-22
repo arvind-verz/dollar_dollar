@@ -86,7 +86,7 @@
                             @endif
                             <div class="ps-block--box no-border">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">Recently Added Products</h5><!-- <a href="#">View all</a> -->
+                                    <h5><img src="img/icons/file.png" alt="">All my Accounts</h5><!-- <a href="#">View all</a> -->
                                 </div>
                                 <div class="ps-block__content">
                                     <div class="ps-table-wrap">
@@ -140,9 +140,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ps-block--box no-border">
+                            <!-- <div class="ps-block--box no-border">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><!-- <a href="#">View all</a> -->
+                                    <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><a href="#">View all</a>
                                 </div>
                                 <div class="ps-block__content">
                                     <div class="ps-table-wrap">
@@ -197,7 +197,7 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
