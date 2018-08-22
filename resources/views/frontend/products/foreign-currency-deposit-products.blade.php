@@ -131,7 +131,9 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
+
                                         <select class="form-control currency" name="currency">
                                             <option value="">All</option>
                                             @if(count($currencies))

@@ -168,7 +168,9 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+
                                         <select class="form-control sort-by" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
