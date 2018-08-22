@@ -2382,7 +2382,7 @@ button {
 }
 
 .ps-sidebar {
-    margin-bottom: 30px;
+    margin-bottom: 0;
     max-width: 500px;
 }
 
