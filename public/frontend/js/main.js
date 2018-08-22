@@ -312,6 +312,12 @@ $(document).ready(function() {
 
 $(document).ready(function() {
  $(".ps-home--links a").eq(0).addClass("active");
+ if($(".ps-block--deposit-filter .ps-form--filter .owl-stage .owl-item").length > 9){
+        $(".ps-block--deposit-filter .ps-form--filter .owl-controls").show();
+    }
+    else{
+        $(".ps-block--deposit-filter .ps-form--filter .owl-controls").hide();
+    }
 })
 $(window).on('load resize', function() {
     $('.ps-slider--home').on('changed.owl.carousel', function(e) {

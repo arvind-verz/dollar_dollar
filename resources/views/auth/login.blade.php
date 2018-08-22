@@ -133,8 +133,8 @@
                                 <div class="col-xs-6">
                                     <button type="submit" class="ps-btn">Login</button>
                                 </div>
-                                <div class="col-xs-6"><a class="ps-btn ps-btn--outline" href="@if(!empty($redirect_url)) {{ url('registration_page', ['redirect_url' => $redirect_url]) }} @else {{ url('registration') }} @endif">Signup</a></div>
-                            </div><a class="ps-btn ps-btn--blue" href="{{ url('login/facebook/'.$redirect_url) }}">Connect with Facebook</a>
+                                <div class="col-xs-6"><a class="ps-btn ps-btn--outline" href="@if(isset($redirect_url)) {{ url('registration_page', ['redirect_url' => $redirect_url]) }} @else {{ url('registration') }} @endif">Signup</a></div>
+                            </div><a class="ps-btn ps-btn--blue" href="{{ url('login/facebook') }}">Connect with Facebook</a>
                         </div>
                     </div>
                 </div>

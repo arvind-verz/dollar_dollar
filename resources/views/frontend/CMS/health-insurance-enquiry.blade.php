@@ -192,7 +192,7 @@
                     <div class="col-xs-3">
                         <div class="form-icon"><i class="fa fa-globe"></i>
                             <input class="form-control" type="text" placeholder="+65" name="country_code"
-                                   value="{{ old('country_code') ? old('country_code') : '+65' }}">
+                                   value="{{ old('country_code') ? old('country_code') : (Auth::user()->country_code) ? Auth::user()->country_code : '+65' }}">
                         </div>
                         @if ($errors->has('country_code'))
                             <span class="text-danger">

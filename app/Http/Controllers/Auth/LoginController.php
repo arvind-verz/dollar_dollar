@@ -165,6 +165,7 @@ class LoginController extends Controller
 
     public function redirectToProvider($provider)
     {
+
         return Socialite::driver($provider)->redirect();
     }
 
@@ -173,18 +174,11 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback($provider, $redirect)
+    public function handleProviderCallback($provider)
     {
-        $user = Socialite::driver($provider)->user();
-    //dd($user);
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-        if(empty($redirect)) {
-            return redirect($this->redirectTo);
-        }
-        else {
-            return redirect($redirect);
-        }
+        return Redirect::back();
     }
 
     function findOrCreateUser($user, $provider) {
