@@ -44,6 +44,8 @@
                                             <tr>
                                                 @if($type=='product')
                                                 <th>Product Page</th>
+                                                @elseif($type=='blog')
+                                                <th>Blog Page</th>
                                                 @endif
                                                 <th>Title</th>
                                                 <th>Ad Image</th>
@@ -56,7 +58,7 @@
                                             @if($ads->count())
                                                 @foreach($ads as $ad)
                                                     <tr>
-                                                        @if($type=='product')
+                                                        @if($type=='product' || $type=='blog')
                                                             <td>
                                                                 {{  $ad->page_type  }}
                                                             </td>

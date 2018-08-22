@@ -113,6 +113,7 @@
                         </div>
                         <div class="form-group">
                             <button type="submit" class="ps-btn">Submit</button>
+                            <a class="ps-btn ps-btn--blue" href="{{ url('login/facebook') }}">Connect with Facebook</a>
                         </div>
                     </div>
                 </div>

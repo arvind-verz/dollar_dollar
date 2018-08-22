@@ -40,5 +40,8 @@ function printBlogCategories($parentCategories, $parent = 0, $id, $deep = 0) {//
             ?>
         </ul>
     </div>
+    @if(count($ads))
+    <div class="ps-post__thumbnail ads"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
+    @endif
 </div>
 

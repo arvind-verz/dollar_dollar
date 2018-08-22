@@ -107,9 +107,18 @@
                             </div>
                         @endforeach
                     @endif
-                    <div class="ps-fanpage"><img src="img/post/share.jpg" alt=""></div>
+                    <div class="ps-fanpage">
+                        <div class="fb-page" data-href="https://www.facebook.com/dollardollar.sg/"
+                                 data-tabs="timeline" data-width="500" data-height="280" data-small-header="false"
+                                 data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                                <blockquote cite="https://www.facebook.com/dollardollar.sg/"
+                                            class="fb-xfbml-parse-ignore"><a
+                                            href="https://www.facebook.com/dollardollar.sg/">DollarDollar</a>
+                                </blockquote>
+                            </div>
+                    </div>
                     @if(count($ads))
-                    <div class="ps-post__thumbnail ads"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a></div>
+                    <div class="ps-post__thumbnail ads"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
                     @endif
                 </div>
             </div>
