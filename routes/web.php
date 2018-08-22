@@ -27,8 +27,8 @@ Route::get('/welcome', 'HomeController@index')->name('index');
 Route::get('/', 'HomeController@index')->name('/');
 /*End Home Module*/
 
-Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
-Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/{provider}/{redirect}', 'Auth\LoginController@redirectToProvider');
+Route::get('login/{provider}/{redirect}/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 /*User Module*/
