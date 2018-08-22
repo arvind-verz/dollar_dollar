@@ -43,6 +43,15 @@
                                         <option value="all-in-one-deposit-mode">All in One Deposit</option>
                                     </select>
                                 </div>
+                                @elseif($type=='blog')
+                                <div class="form-group">
+                                    <label>Blog Page</label>
+                                    <select class="form-control" name="page_type">
+                                        <option value="">Select</option>
+                                        <option value="blog">Blog</option>
+                                        <option value="blog-inner">Blog Inner</option>
+                                    </select>
+                                </div>
                                 @endif
                                 <div class="form-group">
                                     <label>Title</label>

@@ -92,7 +92,7 @@ class AdsController extends Controller
 
         $ads = new AdsManagement;
         $page_type = NULL;
-        if($request->page=='product')
+        if($request->page=='product' || $request->page=='blog')
         {
             $page_type = $request->page_type;
         }
@@ -207,7 +207,7 @@ class AdsController extends Controller
         }
 
         $page_type = NULL;
-        if($request->page=='product')
+        if($request->page=='product' || $request->page=='blog')
         {
             $page_type = $request->page_type;
         }

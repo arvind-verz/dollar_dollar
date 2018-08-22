@@ -43,6 +43,15 @@
                                         <option value="all-in-one-deposit-mode" @if($ads->page_type=='all-in-one-deposit-mode') selected @endif>All in One Deposit</option>
                                     </select>
                                 </div>
+                                @elseif($type=='blog')
+                                <div class="form-group">
+                                    <label>Blog Page</label>
+                                    <select class="form-control" name="page_type">
+                                        <option value="">Select</option>
+                                        <option value="blog" @if($ads->page_type=='blog') selected @endif>Blog</option>
+                                        <option value="blog-inner" @if($ads->page_type=='blog-inner') selected @endif>Blog Inner</option>
+                                    </select>
+                                </div>
                                 @endif
                                 <div class="form-group">
                                     <label>Title</label>
