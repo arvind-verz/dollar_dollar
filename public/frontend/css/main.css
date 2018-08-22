@@ -5577,3 +5577,7 @@ span.ps-post__meta a {
 .product-col-012{
      margin-left: 10px;
 }
+
+.default-case thead tr th, td {
+    text-transform: initial;
+}
