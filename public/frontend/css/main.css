@@ -5573,7 +5573,18 @@ span.ps-post__meta a {
 #logo-detail .product-row-01 {
     margin-top: 20px;
 }
-
+.refresh {
+    width: 60px;
+    height: 40px;
+    background-color: #3db54a;
+    color: #ffffff;
+    font-weight: 700;
+    padding-top: 8px;
+}
+.refresh:hover {
+    background-color: #fdb515;
+    color: #ffffff;
+    font-weight: 700;}
 .product-col-012{
      margin-left: 10px;
 }

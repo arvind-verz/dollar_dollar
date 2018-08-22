@@ -133,18 +133,24 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="ps-form__option">
-                                    <button type="button" style="width: calc((100% / 2) - 10px) !important;"
+                                    <button type="button"
                                             class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Interest') active @endif">
                                         <input type="radio" name="filter" value="Interest"
                                                style="opacity: 0;position: absolute;"
                                                @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Interest') checked @endif>Interest
                                     </button>
-                                    <button type="button" style="width: calc((100% / 2) - 10px) !important;"
+                                    <button type="button"
                                             class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement') active @elseif(empty($searchFilter)) active @endif">
                                         <input type="radio" name="filter" value="Placement"
                                                style="opacity: 0;position: absolute;"
                                                @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement') checked
                                                @elseif(empty($searchFilter)) checked @endif>Placement
+                                    </button>
+                                    <button type="button"
+                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']==CRITERIA) active @endif">
+                                        <input type="radio" name="filter" value="{{CRITERIA}}"
+                                               style="opacity: 0;position: absolute;"
+                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']==CRITERIA) checked @endif>{{CRITERIA}}
                                     </button>
                                 </div>
                             </div>
@@ -162,7 +168,9 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+
                                         <select class="form-control sort-by" name="sort_by">
                                             <option value="">Sort by</option>
                                             <option value="1"
@@ -174,6 +182,13 @@
                                                 Descending
                                             </option>
                                         </select>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
+                                        <div class="form-group  ">
+                                            <a class="btn refresh form-control " style="width: 73px;" href="{{url(AIO_DEPOSIT_MODE)}}/#logo-detail" > <i class="fa fa-refresh"></i></a>
+
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
