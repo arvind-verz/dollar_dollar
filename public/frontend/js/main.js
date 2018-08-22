@@ -242,12 +242,17 @@ $(document).ready(function() {
         $(obj).val(addCommas(parseFloat($(obj).val()).toFixed(0))).val();
     });
 });
+$("input[name='search_value']").on( "change", function() {
+    var n = $(this).val();
+    var k = addCommas(parseFloat(n).toFixed(0));
+    $(this).val(k);
+});
 function addCommas(nStr)
 {
     nStr += '';
-    x = nStr.split('.');
-    x1 = x[0];
-    x2 = x.length > 1 ? '.' + x[1] : '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
     var rgx = /(\d+)(\d{3})/;
     while (rgx.test(x1)) {
         x1 = x1.replace(rgx, '$1' + ',' + '$2');
