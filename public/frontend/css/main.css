@@ -5579,6 +5579,7 @@ span.ps-post__meta a {
     background-color: #3db54a;
     color: #ffffff;
     font-weight: 700;
+    padding-top: 8px;
 }
 .refresh:hover {
     background-color: #fdb515;
