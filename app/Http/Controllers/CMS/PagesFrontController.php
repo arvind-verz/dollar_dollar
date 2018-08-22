@@ -126,7 +126,6 @@ class PagesFrontController extends Controller
                         ->where('display', 1)
                         ->where('page', 'account')
                         ->inRandomOrder()
-                        ->limit(1)
                         ->get();
                     if (AUTH::check()) {
                         return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners", "user_products", "user_products_ending", "ads"));
@@ -138,7 +137,6 @@ class PagesFrontController extends Controller
                         ->where('display', 1)
                         ->where('page', 'account')
                         ->inRandomOrder()
-                        ->limit(1)
                         ->get();
                     if (AUTH::check()) {
                         return view('frontend.user.account-information', compact("brands", "page", "systemSetting", "banners", 'ads'));
@@ -151,7 +149,6 @@ class PagesFrontController extends Controller
                         ->where('display', 1)
                         ->where('page', 'account')
                         ->inRandomOrder()
-                        ->limit(1)
                         ->get();
                     if (AUTH::check()) {
                         return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners", "user_products", 'ads'));
@@ -248,8 +245,8 @@ class PagesFrontController extends Controller
                 $ads = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
                     ->where('page', 'blog')
+                    ->where('page_type', 'blog-inner')
                     ->inRandomOrder()
-                    ->limit(1)
                     ->get();
 
 //unserialize tags
@@ -309,7 +306,6 @@ class PagesFrontController extends Controller
             ->where('page', 'product')
             ->where('page_type', FIXED_DEPOSIT_MODE)
             ->inRandomOrder()
-            ->limit(1)
             ->get();
 //dd($ads_manage);
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
@@ -630,7 +626,14 @@ class PagesFrontController extends Controller
             $details = $query->paginate(5);
         }
 
-        return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id'));
+        $ads = AdsManagement::where('delete_status', 0)
+                        ->where('display', 1)
+                        ->where('page', 'blog')
+                        ->where('page_type', 'blog')
+                        ->inRandomOrder()
+                        ->get();
+//dd($ads);
+        return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads'));
     }
 
     public function search_tags($slug)
@@ -681,7 +684,6 @@ class PagesFrontController extends Controller
             ->where('page', 'product')
             ->where('page_type', WEALTH_DEPOSIT_MODE)
             ->inRandomOrder()
-            ->limit(1)
             ->get();
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -1291,7 +1293,6 @@ class PagesFrontController extends Controller
             ->where('page', 'product')
             ->where('page_type', SAVING_DEPOSIT_MODE)
             ->inRandomOrder()
-            ->limit(1)
             ->get();
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -1813,7 +1814,6 @@ class PagesFrontController extends Controller
             ->where('page', 'product')
             ->where('page_type', FOREIGN_CURRENCY_DEPOSIT_MODE)
             ->inRandomOrder()
-            ->limit(1)
             ->get();
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -2435,7 +2435,6 @@ class PagesFrontController extends Controller
             ->where('page', 'product')
             ->where('page_type', AIO_DEPOSIT_MODE)
             ->inRandomOrder()
-            ->limit(1)
             ->get();
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
