@@ -6,7 +6,7 @@ html {
 
 body {
     margin: 0;
-}
+} 
 
 article,
 aside,
@@ -4284,7 +4284,7 @@ button {
 
 .header .ps-logo {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 @media (max-width: 1199px) {
