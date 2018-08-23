@@ -79,7 +79,7 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class=" "><a href="{{ route('ads.index', ['type'=>'account']) }}"> Account</a></li>
+                            <li class=" "><a href="{{ route('ads.index', ['type'=>'account']) }}"> My Account</a></li>
                             <li class=" "><a href="{{ route('ads.index', ['type'=>'blog']) }}"> Blog</a></li>
                             <li class=" "><a href="{{ route('ads.index', ['type'=>'product']) }}"> Product</a></li>
                             <li class=" "><a href="{{ route('ads.index', ['type'=>'email']) }}"> Email</a></li>

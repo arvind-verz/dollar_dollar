@@ -5592,3 +5592,7 @@ span.ps-post__meta a {
 .default-case thead tr th, td {
     text-transform: initial;
 }
+
+ps-btn ps-btn--blue{
+ background-color: #3b589e;
+}

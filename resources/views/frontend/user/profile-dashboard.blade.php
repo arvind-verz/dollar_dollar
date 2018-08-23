@@ -41,7 +41,7 @@
                         </ul>
                         @if(count($ads))
                         <div class="pt-2">
-                            <a href="{{ isset($ads->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                            <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
                         </div>
                         @endif
                     </div>
@@ -116,7 +116,7 @@
                                                             $end_date = date("Y-m-d", strtotime($value->end_date));
                                                         @endphp
                                                     <tr>
-                                                        <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
+                                                        <td style="padding: 0;"><img src="{{ asset($value->brand_logo) }}"></td>
                                                         <td>{{ $value->account_name }}</td>
                                                         <td>{{ $value->amount }}</td>
                                                         <td>{{ $value->tenure }}</td>
@@ -140,6 +140,11 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(count($ads))
+                            <div class="pt-2">
+                                <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->horizontal_banner_ad_image) }}" alt=""></a>
+                            </div>
+                            @endif
                             <!-- <div class="ps-block--box no-border">
                                 <div class="ps-block__header">
                                     <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><a href="#">View all</a>

@@ -60,11 +60,21 @@
                                 <div class="form-group">
                                     <label>Ad Image</label>
                                     <input type="file" name="ad_image" class="form-control">
-                                </div>
+                                </div>                                
                                 <div class="form-group">
                                     <label>Ad Link</label>
                                     <input type="text" name="ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
+                                @if($type=='account')
+                                <div class="form-group">
+                                    <label>Horizontal Banner</label>
+                                    <input type="file" name="horizontal_banner_ad_image" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Horizontal Banner Link</label>
+                                    <input type="text" name="horizontal_banner_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     <label>Display?</label>
                                     <select class="form-control" name="display">
