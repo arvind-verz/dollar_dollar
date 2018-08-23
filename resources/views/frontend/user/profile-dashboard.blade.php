@@ -116,13 +116,18 @@
                                                             $end_date = date("Y-m-d", strtotime($value->end_date));
                                                         @endphp
                                                     <tr>
-                                                        <td style="padding: 0;"><img src="{{ asset($value->brand_logo) }}"></td>
+                                                        <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
+                                                            @if(!empty($value->brand_logo))
+                                                            <img src="{{ asset($value->brand_logo) }}"></td>
+                                                            @else
+                                                            {{ $value->other_bank }}
+                                                            @endif
                                                         <td>{{ $value->account_name }}</td>
                                                         <td>{{ $value->amount }}</td>
                                                         <td>{{ $value->tenure }}</td>
                                                         <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
                                                         <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
-                                                        <td>{{ isset($value->interest_earned) ? $value->interest_earned.'%' : '-' }}</td>
+                                                        <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
                                                         <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
                                                         <td>
                                                             <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>

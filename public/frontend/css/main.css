@@ -3492,7 +3492,7 @@ button {
 }
 
 .ps-form--product-management .submit p {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .ps-form--product-management .submit p span {
@@ -5670,11 +5670,14 @@ span.ps-post__meta a {
     /* margin: 15px 50px 0 0; */
 }
 
-.ps-dashboard .ps-form--product-management .col-lg-12 .form-group > input {
-    width: initial;
-    height: initial;
-    margin-right: 5px;
-    float: left;
+.ps-dashboard .ps-form--product-management .col-lg-12 .form-group > input{
+ width: initial;
+ height: initial;
+ margin-right: 5px;
+ float: left;
+ height: 20px;
+ width: 20px;
+ margin-top: 0;
 }
 
 .ps-checkbox.ps-checkbox--inline label:after {
@@ -5750,4 +5753,12 @@ span.ps-post__meta a {
     font-weight: 700;
     border-bottom: none;
     padding: 0px 35%;
+}
+
+.ps-dashboard .recommended-product .ps-slider--feature-product .ps-block--short-product{
+ padding: 10px;
+}
+
+.ps-form--product-management sup {
+    color: #ff0000;
 }
