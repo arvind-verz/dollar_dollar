@@ -1230,7 +1230,7 @@
                                                                        id="showContent-11">Placement</a></li>
                                         <li id="catList12" class=""><a class="aboutpage"
                                                                        target="showContent-container-12"
-                                                                       id="showContent-12">tenure</a></li>
+                                                                       id="showContent-12">Criteria</a></li>
                                     </ul>
                                 </div>
                             </div>
