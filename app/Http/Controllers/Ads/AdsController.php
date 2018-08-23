@@ -75,7 +75,7 @@ class AdsController extends Controller
         }
 
         $destinationPath = 'uploads/ads'; // upload path
-        $ad_image = '';
+        $ad_image = $horizontal_banner_ad_image = '';
         if ($request->hasFile('ad_image')) {
 
             // Get filename with the extension
@@ -89,6 +89,19 @@ class AdsController extends Controller
             // Upload Image
             $request->file('ad_image')->move($destinationPath, $ad_image);
         }
+        if ($request->hasFile('horizontal_banner_ad_image')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('horizontal_banner_ad_image')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('horizontal_banner_ad_image')->getClientOriginalExtension();
+            // Filename to store
+            $horizontal_banner_ad_image = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('horizontal_banner_ad_image')->move($destinationPath, $horizontal_banner_ad_image);
+        }
 
         $ads = new AdsManagement;
         $page_type = NULL;
@@ -101,6 +114,8 @@ class AdsController extends Controller
         $ads->title = $request->title;
         $ads->ad_image = $destinationPath . "/" . $ad_image;
         $ads->ad_link = $request->ad_link;
+        $ads->horizontal_banner_ad_image = $destinationPath . "/" . $horizontal_banner_ad_image;
+        $ads->horizontal_banner_ad_link = $request->horizontal_banner_ad_link;
         $ads->display = $request->display;
         $ads->created_at = Carbon::now()->toDateTimeString();
         $ads->save();
@@ -205,6 +220,26 @@ class AdsController extends Controller
             }
             $ads->ad_image = $destinationPath . '/' . $ad_image;
         }
+        if ($request->hasFile('horizontal_banner_ad_image')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('horizontal_banner_ad_image')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('horizontal_banner_ad_image')->getClientOriginalExtension();
+            // Filename to store
+            $horizontal_banner_ad_image = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('horizontal_banner_ad_image')->move($destinationPath, $horizontal_banner_ad_image);
+        }
+
+        if ($request->hasFile('horizontal_banner_ad_image')) {
+            if ($ads->horizontal_banner_ad_image != 'noimage.jpg') {
+                \File::delete($ads->horizontal_banner_ad_image);
+            }
+            $ads->horizontal_banner_ad_image = $destinationPath . '/' . $horizontal_banner_ad_image;
+        }
 
         $page_type = NULL;
         if($request->page=='product' || $request->page=='blog')
@@ -215,6 +250,7 @@ class AdsController extends Controller
         $ads->page = $request->page;
         $ads->title = $request->title;
         $ads->ad_link = $request->ad_link;
+        $ads->horizontal_banner_ad_link = $request->horizontal_banner_ad_link;
         $ads->display = $request->display;
         $ads->created_at = Carbon::now()->toDateTimeString();
         $ads->save();
