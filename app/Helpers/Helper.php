@@ -159,7 +159,7 @@ class Helper
             ->where('pages.delete_status', 0)
             ->where('pages.slug', $slug)
             ->select('banners.*', 'pages.slug')
-            ->orderBy('banners.view_order', 'ASC')
+            ->inRandomOrder()
             ->get();
         //dd($slug);
         return $banners;
