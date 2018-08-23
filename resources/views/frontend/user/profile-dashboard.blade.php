@@ -116,7 +116,12 @@
                                                             $end_date = date("Y-m-d", strtotime($value->end_date));
                                                         @endphp
                                                     <tr>
-                                                        <td style="padding: 0;"><img src="{{ asset($value->brand_logo) }}"></td>
+                                                        <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
+                                                            @if(!empty($value->brand_logo))
+                                                            <img src="{{ asset($value->brand_logo) }}"></td>
+                                                            @else
+                                                            {{ $value->other_bank }}
+                                                            @endif
                                                         <td>{{ $value->account_name }}</td>
                                                         <td>{{ $value->amount }}</td>
                                                         <td>{{ $value->tenure }}</td>
