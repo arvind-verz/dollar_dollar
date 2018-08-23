@@ -188,12 +188,11 @@
                                 <div class="ps-slider--feature-product saving">
                                     <div class="ps-block--short-product second highlight" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->upto_interest_rate  }}%</strong>
+                                        <h4>up to <strong> {{ $product->maximum_interest_rate  }}%</strong>
                                         </h4>
 
                                         <div class="ps-block__info">
                                             <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
-
                                             <p>
                                                 <strong>Min:</strong> {{$product->currency_code}}
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
@@ -232,7 +231,7 @@
                                 @if($product->featured==0)
                                     <div class="ps-block--short-product second" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->upto_interest_rate  }}%</strong>
+                                        <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong>
                                         </h4>
 
                                         <div class="ps-block__info">
