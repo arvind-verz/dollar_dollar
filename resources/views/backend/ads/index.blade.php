@@ -49,6 +49,9 @@
                                                 @endif
                                                 <th>Title</th>
                                                 <th>Ad Image</th>
+                                                @if($type=='account')
+                                                <th>Banner Image</th>
+                                                @endif
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
@@ -73,6 +76,15 @@
                                                             Not available
                                                             @endif
                                                         </td>
+                                                        @if($type=='account')
+                                                        <td>
+                                                            @if(!empty($ad->horizontal_banner_ad_image))
+                                                            <img src="{{ asset($ad->horizontal_banner_ad_image) }}" alt="" width="100px">
+                                                            @else
+                                                            Not available
+                                                            @endif
+                                                        </td>
+                                                        @endif
                                                         <td>
                                                             @if ($ad->created_at == null)
                                                                 {{$ad->created_at}}

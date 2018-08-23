@@ -74,6 +74,25 @@
                                     <label>Ad Link</label>
                                     <input type="text" name="ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)" value="{{ $ads->ad_link }}">
                                 </div>
+                                @if($type=='account')
+                                <div class="form-group">
+                                    <label>Horizontal Banner</label>
+                                    <input type="file" name="horizontal_banner_ad_image" class="form-control">
+                                    @if(isset($ads->horizontal_banner_ad_image) && ($ads->horizontal_banner_ad_image != ''))
+                                        <div class="col-sm-2">                                        
+                                            <div class="attachment-block clearfix">
+                                                <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $ads->id }}');"><i class="fas fa-times fa-lg"></i></a>
+                                                <img class="attachment-img" src="{!! asset($ads->horizontal_banner_ad_image) !!}"
+                                                     alt="Banner Image">
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                    <label>Horizontal Banner Link</label>
+                                    <input type="text" name="horizontal_banner_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)" value="{{ $ads->horizontal_banner_ad_link }}">
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     <label>Display?</label>
                                     <select class="form-control" name="display">
