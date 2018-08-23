@@ -195,9 +195,11 @@
                                             </h4>
                                         @endif
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong>
+                                                    rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong> SGD
+                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong>
+                                                SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
 
@@ -262,9 +264,11 @@
                                         @endif
 
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong>
+                                                    rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p class=" @if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong> SGD
+                                            <p class=" @if($searchFilter['filter']==PLACEMENT) highlight @endif">
+                                                <strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
 
@@ -340,7 +344,7 @@
                                         $end_date = new DateTime(date("Y-m-d",
                                                 strtotime($product->promotion_end)));
                                         $interval = date_diff($end_date, $start_date);
-                                        echo $interval->format('%a days left');
+                                        echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
                                     }
                                     ?>
                                 </p>
@@ -520,9 +524,9 @@
                                                         <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else {{ $product->total_interest }}% @endif
+                                                        - @else {{ $product->total_interest }}%
+                                                        for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
                                                 </span>
-                                                        <span>Based the Effective interest Rate</span>
                                                     </h2>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -563,7 +567,7 @@
                                                                     @foreach($product->product_ranges as $productRange)
                                                                         <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                                             <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
-                                                                            <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure. ' Months' }}</td>
+                                                                            <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
                                                                             <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                                             <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if(($productRange->board_rate)<=0)
@@ -599,9 +603,9 @@
                                                                 <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else ${{ $product->total_interest }}% @endif
+                                                        - @else ${{ $product->total_interest }}%
+                                                        for {{$product->duration}} {{\Helper::days_or_month_or_year(2, $product->duration)}} @endif
                                                 </span>
-                                                                <span>Based the Effective interest Rate</span>
                                                             </h2>
                                                         </div>
                                                         <div class="clearfix"></div>
@@ -688,12 +692,10 @@
                                                                             - @else
                                                                             ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                         <br>
-                                                <span>
-                                                    Total interest rate @if($product->total_interest <=0)
-                                                        - @else {{ $product->total_interest }}% @endif
-
+                                                 <span>
+                                                    Average interest rate @if($product->total_interest <=0)
+                                                         - @else {{ $product->total_interest }}%<sup>*</sup> throughout 1 Year @endif
                                                 </span>
-                                                                        <span>Based the Effective interest Rate</span>
                                                                     </h2>
                                                                 </div>
                                                                 <div class="clearfix"></div>
@@ -788,11 +790,9 @@
                                                                                     - @else
                                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
-                                                                                <span>
-                                                                            Total interest rate {{ $product->total_interest }}
-                                                                                    %
+                                                                               <span>
+                                                                             Total interest rate {{ $product->total_interest }}% throughout 1 Year
                                                                         </span>
-                                                                                <span>Based on effective interest rate</span>
                                                                             </h2>
                                                                         </div>
                                                                         <div class="clearfix"></div>
@@ -1075,6 +1075,7 @@
                                         <div class="ps-product__panel">
                                             <h4>Possible interest(s) earned for SGD
                                                 ${{ Helper::inThousand($product->placement) }}</h4>
+
                                             <p>
                                                 <span class="nill"> {{ NILL }}</span><br/>
                                                 {{NOT_ELIGIBLE}}
