@@ -470,13 +470,12 @@ class PagesFrontController extends Controller
                 $product->product_ranges = $ranges;
                 $product->total_interest = $resultInterestEarnPercent;
                 $product->total_interest_earn = round($resultInterestEarn, 2);
-                $product->placement = $placement;
-
                 if ($status == true) {
+                    $product->placement = $placement;
                     //dd($product);
                     $filterProducts[] = $product;
                 } else {
-
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
             }
@@ -627,11 +626,11 @@ class PagesFrontController extends Controller
         }
 
         $ads = AdsManagement::where('delete_status', 0)
-                        ->where('display', 1)
-                        ->where('page', 'blog')
-                        ->where('page_type', 'blog')
-                        ->inRandomOrder()
-                        ->get();
+            ->where('display', 1)
+            ->where('page', 'blog')
+            ->where('page_type', 'blog')
+            ->inRandomOrder()
+            ->get();
 //dd($ads);
         return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads'));
     }
@@ -1842,9 +1841,8 @@ class PagesFrontController extends Controller
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
-            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'currency.code as currency_code', 'currency.icon as currency_icon', 'currency.currency as currency_namer')
+            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'currency.code as currency_code', 'currency.icon as currency_icon', 'currency.currency as currency_name')
             ->get();
-
 
 
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
@@ -1871,7 +1869,7 @@ class PagesFrontController extends Controller
             $searchFilter = $request;
         }
         if ($currency) {
-            $products = $products->where('currency',$currency);
+            $products = $products->where('currency', $currency);
         }
         foreach ($products as $key => &$product) {
             //dd($product);
@@ -2428,8 +2426,6 @@ class PagesFrontController extends Controller
     public
     function aio($request)
     {
-
-
         $ads_manage = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
@@ -2581,7 +2577,7 @@ class PagesFrontController extends Controller
                             $totalInterest = $totalInterest + $productRange->bonus_interest_wealth;
                             $criteriaMatchCount++;
                         }
-                        if ($placement > 0 && $productRange->bonus_amount <= $placement) {
+                        if ($placement > 0 && $productRange->bonus_amount <= $placement && (in_array(true, [$product->salary_highlight, $product->payment_highlight, $product->spend_highlight, $product->wealth_highlight]))) {
                             $product->bonus_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest;
                             $criteriaMatchCount++;

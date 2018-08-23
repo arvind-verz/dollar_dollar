@@ -183,9 +183,9 @@
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
                                                     @if($product->promotion_end == null)
-                                                            <strong>{{ONGOING}}</strong>
+                                                        <strong>{{ONGOING}}</strong>
                                                     @else
-                                                           <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
                                                     @endif
 
                                                 @endif
@@ -195,9 +195,11 @@
                                             </h4>
                                         @endif
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong>
+                                                    rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong> SGD
+                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong>
+                                                SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
 
@@ -249,7 +251,7 @@
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
                                                     @if($product->promotion_end == null)
-                                                            <strong>{{ONGOING}}</strong>
+                                                        <strong>{{ONGOING}}</strong>
                                                     @else
                                                         <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
                                                     @endif
@@ -262,9 +264,11 @@
                                         @endif
 
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong>
+                                                    rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p class=" @if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong> SGD
+                                            <p class=" @if($searchFilter['filter']==PLACEMENT) highlight @endif">
+                                                <strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
 
@@ -630,19 +634,14 @@
                                 <?php } ?>
                             @endif
                             <div class="ps-product__panel">
-                                @if(count($interestEarns))
-                                    @foreach($tenures as $tenureKey => $value)
-                                        <?php $type = Helper::days_or_month_or_year(2, $value); ?>
-                                        @if($tenureKey==0)
-                                            <h4>Possible interest(s) earned for SGD
-                                                ${{ Helper::inThousand($product->placement) }}</h4>
-                                        @endif
-                                        <p><strong>{{ $value . ' ' . $type }}</strong>-
-                                            ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
-                                            ({{ $bonusInterests[$tenureKey] . '%' }})</p>
-                                    @endforeach
 
-                                @endif
+                                <h4>Possible interest(s) earned for SGD
+                                    ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                <p>
+                                    <span class="nill"> {{ NILL }}</span><br/>
+                                    {{NOT_ELIGIBLE}}
+                                </p>
                             </div>
                             <div class="clearfix"></div>
                             @if(isset($ads[2]))
