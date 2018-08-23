@@ -510,7 +510,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('upto_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortBy('min_tenure');
                 }
@@ -518,7 +518,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('upto_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortByDesc('max_tenure');
 
@@ -532,7 +532,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $remainingProducts = $remainingProducts->sortBy('min_tenure');
                 }
@@ -540,7 +540,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $remainingProducts = $remainingProducts->sortByDesc('max_tenure');
 
@@ -1238,7 +1238,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('upto_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortBy('min_tenure');
                 }
@@ -1246,7 +1246,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('upto_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortByDesc('max_tenure');
 
@@ -1260,7 +1260,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $remainingProducts = $remainingProducts->sortBy('min_tenure');
                 }
@@ -1268,7 +1268,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $remainingProducts = $remainingProducts->sortByDesc('max_tenure');
 
@@ -1737,7 +1737,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('upto_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortBy('min_tenure');
                 }
@@ -1745,7 +1745,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('upto_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortByDesc('max_tenure');
 
@@ -1759,7 +1759,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $remainingProducts = $remainingProducts->sortBy('min_tenure');
                 }
@@ -1767,7 +1767,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $remainingProducts = $remainingProducts->sortByDesc('max_tenure');
 
@@ -2377,7 +2377,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('upto_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortBy('min_tenure');
                 }
@@ -2385,7 +2385,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('upto_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $products = $products->sortByDesc('max_tenure');
 
@@ -2399,7 +2399,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
                     $remainingProducts = $remainingProducts->sortBy('min_tenure');
                 }
@@ -2960,7 +2960,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('upto_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate');
                 } elseif ($filter == CRITERIA) {
                     $products = $products->sortBy('promotion_period');
                 }
@@ -2968,7 +2968,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $products = $products->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('upto_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == CRITERIA) {
                     $products = $products->sortByDesc('promotion_period');
                 }
@@ -2979,7 +2979,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
                 } elseif ($filter == CRITERIA) {
                     $remainingProducts = $remainingProducts->sortBy('promotion_period');
                 }
@@ -2987,7 +2987,7 @@ class PagesFrontController extends Controller
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == CRITERIA) {
                     $remainingProducts = $remainingProducts->sortByDesc('promotion_period');
                 }
