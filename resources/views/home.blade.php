@@ -190,17 +190,15 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
-                                    $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
-                                    $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
-                                    $featured_width = 4;
+                                    if ($featured_count == 1) {
+                                        $featured_width = 2;
+                                    } elseif ($featured_count == 2) {
+                                        $featured_width = 3;
+                                    } elseif ($featured_count == 3) {
+                                        $featured_width = 4;
                                     }
                                     ?>
                                     <div class="product-col-0{{ $featured_width }}">
@@ -288,7 +286,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p >{{ $product->promotion_period }}
+                                                            <p>{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -299,17 +297,15 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
-                                    $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
-                                    $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
-                                    $featured_width = 4;
+                                    if ($featured_count == 1) {
+                                        $featured_width = 2;
+                                    } elseif ($featured_count == 2) {
+                                        $featured_width = 3;
+                                    } elseif ($featured_count == 3) {
+                                        $featured_width = 4;
                                     }
                                     ?>
                                     <div class="product-col-0{{ $featured_width }}">
@@ -343,7 +339,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p ><?php echo $product->promotion_period; ?>
+                                                            <p><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -426,17 +422,15 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
-                                    $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
-                                    $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
-                                    $featured_width = 4;
+                                    if ($featured_count == 1) {
+                                        $featured_width = 2;
+                                    } elseif ($featured_count == 2) {
+                                        $featured_width = 3;
+                                    } elseif ($featured_count == 3) {
+                                        $featured_width = 4;
                                     }
                                     ?>
                                     <div class="product-col-0{{ $featured_width }}">
@@ -555,16 +549,14 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -653,7 +645,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p >{{ $product->promotion_period }}
+                                                            <p>{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -664,16 +656,14 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -708,7 +698,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p ><?php echo $product->promotion_period; ?>
+                                                            <p><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -791,16 +781,14 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -920,16 +908,14 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -1017,7 +1003,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p >{{ $product->promotion_period }}
+                                                            <p>{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -1028,16 +1014,14 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -1072,7 +1056,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p ><?php echo $product->promotion_period; ?>
+                                                            <p><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -1155,16 +1139,14 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -1287,16 +1269,14 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -1385,7 +1365,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p >{{ $product->promotion_period }}
+                                                            <p>{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -1396,16 +1376,14 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -1440,7 +1418,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p ><?php echo $product->promotion_period; ?>
+                                                            <p><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -1484,7 +1462,7 @@
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
                                                         <h4>
-                                                                <strong>{{ $product->promotion_period }}</strong> {{CRITERIA}}
+                                                            <strong>{{ $product->promotion_period }}</strong> {{CRITERIA}}
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -1507,16 +1485,14 @@
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -1591,6 +1567,7 @@
                                             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                                             ->join('promotion_formula', 'promotion_products.formula_id', '=',
                                                     'promotion_formula.id')
+                                            ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
                                             ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
                                             //->where('promotion_products.promotion_start', '<=', $datetime)
                                             //->where('promotion_products.promotion_end', '>=', $datetime)
@@ -1598,7 +1575,8 @@
                                             ->where('promotion_products.status', '=', 1)
                                             ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
                                             ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
+                                                    'currency.icon as currency_icon', 'currency.currency as currency_name')
                                             ->get();
 
                                     $i = 1;$featured = []; ?>
@@ -1621,7 +1599,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p><strong>Min:</strong> SGD
+                                                            <p><strong>Min:</strong> {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1629,23 +1607,22 @@
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
+                                                            info</a>
                                                     </div>
                                                 </div>
                                             </div>
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -1673,7 +1650,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p><strong>Min:</strong> SGD
+                                                            <p><strong>Min:</strong> {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1681,7 +1658,8 @@
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
+                                                            info</a>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1699,6 +1677,7 @@
                                             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                                             ->join('promotion_formula', 'promotion_products.formula_id', '=',
                                                     'promotion_formula.id')
+                                            ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
                                             ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
                                             //->where('promotion_products.promotion_start', '<=', $datetime)
                                             //->where('promotion_products.promotion_end', '>=', $datetime)
@@ -1706,7 +1685,8 @@
                                             ->where('promotion_products.status', '=', 1)
                                             ->orderBy('promotion_products.minimum_placement_amount', 'DESC')
                                             ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
+                                                    'currency.icon as currency_icon', 'currency.currency as currency_name')
                                             ->get();
 
                                     $i = 1;$featured = []; ?>
@@ -1720,7 +1700,7 @@
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
                                                         <h4> Min: <strong>
-                                                                SGD
+                                                                {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
                                                         </h4>
@@ -1730,31 +1710,30 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight"><strong>Min:</strong> {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p >{{ $product->promotion_period }}
+                                                            <p>{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
+                                                            info</a>
                                                     </div>
                                                 </div>
                                             </div>
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -1775,7 +1754,7 @@
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
                                                         <h4> Min: <strong>
-                                                                SGD
+                                                                {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
                                                         </h4>
@@ -1785,15 +1764,16 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight"><strong>Min:</strong> {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p ><?php echo $product->promotion_period; ?>
+                                                            <p><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
+                                                            info</a>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1811,6 +1791,7 @@
                                             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
                                             ->join('promotion_formula', 'promotion_products.formula_id', '=',
                                                     'promotion_formula.id')
+                                            ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
                                             ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
                                             //->where('promotion_products.promotion_start', '<=', $datetime)
                                             //->where('promotion_products.promotion_end', '>=', $datetime)
@@ -1818,7 +1799,8 @@
                                             ->where('promotion_products.status', '=', 1)
                                             ->orderBy('promotion_products.promotion_period', 'DESC')
                                             ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
+                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
+                                                    'currency.icon as currency_icon', 'currency.currency as currency_name')
                                             ->get();
                                     foreach ($products as $key => &$product) {
                                         $placementPeriod = explode("|", $product->promotion_period);
@@ -1857,7 +1839,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p><strong>Min:</strong> SGD
+                                                            <p><strong>Min:</strong> {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1865,23 +1847,22 @@
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
+                                                            info</a>
                                                     </div>
                                                 </div>
                                             </div>
                                             @php $i++; @endphp
                                         @endif
                                     @endforeach
-                                    <?php $i = 1;$featured_item = 5-count($featured);
+                                    <?php $i = 1;$featured_item = 5 - count($featured);
                                     $featured_count = count($featured);
                                     $featured_width = 12;
-                                    if($featured_count==1) {
+                                    if ($featured_count == 1) {
                                         $featured_width = 2;
-                                    }
-                                    elseif($featured_count==2) {
+                                    } elseif ($featured_count == 2) {
                                         $featured_width = 3;
-                                    }
-                                    elseif($featured_count==3) {
+                                    } elseif ($featured_count == 3) {
                                         $featured_width = 4;
                                     }
                                     ?>
@@ -1913,7 +1894,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p><strong>Min:</strong> SGD
+                                                            <p><strong>Min:</strong> {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1921,7 +1902,8 @@
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
+                                                            info</a>
                                                     </div>
                                                 @endif
                                             @endforeach
