@@ -78,7 +78,7 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Amount <sup>*</sup></label>
-                                            <input class="form-control prefix_dollar" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ (old('amount')) ? old('amount') : '0.000' }}">
+                                            <input class="form-control prefix_dollar" required="required" name="amount" type="text" placeholder="Enter Amount"  value="{{ old('amount') }}">
                                             <!-- <span class="suffix_k">K</span> -->
                                         </div>
                                     </div>
@@ -117,7 +117,7 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Interested earned</label>
-                                            <input class="form-control" name="interest_earned" type="text" placeholder="Enter Interest Earned" value="{{ old('interest_earned') }}">
+                                            <input class="form-control" name="interest_earned" type="text" placeholder="Enter Interest Rate &/OR in dollar amount" value="{{ old('interest_earned') }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
