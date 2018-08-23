@@ -470,13 +470,12 @@ class PagesFrontController extends Controller
                 $product->product_ranges = $ranges;
                 $product->total_interest = $resultInterestEarnPercent;
                 $product->total_interest_earn = round($resultInterestEarn, 2);
-                $product->placement = $placement;
-
                 if ($status == true) {
+                    $product->placement = $placement;
                     //dd($product);
                     $filterProducts[] = $product;
                 } else {
-
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
             }
