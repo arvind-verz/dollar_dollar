@@ -1072,23 +1072,10 @@
                                                                             ${{Helper::inThousand($range->placement)}}</td>
                                                                         <td class="text-center @if($product->highlight==true ) highlight @endif"
                                                                             colspan="4">
-                                                                            @if($range->placement > $range->first_cap_amount)
-                                                                                First
-                                                                                ${{ Helper::inThousand($range->first_cap_amount) }}
-                                                                                -
-                                                                                ${{ Helper::inThousand(($range->first_cap_amount*($product->total_interest/100))) }}
-                                                                                (
-                                                                                {{ $product->total_interest }}%), next
-                                                                                ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
-                                                                                -
-                                                                                ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                                                ({{ $range->bonus_interest_remaining_amount }}
-                                                                                %) Total =
-                                                                                ${{ Helper::inThousand($product->interest_earned) }}
-                                                                            @else
-                                                                                Total =
-                                                                                ${{ Helper::inThousand($product->interest_earned) }}
-                                                                            @endif
+
+                                                                                <span class="nill"> {{ NILL }}</span><br/>
+                                                                                <p>{{NOT_ELIGIBLE}}</p>
+
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -1219,9 +1206,8 @@
                                                                             @if($key==0)
                                                                                 <td class="text-center  @if($product->highlight==true) highlight @endif"
                                                                                     rowspan="{{count($productRanges)}}">
-                                                                                    ${{ Helper::inThousand($product->interest_earned) }}
-                                                                                    <br> Effective Interest
-                                                                                    Rate {{ $product->total_interest }}%
+                                                                                    <span class="nill"> {{ NILL }}</span><br/>
+                                                                                    <p>{{NOT_ELIGIBLE}}</p>
                                                                                 </td>
                                                                             @endif
                                                                         </tr>
@@ -1301,11 +1287,11 @@
                                                                         <table class="ps-table ps-table--product ps-table--product-3">
                                                                             <thead>
                                                                             <tr>
-                                                                                <th>CRITERIA</th>
-                                                                                <th>SALARY</th>
-                                                                                <th>Giro</th>
-                                                                                <th>SPEND</th>
-                                                                                <th>
+                                                                                <th class="combine-criteria-padding">CRITERIA</th>
+                                                                                <th class="combine-criteria-padding">SALARY</th>
+                                                                                <th class="combine-criteria-padding">Giro</th>
+                                                                                <th class="combine-criteria-padding">SPEND</th>
+                                                                                <th class="combine-criteria-padding">
                                                                                     <div class="ps-checkbox">
                                                                                         <input class="form-control"
                                                                                                type="checkbox"
@@ -1320,7 +1306,7 @@
                                                                                             Insurance</label>
                                                                                     </div>
                                                                                 </th>
-                                                                                <th>
+                                                                                <th class="combine-criteria-padding">
                                                                                     <div class="ps-checkbox">
                                                                                         <input class="form-control"
                                                                                                type="checkbox"
@@ -1336,7 +1322,7 @@
                                                                                             Loan</label>
                                                                                     </div>
                                                                                 </th>
-                                                                                <th>
+                                                                                <th class="combine-criteria-padding">
                                                                                     <div class="ps-checkbox">
                                                                                         <input class="form-control"
                                                                                                type="checkbox"
@@ -1351,7 +1337,7 @@
                                                                                             Loan</label>
                                                                                     </div>
                                                                                 </th>
-                                                                                <th>
+                                                                                <th class="combine-criteria-padding">
                                                                                     <div class="ps-checkbox">
                                                                                         <input class="form-control"
                                                                                                type="checkbox"
@@ -1366,7 +1352,7 @@
                                                                                             Purchase loan</label>
                                                                                     </div>
                                                                                 </th>
-                                                                                <th>
+                                                                                <th class="combine-criteria-padding">
                                                                                     <div class="ps-checkbox">
                                                                                         <input class="form-control"
                                                                                                type="checkbox"
@@ -1381,7 +1367,7 @@
                                                                                             loan</label>
                                                                                     </div>
                                                                                 </th>
-                                                                                <th>
+                                                                                <th class="combine-criteria-padding">
                                                                                     <div class="ps-checkbox">
                                                                                         <input class="form-control"
                                                                                                type="checkbox"
@@ -1422,31 +1408,14 @@
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td colspan="2">Total Bonus Interest
+                                                                                    <td colspan="1">Total Bonus Interest
                                                                                         Earned for
                                                                                         ${{ Helper::inThousand($range->placement) }}</td>
                                                                                     <td class=" text-center @if($product->highlight==true ) highlight @endif"
-                                                                                        colspan="8">
+                                                                                        colspan="9">
 
-                                                                                        @if($range->placement > $range->first_cap_amount)
-                                                                                            First
-                                                                                            ${{ Helper::inThousand($range->first_cap_amount) }}
-                                                                                            -
-                                                                                            ${{ Helper::inThousand(($range->first_cap_amount*($product->total_interest/100))) }}
-                                                                                            (
-                                                                                            {{ $product->total_interest }}
-                                                                                            %), next
-                                                                                            ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
-                                                                                            -
-                                                                                            ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                                                            ({{ $range->bonus_interest_remaining_amount }}
-                                                                                            %)
-                                                                                            Total =
-                                                                                            ${{ Helper::inThousand($product->interest_earned) }}
-                                                                                        @else
-                                                                                            Total =
-                                                                                            ${{ Helper::inThousand($product->interest_earned) }}
-                                                                                        @endif
+                                                                                        <span class="nill"> {{ NILL }}</span><br/>
+                                                                                        <p>{{NOT_ELIGIBLE}}</p>
                                                                                     </td>
                                                                                     </td>
                                                                                 </tr>
@@ -1559,8 +1528,9 @@
                                                                                     @if($key==0)
                                                                                         <td class=" text-center @if($product->highlight==true ) highlight @endif"
                                                                                             rowspan="6">
-                                                                                            Total=
-                                                                                            ${{ Helper::inThousand($product->interest_earned).' ( '.$product->total_interest.'%) ' }}</td>
+                                                                                            <span class="nill"> {{ NILL }}</span><br/>
+                                                                                            <p>{{NOT_ELIGIBLE}}</p>
+                                                                                        </td>
                                                                                     @endif
                                                                                 </tr>
 

@@ -952,16 +952,10 @@
                                             <h4>Possible interest(s) earned for SGD
                                                 ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                            <h2> @if(($product->total_interest_earn)<=0)
-                                                    - @else
-                                                    ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                                <br>
-                                                <span>
-                                                    Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else {{ $product->total_interest }}% @endif
-                                                </span>
-                                                <span>Based the Effective interest Rate</span>
-                                            </h2>
+                                            <p>
+                                                <span class="nill"> {{ NILL }}</span><br/>
+                                                {{NOT_ELIGIBLE}}
+                                            </p>
                                         </div>
                                         <div class="clearfix"></div>
                                         @if(!empty($product->ads_placement))
@@ -1031,16 +1025,10 @@
                                                     <h4>Possible interest(s) earned for SGD
                                                         ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                    <h2>@if(($product->total_interest_earn)<=0)
-                                                            - @else
-                                                            ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                                        <br>
-                                                <span>
-                                                    Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else ${{ $product->total_interest }}% @endif
-                                                </span>
-                                                        <span>Based the Effective interest Rate</span>
-                                                    </h2>
+                                                    <p>
+                                                        <span class="nill"> {{ NILL }}</span><br/>
+                                                        {{NOT_ELIGIBLE}}
+                                                    </p>
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 @if(!empty($product->ads_placement))
@@ -1124,17 +1112,10 @@
                                                             <h4>Possible interest(s) earned for SGD
                                                                 ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                            <h2>@if($product->total_interest_earn <=0)
-                                                                    - @else
-                                                                    ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                                                <br>
-                                                <span>
-                                                    AVERAGE INTEREST RATE FOR 1 YEAR @if($product->total_interest <=0)
-                                                        - @else {{ $product->total_interest }}%<sup>*</sup> @endif
-                                                </span>
-                                                                <span>Based the Effective interest Rate</span>
-
-                                                            </h2>
+                                                            <p>
+                                                                <span class="nill"> {{ NILL }}</span><br/>
+                                                                {{NOT_ELIGIBLE}}
+                                                            </p>
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         @if(!empty($product->ads_placement))
@@ -1222,17 +1203,10 @@
                                                                         <br/>
                                                                         Base on effective interest rate</h4>
 
-                                                                    <h2>@if($product->total_interest_earn <=0 )
-                                                                            - @else
-                                                                            ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                                                        <br>
-                                                                        <span>
-                                                                            Total interest rate {{ $product->total_interest }}
-                                                                            %
-                                                                        </span>
-                                                                        <span>Based on effective interest rate</span>
-
-                                                                    </h2>
+                                                                    <p>
+                                                                        <span class="nill"> {{ NILL }}</span><br/>
+                                                                        {{NOT_ELIGIBLE}}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="clearfix"></div>
                                                                 @if(!empty($product->ads_placement))
