@@ -87,6 +87,14 @@
                                     {{Form::text('banner_link', old('banner_link'), ['id'=>'', 'class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">
+                                    <label for="">Banner Expiry</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="text" name="banner_expiry" class="form-control datepicker1">
+                                </div>
+                            </div>
                             <div class="form-group" id="target-div">
                                 <label class="col-sm-2 control-label">Target</label>
 
@@ -104,6 +112,17 @@
                                 {{Form::label('view_order', 'View Order',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
                                     {{Form::text('view_order', (old('view_order') ?  old('view_order') :0), ['class' => 'form-control', 'placeholder' => ''])}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">
+                                    <label>Display?</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="display">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
                                 </div>
                             </div>
 
