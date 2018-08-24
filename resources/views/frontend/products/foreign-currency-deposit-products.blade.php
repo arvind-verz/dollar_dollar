@@ -313,7 +313,7 @@
                                     $end_date = new DateTime(date("Y-m-d",
                                             strtotime($product->promotion_end)));
                                     $interval = date_diff($end_date, $start_date);
-                                    echo $interval->format('%a days left');
+                                    echo $interval->format('%a').' '.\Helper::days_or_month_or_year(1, $interval->format('%a')).' left';
                                     echo "</p>";
                                 }
                                 ?>
@@ -507,9 +507,9 @@
                                                         <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else {{ $product->total_interest }}% @endif
+                                                        - @else {{ $product->total_interest }}% for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
                                                 </span>
-                                                        <span>Based the Effective interest Rate</span>
+
                                                     </h2>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -552,7 +552,7 @@
                                                                                 ${{Helper::inThousand($productRange->min_range)}}
                                                                                 -
                                                                                 ${{Helper::inThousand($productRange->max_range) }}</td>
-                                                                            <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure. ' Months' }}</td>
+                                                                            <td class="@if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
                                                                             <td class="@if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($product->bonus_interest)<=0)
                                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                                             <td class="@if($productRange->board_interest_highlight==true ) highlight @endif">@if(($product->board_rate)<=0)
@@ -590,9 +590,8 @@
                                                                 <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else ${{ $product->total_interest }}% @endif
+                                                        - @else ${{ $product->total_interest }}% for {{$product->duration}} {{\Helper::days_or_month_or_year(2, $product->duration)}} @endif
                                                 </span>
-                                                                <span>Based the Effective interest Rate</span>
                                                             </h2>
                                                         </div>
                                                         <div class="clearfix"></div>
@@ -683,10 +682,9 @@
                                                                             ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                         <br>
                                                 <span>
-                                                    Total interest rate @if($product->total_interest <=0)
-                                                        - @else {{ $product->total_interest }}% @endif
+                                                    Average interest rate @if($product->total_interest <=0)
+                                                        - @else {{ $product->total_interest }}%<sup>*</sup> throughout 1 Year @endif
                                                 </span>
-                                                                        <span>Based the Effective interest Rate</span>
                                                                     </h2>
                                                                 </div>
                                                                 <div class="clearfix"></div>
@@ -784,10 +782,8 @@
                                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
                                                                                 <span>
-                                                                            Total interest rate {{ $product->total_interest }}
-                                                                                    %
+                                                                             Total interest rate {{ $product->total_interest }}% throughout 1 Year
                                                                         </span>
-                                                                                <span>Based on effective interest Rate</span>
                                                                             </h2>
                                                                         </div>
                                                                         <div class="clearfix"></div>
@@ -1076,21 +1072,13 @@
                                             <?php } ?>
                                         @endif
                                         <div class="ps-product__panel">
-                                            @if(count($interestEarns))
-                                                @foreach($tenures as $tenureKey => $value)
-                                                    <?php $type = Helper::days_or_month_or_year(2, $value); ?>
-                                                    @if($tenureKey==0)
-                                                        <h4>Possible interest(s) earned
-                                                            for {{$product->currency_code}}
-                                                            ${{ Helper::inThousand($product->placement) }}</h4>
-                                                    @endif
-                                                    <p><strong>{{ $value . ' ' . $type }}</strong> -
-                                                        {{$product->currency_code}}
-                                                        ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
-                                                        ({{ $bonusInterests[$tenureKey] . '%' }})</p>
-                                                @endforeach
+                                            <h4>Possible interest(s) earned for SGD
+                                                ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                            @endif
+                                            <p>
+                                                <span class="nill"> {{ NILL }}</span><br/>
+                                                {{NOT_ELIGIBLE}}
+                                            </p>
                                         </div>
                                         <div class="clearfix"></div>
                                         @if(!empty($product->ads_placement))
@@ -1166,16 +1154,10 @@
                                                         for {{$product->currency_code}}
                                                         ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                    <h2> @if(($product->total_interest_earn)<=0)
-                                                            - @else
-                                                            {{$product->currency_code}}
-                                                            ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                                        <br>
-                                                <span>
-                                                    Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else {{ $product->total_interest }}% @endif
-                                                </span>
-                                                    </h2>
+                                                    <p>
+                                                        <span class="nill"> {{ NILL }}</span><br/>
+                                                        {{NOT_ELIGIBLE}}
+                                                    </p>
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 @if(!empty($product->ads_placement))
@@ -1248,16 +1230,10 @@
                                                                 for {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                            <h2>@if(($product->total_interest_earn)<=0)
-                                                                    - @else
-                                                                    {{$product->currency_code}}
-                                                                    ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                                                <br>
-                                                <span>
-                                                    Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else ${{ $product->total_interest }}% @endif
-                                                </span>
-                                                            </h2>
+                                                            <p>
+                                                                <span class="nill"> {{ NILL }}</span><br/>
+                                                                {{NOT_ELIGIBLE}}
+                                                            </p>
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         @if(!empty($product->ads_placement))
@@ -1341,16 +1317,10 @@
                                                                         for {{$product->currency_code}}
                                                                         ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                                    <h2>@if($product->total_interest_earn <=0)
-                                                                            - @else
-                                                                            {{$product->currency_code}}
-                                                                            ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                                                        <br>
-                                                <span>
-                                                    Total interest rate @if($product->total_interest <=0)
-                                                        - @else {{ $product->total_interest }}% @endif
-                                                </span>
-                                                                    </h2>
+                                                                    <p>
+                                                                        <span class="nill"> {{ NILL }}</span><br/>
+                                                                        {{NOT_ELIGIBLE}}
+                                                                    </p>
                                                                 </div>
                                                                 <div class="clearfix"></div>
                                                                 @if(!empty($product->ads_placement))
@@ -1442,17 +1412,10 @@
                                                                                 for {{$product->currency_code}}
                                                                                 ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                                            <h2>@if($product->total_interest_earn <=0 )
-                                                                                    - @else
-                                                                                    {{$product->currency_code}}
-                                                                                    ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                                                                <br>
-                                                                                 <span>
-                                                                            Total interest rate {{ $product->total_interest }}
-                                                                                     %
-                                                                        </span>
-                                                                                <span>Based on effective interest Rate</span>
-                                                                            </h2>
+                                                                            <p>
+                                                                                <span class="nill"> {{ NILL }}</span><br/>
+                                                                                {{NOT_ELIGIBLE}}
+                                                                            </p>
                                                                         </div>
                                                                         <div class="clearfix"></div>
                                                                         @if(!empty($product->ads_placement))

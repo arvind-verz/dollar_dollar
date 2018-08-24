@@ -923,9 +923,9 @@ class PagesFrontController extends Controller
                         if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F2])) {
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
-                            $product->max_tenure = $tenure;
+                            //$product->max_tenure = $tenure;
                         }
-
+                        $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
                         $totalInterest = (($placement * $productRange->bonus_interest / 100) * ($tenure / $tenureTotal)) + (($placement * $productRange->board_rate / 100) * ($tenure / $tenureTotal));
                         $product->total_interest_earn = $totalInterest;
@@ -1420,9 +1420,9 @@ class PagesFrontController extends Controller
                         if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F2])) {
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
-                            //$product->max_tenure = $tenure;
-                        }
 
+                        }
+                        $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
                         $totalInterest = (($placement * $productRange->bonus_interest / 100) * ($tenure / $tenureTotal)) + (($placement * $productRange->board_rate / 100) * ($tenure / $tenureTotal));
                         $product->total_interest_earn = round($totalInterest, 2);
@@ -2063,8 +2063,9 @@ class PagesFrontController extends Controller
                         if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F3])) {
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
-                            $product->max_tenure = $tenure;
+                           // $product->max_tenure = $tenure;
                         }
+                        $product->duration = $tenure;
 
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
                         $totalInterest = (($placement * $productRange->bonus_interest / 100) * ($tenure / $tenureTotal)) + (($placement * $productRange->board_rate / 100) * ($tenure / $tenureTotal));
