@@ -141,7 +141,7 @@ class BannerController extends Controller
         }
 
         $destinationPath = 'uploads/banners'; // upload path
-        $banner_image = '';
+        $banner_image = $fixed_banner = '';
         if ($request->hasFile('banner_image')) {
 
             // Get filename with the extension
@@ -154,6 +154,20 @@ class BannerController extends Controller
             $banner_image = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             $request->file('banner_image')->move($destinationPath, $banner_image);
+        }
+
+        if ($request->hasFile('fixed_banner')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('fixed_banner')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('fixed_banner')->getClientOriginalExtension();
+            // Filename to store
+            $fixed_banner = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('fixed_banner')->move($destinationPath, $fixed_banner);
         }
         /*# Resize image
         $frame_width = 1400;
@@ -171,6 +185,10 @@ class BannerController extends Controller
         $banner->view_order = $request->view_order;
         $banner->banner_link = ($request->banner_link ? $request->banner_link : '');
         $banner->banner_image = $destinationPath . "/" . $banner_image;
+        $banner->fixed_banner = $destinationPath . "/" . $fixed_banner;
+        $banner->fixed_banner_link = ($request->fixed_banner_link ? $request->fixed_banner_link : '');
+        $banner->banner_expiry = $request->banner_expiry;
+        $banner->display = $request->display;
         $banner->created_at = Carbon::now()->toDateTimeString();
         $banner->save();
 
@@ -306,7 +324,7 @@ class BannerController extends Controller
 
 
         $destinationPath = 'uploads/banners'; // upload path
-        $banner_image = '';
+        $banner_image = $fixed_banner = '';
         if ($request->hasFile('banner_image')) {
 
             // Get filename with the extension
@@ -328,6 +346,27 @@ class BannerController extends Controller
             $banner->banner_image = $destinationPath . '/' . $banner_image;
         }
 
+        if ($request->hasFile('fixed_banner')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('fixed_banner')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('fixed_banner')->getClientOriginalExtension();
+            // Filename to store
+            $fixed_banner = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('fixed_banner')->move($destinationPath, $fixed_banner);
+        }
+
+        if ($request->hasFile('fixed_banner')) {
+            if ($banner->fixed_banner != 'noimage.jpg') {
+                \File::delete($banner->fixed_banner);
+            }
+            $banner->fixed_banner = $destinationPath . '/' . $fixed_banner;
+        }
+
 
         $banner->page_id = $request->page;
         $banner->title = $request->title;
@@ -337,6 +376,9 @@ class BannerController extends Controller
         $banner->banner_content_color = $request->banner_content_color;
         $banner->view_order = $request->view_order;
         $banner->banner_link = ($request->banner_link ? $request->banner_link : '');
+        $banner->fixed_banner_link = ($request->fixed_banner_link ? $request->fixed_banner_link : '');
+        $banner->banner_expiry = $request->banner_expiry;
+        $banner->display = $request->display;
         $banner->updated_at = Carbon::now()->toDateTimeString();
         $banner->save();
 
