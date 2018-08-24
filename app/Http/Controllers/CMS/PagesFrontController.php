@@ -492,9 +492,15 @@ class PagesFrontController extends Controller
                 $maxTenure = max($placementTenures);
                 $minTenure = min($placementTenures);
             }
+            
             $product->max_tenure = $maxTenure;
             $product->min_tenure = $minTenure;
 
+            if ($sortBy == MINIMUM) {
+                $product->tenure_value = $minTenure;
+            } else {
+                $product->tenure_value = $maxTenure;
+            }
 
         }
         $remainingProducts = collect($remainingProducts);
@@ -874,7 +880,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     //dd($product);
                     $filterProducts[] = $product;
@@ -948,7 +958,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -1009,6 +1023,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -1109,7 +1128,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
@@ -1221,6 +1244,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -1448,7 +1476,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -1509,7 +1541,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -1611,7 +1647,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
@@ -1723,6 +1763,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -2021,6 +2066,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     //dd($product);
                     $filterProducts[] = $product;
@@ -2094,7 +2144,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -2155,6 +2209,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -2254,7 +2313,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
@@ -2366,6 +2429,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
