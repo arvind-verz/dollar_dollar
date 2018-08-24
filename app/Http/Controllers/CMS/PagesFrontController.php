@@ -879,7 +879,7 @@ class PagesFrontController extends Controller
                     //dd($product);
                     $filterProducts[] = $product;
                 } else {
-
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
             }
@@ -952,6 +952,7 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1011,6 +1012,7 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1117,7 +1119,7 @@ class PagesFrontController extends Controller
                 } else {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
-                    $product->placement = $placement;
+                    $product->placement = $searchValue;
                     $product->highlight = $highlight;
                     $remainingProducts[] = $product;
                 }
@@ -1222,6 +1224,7 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1449,6 +1452,7 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1509,6 +1513,7 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1616,7 +1621,7 @@ class PagesFrontController extends Controller
                 } else {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
-                    $product->placement = $placement;
+                    $product->placement = $searchValue;
                     $product->highlight = $highlight;
                     $remainingProducts[] = $product;
                 }
@@ -1721,6 +1726,7 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -2019,7 +2025,7 @@ class PagesFrontController extends Controller
                     //dd($product);
                     $filterProducts[] = $product;
                 } else {
-
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
             }
@@ -2092,6 +2098,7 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -2151,6 +2158,7 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -2256,7 +2264,7 @@ class PagesFrontController extends Controller
                 } else {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
-                    $product->placement = $placement;
+                    $product->placement = $searchValue;
                     $product->highlight = $highlight;
                     $remainingProducts[] = $product;
                 }
@@ -2361,6 +2369,7 @@ class PagesFrontController extends Controller
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
