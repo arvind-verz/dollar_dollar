@@ -87,8 +87,8 @@
                                     </div>
                                     <div class="form-group display-none" id="apply-link">
 
-                                            <input type="hidden" id="apply-link-status" name="apply_link_status"
-                                                   value="{{$product->apply_link_status}}"/>
+                                        <input type="hidden" id="apply-link-status" name="apply_link_status"
+                                               value="{{$product->apply_link_status}}"/>
                                         {{Form::label('apply_link', 'Apply Button Link',['class'=>'col-sm-2 control-label'])}}
                                         @if(empty($product->apply_link_status))
                                             <div class="col-sm-8">
@@ -137,21 +137,20 @@
                                             {{Form::text('maximum_interest_rate',  $product->maximum_interest_rate, ['id'=>'maximum-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-                                    @if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT)
-                                        <div class="form-group">
-                                            {{Form::label('promotion_period', 'Criteria',['class'=>'col-sm-2 control-label'])}}
-                                            <div class="col-sm-10">
-                                                {{Form::text('promotion_period',  $product->promotion_period, ['id'=>'promotion-period','class' => 'form-control only_numeric', 'placeholder' => '','onChange'=>"addCounter(this);"])}}
-                                            </div>
+                                    <div class="form-group">
+                                        <label for="promotion_period" class="col-sm-2 control-label">Placement
+                                            Period</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text"
+                                                   class="form-control @if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT) only_numeric @endif"
+                                                   name="promotion_period" id="promotion-period"
+                                                   onchange="addCounter(this);"
+                                                   value="{{$product->promotion_period}}"
+                                                   @if(($product->promotion_start==null) && ($product->promotion_end==null)) readonly="readonly" @endif>
                                         </div>
-                                    @else
-                                        <div class="form-group">
-                                            {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
-                                            <div class="col-sm-10">
-                                                {{Form::text('promotion_period',  $product->promotion_period, ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => '','onChange'=>"addCounter(this);"])}}
-                                            </div>
-                                        </div>
-                                    @endif
+                                    </div>
+
 
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Date Range</label>
@@ -196,13 +195,13 @@
                                         </div>
                                         <div class="col-sm-2 " id="ongoing">
                                             @if(($product->promotion_start==null) && ($product->promotion_end==null))
-                                                <button type="button" data-status="true" id="ongoing"
+                                                <button type="button" data-status="true" id="ongoing-status"
                                                         class="btn btn-block btn-success btn-social"
                                                         onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i>
                                                     Ongoing
                                                 </button>
                                             @else
-                                                <button type="button" data-status="false" id="ongoing"
+                                                <button type="button" data-status="false" id="ongoing-status"
                                                         class="btn btn-block btn-danger btn-social"
                                                         onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i>
                                                     Ongoing
