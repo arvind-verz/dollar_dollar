@@ -118,6 +118,17 @@
                                     <input type="text" name="banner_expiry" class="form-control datepicker1" value="{{ $banner->banner_expiry }}">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">
+                                    <label>Activate?</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="display">
+                                        <option value="1" @if($banner->display==1) selected @endif>Yes</option>
+                                        <option value="0" @if($banner->display==0) selected @endif>No</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group" id="target-div">
                                 <label class="col-sm-2 control-label">Target</label>
 
@@ -142,17 +153,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-sm-2 control-label">
-                                    <label>Display?</label>
-                                </div>
-                                <div class="col-sm-10">
-                                    <select class="form-control" name="display">
-                                        <option value="1" @if($banner->display==1) selected @endif>Yes</option>
-                                        <option value="0" @if($banner->display==0) selected @endif>No</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
 
                         </div>
                         <!-- /.box-body -->

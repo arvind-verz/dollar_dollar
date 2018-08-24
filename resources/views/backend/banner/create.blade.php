@@ -108,6 +108,17 @@
                                     <input type="text" name="banner_expiry" class="form-control datepicker1">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">
+                                    <label>Activate?</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="display">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group" id="target-div">
                                 <label class="col-sm-2 control-label">Target</label>
 
@@ -127,17 +138,7 @@
                                     {{Form::text('view_order', (old('view_order') ?  old('view_order') :0), ['class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-2 control-label">
-                                    <label>Display?</label>
-                                </div>
-                                <div class="col-sm-10">
-                                    <select class="form-control" name="display">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
 
                             <div class="form-group">
                             </div>

@@ -158,7 +158,6 @@ class Helper
             ->where('banners.delete_status', 0)
             ->where('pages.delete_status', 0)
             ->where('pages.slug', $slug)
-            ->where('banners.display', 1)
             ->select('banners.*', 'pages.slug')
             ->inRandomOrder()
             ->get();
