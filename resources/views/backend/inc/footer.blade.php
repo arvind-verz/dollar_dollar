@@ -464,6 +464,7 @@
                 if (index == 1) {
                     var name = $.trim($('#name').val());
                     var bank = $.trim($('#bank').val());
+                    var ongoingStatus = $.trim($('#ongoing-status').data('status'));
                     var productType = $.trim($('#product-type').val());
                     var currency = $.trim($('#currency').val());
                     var maxInterestRate = $.trim($('#maximum-interest-rate').val());
@@ -517,7 +518,8 @@
                         errors[i] = 'The maximum interest rate is required.';
                         i++;
                     }
-                    if (!promotionPeriod) {
+
+                    if ((!promotionPeriod)&&(ongoingStatus=='false')) {
                         errors[i] = 'The promotion period is required.';
                         i++;
                     }
@@ -1642,9 +1644,12 @@
         var endDate = $("#promotion_end_date").val();
         if((startDate.length == 0)&&(endDate.length == 0))
         {
-            ongoingButton = '<button type="button" data-status="true" id="ongoing" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
+            ongoingButton = '<button type="button" data-status="true" id="ongoing-status" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
+            $('#promotion-period').val('');
+            $('#promotion-period').attr('readonly', true);
         }else{
-            ongoingButton = '<button type="button" data-status="false" id="ongoing" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
+            ongoingButton = '<button type="button" data-status="false" id="ongoing-status" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
+            $('#promotion-period').attr('readonly', false);
         }
         $('#ongoing').html(ongoingButton);
     }
@@ -1671,13 +1676,17 @@
             }
             $("#promotion_start_date").val(startDate);
             $("#promotion_end_date").val(endDate);
-            ongoingButton = '<button type="button" data-status="false" id="ongoing" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
+            ongoingButton = '<button type="button" data-status="false" id="ongoing-status" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
+            $('#promotion-period').attr('readonly', false);
         }else{
             $("#promotion_start_date").val(null);
             $("#promotion_end_date").val(null);
-            ongoingButton = '<button type="button" data-status="true" id="ongoing" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
+            ongoingButton = '<button type="button" data-status="true" id="ongoing-status" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
+            $('#promotion-period').val('');
+            $('#promotion-period').attr('readonly', true);
         }
         $('#ongoing').html(ongoingButton);
+
 
     }
     function changeApplyStatus(obj)
