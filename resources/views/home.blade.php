@@ -18,7 +18,13 @@
                  data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000"
                  data-owl-mousedrag="on">
                 @foreach($banners as $banner)
-                    @if(strtotime('now')<strtotime($banner->banner_expiry) || $banner->display==0)
+                    @if($banner->display==1 && strtotime('now')>=strtotime($banner->banner_expiry))
+                    <a href="{{ $banner->fixed_banner_link }}" target="_blank">
+                        <div class="ps-banner bg--cover" data-background="{{asset($banner->fixed_banner )}}"><img
+                                    src="{{asset($banner->fixed_banner )}}" alt="">
+                        </div>
+                    </a>
+                    @else
                     <a href="{{ $banner->banner_link }}" target="_blank">
                         <div class="ps-banner bg--cover" data-background="{{asset($banner->banner_image )}}"><img
                                     src="{{asset($banner->banner_image )}}" alt="">
@@ -26,12 +32,6 @@
                             <div class="ps-banner__content">
                                 {!! $banner->banner_content !!}
                             </div>
-                        </div>
-                    </a>
-                    @else
-                    <a href="{{ $banner->fixed_banner_link }}" target="_blank">
-                        <div class="ps-banner bg--cover" data-background="{{asset($banner->fixed_banner )}}"><img
-                                    src="{{asset($banner->fixed_banner )}}" alt="">
                         </div>
                     </a>
                     @endif
