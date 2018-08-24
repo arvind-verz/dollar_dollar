@@ -87,6 +87,7 @@
                                     {{Form::text('banner_link', old('banner_link'), ['id'=>'', 'class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
+                            @if($type=='home-page')
                             <div class="form-group">
                                 {{Form::label('fixed_banner', 'Fixed Banner',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
@@ -119,6 +120,7 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
                             <div class="form-group" id="target-div">
                                 <label class="col-sm-2 control-label">Target</label>
 
