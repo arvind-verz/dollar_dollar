@@ -243,8 +243,19 @@ $(document).ready(function() {
     });
 });
 $("input[name='search_value']").on( "change", function() {
-    var n = $(this).val();
-    var k = addCommas(parseFloat(n).toFixed(0));
+    var n = parseInt($(this).val());
+    if(n > 999)
+    {
+        n = Math.round(parseInt(n)/1000)*1000 ;
+    }else{
+        n = Math.round(parseInt(n)/100)*100 ;
+    }
+    if(n==0)
+    {
+        n = 100 ;
+    }
+
+    var k = addCommas(n.toFixed(0));
     $(this).val(k);
 });
 function addCommas(nStr)
