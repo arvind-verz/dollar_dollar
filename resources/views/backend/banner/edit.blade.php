@@ -87,6 +87,37 @@
                                     {{Form::text('banner_link', $banner->banner_link, ['id'=>'','class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
+                            <div class="form-group">
+                                {{Form::label('fixed_banner', ' Fixed Banner',['class'=>'col-sm-2 control-label'])}}
+                                <div class="@if(isset($banner->fixed_banner) && ($banner->fixed_banner != ''))col-sm-8 @else col-sm-10 @endif">
+                                    {{Form::file('fixed_banner', ['class' => 'form-control', 'placeholder' => ''])}}
+                                </div>
+                                @if(isset($banner->fixed_banner) && ($banner->fixed_banner != ''))
+                                    <div class=" col-sm-2">                                        
+                                        <div class="attachment-block clearfix">
+                                            <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $banner->id }}');"><i class="fas fa-times fa-lg"></i></a>
+                                            <img class="attachment-img" src="{!! asset($banner->fixed_banner) !!}"
+                                                 alt="Fixed Banner Image">
+                                        </div>
+                                    </div>
+                                @endif
+                                <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 1920*428 for better display</div>
+                            </div>
+
+                            <div class="form-group">
+                                {{Form::label('fixed_banner_link', ' Link',['class'=>'col-sm-2 control-label'])}}
+                                <div class="col-sm-10">
+                                    {{Form::text('fixed_banner_link', $banner->fixed_banner_link, ['id'=>'','class' => 'form-control', 'placeholder' => ''])}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">
+                                    <label for="">Banner Expiry</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="text" name="banner_expiry" class="form-control datepicker1" value="{{ $banner->banner_expiry }}">
+                                </div>
+                            </div>
                             <div class="form-group" id="target-div">
                                 <label class="col-sm-2 control-label">Target</label>
 
@@ -112,6 +143,15 @@
                             </div>
 
                             <div class="form-group">
+                                <div class="col-sm-2 control-label">
+                                    <label>Display?</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="display">
+                                        <option value="1" @if($banner->display==1) selected @endif>Yes</option>
+                                        <option value="0" @if($banner->display==0) selected @endif>No</option>
+                                    </select>
+                                </div>
                             </div>
 
                         </div>

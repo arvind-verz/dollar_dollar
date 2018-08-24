@@ -88,6 +88,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                {{Form::label('fixed_banner', 'Fixed Banner',['class'=>'col-sm-2 control-label'])}}
+                                <div class="col-sm-10">
+                                    {{Form::file('fixed_banner', ['class' => 'form-control', 'placeholder' => ''])}}
+                                </div>
+                                <div class="text-muted col-sm-offset-2"><strong>Note:</strong> Image size should be 1920*428 for better display</div>
+                            </div>
+                            <div class="form-group">
+                                {{Form::label('fixed_banner_link', 'Fixed Banner Link',['class'=>'col-sm-2 control-label'])}}
+                                <div class="col-sm-10">
+                                    {{Form::text('fixed_banner_link', old('fixed_banner_link'), ['id'=>'', 'class' => 'form-control', 'placeholder' => ''])}}
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-sm-2 control-label">
                                     <label for="">Banner Expiry</label>
                                 </div>
