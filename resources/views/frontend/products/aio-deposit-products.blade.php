@@ -432,9 +432,9 @@
                                                     <td class="text-left @if($product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
                                                             - @else  {{ $range->bonus_interest }}% @endif
                                                         on
-                                                        first {{ Helper::inThousand($range->first_cap_amount) }} if
+                                                        first ${{ Helper::inThousand($range->first_cap_amount) }} if
                                                         account more
-                                                        than {{ Helper::inThousand($range->bonus_amount) }}</td>
+                                                        than ${{ Helper::inThousand($range->bonus_amount) }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="1" class="text-left">Total Bonus Interest Earned for
@@ -446,15 +446,15 @@
                                                             ${{ Helper::inThousand($range->first_cap_amount) }} -
                                                             ${{ Helper::inThousand(($range->first_cap_amount*($product->total_interest/100))) }}
                                                             (
-                                                            {{ $product->total_interest }}%), next
+                                                            {{ $product->total_interest }}%), remaining
                                                             ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
                                                             -
                                                             ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                            ({{ $range->bonus_interest_remaining_amount }}%) Total =
+                                                            ({{ $range->bonus_interest_remaining_amount }}%) <br/> Total =
                                                             ${{ Helper::inThousand($product->interest_earned) }}
                                                         @else
                                                             Total =
-                                                            ${{ Helper::inThousand($product->interest_earned) }}
+                                                            ${{ Helper::inThousand($product->interest_earned) }} ({{$product->total_interest}}%)
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -584,8 +584,7 @@
                                                             <td class="text-center  @if($product->highlight==true) highlight @endif"
                                                                 rowspan="{{count($productRanges)}}">
                                                                 ${{ Helper::inThousand($product->interest_earned) }}
-                                                                <br> Effective Interest
-                                                                Rate {{ $product->total_interest }}%
+                                                                <br> base on effective interest rate
                                                             </td>
                                                         @endif
                                                     </tr>
@@ -1062,10 +1061,10 @@
                                                                                 - @else  {{ $range->bonus_interest }}
                                                                                 % @endif
                                                                             on
-                                                                            first {{ Helper::inThousand($range->first_cap_amount) }}
+                                                                            first ${{ Helper::inThousand($range->first_cap_amount) }}
                                                                             if
                                                                             account more
-                                                                            than {{ Helper::inThousand($range->bonus_amount) }}</td>
+                                                                            than ${{ Helper::inThousand($range->bonus_amount) }}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td colspan="2">Total Bonus Interest Earned for
