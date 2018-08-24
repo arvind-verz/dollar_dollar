@@ -193,6 +193,7 @@
 
                                         <div class="ps-block__info">
                                             <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
+
                                             <p>
                                                 <strong>Min:</strong> {{$product->currency_code}}
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
@@ -313,7 +314,7 @@
                                     $end_date = new DateTime(date("Y-m-d",
                                             strtotime($product->promotion_end)));
                                     $interval = date_diff($end_date, $start_date);
-                                    echo $interval->format('%a').' '.\Helper::days_or_month_or_year(1, $interval->format('%a')).' left';
+                                    echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
                                     echo "</p>";
                                 }
                                 ?>
@@ -507,7 +508,8 @@
                                                         <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else {{ $product->total_interest }}% for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
+                                                        - @else {{ $product->total_interest }}%
+                                                        for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
                                                 </span>
 
                                                     </h2>
@@ -539,19 +541,28 @@
                                                                     <thead>
                                                                     <tr>
                                                                         <th>DEPOSIT BALANCE TIER</th>
-                                                                        <th class="center combine-criteria-padding">tenure</th>
-                                                                        <th class="center combine-criteria-padding">BONUS RATE</th>
-                                                                        <th class="center combine-criteria-padding">BOARD RATE</th>
-                                                                        <th class="center combine-criteria-padding">TOTAL INTEREST</th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            tenure
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            BONUS RATE
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            BOARD RATE
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            TOTAL INTEREST
+                                                                        </th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    @foreach($product->product_ranges as $productRange)
+                                                                    @foreach($product->product_ranges as $key => $productRange)
                                                                         <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                                             <td class="@if($productRange->placement_highlight==true ) highlight @endif">
                                                                                 ${{Helper::inThousand($productRange->min_range)}}
                                                                                 -
                                                                                 ${{Helper::inThousand($productRange->max_range) }}</td>
+
                                                                             <td class="center @if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
                                                                             <td class="center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
@@ -590,7 +601,8 @@
                                                                 <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else ${{ $product->total_interest }}% for {{$product->duration}} {{\Helper::days_or_month_or_year(2, $product->duration)}} @endif
+                                                        - @else ${{ $product->total_interest }}%
+                                                        for {{$product->duration}} {{\Helper::days_or_month_or_year(2, $product->duration)}} @endif
                                                 </span>
                                                             </h2>
                                                         </div>
@@ -620,9 +632,13 @@
                                                                         <table class="ps-table ps-table--product text-center">
                                                                             <thead>
                                                                             <tr>
-                                                                                <th class="center">BASE RATE# (P.A.)</th>
-                                                                                <th class="center">BONUS RATE^ (P.A.)</th>
-                                                                                <th class="center">TOTAL INTEREST* (P.A.)</th>
+                                                                                <th class="center">BASE RATE# (P.A.)
+                                                                                </th>
+                                                                                <th class="center">BONUS RATE^ (P.A.)
+                                                                                </th>
+                                                                                <th class="center">TOTAL INTEREST*
+                                                                                    (P.A.)
+                                                                                </th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -633,17 +649,20 @@
                                                                                         <tr class="@if($productRange->high_light==true ) highlight @endif">
                                                                                             @endif
                                                                                             @if($i==1)
-                                                                                                <td class="center" rowspan="6"
+                                                                                                <td class="center"
+                                                                                                    rowspan="6"
                                                                                                     style="border: none; font-size: 30px; background-color: #faf9f9"> @if(($productRange->sibor_rate)<=0)
                                                                                                         - @else {{ $productRange->sibor_rate. '%' }} @endif</td>
                                                                                             @endif
                                                                                             @if($i==4)
-                                                                                                <td class="center">TO</td>
+                                                                                                <td class="center">TO
+                                                                                                </td>
                                                                                             @elseif(!((4 < $i) && ($i < 11)))
                                                                                                 <td class="center">{{ 'COUNTER ' . $i . ' - ' . ($i*0.1). '%' }}</td>
                                                                                             @endif
                                                                                             @if($i==4)
-                                                                                                <td class="center">TO</td>
+                                                                                                <td class="center">TO
+                                                                                                </td>
                                                                                             @elseif(!((4 <= $i) && ($i <= 10)))
                                                                                                 <td class="center"> @if((($i*0.1)+($productRange->sibor_rate)) <=0)
                                                                                                         - @else {{ (($i*0.1)+($productRange->sibor_rate)) . '%' }} @endif </td>
@@ -683,7 +702,8 @@
                                                                         <br>
                                                 <span>
                                                     Average interest rate @if($product->total_interest <=0)
-                                                        - @else {{ $product->total_interest }}%<sup>*</sup> throughout 1 Year @endif
+                                                        - @else {{ $product->total_interest }}%<sup>*</sup> throughout 1
+                                                        Year @endif
                                                 </span>
                                                                     </h2>
                                                                 </div>
@@ -716,10 +736,14 @@
                                                                                     <tr>
                                                                                         <th>Account Balance
                                                                                         </th>
-                                                                                        <th class="center" >Base Interest
+                                                                                        <th class="center">Base Interest
                                                                                         </th>
-                                                                                        <th class="center" >Bonus Interest</th>
-                                                                                        <th class="center">Total Interest</th>
+                                                                                        <th class="center">Bonus
+                                                                                            Interest
+                                                                                        </th>
+                                                                                        <th class="center">Total
+                                                                                            Interest
+                                                                                        </th>
                                                                                     </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -779,7 +803,8 @@
                                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
                                                                                 <span>
-                                                                             Total interest rate {{ $product->total_interest }}% throughout 1 Year
+                                                                             Total interest rate {{ $product->total_interest }}
+                                                                                    % throughout 1 Year
                                                                         </span>
                                                                             </h2>
                                                                         </div>
@@ -815,7 +840,7 @@
                                                                                             <tr>
                                                                                                 <th></th>
                                                                                                 @foreach($product->months as $month)
-                                                                                                    <th class="center" >{{ 'MONTH ' . $month }}</th>
+                                                                                                    <th class="center">{{ 'MONTH ' . $month }}</th>
                                                                                                 @endforeach
                                                                                                 <th class="center">{{ 'END OF YEARS' }}</th>
                                                                                             </tr>
@@ -844,7 +869,8 @@
                                                                                                                     ${{$additionalInterest}} @endif  </td>
                                                                                                         @endforeach
                                                                                                     @elseif($key==3)
-                                                                                                        <td class="center" colspan="{{count($product->months)}}"></td>
+                                                                                                        <td class="center"
+                                                                                                            colspan="{{count($product->months)}}"></td>
                                                                                                         <td class="center">@if($product->total_interest_earn <=0 )
                                                                                                                 - @else
                                                                                                                 {{$product->currency_code}}
@@ -1183,10 +1209,18 @@
                                                                     <thead>
                                                                     <tr>
                                                                         <th>DEPOSIT BALANCE TIER</th>
-                                                                        <th class="center combine-criteria-padding">tenure</th>
-                                                                        <th class="center combine-criteria-padding">BONUS RATE</th>
-                                                                        <th class="center combine-criteria-padding">BOARD RATE</th>
-                                                                        <th class="center combine-criteria-padding">TOTAL INTEREST</th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            tenure
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            BONUS RATE
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            BOARD RATE
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            TOTAL INTEREST
+                                                                        </th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -1258,9 +1292,13 @@
                                                                         <table class="ps-table ps-table--product text-center">
                                                                             <thead>
                                                                             <tr>
-                                                                                <th class="center">BASE RATE# (P.A.)</th>
-                                                                                <th  class="center">BONUS RATE^ (P.A.)</th>
-                                                                                <th  class="center">TOTAL INTEREST* (P.A.)</th>
+                                                                                <th class="center">BASE RATE# (P.A.)
+                                                                                </th>
+                                                                                <th class="center">BONUS RATE^ (P.A.)
+                                                                                </th>
+                                                                                <th class="center">TOTAL INTEREST*
+                                                                                    (P.A.)
+                                                                                </th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -1271,17 +1309,20 @@
                                                                                         <tr class="@if($productRange->high_light==true ) highlight @endif">
                                                                                             @endif
                                                                                             @if($i==1)
-                                                                                                <td class="center" rowspan="6"
+                                                                                                <td class="center"
+                                                                                                    rowspan="6"
                                                                                                     style="border: none; font-size: 30px; background-color: #faf9f9"> @if(($productRange->sibor_rate)<=0)
                                                                                                         - @else {{ $productRange->sibor_rate. '%' }} @endif</td>
                                                                                             @endif
                                                                                             @if($i==4)
-                                                                                                <td class="center">TO</td>
+                                                                                                <td class="center">TO
+                                                                                                </td>
                                                                                             @elseif(!((4 < $i) && ($i < 11)))
                                                                                                 <td class="center">{{ 'COUNTER ' . $i . ' - ' . ($i*0.1). '%' }}</td>
                                                                                             @endif
                                                                                             @if($i==4)
-                                                                                                <td class="center">TO</td>
+                                                                                                <td class="center">TO
+                                                                                                </td>
                                                                                             @elseif(!((4 <= $i) && ($i <= 10)))
                                                                                                 <td class="center"> @if((($i*0.1)+($productRange->sibor_rate)) <=0)
                                                                                                         - @else {{ (($i*0.1)+($productRange->sibor_rate)) . '%' }} @endif </td>
@@ -1349,10 +1390,14 @@
                                                                                     <tr>
                                                                                         <th>Account Balance
                                                                                         </th>
-                                                                                        <th  class="center">Base Interest
+                                                                                        <th class="center">Base Interest
                                                                                         </th>
-                                                                                        <th class="center">Bonus Interest</th>
-                                                                                        <th class="center">Total Interest</th>
+                                                                                        <th class="center">Bonus
+                                                                                            Interest
+                                                                                        </th>
+                                                                                        <th class="center">Total
+                                                                                            Interest
+                                                                                        </th>
                                                                                     </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -1472,7 +1517,8 @@
                                                                                                                     ${{$additionalInterest}} @endif  </td>
                                                                                                         @endforeach
                                                                                                     @elseif($key==3)
-                                                                                                        <td class="center" colspan="{{count($product->months)}}"></td>
+                                                                                                        <td class="center"
+                                                                                                            colspan="{{count($product->months)}}"></td>
                                                                                                         <td class="center">@if($product->total_interest_earn <=0 )
                                                                                                                 - @else
                                                                                                                 {{$product->currency_code}}
