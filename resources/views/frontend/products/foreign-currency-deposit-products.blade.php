@@ -714,15 +714,12 @@
                                                                                 <table class="ps-table ps-table--product text-center">
                                                                                     <thead>
                                                                                     <tr>
-                                                                                        <th>Account Balance in Stash
-                                                                                            account
+                                                                                        <th>Account Balance
                                                                                         </th>
-                                                                                        <th>Base Interest/Prevailing
-                                                                                            Rate
-                                                                                            (PA)
+                                                                                        <th>Base Interest
                                                                                         </th>
-                                                                                        <th>Bonus Interest (PA)</th>
-                                                                                        <th>Total Interest (PA)</th>
+                                                                                        <th>Bonus Interest</th>
+                                                                                        <th>Total Interest</th>
                                                                                     </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -1350,15 +1347,12 @@
                                                                                 <table class="ps-table ps-table--product text-center">
                                                                                     <thead>
                                                                                     <tr>
-                                                                                        <th>Account Balance in Stash
-                                                                                            account
+                                                                                        <th>Account Balance
                                                                                         </th>
-                                                                                        <th>Base Interest/Prevailing
-                                                                                            Rate
-                                                                                            (PA)
+                                                                                        <th>Base Interest
                                                                                         </th>
-                                                                                        <th>Bonus Interest (PA)</th>
-                                                                                        <th>Total Interest (PA)</th>
+                                                                                        <th>Bonus Interest</th>
+                                                                                        <th>Total Interest</th>
                                                                                     </tr>
                                                                                     </thead>
                                                                                     <tbody>
