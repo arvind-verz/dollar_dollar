@@ -185,7 +185,7 @@
                                                     @if($product->promotion_end == null)
                                                         <strong>{{ONGOING}}</strong>
                                                     @else
-                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                        <strong> {{ $product->tenure_value }}</strong> {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}}
                                                     @endif
 
                                                 @endif
@@ -251,7 +251,7 @@
                                                     @if($product->promotion_end == null)
                                                         <strong>{{ONGOING}}</strong>
                                                     @else
-                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                        <strong> {{ $product->tenure_value }}</strong> {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}}
                                                     @endif
 
                                                 @endif
