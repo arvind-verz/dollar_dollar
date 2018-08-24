@@ -594,7 +594,7 @@
                                             <?php
                                             $bonusInterestHighlight = $range->bonus_interest_highlight;
                                             ?>
-                                            <tr class="@if($range->placement_highlight==true)highlight @endif">
+                                            <tr class="@if($range->placement_highlight==true)highlight @endif text-center" >
                                                 <td>
                                                     <?php
                                                     $legendImage = null;
