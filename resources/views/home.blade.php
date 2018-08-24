@@ -18,7 +18,7 @@
                  data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000"
                  data-owl-mousedrag="on">
                 @foreach($banners as $banner)
-                    @if(strtotime('now')<strtotime($banner->banner_expiry) || $banner->display==0)
+                    @if($banner->display==1 && strtotime(date('Y-m-d', strtotime('now')))<=strtotime(date('Y-m-d', strtotime($banner->banner_expiry))))
                     <a href="{{ $banner->banner_link }}" target="_blank">
                         <div class="ps-banner bg--cover" data-background="{{asset($banner->banner_image )}}"><img
                                     src="{{asset($banner->banner_image )}}" alt="">

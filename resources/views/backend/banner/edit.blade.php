@@ -115,7 +115,7 @@
                                     <label for="">Banner Expiry</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="text" name="banner_expiry" class="form-control datepicker1" value="{{ $banner->banner_expiry }}">
+                                    <input type="text" name="banner_expiry" class="form-control datepicker1" value="{{ date('Y-m-d', strtotime($banner->banner_expiry)) }}">
                                 </div>
                             </div>
                             <div class="form-group">
