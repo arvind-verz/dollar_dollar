@@ -783,12 +783,12 @@
                                                                         ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
                                                                         -
                                                                         ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                                        ({{ $range->bonus_interest_remaining_amount }}%)
+                                                                        ({{ $range->bonus_interest_remaining_amount }}%) <br/>
                                                                         Total =
                                                                         ${{ Helper::inThousand($product->interest_earned) }}
                                                                     @else
                                                                         Total =
-                                                                        ${{ Helper::inThousand($product->interest_earned) }}
+                                                                        ${{ Helper::inThousand($product->interest_earned) }} ({{$product->total_interest}}%)
                                                                     @endif
                                                                 </td>
                                                                 </td>
