@@ -131,6 +131,7 @@ class AccountInformationController extends Controller
             $account_information->email    =   $request->email;
             $account_information->first_name    =   $request->first_name;
             $account_information->last_name     =   $request->last_name;
+            $account_information->country_code     =   $request->country_code;
             $account_information->tel_phone     =   $request->tel_phone;
             /*$account_information->notification    =   $request->privacy;*/
             $account_information->email_notification     =   $email_notification;

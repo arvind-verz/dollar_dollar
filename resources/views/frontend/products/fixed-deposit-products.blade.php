@@ -117,7 +117,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                                 @elseif(!isset($searchFilter['filter']))$@endif
@@ -131,17 +131,26 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                        <select class="form-control" name="sort_by">
-                                            <option value="">Sort by</option>
-                                            <option value="1"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
-                                                Ascending
-                                            </option>
-                                            <option value="2"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
-                                                Descending
-                                            </option>
-                                        </select>
+                                        <div class="form-group  ">
+                                            <select class="form-control sort-by" name="sort_by">
+                                                <option value="">Sort by</option>
+                                                <option value="1"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
+                                                    Ascending
+                                                </option>
+                                                <option value="2"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
+                                                    Descending
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
+                                        <div class="form-group  ">
+                                            <a class="btn refresh form-control "
+                                               href="{{url(FIXED_DEPOSIT_MODE)}}/#logo-detail"> <i
+                                                        class="fa fa-refresh"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -161,17 +170,40 @@
                                 <div class="ps-slider--feature-product saving">
                                     <div class="ps-block--short-product second highlight" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->upto_interest_rate }}%</strong>
-                                        </h4>
+                                        @if(isset($searchFilter['filter']))
+                                            <h4>
+                                                @if($searchFilter['filter']==INTEREST)
+                                                    up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                                @endif
+                                                @if($searchFilter['filter']==PLACEMENT)
+                                                    Min: <strong>
+                                                        SGD
+                                                        ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                    </strong>
+                                                @endif
+                                                @if($searchFilter['filter']==TENURE)
+                                                    @if($product->promotion_end == null)
+                                                        <strong>{{ONGOING}}</strong>
+                                                    @else
+                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                    @endif
 
+                                                @endif
+                                                @if($searchFilter['filter']==CRITERIA)
+                                                    <strong> {{ $product->promotion_period }}</strong> Criteria
+                                                @endif
+                                            </h4>
+                                        @endif
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong>
+                                                    rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p><strong>Min:</strong> SGD
+                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong>
+                                                SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
 
-                                            <p class="highlight">{{ $product->promotion_period }} Months</p>
+                                            <p class="@if($searchFilter['filter']==TENURE) highlight @endif">{{ $product->promotion_period }} {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
                                     </div>
@@ -206,17 +238,41 @@
                                 @if($product->featured==0)
                                     <div class="ps-block--short-product second" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->upto_interest_rate  }}%</strong>
-                                        </h4>
+                                        @if(isset($searchFilter['filter']))
+                                            <h4>
+                                                @if($searchFilter['filter']==INTEREST)
+                                                    up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                                @endif
+                                                @if($searchFilter['filter']==PLACEMENT)
+                                                    Min: <strong>
+                                                        SGD
+                                                        ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                    </strong>
+                                                @endif
+                                                @if($searchFilter['filter']==TENURE)
+                                                    @if($product->promotion_end == null)
+                                                        <strong>{{ONGOING}}</strong>
+                                                    @else
+                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                    @endif
+
+                                                @endif
+                                                @if($searchFilter['filter']==CRITERIA)
+                                                    <strong> {{ $product->promotion_period }}</strong> Criteria
+                                                @endif
+                                            </h4>
+                                        @endif
 
                                         <div class="ps-block__info">
-                                            <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong>
+                                                    rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p><strong>Min:</strong> SGD
+                                            <p class=" @if($searchFilter['filter']==PLACEMENT) highlight @endif">
+                                                <strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
 
-                                            <p class="highlight">{{ $product->promotion_period }} Months</p>
+                                            <p class=" @if($searchFilter['filter']==TENURE) highlight @endif">{{ $product->promotion_period }} {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                         </div>
                                         <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
                                     </div>
@@ -416,7 +472,7 @@
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==3)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
                                 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
                                    target="_blank"><img
@@ -428,7 +484,7 @@
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
                                 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
                                    target="_blank"><img
@@ -538,7 +594,7 @@
                                             <?php
                                             $bonusInterestHighlight = $range->bonus_interest_highlight;
                                             ?>
-                                            <tr class="@if($range->placement_highlight==true)highlight @endif">
+                                            <tr class="@if($range->placement_highlight==true)highlight @endif text-center" >
                                                 <td>
                                                     <?php
                                                     $legendImage = null;
@@ -578,19 +634,14 @@
                                 <?php } ?>
                             @endif
                             <div class="ps-product__panel">
-                                @if(count($interestEarns))
-                                    @foreach($tenures as $tenureKey => $value)
-                                        <?php $type = Helper::days_or_month_or_year(2, $value); ?>
-                                        @if($tenureKey==0)
-                                            <h4>Possible interest(s) earned for SGD
-                                                ${{ Helper::inThousand($product->placement) }}</h4>
-                                        @endif
-                                        <p><strong>{{ $value . ' ' . $type }}</strong>-
-                                            ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
-                                            ({{ $bonusInterests[$tenureKey] . '%' }})</p>
-                                    @endforeach
 
-                                @endif
+                                <h4>Possible interest(s) earned for SGD
+                                    ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                <p>
+                                    <span class="nill"> {{ NILL }}</span><br/>
+                                    {{NOT_ELIGIBLE}}
+                                </p>
                             </div>
                             <div class="clearfix"></div>
                             @if(isset($ads[2]))
@@ -621,7 +672,7 @@
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==3)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
                                 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
                                    target="_blank"><img
@@ -633,7 +684,7 @@
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
                                 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
                                    target="_blank"><img

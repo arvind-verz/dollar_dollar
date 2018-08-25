@@ -47,6 +47,7 @@
                                         </div>
                                     </div>
                                 @endif
+                                <div class="text-muted col-sm-offset-2"><strong>Note:</strong> Image size should be 100*46 for better display</div>
                             </div>
                             <div class="form-group">
                                 {{Form::label('brand_link', 'Link',['class'=>'col-sm-2 control-label'])}}

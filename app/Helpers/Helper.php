@@ -159,7 +159,7 @@ class Helper
             ->where('pages.delete_status', 0)
             ->where('pages.slug', $slug)
             ->select('banners.*', 'pages.slug')
-            ->orderBy('banners.view_order', 'ASC')
+            ->inRandomOrder()
             ->get();
         //dd($slug);
         return $banners;
@@ -296,7 +296,7 @@ class Helper
             $filter_data = $details->filter(function ($detail) {
                 if (($detail->child != 0) || ($detail->slug != null))
                     return $detail;
-                });
+            });
 
             $menus = $filter_data->groupBy('parent')->toArray();
         }
@@ -350,7 +350,7 @@ class Helper
         $checkMenuPermission = \DB::table('role_type_access')
             ->join('modules', 'role_type_access.module_id', '=', 'modules.id')
             ->where(['role_type_access.role_type_id' => @Auth::user()->role_type_id, 'role_type_access.view' => 1])
-            ->where('modules.delete_status',0)
+            ->where('modules.delete_status', 0)
             ->select('role_type_access.module_id', 'modules.name', 'modules.label', 'modules.icon')
             ->orderBy('modules.view_order', 'asc')
             ->get();
@@ -410,11 +410,10 @@ class Helper
             return null;
         }
 
-        if($sel_query->ads_placement)
-       {
-           $sel_query->ads_placement = json_decode($sel_query->ads_placement);
+        if ($sel_query->ads_placement) {
+            $sel_query->ads_placement = json_decode($sel_query->ads_placement);
 
-       }
+        }
         return $sel_query;
     }
 
@@ -444,7 +443,7 @@ class Helper
 
     public static function getAllFormula($id = NULL)
     {
-        $sel_query = PromotionFormula::where('promotion_id', $id)->where('delete_status', 0)->orderBy('view_order','ASC')->get();
+        $sel_query = PromotionFormula::where('promotion_id', $id)->where('delete_status', 0)->orderBy('view_order', 'ASC')->get();
         return $sel_query;
     }
     /* END FORMULAS */
@@ -482,61 +481,60 @@ class Helper
         $endOfDay = Carbon::createFromFormat('Y-m-d H:i:s', $date)->endOfDay()->toDateTimeString();
         return $endOfDay;
     }
+
     public static function convertToCarbonStartDate($date = null)
     {
         if (!$date) {
             $carbonStartDate = Carbon::now()->startOfDay();
-        }else{
+        } else {
             $carbonStartDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->startOfDay();
         }
         return $carbonStartDate;
     }
+
     public static function convertToCarbonEndDate($date = null)
     {
         if (!$date) {
             $carbonEndDate = Carbon::now()->endOfDay();
-        }else{
+        } else {
             $carbonEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $date)->endOfDay();
         }
         return $carbonEndDate;
     }
+
     public static function days_or_month_or_year($tenure_type, $tenure)
     {
         $day = 'Invalid';
-        if($tenure_type==1) {
-            if($tenure>1) {
+        if ($tenure_type == 1) {
+            if ($tenure > 1) {
                 $day = 'Days';
-            }
-            else {
+            } else {
                 $day = 'Day';
             }
-        }
-        elseif($tenure_type==2) {
-            if($tenure>1) {
+        } elseif ($tenure_type == 2) {
+            if ($tenure > 1) {
                 $day = 'Months';
-            }
-            else {
+            } else {
                 $day = 'Month';
             }
-        }
-        elseif($tenure_type==3) {
-            if($tenure>1) {
+        } elseif ($tenure_type == 3) {
+            if ($tenure > 1) {
                 $day = 'Years';
-            }
-            else {
+            } else {
                 $day = 'Year';
             }
         }
         return $day;
     }
 
-    public static function get_page_detail($slug=HOME_SLUG) {
+    public static function get_page_detail($slug = HOME_SLUG)
+    {
         //dd($slug);
         $page = Page::where('delete_status', 0)->where('slug', $slug)->first();
         if (!$page) {
             return back()->with('error', OPPS_ALERT);
         }
-        
+
         $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
 
         $systemSetting = \Helper::getSystemSetting();
@@ -556,20 +554,34 @@ class Helper
         return $details;
     }
 
-    public static function inThousand($amount) {
+    public static function inThousand($amount)
+    {
         //dd($amount);
-        if($amount > 999)
-        {
-            $amount =  round(($amount/1000),3) . 'k';
-        }else{
-            $amount = round($amount,2);
+        if ($amount > 999) {
+            $amount = $amount / 1000;
+            $intVal = intval($amount);
+            if (($amount - $intVal) > 0) {
+                $amount = number_format((float)$amount, 2, '.', '').'K';
+            }else{
+                $amount = $intVal.'K';
+            }
+
+        } else {
+            $intVal = intval($amount);
+            if(($amount-$intVal)>0)
+            {
+                $amount = number_format((float)$amount, 2, '.', '');
+            }
+
         }
         return $amount;
     }
 
-    public static function todayDate() {
+    public static function todayDate()
+    {
         return Carbon::now()->format('Y-m-d');
     }
+
     public static function base64_encode($str)
     {
         return strtr(base64_encode($str), '+/', '-_');

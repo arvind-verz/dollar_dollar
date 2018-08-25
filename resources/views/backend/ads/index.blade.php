@@ -44,9 +44,14 @@
                                             <tr>
                                                 @if($type=='product')
                                                 <th>Product Page</th>
+                                                @elseif($type=='blog')
+                                                <th>Blog Page</th>
                                                 @endif
                                                 <th>Title</th>
                                                 <th>Ad Image</th>
+                                                @if($type=='account')
+                                                <th>Banner Image</th>
+                                                @endif
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
@@ -56,7 +61,7 @@
                                             @if($ads->count())
                                                 @foreach($ads as $ad)
                                                     <tr>
-                                                        @if($type=='product')
+                                                        @if($type=='product' || $type=='blog')
                                                             <td>
                                                                 {{  $ad->page_type  }}
                                                             </td>
@@ -71,6 +76,15 @@
                                                             Not available
                                                             @endif
                                                         </td>
+                                                        @if($type=='account')
+                                                        <td>
+                                                            @if(!empty($ad->horizontal_banner_ad_image))
+                                                            <img src="{{ asset($ad->horizontal_banner_ad_image) }}" alt="" width="100px">
+                                                            @else
+                                                            Not available
+                                                            @endif
+                                                        </td>
+                                                        @endif
                                                         <td>
                                                             @if ($ad->created_at == null)
                                                                 {{$ad->created_at}}

@@ -132,12 +132,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('upto_interest_rate', 'Upto Interest Rate',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::text('upto_interest_rate',  $product->upto_interest_rate, ['id'=>'upto-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         {{Form::label('maximum_interest_rate', 'Maximum Interest Rate',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('maximum_interest_rate',  $product->maximum_interest_rate, ['id'=>'maximum-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}

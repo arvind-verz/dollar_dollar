@@ -41,7 +41,7 @@
                         </ul>
                         @if(count($ads))
                         <div class="pt-2">
-                            <a href="{{ isset($ads->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                            <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
                         </div>
                         @endif
                     </div>
@@ -86,7 +86,7 @@
                             @endif
                             <div class="ps-block--box no-border">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">Recently Added Products</h5><!-- <a href="#">View all</a> -->
+                                    <h5><img src="img/icons/file.png" alt="">All my Accounts</h5><!-- <a href="#">View all</a> -->
                                 </div>
                                 <div class="ps-block__content">
                                     <div class="ps-table-wrap">
@@ -116,13 +116,18 @@
                                                             $end_date = date("Y-m-d", strtotime($value->end_date));
                                                         @endphp
                                                     <tr>
-                                                        <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
+                                                        <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
+                                                            @if(!empty($value->brand_logo))
+                                                            <img src="{{ asset($value->brand_logo) }}"></td>
+                                                            @else
+                                                            {{ $value->other_bank }}
+                                                            @endif
                                                         <td>{{ $value->account_name }}</td>
                                                         <td>{{ $value->amount }}</td>
                                                         <td>{{ $value->tenure }}</td>
                                                         <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
                                                         <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
-                                                        <td>{{ isset($value->interest_earned) ? $value->interest_earned.'%' : '-' }}</td>
+                                                        <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
                                                         <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
                                                         <td>
                                                             <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
@@ -140,9 +145,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ps-block--box no-border">
+                            @if(count($ads))
+                            <div class="pt-2">
+                                <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->horizontal_banner_ad_image) }}" alt=""></a>
+                            </div>
+                            @endif
+                            <!-- <div class="ps-block--box no-border">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><!-- <a href="#">View all</a> -->
+                                    <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><a href="#">View all</a>
                                 </div>
                                 <div class="ps-block__content">
                                     <div class="ps-table-wrap">
@@ -197,7 +207,7 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

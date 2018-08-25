@@ -42,7 +42,7 @@
                         </ul>
                         @if(count($ads))
                         <div class="pt-2">
-                            <a href="{{ isset($ads->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                            <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
                         </div>
                         @endif
                     </div>
@@ -65,7 +65,14 @@
                                     <p><strong> First Name: </strong> <input type="text" class="form-control" name="first_name" placeholder="Enter first name" value="{{ AUTH::user()->first_name }}"></p>
                                     <p><strong> Last Name: </strong><input type="text" class="form-control" name="last_name" placeholder="Enter last name" value="{{ AUTH::user()->last_name }}"></p>
                                     
-                                    <p><strong> Contact Number: </strong><input type="text" class="form-control only_numeric" name="tel_phone" placeholder="Enter contact number" value="{{ AUTH::user()->tel_phone }}"></p>
+                                    <p><strong> Contact Number: </strong>
+                                        <div class="col-xs-2 pl-0">
+                                            <input type="text" class="form-control" name="country_code" placeholder="+65" value="{{ isset(AUTH::user()->country_code) ? AUTH::user()->country_code : '+65' }}">
+                                        </div>
+                                        <div class="col-xs-10 pr-0">
+                                            <input type="text" class="form-control only_numeric" name="tel_phone" placeholder="Enter contact number" value="{{ AUTH::user()->tel_phone }}">
+                                        </div>
+                                    </p>
                                     <!-- <p><strong> Privacy: </strong>
                                         <select class="form-control" name="privacy">
                                                 <option value="1" @if(1==AUTH::user()->notification) selected  @endif>DOD</option>
