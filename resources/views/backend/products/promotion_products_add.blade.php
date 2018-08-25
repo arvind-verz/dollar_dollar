@@ -186,7 +186,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2 " id="ongoing">
-                                            <button type="button" data-status="false" id="ongoing"
+                                            <button type="button" data-status="false" id="ongoing-status"
                                                     class="btn btn-block btn-danger btn-social"
                                                     onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i>
                                                 Ongoing

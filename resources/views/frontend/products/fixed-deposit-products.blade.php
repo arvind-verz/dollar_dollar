@@ -185,7 +185,7 @@
                                                     @if($product->promotion_end == null)
                                                         <strong>{{ONGOING}}</strong>
                                                     @else
-                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                        <strong> {{ $product->tenure_value }}</strong> {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}}
                                                     @endif
 
                                                 @endif
@@ -253,7 +253,7 @@
                                                     @if($product->promotion_end == null)
                                                         <strong>{{ONGOING}}</strong>
                                                     @else
-                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                        <strong> {{ $product->tenure_value }}</strong> {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}}
                                                     @endif
 
                                                 @endif
@@ -380,7 +380,7 @@
                                                 <?php
                                                 $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                 ?>
-                                                <th>{{ $tenure . ' ' . $monthSuffix }}</th>
+                                                <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
                                             @endforeach
                                         </tr>
                                         </thead>
@@ -406,7 +406,7 @@
                                                 </td>
                                                 <td class="@if($range->placement_value==true)highlight @endif">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
                                                 @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
-                                                    <td class="@if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
+                                                    <td class="text-center @if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
                                                             - @else {{ $bonus_interest . '%' }} @endif </td>
                                                 @endforeach
                                             </tr>
@@ -580,12 +580,12 @@
                                         <thead>
                                         <tr>
                                             <th>Type</th>
-                                            <th>Account</th>
+                                            <th>Placement</th>
                                             @foreach($tenures as  $tenure)
                                                 <?php
                                                 $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                 ?>
-                                                <th>{{ $tenure . ' ' . $monthSuffix }}</th>
+                                                <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
                                             @endforeach
                                         </tr>
                                         </thead>
@@ -594,7 +594,7 @@
                                             <?php
                                             $bonusInterestHighlight = $range->bonus_interest_highlight;
                                             ?>
-                                            <tr class="@if($range->placement_highlight==true)highlight @endif text-center" >
+                                            <tr class="@if($range->placement_highlight==true)highlight @endif " >
                                                 <td>
                                                     <?php
                                                     $legendImage = null;
@@ -611,7 +611,7 @@
                                                 </td>
                                                 <td class="@if($range->placement_value==true)highlight @endif">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
                                                 @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
-                                                    <td class="@if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
+                                                    <td class=" text-center @if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
                                                             - @else {{ $bonus_interest . '%' }} @endif </td>
                                                 @endforeach
                                             </tr>

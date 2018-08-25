@@ -492,9 +492,15 @@ class PagesFrontController extends Controller
                 $maxTenure = max($placementTenures);
                 $minTenure = min($placementTenures);
             }
+            
             $product->max_tenure = $maxTenure;
             $product->min_tenure = $minTenure;
 
+            if ($sortBy == MINIMUM) {
+                $product->tenure_value = $minTenure;
+            } else {
+                $product->tenure_value = $maxTenure;
+            }
 
         }
         $remainingProducts = collect($remainingProducts);
@@ -874,12 +880,16 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     //dd($product);
                     $filterProducts[] = $product;
                 } else {
-
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
             }
@@ -948,10 +958,15 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1008,9 +1023,15 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1107,7 +1128,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
@@ -1117,7 +1142,7 @@ class PagesFrontController extends Controller
                 } else {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
-                    $product->placement = $placement;
+                    $product->placement = $searchValue;
                     $product->highlight = $highlight;
                     $remainingProducts[] = $product;
                 }
@@ -1219,9 +1244,15 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1445,10 +1476,15 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1505,10 +1541,15 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -1606,7 +1647,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
@@ -1616,7 +1661,7 @@ class PagesFrontController extends Controller
                 } else {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
-                    $product->placement = $placement;
+                    $product->placement = $searchValue;
                     $product->highlight = $highlight;
                     $remainingProducts[] = $product;
                 }
@@ -1718,9 +1763,15 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -2015,11 +2066,16 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     //dd($product);
                     $filterProducts[] = $product;
                 } else {
-
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
             }
@@ -2088,10 +2144,15 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -2148,9 +2209,15 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -2246,7 +2313,11 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
-
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
@@ -2256,7 +2327,7 @@ class PagesFrontController extends Controller
                 } else {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
                     $product->total_interest_earn = array_sum($interestEarns);
-                    $product->placement = $placement;
+                    $product->placement = $searchValue;
                     $product->highlight = $highlight;
                     $remainingProducts[] = $product;
                 }
@@ -2358,9 +2429,15 @@ class PagesFrontController extends Controller
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
+                    $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
 
@@ -3211,11 +3288,11 @@ class PagesFrontController extends Controller
                     <table class="ps-table ps-table--product ps-table--product-3">
                         <thead>
                         <tr>
-                            <th>CRITERIA</th>
-                            <th>SALARY</th>
-                            <th>Giro</th>
-                            <th>SPEND</th>
-                            <th>
+                            <th class="combine-criteria-padding">CRITERIA</th>
+                            <th class="combine-criteria-padding">SALARY</th>
+                            <th class="combine-criteria-padding">Giro</th>
+                            <th class="combine-criteria-padding">SPEND</th>
+                            <th class="combine-criteria-padding">
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox"
                                            data-product-id="<?php echo $product->product_id; ?>"
@@ -3228,7 +3305,7 @@ class PagesFrontController extends Controller
                                         Insurance</label>
                                 </div>
                             </th>
-                            <th>
+                            <th class="combine-criteria-padding">
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
                                         <?php if ($product->housing_loan) {
@@ -3241,7 +3318,7 @@ class PagesFrontController extends Controller
                                     <label for="housing-loan-<?php echo $product->product_id; ?>">Housing Loan</label>
                                 </div>
                             </th>
-                            <th>
+                            <th class="combine-criteria-padding">
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox"
                                            data-status="<?php echo $highlightStatus; ?>"
@@ -3255,7 +3332,7 @@ class PagesFrontController extends Controller
                                         Loan</label>
                                 </div>
                             </th>
-                            <th>
+                            <th class="combine-criteria-padding">
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
                                            name="hire_loan" value="true"
@@ -3269,7 +3346,7 @@ class PagesFrontController extends Controller
                                         loan</label>
                                 </div>
                             </th>
-                            <th>
+                            <th class="combine-criteria-padding">
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox"
                                            data-status="<?php echo $highlightStatus; ?>"
@@ -3283,7 +3360,7 @@ class PagesFrontController extends Controller
                                         loan</label>
                                 </div>
                             </th>
-                            <th>
+                            <th class="combine-criteria-padding">
                                 <div class="ps-checkbox">
                                     <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
                                            name="unit_trust" value="true"
@@ -3335,13 +3412,13 @@ class PagesFrontController extends Controller
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">Total Bonus Interest Earned for
+                                <td colspan="1">Total Bonus Interest Earned for
                                     <?php echo "$" . \Helper::inThousand($range->placement); ?>
                                 </td>
                                 <td class=" text-center <?php if ($product->highlight == true) {
                                     echo 'highlight';
                                 } ?>"
-                                    colspan="8">
+                                    colspan="9">
 
                                     <?php if ($range->placement > $range->first_cap_amount) {
                                         echo "First ";
@@ -3350,7 +3427,7 @@ class PagesFrontController extends Controller
                                             ' (' . $product->total_interest . '%), next $' .
                                             \Helper::inThousand(($range->placement - $range->first_cap_amount)) . ' - '
                                             . '$' . \Helper::inThousand((($range->bonus_interest_remaining_amount / 100) * ($range->placement - $range->first_cap_amount))) .
-                                            ' (' . $range->bonus_interest_remaining_amount . '%) Total = $'
+                                            ' (' . $range->bonus_interest_remaining_amount . '%)<br/> Total = $'
                                             . \Helper::inThousand($product->interest_earned);
                                     } else {
                                         echo "Total = $" . \Helper::inThousand($product->interest_earned);
