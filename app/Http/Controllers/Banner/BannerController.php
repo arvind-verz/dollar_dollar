@@ -187,6 +187,7 @@ class BannerController extends Controller
         $banner->banner_image = $destinationPath . "/" . $banner_image;
         $banner->fixed_banner = $destinationPath . "/" . $fixed_banner;
         $banner->fixed_banner_link = ($request->fixed_banner_link ? $request->fixed_banner_link : '');
+        $banner->banner_start_date = $request->banner_start_date;
         $banner->banner_expiry = $request->banner_expiry;
         $banner->display = $request->display;
         $banner->created_at = Carbon::now()->toDateTimeString();
@@ -377,6 +378,7 @@ class BannerController extends Controller
         $banner->view_order = $request->view_order;
         $banner->banner_link = ($request->banner_link ? $request->banner_link : '');
         $banner->fixed_banner_link = ($request->fixed_banner_link ? $request->fixed_banner_link : '');
+        $banner->banner_start_date = $request->banner_start_date;
         $banner->banner_expiry = $request->banner_expiry;
         $banner->display = $request->display;
         $banner->updated_at = Carbon::now()->toDateTimeString();

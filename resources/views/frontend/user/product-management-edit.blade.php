@@ -163,6 +163,16 @@
             $("select[name='bank_id']").attr("required", true);
             $("input[name='bank_id_other']").addClass("hide").attr("required", false);
         }
+
+        $("input[name='dod_reminder']").on("change", function() {
+            if($(this).is(":checked")!==false) {
+                $("select[name='reminder[]']").prop("disabled", true);
+                $(".select2").select2("val", " ");
+            }
+            else {
+                $("select[name='reminder[]']").prop("disabled", false);
+            }
+        });
     </script>
     <script type="text/javascript">
         $(document).ready( function () {

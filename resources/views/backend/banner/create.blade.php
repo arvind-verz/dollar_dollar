@@ -103,10 +103,18 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 control-label">
+                                    <label for="">Banner Start Date</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="text" name="banner_start_date" class="form-control datepicker1" value="{{ date('Y-m-d') }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">
                                     <label for="">Banner Expiry</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="text" name="banner_expiry" class="form-control datepicker1">
+                                    <input type="text" name="banner_expiry" class="form-control datepicker1" value="{{ date('Y-m-d') }}">
                                 </div>
                             </div>
                             <div class="form-group">
