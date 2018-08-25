@@ -87,6 +87,7 @@
                                     {{Form::text('banner_link', $banner->banner_link, ['id'=>'','class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
                             </div>
+                            @if($type=='home-page')
                             <div class="form-group">
                                 {{Form::label('fixed_banner', ' Fixed Banner',['class'=>'col-sm-2 control-label'])}}
                                 <div class="@if(isset($banner->fixed_banner) && ($banner->fixed_banner != ''))col-sm-8 @else col-sm-10 @endif">
@@ -112,10 +113,18 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 control-label">
+                                    <label for="">Banner Start Date</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="text" name="banner_start_date" class="form-control datepicker1" value="{{ isset($banner->banner_start_date) ? date('Y-m-d', strtotime($banner->banner_start_date)) : date('Y-m-d') }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label">
                                     <label for="">Banner Expiry</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input type="text" name="banner_expiry" class="form-control datepicker1" value="{{ date('Y-m-d', strtotime($banner->banner_expiry)) }}">
+                                    <input type="text" name="banner_expiry" class="form-control datepicker1" value="{{ isset($banner->banner_expiry) ? date('Y-m-d', strtotime($banner->banner_expiry)) : date('Y-m-d') }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -129,6 +138,7 @@
                                     </select>
                                 </div>
                             </div>
+                            @endif
                             <div class="form-group" id="target-div">
                                 <label class="col-sm-2 control-label">Target</label>
 
