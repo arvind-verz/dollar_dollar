@@ -188,8 +188,30 @@
                                 <div class="ps-slider--feature-product saving">
                                     <div class="ps-block--short-product second highlight" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->maximum_interest_rate  }}%</strong>
-                                        </h4>
+                                        @if(isset($searchFilter['filter']))
+                                            <h4 class="slider-heading">
+                                                @if($searchFilter['filter']==INTEREST)
+                                                    up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                                @endif
+                                                @if($searchFilter['filter']==PLACEMENT)
+                                                    Min: <strong>
+                                                            {{$product->currency_code}}
+                                                        ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                    </strong>
+                                                @endif
+                                                @if($searchFilter['filter']==TENURE)
+                                                    @if($product->promotion_end == null)
+                                                        <strong>{{ONGOING}}</strong>
+                                                    @else
+                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                    @endif
+
+                                                @endif
+                                                @if($searchFilter['filter']==CRITERIA)
+                                                    <strong> {{ $product->promotion_period }}</strong> Criteria
+                                                @endif
+                                            </h4>
+                                        @endif
 
                                         <div class="ps-block__info">
                                             <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
@@ -232,9 +254,28 @@
                                 @if($product->featured==0)
                                     <div class="ps-block--short-product second" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
-                                        <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong>
-                                        </h4>
+                                        <h4 class="slider-heading">
+                                            @if($searchFilter['filter']==INTEREST)
+                                                up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                            @endif
+                                            @if($searchFilter['filter']==PLACEMENT)
+                                                Min: <strong>
+                                                    {{$product->currency_code}}
+                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                </strong>
+                                            @endif
+                                            @if($searchFilter['filter']==TENURE)
+                                                @if($product->promotion_end == null)
+                                                    <strong>{{ONGOING}}</strong>
+                                                @else
+                                                    <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                @endif
 
+                                            @endif
+                                            @if($searchFilter['filter']==CRITERIA)
+                                                <strong> {{ $product->promotion_period }}</strong> Criteria
+                                            @endif
+                                        </h4>
                                         <div class="ps-block__info">
                                             <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
@@ -563,7 +604,10 @@
                                                                                 -
                                                                                 ${{Helper::inThousand($productRange->max_range) }}</td>
 
-                                                                            <td class="center @if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                            @if($key==0)
+                                                                                <td rowspan="{{count($product->product_ranges)}}"
+                                                                                    class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                            @endif
                                                                             <td class="center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                                             <td class="center @if($productRange->board_interest_highlight==true ) highlight @endif">@if(($productRange->board_rate)<=0)
@@ -1039,7 +1083,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th>Type</th>
-                                                        <th>Account</th>
+                                                        <th>Placement</th>
                                                         @foreach($tenures as  $tenure)
                                                             <?php
                                                             $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
@@ -1224,13 +1268,16 @@
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    @foreach($product->product_ranges as $productRange)
+                                                                    @foreach($product->product_ranges as $key => $productRange)
                                                                         <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                                             <td class="@if($productRange->placement_highlight==true ) highlight @endif">
                                                                                 ${{Helper::inThousand($productRange->min_range)}}
                                                                                 -
                                                                                 ${{Helper::inThousand($productRange->max_range) }}</td>
-                                                                            <td class="center @if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure. ' Months' }}</td>
+                                                                            @if($key==0)
+                                                                                <td rowspan="{{count($product->product_ranges)}}"
+                                                                                    class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                            @endif
                                                                             <td class="center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                                             <td class="center @if($productRange->board_interest_highlight==true ) highlight @endif">@if(($productRange->board_rate)<=0)
