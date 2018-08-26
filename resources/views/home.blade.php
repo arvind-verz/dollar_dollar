@@ -173,7 +173,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4>up to
+                                                        <h4 class="slider-heading">up to
                                                             <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
@@ -224,7 +224,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4>up to <strong> {{ $product->maximum_interest_rate  }}
+                                                        <h4 class="slider-heading">up to <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
 
@@ -279,7 +279,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -332,7 +332,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -381,14 +381,21 @@
                                     foreach ($products as $key => &$product) {
                                         $placementPeriod = explode("|", $product->promotion_period);
                                         $maxTenure = 0;
+                                        $minTenure = 0;
                                         if (count($placementPeriod)) {
-                                            $placementTenures = [0];
+                                            $placementTenures = [];
                                             foreach ($placementPeriod as $period) {
                                                 $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                                             }
-                                            $maxTenure = max($placementTenures);
+                                            if (count($placementTenures)) {
+                                                $maxTenure = max($placementTenures);
+                                                $minTenure = min($placementTenures);
+                                            }
                                         }
+
                                         $product->max_tenure = $maxTenure;
+                                        $product->min_tenure = $minTenure;
+
 
                                     }
                                     $products = $products->sortByDesc('max_tenure');
@@ -403,10 +410,10 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4> @if($product->promotion_end == null)
+                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
                                                                 <strong>{{ONGOING}}</strong>
                                                             @else
-                                                                <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                                <strong> {{ $product->max_tenure }}</strong> {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}}
                                                             @endif
                                                         </h4>
 
@@ -457,7 +464,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4> @if($product->promotion_end == null)
+                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
                                                                 <strong>{{ONGOING}}</strong>
                                                             @else
                                                                 <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
@@ -532,7 +539,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4>up to
+                                                        <h4 class="slider-heading">up to
                                                             <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
@@ -583,7 +590,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4>up to <strong> {{ $product->maximum_interest_rate  }}
+                                                        <h4 class="slider-heading">up to <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
 
@@ -638,7 +645,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -691,7 +698,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -740,14 +747,21 @@
                                     foreach ($products as $key => &$product) {
                                         $placementPeriod = explode("|", $product->promotion_period);
                                         $maxTenure = 0;
+                                        $minTenure = 0;
                                         if (count($placementPeriod)) {
-                                            $placementTenures = [0];
+                                            $placementTenures = [];
                                             foreach ($placementPeriod as $period) {
                                                 $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                                             }
-                                            $maxTenure = max($placementTenures);
+                                            if (count($placementTenures)) {
+                                                $maxTenure = max($placementTenures);
+                                                $minTenure = min($placementTenures);
+                                            }
                                         }
+
                                         $product->max_tenure = $maxTenure;
+                                        $product->min_tenure = $minTenure;
+
 
                                     }
                                     $products = $products->sortByDesc('max_tenure');
@@ -762,10 +776,10 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4> @if($product->promotion_end == null)
+                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
                                                                 <strong>{{ONGOING}}</strong>
                                                             @else
-                                                                <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                                <strong> {{ $product->max_tenure }}</strong> {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}}
                                                             @endif
                                                         </h4>
 
@@ -816,7 +830,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4> @if($product->promotion_end == null)
+                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
                                                                 <strong>{{ONGOING}}</strong>
                                                             @else
                                                                 <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
@@ -891,7 +905,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4>up to
+                                                        <h4 class="slider-heading">up to
                                                             <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
@@ -942,7 +956,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4>up to <strong> {{ $product->maximum_interest_rate  }}
+                                                        <h4 class="slider-heading">up to <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
 
@@ -996,7 +1010,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -1049,7 +1063,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -1098,14 +1112,20 @@
                                     foreach ($products as $key => &$product) {
                                         $placementPeriod = explode("|", $product->promotion_period);
                                         $maxTenure = 0;
+                                        $minTenure = 0;
                                         if (count($placementPeriod)) {
-                                            $placementTenures = [0];
+                                            $placementTenures = [];
                                             foreach ($placementPeriod as $period) {
                                                 $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                                             }
-                                            $maxTenure = max($placementTenures);
+                                            if (count($placementTenures)) {
+                                                $maxTenure = max($placementTenures);
+                                                $minTenure = min($placementTenures);
+                                            }
                                         }
+
                                         $product->max_tenure = $maxTenure;
+                                        $product->min_tenure = $minTenure;
 
                                     }
                                     $products = $products->sortByDesc('max_tenure');
@@ -1120,10 +1140,10 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4> @if($product->promotion_end == null)
+                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
                                                                 <strong>{{ONGOING}}</strong>
                                                             @else
-                                                                <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                                <strong> {{ $product->max_tenure }}</strong> {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}}
                                                             @endif
                                                         </h4>
 
@@ -1174,7 +1194,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4> @if($product->promotion_end == null)
+                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
                                                                 <strong>{{ONGOING}}</strong>
                                                             @else
                                                                 <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
@@ -1252,7 +1272,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4>up to
+                                                        <h4 class="slider-heading">up to
                                                             <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
@@ -1303,7 +1323,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4>up to <strong> {{ $product->maximum_interest_rate  }}
+                                                        <h4 class="slider-heading">up to <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
 
@@ -1358,7 +1378,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -1411,7 +1431,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -1469,8 +1489,8 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4>
-                                                            <strong>{{ $product->promotion_period }}</strong> {{CRITERIA}}
+                                                        <h4 class="slider-heading">
+                                                            up to <strong> {{ $product->promotion_period }} Criteria</strong>
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -1520,8 +1540,8 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4>
-                                                            <strong>{{ $product->promotion_period }}</strong> {{CRITERIA}}
+                                                        <h4 class="slider-heading">
+                                                            up to <strong> {{ $product->promotion_period }} Criteria</strong>
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -1597,7 +1617,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4>up to
+                                                        <h4 class="slider-heading">up to
                                                             <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
@@ -1649,7 +1669,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4>up to <strong> {{ $product->maximum_interest_rate  }}
+                                                        <h4 class="slider-heading">up to <strong> {{ $product->maximum_interest_rate  }}
                                                                 %</strong>
                                                         </h4>
 
@@ -1707,7 +1727,7 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -1761,7 +1781,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4> Min: <strong>
+                                                        <h4 class="slider-heading"> Min: <strong>
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </strong>
@@ -1813,14 +1833,21 @@
                                     foreach ($products as $key => &$product) {
                                         $placementPeriod = explode("|", $product->promotion_period);
                                         $maxTenure = 0;
+                                        $minTenure = 0;
                                         if (count($placementPeriod)) {
-                                            $placementTenures = [0];
+                                            $placementTenures = [];
                                             foreach ($placementPeriod as $period) {
                                                 $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                                             }
-                                            $maxTenure = max($placementTenures);
+                                            if (count($placementTenures)) {
+                                                $maxTenure = max($placementTenures);
+                                                $minTenure = min($placementTenures);
+                                            }
                                         }
+
                                         $product->max_tenure = $maxTenure;
+                                        $product->min_tenure = $minTenure;
+
 
                                     }
                                     $products = $products->sortByDesc('max_tenure');
@@ -1835,10 +1862,10 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4> @if($product->promotion_end == null)
+                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
                                                                 <strong>{{ONGOING}}</strong>
                                                             @else
-                                                                <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                                <strong> {{ $product->max_tenure }}</strong> {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}}
                                                             @endif
                                                         </h4>
 
@@ -1890,7 +1917,7 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4> @if($product->promotion_end == null)
+                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
                                                                 <strong>{{ONGOING}}</strong>
                                                             @else
                                                                 <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
