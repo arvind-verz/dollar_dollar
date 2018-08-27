@@ -72,7 +72,7 @@
                                     <div class="c-list ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="2" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                                         @foreach($products as $product)
                                         <div class="ps-block--short-product second"><img src="{{ asset($product->brand_logo) }}" alt="">
-                                            <h4>up to <strong> 1.3%</strong></h4>
+                                            <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong></h4>
                                             <div class="ps-block__info">
                                                 <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
