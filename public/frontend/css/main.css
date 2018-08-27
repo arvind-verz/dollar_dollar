@@ -3075,7 +3075,15 @@ button {
         font-size: 35px;
     }
 }
-
+@media (max-width: 768px) {
+    .ps-table--product-3,.ps-product__table,.ps-table--product{
+        display: none !important;
+    }
+    .ps-product__panel
+    {
+     width: 100% !important;
+    }
+}
 @media (max-width: 479px) {
     .ps-banner__content > img {
         max-width: 150px;
@@ -5766,4 +5774,12 @@ span.ps-post__meta a {
 
 .center {
     text-align: center !important;
+}
+.color-border-none {
+    background-color: #ffffff !important;
+    border: none !important;
+}
+.slider-heading
+{
+    font-size: 22px !important;
 }

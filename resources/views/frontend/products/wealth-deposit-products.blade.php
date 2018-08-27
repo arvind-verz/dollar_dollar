@@ -171,7 +171,7 @@
                                     <div class="ps-block--short-product second highlight" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
                                         @if(isset($searchFilter['filter']))
-                                            <h4>
+                                            <h4 class="slider-heading">
                                                 @if($searchFilter['filter']==INTEREST)
                                                     up to <strong> {{ $product->maximum_interest_rate }}%</strong>
                                                 @endif
@@ -239,7 +239,7 @@
                                     <div class="ps-block--short-product second" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
                                         @if(isset($searchFilter['filter']))
-                                            <h4>
+                                            <h4 class="slider-heading">
                                                 @if($searchFilter['filter']==INTEREST)
                                                     up to <strong> {{ $product->maximum_interest_rate }}%</strong>
                                                 @endif
@@ -557,17 +557,28 @@
                                                                     <thead>
                                                                     <tr>
                                                                         <th>DEPOSIT BALANCE TIER</th>
-                                                                        <th class="center combine-criteria-padding">tenure</th>
-                                                                        <th class="center combine-criteria-padding">BONUS RATE</th>
-                                                                        <th class="center combine-criteria-padding">BOARD RATE</th>
-                                                                        <th class="center combine-criteria-padding">TOTAL INTEREST</th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            tenure
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            BONUS RATE
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            BOARD RATE
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            TOTAL INTEREST
+                                                                        </th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    @foreach($product->product_ranges as $productRange)
+                                                                    @foreach($product->product_ranges as $key => $productRange)
                                                                         <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                                             <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
-                                                                            <td class="center @if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                            @if($key==0)
+                                                                                <td rowspan="{{count($product->product_ranges)}}"
+                                                                                    class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                            @endif
                                                                             <td class="center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                                             <td class="center @if($productRange->board_interest_highlight==true ) highlight @endif">@if(($productRange->board_rate)<=0)
@@ -634,9 +645,13 @@
                                                                         <table class="ps-table ps-table--product text-center">
                                                                             <thead>
                                                                             <tr>
-                                                                                <th class="center">BASE RATE# (P.A.)</th>
-                                                                                <th class="center">BONUS RATE^ (P.A.)</th>
-                                                                                <th class="center">TOTAL INTEREST* (P.A.)</th>
+                                                                                <th class="center">BASE RATE# (P.A.)
+                                                                                </th>
+                                                                                <th class="center">BONUS RATE^ (P.A.)
+                                                                                </th>
+                                                                                <th class="center">TOTAL INTEREST*
+                                                                                    (P.A.)
+                                                                                </th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -647,17 +662,20 @@
                                                                                         <tr class="@if($productRange->high_light==true ) highlight @endif">
                                                                                             @endif
                                                                                             @if($i==1)
-                                                                                                <td class="center" rowspan="6"
+                                                                                                <td class="center"
+                                                                                                    rowspan="6"
                                                                                                     style="border: none; font-size: 30px; background-color: #faf9f9"> @if(($productRange->sibor_rate)<=0)
                                                                                                         - @else {{ $productRange->sibor_rate. '%' }} @endif</td>
                                                                                             @endif
                                                                                             @if($i==4)
-                                                                                                <td class="center">TO</td>
+                                                                                                <td class="center">TO
+                                                                                                </td>
                                                                                             @elseif(!((4 < $i) && ($i < 11)))
                                                                                                 <td class="center">{{ 'COUNTER ' . $i . ' - ' . ($i*0.1). '%' }}</td>
                                                                                             @endif
                                                                                             @if($i==4)
-                                                                                                <td class="center">TO</td>
+                                                                                                <td class="center">TO
+                                                                                                </td>
                                                                                             @elseif(!((4 <= $i) && ($i <= 10)))
                                                                                                 <td class="center"> @if((($i*0.1)+($productRange->sibor_rate)) <=0)
                                                                                                         - @else {{ (($i*0.1)+($productRange->sibor_rate)) . '%' }} @endif </td>
@@ -694,7 +712,8 @@
                                                                         <br>
                                                  <span>
                                                     Average interest rate @if($product->total_interest <=0)
-                                                         - @else {{ $product->total_interest }}%<sup>*</sup> throughout 1 Year @endif
+                                                         - @else {{ $product->total_interest }}%<sup>*</sup> throughout1
+                                                         Year @endif
                                                 </span>
                                                                     </h2>
                                                                 </div>
@@ -729,8 +748,12 @@
                                                                                         </th>
                                                                                         <th class="center">Base Interest
                                                                                         </th>
-                                                                                        <th class="center">Bonus Interest</th>
-                                                                                        <th class="center">Total Interest</th>
+                                                                                        <th class="center">Bonus
+                                                                                            Interest
+                                                                                        </th>
+                                                                                        <th class="center">Total
+                                                                                            Interest
+                                                                                        </th>
                                                                                     </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -788,7 +811,8 @@
                                                                                     ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                                 <br>
                                                                                <span>
-                                                                             Total interest rate {{ $product->total_interest }}% throughout 1 Year
+                                                                             Total interest rate {{ $product->total_interest }}
+                                                                                   % throughout 1 Year
                                                                         </span>
                                                                             </h2>
                                                                         </div>
@@ -1016,7 +1040,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th>Type</th>
-                                                        <th>Account</th>
+                                                        <th>Placement</th>
                                                         @foreach($tenures as  $tenure)
                                                             <?php
                                                             $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
@@ -1031,7 +1055,7 @@
                                                         $bonusInterestHighlight = $range->bonus_interest_highlight;
                                                         ?>
                                                         <tr class="@if($range->placement_highlight==true)highlight @endif">
-                                                            <td >
+                                                            <td>
                                                                 <?php
                                                                 $legendImage = null;
                                                                 if (isset($range->legend)) {
@@ -1180,17 +1204,28 @@
                                                                     <thead>
                                                                     <tr>
                                                                         <th>DEPOSIT BALANCE TIER</th>
-                                                                        <th class="center combine-criteria-padding">tenure</th>
-                                                                        <th class="center combine-criteria-padding">BONUS RATE</th>
-                                                                        <th class="center combine-criteria-padding">BOARD RATE</th>
-                                                                        <th class="center combine-criteria-padding">TOTAL INTEREST</th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            tenure
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            BONUS RATE
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            BOARD RATE
+                                                                        </th>
+                                                                        <th class="center combine-criteria-padding">
+                                                                            TOTAL INTEREST
+                                                                        </th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    @foreach($product->product_ranges as $productRange)
+                                                                    @foreach($product->product_ranges as $key => $productRange)
                                                                         <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                                             <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
-                                                                            <td class="center @if( $productRange->tenure_highlight==true  ) highlight @endif">{{ $productRange->tenure. ' Months' }}</td>
+                                                                            @if($key==0)
+                                                                                <td rowspan="{{count($product->product_ranges)}}"
+                                                                                    class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                            @endif
                                                                             <td class="center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                                     - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
                                                                             <td class="center @if($productRange->board_interest_highlight==true ) highlight @endif">@if(($productRange->board_rate)<=0)
@@ -1251,9 +1286,13 @@
                                                                         <table class="ps-table ps-table--product text-center">
                                                                             <thead>
                                                                             <tr>
-                                                                                <th class="center">BASE RATE# (P.A.)</th>
-                                                                                <th class="center">BONUS RATE^ (P.A.)</th>
-                                                                                <th class="center">TOTAL INTEREST* (P.A.)</th>
+                                                                                <th class="center">BASE RATE# (P.A.)
+                                                                                </th>
+                                                                                <th class="center">BONUS RATE^ (P.A.)
+                                                                                </th>
+                                                                                <th class="center">TOTAL INTEREST*
+                                                                                    (P.A.)
+                                                                                </th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -1264,17 +1303,20 @@
                                                                                         <tr class="@if($productRange->high_light==true ) highlight @endif">
                                                                                             @endif
                                                                                             @if($i==1)
-                                                                                                <td class="center" rowspan="6"
+                                                                                                <td class="center"
+                                                                                                    rowspan="6"
                                                                                                     style="border: none; font-size: 30px; background-color: #faf9f9"> @if(($productRange->sibor_rate)<=0)
                                                                                                         - @else {{ $productRange->sibor_rate. '%' }} @endif</td>
                                                                                             @endif
                                                                                             @if($i==4)
-                                                                                                <td class="center">TO</td>
+                                                                                                <td class="center">TO
+                                                                                                </td>
                                                                                             @elseif(!((4 < $i) && ($i < 11)))
                                                                                                 <td class="center">{{ 'COUNTER ' . $i . ' - ' . ($i*0.1). '%' }}</td>
                                                                                             @endif
                                                                                             @if($i==4)
-                                                                                                <td class="center">TO</td>
+                                                                                                <td class="center">TO
+                                                                                                </td>
                                                                                             @elseif(!((4 <= $i) && ($i <= 10)))
                                                                                                 <td class="center"> @if((($i*0.1)+($productRange->sibor_rate)) <=0)
                                                                                                         - @else {{ (($i*0.1)+($productRange->sibor_rate)) . '%' }} @endif </td>
@@ -1342,8 +1384,12 @@
                                                                                         </th>
                                                                                         <th class="center">Base Interest
                                                                                         </th>
-                                                                                        <th class="center">Bonus Interest</th>
-                                                                                        <th class="center">Total Interest</th>
+                                                                                        <th class="center">Bonus
+                                                                                            Interest
+                                                                                        </th>
+                                                                                        <th class="center">Total
+                                                                                            Interest
+                                                                                        </th>
                                                                                     </tr>
                                                                                     </thead>
                                                                                     <tbody>
@@ -1459,7 +1505,8 @@
                                                                                                                     - @else {{ '$' .$additionalInterest }} @endif  </td>
                                                                                                         @endforeach
                                                                                                     @elseif($key==3)
-                                                                                                        <td class="center" colspan="{{count($product->months)}}"></td>
+                                                                                                        <td class="center"
+                                                                                                            colspan="{{count($product->months)}}"></td>
                                                                                                         <td class="center">@if($product->total_interest_earn <=0 )
                                                                                                                 - @else {{ '$' . $product->total_interest_earn }} @endif
                                                                                                             {{-- <br/>

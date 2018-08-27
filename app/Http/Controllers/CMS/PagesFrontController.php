@@ -485,14 +485,16 @@ class PagesFrontController extends Controller
             $maxTenure = 0;
             $minTenure = 0;
             if (count($placementPeriod)) {
-                $placementTenures = [0];
+                $placementTenures = [];
                 foreach ($placementPeriod as $period) {
                     $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                 }
-                $maxTenure = max($placementTenures);
-                $minTenure = min($placementTenures);
+                if (count($placementTenures)) {
+                    $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
+                }
             }
-            
+
             $product->max_tenure = $maxTenure;
             $product->min_tenure = $minTenure;
 
@@ -871,12 +873,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -949,12 +953,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -1014,12 +1020,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -1119,12 +1127,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -1235,12 +1245,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -1467,12 +1479,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -1532,12 +1546,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -1638,12 +1654,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -1754,12 +1772,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -2057,12 +2077,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -2119,7 +2141,7 @@ class PagesFrontController extends Controller
                         if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F3])) {
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
-                           // $product->max_tenure = $tenure;
+                            // $product->max_tenure = $tenure;
                         }
                         $product->duration = $tenure;
 
@@ -2135,12 +2157,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -2200,12 +2224,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -2304,12 +2330,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
@@ -2420,12 +2448,14 @@ class PagesFrontController extends Controller
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
-                    $placementTenures = [0];
+                    $placementTenures = [];
                     foreach ($placementPeriod as $period) {
                         $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
                     }
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
+                    }
                 }
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
