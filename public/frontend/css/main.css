@@ -5811,3 +5811,8 @@ span.ps-post__meta a {
     transition: 0s !important;
     transform-style: initial !important;
 }
+
+.menu--mobile > li .sub-menu{
+    visibility: initial;
+    opacity: 1;
+}
