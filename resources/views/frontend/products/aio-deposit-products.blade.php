@@ -243,7 +243,7 @@
                                                 SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
-                                            
+
                                             <p class="@if($searchFilter['filter']==CRITERIA) highlight @endif">{{ $product->promotion_period }} {{CRITERIA}}</p>
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
