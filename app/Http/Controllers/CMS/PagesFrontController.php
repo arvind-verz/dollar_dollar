@@ -70,6 +70,17 @@ class PagesFrontController extends Controller
                 ->select('product_managements.id as product_id', 'brands.*', 'product_managements.*')
                 ->get();
 
+            $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            ->where('promotion_products.featured', '=', 1)
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->orderBy('promotion_products.featured', 'DESC')
+            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+            ->get();
+            //dd($products);
+
             $user_products_ending = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
                 ->where('user_id', Auth::user()->id)
                 ->get();
@@ -128,7 +139,7 @@ class PagesFrontController extends Controller
                         ->inRandomOrder()
                         ->get();
                     if (AUTH::check()) {
-                        return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners", "user_products", "user_products_ending", "ads"));
+                        return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners", "user_products", "user_products_ending", "ads", 'products'));
                     } else {
                         return redirect('/login');
                     }
