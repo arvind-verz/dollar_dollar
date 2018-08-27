@@ -162,7 +162,7 @@ $banners = Helper::getBanners($slug);
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-4 col-xs-12 ">
-            
+            <div class="pc-only">{!!$page->contents!!}</div>
             <div class="ps-form__content">
                 <div class="form-group recaptcha">
                     {!! app('captcha')->display($attributes = [],
@@ -183,7 +183,7 @@ $lang = []) !!}
                     </button>
                 </div>
             </div>
-            {!!$page->contents!!}
+            <div class="sp-only">{!!$page->contents!!}</div>
         </div>
         </div>
         {!! Form::close() !!}
