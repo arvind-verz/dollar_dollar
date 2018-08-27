@@ -5759,8 +5759,8 @@ span.ps-post__meta a {
     text-transform: initial;
 }
 
-.ps-btn ps-btn--blue {
-     background-color: #3b589e !important;
+.ps-btn.ps-btn--blue {
+    background-color: #3b589e !important;
 }
 
 .nill {
@@ -5965,6 +5965,13 @@ span.ps-post__meta a {
         display: none;
     }
     .sp-only{
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+         .ps-page--deposit .ps-product .ps-product__header >img{
+        margin: auto;
         display: block;
     }
 }
