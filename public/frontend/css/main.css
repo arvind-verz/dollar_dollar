@@ -3076,7 +3076,7 @@ button {
     }
 }
 @media (max-width: 768px) {
-    .ps-table--product-3,.ps-product__table,.ps-table--product{
+    .ps-table--product-3,.ps-product__table,.ps-table--product,.slider-class{
         display: none !important;
     }
     .ps-product__panel

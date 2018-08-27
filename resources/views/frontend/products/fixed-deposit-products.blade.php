@@ -161,7 +161,7 @@
             <!-- Search form end -->
 
             @if(count($products))
-                <div class="product-row-01 clearfix">
+                <div class="product-row-01 clearfix slider-class">
                     @php $i = 1;$featured = []; @endphp
                     @foreach($products as $product)
                         @if($product->featured==1)
