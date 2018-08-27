@@ -195,7 +195,7 @@
                                                 @endif
                                                 @if($searchFilter['filter']==PLACEMENT)
                                                     Min: <strong>
-                                                            {{$product->currency_code}}
+                                                        {{$product->currency_code}}
                                                         ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                     </strong>
                                                 @endif
@@ -214,7 +214,8 @@
                                         @endif
 
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
+                                                <strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
                                             <p class=" @if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
@@ -222,7 +223,12 @@
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
 
-                                            <p class=" @if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{ $product->promotion_period }} {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                            @if($product->tenure_value > 0)
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
+                                                    Months</p>
+                                            @else
+                                                <p></p>
+                                            @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
                                     </div>
@@ -277,16 +283,22 @@
                                                 <strong> {{ $product->promotion_period }}</strong> Criteria
                                             @endif
                                         </h4>
+
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
+                                                <strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
                                             <p class=" @if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
                                                 <strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
-
-                                            <p class=" @if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{ $product->promotion_period }} {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                            @if($product->tenure_value > 0)
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
+                                                    Months</p>
+                                            @else
+                                                <p></p>
+                                            @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
                                     </div>
@@ -353,14 +365,12 @@
                                 <p class="text-uppercase">
                                     <?php
                                     $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                    if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])))
-                                    {
+                                    if (($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, WEALTH_DEPOSIT_F1]))) {
                                         $end_date = new DateTime(date("Y-m-d",
                                                 strtotime($product->until_end_date)));
                                         $interval = date_diff($end_date, $start_date);
                                         echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
-                                    }
-                                    elseif ($product->promotion_end > $todayStartDate) {
+                                    } elseif ($product->promotion_end > $todayStartDate) {
 
                                         $end_date = new DateTime(date("Y-m-d",
                                                 strtotime($product->promotion_end)));

@@ -591,5 +591,11 @@ class Helper
     {
         return base64_decode(strtr($str, '-_', '+/'));
     }
+    public static function multiExplode ($delimiters,$string) {
+
+        $ready = str_replace($delimiters, $delimiters[0], $string);
+        $launch = explode($delimiters[0], $ready);
+        return  $launch;
+    }
 
 }
