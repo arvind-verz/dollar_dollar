@@ -5803,3 +5803,16 @@ span.ps-post__meta a {
     border-top: none;
     border-left: none;
 }
+
+.owl-carousel .owl-item,.owl-carousel .owl-item img, .owl-carousel .owl-item h4,.owl-carousel .owl-item .ps-btn ,.ps-block--short-product{
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: 0s !important;
+    transform-style: initial !important;
+}
+
+.menu--mobile > li .sub-menu{
+    visibility: initial;
+    opacity: 1;
+}
