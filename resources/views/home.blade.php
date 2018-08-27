@@ -180,7 +180,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -230,7 +230,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -291,7 +291,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -344,7 +344,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -427,7 +427,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight">{{ $product->promotion_period }}
+                                                            <p class="highlight highlight-bg">{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -481,7 +481,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight"><?php echo $product->promotion_period; ?>
+                                                            <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -546,7 +546,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -596,7 +596,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -657,7 +657,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -710,7 +710,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -793,7 +793,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight">{{ $product->promotion_period }}
+                                                            <p class="highlight highlight-bg">{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -847,7 +847,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight"><?php echo $product->promotion_period; ?>
+                                                            <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -912,7 +912,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -962,7 +962,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -1022,7 +1022,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1075,7 +1075,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1157,7 +1157,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight">{{ $product->promotion_period }}
+                                                            <p class="highlight highlight-bg">{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -1211,7 +1211,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight"><?php echo $product->promotion_period; ?>
+                                                            <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -1279,7 +1279,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -1329,7 +1329,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -1390,7 +1390,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1443,7 +1443,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> SGD
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1503,7 +1503,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight">{{ $product->promotion_period }}
+                                                            <p class="highlight highlight-bg">{{ $product->promotion_period }}
                                                                 {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -1554,7 +1554,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight"><?php echo $product->promotion_period; ?>
+                                                            <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -1624,7 +1624,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -1675,7 +1675,7 @@
                                                         </h4>
 
                                                         <div class="ps-block__info">
-                                                            <p class="highlight"><strong>
+                                                            <p class="highlight highlight-bg"><strong>
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
@@ -1739,7 +1739,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> {{$product->currency_code}}
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1793,7 +1793,7 @@
                                                                     rate: </strong>{{ $product->maximum_interest_rate }}
                                                                 %</p>
 
-                                                            <p class="highlight"><strong>Min:</strong> {{$product->currency_code}}
+                                                            <p class="highlight highlight-bg"><strong>Min:</strong> {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
@@ -1879,7 +1879,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight">{{ $product->promotion_period }}
+                                                            <p class="highlight highlight-bg">{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"
@@ -1934,7 +1934,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight"><?php echo $product->promotion_period; ?>
+                                                            <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
                                                         </div>
                                                         <a class="ps-btn"

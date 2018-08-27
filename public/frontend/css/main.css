@@ -2161,9 +2161,10 @@ button {
     color: #3f545c;
 }
 
-.ps-block--short-product p:nth-child(odd) {
+/*.ps-block--short-product p:nth-child(odd) {
     background-color: #f6f6f6;
-}
+}*/
+
 
 .ps-block--short-product .highlight {
     font-family: "Montserrat", sans-serif;
@@ -5931,6 +5932,9 @@ span.ps-post__meta a {
     }
 }
 
+.highlight-bg {
+    background-color: #f6f6f6;
+}
 .ps-form--enquiry .form-group .form-icon a {
     color: orange;
     margin-top: 20px;
@@ -5942,11 +5946,12 @@ span.ps-post__meta a {
 }
 
 @media (max-width: 500px) {
-    .ps-product--2 .ps-product__action{
+    .ps-product--2 .ps-product__action {
         text-align: center;
         float: none;
         width: 100%;
     }
+
     .ps-product.ps-product--2 {
         text-align: center;
     }
