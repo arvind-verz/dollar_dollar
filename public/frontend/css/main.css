@@ -5968,10 +5968,10 @@ span.ps-post__meta a {
         display: block;
     }
 }
-
 @media (max-width: 768px) {
     .ps-page--deposit .ps-product .ps-product__header >img{
         margin: auto;
         display: block;
     }
 }
+
