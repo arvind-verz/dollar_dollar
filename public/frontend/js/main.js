@@ -352,3 +352,9 @@ $(document).ready(function() {
         });},100);
     });
 });
+
+$(document).ready(function() {
+    $("body").on("click", ".menu--mobile > li.menu-item-has-children",function(){
+        $(this).children(".sub-menu").slideToggle();
+    })
+});
