@@ -3084,6 +3084,11 @@ button {
      width: 100% !important;
     }
 }
+@media (min-width:769px) {
+    .aio-product{
+        display: none !important;
+    }
+}
 @media (max-width: 479px) {
     .ps-banner__content > img {
         max-width: 150px;
