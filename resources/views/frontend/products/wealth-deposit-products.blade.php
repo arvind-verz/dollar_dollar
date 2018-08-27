@@ -73,7 +73,7 @@
                     <div class="ps-block__header">
                         <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
                              data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="10"
-                             data-owl-item-xs="5" data-owl-item-sm="6" data-owl-item-md="7" data-owl-item-lg="10"
+                             data-owl-item-xs="3" data-owl-item-sm="5" data-owl-item-md="6" data-owl-item-lg="10"
                              data-owl-duration="1000" data-owl-mousedrag="on">
                             @if(count($brands))
                                 @foreach($brands as $brand)

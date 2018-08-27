@@ -98,8 +98,8 @@
             <div class="container">
 
                 <div class="nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-                     data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="8" data-owl-item-xs="5"
-                     data-owl-item-sm="6" data-owl-item-md="7" data-owl-item-lg="8" data-owl-duration="1000"
+                     data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="8" data-owl-item-xs="3"
+                     data-owl-item-sm="4" data-owl-item-md="6" data-owl-item-lg="8" data-owl-duration="1000"
                      data-owl-mousedrag="on">
                     @foreach($brands as $brand)
                         <a href="{{isset($brand->brand_link) ? $brand->brand_link : '#'}}" target="_blank"

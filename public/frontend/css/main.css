@@ -4298,7 +4298,7 @@ button {
 
 .header .ps-logo {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 12px;
 }
 
 @media (max-width: 1199px) {
@@ -5815,4 +5815,81 @@ span.ps-post__meta a {
 .menu--mobile > li .sub-menu{
     visibility: initial;
     opacity: 1;
+}
+
+@media (max-width: 990px) {
+    .ps-home--partners .nav-outside{
+        padding: 0 30px;
+    }
+    .ps-home--partners .nav-outside .owl-prev{
+        margin-left: -42px !important;
+    }
+    .ps-home--partners .nav-outside .owl-next{
+        margin-right: 17px !important;
+    }
+    .ps-home-fixed-deposit .ps-tab-list li{
+        width: 25%;
+        text-align: center;
+        border-right: 1px solid #dadada;
+    }
+    .ps-home-fixed-deposit .ps-tab-list li:last-child{
+        border-right: none;
+    }
+    .ps-home-fixed-deposit .ps-tab-list li > a{
+        border: none;
+    }
+    .ps-home-fixed-deposit .ps-tab-list li.current{
+        background-color: #3db54a;
+        color: #fff;
+    }
+    .ps-home-fixed-deposit .ps-tab-list{
+        text-align: left;
+        
+    }
+    .ps-home-fixed-deposit .ps-tab-list li:hover{
+        background-color: #3db54a;
+        color: #fff;
+    }
+}
+@media (max-width: 740px) {
+    .ps-home-fixed-deposit .ps-tab-list li{
+        width: 33%;
+    }
+}
+@media (max-width: 600px) {
+    .ps-home-fixed-deposit .ps-tab-list li{
+        width: 50%;
+    }
+}
+@media (max-width: 400px) {
+    .ps-home-fixed-deposit .ps-tab-list li{
+        width: 100%;
+    }
+}
+
+@media (max-width: 500px) {
+    .ps-home-fixed-deposit.ps-tabs-root .catListing > li > a{
+        padding: 10px;
+        display: initial;
+    }
+    .ps-home-fixed-deposit.ps-tabs-root .catListing > li{
+        margin: 5px;
+    }
+    .ps-home-fixed-deposit.ps-tabs-root .catListing{
+        margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .display_fixed.owl-slider.nav-outside .owl-nav{
+        top: 170px;
+    }
+    .display_fixed.owl-slider.nav-outside .owl-nav .owl-prev{
+        right: auto !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .ps-form--filter .filter{
+        width: 100%;
+    }
 }
