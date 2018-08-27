@@ -152,6 +152,12 @@ class ProductsController extends Controller
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
+        if(isset($request->until_end_date))
+        {
+            $product->until_end_date = $request->until_end_date;
+        }else{
+            $product->until_end_date = null;
+        }
         $product->maximum_interest_rate = $request->maximum_interest_rate;
         $product->minimum_placement_amount = $request->minimum_placement_amount;
         $ranges = [];
@@ -491,6 +497,12 @@ class ProductsController extends Controller
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
+        if(isset($request->until_end_date))
+        {
+            $product->until_end_date = $request->until_end_date;
+        }else{
+            $product->until_end_date = null;
+        }
         $product->maximum_interest_rate = $request->maximum_interest_rate;
         $product->minimum_placement_amount = $request->minimum_placement_amount;
         $ranges = [];
