@@ -121,8 +121,9 @@
                     <li class="current"><a href="#tab-1">Fixed Deposit</a></li>
                     <li><a href="#tab-2">Saving Deposit</a></li>
                     <li><a href="#tab-3">Wealth Deposit</a></li>
-                    <li><a href="#tab-4">All In One Account</a></li>
                     <li><a href="#tab-5">Foreign Currency</a></li>
+                    <li><a href="#tab-4">All In One Account</a></li>
+                    
                 </ul>
             </div>
         </div>
