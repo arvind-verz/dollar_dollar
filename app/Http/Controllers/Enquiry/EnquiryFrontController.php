@@ -9,6 +9,7 @@ use App\LifeInsuranceEnquiry;
 use App\Mail\ContactEnquiryMail;
 use App\Mail\HealthEnquiryMail;
 use App\Mail\LifeEnquiryMail;
+use App\User;
 use Auth;
 use Exception;
 use Illuminate\Http\Request;
@@ -171,6 +172,15 @@ class EnquiryFrontController extends Controller
 
         $healthInsuranceEnquiry->save();
 
+        if(Auth::user()->email==$request->email) {
+            $user = User::find(Auth::user()->id);
+
+            $user->country_code = $request->country_code;
+            $user->tel_phone = $request->telephone;
+
+            $user->save();
+        }
+
         try {
             //Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
         } catch (Exception $exception) {
@@ -229,6 +239,15 @@ class EnquiryFrontController extends Controller
         $lifeInsuranceEnquiry->telephone = $request->telephone;
 
         $lifeInsuranceEnquiry->save();
+
+        if(Auth::user()->email==$request->email) {
+            $user = User::find(Auth::user()->id);
+
+            $user->country_code = $request->country_code;
+            $user->tel_phone = $request->telephone;
+
+            $user->save();
+        }
 
         try {
             Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));

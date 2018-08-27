@@ -5931,6 +5931,28 @@ span.ps-post__meta a {
         display: none;
     }
 }
+
 .highlight-bg {
     background-color: #f6f6f6;
+}
+.ps-form--enquiry .form-group .form-icon a {
+    color: orange;
+    margin-top: 20px;
+    display: block;
+}
+
+.ps-form--enquiry .form-group .form-icon i{
+    top: 25px;
+}
+
+@media (max-width: 500px) {
+    .ps-product--2 .ps-product__action {
+        text-align: center;
+        float: none;
+        width: 100%;
+    }
+
+    .ps-product.ps-product--2 {
+        text-align: center;
+    }
 }
