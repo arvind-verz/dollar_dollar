@@ -5956,3 +5956,15 @@ span.ps-post__meta a {
         text-align: center;
     }
 }
+
+.sp-only{
+    display: none;
+}
+@media (max-width: 768px) {
+    .pc-only{
+        display: none;
+    }
+    .sp-only{
+        display: block;
+    }
+}
