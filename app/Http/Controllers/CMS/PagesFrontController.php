@@ -949,6 +949,9 @@ class PagesFrontController extends Controller
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                             //$product->max_tenure = $tenure;
+                        }else{
+                            $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                            $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                         }
                         $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
@@ -1475,6 +1478,9 @@ class PagesFrontController extends Controller
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
 
+                        }else{
+                            $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                            $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                         }
                         $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
@@ -2153,6 +2159,9 @@ class PagesFrontController extends Controller
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                             // $product->max_tenure = $tenure;
+                        }else{
+                            $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                            $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                         }
                         $product->duration = $tenure;
 
