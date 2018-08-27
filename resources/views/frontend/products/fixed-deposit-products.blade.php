@@ -202,8 +202,11 @@
                                                 SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
-
-                                            <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{ $product->promotion_period }} {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                            @if($product->tenure_value > 0)
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">Months</p>
+                                            @else
+                                                <p></p>
+                                            @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
                                     </div>
@@ -271,9 +274,12 @@
                                                 <strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
-
-                                            <p class=" @if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{ $product->promotion_period }} {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
-                                        </div>
+                                            @if($product->tenure_value > 0)
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">Months</p>
+                                            @else
+                                                <p></p>
+                                            @endif
+                                            </div>
                                         <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
                                     </div>
                                     @php $i++; @endphp

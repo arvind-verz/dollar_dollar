@@ -3082,7 +3082,7 @@ button {
     }
     .ps-product__panel
     {
-     width: 100% !important;
+        width: 100% !important;
     }
 }
 @media (min-width:769px) {
@@ -5759,8 +5759,8 @@ span.ps-post__meta a {
     text-transform: initial;
 }
 
-.ps-btn ps-btn--blue {
-     background-color: #3b589e !important;
+.ps-btn.ps-btn--blue {
+    background-color: #3b589e !important;
 }
 
 .nill {
@@ -5850,7 +5850,7 @@ span.ps-post__meta a {
     }
     .ps-home-fixed-deposit .ps-tab-list{
         text-align: left;
-        
+
     }
     .ps-home-fixed-deposit .ps-tab-list li:hover{
         background-color: #3db54a;
@@ -5927,7 +5927,7 @@ span.ps-post__meta a {
 }
 
 @media (max-width: 768px) {
-      .ps-section__footer:before, .ps-section__footer:after{
+    .ps-section__footer:before, .ps-section__footer:after{
         display: none;
     }
 }
@@ -5968,3 +5968,10 @@ span.ps-post__meta a {
         display: block;
     }
 }
+@media (max-width: 768px) {
+    .ps-page--deposit .ps-product .ps-product__header >img{
+        margin: auto;
+        display: block;
+    }
+}
+
