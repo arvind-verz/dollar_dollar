@@ -5930,3 +5930,13 @@ span.ps-post__meta a {
         display: none;
     }
 }
+
+.ps-form--enquiry .form-group .form-icon a {
+    color: orange;
+    margin-top: 20px;
+    display: block;
+}
+
+.ps-form--enquiry .form-group .form-icon i{
+    top: 25px;
+}
