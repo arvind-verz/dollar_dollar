@@ -236,15 +236,15 @@
                                             </h4>
                                         @endif
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight @endif"><strong>Min:</strong>
+                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif"><strong>Min:</strong>
                                                 SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
 
-                                            <p class="@if($searchFilter['filter']==CRITERIA) highlight @endif">{{ $product->promotion_period }} {{CRITERIA}}</p>
+                                            <p class="@if($searchFilter['filter']==CRITERIA) highlight highlight-bg @endif">{{ $product->promotion_period }} {{CRITERIA}}</p>
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
                                     </div>
@@ -305,14 +305,14 @@
                                         @endif
 
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight @endif"><strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p class=" @if($searchFilter['filter']==PLACEMENT) highlight @endif">
+                                            <p class=" @if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
                                                 <strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
-                                            <p class="@if($searchFilter['filter']==CRITERIA) highlight @endif">{{ $product->promotion_period }} {{CRITERIA}}</p>
+                                            <p class="@if($searchFilter['filter']==CRITERIA) highlight highlight-bg @endif">{{ $product->promotion_period }} {{CRITERIA}}</p>
                                         </div>
                                         <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
                                     </div>
