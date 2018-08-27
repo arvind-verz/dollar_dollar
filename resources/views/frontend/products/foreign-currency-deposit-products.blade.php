@@ -179,7 +179,7 @@
             </div>
             <!-- Search form end -->
             @if($products->count())
-                <div class="product-row-01">
+                <div class="product-row-01 slider-class">
                     @php $i = 1;$featured = []; @endphp
                     @foreach($products as $product)
                         @if($product->featured==1)
