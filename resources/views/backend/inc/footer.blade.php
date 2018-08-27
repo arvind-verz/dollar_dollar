@@ -458,6 +458,11 @@
                     '<?php echo WEALTH_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>',
                     '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
                 ];
+                var utilFormula = [
+                    '<?php echo SAVING_DEPOSIT_F1; ?>',
+                    '<?php echo WEALTH_DEPOSIT_F1; ?>',
+                    '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
+                ];
                 var SDP6 = [
                     '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
                 ];
@@ -469,6 +474,7 @@
                     var currency = $.trim($('#currency').val());
                     var maxInterestRate = $.trim($('#maximum-interest-rate').val());
                     var promotionPeriod = $.trim($('#promotion-period').val());
+                    var untilEndDate = $.trim($('#until-end-date').val());
                     var startDate = $.trim($('#promotion_start_date').val());
                     var endDate = $.trim($('#promotion_end_date').val());
                     // Make sure we entered the name
@@ -521,6 +527,10 @@
 
                     if ((!promotionPeriod)&&(ongoingStatus=='false')) {
                         errors[i] = 'The promotion period is required.';
+                        i++;
+                    }
+                    if ((!untilEndDate)&&(jQuery.inArray(formula, utilFormula) !== -1)) {
+                        errors[i] = 'The until end date is required.';
                         i++;
                     }
                 }
@@ -1645,11 +1655,14 @@
         if((startDate.length == 0)&&(endDate.length == 0))
         {
             ongoingButton = '<button type="button" data-status="true" id="ongoing-status" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
-            $('#promotion-period').val('');
+            /*$('#promotion-period').val('');
             $('#promotion-period').attr('readonly', true);
+            $('#until-end-date').attr('disabled', false);*/
         }else{
             ongoingButton = '<button type="button" data-status="false" id="ongoing-status" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
-            $('#promotion-period').attr('readonly', false);
+            /*$('#promotion-period').attr('readonly', false);
+            $('#until-end-date').val('');
+            $('#until-end-date').attr('disabled', true);*/
         }
         $('#ongoing').html(ongoingButton);
     }
@@ -1677,13 +1690,16 @@
             $("#promotion_start_date").val(startDate);
             $("#promotion_end_date").val(endDate);
             ongoingButton = '<button type="button" data-status="false" id="ongoing-status" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
-            $('#promotion-period').attr('readonly', false);
+           /* $('#promotion-period').attr('readonly', false);
+            $('#until-end-date').val('');
+            $('#until-end-date').attr('disabled', true);*/
         }else{
             $("#promotion_start_date").val(null);
             $("#promotion_end_date").val(null);
             ongoingButton = '<button type="button" data-status="true" id="ongoing-status" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
-            $('#promotion-period').val('');
+            /*$('#promotion-period').val('');
             $('#promotion-period').attr('readonly', true);
+            $('#until-end-date').attr('disabled', false);*/
         }
         $('#ongoing').html(ongoingButton);
 

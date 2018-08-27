@@ -193,6 +193,30 @@
                                             </button>
                                         </div>
                                     </div>
+
+                                    <div class="form-group display-none" id="until-end-section">
+                                        <label for="title" class="col-sm-2 control-label">Until End Date</label>
+
+                                        <div class="col-sm-10 ">
+
+                                            <div class="input-group date ">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-danger">End
+                                                        Date
+                                                    </button>
+                                                </div>
+                                                <input type="text" class="form-control pull-right datepicker1"
+                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}"
+                                                       name="until_end_date" id="until-end-date"
+                                                       value="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}">
+
+                                                <div class="input-group-addon ">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Status</label>
 
@@ -404,7 +428,17 @@
             var SDP4 = [
                 '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
-            if (jQuery.inArray(formula, FDP1) !== -1) {
+            var utilFormula = [
+                '<?php echo SAVING_DEPOSIT_F1; ?>',
+                '<?php echo WEALTH_DEPOSIT_F1; ?>',
+                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
+            ];
+            if (jQuery.inArray(formula, utilFormula) !== -1) {
+
+                $('#until-end-section').removeClass('display-none');
+
+
+            }if (jQuery.inArray(formula, FDP1) !== -1) {
 
                 $('#fixDepositF1').removeClass('display-none');
 
@@ -454,6 +488,7 @@
 
             }
 
+
         });
         $("select[name='product_type']").on("change", function () {
             $('#fixDepositF1').addClass('display-none');
@@ -465,7 +500,7 @@
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
-
+            $('#until-end-section').addClass('display-none');
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
             //alert(formula);
@@ -502,6 +537,7 @@
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
+            $('#until-end-section').addClass('display-none');
 
             var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
@@ -517,6 +553,17 @@
             var SDP4 = [
                 '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
+            var utilFormula = [
+                '<?php echo SAVING_DEPOSIT_F1; ?>',
+                '<?php echo WEALTH_DEPOSIT_F1; ?>',
+                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
+            ];
+            if (jQuery.inArray(formula, utilFormula) !== -1) {
+
+                $('#until-end-section').removeClass('display-none');
+
+
+            }
             if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
 
