@@ -5873,17 +5873,19 @@ span.ps-post__meta a {
 }
 
 @media (max-width: 500px) {
-    .ps-home-fixed-deposit.ps-tabs-root .catListing > li > a{
+    .ps-home-fixed-deposit.ps-tabs-root .catListing > li > a {
         padding: 10px;
         display: initial;
     }
-    .ps-home-fixed-deposit.ps-tabs-root .catListing > li{
+
+    .ps-home-fixed-deposit.ps-tabs-root .catListing > li {
         margin: 5px;
     }
-    .ps-home-fixed-deposit.ps-tabs-root .catListing{
-        margin-bottom: 30px;
-}
 
+    .ps-home-fixed-deposit.ps-tabs-root .catListing {
+        margin-bottom: 30px;
+    }
+}
 @media (max-width: 768px) {
     .display_fixed.owl-slider.nav-outside .owl-nav{
         top: 170px;
