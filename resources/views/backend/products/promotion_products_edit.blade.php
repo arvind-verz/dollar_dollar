@@ -224,7 +224,7 @@
                                                     <input type="text" class="form-control pull-right datepicker1"
                                                            data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}"
                                                            name="until_end_date" id="until-end-date"
-                                                           @if((!empty($product->promotion_start)) || (!empty($product->promotion_end))) disabled="disabled" @endif
+                                                           {{--@if((!empty($product->promotion_start)) || (!empty($product->promotion_end))) disabled="disabled" @endif--}}
                                                            data-date="{{ $product->until_end_date ? date('Y-m-d', strtotime($product->until_end_date )) : null }}"
                                                            value="{{ $product->until_end_date ? date('Y-m-d', strtotime($product->until_end_date )) : null }}">
 

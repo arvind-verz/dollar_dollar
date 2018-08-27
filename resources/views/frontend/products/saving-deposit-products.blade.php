@@ -344,8 +344,16 @@
 
                                 <p class="text-uppercase">
                                     <?php
-                                    if ($product->promotion_end > $todayStartDate) {
-                                        $start_date = new DateTime(date("Y-m-d", strtotime("now")));
+                                    $start_date = new DateTime(date("Y-m-d", strtotime("now")));
+                                        if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])))
+                                            {
+                                                $end_date = new DateTime(date("Y-m-d",
+                                                        strtotime($product->until_end_date)));
+                                                $interval = date_diff($end_date, $start_date);
+                                                echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
+                                            }
+                                    elseif ($product->promotion_end > $todayStartDate) {
+
                                         $end_date = new DateTime(date("Y-m-d",
                                                 strtotime($product->promotion_end)));
                                         $interval = date_diff($end_date, $start_date);
@@ -892,12 +900,21 @@
 
                                 <p class="text-uppercase">
                                     <?php
-                                    if ($product->promotion_end > $todayStartDate) {
                                     $start_date = new DateTime(date("Y-m-d", strtotime("now")));
+                                    if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])))
+                                    {
+                                    $end_date = new DateTime(date("Y-m-d",
+                                    strtotime($product->until_end_date)));
+                                    $interval = date_diff($end_date, $start_date);
+                                    echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
+                                    }
+                                    elseif ($product->promotion_end > $todayStartDate) {
+
                                     $end_date = new DateTime(date("Y-m-d",
                                     strtotime($product->promotion_end)));
                                     $interval = date_diff($end_date, $start_date);
-                                    echo $interval->format('%a days left');
+                                    echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
+
                                     }
                                     ?>
                                 </p>

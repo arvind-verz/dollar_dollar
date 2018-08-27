@@ -2983,23 +2983,30 @@ class PagesFrontController extends Controller
                 $highlight = null;
                 $criteriaCount = 0;
                 $criteriaMatchCount = 0;
+                $searchValue = 0;
+
                 if ($salary > 0 && $baseDetail->minimum_salary <= $salary) {
+                    $searchValue = $searchValue+$salary;
                     $criteriaCount++;
                     if ($spend > 0 && $baseDetail->minimum_spend <= $spend) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
+                        $searchValue = $searchValue+$spend;
                     }
                     if ($spend > 0 && $baseDetail->minimum_insurance <= ($wealth / 2)) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
+                        $searchValue = $searchValue+($wealth / (2*12));
                     }
                     if ($spend > 0 && $baseDetail->minimum_investment <= ($wealth / 2)) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
+                        $searchValue = $searchValue+($wealth / (2*12));
                     }
                     if ($loan > 0 && $baseDetail->minimum_home_loan <= $loan) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
+                        $searchValue = $searchValue+($loan / 12);
                     }
 
                     if ($criteriaMatchCount == 1) {
@@ -3036,7 +3043,7 @@ class PagesFrontController extends Controller
                         $maxRanges[] = $productRange->max_range;
                         if ($searchValue >= $productRange->min_range && $status == true) {
                             if ($searchValue > 0) {
-                                $placement = (int)$searchValue / 12;
+                                $placement = (int)$searchValue;
                             } else {
                                 $placement = (int)$searchValue;
                             }
