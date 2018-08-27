@@ -477,7 +477,7 @@
                                         <h4>Total Bonus Interest Earned for SGD
                                             ${{Helper::inThousand($range->placement)}}</h4>
 
-                                        <p>
+                                        <p class="center">
                                             <span class="nill"> ${{ Helper::inThousand($product->interest_earned) }} </span><br/>
                                             @if($range->placement > $range->first_cap_amount)
                                                 First
@@ -634,7 +634,7 @@
                                             <h4>Total Interest Earned for SGD
                                                 ${{Helper::inThousand($product->placement)}}</h4>
 
-                                            <p>
+                                            <p class="center">
                                                 <span class="nill"> ${{ Helper::inThousand($product->interest_earned) }} </span><br/>
                                                 Base on effective interest rate
                                             </p>
@@ -848,9 +848,6 @@
                                                     </table>
                                                 </form>
                                             </div>
-                                            <div class="ps-product__detail">
-                                                {!! $product->product_footer !!}
-                                            </div>
                                             <?php
                                             $range = $productRanges[0];
                                             ?>
@@ -860,7 +857,7 @@
                                                 <h4>Total Bonus Interest Earned for SGD
                                                     ${{Helper::inThousand($range->placement)}}</h4>
 
-                                                <p>
+                                                <p class="center">
                                                     <span class="nill"> ${{ Helper::inThousand($product->interest_earned) }} </span><br/>
                                                     @if($range->placement > $range->first_cap_amount)
                                                         First
@@ -901,6 +898,9 @@
                                                 </div>
                                                 @php } @endphp
                                             @endif
+                                            <div class="ps-product__detail">
+                                                {!! $product->product_footer !!}
+                                            </div>
                                             <div class="ps-product__footer"><a class="ps-product__more" href="#">More
                                                     Detail<i
                                                             class="fa fa-angle-down"></i></a></div>
@@ -944,7 +944,7 @@
                                                             </th>
                                                             <th>Criteria A <br/><span class="subtitle">(Salary + 2 OR more Cateogry)</span>
                                                             </th>
-                                                            <th>Total Interest Earned for
+                                                            <th>Total Interest Earned for SGD
                                                                 ${{ Helper::inThousand($product->placement) }}</th>
                                                         </tr>
                                                         </thead>
@@ -986,6 +986,15 @@
                                                         @endforeach
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                                <div class="ps-product__panel aio-product">
+
+                                                    <h4>Total Interest Earned for SGD
+                                                        ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                                    <p class="center">
+                                                        <span class="nill">  ${{ Helper::inThousand($product->interest_earned).' ( '.$product->total_interest.'%) ' }}</span>
+                                                    </p>
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 @if(!empty($product->ads_placement))
@@ -1174,26 +1183,9 @@
                                                             <h4>Total Bonus Interest Earned for SGD
                                                                 ${{Helper::inThousand($range->placement)}}</h4>
 
-                                                            <p>
-                                                                <span class="nill"> ${{ Helper::inThousand($product->interest_earned) }} </span><br/>
-                                                                @if($range->placement > $range->first_cap_amount)
-                                                                    First
-                                                                    ${{ Helper::inThousand($range->first_cap_amount) }} -
-                                                                    ${{ Helper::inThousand(($range->first_cap_amount*($product->total_interest/100))) }}
-                                                                    (
-                                                                    {{ $product->total_interest }}%), Remaining
-                                                                    ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
-                                                                    -
-                                                                    ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                                    ({{ $range->bonus_interest_remaining_amount }}%) <br/> Total
-                                                                    =
-                                                                    ${{ Helper::inThousand($product->interest_earned) }}
-                                                                @else
-                                                                    Total =
-                                                                    ${{ Helper::inThousand($product->interest_earned) }}
-                                                                    ({{$product->total_interest}}%)
-                                                                @endif
-                                                            </p>
+                                                            <span class="nill"> {{ NILL }}</span><br/>
+
+                                                            <p class="center">{{NOT_ELIGIBLE}}</p>
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         @if(!empty($product->ads_placement))
@@ -1334,10 +1326,9 @@
                                                                 <h4>Total Interest Earned for SGD
                                                                     ${{Helper::inThousand($product->placement)}}</h4>
 
-                                                                <p>
-                                                                    <span class="nill"> ${{ Helper::inThousand($product->interest_earned) }} </span><br/>
-                                                                    Base on effective interest rate
-                                                                </p>
+                                                                <span class="nill"> {{ NILL }}</span><br/>
+
+                                                                <p class="center">{{NOT_ELIGIBLE}}</p>
                                                             </div>
                                                             <div class="clearfix"></div>
                                                         @if(!empty($product->ads_placement))
@@ -1557,8 +1548,14 @@
                                                                         </table>
                                                                     </form>
                                                                 </div>
-                                                                <div class="ps-product__detail">
-                                                                    {!! $product->product_footer !!}
+                                                                <div class="ps-product__panel aio-product">
+
+                                                                    <h4>Total Interest Earned for SGD
+                                                                        ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                                                    <span class="nill"> {{ NILL }}</span><br/>
+
+                                                                    <p class="center">{{NOT_ELIGIBLE}}</p>
                                                                 </div>
                                                                 <div class="clearfix"></div>
                                                                 @if(!empty($product->ads_placement))
@@ -1580,6 +1577,9 @@
                                                                     </div>
                                                                     @php } @endphp
                                                                 @endif
+                                                                <div class="ps-product__detail">
+                                                                    {!! $product->product_footer !!}
+                                                                </div>
                                                                 <div class="ps-product__footer"><a
                                                                             class="ps-product__more" href="#">More
                                                                         Detail<i
@@ -1678,29 +1678,12 @@
 
                                                                     <div class="ps-product__panel aio-product">
 
-                                                                        <h4>Total Bonus Interest Earned for SGD
-                                                                            ${{Helper::inThousand($range->placement)}}</h4>
+                                                                        <h4>Total Interest Earned for SGD
+                                                                            ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                                        <p>
-                                                                            <span class="nill"> ${{ Helper::inThousand($product->interest_earned) }} </span><br/>
-                                                                            @if($range->placement > $range->first_cap_amount)
-                                                                                First
-                                                                                ${{ Helper::inThousand($range->first_cap_amount) }} -
-                                                                                ${{ Helper::inThousand(($range->first_cap_amount*($product->total_interest/100))) }}
-                                                                                (
-                                                                                {{ $product->total_interest }}%), Remaining
-                                                                                ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
-                                                                                -
-                                                                                ${{ Helper::inThousand((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                                                ({{ $range->bonus_interest_remaining_amount }}%) <br/> Total
-                                                                                =
-                                                                                ${{ Helper::inThousand($product->interest_earned) }}
-                                                                            @else
-                                                                                Total =
-                                                                                ${{ Helper::inThousand($product->interest_earned) }}
-                                                                                ({{$product->total_interest}}%)
-                                                                            @endif
-                                                                        </p>
+                                                                        <span class="nill"> {{ NILL }}</span><br/>
+
+                                                                        <p class="center">{{NOT_ELIGIBLE}}</p>
                                                                     </div>
                                                                     <div class="clearfix"></div>
                                                                     @if(!empty($product->ads_placement))
