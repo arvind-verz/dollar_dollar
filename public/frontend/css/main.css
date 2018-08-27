@@ -5783,3 +5783,18 @@ span.ps-post__meta a {
 {
     font-size: 22px !important;
 }
+
+.ps-table-wrap .combine-criteria-padding.active{
+    background-color: #3DB54B;
+}
+
+
+.ps-table-wrap .combine-criteria-padding .ps-checkbox label:before{
+    background-color: #fff;
+    z-index: 2;
+}
+.ps-table-wrap .combine-criteria-padding .ps-checkbox label:after{
+    border: 2px solid #3DB54B;
+    border-top: none;
+    border-left: none;
+}
