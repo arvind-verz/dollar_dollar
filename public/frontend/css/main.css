@@ -5759,7 +5759,7 @@ span.ps-post__meta a {
     text-transform: initial;
 }
 
-.ps-btn ps-btn--blue {
+.ps-btn.ps-btn--blue {
     background-color: #3b589e !important;
 }
 
@@ -5971,7 +5971,6 @@ span.ps-post__meta a {
 
 @media (max-width: 768px) {
     .ps-page--deposit .ps-product .ps-product__header >img{
-
         margin: auto;
         display: block;
     }
