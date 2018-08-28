@@ -151,23 +151,11 @@
                                 <div class="product-row-01 clearfix">
                                     <?php
 
-                                    $products = DB::table('promotion_products')->join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
-
-
+                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT,'maximum_interest_rate');
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
                                         @if($product->featured==1)
-                                            @php $featured[] = $i;  @endphp
+                                            <?php $featured[] = $i;  ?>
                                             <div class="product-col-01">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
@@ -188,8 +176,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
@@ -238,8 +230,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                           @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
@@ -255,21 +251,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.minimum_placement_amount', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
-
+                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT,'minimum_placement_amount');
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
                                         @if($product->featured==1)
@@ -295,8 +277,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
@@ -348,8 +334,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                           @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
@@ -365,42 +355,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.promotion_period', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
-                                    foreach ($products as $key => &$product) {
-                                        $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
-                                        $maxTenure = 0;
-                                        $minTenure = 0;
-                                        if (count($placementPeriod)) {
-                                            $placementTenures = [];
-                                            foreach ($placementPeriod as $period) {
-                                                $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                                if ($value > 0) {
-                                                    $placementTenures[] = $value;
-                                                }
-                                            }
-                                            if (count($placementTenures)) {
-                                                $maxTenure = max($placementTenures);
-                                                $minTenure = min($placementTenures);
-                                            }
-                                        }
-                                        $product->max_tenure = $maxTenure;
-                                        $product->min_tenure = $minTenure;
-
-
-                                    }
+                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT,'promotion_period');
                                     $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
@@ -490,8 +445,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
@@ -524,20 +483,8 @@
                             <div class="productGridContainer target-content" id="showContent-container-4">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
+                                    $products = \Helper::getHomeProducts(SAVING_DEPOSIT,'maximum_interest_rate');
+
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -563,8 +510,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">More info</a>
@@ -613,8 +564,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                           @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">More info</a>
@@ -630,20 +585,8 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.minimum_placement_amount', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
+                                    $products = \Helper::getHomeProducts(SAVING_DEPOSIT,'minimum_placement_amount');
+
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -670,8 +613,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">More info</a>
@@ -723,8 +670,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                           @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">More info</a>
@@ -740,42 +691,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.promotion_period', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
-                                    foreach ($products as $key => &$product) {
-                                        $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
-                                        $maxTenure = 0;
-                                        $minTenure = 0;
-                                        if (count($placementPeriod)) {
-                                            $placementTenures = [];
-                                            foreach ($placementPeriod as $period) {
-                                                $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                                if ($value > 0) {
-                                                    $placementTenures[] = $value;
-                                                }
-                                            }
-                                            if (count($placementTenures)) {
-                                                $maxTenure = max($placementTenures);
-                                                $minTenure = min($placementTenures);
-                                            }
-                                        }
-                                        $product->max_tenure = $maxTenure;
-                                        $product->min_tenure = $minTenure;
-
-
-                                    }
+                                    $products = \Helper::getHomeProducts(SAVING_DEPOSIT,'promotion_period');
                                     $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
@@ -865,8 +781,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">More info</a>
@@ -899,20 +819,7 @@
                             <div class="productGridContainer target-content" id="showContent-container-7">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', WEALTH_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
+                                    $products = \Helper::getHomeProducts(WEALTH_DEPOSIT,'maximum_interest_rate');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -938,8 +845,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
@@ -988,8 +899,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                           @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
@@ -1005,20 +920,8 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', WEALTH_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.minimum_placement_amount', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
+                                    $products = \Helper::getHomeProducts(WEALTH_DEPOSIT,'minimum_placement_amount');
+
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
                                         @if($product->featured==1)
@@ -1044,8 +947,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
@@ -1097,8 +1004,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                           @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
@@ -1114,41 +1025,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', WEALTH_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.promotion_period', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
-                                    foreach ($products as $key => &$product) {
-                                        $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
-                                        $maxTenure = 0;
-                                        $minTenure = 0;
-                                        if (count($placementPeriod)) {
-                                            $placementTenures = [];
-                                            foreach ($placementPeriod as $period) {
-                                                $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                                if ($value > 0) {
-                                                    $placementTenures[] = $value;
-                                                }
-                                            }
-                                            if (count($placementTenures)) {
-                                                $maxTenure = max($placementTenures);
-                                                $minTenure = min($placementTenures);
-                                            }
-                                        }
-                                        $product->max_tenure = $maxTenure;
-                                        $product->min_tenure = $minTenure;
-
-                                    }
+                                    $products = \Helper::getHomeProducts(WEALTH_DEPOSIT,'promotion_period');
                                     $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
@@ -1238,8 +1115,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
@@ -1275,20 +1156,7 @@
                             <div class="productGridContainer target-content" id="showContent-container-10">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', ALL_IN_ONE_ACCOUNT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
+                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT,'maximum_interest_rate');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -1381,20 +1249,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', ALL_IN_ONE_ACCOUNT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.minimum_placement_amount', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
+                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT,'minimum_placement_amount');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -1491,21 +1346,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->where('promotion_products.promotion_type_id', '=', ALL_IN_ONE_ACCOUNT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.promotion_period', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
-                                            ->get();
-
+                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT,'promotion_period');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -1618,22 +1459,8 @@
                             <div class="productGridContainer target-content" id="showContent-container-13">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
-                                            ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
-                                                    'currency.icon as currency_icon', 'currency.currency as currency_name')
-                                            ->get();
+                                    $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT,'maximum_interest_rate');
+
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -1659,8 +1486,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
@@ -1710,8 +1541,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                           @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
@@ -1728,22 +1563,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
-                                            ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.minimum_placement_amount', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
-                                                    'currency.icon as currency_icon', 'currency.currency as currency_name')
-                                            ->get();
+                                    $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT,'minimum_placement_amount');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -1770,8 +1590,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
@@ -1824,8 +1648,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                           @if($product->max_tenure > 0)
+                                                                <p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
@@ -1842,44 +1670,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = DB::table('promotion_products')->join('promotion_types',
-                                            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                                            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                                            ->join('promotion_formula', 'promotion_products.formula_id', '=',
-                                                    'promotion_formula.id')
-                                            ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
-                                            ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
-                                            //->where('promotion_products.promotion_start', '<=', $datetime)
-                                            //->where('promotion_products.promotion_end', '>=', $datetime)
-                                            ->where('promotion_products.delete_status', '=', 0)
-                                            ->where('promotion_products.status', '=', 1)
-                                            ->orderBy('promotion_products.promotion_period', 'DESC')
-                                            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-                                                    'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
-                                                    'currency.icon as currency_icon', 'currency.currency as currency_name')
-                                            ->get();
-                                    foreach ($products as $key => &$product) {
-                                        $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
-                                        $maxTenure = 0;
-                                        $minTenure = 0;
-                                        if (count($placementPeriod)) {
-                                            $placementTenures = [];
-                                            foreach ($placementPeriod as $period) {
-                                                $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                                                if ($value > 0) {
-                                                    $placementTenures[] = $value;
-                                                }
-                                            }
-                                            if (count($placementTenures)) {
-                                                $maxTenure = max($placementTenures);
-                                                $minTenure = min($placementTenures);
-                                            }
-                                        }
-                                        $product->max_tenure = $maxTenure;
-                                        $product->min_tenure = $minTenure;
-
-
-                                    }
+                                    $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT,'promotion_period');
                                     $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
@@ -1954,10 +1745,11 @@
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
-                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
-                                                                <strong>{{ONGOING}}</strong>
+                                                        <h4 class="slider-heading">
+                                                            @if($product->max_tenure > 0)
+                                                                <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                             @else
-                                                                <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                                <strong> {{$product->promotion_period}}</strong>
                                                             @endif
                                                         </h4>
 
@@ -1970,8 +1762,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More

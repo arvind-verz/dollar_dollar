@@ -598,4 +598,49 @@ class Helper
         return  $launch;
     }
 
+    public static function getHomeProducts($productType, $byOrderValue)
+    {
+
+        $products = DB::table('promotion_products')->join('promotion_types',
+            'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->join('promotion_formula', 'promotion_products.formula_id', '=',
+                'promotion_formula.id')
+            ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
+            ->where('promotion_products.promotion_type_id', '=', $productType)
+            //->where('promotion_products.promotion_start', '<=', $datetime)
+            //->where('promotion_products.promotion_end', '>=', $datetime)
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->orderBy('promotion_products.'.$byOrderValue, 'DESC')
+            ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
+                'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
+                'currency.icon as currency_icon', 'currency.currency as currency_name')
+            ->get();
+
+        foreach ($products as $key => &$product) {
+            $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+            $maxTenure = 0;
+            $minTenure = 0;
+            if (count($placementPeriod)) {
+                $placementTenures = [];
+                foreach ($placementPeriod as $period) {
+                    $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                    if ($value > 0) {
+                        $placementTenures[] = $value;
+                    }
+                }
+                if (count($placementTenures)) {
+                    $maxTenure = max($placementTenures);
+                    $minTenure = min($placementTenures);
+                }
+            }
+            $product->max_tenure = $maxTenure;
+            $product->min_tenure = $minTenure;
+
+
+        }
+        return $products;
+    }
+
 }
