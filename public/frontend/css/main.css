@@ -5759,8 +5759,8 @@ span.ps-post__meta a {
     text-transform: initial;
 }
 
-.ps-btn.ps-btn--blue {
-    background-color: #3b589e !important;
+.ps-btn ps-btn--blue {
+     background-color: #3b589e !important;
 }
 
 .nill {
@@ -5968,20 +5968,11 @@ span.ps-post__meta a {
         display: block;
     }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> b585de419526a7821286806935671179fd3f4ce5
 @media (max-width: 768px) {
-    .ps-page--deposit .ps-product .ps-product__header >img{
+         .ps-page--deposit .ps-product .ps-product__header >img{
+
         margin: auto;
         display: block;
     }
 }
-<<<<<<< HEAD
-=======
->>>>>>> master
-=======
-
->>>>>>> b585de419526a7821286806935671179fd3f4ce5
