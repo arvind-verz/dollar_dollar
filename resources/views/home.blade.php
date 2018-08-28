@@ -162,7 +162,7 @@
                                             ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
                                             ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
                                             ->get();
-                                    //dd($products);
+
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -414,13 +414,13 @@
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
                                                         <h4 class="slider-heading">
-                                                            @if($searchFilter['filter']==TENURE)
+
                                                                 @if($product->max_tenure > 0)
-                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                                 @else
                                                                     <strong> {{$product->promotion_period}}</strong>
                                                                 @endif
-                                                            @endif
+
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -433,8 +433,8 @@
                                                             </p>
 
                                                             @if($product->max_tenure > 0)
-                                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                                    {{$product->promotion_period}} @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -789,13 +789,13 @@
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
                                                         <h4 class="slider-heading">
-                                                            @if($searchFilter['filter']==TENURE)
+
                                                                 @if($product->max_tenure > 0)
-                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                                 @else
                                                                     <strong> {{$product->promotion_period}}</strong>
                                                                 @endif
-                                                            @endif
+
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -808,8 +808,8 @@
                                                             </p>
 
                                                             @if($product->max_tenure > 0)
-                                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                                    {{$product->promotion_period}} @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -1162,13 +1162,13 @@
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
                                                         <h4 class="slider-heading">
-                                                            @if($searchFilter['filter']==TENURE)
+
                                                                 @if($product->max_tenure > 0)
-                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                                 @else
                                                                     <strong> {{$product->promotion_period}}</strong>
                                                                 @endif
-                                                            @endif
+
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -1181,8 +1181,8 @@
                                                             </p>
 
                                                             @if($product->max_tenure > 0)
-                                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                                    {{$product->promotion_period}} @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -1315,7 +1315,7 @@
                                                             </p>
 
                                                             <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1365,7 +1365,7 @@
                                                             </p>
 
                                                             <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1422,7 +1422,7 @@
                                                             </p>
 
                                                             <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1475,7 +1475,7 @@
                                                             </p>
 
                                                             <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1582,7 +1582,7 @@
                                                             </p>
 
                                                             <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1893,13 +1893,13 @@
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
                                                         <h4 class="slider-heading">
-                                                            @if($searchFilter['filter']==TENURE)
+
                                                                 @if($product->max_tenure > 0)
-                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                                 @else
                                                                     <strong> {{$product->promotion_period}}</strong>
                                                                 @endif
-                                                            @endif
+
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -1912,8 +1912,8 @@
                                                             </p>
 
                                                             @if($product->max_tenure > 0)
-                                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                                    {{$product->promotion_period}} @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
