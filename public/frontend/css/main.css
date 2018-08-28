@@ -3077,13 +3077,14 @@ button {
     }
 }
 @media (max-width: 768px) {
-    .ps-table--product-3,.ps-product__table,.ps-table--product,.slider-class{
+    .ps-table--product-3,.ps-product__table,.ps-table--product,.slider-class,.ps-criteria-detail{
         display: none !important;
     }
     .ps-product__panel
     {
         width: 100% !important;
     }
+
 }
 @media (min-width:769px) {
     .aio-product{
