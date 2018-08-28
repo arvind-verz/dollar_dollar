@@ -391,7 +391,7 @@
                                                                 <p class=" highlight highlight-bg ">
                                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
-                                                                <p>{{$product->promotion_period}}</p>
+                                                                <p class="highlight highlight-bg">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
@@ -449,7 +449,7 @@
                                                                 <p class=" highlight highlight-bg ">
                                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
-                                                                <p>{{$product->promotion_period}}</p>
+                                                                <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
@@ -727,7 +727,7 @@
                                                                 <p class=" highlight highlight-bg ">
                                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
-                                                                <p>{{$product->promotion_period}}</p>
+                                                                <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
@@ -785,7 +785,7 @@
                                                                 <p class=" highlight highlight-bg ">
                                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
-                                                                <p>{{$product->promotion_period}}</p>
+                                                                <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
@@ -1061,7 +1061,7 @@
                                                                 <p class=" highlight highlight-bg ">
                                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
-                                                                <p>{{$product->promotion_period}}</p>
+                                                                <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
@@ -1119,7 +1119,7 @@
                                                                 <p class=" highlight highlight-bg ">
                                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
-                                                                <p>{{$product->promotion_period}}</p>
+                                                                <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
@@ -1706,7 +1706,7 @@
                                                                 <p class=" highlight highlight-bg ">
                                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
-                                                                <p>{{$product->promotion_period}}</p>
+                                                                <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
@@ -1766,7 +1766,7 @@
                                                                 <p class=" highlight highlight-bg ">
                                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
-                                                                <p>{{$product->promotion_period}}</p>
+                                                                <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
