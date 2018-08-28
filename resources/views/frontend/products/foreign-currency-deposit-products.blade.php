@@ -200,10 +200,10 @@
                                                     </strong>
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
-                                                    @if($product->promotion_end == null)
-                                                        <strong>{{ONGOING}}</strong>
+                                                    @if($product->tenure_value > 0)
+                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
                                                     @else
-                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                        <strong> {{$product->promotion_period}}</strong>
                                                     @endif
 
                                                 @endif
@@ -225,9 +225,11 @@
 
                                             @if($product->tenure_value > 0)
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                    Months</p>
+                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+
+                                                </p>
                                             @else
-                                                <p></p>
+                                                <p>{{$product->promotion_period}}</p>
                                             @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
@@ -272,10 +274,10 @@
                                                 </strong>
                                             @endif
                                             @if($searchFilter['filter']==TENURE)
-                                                @if($product->promotion_end == null)
-                                                    <strong>{{ONGOING}}</strong>
+                                                @if($product->tenure_value > 0)
+                                                    <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
                                                 @else
-                                                    <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
+                                                    <strong> {{$product->promotion_period}}</strong>
                                                 @endif
 
                                             @endif
@@ -295,9 +297,11 @@
                                             </p>
                                             @if($product->tenure_value > 0)
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                    Months</p>
+                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+
+                                                </p>
                                             @else
-                                                <p></p>
+                                                <p>{{$product->promotion_period}}</p>
                                             @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
@@ -952,22 +956,23 @@
                                                                                         </table>
                                                                                     </div>
                                                                                 </div>
-                                                                                    <div class="ps-product__panel aio-product">
-                                                                                        <h4>Possible interest(s) earned for {{$product->currency_code}}
-                                                                                            ${{ Helper::inThousand($product->placement) }}</h4>
+                                                                                <div class="ps-product__panel aio-product">
+                                                                                    <h4>Possible interest(s) earned
+                                                                                        for {{$product->currency_code}}
+                                                                                        ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                                                        <h2> @if(($product->total_interest_earn)<=0)
-                                                                                                - @else
-                                                                                                ${{ Helper::inThousand($product->total_interest_earn) }} @endif
-                                                                                            <br>
+                                                                                    <h2> @if(($product->total_interest_earn)<=0)
+                                                                                            - @else
+                                                                                            ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                                        <br>
                                                 <span>
                                                     Total interest rate @if(($product->total_interest)<=0)
                                                         - @else {{ $product->total_interest }}%
                                                         for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
                                                 </span>
-                                                                                        </h2>
-                                                                                    </div>
-                                                                                    <div class="clearfix"></div>
+                                                                                    </h2>
+                                                                                </div>
+                                                                                <div class="clearfix"></div>
                                                                                 @if(!empty($product->ads_placement))
                                                                                     @php
                                                                                     $ads =
@@ -1627,16 +1632,16 @@
                                                                                         </table>
                                                                                     </div>
                                                                                 </div>
-                                                                                    <div class="ps-product__panel aio-product">
-                                                                                        <h4>Possible interest(s) earned
-                                                                                            for {{$product->currency_code}}
-                                                                                            ${{ Helper::inThousand($product->placement) }}</h4>
+                                                                                <div class="ps-product__panel aio-product">
+                                                                                    <h4>Possible interest(s) earned
+                                                                                        for {{$product->currency_code}}
+                                                                                        ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                                                        <p>
-                                                                                            <span class="nill"> {{ NILL }}</span><br/>
-                                                                                            {{NOT_ELIGIBLE}}
-                                                                                        </p>
-                                                                                    </div>
+                                                                                    <p>
+                                                                                        <span class="nill"> {{ NILL }}</span><br/>
+                                                                                        {{NOT_ELIGIBLE}}
+                                                                                    </p>
+                                                                                </div>
                                                                                 <div class="clearfix"></div>
                                                                                 @if(!empty($product->ads_placement))
                                                                                     @php
