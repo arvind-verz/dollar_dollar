@@ -907,6 +907,21 @@
                                                                                         </table>
                                                                                     </div>
                                                                                 </div>
+                                                                                    <div class="ps-product__panel aio-product">
+                                                                                        <h4>Possible interest(s) earned for SGD
+                                                                                            ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                                                                        <h2> @if(($product->total_interest_earn)<=0)
+                                                                                                - @else
+                                                                                                ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                                            <br>
+                                                <span>
+                                                    Total interest rate @if(($product->total_interest)<=0)
+                                                        - @else {{ $product->total_interest }}%
+                                                        for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
+                                                </span>
+                                                                                        </h2>
+                                                                                    </div>
                                                                                 <div class="clearfix"></div>
                                                                                 @if(!empty($product->ads_placement))
                                                                                     @php
@@ -1548,7 +1563,17 @@
                                                                                         </table>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="clearfix"></div>
+                                                                                    <div class="ps-product__panel aio-product">
+                                                                                        <h4>Possible interest(s) earned
+                                                                                            for {{$product->currency_code}}
+                                                                                            ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                                                                        <p>
+                                                                                            <span class="nill"> {{ NILL }}</span><br/>
+                                                                                            {{NOT_ELIGIBLE}}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                    <div class="clearfix"></div>
                                                                                 @if(!empty($product->ads_placement))
                                                                                     @php
                                                                                     $ads =
