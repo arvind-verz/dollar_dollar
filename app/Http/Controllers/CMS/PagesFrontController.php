@@ -71,14 +71,14 @@ class PagesFrontController extends Controller
                 ->get();
 
             $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.featured', '=', 1)
-            ->where('promotion_products.delete_status', '=', 0)
-            ->where('promotion_products.status', '=', 1)
-            ->orderBy('promotion_products.featured', 'DESC')
-            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-            ->get();
+                ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+                ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+                ->where('promotion_products.featured', '=', 1)
+                ->where('promotion_products.delete_status', '=', 0)
+                ->where('promotion_products.status', '=', 1)
+                ->orderBy('promotion_products.featured', 'DESC')
+                ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
+                ->get();
             //dd($products);
 
             $user_products_ending = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
@@ -491,14 +491,16 @@ class PagesFrontController extends Controller
                 }
             }
 
-            $placementPeriod = explode("|", $product->promotion_period);
-
+            $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
             $maxTenure = 0;
             $minTenure = 0;
             if (count($placementPeriod)) {
                 $placementTenures = [];
                 foreach ($placementPeriod as $period) {
-                    $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                    $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                    if ($value > 0) {
+                        $placementTenures[] = $value;
+                    }
                 }
                 if (count($placementTenures)) {
                     $maxTenure = max($placementTenures);
@@ -949,7 +951,7 @@ class PagesFrontController extends Controller
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                             //$product->max_tenure = $tenure;
-                        }else{
+                        } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
                             $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                         }
@@ -1478,7 +1480,7 @@ class PagesFrontController extends Controller
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
 
-                        }else{
+                        } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
                             $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                         }
@@ -1491,14 +1493,16 @@ class PagesFrontController extends Controller
                     }
                 }
 
-                $placementPeriod = explode("|", $product->promotion_period);
-
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [];
                     foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
                     }
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
@@ -1558,14 +1562,16 @@ class PagesFrontController extends Controller
                         $product->placement = $placement;
                     }
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [];
                     foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
                     }
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
@@ -1666,14 +1672,16 @@ class PagesFrontController extends Controller
 
 
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [];
                     foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
                     }
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
@@ -1784,14 +1792,16 @@ class PagesFrontController extends Controller
                     $product->placement = $placement;
                     $product->total_interest = 0;
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [];
                     foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
                     }
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
@@ -2089,14 +2099,16 @@ class PagesFrontController extends Controller
                 $product->total_interest_earn = round($resultInterestEarn, 2);
                 $product->placement = $placement;
 
-                $placementPeriod = explode("|", $product->promotion_period);
-
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [];
                     foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
                     }
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
@@ -2159,7 +2171,7 @@ class PagesFrontController extends Controller
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                             // $product->max_tenure = $tenure;
-                        }else{
+                        } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
                             $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                         }
@@ -2172,14 +2184,16 @@ class PagesFrontController extends Controller
                         //dd($product);
                     }
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [];
                     foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
                     }
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
@@ -2239,14 +2253,16 @@ class PagesFrontController extends Controller
                         $product->placement = $placement;
                     }
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [];
                     foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
                     }
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
@@ -2345,14 +2361,16 @@ class PagesFrontController extends Controller
 
 
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [];
                     foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
                     }
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
@@ -2463,14 +2481,16 @@ class PagesFrontController extends Controller
                     $product->placement = $placement;
                     $product->total_interest = 0;
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
                 if (count($placementPeriod)) {
                     $placementTenures = [];
                     foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
                     }
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
@@ -2986,27 +3006,27 @@ class PagesFrontController extends Controller
                 $searchValue = 0;
 
                 if ($salary > 0 && $baseDetail->minimum_salary <= $salary) {
-                    $searchValue = $searchValue+$salary;
+                    $searchValue = $searchValue + $salary;
                     $criteriaCount++;
                     if ($spend > 0 && $baseDetail->minimum_spend <= $spend) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
-                        $searchValue = $searchValue+$spend;
+                        $searchValue = $searchValue + $spend;
                     }
                     if ($spend > 0 && $baseDetail->minimum_insurance <= ($wealth / 2)) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
-                        $searchValue = $searchValue+($wealth / (2*12));
+                        $searchValue = $searchValue + ($wealth / (2 * 12));
                     }
                     if ($spend > 0 && $baseDetail->minimum_investment <= ($wealth / 2)) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
-                        $searchValue = $searchValue+($wealth / (2*12));
+                        $searchValue = $searchValue + ($wealth / (2 * 12));
                     }
                     if ($loan > 0 && $baseDetail->minimum_home_loan <= $loan) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
-                        $searchValue = $searchValue+($loan / 12);
+                        $searchValue = $searchValue + ($loan / 12);
                     }
 
                     if ($criteriaMatchCount == 1) {
