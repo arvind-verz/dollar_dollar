@@ -162,7 +162,7 @@
                                             ->orderBy('promotion_products.maximum_interest_rate', 'DESC')
                                             ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id', 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
                                             ->get();
-                                    //dd($products);
+
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -380,20 +380,22 @@
                                                     'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
                                             ->get();
                                     foreach ($products as $key => &$product) {
-                                        $placementPeriod = explode("|", $product->promotion_period);
+                                        $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                                         $maxTenure = 0;
                                         $minTenure = 0;
                                         if (count($placementPeriod)) {
                                             $placementTenures = [];
                                             foreach ($placementPeriod as $period) {
-                                                $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                                $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                                if ($value > 0) {
+                                                    $placementTenures[] = $value;
+                                                }
                                             }
                                             if (count($placementTenures)) {
                                                 $maxTenure = max($placementTenures);
                                                 $minTenure = min($placementTenures);
                                             }
                                         }
-
                                         $product->max_tenure = $maxTenure;
                                         $product->min_tenure = $minTenure;
 
@@ -411,11 +413,14 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
-                                                                <strong>{{ONGOING}}</strong>
-                                                            @else
-                                                                <strong> {{ $product->max_tenure }}</strong> {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}}
-                                                            @endif
+                                                        <h4 class="slider-heading">
+
+                                                                @if($product->max_tenure > 0)
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
+                                                                @else
+                                                                    <strong> {{$product->promotion_period}}</strong>
+                                                                @endif
+
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -427,8 +432,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight highlight-bg">{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">More info</a>
@@ -746,20 +755,22 @@
                                                     'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
                                             ->get();
                                     foreach ($products as $key => &$product) {
-                                        $placementPeriod = explode("|", $product->promotion_period);
+                                        $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                                         $maxTenure = 0;
                                         $minTenure = 0;
                                         if (count($placementPeriod)) {
                                             $placementTenures = [];
                                             foreach ($placementPeriod as $period) {
-                                                $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                                $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                                if ($value > 0) {
+                                                    $placementTenures[] = $value;
+                                                }
                                             }
                                             if (count($placementTenures)) {
                                                 $maxTenure = max($placementTenures);
                                                 $minTenure = min($placementTenures);
                                             }
                                         }
-
                                         $product->max_tenure = $maxTenure;
                                         $product->min_tenure = $minTenure;
 
@@ -777,11 +788,14 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
-                                                                <strong>{{ONGOING}}</strong>
-                                                            @else
-                                                                <strong> {{ $product->max_tenure }}</strong> {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}}
-                                                            @endif
+                                                        <h4 class="slider-heading">
+
+                                                                @if($product->max_tenure > 0)
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
+                                                                @else
+                                                                    <strong> {{$product->promotion_period}}</strong>
+                                                                @endif
+
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -793,8 +807,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight highlight-bg">{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">More info</a>
@@ -1111,20 +1129,22 @@
                                                     'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*')
                                             ->get();
                                     foreach ($products as $key => &$product) {
-                                        $placementPeriod = explode("|", $product->promotion_period);
+                                        $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                                         $maxTenure = 0;
                                         $minTenure = 0;
                                         if (count($placementPeriod)) {
                                             $placementTenures = [];
                                             foreach ($placementPeriod as $period) {
-                                                $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                                $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                                if ($value > 0) {
+                                                    $placementTenures[] = $value;
+                                                }
                                             }
                                             if (count($placementTenures)) {
                                                 $maxTenure = max($placementTenures);
                                                 $minTenure = min($placementTenures);
                                             }
                                         }
-
                                         $product->max_tenure = $maxTenure;
                                         $product->min_tenure = $minTenure;
 
@@ -1141,11 +1161,14 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
-                                                                <strong>{{ONGOING}}</strong>
-                                                            @else
-                                                                <strong> {{ $product->max_tenure }}</strong> {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}}
-                                                            @endif
+                                                        <h4 class="slider-heading">
+
+                                                                @if($product->max_tenure > 0)
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
+                                                                @else
+                                                                    <strong> {{$product->promotion_period}}</strong>
+                                                                @endif
+
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -1157,8 +1180,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight highlight-bg">{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
@@ -1288,7 +1315,7 @@
                                                             </p>
 
                                                             <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1338,7 +1365,7 @@
                                                             </p>
 
                                                             <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1395,7 +1422,7 @@
                                                             </p>
 
                                                             <p>{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1448,7 +1475,7 @@
                                                             </p>
 
                                                             <p><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1555,7 +1582,7 @@
                                                             </p>
 
                                                             <p class="highlight highlight-bg"><?php echo $product->promotion_period; ?>
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                                {{CRITERIA}}</p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(AIO_DEPOSIT_MODE); ?>">More info</a>
@@ -1832,20 +1859,22 @@
                                                     'currency.icon as currency_icon', 'currency.currency as currency_name')
                                             ->get();
                                     foreach ($products as $key => &$product) {
-                                        $placementPeriod = explode("|", $product->promotion_period);
+                                        $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                                         $maxTenure = 0;
                                         $minTenure = 0;
                                         if (count($placementPeriod)) {
                                             $placementTenures = [];
                                             foreach ($placementPeriod as $period) {
-                                                $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                                $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                                if ($value > 0) {
+                                                    $placementTenures[] = $value;
+                                                }
                                             }
                                             if (count($placementTenures)) {
                                                 $maxTenure = max($placementTenures);
                                                 $minTenure = min($placementTenures);
                                             }
                                         }
-
                                         $product->max_tenure = $maxTenure;
                                         $product->min_tenure = $minTenure;
 
@@ -1863,11 +1892,14 @@
                                                          data-mh="product"><img
                                                                 src="{{ asset($product->brand_logo) }}"
                                                                 alt="">
-                                                        <h4 class="slider-heading"> @if($product->promotion_end == null)
-                                                                <strong>{{ONGOING}}</strong>
-                                                            @else
-                                                                <strong> {{ $product->max_tenure }}</strong> {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}}
-                                                            @endif
+                                                        <h4 class="slider-heading">
+
+                                                                @if($product->max_tenure > 0)
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
+                                                                @else
+                                                                    <strong> {{$product->promotion_period}}</strong>
+                                                                @endif
+
                                                         </h4>
 
                                                         <div class="ps-block__info">
@@ -1879,8 +1911,12 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
 
-                                                            <p class="highlight highlight-bg">{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                            @if($product->max_tenure > 0)
+                                                                <p class=" highlight highlight-bg ">
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                            @else
+                                                                <p>{{$product->promotion_period}}</p>
+                                                            @endif
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">More
