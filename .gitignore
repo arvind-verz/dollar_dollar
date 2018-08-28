@@ -13,3 +13,5 @@ yarn-error.log
 app/Http/Kernel.php
 *.png
 *.jpg
+public/frontend/css/main.css
+resources/views/frontend/products/saving-deposit-products.blade.php
