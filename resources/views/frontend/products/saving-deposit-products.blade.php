@@ -206,7 +206,7 @@
                                             @if($product->tenure_value > 0)
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">Months</p>
                                             @else
-                                                <p></p>
+                                                <p>{{ONGOING}}</p>
                                             @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
