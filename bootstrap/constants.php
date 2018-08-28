@@ -273,4 +273,6 @@ define('EXPIRED', "EXPIRED");
 define('CRITERIA_ERROR', "Sorry. Products do not meet your search criteria");
 define('NOT_ELIGIBLE', "Placement amount not eligible for this promotion/product");
 define('NILL', "NIL");
+define('MONTHS', "Months");
+define('DAYS', "Days");
 
