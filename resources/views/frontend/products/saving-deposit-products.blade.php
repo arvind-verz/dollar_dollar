@@ -190,21 +190,24 @@
 
                                                 @endif
                                                 @if($searchFilter['filter']==CRITERIA)
-                                                        up to <strong> {{ $product->promotion_period }} Criteria</strong>
+                                                    up to <strong> {{ $product->promotion_period }} Criteria</strong>
                                                 @endif
                                             </h4>
                                         @endif
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
+                                                <strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif"><strong>Min:</strong>
+                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
+                                                <strong>Min:</strong>
                                                 SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
 
                                             @if($product->tenure_value > 0)
-                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">Months</p>
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
+                                                    Months</p>
                                             @else
                                                 <p></p>
                                             @endif
@@ -261,14 +264,15 @@
                                                     @endif
 
                                                 @endif
-                                                    @if($searchFilter['filter']==CRITERIA)
-                                                        up to <strong> {{ $product->promotion_period }} Criteria</strong>
-                                                    @endif
+                                                @if($searchFilter['filter']==CRITERIA)
+                                                    up to <strong> {{ $product->promotion_period }} Criteria</strong>
+                                                @endif
                                             </h4>
                                         @endif
 
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
+                                                <strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
                                             <p class=" @if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
@@ -276,7 +280,8 @@
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
                                             @if($product->tenure_value > 0)
-                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">Months</p>
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
+                                                    Months</p>
                                             @else
                                                 <p></p>
                                             @endif
@@ -352,14 +357,12 @@
                                 <p class="text-uppercase">
                                     <?php
                                     $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                        if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])))
-                                            {
-                                                $end_date = new DateTime(date("Y-m-d",
-                                                        strtotime($product->until_end_date)));
-                                                $interval = date_diff($end_date, $start_date);
-                                                echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
-                                            }
-                                    elseif ($product->promotion_end > $todayStartDate) {
+                                    if (($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, WEALTH_DEPOSIT_F1]))) {
+                                        $end_date = new DateTime(date("Y-m-d",
+                                                strtotime($product->until_end_date)));
+                                        $interval = date_diff($end_date, $start_date);
+                                        echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
+                                    } elseif ($product->promotion_end > $todayStartDate) {
 
                                         $end_date = new DateTime(date("Y-m-d",
                                                 strtotime($product->promotion_end)));
@@ -484,9 +487,10 @@
                                                             <tbody>
                                                             @foreach($product->product_ranges as $key => $productRange)
                                                                 <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
-                                                                        <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                    <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                                     @if($key==0)
-                                                                        <td rowspan="{{count($product->product_ranges)}}" class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                        <td rowspan="{{count($product->product_ranges)}}"
+                                                                            class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
                                                                     @endif
                                                                     <td class=" center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                             - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
@@ -795,6 +799,21 @@
                                                                                 </table>
                                                                             </div>
                                                                         </div>
+                                                                        <div class="ps-product__panel aio-product">
+                                                                            <h4>Possible interest(s) earned for SGD
+                                                                                ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                                                            <h2> @if(($product->total_interest_earn)<=0)
+                                                                                    - @else
+                                                                                    ${{ Helper::inThousand($product->total_interest_earn) }} @endif
+                                                                                <br>
+                                                <span>
+                                                    Total interest rate @if(($product->total_interest)<=0)
+                                                        - @else {{ $product->total_interest }}%
+                                                        for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
+                                                </span>
+                                                                            </h2>
+                                                                        </div>
                                                                         <div class="clearfix"></div>
                                                                         @if(!empty($product->ads_placement))
                                                                             @php
@@ -1036,7 +1055,8 @@
                                                                 <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                                     <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                                     @if($key==0)
-                                                                        <td rowspan="{{count($product->product_ranges)}}" class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                        <td rowspan="{{count($product->product_ranges)}}"
+                                                                            class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
                                                                     @endif
                                                                     <td class="center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                             - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
@@ -1323,6 +1343,16 @@
                                                                                     </tbody>
                                                                                 </table>
                                                                             </div>
+                                                                        </div>
+                                                                        <div class="ps-product__panel aio-product">
+                                                                            <h4>Possible interest(s) earned
+                                                                                for SGD
+                                                                                ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                                                            <p>
+                                                                                <span class="nill"> {{ NILL }}</span><br/>
+                                                                                {{NOT_ELIGIBLE}}
+                                                                            </p>
                                                                         </div>
                                                                         <div class="clearfix"></div>
                                                                         @if(!empty($product->ads_placement))
