@@ -171,7 +171,7 @@
                                     <div class="ps-block--short-product second highlight" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
                                         @if(isset($searchFilter['filter']))
-                                            <h4>
+                                            <h4 class="slider-heading">
                                                 @if($searchFilter['filter']==INTEREST)
                                                     up to <strong> {{ $product->maximum_interest_rate }}%</strong>
                                                 @endif
@@ -182,10 +182,10 @@
                                                     </strong>
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
-                                                    @if($product->tenure_value > 0)
-                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                    @if($product->promotion_end == null)
+                                                        <strong>{{ONGOING}}</strong>
                                                     @else
-                                                        <strong> {{$product->promotion_period}}</strong>
+                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
                                                     @endif
 
                                                 @endif
@@ -195,20 +195,18 @@
                                             </h4>
                                         @endif
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
-                                                <strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
-                                                <strong>Min:</strong>
+                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif"><strong>Min:</strong>
                                                 SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
+
                                             @if($product->tenure_value > 0)
-                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                    {{$product->promotion_period}} @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">Months</p>
                                             @else
-                                                <p>{{$product->promotion_period}}</p>
+                                                <p></p>
                                             @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
@@ -245,7 +243,7 @@
                                     <div class="ps-block--short-product second" data-mh="product"><img
                                                 src="{{ asset($product->brand_logo) }}" alt="">
                                         @if(isset($searchFilter['filter']))
-                                            <h4>
+                                            <h4 class="slider-heading">
                                                 @if($searchFilter['filter']==INTEREST)
                                                     up to <strong> {{ $product->maximum_interest_rate }}%</strong>
                                                 @endif
@@ -256,10 +254,10 @@
                                                     </strong>
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
-                                                    @if($product->tenure_value > 0)
-                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                    @if($product->promotion_end == null)
+                                                        <strong>{{ONGOING}}</strong>
                                                     @else
-                                                        <strong> {{$product->promotion_period}}</strong>
+                                                        <strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
                                                     @endif
 
                                                 @endif
@@ -270,19 +268,18 @@
                                         @endif
 
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
-                                                <strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
                                             <p class=" @if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
                                                 <strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
+
                                             @if($product->tenure_value > 0)
-                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                    {{$product->promotion_period}} @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">Months</p>
                                             @else
-                                                <p>{{$product->promotion_period}}</p>
+                                                <p></p>
                                             @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
@@ -351,12 +348,14 @@
                                 <p class="text-uppercase">
                                     <?php
                                     $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                    if (($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, WEALTH_DEPOSIT_F1]))) {
+                                    if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])))
+                                    {
                                         $end_date = new DateTime(date("Y-m-d",
                                                 strtotime($product->until_end_date)));
                                         $interval = date_diff($end_date, $start_date);
                                         echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
-                                    } elseif ($product->promotion_end > $todayStartDate) {
+                                    }
+                                    elseif ($product->promotion_end > $todayStartDate) {
 
                                         $end_date = new DateTime(date("Y-m-d",
                                                 strtotime($product->promotion_end)));

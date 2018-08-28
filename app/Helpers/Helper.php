@@ -561,14 +561,15 @@ class Helper
             $amount = $amount / 1000;
             $intVal = intval($amount);
             if (($amount - $intVal) > 0) {
-                $amount = number_format((float)$amount, 2, '.', '') . 'K';
-            } else {
-                $amount = $intVal . 'K';
+                $amount = number_format((float)$amount, 2, '.', '').'K';
+            }else{
+                $amount = $intVal.'K';
             }
 
         } else {
             $intVal = intval($amount);
-            if (($amount - $intVal) > 0) {
+            if(($amount-$intVal)>0)
+            {
                 $amount = number_format((float)$amount, 2, '.', '');
             }
 
@@ -590,18 +591,11 @@ class Helper
     {
         return base64_decode(strtr($str, '-_', '+/'));
     }
-
-    public static function roundNearestHundredUp($number)
-    {
-        return round($number / 100) * 100;
-    }
-
-    public static function multiExplode($delimiters, $string)
-    {
+    public static function multiExplode ($delimiters,$string) {
 
         $ready = str_replace($delimiters, $delimiters[0], $string);
         $launch = explode($delimiters[0], $ready);
-        return $launch;
+        return  $launch;
     }
 
 }

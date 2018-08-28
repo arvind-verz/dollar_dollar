@@ -1184,8 +1184,7 @@ class PagesFrontController extends Controller
                     $months = [1];
                     $allInterests = [$productRange->base_interest, $productRange->bonus_interest];
                     $placement = $productRange->max_range;
-                    $searchValue = $searchValue / ((int)$productRange->placement_month);
-                    $searchValue = \Helper::roundNearestHundredUp($searchValue);
+                    $searchValue = round($searchValue / ((int)$productRange->placement_month), 2);
 
 
                     if (count($searchFilter)) {
@@ -1721,8 +1720,7 @@ class PagesFrontController extends Controller
                     $months = [1];
                     $allInterests = [$productRange->base_interest, $productRange->bonus_interest];
                     $placement = $productRange->max_range;
-                    $searchValue = $searchValue / ((int)$productRange->placement_month);
-                    $searchValue = \Helper::roundNearestHundredUp($searchValue);
+                    $searchValue = round($searchValue / ((int)$productRange->placement_month), 2);
 
 
                     if (count($searchFilter)) {
@@ -2411,8 +2409,7 @@ class PagesFrontController extends Controller
                     $months = [1];
                     $allInterests = [$productRange->base_interest, $productRange->bonus_interest];
                     $placement = $productRange->max_range;
-                    $searchValue = $searchValue / ((int)$productRange->placement_month);
-                    $searchValue = \Helper::roundNearestHundredUp($searchValue);
+                    $searchValue = round($searchValue / ((int)$productRange->placement_month), 2);
 
 
                     if (count($searchFilter)) {

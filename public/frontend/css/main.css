@@ -2135,7 +2135,7 @@ button {
     margin-bottom: 15px;
     text-align: center;
     font-family: "Montserrat", sans-serif;
-    font-size: 22px;
+    font-size: 25px;
     font-weight: 300;
 }
 
@@ -5759,8 +5759,8 @@ span.ps-post__meta a {
     text-transform: initial;
 }
 
-.ps-btn.ps-btn--blue {
-    background-color: #3b589e !important;
+.ps-btn ps-btn--blue {
+     background-color: #3b589e !important;
 }
 
 .nill {
@@ -5971,8 +5971,8 @@ span.ps-post__meta a {
 
 @media (max-width: 768px) {
          .ps-page--deposit .ps-product .ps-product__header >img{
+
         margin: auto;
         display: block;
     }
 }
-
