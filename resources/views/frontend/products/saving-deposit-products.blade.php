@@ -182,31 +182,33 @@
                                                     </strong>
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
-                                                    @if($product->promotion_end == null)
-                                                        <strong>{{ONGOING}}</strong>
+                                                    @if($product->tenure_value > 0)
+                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
                                                     @else
-                                                        <strong> {{ $product->tenure_value }}</strong> {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}}
+                                                        <strong> {{$product->promotion_period}}</strong>
                                                     @endif
 
                                                 @endif
                                                 @if($searchFilter['filter']==CRITERIA)
-                                                        up to <strong> {{ $product->promotion_period }} Criteria</strong>
+                                                    <strong> {{ $product->promotion_period }}</strong> Criteria
                                                 @endif
                                             </h4>
                                         @endif
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
+                                                <strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
-                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif"><strong>Min:</strong>
+                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
+                                                <strong>Min:</strong>
                                                 SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
-
                                             @if($product->tenure_value > 0)
-                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">Months</p>
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
+                                                    {{$product->promotion_period}} @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                             @else
-                                                <p>{{ONGOING}}</p>
+                                                <p>{{$product->promotion_period}}</p>
                                             @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
@@ -254,21 +256,22 @@
                                                     </strong>
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
-                                                    @if($product->promotion_end == null)
-                                                        <strong>{{ONGOING}}</strong>
+                                                    @if($product->tenure_value > 0)
+                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
                                                     @else
-                                                        <strong> {{ $product->tenure_value }}</strong> {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}}
+                                                        <strong> {{$product->promotion_period}}</strong>
                                                     @endif
 
                                                 @endif
-                                                    @if($searchFilter['filter']==CRITERIA)
-                                                        up to <strong> {{ $product->promotion_period }} Criteria</strong>
-                                                    @endif
+                                                @if($searchFilter['filter']==CRITERIA)
+                                                    <strong> {{ $product->promotion_period }}</strong> Criteria
+                                                @endif
                                             </h4>
                                         @endif
 
                                         <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif"><strong>
+                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
+                                                <strong>
                                                     rate: </strong>{{ $product->maximum_interest_rate }}%</p>
 
                                             <p class=" @if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
@@ -276,9 +279,10 @@
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
                                             @if($product->tenure_value > 0)
-                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">Months</p>
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
+                                                    {{$product->promotion_period}} @if(in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                             @else
-                                                <p></p>
+                                                <p>{{$product->promotion_period}}</p>
                                             @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
@@ -352,14 +356,12 @@
                                 <p class="text-uppercase">
                                     <?php
                                     $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                        if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])))
-                                            {
-                                                $end_date = new DateTime(date("Y-m-d",
-                                                        strtotime($product->until_end_date)));
-                                                $interval = date_diff($end_date, $start_date);
-                                                echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
-                                            }
-                                    elseif ($product->promotion_end > $todayStartDate) {
+                                    if (($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, WEALTH_DEPOSIT_F1]))) {
+                                        $end_date = new DateTime(date("Y-m-d",
+                                                strtotime($product->until_end_date)));
+                                        $interval = date_diff($end_date, $start_date);
+                                        echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
+                                    } elseif ($product->promotion_end > $todayStartDate) {
 
                                         $end_date = new DateTime(date("Y-m-d",
                                                 strtotime($product->promotion_end)));
@@ -484,9 +486,10 @@
                                                             <tbody>
                                                             @foreach($product->product_ranges as $key => $productRange)
                                                                 <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
-                                                                        <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
+                                                                    <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                                     @if($key==0)
-                                                                        <td rowspan="{{count($product->product_ranges)}}" class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                        <td rowspan="{{count($product->product_ranges)}}"
+                                                                            class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
                                                                     @endif
                                                                     <td class=" center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                             - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
@@ -1036,7 +1039,8 @@
                                                                 <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                                     <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                                     @if($key==0)
-                                                                        <td rowspan="{{count($product->product_ranges)}}" class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                        <td rowspan="{{count($product->product_ranges)}}"
+                                                                            class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
                                                                     @endif
                                                                     <td class="center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                             - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
