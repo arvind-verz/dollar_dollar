@@ -226,10 +226,8 @@
                                             @if($product->tenure_value > 0)
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
-
-                                                </p>
                                             @else
-                                                <p>{{$product->promotion_period}}</p>
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{$product->promotion_period}}</p>
                                             @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
@@ -299,9 +297,8 @@
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
                                                     {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
 
-                                                </p>
                                             @else
-                                                <p>{{$product->promotion_period}}</p>
+                                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{$product->promotion_period}}</p>
                                             @endif
                                         </div>
                                         <a class="ps-btn" href="#{{ $i }}">More info</a>
