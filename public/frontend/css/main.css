@@ -2135,7 +2135,7 @@ button {
     margin-bottom: 15px;
     text-align: center;
     font-family: "Montserrat", sans-serif;
-    font-size: 22px;
+    font-size: 25px;
     font-weight: 300;
 }
 
@@ -5968,11 +5968,20 @@ span.ps-post__meta a {
         display: block;
     }
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> b585de419526a7821286806935671179fd3f4ce5
 @media (max-width: 768px) {
-         .ps-page--deposit .ps-product .ps-product__header >img{
+    .ps-page--deposit .ps-product .ps-product__header >img{
         margin: auto;
         display: block;
     }
 }
+<<<<<<< HEAD
+=======
+>>>>>>> master
+=======
 
+>>>>>>> b585de419526a7821286806935671179fd3f4ce5
