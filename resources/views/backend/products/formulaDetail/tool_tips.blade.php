@@ -53,9 +53,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{Form::label('wealth', 'Wealth',['class'=>'col-sm-2 control-label'])}}
+                                    {{Form::label('privilege', 'Privilege',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('wealth', $toolTips->wealth, ['class' => 'form-control ', 'placeholder' => ''])}}
+                                        {{Form::text('privilege', $toolTips->privilege, ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -108,9 +108,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{Form::label('wealth', 'Wealth',['class'=>'col-sm-2 control-label'])}}
+                                    {{Form::label('privilege', 'Privilege',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('wealth', old('wealth'), ['class' => 'form-control ', 'placeholder' => ''])}}
+                                        {{Form::text('privilege', old('privilege'), ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">

@@ -53,7 +53,7 @@
                             <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>FIX_DEPOSIT]) }}"><i class="fa fa-credit-card"></i> Fixed Deposit</a></li>
                             <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>SAVING_DEPOSIT]) }}"><i class="fa fa-cloud"></i> Saving Deposit</a></li>
                             <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>ALL_IN_ONE_ACCOUNT]) }}"><i class="fa fa-sign-language "></i> All in One Account Deposit</a></li>
-                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>WEALTH_DEPOSIT]) }}"><i class="fa fa-bolt"></i> Wealth Deposit</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>PRIVILEGE_DEPOSIT]) }}"><i class="fa fa-bolt"></i> Privilege Deposit</a></li>
                             <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>FOREIGN_CURRENCY_DEPOSIT]) }}"><i class="fa fa-dollar-sign"></i> Foreign Currency Deposit</a></li>
                         </ul>
                     </li>

@@ -38,7 +38,7 @@
                                         <option value="">Select</option>
                                         <option value="fixed-deposit-mode" @if($ads->page_type=='fixed-deposit-mode') selected @endif>Fixed Deposit</option>
                                         <option value="saving-deposit-mode" @if($ads->page_type=='saving-deposit-mode') selected @endif>Saving Deposit</option>
-                                        <option value="wealth-deposit-mode" @if($ads->page_type=='wealth-deposit-mode') selected @endif>Wealth Deposit</option>
+                                        <option value="privilege-deposit-mode" @if($ads->page_type=='privilege-deposit-mode') selected @endif>Privilege Deposit</option>
                                         <option value="foreign-currency-deposit-mode" @if($ads->page_type=='foreign-currency-deposit-mode') selected @endif>Foreign Currency Deposit</option>
                                         <option value="all-in-one-deposit-mode" @if($ads->page_type=='all-in-one-deposit-mode') selected @endif>All in One Deposit</option>
                                     </select>

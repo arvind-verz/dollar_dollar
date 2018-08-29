@@ -38,7 +38,7 @@
                                         <option value="">Select</option>
                                         <option value="fixed-deposit-mode">Fixed Deposit</option>
                                         <option value="saving-deposit-mode">Saving Deposit</option>
-                                        <option value="wealth-deposit-mode">Wealth Deposit</option>
+                                        <option value="privilege-deposit-mode">Privilege Deposit</option>
                                         <option value="foreign-currency-deposit-mode">Foreign Currency Deposit</option>
                                         <option value="all-in-one-deposit-mode">All in One Deposit</option>
                                     </select>

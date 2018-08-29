@@ -37,7 +37,7 @@
                                                 <option value="{{FIX_DEPOSIT}}">{{FIX_DEPOSIT_MODULE}}</option>
                                                 <option value="{{SAVING_DEPOSIT}}">{{SAVING_DEPOSIT_MODULE}}</option>
                                                 <option value="{{ALL_IN_ONE_ACCOUNT}}">{{ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE}}</option>
-                                                <option value="{{WEALTH_DEPOSIT}}">{{WEALTH_DEPOSIT_MODULE}}</option>
+                                                <option value="{{PRIVILEGE_DEPOSIT}}">{{PRIVILEGE_DEPOSIT_MODULE}}</option>
                                                 <option value="{{FOREIGN_CURRENCY_DEPOSIT}}">{{FOREIGN_CURRENCY_DEPOSIT_MODULE}}</option>
                                             </select>
                                         </div>
@@ -94,8 +94,8 @@
                                                     {{SAVING_DEPOSIT_MODULE}}
                                                 @elseif($setting->page_type == ALL_IN_ONE_ACCOUNT)
                                                     {{ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE}}
-                                                @elseif($setting->page_type == WEALTH_DEPOSIT)
-                                                    {{WEALTH_DEPOSIT_MODULE}}
+                                                @elseif($setting->page_type == PRIVILEGE_DEPOSIT)
+                                                    {{PRIVILEGE_DEPOSIT_MODULE}}
                                                 @elseif($setting->page_type == FOREIGN_CURRENCY_DEPOSIT)
                                                     {{FOREIGN_CURRENCY_DEPOSIT_MODULE}}
                                                 @endif
