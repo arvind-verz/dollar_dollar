@@ -50,9 +50,9 @@ $banners = Helper::getBanners($slug);
     <div class="container">
         <h3 class="ps-heading mb-35">
             <span>
-                Contact
+                Contact us
             </span>
-            us
+            
         </h3>
         {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="row">
