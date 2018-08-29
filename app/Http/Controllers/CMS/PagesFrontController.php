@@ -381,7 +381,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if (empty($searchValue)) {
+                if (!is_numeric($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
@@ -771,7 +771,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if (empty($searchValue)) {
+                if (!is_numeric($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
@@ -1420,7 +1420,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if (empty($searchValue)) {
+                if (!is_numeric($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
@@ -1988,7 +1988,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if (empty($searchValue)) {
+                if (!is_numeric($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
@@ -2657,7 +2657,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchFilter = $request;
                 $searchValue = str_replace(',', '', $searchFilter['search_value']);
-                if (empty($searchValue)) {
+                if (!is_numeric($searchValue)) {
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
