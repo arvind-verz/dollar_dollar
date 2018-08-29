@@ -5975,3 +5975,15 @@ span.ps-post__meta a {
         display: block;
     }
 }
+
+@media only screen and (max-width: 768px) {
+ .ps-footer__center.ps-col-tiny .row{
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: space-between;
+ }
+ .ps-footer__center.ps-col-tiny .row .col-lg-4{
+     margin-bottom: 30px;
+ }
+ 
+}
