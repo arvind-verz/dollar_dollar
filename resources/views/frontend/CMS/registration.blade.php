@@ -63,7 +63,7 @@
     @endif
     <main class="ps-main">
         <div class="container">
-            <h3 class="ps-heading mb-35"><span> Register </span> to DollarDollar.sg</h3>
+            <h3 class="ps-heading mb-35"><span> Register to DollarDollar.sg </span></h3>
 
             {!! Form::open(['route' => ['registration-add'], 'class'=>'ps-form--contact ps-form--register', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="row">

@@ -95,7 +95,7 @@
     @endif
     <main class="ps-main">
         <div class="container">
-            <h3 class="ps-heading mb-35"><span> Login </span> to your account</h3>
+            <h3 class="ps-heading mb-35"><span> Login to your account </span></h3>
 
             {!! Form::open(['route' => ['login'], 'class'=>'ps-form--login ps-form--contact', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="row">
