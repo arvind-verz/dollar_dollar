@@ -109,12 +109,12 @@
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
-                                    <label>Wealth</label>
-                                    <input class="form-control" type="text" placeholder="" name="wealth" id='wealth'
-                                           value="{{ isset($searchFilter['wealth']) ? $searchFilter['wealth'] : '' }}">
+                                    <label>Privilege</label>
+                                    <input class="form-control" type="text" placeholder="" name="privilege" id='privilege'
+                                           value="{{ isset($searchFilter['privilege']) ? $searchFilter['privilege'] : '' }}">
                                 </div>
-                                @if(isset($toolTips->wealth))
-                                    <a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->wealth}}"><i
+                                @if(isset($toolTips->privilege))
+                                    <a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->privilege}}"><i
                                                 class="fa fa-exclamation-circle"></i></a>
                                 @endif
                             </div>
@@ -403,7 +403,7 @@
                                                 <th>SALARY</th>
                                                 <th>PAYMENT</th>
                                                 <th>SPEND</th>
-                                                <th>WEALTH</th>
+                                                <th>PRIVILEGE</th>
                                                 <th>BONUS <br/><span class="subtitle">(OPTIONAL)</span></th>
                                             </tr>
                                             </thead>
@@ -424,9 +424,9 @@
                                                             - @else {{ $range->bonus_interest_spend }} % @endif
 
                                                     </td>
-                                                    <td class="text-center @if($product->wealth_highlight==true ) highlight @endif">
-                                                        Up to @if($range->bonus_interest_wealth<=0)
-                                                            - @else  {{ $range->bonus_interest_wealth }}% @endif
+                                                    <td class="text-center @if($product->privilege_highlight==true ) highlight @endif">
+                                                        Up to @if($range->bonus_interest_privilege<=0)
+                                                            - @else  {{ $range->bonus_interest_privilege }}% @endif
                                                     </td>
                                                     <td class="text-left @if($product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
                                                             - @else  {{ $range->bonus_interest }}% @endif
@@ -1018,8 +1018,8 @@
                                             </div>
                                         </div>
                                     @endif
-                                    @if(count($products)>=3)
-                                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==3)
+                                    @if(count($products)>=2)
+                                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==2)
                                             <div class="ps-poster-popup">
                                                 <!-- <div class="close-popup">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -1110,7 +1110,7 @@
                                                                     <th>SALARY</th>
                                                                     <th>PAYMENT</th>
                                                                     <th>SPEND</th>
-                                                                    <th>WEALTH</th>
+                                                                    <th>PRIVILEGE</th>
                                                                     <th>BONUS(OPTIONAL)</th>
                                                                 </tr>
                                                                 </thead>
@@ -1137,9 +1137,9 @@
                                                                             % @endif
 
                                                                         </td>
-                                                                        <td class="text-center @if($product->wealth_highlight==true ) highlight @endif">
-                                                                            Up to @if($range->bonus_interest_wealth<=0)
-                                                                                - @else  {{ $range->bonus_interest_wealth }}
+                                                                        <td class="text-center @if($product->privilege_highlight==true ) highlight @endif">
+                                                                            Up to @if($range->bonus_interest_privilege<=0)
+                                                                                - @else  {{ $range->bonus_interest_privilege }}
                                                                                 % @endif
                                                                         </td>
                                                                         <td class="text-center @if($product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
@@ -1710,8 +1710,8 @@
                                                                 </div>
                                                             </div>
                                                         @endif
-                                                        @if($products->count()<3 && $remainingProducts->count()>=3)
-                                                            @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==3)
+                                                        @if($products->count()<2 && $remainingProducts->count()>=2)
+                                                            @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==2)
                                                                 <div class="ps-poster-popup">
                                                                     <!-- <div class="close-popup">
                                                                         <i class="fa fa-times" aria-hidden="true"></i>

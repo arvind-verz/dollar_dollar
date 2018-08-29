@@ -1,7 +1,7 @@
 <div class="display-none" id="savingDepositF1">
-    @if(isset($product) && (in_array($product->formula_id,[SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2,  FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])))
+    @if(isset($product) && (in_array($product->formula_id,[SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F2,  FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])))
         <?php
-        if(in_array($product->formula_id,[SAVING_DEPOSIT_F2,WEALTH_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F3]))
+        if(in_array($product->formula_id,[SAVING_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F2,FOREIGN_CURRENCY_DEPOSIT_F3]))
             {
                 $range = $product->product_range[0];
             }

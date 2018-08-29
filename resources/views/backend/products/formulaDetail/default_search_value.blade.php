@@ -59,9 +59,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{Form::label('wealth', 'Wealth',['class'=>'col-sm-2 control-label'])}}
+                                    {{Form::label('privilege', 'Privilege',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('wealth', $defaultSearch->wealth, ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('privilege', $defaultSearch->privilege, ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -120,9 +120,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{Form::label('wealth', 'Wealth',['class'=>'col-sm-2 control-label'])}}
+                                    {{Form::label('privilege', 'Privilege',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        {{Form::text('wealth', old('wealth'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                        {{Form::text('privilege', old('privilege'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">

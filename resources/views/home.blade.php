@@ -74,7 +74,7 @@
                     <option value="">Select account Type</option>
                     <option value="1">Fixed Deposit</option>
                     <option value="2">Saving Deposit</option>
-                    <option value="3">Wealth Deposit</option>
+                    <option value="3">Privilege Deposit</option>
                     <option value="4">Foreign Currency</option>
                     <option value="5">All In One Account</option>
                 </select>
@@ -120,7 +120,7 @@
                 <ul class="ps-tab-list">
                     <li class="current"><a href="#tab-1">Fixed Deposit</a></li>
                     <li><a href="#tab-2">Saving Deposit</a></li>
-                    <li><a href="#tab-3">Wealth Deposit</a></li>
+                    <li><a href="#tab-3">Privilege Deposit</a></li>
                     <li><a href="#tab-5">Foreign Currency</a></li>
                     <li><a href="#tab-4">All In One Account</a></li>
                     
@@ -178,7 +178,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -232,7 +232,7 @@
 
                                                            @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -279,7 +279,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -336,7 +336,7 @@
 
                                                            @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -371,7 +371,7 @@
                                                         <h4 class="slider-heading">
 
                                                                 @if($product->max_tenure > 0)
-                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                                 @else
                                                                     <strong> {{$product->promotion_period}}</strong>
                                                                 @endif
@@ -389,7 +389,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p class="highlight highlight-bg">{{$product->promotion_period}}</p>
                                                             @endif
@@ -447,7 +447,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
@@ -512,7 +512,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -566,7 +566,7 @@
 
                                                            @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -615,7 +615,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -672,7 +672,7 @@
 
                                                            @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -707,7 +707,7 @@
                                                         <h4 class="slider-heading">
 
                                                                 @if($product->max_tenure > 0)
-                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                                 @else
                                                                     <strong> {{$product->promotion_period}}</strong>
                                                                 @endif
@@ -725,7 +725,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
@@ -783,7 +783,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
@@ -802,7 +802,7 @@
                     <div class="ps-tab" id="tab-3">
                         <div class="ps-block--desposit">
                             <div class="ps-block__header">
-                                <h3><strong>Wealth Deposit</strong></h3>
+                                <h3><strong>Privilege Deposit</strong></h3>
 
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
@@ -819,7 +819,7 @@
                             <div class="productGridContainer target-content" id="showContent-container-7">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = \Helper::getHomeProducts(WEALTH_DEPOSIT,'maximum_interest_rate');
+                                    $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT,'maximum_interest_rate');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -847,13 +847,13 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">More info</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -882,7 +882,7 @@
                                              data-owl-nav-left="<i class='fa fa-angle-left'></i>"
                                              data-owl-nav-right="<i class='fa fa-angle-right'></i>">
                                             @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==WEALTH_DEPOSIT && $product->featured==0)
+                                                @if ($product->promotion_type_id ==PRIVILEGE_DEPOSIT && $product->featured==0)
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
@@ -901,13 +901,13 @@
 
                                                            @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">More info</a>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -920,7 +920,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = \Helper::getHomeProducts(WEALTH_DEPOSIT,'minimum_placement_amount');
+                                    $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT,'minimum_placement_amount');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -949,13 +949,13 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">More info</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -985,7 +985,7 @@
                                              data-owl-nav-right="<i class='fa fa-angle-right'></i>">
 
                                             @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==WEALTH_DEPOSIT && $product->featured==0)
+                                                @if ($product->promotion_type_id ==PRIVILEGE_DEPOSIT && $product->featured==0)
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
@@ -1006,13 +1006,13 @@
 
                                                            @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">More info</a>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1025,7 +1025,7 @@
                                  style="display:none;">
                                 <div class="product-row-01 clearfix">
                                     <?php
-                                    $products = \Helper::getHomeProducts(WEALTH_DEPOSIT,'promotion_period');
+                                    $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT,'promotion_period');
                                     $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
@@ -1041,7 +1041,7 @@
                                                         <h4 class="slider-heading">
 
                                                                 @if($product->max_tenure > 0)
-                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                                 @else
                                                                     <strong> {{$product->promotion_period}}</strong>
                                                                 @endif
@@ -1059,13 +1059,13 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">More info</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1095,7 +1095,7 @@
                                              data-owl-nav-right="<i class='fa fa-angle-right'></i>">
 
                                             @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==WEALTH_DEPOSIT && $product->featured==0)
+                                                @if ($product->promotion_type_id ==PRIVILEGE_DEPOSIT && $product->featured==0)
                                                     <div class="ps-block--short-product"><img
                                                                 src="<?php echo asset($product->brand_logo); ?>"
                                                                 alt="">
@@ -1117,13 +1117,13 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
                                                         </div>
                                                         <a class="ps-btn"
-                                                           href="<?php echo url(WEALTH_DEPOSIT_MODE); ?>">More info</a>
+                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">More info</a>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1488,7 +1488,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -1543,7 +1543,7 @@
 
                                                            @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -1592,7 +1592,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -1650,7 +1650,7 @@
 
                                                            @if($product->max_tenure > 0)
                                                                 <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p>{{$product->promotion_period}}</p>
                                                             @endif
@@ -1686,7 +1686,7 @@
                                                         <h4 class="slider-heading">
 
                                                                 @if($product->max_tenure > 0)
-                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
+                                                                    <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                                 @else
                                                                     <strong> {{$product->promotion_period}}</strong>
                                                                 @endif
@@ -1704,7 +1704,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
@@ -1747,7 +1747,7 @@
                                                                 alt="">
                                                         <h4 class="slider-heading">
                                                             @if($product->max_tenure > 0)
-                                                                <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
+                                                                <strong> {{ $product->max_tenure }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
                                                             @else
                                                                 <strong> {{$product->promotion_period}}</strong>
                                                             @endif
@@ -1764,7 +1764,7 @@
 
                                                             @if($product->max_tenure > 0)
                                                                 <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
                                                             @else
                                                                 <p class=" highlight highlight-bg ">{{$product->promotion_period}}</p>
                                                             @endif
@@ -1845,7 +1845,7 @@
                             </div>
                         </div>
                         <div class="ps-block--home-signup">
-                            <h3>Create an account to manage your wealth easily. <strong> It is free!</strong></h3><a
+                            <h3>Create an account to manage your privilege easily. <strong> It is free!</strong></h3><a
                                     class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i
                                         class="fa fa-facebook"></i> Signup with facebook</a><a
                                     class="ps-btn ps-btn--outline" href="{{ url('login/google') }}">Sign Up with
@@ -1889,8 +1889,8 @@
             else if (title == 'Saving Deposit') {
                 $("div.view_all_types a").attr("href", "saving-deposit-mode");
             }
-            else if (title == 'Wealth Deposit') {
-                $("div.view_all_types a").attr("href", "wealth-deposit-mode");
+            else if (title == 'Privilege Deposit') {
+                $("div.view_all_types a").attr("href", "privilege-deposit-mode");
             }
             else if (title == 'All In One Account') {
                 $("div.view_all_types a").attr("href", "all-in-one-deposit-mode");
@@ -1940,11 +1940,11 @@
          }
          });
          }
-         else if (title == 'Wealth Deposit') {
+         else if (title == 'Privilege Deposit') {
          $.ajax({
          method: 'POST',
          url: '{{ route('deposit-type') }}',
-         data: {type: value, promotion_type:'<?php echo WEALTH_DEPOSIT ; ?>'},
+         data: {type: value, promotion_type:'<?php echo PRIVILEGE_DEPOSIT ; ?>'},
          cache: false,
          success: function (data) {
          //alert(data);

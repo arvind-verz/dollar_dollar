@@ -490,23 +490,23 @@
                 $('#currencyDiv').addClass('display-none');
             }
 
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
-            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
-            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
+            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
                 '<?php echo SAVING_DEPOSIT_F1; ?>', '<?php echo SAVING_DEPOSIT_F2; ?>',
-                '<?php echo WEALTH_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>',
+                '<?php echo PRIVILEGE_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F2; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
             var SDP6 = [
-                '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+                '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
             ];
             var SDP4 = [
-                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
+                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo PRIVILEGE_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
             var utilFormula = [
                 '<?php echo SAVING_DEPOSIT_F1; ?>',
-                '<?php echo WEALTH_DEPOSIT_F1; ?>',
+                '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
             ];
             if (jQuery.inArray(formula, utilFormula) !== -1) {
@@ -603,23 +603,23 @@
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
             $('#until-end-section').addClass('display-none');
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
-            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo WEALTH_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
-            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo WEALTH_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
+            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
+            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
             var SDP1 = [
                 '<?php echo SAVING_DEPOSIT_F1; ?>', '<?php echo SAVING_DEPOSIT_F2; ?>',
-                '<?php echo WEALTH_DEPOSIT_F1; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>',
+                '<?php echo PRIVILEGE_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F2; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
             var SDP6 = [
-                '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo WEALTH_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
+                '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
             ];
             var SDP4 = [
-                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo WEALTH_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
+                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo PRIVILEGE_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
             ];
             var utilFormula = [
                 '<?php echo SAVING_DEPOSIT_F1; ?>',
-                '<?php echo WEALTH_DEPOSIT_F1; ?>',
+                '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
             ];
             if (jQuery.inArray(formula, utilFormula) !== -1) {

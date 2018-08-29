@@ -80,7 +80,7 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}</p>
                                                 <p class="highlight">{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
-                                            </div><a class="ps-btn" href="@if($product->promotion_type_id==1) fixed-deposit-mode @elseif($product->promotion_type_id==2) saving-deposit-mode @elseif($product->promotion_type_id==3) all-in-one-deposit-mode @elseif($product->promotion_type_id==4) wealth-deposit-mode @elseif($product->promotion_type_id==5) foreign-currency-deposit-mode @endif">More info</a>
+                                            </div><a class="ps-btn" href="@if($product->promotion_type_id==1) fixed-deposit-mode @elseif($product->promotion_type_id==2) saving-deposit-mode @elseif($product->promotion_type_id==3) all-in-one-deposit-mode @elseif($product->promotion_type_id==4) privilege-deposit-mode @elseif($product->promotion_type_id==5) foreign-currency-deposit-mode @endif">More info</a>
                                         </div>
                                         @endforeach
                                     </div>

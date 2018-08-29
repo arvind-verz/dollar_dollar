@@ -113,16 +113,16 @@
                         <div class="col-sm-8 ">
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Minimum Requirement Amount (Wealth)</label>
+                                    <label for="">Minimum Requirement Amount (Privilege)</label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="minimum_wealth_pa_aioa1"  value="{{ $value->minimum_wealth_pa  }}"
+                                           name="minimum_privilege_pa_aioa1"  value="{{ $value->minimum_privilege_pa  }}"
                                            placeholder="">
 
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Wealth)</label>
+                                    <label for="">Bonus Interest (Privilege)</label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="bonus_interest_wealth_aioa1"  value="{{ $value->bonus_interest_wealth  }}"
+                                           name="bonus_interest_privilege_aioa1"  value="{{ $value->bonus_interest_privilege  }}"
                                            placeholder="">
                                 </div>
                             </div>
@@ -309,16 +309,16 @@
                 <div class="col-sm-8 ">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Minimum Requirement Amount (Wealth)</label>
+                            <label for="">Minimum Requirement Amount (Privilege)</label>
                             <input type="text" class="form-control only_numeric" id=""
-                                   name="minimum_wealth_pa_aioa1"
+                                   name="minimum_privilege_pa_aioa1"
                                    placeholder="">
 
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Bonus Interest (Wealth)</label>
+                            <label for="">Bonus Interest (Privilege)</label>
                             <input type="text" class="form-control only_numeric" id=""
-                                   name="bonus_interest_wealth_aioa1"
+                                   name="bonus_interest_privilege_aioa1"
                                    placeholder="">
                         </div>
                     </div>

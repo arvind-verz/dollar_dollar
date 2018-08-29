@@ -69,7 +69,7 @@
             <!-- Search form start -->
             <div class="ps-block--deposit-filter">
                 <form class="ps-form--filter" id="search-form"
-                      action="{{ URL::route('wealth-deposit-mode.search') }}#logo-detail" method="post">
+                      action="{{ URL::route('privilege-deposit-mode.search') }}#logo-detail" method="post">
                     <div class="ps-block__header">
                         <div class="owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
                              data-owl-gap="10" data-owl-nav="false" data-owl-dots="false" data-owl-item="10"
@@ -149,7 +149,7 @@
                                     <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group  ">
                                             <a class="btn refresh form-control "
-                                               href="{{url(WEALTH_DEPOSIT_MODE)}}/#logo-detail"> <i
+                                               href="{{url(PRIVILEGE_DEPOSIT_MODE)}}/#logo-detail"> <i
                                                         class="fa fa-refresh"></i></a>
                                         </div>
                                     </div> -->
@@ -183,7 +183,7 @@
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
                                                     @if($product->tenure_value > 0)
-                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
                                                     @else
                                                         <strong> {{$product->promotion_period}}</strong>
                                                     @endif
@@ -207,7 +207,7 @@
 
                                             @if($product->tenure_value > 0)
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
 
                                             @else
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{$product->promotion_period}}</p>
@@ -259,7 +259,7 @@
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
                                                     @if($product->tenure_value > 0)
-                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
                                                     @else
                                                         <strong> {{$product->promotion_period}}</strong>
                                                     @endif
@@ -282,7 +282,7 @@
                                             </p>
                                             @if($product->tenure_value > 0)
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
 
                                             @else
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{$product->promotion_period}}</p>
@@ -304,7 +304,7 @@
                     </div>
                     <div class="ps-block__content">
                         @foreach($legendtable as $legend)
-                            @if($legend->page_type==WEALTH_DEPOSIT)
+                            @if($legend->page_type==PRIVILEGE_DEPOSIT)
                                 <p><img src="{{ asset($legend->icon) }}" alt=""> = {{ $legend->title }}</p>
                             @endif
                         @endforeach
@@ -320,7 +320,7 @@
                     //dd($products);
                     ?>
 
-                    @if($page->slug=='wealth-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+                    @if($page->slug=='privilege-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
                                 <i class="fa fa-times" aria-hidden="true"></i>
@@ -354,7 +354,7 @@
                                 <p class="text-uppercase">
                                     <?php
                                     $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                    if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])))
+                                    if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])))
                                     {
                                         $end_date = new DateTime(date("Y-m-d",
                                                 strtotime($product->until_end_date)));
@@ -388,7 +388,7 @@
 
 
                                             <!-- FORMULA 1 -->
-                                    @if($product->promotion_formula_id==WEALTH_DEPOSIT_F6)
+                                    @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F6)
                                         <?php
                                         $product_id = $product->promotion_product_id;
                                         $tenures = $product->tenure;
@@ -493,7 +493,7 @@
 
 
                                                     <!-- FORMULA 1 -->
-                                            @if($product->promotion_formula_id==WEALTH_DEPOSIT_F1)
+                                            @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F1)
                                                 <div class="ps-product__table">
                                                     <div class="ps-table-wrap">
                                                         <table class="ps-table ps-table--product">
@@ -573,7 +573,7 @@
                                                     @endif
 
                                                             <!-- FORMULA 2 -->
-                                                    @if($product->promotion_formula_id==WEALTH_DEPOSIT_F2)
+                                                    @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F2)
                                                         <div class="ps-product__table">
                                                             <div class="ps-table-wrap">
                                                                 <table class="ps-table ps-table--product">
@@ -662,7 +662,7 @@
                                                             @endif
                                                             @endif
                                                                     <!-- FORMULA 3 -->
-                                                            @if($product->promotion_formula_id==WEALTH_DEPOSIT_F3)
+                                                            @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F3)
                                                                 <div class="ps-product__table">
                                                                     <div class="ps-table-wrap">
                                                                         <table class="ps-table ps-table--product text-center">
@@ -761,7 +761,7 @@
                                                                     @endif
                                                                     @endif
                                                                             <!-- FORMULA 4 -->
-                                                                    @if($product->promotion_formula_id==WEALTH_DEPOSIT_F4)
+                                                                    @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F4)
                                                                         <div class="ps-product__table">
                                                                             <div class="ps-table-wrap">
                                                                                 <table class="ps-table ps-table--product text-center">
@@ -862,7 +862,7 @@
                                                                             @endif
 
                                                                                     <!-- FORMULA 5 -->
-                                                                            @if($product->promotion_formula_id==WEALTH_DEPOSIT_F5 )
+                                                                            @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F5 )
 
                                                                                 <div class="ps-product__table fullwidth">
                                                                                     <div class="ps-table-wrap">
@@ -964,8 +964,8 @@
                                                                             </div>
                         </div>
                     </div>
-                    @if(count($products)>=3)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==WEALTH_DEPOSIT_MODE && $j==3)
+                    @if(count($products)>=2)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==PRIVILEGE_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -977,7 +977,7 @@
                             </div>
                         @endif
                     @elseif(empty($remainingProducts->count()) && $j==$products->count())
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==WEALTH_DEPOSIT_MODE)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==PRIVILEGE_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -1004,7 +1004,7 @@
                 <?php $j = 1;?>
                 @foreach($remainingProducts as $product)
 
-                    @if($page->slug=='wealth-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
+                    @if($page->slug=='privilege-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
                         <div class="ps-poster-popup">
                             <div class="close-popup">
                                 <i class="fa fa-times" aria-hidden="true"></i>
@@ -1038,7 +1038,7 @@
                                 <p class="text-uppercase">
                                     <?php
                                     $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                    if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])))
+                                    if(($product->until_end_date > $todayStartDate) && (in_array($product->promotion_formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])))
                                     {
                                     $end_date = new DateTime(date("Y-m-d",
                                     strtotime($product->until_end_date)));
@@ -1072,7 +1072,7 @@
 
 
                                             <!-- FORMULA 1 -->
-                                    @if($product->promotion_formula_id==WEALTH_DEPOSIT_F6)
+                                    @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F6)
                                         <?php
                                         $product_id = $product->promotion_product_id;
                                         $tenures = $product->tenure;
@@ -1171,7 +1171,7 @@
 
 
                                                     <!-- FORMULA 1 -->
-                                            @if($product->promotion_formula_id==WEALTH_DEPOSIT_F1)
+                                            @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F1)
                                                 <div class="ps-product__table">
                                                     <div class="ps-table-wrap">
                                                         <table class="ps-table ps-table--product">
@@ -1244,7 +1244,7 @@
                                                     @endif
                                                     @endif
                                                             <!-- FORMULA 2 -->
-                                                    @if($product->promotion_formula_id==WEALTH_DEPOSIT_F2)
+                                                    @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F2)
                                                         <div class="ps-product__table">
                                                             <div class="ps-table-wrap">
                                                                 <table class="ps-table ps-table--product">
@@ -1327,7 +1327,7 @@
                                                             @endif
                                                             @endif
                                                                     <!-- FORMULA 3 -->
-                                                            @if($product->promotion_formula_id==WEALTH_DEPOSIT_F3)
+                                                            @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F3)
                                                                 <div class="ps-product__table">
                                                                     <div class="ps-table-wrap">
                                                                         <table class="ps-table ps-table--product text-center">
@@ -1421,7 +1421,7 @@
                                                                     @endif
                                                                     @endif
                                                                             <!-- FORMULA 4 -->
-                                                                    @if($product->promotion_formula_id==WEALTH_DEPOSIT_F4)
+                                                                    @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F4)
                                                                         <div class="ps-product__table">
                                                                             <div class="ps-table-wrap">
                                                                                 <table class="ps-table ps-table--product text-center">
@@ -1517,7 +1517,7 @@
                                                                             @endif
 
                                                                                     <!-- FORMULA 5 -->
-                                                                            @if($product->promotion_formula_id==WEALTH_DEPOSIT_F5 )
+                                                                            @if($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F5 )
 
                                                                                 <div class="ps-product__table fullwidth">
                                                                                     <div class="ps-table-wrap">
@@ -1615,8 +1615,8 @@
                                                                             </div>
                         </div>
                     </div>
-                    @if($products->count()<3 && $remainingProducts->count()>=3)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==WEALTH_DEPOSIT_MODE && $j==3)
+                    @if($products->count()<2 && $remainingProducts->count()>=2)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==PRIVILEGE_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -1628,7 +1628,7 @@
                             </div>
                         @endif
                     @elseif(empty($products->count()) && $j==$remainingProducts->count())
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==WEALTH_DEPOSIT_MODE)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==PRIVILEGE_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>

@@ -149,7 +149,7 @@ class PagesFrontController extends Controller
                     /*sent all pages detail into this function and than return to blade file*/
                     return $this->savingDepositMode($details);
 
-                } elseif ($slug == WEALTH_DEPOSIT_MODE) {
+                } elseif ($slug == PRIVILEGE_DEPOSIT_MODE) {
                     $details = [];
                     $details['brands'] = $brands;
                     $details['page'] = $page;
@@ -157,7 +157,7 @@ class PagesFrontController extends Controller
                     $details['banners'] = $banners;
 
                     /*sent all pages detail into this function and than return to blade file*/
-                    return $this->wealthDepositMode($details);
+                    return $this->privilegeDepositMode($details);
 
                 } elseif ($slug == FOREIGN_CURRENCY_DEPOSIT_MODE) {
                     $details = [];
@@ -456,9 +456,9 @@ class PagesFrontController extends Controller
         return $this->saving([]);
     }
 
-    public function wealthDepositMode($details)
+    public function privilegeDepositMode($details)
     {
-        return $this->wealth([]);
+        return $this->privilege([]);
     }
 
     public function foreignCurrencyDepositMode($details)
@@ -563,12 +563,12 @@ class PagesFrontController extends Controller
 
     }
 
-    public function search_wealth_deposit(Request $request)
+    public function search_privilege_deposit(Request $request)
     {
-        return $this->wealth($request->all());
+        return $this->privilege($request->all());
     }
 
-    public function wealth($request)
+    public function privilege($request)
     {
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -581,14 +581,14 @@ class PagesFrontController extends Controller
 
         //dd($searchValue,$searchFilter);
         DB::connection()->enableQueryLog();
-        $legendtable = systemSettingLegendTable::where('page_type', '=', WEALTH_DEPOSIT)
+        $legendtable = systemSettingLegendTable::where('page_type', '=', PRIVILEGE_DEPOSIT)
             ->where('delete_status', 0)
             ->get();
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.promotion_type_id', '=', WEALTH_DEPOSIT)
+            ->where('promotion_products.promotion_type_id', '=', PRIVILEGE_DEPOSIT)
             // ->where('promotion_products.formula_id', '=', 6)
             //->where('promotion_products.promotion_start', '<=', $start_date)
             //->where('promotion_products.promotion_end', '>=', $end_date)
@@ -598,7 +598,7 @@ class PagesFrontController extends Controller
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
 
-        $details = \Helper::get_page_detail(WEALTH_DEPOSIT_MODE);
+        $details = \Helper::get_page_detail(PRIVILEGE_DEPOSIT_MODE);
         $brands = $details['brands'];
         $page = $details['page'];
         $systemSetting = $details['systemSetting'];
@@ -614,7 +614,7 @@ class PagesFrontController extends Controller
         }
         foreach ($products as $key => &$product) {
             //dd($product);
-            $defaultSearch = DefaultSearch::where('promotion_id', WEALTH_DEPOSIT)->first();
+            $defaultSearch = DefaultSearch::where('promotion_id', PRIVILEGE_DEPOSIT)->first();
             if ($defaultSearch) {
                 $defaultPlacement = $defaultSearch->placement;
             } else {
@@ -649,11 +649,11 @@ class PagesFrontController extends Controller
             $product->remaining_days = $tenure; // remaining in days
             $status = false;
 
-            if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F6])) {
+            if (in_array($product->promotion_formula_id, [PRIVILEGE_DEPOSIT_F6])) {
 
 
             }
-            if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2])) {
+            if (in_array($product->promotion_formula_id, [PRIVILEGE_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F2])) {
                 $maxPlacements = [];
 
                 foreach ($productRanges as $productRange) {
@@ -694,7 +694,7 @@ class PagesFrontController extends Controller
                             $status = true;
                         } elseif ($filter == TENURE) {
 
-                            if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F2]) && $searchValue == $productRange->tenure) {
+                            if (in_array($product->promotion_formula_id, [PRIVILEGE_DEPOSIT_F2]) && $searchValue == $productRange->tenure) {
                                 $productRange->tenure_highlight = true;
                                 $productRange->placement_highlight = true;
                                 $placement = $productRange->max_range;
@@ -712,7 +712,7 @@ class PagesFrontController extends Controller
                     if ($placement >= $productRange->min_range &&
                         $placement <= $productRange->max_range
                     ) {
-                        if (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F2])) {
+                        if (in_array($product->promotion_formula_id, [PRIVILEGE_DEPOSIT_F2])) {
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
                         }
@@ -732,7 +732,7 @@ class PagesFrontController extends Controller
                     $filterProducts[] = $product;
                 }
 
-            } elseif (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F3])) {
+            } elseif (in_array($product->promotion_formula_id, [PRIVILEGE_DEPOSIT_F3])) {
 
                 foreach ($productRanges as $k => &$productRange) {
                     //$placement = $productRange->max_range;
@@ -783,7 +783,7 @@ class PagesFrontController extends Controller
                     $filterProducts[] = $product;
                 }
 
-            } elseif (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F4])) {
+            } elseif (in_array($product->promotion_formula_id, [PRIVILEGE_DEPOSIT_F4])) {
                 $maxPlacements = [0];
                 $highlight = 0;
 
@@ -857,7 +857,7 @@ class PagesFrontController extends Controller
                     $filterProducts[] = $product;
                 }
 
-            } elseif (in_array($product->promotion_formula_id, [WEALTH_DEPOSIT_F5])) {
+            } elseif (in_array($product->promotion_formula_id, [PRIVILEGE_DEPOSIT_F5])) {
 
                 $rowHeadings = [CUMMULATED_MONTHLY_SAVINGS_AMOUNT, BASE_INTEREST,
                     ADDITIONAL_INTEREST, TOTAL_AMOUNT];
@@ -983,7 +983,7 @@ class PagesFrontController extends Controller
         if ($searchFilter['search_value'] > 0 && $searchFilter['filter'] == PLACEMENT) {
             $searchFilter['search_value'] = $searchFilter['search_value'] / 1000;
         }
-        return view('frontend.products.wealth-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
+        return view('frontend.products.privilege-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable"));
 
     }
 
@@ -1434,7 +1434,7 @@ class PagesFrontController extends Controller
         } elseif ($account_type == 2) {
             return $this->saving($request);
         } elseif ($account_type == 3) {
-            return $this->wealth($request);
+            return $this->privilege($request);
         } elseif ($account_type == 4) {
             return $this->foreign_currency($request);
         } elseif ($account_type == 5) {
@@ -1697,7 +1697,7 @@ class PagesFrontController extends Controller
                 $defaultGiro = $defaultSearch->payment;
                 $defaultSpend = $defaultSearch->spend;
                 $defaultLoan = $defaultSearch->loan;
-                $defaultWealth = $defaultSearch->wealth;
+                $defaultPrivilege = $defaultSearch->privilege;
 
             } else {
                 $defaultPlacement = 0;
@@ -1705,7 +1705,7 @@ class PagesFrontController extends Controller
                 $defaultGiro = 0;
                 $defaultSpend = 0;
                 $defaultLoan = 0;
-                $defaultWealth = 0;
+                $defaultPrivilege = 0;
 
             }
             if (!count($request)) {
@@ -1715,13 +1715,13 @@ class PagesFrontController extends Controller
                 $giro = $defaultGiro;
                 $spend = $defaultSpend;
                 $loan = $defaultLoan;
-                $wealth = $defaultWealth;
+                $privilege = $defaultPrivilege;
                 $search_filter['search_value'] = $defaultPlacement;
                 $search_filter['salary'] = $defaultSalary;
                 $search_filter['giro'] = $defaultGiro;
                 $search_filter['spend'] = $defaultSpend;
-                $search_filter['wealth'] = $defaultLoan;
-                $search_filter['loan'] = $defaultWealth;
+                $search_filter['privilege'] = $defaultLoan;
+                $search_filter['loan'] = $defaultPrivilege;
                 $search_filter['filter'] = PLACEMENT;
             } else {
                 $placement = 0;
@@ -1736,7 +1736,7 @@ class PagesFrontController extends Controller
                 $giro = $search_filter['giro'] = isset($search_filter['giro']) ? (int)$search_filter['giro'] : $defaultGiro;
                 $spend = $search_filter['spend'] = isset($search_filter['spend']) ? (int)$search_filter['spend'] : $defaultSpend;
                 $loan = $search_filter['loan'] = isset($search_filter['loan']) ? (int)$search_filter['loan'] : $defaultLoan;
-                $wealth = $search_filter['wealth'] = isset($search_filter['wealth']) ? (int)$search_filter['wealth'] : $defaultWealth;
+                $privilege = $search_filter['privilege'] = isset($search_filter['privilege']) ? (int)$search_filter['privilege'] : $defaultPrivilege;
                 $search_filter['filter'] = $search_filter['filter'] ? $search_filter['filter'] : PLACEMENT;
             }
             $status = false;
@@ -1749,7 +1749,7 @@ class PagesFrontController extends Controller
                 $product->salary_highlight = false;
                 $product->payment_highlight = false;
                 $product->spend_highlight = false;
-                $product->wealth_highlight = false;
+                $product->privilege_highlight = false;
                 $product->loan_highlight = false;
                 $product->bonus_highlight = false;
                 $criteriaMatchCount = 0;
@@ -1760,7 +1760,7 @@ class PagesFrontController extends Controller
                         $productRange->bonus_interest_salary,
                         $productRange->bonus_interest_giro_payment,
                         $productRange->bonus_interest_spend,
-                        $productRange->bonus_interest_wealth,
+                        $productRange->bonus_interest_privilege,
                         //$productRange->bonus_interest_loan,
                         $productRange->bonus_interest,
                         $productRange->bonus_interest_remaining_amount,
@@ -1793,9 +1793,9 @@ class PagesFrontController extends Controller
                             $totalInterest = $totalInterest + $productRange->bonus_interest_spend;
                             $criteriaMatchCount++;
                         }
-                        if ($wealth > 0 && $productRange->minimum_wealth_pa <= $wealth / 12) {
-                            $product->wealth_highlight = true;
-                            $totalInterest = $totalInterest + $productRange->bonus_interest_wealth;
+                        if ($privilege > 0 && $productRange->minimum_privilege_pa <= $privilege / 12) {
+                            $product->privilege_highlight = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_privilege;
                             $criteriaMatchCount++;
                         }
                         /*if ($loan > 0 && $productRange->bonus_interest_loan <= $loan) {
@@ -1958,11 +1958,11 @@ class PagesFrontController extends Controller
                         if ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
                         }
-                        if ($wealth > 0 && $productRange->minimum_insurance <= ($wealth / 12)) {
+                        if ($privilege > 0 && $productRange->minimum_insurance <= ($privilege / 12)) {
                             $criteriaMatchCount++;
                             $product->life_insurance = true;
                         }
-                        if ($wealth > 0 && $productRange->minimum_unit_trust <= ($wealth / 12)) {
+                        if ($privilege > 0 && $productRange->minimum_unit_trust <= ($privilege / 12)) {
                             $criteriaMatchCount++;
                             $product->unit_trust = true;
                         }
@@ -2030,10 +2030,10 @@ class PagesFrontController extends Controller
                     if ($spend > 0 && $baseDetail->minimum_spend <= $spend) {
                         $criteriaMatchCount++;
                     }
-                    if ($spend > 0 && $baseDetail->minimum_insurance <= ($wealth / 2)) {
+                    if ($spend > 0 && $baseDetail->minimum_insurance <= ($privilege / 2)) {
                         $criteriaMatchCount++;
                     }
-                    if ($spend > 0 && $baseDetail->minimum_investment <= ($wealth / 2)) {
+                    if ($spend > 0 && $baseDetail->minimum_investment <= ($privilege / 2)) {
                         $criteriaMatchCount++;
                     }
                     if ($loan > 0 && $baseDetail->minimum_home_loan <= $loan) {
@@ -2161,7 +2161,7 @@ class PagesFrontController extends Controller
                 $defaultGiro = $defaultSearch->payment;
                 $defaultSpend = $defaultSearch->spend;
                 $defaultLoan = $defaultSearch->loan;
-                $defaultWealth = $defaultSearch->wealth;
+                $defaultPrivilege = $defaultSearch->privilege;
 
             } else {
                 $defaultPlacement = 0;
@@ -2169,7 +2169,7 @@ class PagesFrontController extends Controller
                 $defaultGiro = 0;
                 $defaultSpend = 0;
                 $defaultLoan = 0;
-                $defaultWealth = 0;
+                $defaultPrivilege = 0;
 
             }
             $placement = 0;
@@ -2184,7 +2184,7 @@ class PagesFrontController extends Controller
             $giro = (int)$searchDetail['giro'];
             $spend = (int)$searchDetail['spend'];
             $loan = (int)$searchDetail['loan'];
-            $wealth = (int)$searchDetail['wealth'];
+            $privilege = (int)$searchDetail['privilege'];
 
             $status = false;
             $productRanges = json_decode($product->product_range);
@@ -2234,11 +2234,11 @@ class PagesFrontController extends Controller
                         if ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
                         }
-                        if ((isset($checkBoxDetail['life_insurance'])) && ($wealth > 0 && $productRange->minimum_insurance <= ($wealth / 12))) {
+                        if ((isset($checkBoxDetail['life_insurance'])) && ($privilege > 0 && $productRange->minimum_insurance <= ($privilege / 12))) {
                             $criteriaMatchCount++;
                             $product->life_insurance = true;
                         }
-                        if ((isset($checkBoxDetail['unit_trust'])) && ($wealth > 0 && $productRange->minimum_unit_trust <= ($wealth / 12))) {
+                        if ((isset($checkBoxDetail['unit_trust'])) && ($privilege > 0 && $productRange->minimum_unit_trust <= ($privilege / 12))) {
                             $criteriaMatchCount++;
                             $product->unit_trust = true;
                         }
