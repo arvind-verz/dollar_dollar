@@ -117,7 +117,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 ">
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 ">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                                 @elseif(!isset($searchFilter['filter']))$@endif
@@ -162,15 +162,15 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
+                                    <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group  ">
                                             <a class="btn refresh form-control "
                                                href="{{url(FOREIGN_CURRENCY_DEPOSIT_MODE)}}/#logo-detail"> <i
                                                         class="fa fa-refresh"></i></a>
-
-
+                                    
+                                    
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
