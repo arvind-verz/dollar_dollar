@@ -57,7 +57,7 @@
         <main class="ps-main">
             <div class="container">
                 <h3 class="ps-heading mb-35 pl-15">
-                    <span><i class="fa fa-umbrella"></i> {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                    <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
                 </h3>
 
 

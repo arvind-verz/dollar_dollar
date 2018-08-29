@@ -90,6 +90,7 @@ class PagesController extends Controller
         $page = new Page();
         $page->name = ucfirst($request->name);
         $page->title = ucfirst($request->title);
+        $page->icon = $request->icon;
         $page->slug = str_slug($request->slug);
         $page->contents = $request->contents;
         $page->meta_title = $request->meta_title;
@@ -221,6 +222,7 @@ class PagesController extends Controller
         $oldPage = $page;
         $page->name = ucfirst($request->name);
         $page->title = ucfirst($request->title);
+        $page->icon = $request->icon;
         if (isset($request->slug)) {
             $page->slug = str_slug($request->slug);
         }

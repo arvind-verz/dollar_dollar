@@ -43,6 +43,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        {{Form::label('icon', 'Icon',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('icon', old('icon'), ['class' => 'form-control iconpicker', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         {{Form::label('contents', 'Contents',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::textarea('contents', old('contents'), ['id' => 'article-ckeditor', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
