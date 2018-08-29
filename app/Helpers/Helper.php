@@ -557,7 +557,17 @@ class Helper
     public static function inThousand($amount)
     {
         //dd($amount);
-        if ($amount > 999) {
+        if ($amount > 99999) {
+            $amount = $amount / 100000;
+            $intVal = intval($amount);
+            if (($amount - $intVal) > 0) {
+                $amount = number_format((float)$amount, 2, '.', '').'M';
+            }else{
+                $amount = $intVal.'M';
+            }
+
+        }
+        elseif ($amount > 999) {
             $amount = $amount / 1000;
             $intVal = intval($amount);
             if (($amount - $intVal) > 0) {
