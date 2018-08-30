@@ -144,11 +144,11 @@
                 @endif
             </div>
             <div class="form-group">
-                <h5 class="ps-heading--3">5. What is the best time to contact you?</h5>
+                <h5 class="ps-heading--3">5. One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</h5>
 
                 <p>A representative from one of our partners will get you multiple quotes from different insurers
-                    and call you to run through your best options. I consent that a representative from ?one of
-                    MoneySmart’s partners? can contact me via phone regarding this enquiry.</p>
+                    and call you to run through your best options. I consent that a representative from one of
+                    MoneySmart's partners can contact me via phone regarding this enquiry.</p>
 
                 <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="time-1" value="{{TIME_ANYTIME}}" name="time[]"
@@ -226,7 +226,7 @@
                         <div class="form-icon"><i class="fa fa-globe"></i>
                             <input class="form-control" type="text" placeholder="+65" name="country_code"
                                    value="{{ old('country_code') ? old('country_code') : (Auth::user()->country_code) ? Auth::user()->country_code : '+65' }}">
-                                   <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id]) }}">Edit Info</a>
+                                   <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit Info</a>
                         </div>
                         @if ($errors->has('country_code'))
                             <span class="text-danger">

@@ -281,7 +281,9 @@ $(".search_type").on("click", function () {
 
 });
 $(".sort-by").on("change", function () {
-    document.getElementById('search-form').submit();
+    if($(this).val()!=='') {
+        document.getElementById('search-form').submit();
+    }
 
 });
 $(".currency").on("change", function () {
@@ -356,5 +358,11 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("body").on("click", ".menu--mobile > li.menu-item-has-children",function(){
         $(this).children(".sub-menu").slideToggle();
+    });
+
+    $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-block--product-info .ps-block__content .ps-block__more").click(function(){
+        var n = $(this).attr("href").replace("#","");
+        $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content").css("display", "none");
+        $(".ps-criteria-detail__content#" + n).css("display", "block");
     })
 });

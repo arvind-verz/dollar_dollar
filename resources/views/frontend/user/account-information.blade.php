@@ -56,7 +56,7 @@
                             <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5><a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id]) }}">Edit</a>
+                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5><a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location' => 'account-information']) }}">Edit</a>
                                 </div>
                                 <div class="ps-block__content">
                                     <h5>Contact Information</h5>

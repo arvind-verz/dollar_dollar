@@ -159,6 +159,7 @@ class EnquiryFrontController extends Controller
 
         $healthInsuranceEnquiry->coverage = $request->coverage;
         $healthInsuranceEnquiry->level = $request->level;
+        $healthInsuranceEnquiry->health_condition = $request->health_condition;
         $times = [];
         if (isset($request->time)) {
             $times = $request->time;

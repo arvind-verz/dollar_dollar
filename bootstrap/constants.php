@@ -200,7 +200,7 @@ define('OFFER_SECTION_VALUE', "offer_section");
 
 //value for enquiry option store in constants
 define('PRIVATE_COVERAGE', "Private Hospital");
-define('GOVERNMENT_COVERAGE', "Government Hospital (A Class Ward)");
+define('GOVERNMENT_COVERAGE', "Government Hospital");
 define('SEMI_PRIVATE_COVERAGE', "Semi Private Hospital");
 define('YES', "Yes");
 define('NO', "No");
