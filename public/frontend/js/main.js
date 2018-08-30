@@ -281,7 +281,9 @@ $(".search_type").on("click", function () {
 
 });
 $(".sort-by").on("change", function () {
-    document.getElementById('search-form').submit();
+    if($(this).val()!=='') {
+        document.getElementById('search-form').submit();
+    }
 
 });
 $(".currency").on("change", function () {

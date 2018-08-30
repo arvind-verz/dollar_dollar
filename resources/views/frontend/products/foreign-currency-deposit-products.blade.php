@@ -143,7 +143,7 @@
                                                 @foreach($currencies as $currency)
                                                     <option value="{{$currency->id}}"
                                                             @if(isset($searchFilter['currency']) && $searchFilter['currency']==$currency->id) selected @endif>
-                                                        {{$currency->code}}
+                                                        {{ $currency->code }}
                                                     </option>
                                                 @endforeach
                                             @endif
@@ -386,7 +386,7 @@
 
                                 <p>
                                     <span class="highlight">Currency: </span>
-                                    {{$product->currency_name}} {{$product->currency_code}}
+                                    {{$product->currency_name}} ({{$product->currency_code}})
                                 </p>
                             </div>
                         </div>
