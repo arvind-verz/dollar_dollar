@@ -66,7 +66,7 @@
             {!! Form::open(['url' => ['post-health-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
             <div class="form-group">
-                <h5 class="ps-heading--3">1. What level of coverage would you like?</h5>
+                <h5 class="ps-heading--3">1. What type of coverage would you like?</h5>
 
 
                 <div class="ps-radio ps-radio--inline">
@@ -92,7 +92,7 @@
                 @endif
             </div>
             <div class="form-group">
-                <h5 class="ps-heading--3">2. What level of coverage would you like?</h5>
+                <h5 class="ps-heading--3">2. Do you have any existing health condition? </h5>
 
                 <div class="ps-radio ps-radio--inline">
                     <input class="form-control" type="radio" value="{{YES}}" id="level-1" name="level"
@@ -104,11 +104,16 @@
                            @if (old('level')==NO) checked="CHECKED"@endif />
                     <label for="level-2">{{NO}}</label>
                 </div>
+                <div class="short-form mb-10 hide">
+                    <label>Please briefly state what health conditions you have</label>
+                    <input class="form-control" type="text" id="health_condition" name="health_condition" placeholder="" value="">
+                </div>
                 @if ($errors->has('level'))
                     <span class="text-danger">
                                                     <strong>{{ $errors->first('level') }}</strong>
                                                     </span>
                 @endif
+
             </div>
             <div class="form-group">
                 <h5 class="ps-heading--3">3. One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</h5>
@@ -246,7 +251,16 @@
             else {
                 $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("disabled", true);
             }
-        } 
+        }
+
+        $("input[name='level']").on("change", function() {
+            if($(this).val()=='Yes') {
+                $("input[name='health_condition']").parent("div").removeClass("hide");
+            }
+            else {
+                $("input[name='health_condition']").parent("div").addClass("hide");
+            }
+        });
     });
 </script>
 @endsection
