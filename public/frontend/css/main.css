@@ -5988,3 +5988,10 @@ span.ps-post__meta a {
  }
  
 }
+
+.ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content{
+ display: none;
+}
+.ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content:first-child{
+ display: block;
+}
