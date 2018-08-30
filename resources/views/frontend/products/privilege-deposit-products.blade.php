@@ -82,9 +82,11 @@
                                                value="@if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) {{ $searchFilter['brand_id'] }} @else {{ $brand->id }} @endif"
                                                style="opacity: 0;position: absolute;"
                                                @if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) checked @endif>
+                                               <a href="{{ !empty($brand->brand_link) ? $brand->brand_link : 'javascript:void(0)' }}" target="_blank">
                                         <img src="{{ asset($brand->brand_logo) }}"
                                              style="padding-right:20px; min-width: 80px;"
                                              class="brand_img  @if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) selected_img @endif">
+                                         </a>
                                     </span>
                                 @endforeach
                             @endif
