@@ -25,7 +25,7 @@
             <td>{{$data['dob']}}</td>
         </tr>
     @endif
-    @endif@if($data['smoke'])
+    @if($data['smoke'])
         <tr>
             <td>4. Are you a smoker?</td>
             <td>:</td>
