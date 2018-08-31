@@ -122,16 +122,18 @@
                                                         <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
                                                             @if(!empty($value->brand_logo))
                                                             <img src="{{ asset($value->brand_logo) }}"></td>
-                                                            @else
+                                                            @elseif($value->other_bank)
                                                             {{ $value->other_bank }}
+                                                            @else
+                                                            -
                                                             @endif
-                                                        <td>{{ $value->account_name }}</td>
-                                                        <td>{{ $value->amount }}</td>
-                                                        <td>{{ $value->tenure }}</td>
-                                                        <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
-                                                        <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
+                                                        <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
+                                                        <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
+                                                        <td>{{ !empty($value->tenure) ? $value->tenure : '-' }}</td>
+                                                        <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
+                                                        <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
                                                         <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
-                                                        <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
+                                                        <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date))) Ongoing @else Expired @endif</td>
                                                         <td>
                                                             <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
                                                             <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>

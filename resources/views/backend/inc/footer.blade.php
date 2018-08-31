@@ -382,7 +382,28 @@
                 {
                     dom: 'lBfrtip',
                     buttons: [
-                        'excel', 'pdf', 'print'
+                        {
+                           extend: 'pdf',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            }
+                       },
+                       {
+                           extend: 'csv',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            }
+                          
+                       },
+                       {
+                           extend: 'excel',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            }
+                       }   
                     ],
                     "pageLength": 10,
                     'ordering': true,
@@ -391,7 +412,8 @@
                         "aTargets": [0],
                         "bSortable": false,
                     
-                    }]
+                    }],
+
                 });
         $('#products').DataTable(
                 {

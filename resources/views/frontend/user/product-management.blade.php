@@ -103,13 +103,13 @@
                                             <div class="col-xs-6">
                                                 <div class="form-group">
                                                     <label>Start Date</label>
-                                                    <input class="form-control datepicker" name="start_date" type="text" placeholder="" autocomplete="off" value="{{ old('start_date') }}">
+                                                    <input class="form-control datepicker" name="start_date" type="text" placeholder="" autocomplete="off" value="{{ old('start_date') ? old('start_date') : date('Y-m-d') }}">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <div class="form-group">
                                                     <label>End Date</label>
-                                                    <input class="form-control datepicker" name="end_date" type="text" placeholder="" autocomplete="off" value="{{ old('end_date') }}">
+                                                    <input class="form-control datepicker" name="end_date" type="text" placeholder="" autocomplete="off" value="{{ old('end_date') ? old('end_date') : date('Y-m-d') }}">
                                                 </div>
                                             </div>
                                         </div>
