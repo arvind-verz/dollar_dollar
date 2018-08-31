@@ -104,13 +104,13 @@
                                             <div class="col-xs-6">
                                                 <div class="form-group">
                                                     <label>Start Date</label>
-                                                    <input class="form-control datepicker" name="start_date" type="text" placeholder="" autocomplete="off" value="{{ date("Y-m-d", strtotime($product_management->start_date)) }}">
+                                                    <input class="form-control datepicker" name="start_date" type="text" placeholder="" autocomplete="off" value="{{ !empty($product_management->start_date) ? date("Y-m-d", strtotime($product_management->start_date)) : '' }}">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <div class="form-group">
                                                     <label>End Date</label>
-                                                    <input class="form-control datepicker" name="end_date" type="text" placeholder="" autocomplete="off" value="{{ date("Y-m-d", strtotime($product_management->end_date)) }}">
+                                                    <input class="form-control datepicker" name="end_date" type="text" placeholder="" autocomplete="off" value="{{ !empty($product_management->end_date) ? date("Y-m-d", strtotime($product_management->end_date)) : '' }}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">

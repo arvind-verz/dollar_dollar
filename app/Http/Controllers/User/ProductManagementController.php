@@ -10,6 +10,7 @@ use App\Page;
 use App\Brand;
 use Auth;
 use App\AdsManagement;
+use Route;
 
 class ProductManagementController extends Controller
 {
@@ -95,6 +96,7 @@ class ProductManagementController extends Controller
      */
     public function edit($id)
     {
+        //dd(Route::current());
         $ads = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
                     ->where('page', 'account')
@@ -156,7 +158,7 @@ class ProductManagementController extends Controller
             $product_management->interest_earned = $request->interest_earned;
             $product_management->save();
         }
-        return back()->with('success', 'Data ' . UPDATED_ALERT);
+        return redirect('product-management')->with('success', 'Data ' . UPDATED_ALERT);
     }
 
     /**
