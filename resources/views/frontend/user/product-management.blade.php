@@ -122,7 +122,7 @@
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                         <div class="form-group">
-                                            <label>Don’t Send Reminders</label>
+                                            <label>Do not Send Reminders</label>
                                             <input type="checkbox" class="form-control" name="dod_reminder" @if(old('dod_reminder')==1) checked @endif>
                                         </div>
                                     </div>

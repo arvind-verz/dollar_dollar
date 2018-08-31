@@ -6,7 +6,7 @@
 <table>
     @if(count($data['components']))
         <tr>
-            <td>1. What components of life insurance are you interested in?</td>
+            <td>1. What type of life insurance are you looking for?</td>
             <td>:</td>
             <td>{{implode(', ',$data['components']) }}</td>
         </tr>
@@ -34,7 +34,7 @@
     @endif
     @if(count($data['times']))
         <tr>
-            <td>5. When is the best time to reach you?</td>
+            <td>5. One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</td>
             <td>:</td>
             <td>{{implode(', ',$data['times']) }}</td>
         </tr>
@@ -49,7 +49,7 @@
 
     @if($data['full_name'])
         <tr>
-            <td>Name</td>
+            <td>Fullname</td>
             <td>:</td>
             <td>{{$data['full_name']}}</td>
         </tr>

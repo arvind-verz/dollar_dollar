@@ -39,7 +39,7 @@
                                                 <th>Full name</th>
                                                 <th>Email</th>
                                                 <th>Contact number</th>
-                                                <th>1. What components of life insurance are you interested in?</th>
+                                                <th>1. What type of life insurance are you looking for?</th>
                                                 <th>2. What is your gender?</th>
                                                 <th>3. What is your date of birth?</th>
                                                 <th>4. Are you a smoker?</th>

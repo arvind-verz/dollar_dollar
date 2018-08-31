@@ -108,7 +108,7 @@ class ProductManagementController extends Controller
             ->select('pages.*', 'menus.title as menu_title', 'menus.id as menu_id')
             ->first();
 
-        $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+        $brands = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
 
         $product_management = ProductManagement::find($id);
         //dd($product_management);

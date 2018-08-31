@@ -183,7 +183,7 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            //Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
+            Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
         } catch (Exception $exception) {
 
             return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
@@ -251,9 +251,9 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
+            Mail::to(ADMIN_EMAIL)->send(new LifeEnquiryMail($data));
         } catch (Exception $exception) {
-
+            dd($exception);
             return redirect(url(LIFE_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');

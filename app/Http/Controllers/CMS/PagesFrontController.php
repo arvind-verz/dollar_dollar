@@ -110,7 +110,7 @@ class PagesFrontController extends Controller
             $banners = \Helper::getBanners($slug);
 
 //get slug
-            $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+            $brands = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
 
             if ($page->is_dynamic == 1) {
 
