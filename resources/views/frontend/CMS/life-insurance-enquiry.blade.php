@@ -65,7 +65,7 @@
             @endif
             {!! Form::open(['url' => ['post-life-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="form-group">
-                <h5 class="ps-heading--3">1. What components of life insurance are you interested in?</h5>
+                <h5 class="ps-heading--3">1. What type of life insurance are you looking for?</h5>
 
                 <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="component-1" value="{{COMPONENTS_PROTECTION}}"
@@ -74,16 +74,16 @@
                     <label for="component-1">{{COMPONENTS_PROTECTION}}</label>
                 </div>
                 <div class="ps-checkbox ps-checkbox--inline">
-                    <input class="form-control" type="checkbox" id="component-2" value="{{COMPONENTS_INVESTMENT}}"
-                           name="components[]"
-                    @if (!is_null(old('components'))) {{ in_array(COMPONENTS_INVESTMENT,old('components'))? "CHECKED" : "" }} @endif/>
-                    <label for="component-2">{{COMPONENTS_INVESTMENT}}</label>
-                </div>
-                <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="component-3" value="{{COMPONENTS_SAVING}}"
                            name="components[]"
                     @if (!is_null(old('components'))) {{ in_array(COMPONENTS_SAVING,old('components'))? "CHECKED" : "" }} @endif/>
                     <label for="component-3">{{COMPONENTS_SAVING}}</label>
+                </div>
+                <div class="ps-checkbox ps-checkbox--inline">
+                    <input class="form-control" type="checkbox" id="component-2" value="{{COMPONENTS_INVESTMENT}}"
+                           name="components[]"
+                    @if (!is_null(old('components'))) {{ in_array(COMPONENTS_INVESTMENT,old('components'))? "CHECKED" : "" }} @endif/>
+                    <label for="component-2">{{COMPONENTS_INVESTMENT}}</label>
                 </div>
                 @if ($errors->has('components'))
                     <span class="text-danger">

@@ -39,9 +39,9 @@
                                                 <th>Full name</th>
                                                 <th>Email</th>
                                                 <th>Contact number</th>
-                                                <th>1. What level of coverage would you like?</th>
-                                                <th>2. What level of coverage would you like?</th>
-                                                <th>3. When is the best time to reach you?</th>
+                                                <th>1. What type of coverage would you like?</th>
+                                                <th>2. Do you have any existing health condition?</th>
+                                                <th>3. One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</th>
                                                 <th>Other</th>
                                                 <th>Created on</th>
                                                 <th>Action</th>

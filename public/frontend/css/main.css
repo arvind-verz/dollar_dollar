@@ -2300,7 +2300,7 @@ button {
 
 .ps-block--box .ps-block__header {
     padding-bottom: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
 }
 
 .ps-block--box .ps-block__header::after {

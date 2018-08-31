@@ -64,9 +64,9 @@
                                 </div>
                             </div>
                             @if(count($products))
-                            <div class="ps-block--box recommended-product">
+                            <div class="ps-block--box info recommended-product">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">recommended products</h5><!-- <a href="#">View all</a> -->
+                                    <h5><img src="img/icons/file.png" alt="">Featured products</h5><!-- <a href="#">View all</a> -->
                                 </div>
                                 <div class="ps-block__content">
                                     <div class="c-list ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="2" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
@@ -87,7 +87,7 @@
                                 </div>
                             </div>.
                             @endif
-                            <div class="ps-block--box no-border">
+                            <div class="ps-block--box info no-border">
                                 <div class="ps-block__header">
                                     <h5><img src="img/icons/file.png" alt="">All my Accounts</h5><!-- <a href="#">View all</a> -->
                                 </div>
