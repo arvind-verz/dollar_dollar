@@ -18,13 +18,16 @@
             <td>:</td>
             <td>{{$data['gender']}}</td>
         </tr>
-    @endif@if($data['dob'])
+    @endif
+
+    @if($data['dob'])
         <tr>
             <td>3. What is your date of birth?</td>
             <td>:</td>
             <td>{{$data['dob']}}</td>
         </tr>
     @endif
+
     @if($data['smoke'])
         <tr>
             <td>4. Are you a smoker?</td>
@@ -32,11 +35,12 @@
             <td>{{$data['smoke']}}</td>
         </tr>
     @endif
-    @if(count($data['times']))
+    
+    @if(count($data['time']))
         <tr>
             <td>5. One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</td>
             <td>:</td>
-            <td>{{implode(', ',$data['times']) }}</td>
+            <td>{{implode(', ',$data['time']) }}</td>
         </tr>
     @endif
     @if($data['other_value'])

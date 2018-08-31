@@ -26,11 +26,11 @@
             <td>{{$data['health_condition']}}</td>
         </tr>
     @endif
-    @if(count($data['times']))
+    @if(count($data['time']))
         <tr>
             <td>3. One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</td>
             <td>:</td>
-            <td>{{implode(', ',$data['times']) }}</td>
+            <td>{{implode(', ',$data['time']) }}</td>
         </tr>
     @endif
     @if($data['other_value'])
