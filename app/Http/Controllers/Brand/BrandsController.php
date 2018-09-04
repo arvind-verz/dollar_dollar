@@ -99,6 +99,7 @@ class BrandsController extends Controller
 
         $brand = new Brand;
         $brand->title = $request->title;
+        $brand->display = $request->display;
         $brand->view_order = $request->view_order;
         $brand->brand_link = ($request->brand_link ? $request->brand_link : '');
         $brand->brand_logo = $destinationPath . "/" . $brand_logo;
@@ -213,6 +214,7 @@ class BrandsController extends Controller
         }
         $brand->title = $request->title;
         $brand->view_order = $request->view_order;
+        $brand->display = $request->display;
         $brand->brand_link = ($request->brand_link ? $request->brand_link : '');
         $brand->updated_at = Carbon::now()->toDateTimeString();
         $brand->save();

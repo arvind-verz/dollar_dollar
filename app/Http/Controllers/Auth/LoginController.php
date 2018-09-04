@@ -144,7 +144,7 @@ class LoginController extends Controller
             $banners = \Helper::getBanners($slug);
 
             //get slug
-            $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+            $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('view_order', 'asc')->get();
         return view('frontend.user.change-password', compact("brands", "page", "systemSetting", "banners", 'ads'));
         }
     }

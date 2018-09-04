@@ -169,6 +169,7 @@ class Helper
     public static function getBrands()
     {
         $brands = Brand::where('delete_status', 0)
+            ->where('display', 1)
             ->orderBy('view_order', 'ASC')
             ->get();
         return $brands;
@@ -535,7 +536,7 @@ class Helper
             return back()->with('error', OPPS_ALERT);
         }
 
-        $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+        $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('view_order', 'asc')->get();
 
         $systemSetting = \Helper::getSystemSetting();
         if (!$systemSetting) {
