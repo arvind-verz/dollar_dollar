@@ -415,6 +415,247 @@
                     }],
 
                 });
+
+        $('#contact').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                           extend: 'pdf',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Contact '+ today;
+                            }
+                       },
+                       {
+                           extend: 'csv',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Contact '+ today;
+                            }
+                          
+                       },
+                       {
+                           extend: 'excel',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Contact '+ today;
+                            }
+                       }   
+                    ],
+                    "pageLength": 10,
+                    'ordering': true,
+                    'order': [[0, 'asc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [0],
+                        "bSortable": false,
+                    
+                    }],
+
+                });
+
+        
+        $('#life').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                           extend: 'pdf',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Life '+ today;
+                            }
+                       },
+                       {
+                           extend: 'csv',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Life '+ today;
+                            }
+                          
+                       },
+                       {
+                           extend: 'excel',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Life '+ today;
+                            }
+                       }   
+                    ],
+                    "pageLength": 10,
+                    'ordering': true,
+                    'order': [[0, 'asc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [0],
+                        "bSortable": false,
+                    
+                    }],
+
+                });
+
+        $('#health').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                           extend: 'pdf',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Health '+ today;
+                            }
+                       },
+                       {
+                           extend: 'csv',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Health '+ today;
+                            }
+                          
+                       },
+                       {
+                           extend: 'excel',
+                           footer: true,
+                           exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Health '+ today;
+                            }
+                       }   
+                    ],
+                    "pageLength": 10,
+                    'ordering': true,
+                    'order': [[0, 'asc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [0],
+                        "bSortable": false,
+                    
+                    }],
+
+                });
         $('#products').DataTable(
                 {
                     "pageLength": 10,
@@ -452,7 +693,7 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return today + '-Customers-Report';
+                                return 'Customers-Report '+ today;
                             }
                         }
                     ],
