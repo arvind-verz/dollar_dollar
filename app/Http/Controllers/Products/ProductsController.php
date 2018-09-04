@@ -47,7 +47,7 @@ class ProductsController extends Controller
         $legends = systemSettingLegendTable::where('delete_status', 0)->where('page_type', $productTypeId)->get();
         $promotion_types = \Helper::getPromotionType($productTypeId);
         $formulas = \Helper::getAllFormula($productTypeId);
-        $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
+        $banks = Brand::where('delete_status', 0)->where('display', 1)->orderBy('title', 'asc')->get();
         $productType = $this->productType($productTypeId);
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
@@ -404,7 +404,7 @@ class ProductsController extends Controller
         $productType = $this->productType($request->product_type_id);
         //dd($product->product_range);
         $formula = \Helper::productType($id);
-        $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
+        $banks = Brand::where('delete_status', 0)->where('display', 1)->orderBy('title', 'asc')->get();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
         return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));

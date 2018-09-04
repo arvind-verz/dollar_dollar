@@ -97,7 +97,7 @@ class PagesFrontController extends Controller
             $banners = \Helper::getBanners($slug);
 
 //get slug
-            $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+            $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('view_order', 'asc')->get();
 
             if ($page->is_dynamic == 1) {
 
@@ -480,7 +480,7 @@ class PagesFrontController extends Controller
         if (!$page) {
             return back()->with('error', OPPS_ALERT);
         }
-        $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+        $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('view_order', 'asc')->get();
 
         $systemSetting = \Helper::getSystemSetting();
         if (!$systemSetting) {

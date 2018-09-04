@@ -102,7 +102,7 @@
                      data-owl-item-sm="4" data-owl-item-md="6" data-owl-item-lg="8" data-owl-duration="1000"
                      data-owl-mousedrag="on">
                     @foreach($brands as $brand)
-                        <a href="{{isset($brand->brand_link) ? $brand->brand_link : '#'}}" target="_blank"
+                        <a href="{{!empty($brand->brand_link) ? $brand->brand_link : 'javascript:void(0)'}}" target="_blank"
                            class="active"><img
                                     src="{{ asset($brand->brand_logo) }}" style="padding:19px;" alt=""></a>
                     @endforeach
