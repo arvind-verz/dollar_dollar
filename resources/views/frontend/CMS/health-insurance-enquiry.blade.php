@@ -116,11 +116,9 @@
 
             </div>
             <div class="form-group">
-                <h5 class="ps-heading--3">3. One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</h5>
+                <h5 class="ps-heading--3">3. When is the best time to reach you?</h5>
 
-                <p>A representative from one of our partners will get you multiple quotes from different insurers
-                    and call you to run through your best options. I consent that a representative from one of
-                    MoneySmart's partners can contact me via phone regarding this enquiry.</p>
+                <p>One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</p>
 
                 <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="time-1" value="{{TIME_ANYTIME}}" name="time[]"
