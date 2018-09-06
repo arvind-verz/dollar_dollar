@@ -16,7 +16,7 @@
             <div class="ps-slider--home owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
                  data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1"
                  data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000"
-                 data-owl-mousedrag="on">
+                 data-owl-mousedrag="on" data-owl-animated="true">
                 @foreach($banners as $banner)
                     @if($banner->display==1 && strtotime(date('Y-m-d', strtotime('now')))<=strtotime(date('Y-m-d', strtotime($banner->banner_expiry))) && strtotime(date('Y-m-d', strtotime('now')))>=strtotime(date('Y-m-d', strtotime($banner->banner_start_date))))
                     <a href="{{ $banner->banner_link }}" target="_blank">

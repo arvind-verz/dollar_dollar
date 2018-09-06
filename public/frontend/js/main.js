@@ -115,6 +115,7 @@ function owlCarousel(element) {
                 dataNavLeft = (el.data('owl-nav-left')) ? el.data('owl-nav-left') : "<i class='fa fa-angle-left'></i>",
                 dataNavRight = (el.data('owl-nav-right')) ? el.data('owl-nav-right') : "<i class='fa fa-angle-right'></i>",
                 duration = el.data('owl-duration'),
+                animateStyle = el.data('owl-animated'),
                 datamouseDrag = (el.data('owl-mousedrag') == 'on') ? true : false;
             if (el.children.length > 1) {
                 el.owlCarousel({
@@ -135,6 +136,7 @@ function owlCarousel(element) {
                     navText: [dataNavLeft, dataNavRight],
                     dots: dataDots,
                     items: dataDefaultItem,
+                    animateOut: animateStyle,
                     responsive: {
                         0: {
                             items: dataItemXS

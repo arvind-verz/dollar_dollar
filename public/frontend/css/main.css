@@ -6004,4 +6004,13 @@ span.ps-post__meta a {
      margin-top: 38px;
 }
 
-
+.ps-dashboard .ps-dashboard__content .owl-prev{
+    margin-left: -20px; 
+}
+.ps-dashboard .ps-dashboard__content .owl-next{
+    margin-right: -20px; 
+}
+ 
+.ps-home-fixed-deposit.ps-tabs-root .productGridContainer.target-content .product-col-01:nth-child(2){
+    padding-right: 20px;
+}
