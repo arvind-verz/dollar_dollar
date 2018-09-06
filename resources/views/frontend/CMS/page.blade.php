@@ -46,9 +46,15 @@
     $pageHeading = $pageName[0];
     // $a =  array_shift($arr);
     unset($pageName[0]);
-    $redirect_url = 'life-insurance-enquiry';
+    $redirect_url = 'javascript:void(0)';
     if($page->slug=='health-insurance') {
         $redirect_url = 'health-insurance-enquiry';
+    }
+    elseif($page->slug=='life-insurance') {
+        $redirect_url = 'life-insurance-enquiry';
+    }
+    elseif($page->slug=='investment') {
+        $redirect_url = 'investment-enquiry';
     }
     $auth_check = Auth::check();
     ?>
@@ -74,6 +80,8 @@
     @if(isset($page->contact_or_offer) && isset($systemSetting->{$page->contact_or_offer}))
         {!! $systemSetting->{$page->contact_or_offer} !!}
     @endif
+
+
     {{--contact us or what we offer section end--}}
 <!-- Modal -->
 <script>

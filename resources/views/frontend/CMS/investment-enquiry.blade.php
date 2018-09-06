@@ -63,7 +63,7 @@
             @else
                 {!!  $page->contents !!}
             @endif
-            {!! Form::open(['url' => ['post-life-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['url' => ['investment-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="form-group">
                 <h5 class="ps-heading--3">1. What type of life insurance are you looking for?</h5>
 

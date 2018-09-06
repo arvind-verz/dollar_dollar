@@ -82,14 +82,21 @@
                                             <!-- <span class="suffix_k">K</span> -->
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
-                                        <div class="form-group">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="input-group form-group">
                                             <label>Tenure</label>
                                             <input type="text" class="form-control " name="tenure" value="{{ $product_management->tenure }}">
+                                            <div class="input-group-btn" style="width: 50%;">
+                                                <select class="form-control mt-30" name="tenure_calender">
+                                                    <option value="D" @if($product_management->tenure_calender=='D') selected @endif>Days</option>
+                                                    <option value="M" @if($product_management->tenure_calender=='M') selected @endif>Months</option>
+                                                    <option value="Y" @if($product_management->tenure_calender=='Y') selected @endif>Years</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     @php $product_reminder = json_decode($product_management->product_reminder);if(!$product_reminder) {$product_reminder=[];} @endphp
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder</label>
                                             <select class="form-control select2" name="reminder[]" multiple="multiple">
