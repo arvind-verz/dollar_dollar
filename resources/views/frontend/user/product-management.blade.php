@@ -161,11 +161,11 @@
                                             <tr>
                                                 <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
                                                 <td>{{ $value->account_name }}</td>
-                                                <td>{{ $value->amount }}</td>
+                                                <td>${{ $value->amount }}</td>
                                                 <td>{{ $value->tenure }}</td>
                                                 <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
                                                 <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
-                                                <td>{{ isset($value->interest_earned) ? $value->interest_earned.'%' : '-' }}</td>
+                                                <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
                                                 <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
                                                 <td>
                                                     <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>

@@ -45,7 +45,7 @@ class ProductManagementController extends Controller
         $validate = Validator::make($request->all(), [
             'bank_id' => 'required',
             'amount' => 'required|numeric',
-            'interest_earned' => 'numeric|nullable'
+            'interest_earned' => 'nullable'
         ]);
         if ($validate->fails()) {
             return redirect('product-management')
@@ -132,7 +132,7 @@ class ProductManagementController extends Controller
         $validate = Validator::make($request->all(), [
             'bank_id' => 'required',
             'amount' => 'required|numeric',
-            'interest_earned' => 'numeric|nullable'
+            'interest_earned' => 'nullable'
         ]);
         if ($validate->fails()) {
             return redirect('product-management')
