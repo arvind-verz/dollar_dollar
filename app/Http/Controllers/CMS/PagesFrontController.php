@@ -113,20 +113,28 @@ class PagesFrontController extends Controller
             $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('title', 'asc')->get();
 
             if ($page->is_dynamic == 1) {
-
+                
                 if ($slug == CONTACT_SLUG) {
                     return view('frontend.CMS.contact', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == HEALTH_INSURANCE_ENQUIRY) {
-                    $redirect_url = 'health-insurance-enquiry';
+                    $redirect_url = HEALTH_INSURANCE_ENQUIRY;
                     if (Auth::check()) {
                         return view('frontend.CMS.health-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
                     } else {
                         return view('auth.login', compact("redirect_url"));
                     }
                 } elseif ($slug == LIFE_INSURANCE_ENQUIRY) {
-                    $redirect_url = 'life-insurance-enquiry';
+                    $redirect_url = LIFE_INSURANCE_ENQUIRY;
                     if (Auth::check()) {
                         return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+                    } else {
+                        return view('auth.login', compact("redirect_url"));
+                    }
+                }elseif ($slug == INVESTMENT_ENQUIRY) {
+                    
+                    $redirect_url = INVESTMENT_ENQUIRY;
+                    if (Auth::check()) {
+                        return view('frontend.CMS.investment-enquiry', compact("brands", "page", "systemSetting", "banners"));
                     } else {
                         return view('auth.login', compact("redirect_url"));
                     }

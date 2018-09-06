@@ -124,6 +124,23 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">Page Linked to</label>
+
+                                        <div class="col-sm-10">
+
+                                            <select class="form-control select2"
+                                                    data-placeholder="Select Page Link" name="page_linked"
+                                                    style="width: 100%;">
+                                                <option value="null" selected="selected">Select Page Linked</option>
+                                                @if($allpages->count())
+                                                    @foreach($allpages as $singlepage)
+                                                        <option value="{{ $singlepage->id }}" >{{ $singlepage->name }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">Only appear after login?</label>
 
                                         <div class="col-sm-10">

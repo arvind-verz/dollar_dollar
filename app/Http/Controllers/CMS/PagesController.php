@@ -45,6 +45,7 @@ class PagesController extends Controller
     {
         $menus = Menu::where('delete_status', 0)->get();
 
+        $allpages = Page::where('delete_status', 0)->get();
         if ($menus->count()) {
             foreach ($menus as &$menu) {
                 $mainMenu = $menus->where('id', $menu->main)->first();
@@ -57,7 +58,7 @@ class PagesController extends Controller
             }
         }
 
-        return view("backend.cms.pages.create", compact("menus"));
+        return view("backend.cms.pages.create", compact("menus", 'allpages'));
     }
 
     /**

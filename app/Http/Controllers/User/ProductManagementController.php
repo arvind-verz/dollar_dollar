@@ -60,6 +60,7 @@ class ProductManagementController extends Controller
             $product_management->account_name = $request->account_name;
             $product_management->amount = $request->amount;
             $product_management->tenure = $request->tenure;
+            $product_management->tenure_calender = $request->tenure_calender;
             $product_management->product_reminder = json_encode($request->reminder);
             if ($request->start_date) {
                 $product_management->start_date = \Helper::startOfDayBefore($request->start_date);
@@ -144,6 +145,7 @@ class ProductManagementController extends Controller
             $product_management->account_name = $request->account_name;
             $product_management->amount = $request->amount;
             $product_management->tenure = $request->tenure;
+            $product_management->tenure_calender = $request->tenure_calender;
             $product_management->product_reminder = json_encode($request->reminder);
             if ($request->start_date) {
                 $product_management->start_date = \Helper::startOfDayBefore($request->start_date);

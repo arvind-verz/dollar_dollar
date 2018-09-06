@@ -82,16 +82,23 @@
                                             <!-- <span class="suffix_k">K</span> -->
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
-                                        <div class="form-group">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="input-group form-group">
                                             <label>Tenure</label>
                                             <input type="text" class="form-control " name="tenure" value="{{ old('tenure') }}">
+                                            <div class="input-group-btn" style="width: 50%;">
+                                                <select class="form-control mt-30" name="tenure_calender">
+                                                    <option value="D" selected>Days</option>
+                                                    <option value="M">Months</option>
+                                                    <option value="Y">Years</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder</label>
-                                            <select class="form-control select2" name="reminder[]" multiple="multiple">
+                                            <select class="form-control select2" name="reminder[]" multiple="multiple" style="width: 100%">
                                                 <option value="1 Day">1 Day</option>
                                                 <option value="1 Week">1 Week</option>
                                                 <option value="2 Week">2 Week</option>
@@ -142,7 +149,8 @@
                                             <th>Amount</th>
                                             <th>tenure
                                                 <br> (M= months,
-                                                <br> D = Days)</th>
+                                                <br> D = Days)
+                                                <br> Y = Years)</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Interest Earned</th>
@@ -162,7 +170,7 @@
                                                 <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
                                                 <td>{{ $value->account_name }}</td>
                                                 <td>${{ $value->amount }}</td>
-                                                <td>{{ $value->tenure }}</td>
+                                                <td>{{ $value->tenure . $value->tenure_calender }}</td>
                                                 <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
                                                 <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
                                                 <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>

@@ -72,6 +72,7 @@ Route::get('/login-status', 'User\UserFrontController@getLoginStatus')->name('us
 Route::post('/post-contact-enquiry', 'Enquiry\EnquiryFrontController@postContactEnquiry')->name('post-contact-enquiry');
 Route::post('/post-health-enquiry', 'Enquiry\EnquiryFrontController@postHealthEnquiry')->name('post-health-enquiry');
 Route::post('/post-life-enquiry', 'Enquiry\EnquiryFrontController@postLifeEnquiry')->name('post-life-enquiry');
+Route::post('/investment-enquiry', 'Enquiry\EnquiryFrontController@investmentEnquiry')->name('investment-enquiry');
 
 /*Blog module end*/
 Route::get('/get-blog-by-category/{id}', 'CMS\PagesFrontController@getBlogByCategories')->name('get-blog-by-category');
@@ -197,6 +198,9 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Blog module start*/
     Route::get('/health-insurance-enquiry/destroy/{id}', 'Enquiry\HealthInsuranceEnquiryController@destroy')->name('health-insurance-destroy');
     Route::resource('/health-insurance-enquiry', 'Enquiry\HealthInsuranceEnquiryController');
+
+    Route::get('/investment-enquiry/destroy/{id}', 'Enquiry\InvestmentEnquiryController@destroy')->name('investment-enquiry-destroy');
+    Route::resource('/investment-enquiry', 'Enquiry\InvestmentEnquiryController');
 
 
     /*Blog module end*/
