@@ -129,7 +129,7 @@
                                                             @endif
                                                         <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
                                                         <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
-                                                        <td>{{ !empty($value->tenure) ? $value->tenure : '-' }}</td>
+                                                        <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>
                                                         <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
                                                         <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
                                                         <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
