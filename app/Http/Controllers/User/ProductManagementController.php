@@ -147,6 +147,7 @@ class ProductManagementController extends Controller
             $product_management->tenure = $request->tenure;
             $product_management->tenure_calender = $request->tenure_calender;
             $product_management->product_reminder = json_encode($request->reminder);
+            $product_management->dod_reminder = isset($request->dod_reminder) ? $request->dod_reminder : 0;
             if ($request->start_date) {
                 $product_management->start_date = \Helper::startOfDayBefore($request->start_date);
             } else {

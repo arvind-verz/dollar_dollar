@@ -123,7 +123,7 @@
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                                 <div class="form-group">
                                                     <label>Do not Send Reminders</label>
-                                                    <input type="checkbox" class="form-control" name="dod_reminder" @if($product_management->dod_reminder==1) checked @endif>
+                                                    <input type="checkbox" class="form-control" name="dod_reminder" value="1" @if($product_management->dod_reminder==1) checked @endif>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,6 +147,8 @@
         </div>
     </main>
     <script type="text/javascript">
+        
+
         $("select[name='bank_id']").on("change", function() {
             var value = $(this).val();
             
@@ -180,6 +182,11 @@
                 $("select[name='reminder[]']").prop("disabled", false);
             }
         });
+
+        if($("input[name='dod_reminder']").is(":checked")!==false) {
+            $("select[name='reminder[]']").prop("disabled", true);
+            $(".select2").select2("val", " ");
+        }
     </script>
     <script type="text/javascript">
         $(document).ready( function () {
