@@ -110,13 +110,13 @@
                                             <div class="col-xs-6">
                                                 <div class="form-group">
                                                     <label>Start Date</label>
-                                                    <input class="form-control datepicker" name="start_date" type="text" placeholder="" autocomplete="off" value="{{ old('start_date') ? old('start_date') : date('Y-m-d') }}">
+                                                    <input class="form-control datepicker" name="start_date" type="text" placeholder="" autocomplete="off" value="{{ old('start_date') }}">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <div class="form-group">
                                                     <label>End Date</label>
-                                                    <input class="form-control datepicker" name="end_date" type="text" placeholder="" autocomplete="off" value="{{ old('end_date') ? old('end_date') : date('Y-m-d') }}">
+                                                    <input class="form-control datepicker" name="end_date" type="text" placeholder="" autocomplete="off" value="{{ old('end_date') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -167,14 +167,21 @@
                                                     $end_date = date("Y-m-d", strtotime($value->end_date));
                                                 @endphp
                                             <tr>
-                                                <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
-                                                <td>{{ $value->account_name }}</td>
-                                                <td>${{ $value->amount }}</td>
-                                                <td>{{ $value->tenure . $value->tenure_calender }}</td>
-                                                <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
-                                                <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
-                                                <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
-                                                <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
+                                                <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
+                                                @if(!empty($value->brand_logo))
+                                                <img src="{{ asset($value->brand_logo) }}"></td>
+                                                @elseif($value->other_bank)
+                                                {{ $value->other_bank }}
+                                                @else
+                                                -
+                                                @endif
+                                            <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
+                                            <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
+                                            <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>
+                                            <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
+                                            <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
+                                            <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
+                                            <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date))) Ongoing @else Expired @endif</td>
                                                 <td>
                                                     <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
                                                     <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>
