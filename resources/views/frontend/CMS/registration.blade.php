@@ -63,7 +63,7 @@
     @endif
     <main class="ps-main">
         <div class="container">
-            <h3 class="ps-heading mb-35"><span> Register </span> to DollarDollar.sg</h3>
+            <h3 class="ps-heading mb-35"><span> Register to DollarDollar.sg </span></h3>
 
             {!! Form::open(['route' => ['registration-add'], 'class'=>'ps-form--contact ps-form--register', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="row">
@@ -112,8 +112,11 @@
                             <label><input type="checkbox" name="adviser" checked="checked"> I would like to be informed of products, services, offers provided by dollardollar.sg and it’s business partners. I have consent to have marketing information sent to me via the various communication (SMS, voice call and emails).</label>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="ps-btn">Submit</button>
+                            <button type="submit" class="ps-btn">Sign Up</button>
                             <a class="ps-btn ps-btn--blue" href="{{ url('login/facebook') }}">Connect with Facebook</a>
+                        </div>
+                        <div class="form-group">
+                            <p>By signing up I agree to DollarDollar.sg’s <a href="{{ url('terms-of-use') }}" target="_blank">Term of Use</a> and <a href="{{ url('privacy-policy') }}" target="_blank">Privacy Policy</a></p>
                         </div>
                     </div>
                 </div>

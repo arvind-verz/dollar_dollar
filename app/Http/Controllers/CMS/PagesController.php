@@ -45,6 +45,7 @@ class PagesController extends Controller
     {
         $menus = Menu::where('delete_status', 0)->get();
 
+        $allpages = Page::where('delete_status', 0)->get();
         if ($menus->count()) {
             foreach ($menus as &$menu) {
                 $mainMenu = $menus->where('id', $menu->main)->first();
@@ -57,7 +58,7 @@ class PagesController extends Controller
             }
         }
 
-        return view("backend.cms.pages.create", compact("menus"));
+        return view("backend.cms.pages.create", compact("menus", 'allpages'));
     }
 
     /**
@@ -90,6 +91,7 @@ class PagesController extends Controller
         $page = new Page();
         $page->name = ucfirst($request->name);
         $page->title = ucfirst($request->title);
+        $page->icon = $request->icon;
         $page->slug = str_slug($request->slug);
         $page->contents = $request->contents;
         $page->meta_title = $request->meta_title;
@@ -221,6 +223,7 @@ class PagesController extends Controller
         $oldPage = $page;
         $page->name = ucfirst($request->name);
         $page->title = ucfirst($request->title);
+        $page->icon = $request->icon;
         if (isset($request->slug)) {
             $page->slug = str_slug($request->slug);
         }

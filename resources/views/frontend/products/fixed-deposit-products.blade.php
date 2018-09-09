@@ -81,9 +81,10 @@
                                                value="@if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) {{ $searchFilter['brand_id'] }} @else {{ $brand->id }} @endif"
                                                style="opacity: 0;position: absolute;"
                                                @if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) checked @endif>
-                                        <img src="{{ asset($brand->brand_logo) }}"
+                                            <a href="{{ !empty($brand->brand_link) ? $brand->brand_link : 'javascript:void(0)' }}" target="_blank"><img src="{{ asset($brand->brand_logo) }}"
                                              style="padding-right:20px; min-width: 80px;"
                                              class="brand_img  @if(!empty($searchFilter['brand_id']) && $brand->id==$searchFilter['brand_id']) selected_img @endif">
+                                             </a>
                                     </span>
                                 @endforeach
                             @endif
@@ -183,7 +184,7 @@
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
                                                     @if($product->tenure_value > 0)
-                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
                                                     @else
                                                         <strong> {{$product->promotion_period}}</strong>
                                                     @endif
@@ -207,7 +208,7 @@
 
                                             @if($product->tenure_value > 0)
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
 
                                             @else
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{$product->promotion_period}}</p>
@@ -259,7 +260,7 @@
                                                 @endif
                                                 @if($searchFilter['filter']==TENURE)
                                                     @if($product->tenure_value > 0)
-                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                                                        <strong> {{ $product->tenure_value }}</strong> @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
                                                     @else
                                                         <strong> {{$product->promotion_period}}</strong>
                                                     @endif
@@ -282,7 +283,7 @@
                                             </p>
                                             @if($product->tenure_value > 0)
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,WEALTH_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
+                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif</p>
 
                                             @else
                                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">{{$product->promotion_period}}</p>
@@ -330,7 +331,7 @@
                             <div class="close-popup">
                                 <i class="fa fa-times" aria-hidden="true"></i>
                             </div>
-                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
+                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : 'javascript:void(0)' }}"
                                target="_blank"><img
                                         src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
                                         alt=""></a>
@@ -377,7 +378,7 @@
                                 if(!empty($ads[0]->ad_image_horizontal)) {
                                 ?>
                                 <div class="ps-product__poster"><a
-                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
                                             target="_blank"><img
                                                 src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
                                                 alt=""></a></div>
@@ -434,7 +435,7 @@
                                 if(!empty($ads[1]->ad_image_vertical)) {
                                 ?>
                                 <div class="ps-product__poster">
-                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"
+                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
                                        target="_blank"><img
                                                 src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                 alt=""></a>
@@ -468,7 +469,7 @@
                                     </div>
 
                                     <a target="_blank"
-                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
+                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                 alt="" target="_blank"></a>
 
@@ -482,13 +483,13 @@
                                             class="fa fa-angle-down"></i></a></div>
                         </div>
                     </div>
-                    @if(count($products)>=3)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==3)
+                    @if(count($products)>=2)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
                                 <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
                                    target="_blank"><img
                                             src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
@@ -500,7 +501,7 @@
                                 <!-- <div class="close-popup">
                                 <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
                                    target="_blank"><img
                                             src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
@@ -536,7 +537,7 @@
                             <div class="close-popup">
                                 <i class="fa fa-times" aria-hidden="true"></i>
                             </div>
-                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' }}"
+                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : 'javascript:void(0)' }}"
                                target="_blank"><img
                                         src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
                                         alt=""></a>
@@ -582,7 +583,7 @@
                                 if(!empty($ads[0]->ad_image_horizontal)) {
                                 ?>
                                 <div class="ps-product__poster"><a
-                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : '' }}"
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
                                             target="_blank"><img
                                                 src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
                                                 alt=""></a></div>
@@ -639,7 +640,7 @@
                                 if(!empty($ads[1]->ad_image_vertical)) {
                                 ?>
                                 <div class="ps-product__poster">
-                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : '' }}"
+                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
                                        target="_blank"><img
                                                 src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                 alt=""></a>
@@ -668,7 +669,7 @@
                                     </div>
 
                                     <a target="_blank"
-                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : '#'}}"><img
+                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                 alt="" target="_blank"></a>
 
@@ -682,13 +683,13 @@
                                             class="fa fa-angle-down"></i></a></div>
                         </div>
                     </div>
-                    @if($products->count()<3 && $remainingProducts->count()>=3)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==3)
+                    @if($products->count()<2 && $remainingProducts->count()>=2)
+                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
                                 <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
                                    target="_blank"><img
                                             src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>
@@ -700,7 +701,7 @@
                                 <!-- <div class="close-popup">
                                 <i class="fa fa-times" aria-hidden="true"></i>
                                 </div> -->
-                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : '#' }}"
+                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
                                    target="_blank"><img
                                             src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
                                             alt=""></a>

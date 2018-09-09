@@ -47,7 +47,7 @@ class ProductsController extends Controller
         $legends = systemSettingLegendTable::where('delete_status', 0)->where('page_type', $productTypeId)->get();
         $promotion_types = \Helper::getPromotionType($productTypeId);
         $formulas = \Helper::getAllFormula($productTypeId);
-        $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
+        $banks = Brand::where('delete_status', 0)->where('display', 1)->orderBy('title', 'asc')->get();
         $productType = $this->productType($productTypeId);
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
@@ -164,7 +164,7 @@ class ProductsController extends Controller
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
             $product->currency = $request->currency;
         }
-        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, WEALTH_DEPOSIT_F6,FOREIGN_CURRENCY_DEPOSIT_F1])) {
+        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F6,FOREIGN_CURRENCY_DEPOSIT_F1])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
                 $legends = $request->legend;
@@ -184,13 +184,13 @@ class ProductsController extends Controller
             //dd($ranges);
             $product->tenure = $tenure;
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
             foreach ($request->min_placement_sdp1 as $k => $v) {
                 $max = $request->max_placement_sdp1;
                 $bonusInterest = $request->bonus_interest_sdp1;
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
-                if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+                if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
                     $range['tenure'] = $request->tenure_sdp1;
 
                 }
@@ -202,7 +202,7 @@ class ProductsController extends Controller
             }
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, WEALTH_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, PRIVILEGE_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
             $range['air'] = (float)$request->air_sdp3;
@@ -211,7 +211,7 @@ class ProductsController extends Controller
 
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, PRIVILEGE_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             $min = 1;
             $previousMax = 0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
@@ -229,7 +229,7 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
 
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, WEALTH_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, PRIVILEGE_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
             $range['min_range'] = (int)$request->min_placement_sdp5;
             $range['max_range'] = (int)$request->max_placement_sdp5;
             $range['base_interest'] = (float)$request->base_interest_sdp5;
@@ -249,8 +249,8 @@ class ProductsController extends Controller
             $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
             $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
             $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
-            $range['minimum_wealth_pa'] = (int)$request->minimum_wealth_pa_aioa1;
-            $range['bonus_interest_wealth'] = (float)$request->bonus_interest_wealth_aioa1;
+            $range['minimum_privilege_pa'] = (int)$request->minimum_privilege_pa_aioa1;
+            $range['bonus_interest_privilege'] = (float)$request->bonus_interest_privilege_aioa1;
             //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
             //$range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
             $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
@@ -404,7 +404,7 @@ class ProductsController extends Controller
         $productType = $this->productType($request->product_type_id);
         //dd($product->product_range);
         $formula = \Helper::productType($id);
-        $banks = Brand::where('delete_status', 0)->orderBy('title', 'asc')->get();
+        $banks = Brand::where('delete_status', 0)->where('display', 1)->orderBy('title', 'asc')->get();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
         return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
@@ -509,7 +509,7 @@ class ProductsController extends Controller
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
             $product->currency = $request->currency;
         }
-        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, WEALTH_DEPOSIT_F6,FOREIGN_CURRENCY_DEPOSIT_F1])) {
+        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F6,FOREIGN_CURRENCY_DEPOSIT_F1])) {
             foreach ($request->min_placement as $k => $v) {
                 $max = $request->max_placement;
                 $legends = $request->legend;
@@ -529,13 +529,13 @@ class ProductsController extends Controller
             //dd($ranges);
             $product->tenure = $tenure;
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
             foreach ($request->min_placement_sdp1 as $k => $v) {
                 $max = $request->max_placement_sdp1;
                 $bonusInterest = $request->bonus_interest_sdp1;
                 $boardInterest = $request->board_rate_sdp1;
                 $range = [];
-                if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+                if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
                     $range['tenure'] = $request->tenure_sdp1;
 
                 }
@@ -547,7 +547,7 @@ class ProductsController extends Controller
             }
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, WEALTH_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, PRIVILEGE_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
             $range['min_range'] = (int)$request->min_placement_sdp3;
             $range['max_range'] = (int)$request->max_placement_sdp3;
             $range['air'] = (float)$request->air_sdp3;
@@ -556,7 +556,7 @@ class ProductsController extends Controller
 
             $ranges = json_encode($ranges);
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, PRIVILEGE_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             $min = 1;
             $previousMax = 0;
             foreach ($request->max_placement_sdp4 as $k => $v) {
@@ -574,7 +574,7 @@ class ProductsController extends Controller
             $ranges = json_encode($ranges);
 
         }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, WEALTH_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
+        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, PRIVILEGE_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
             $range['min_range'] = (int)$request->min_placement_sdp5;
             $range['max_range'] = (int)$request->max_placement_sdp5;
             $range['base_interest'] = (float)$request->base_interest_sdp5;
@@ -594,8 +594,8 @@ class ProductsController extends Controller
             $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
             $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
             $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
-            $range['minimum_wealth_pa'] = (int)$request->minimum_wealth_pa_aioa1;
-            $range['bonus_interest_wealth'] = (float)$request->bonus_interest_wealth_aioa1;
+            $range['minimum_privilege_pa'] = (int)$request->minimum_privilege_pa_aioa1;
+            $range['bonus_interest_privilege'] = (float)$request->bonus_interest_privilege_aioa1;
             //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
             //$range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
             $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
@@ -1121,7 +1121,7 @@ class ProductsController extends Controller
 
     public function addMorePlacementRange(Request $request)
     {
-        if (in_array($request->formula, [FIX_DEPOSIT_F1, WEALTH_DEPOSIT_F6, FOREIGN_CURRENCY_DEPOSIT_F1])) {
+        if (in_array($request->formula, [FIX_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F6, FOREIGN_CURRENCY_DEPOSIT_F1])) {
             $tenure = $request->detail;
             $productType = $request->product_type;
 
@@ -1233,7 +1233,7 @@ class ProductsController extends Controller
                     <div id="new-formula-detail-<?php echo $request->range_id; ?>"></div>
                 </div>
             <?php }
-        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, WEALTH_DEPOSIT_F1, WEALTH_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
             ?>
             <div id="saving_placement_range_f1_<?php echo $request->range_id; ?>">
                 <div class="form-group">
@@ -1305,7 +1305,7 @@ class ProductsController extends Controller
                 </div>
             </div>
             <?php
-        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F4, WEALTH_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+        } elseif (in_array($request->formula, [SAVING_DEPOSIT_F4, PRIVILEGE_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
             ?>
             <div id="placement_range_<?php echo $request->range_id; ?>">
                 <div class="form-group">
@@ -1600,8 +1600,8 @@ class ProductsController extends Controller
             $productType = ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE;
         } elseif ($productTypeId == FOREIGN_CURRENCY_DEPOSIT) {
             $productType = FOREIGN_CURRENCY_DEPOSIT_MODULE;
-        } elseif ($productTypeId == WEALTH_DEPOSIT) {
-            $productType = WEALTH_DEPOSIT_MODULE;
+        } elseif ($productTypeId == PRIVILEGE_DEPOSIT) {
+            $productType = PRIVILEGE_DEPOSIT_MODULE;
         } else {
             $productType = FIX_DEPOSIT_MODULE;
         }
@@ -1627,7 +1627,7 @@ class ProductsController extends Controller
             $validate['salary'] = 'required';
             $validate['payment'] = 'required';
             $validate['spend'] = 'required';
-            $validate['wealth'] = 'required';
+            $validate['privilege'] = 'required';
             $validate['loan'] = 'required';
         }
 
@@ -1648,7 +1648,7 @@ class ProductsController extends Controller
             $defaultSearch->salary = $request->salary;
             $defaultSearch->payment = $request->payment;
             $defaultSearch->spend = $request->spend;
-            $defaultSearch->wealth = $request->wealth;
+            $defaultSearch->privilege = $request->privilege;
             $defaultSearch->loan = $request->loan;
         }
         $defaultSearch->save();
@@ -1676,7 +1676,7 @@ class ProductsController extends Controller
             $validate['salary'] = 'required';
             $validate['payment'] = 'required';
             $validate['spend'] = 'required';
-            $validate['wealth'] = 'required';
+            $validate['privilege'] = 'required';
             $validate['loan'] = 'required';
         }
 
@@ -1696,7 +1696,7 @@ class ProductsController extends Controller
             $toolTips->salary = $request->salary;
             $toolTips->payment = $request->payment;
             $toolTips->spend = $request->spend;
-            $toolTips->wealth = $request->wealth;
+            $toolTips->privilege = $request->privilege;
             $toolTips->loan = $request->loan;
         }
         $toolTips->save();

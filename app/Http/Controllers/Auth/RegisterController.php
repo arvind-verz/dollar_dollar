@@ -143,7 +143,7 @@ class RegisterController extends Controller
                 $banners = \Helper::getBanners($slug);
 
                 //get slug
-                $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+                $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('view_order', 'asc')->get();
             }
             $notification = 1;
             $email_notification = $adviser = 0;
@@ -218,7 +218,7 @@ class RegisterController extends Controller
             $banners = \Helper::getBanners($slug);
 
 //get slug
-            $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+            $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('view_order', 'asc')->get();
         return view('frontend.CMS.registration', compact("redirect_url", "brands", "page", "systemSetting", "banners"));
         }
     }

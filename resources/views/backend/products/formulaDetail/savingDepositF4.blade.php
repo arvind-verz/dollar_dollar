@@ -1,5 +1,5 @@
 <div class="display-none" id="savingDepositF4">
-    @if(isset($product) && (in_array($product->formula_id,[SAVING_DEPOSIT_F4,  WEALTH_DEPOSIT_F4,  FOREIGN_CURRENCY_DEPOSIT_F5])))
+    @if(isset($product) && (in_array($product->formula_id,[SAVING_DEPOSIT_F4,  PRIVILEGE_DEPOSIT_F4,  FOREIGN_CURRENCY_DEPOSIT_F5])))
 
         @if(count($product->product_range))
             <?php $prevMax = 0 ?>

@@ -18,7 +18,7 @@ class CreateToolTipsTable extends Migration
             $table->string('salary')->nullable();
             $table->string('payment')->nullable();
             $table->string('spend')->nullable();
-            $table->string('wealth')->nullable();
+            $table->string('privilege')->nullable();
             $table->string('loan')->nullable();
             $table->timestamps();
         });

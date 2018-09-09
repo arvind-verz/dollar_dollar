@@ -2300,7 +2300,7 @@ button {
 
 .ps-block--box .ps-block__header {
     padding-bottom: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
 }
 
 .ps-block--box .ps-block__header::after {
@@ -5987,4 +5987,30 @@ span.ps-post__meta a {
      margin-bottom: 30px;
  }
  
+}
+
+.ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content{
+ display: none;
+}
+.ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content:first-child{
+ display: block;
+}
+
+.ps-page--deposit .product-row-01 .product-col-01:first-child{
+ padding-right: 0;
+}
+
+.form-group.recaptcha{
+     margin-top: 38px;
+}
+
+.ps-dashboard .ps-dashboard__content .owl-prev{
+    margin-left: -20px; 
+}
+.ps-dashboard .ps-dashboard__content .owl-next{
+    margin-right: -20px; 
+}
+ 
+.ps-home-fixed-deposit.ps-tabs-root .productGridContainer.target-content .product-col-01:nth-child(2){
+    padding-right: 20px;
 }

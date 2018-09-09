@@ -64,9 +64,9 @@
                                 </div>
                             </div>
                             @if(count($products))
-                            <div class="ps-block--box recommended-product">
+                            <div class="ps-block--box info recommended-product">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">recommended products</h5><!-- <a href="#">View all</a> -->
+                                    <h5><img src="img/icons/file.png" alt="">Featured products</h5><!-- <a href="#">View all</a> -->
                                 </div>
                                 <div class="ps-block__content">
                                     <div class="c-list ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="2" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
@@ -80,14 +80,14 @@
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}</p>
                                                 <p class="highlight">{{ $product->promotion_period }}
                                                                 {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
-                                            </div><a class="ps-btn" href="@if($product->promotion_type_id==1) fixed-deposit-mode @elseif($product->promotion_type_id==2) saving-deposit-mode @elseif($product->promotion_type_id==3) all-in-one-deposit-mode @elseif($product->promotion_type_id==4) wealth-deposit-mode @elseif($product->promotion_type_id==5) foreign-currency-deposit-mode @endif">More info</a>
+                                            </div><a class="ps-btn" href="@if($product->promotion_type_id==1) fixed-deposit-mode @elseif($product->promotion_type_id==2) saving-deposit-mode @elseif($product->promotion_type_id==3) all-in-one-deposit-mode @elseif($product->promotion_type_id==4) privilege-deposit-mode @elseif($product->promotion_type_id==5) foreign-currency-deposit-mode @endif">More info</a>
                                         </div>
                                         @endforeach
                                     </div>
                                 </div>
                             </div>.
                             @endif
-                            <div class="ps-block--box no-border">
+                            <div class="ps-block--box info no-border">
                                 <div class="ps-block__header">
                                     <h5><img src="img/icons/file.png" alt="">All my Accounts</h5><!-- <a href="#">View all</a> -->
                                 </div>
@@ -122,16 +122,18 @@
                                                         <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
                                                             @if(!empty($value->brand_logo))
                                                             <img src="{{ asset($value->brand_logo) }}"></td>
-                                                            @else
+                                                            @elseif($value->other_bank)
                                                             {{ $value->other_bank }}
+                                                            @else
+                                                            -
                                                             @endif
-                                                        <td>{{ $value->account_name }}</td>
-                                                        <td>{{ $value->amount }}</td>
-                                                        <td>{{ $value->tenure }}</td>
-                                                        <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
-                                                        <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
+                                                        <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
+                                                        <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
+                                                        <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>
+                                                        <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
+                                                        <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
                                                         <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
-                                                        <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
+                                                        <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date))) Ongoing @else Expired @endif</td>
                                                         <td>
                                                             <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
                                                             <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>

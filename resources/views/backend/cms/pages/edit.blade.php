@@ -42,6 +42,12 @@
                                             {{Form::text('name', $page->name, ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        {{Form::label('icon', 'Icon',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('icon', $page->icon, ['class' => 'form-control iconpicker', 'placeholder' => '', 'autocomplete'    =>  'off'])}}
+                                        </div>
+                                    </div>
                                     @if( !in_array($page->slug,[HOME_SLUG , BLOG_SLUG]) )
                                         <div class="form-group">
                                             {{Form::label('contents', 'Contents',['class'=>'col-sm-2 control-label'])}}

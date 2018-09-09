@@ -43,6 +43,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        {{Form::label('icon', 'Icon',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-10">
+                                            {{Form::text('icon', old('icon'), ['class' => 'form-control iconpicker', 'placeholder' => ''])}}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         {{Form::label('contents', 'Contents',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::textarea('contents', old('contents'), ['id' => 'article-ckeditor', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
@@ -112,6 +118,23 @@
                                                 @if($menus->count())
                                                     @foreach($menus as $singleMenu)
                                                         <option value="{{ $singleMenu->id }}">{{ $singleMenu->title.' ('.$singleMenu->parent_menu.')' }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Page Linked to</label>
+
+                                        <div class="col-sm-10">
+
+                                            <select class="form-control select2"
+                                                    data-placeholder="Select Page Link" name="page_linked"
+                                                    style="width: 100%;">
+                                                <option value="null" selected="selected">Select Page Linked</option>
+                                                @if($allpages->count())
+                                                    @foreach($allpages as $singlepage)
+                                                        <option value="{{ $singlepage->id }}" >{{ $singlepage->name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>

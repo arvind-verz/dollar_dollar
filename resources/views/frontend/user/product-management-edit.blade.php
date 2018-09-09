@@ -82,14 +82,21 @@
                                             <!-- <span class="suffix_k">K</span> -->
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
-                                        <div class="form-group">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="input-group form-group">
                                             <label>Tenure</label>
                                             <input type="text" class="form-control " name="tenure" value="{{ $product_management->tenure }}">
+                                            <div class="input-group-btn" style="width: 50%;">
+                                                <select class="form-control mt-30" name="tenure_calender">
+                                                    <option value="D" @if($product_management->tenure_calender=='D') selected @endif>Days</option>
+                                                    <option value="M" @if($product_management->tenure_calender=='M') selected @endif>Months</option>
+                                                    <option value="Y" @if($product_management->tenure_calender=='Y') selected @endif>Years</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     @php $product_reminder = json_decode($product_management->product_reminder);if(!$product_reminder) {$product_reminder=[];} @endphp
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder</label>
                                             <select class="form-control select2" name="reminder[]" multiple="multiple">
@@ -115,8 +122,8 @@
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                                 <div class="form-group">
-                                                    <label>Don’t Send Reminders</label>
-                                                    <input type="checkbox" class="form-control" name="dod_reminder" @if($product_management->dod_reminder==1) checked @endif>
+                                                    <label>Do not Send Reminders</label>
+                                                    <input type="checkbox" class="form-control" name="dod_reminder" value="1" @if($product_management->dod_reminder==1) checked @endif>
                                                 </div>
                                             </div>
                                         </div>
@@ -140,6 +147,8 @@
         </div>
     </main>
     <script type="text/javascript">
+        
+
         $("select[name='bank_id']").on("change", function() {
             var value = $(this).val();
             
@@ -173,6 +182,11 @@
                 $("select[name='reminder[]']").prop("disabled", false);
             }
         });
+
+        if($("input[name='dod_reminder']").is(":checked")!==false) {
+            $("select[name='reminder[]']").prop("disabled", true);
+            $(".select2").select2("val", " ");
+        }
     </script>
     <script type="text/javascript">
         $(document).ready( function () {

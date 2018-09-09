@@ -82,16 +82,23 @@
                                             <!-- <span class="suffix_k">K</span> -->
                                         </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
-                                        <div class="form-group">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="input-group form-group">
                                             <label>Tenure</label>
                                             <input type="text" class="form-control " name="tenure" value="{{ old('tenure') }}">
+                                            <div class="input-group-btn" style="width: 50%;">
+                                                <select class="form-control mt-30" name="tenure_calender">
+                                                    <option value="D" selected>Days</option>
+                                                    <option value="M">Months</option>
+                                                    <option value="Y">Years</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder</label>
-                                            <select class="form-control select2" name="reminder[]" multiple="multiple">
+                                            <select class="form-control select2" name="reminder[]" multiple="multiple" style="width: 100%">
                                                 <option value="1 Day">1 Day</option>
                                                 <option value="1 Week">1 Week</option>
                                                 <option value="2 Week">2 Week</option>
@@ -122,7 +129,7 @@
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                         <div class="form-group">
-                                            <label>Don’t Send Reminders</label>
+                                            <label>Do not Send Reminders</label>
                                             <input type="checkbox" class="form-control" name="dod_reminder" @if(old('dod_reminder')==1) checked @endif>
                                         </div>
                                     </div>
@@ -142,7 +149,8 @@
                                             <th>Amount</th>
                                             <th>tenure
                                                 <br> (M= months,
-                                                <br> D = Days)</th>
+                                                <br> D = Days)
+                                                <br> Y = Years)</th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                             <th>Interest Earned</th>
@@ -159,14 +167,21 @@
                                                     $end_date = date("Y-m-d", strtotime($value->end_date));
                                                 @endphp
                                             <tr>
-                                                <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
-                                                <td>{{ $value->account_name }}</td>
-                                                <td>{{ $value->amount }}</td>
-                                                <td>{{ $value->tenure }}</td>
-                                                <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
-                                                <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
-                                                <td>{{ isset($value->interest_earned) ? $value->interest_earned.'%' : '-' }}</td>
-                                                <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
+                                                <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
+                                                @if(!empty($value->brand_logo))
+                                                <img src="{{ asset($value->brand_logo) }}"></td>
+                                                @elseif($value->other_bank)
+                                                {{ $value->other_bank }}
+                                                @else
+                                                -
+                                                @endif
+                                            <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
+                                            <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
+                                            <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>
+                                            <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
+                                            <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
+                                            <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
+                                            <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date))) Ongoing @else Expired @endif</td>
                                                 <td>
                                                     <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
                                                     <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>

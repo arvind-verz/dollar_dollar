@@ -169,6 +169,7 @@ class Helper
     public static function getBrands()
     {
         $brands = Brand::where('delete_status', 0)
+            ->where('display', 1)
             ->orderBy('view_order', 'ASC')
             ->get();
         return $brands;
@@ -535,7 +536,7 @@ class Helper
             return back()->with('error', OPPS_ALERT);
         }
 
-        $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+        $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('view_order', 'asc')->get();
 
         $systemSetting = \Helper::getSystemSetting();
         if (!$systemSetting) {
@@ -557,7 +558,17 @@ class Helper
     public static function inThousand($amount)
     {
         //dd($amount);
-        if ($amount > 999) {
+        if ($amount > 999999) {
+            $amount = $amount / 1000000;
+            $intVal = intval($amount);
+            if (($amount - $intVal) > 0) {
+                $amount = number_format((float)$amount, 2, '.', '').'M';
+            }else{
+                $amount = $intVal.'M';
+            }
+
+        }
+        elseif ($amount > 999) {
             $amount = $amount / 1000;
             $intVal = intval($amount);
             if (($amount - $intVal) > 0) {

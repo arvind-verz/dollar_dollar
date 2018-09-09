@@ -6,9 +6,11 @@ use App\ContactEnquiry;
 use App\HealthInsuranceEnquiry;
 use App\Http\Controllers\Controller;
 use App\LifeInsuranceEnquiry;
+use App\InvestmentEnquiry;
 use App\Mail\ContactEnquiryMail;
 use App\Mail\HealthEnquiryMail;
 use App\Mail\LifeEnquiryMail;
+use App\Mail\InvestmentEnquiryMail;
 use App\User;
 use Auth;
 use Exception;
@@ -159,6 +161,7 @@ class EnquiryFrontController extends Controller
 
         $healthInsuranceEnquiry->coverage = $request->coverage;
         $healthInsuranceEnquiry->level = $request->level;
+        $healthInsuranceEnquiry->health_condition = $request->health_condition;
         $times = [];
         if (isset($request->time)) {
             $times = $request->time;
@@ -182,9 +185,9 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            //Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
+            Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
         } catch (Exception $exception) {
-
+            //dd($exception);
             return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
@@ -250,10 +253,78 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
+            Mail::to(ADMIN_EMAIL)->send(new LifeEnquiryMail($data));
         } catch (Exception $exception) {
-
+            
             return redirect(url(LIFE_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+        }
+        return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+    }
+
+    public function investmentEnquiry(Request $request)
+    {
+        //dd($request->all());
+        //check validation
+        $fields = [
+            'components' => 'required',
+            'gender' => 'required|max:255',
+            'dob' => 'required|max:255',
+            'smoke' => 'required|max:255',
+            'time' => 'required',
+            'full_name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'country_code' => 'required|max:255',
+            'telephone' => 'required|max:255',
+
+        ];
+
+        if (isset($request->time)) {
+            if (in_array("Other", $request->time)) {
+                $fields ['other_value'] = 'required';
+            }
+        }
+        $validator = Validator::make($request->all(), $fields);
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
+        $data = $request->all();
+
+        $investmentEnquiry = new InvestmentEnquiry();
+        $components = [];
+        if (isset($request->components)) {
+            $components = $request->components;
+        }
+        $investmentEnquiry->components = serialize($components);
+        $investmentEnquiry->gender = $request->gender;
+        $investmentEnquiry->dob = date("Y-m-d", strtotime($request->dob));
+        $investmentEnquiry->smoke = $request->smoke;
+        $times = [];
+        if (isset($request->time)) {
+            $times = $request->time;
+        }
+        $investmentEnquiry->times = serialize($times);
+        $investmentEnquiry->other_value = $request->other_value;
+        $investmentEnquiry->full_name = $request->full_name;
+        $investmentEnquiry->email = $request->email;
+        $investmentEnquiry->country_code = $request->country_code;
+        $investmentEnquiry->telephone = $request->telephone;
+
+        $investmentEnquiry->save();
+
+        if(Auth::user()->email==$request->email) {
+            $user = User::find(Auth::user()->id);
+
+            $user->country_code = $request->country_code;
+            $user->tel_phone = $request->telephone;
+
+            $user->save();
+        }
+
+        try {
+            Mail::to(ADMIN_EMAIL)->send(new InvestmentEnquiryMail($data));
+        } catch (Exception $exception) {
+            
+            return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
     }

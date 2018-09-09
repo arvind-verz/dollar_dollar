@@ -32,16 +32,16 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="pages" class="table ">
+                                        <table id="health" class="table ">
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
                                                 <th>Full name</th>
                                                 <th>Email</th>
                                                 <th>Contact number</th>
-                                                <th>1. What level of coverage would you like?</th>
-                                                <th>2. What level of coverage would you like?</th>
-                                                <th>3. When is the best time to reach you?</th>
+                                                <th>1. type of coverage...</th>
+                                                <th>2. existing health...</th>
+                                                <th>3. best time to reach...</th>
                                                 <th>Other</th>
                                                 <th>Created on</th>
                                                 <th>Action</th>

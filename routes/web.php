@@ -72,6 +72,7 @@ Route::get('/login-status', 'User\UserFrontController@getLoginStatus')->name('us
 Route::post('/post-contact-enquiry', 'Enquiry\EnquiryFrontController@postContactEnquiry')->name('post-contact-enquiry');
 Route::post('/post-health-enquiry', 'Enquiry\EnquiryFrontController@postHealthEnquiry')->name('post-health-enquiry');
 Route::post('/post-life-enquiry', 'Enquiry\EnquiryFrontController@postLifeEnquiry')->name('post-life-enquiry');
+Route::post('/investment-enquiry', 'Enquiry\EnquiryFrontController@investmentEnquiry')->name('investment-enquiry');
 
 /*Blog module end*/
 Route::get('/get-blog-by-category/{id}', 'CMS\PagesFrontController@getBlogByCategories')->name('get-blog-by-category');
@@ -198,6 +199,9 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/health-insurance-enquiry/destroy/{id}', 'Enquiry\HealthInsuranceEnquiryController@destroy')->name('health-insurance-destroy');
     Route::resource('/health-insurance-enquiry', 'Enquiry\HealthInsuranceEnquiryController');
 
+    Route::get('/investment-enquiry/destroy/{id}', 'Enquiry\InvestmentEnquiryController@destroy')->name('investment-enquiry-destroy');
+    Route::resource('/investment-enquiry', 'Enquiry\InvestmentEnquiryController');
+
 
     /*Blog module end*/
 
@@ -284,13 +288,13 @@ Route::post('product-management/store', 'User\ProductManagementController@store'
 Route::get('product-management/delete/{id}', 'User\ProductManagementController@destroy')->name('product-management.delete');
 
 /* ACCOUNT INFORMATION */
-Route::get('/account-information/edit/{id}', 'User\AccountInformationController@edit')->name('account-information.edit');
+Route::get('/account-information/edit/{id}/{location}', 'User\AccountInformationController@edit')->name('account-information.edit');
 Route::post('/account-information/update/{id}', 'User\AccountInformationController@update')->name('account-information.update');
 
 Route::post('/fixed-deposit-mode/search/', 'CMS\PagesFrontController@search_fixed_deposit')->name('fixed-deposit-mode.search');
 Route::post('/saving-deposit-mode/search/', 'CMS\PagesFrontController@search_saving_deposit')->name('saving-deposit-mode.search');
 Route::get('/saving-deposit-mode/search/', 'CMS\PagesFrontController@savingDepositMode');
-Route::post('/wealth-deposit-mode/search/', 'CMS\PagesFrontController@search_wealth_deposit')->name('wealth-deposit-mode.search');
+Route::post('/privilege-deposit-mode/search/', 'CMS\PagesFrontController@search_privilege_deposit')->name('privilege-deposit-mode.search');
 Route::post('/foreign-currency-deposit-mode/search/', 'CMS\PagesFrontController@search_foreign_currency_deposit')->name('foreign-currency-deposit-mode.search');
 Route::post('/aioa-deposit-mode/search/', 'CMS\PagesFrontController@search_aioa_deposit')->name('aioa-deposit-mode.search');
 Route::get('/aioa-deposit-mode/search/', 'CMS\PagesFrontController@aioDepositMode');

@@ -115,6 +115,7 @@ function owlCarousel(element) {
                 dataNavLeft = (el.data('owl-nav-left')) ? el.data('owl-nav-left') : "<i class='fa fa-angle-left'></i>",
                 dataNavRight = (el.data('owl-nav-right')) ? el.data('owl-nav-right') : "<i class='fa fa-angle-right'></i>",
                 duration = el.data('owl-duration'),
+                animateStyle = el.data('owl-animated'),
                 datamouseDrag = (el.data('owl-mousedrag') == 'on') ? true : false;
             if (el.children.length > 1) {
                 el.owlCarousel({
@@ -135,6 +136,7 @@ function owlCarousel(element) {
                     navText: [dataNavLeft, dataNavRight],
                     dots: dataDots,
                     items: dataDefaultItem,
+                    animateOut: animateStyle,
                     responsive: {
                         0: {
                             items: dataItemXS
@@ -281,7 +283,9 @@ $(".search_type").on("click", function () {
 
 });
 $(".sort-by").on("change", function () {
-    document.getElementById('search-form').submit();
+    if($(this).val()!=='') {
+        document.getElementById('search-form').submit();
+    }
 
 });
 $(".currency").on("change", function () {
@@ -356,5 +360,11 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("body").on("click", ".menu--mobile > li.menu-item-has-children",function(){
         $(this).children(".sub-menu").slideToggle();
+    });
+
+    $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-block--product-info .ps-block__content .ps-block__more").click(function(){
+        var n = $(this).attr("href").replace("#","");
+        $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content").css("display", "none");
+        $(".ps-criteria-detail__content#" + n).css("display", "block");
     })
 });

@@ -34,7 +34,17 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
+                        <div class="form-group col-md-2 bulk_status hide">
+                          <span class="badge"></span>
+                          <select class="form-control" name="select_type">
+                            <option value="">-- Select --</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                          </select>
+                        </div> 
+                        <input type="hidden" name="bulk_remove_type" value="bulk_brand_remove">
+                        <input type="hidden" name="bulk_update_type" value="bulk_brand_status_update">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>
@@ -43,6 +53,7 @@
                                         <table id="brands" class="table ">
                                             <thead>
                                             <tr>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete/Update</th>
                                                 <th>Title</th>
                                                 <th>Link</th>
                                                 <th>Target</th>
@@ -57,6 +68,9 @@
                                             @if($brands->count())
                                                 @foreach($brands as $brand)
                                                     <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="bluk_remove[]" value="{{ $brand->id }}">
+                                                        </td>
                                                         <td>
                                                             {{ $brand->title }}
                                                         </td>

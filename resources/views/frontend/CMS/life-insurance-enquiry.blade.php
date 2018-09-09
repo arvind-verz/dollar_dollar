@@ -56,7 +56,7 @@
             {{--Page content start--}}
             @if($page->slug!=THANK_SLUG)
                         <h3 class="ps-heading mb-35">
-                            <span><i class="fa fa-umbrella"></i> {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                            <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
                         </h3>
 
                         {!!  $page->contents !!}
@@ -65,7 +65,7 @@
             @endif
             {!! Form::open(['url' => ['post-life-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="form-group">
-                <h5 class="ps-heading--3">1. What components of life insurance are you interested in?</h5>
+                <h5 class="ps-heading--3">1. What type of life insurance are you looking for?</h5>
 
                 <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="component-1" value="{{COMPONENTS_PROTECTION}}"
@@ -74,16 +74,16 @@
                     <label for="component-1">{{COMPONENTS_PROTECTION}}</label>
                 </div>
                 <div class="ps-checkbox ps-checkbox--inline">
-                    <input class="form-control" type="checkbox" id="component-2" value="{{COMPONENTS_INVESTMENT}}"
-                           name="components[]"
-                    @if (!is_null(old('components'))) {{ in_array(COMPONENTS_INVESTMENT,old('components'))? "CHECKED" : "" }} @endif/>
-                    <label for="component-2">{{COMPONENTS_INVESTMENT}}</label>
-                </div>
-                <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="component-3" value="{{COMPONENTS_SAVING}}"
                            name="components[]"
                     @if (!is_null(old('components'))) {{ in_array(COMPONENTS_SAVING,old('components'))? "CHECKED" : "" }} @endif/>
                     <label for="component-3">{{COMPONENTS_SAVING}}</label>
+                </div>
+                <div class="ps-checkbox ps-checkbox--inline">
+                    <input class="form-control" type="checkbox" id="component-2" value="{{COMPONENTS_INVESTMENT}}"
+                           name="components[]"
+                    @if (!is_null(old('components'))) {{ in_array(COMPONENTS_INVESTMENT,old('components'))? "CHECKED" : "" }} @endif/>
+                    <label for="component-2">{{COMPONENTS_INVESTMENT}}</label>
                 </div>
                 @if ($errors->has('components'))
                     <span class="text-danger">
@@ -144,11 +144,9 @@
                 @endif
             </div>
             <div class="form-group">
-                <h5 class="ps-heading--3">5. What is the best time to contact you?</h5>
+                <h5 class="ps-heading--3">5. When is the best time to reach you?</h5>
 
-                <p>A representative from one of our partners will get you multiple quotes from different insurers
-                    and call you to run through your best options. I consent that a representative from ?one of
-                    MoneySmart’s partners? can contact me via phone regarding this enquiry.</p>
+                <p>One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</p>
 
                 <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="time-1" value="{{TIME_ANYTIME}}" name="time[]"
@@ -226,7 +224,7 @@
                         <div class="form-icon"><i class="fa fa-globe"></i>
                             <input class="form-control" type="text" placeholder="+65" name="country_code"
                                    value="{{ old('country_code') ? old('country_code') : (Auth::user()->country_code) ? Auth::user()->country_code : '+65' }}">
-                                   <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id]) }}">Edit Info</a>
+                                   <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit Info</a>
                         </div>
                         @if ($errors->has('country_code'))
                             <span class="text-danger">

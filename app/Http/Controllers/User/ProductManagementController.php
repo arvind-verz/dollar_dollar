@@ -10,6 +10,7 @@ use App\Page;
 use App\Brand;
 use Auth;
 use App\AdsManagement;
+use Route;
 
 class ProductManagementController extends Controller
 {
@@ -44,7 +45,7 @@ class ProductManagementController extends Controller
         $validate = Validator::make($request->all(), [
             'bank_id' => 'required',
             'amount' => 'required|numeric',
-            'interest_earned' => 'numeric|nullable'
+            'interest_earned' => 'nullable'
         ]);
         if ($validate->fails()) {
             return redirect('product-management')
@@ -59,6 +60,7 @@ class ProductManagementController extends Controller
             $product_management->account_name = $request->account_name;
             $product_management->amount = $request->amount;
             $product_management->tenure = $request->tenure;
+            $product_management->tenure_calender = $request->tenure_calender;
             $product_management->product_reminder = json_encode($request->reminder);
             if ($request->start_date) {
                 $product_management->start_date = \Helper::startOfDayBefore($request->start_date);
@@ -95,6 +97,7 @@ class ProductManagementController extends Controller
      */
     public function edit($id)
     {
+        //dd(Route::current());
         $ads = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
                     ->where('page', 'account')
@@ -108,7 +111,7 @@ class ProductManagementController extends Controller
             ->select('pages.*', 'menus.title as menu_title', 'menus.id as menu_id')
             ->first();
 
-        $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
+        $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('title', 'asc')->get();
 
         $product_management = ProductManagement::find($id);
         //dd($product_management);
@@ -130,7 +133,7 @@ class ProductManagementController extends Controller
         $validate = Validator::make($request->all(), [
             'bank_id' => 'required',
             'amount' => 'required|numeric',
-            'interest_earned' => 'numeric|nullable'
+            'interest_earned' => 'nullable'
         ]);
         if ($validate->fails()) {
             return redirect('product-management')
@@ -142,7 +145,9 @@ class ProductManagementController extends Controller
             $product_management->account_name = $request->account_name;
             $product_management->amount = $request->amount;
             $product_management->tenure = $request->tenure;
+            $product_management->tenure_calender = $request->tenure_calender;
             $product_management->product_reminder = json_encode($request->reminder);
+            $product_management->dod_reminder = isset($request->dod_reminder) ? $request->dod_reminder : 0;
             if ($request->start_date) {
                 $product_management->start_date = \Helper::startOfDayBefore($request->start_date);
             } else {
@@ -156,7 +161,7 @@ class ProductManagementController extends Controller
             $product_management->interest_earned = $request->interest_earned;
             $product_management->save();
         }
-        return back()->with('success', 'Data ' . UPDATED_ALERT);
+        return redirect('product-management')->with('success', 'Data ' . UPDATED_ALERT);
     }
 
     /**

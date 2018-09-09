@@ -62,7 +62,7 @@ class AccountInformationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, $location=NULL)
     {
         $ads = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
@@ -96,8 +96,8 @@ class AccountInformationController extends Controller
             $banners = \Helper::getBanners($slug);
 
             //get slug
-            $brands = Brand::where('delete_status', 0)->orderBy('view_order', 'asc')->get();
-        return view('frontend.user.account-information-edit', compact("brands", "page", "systemSetting", "banners", 'ads'));
+            $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('view_order', 'asc')->get();
+        return view('frontend.user.account-information-edit', compact("brands", "page", "systemSetting", "banners", 'ads', 'location'));
         }
     }
 
@@ -138,7 +138,12 @@ class AccountInformationController extends Controller
             $account_information->adviser     =   $adviser;
             $account_information->save();
         }
-        return redirect('account-information')->with('success', 'Data ' . UPDATED_ALERT);
+        if(!empty($request->location)) {
+            return redirect($request->location)->with('success', 'Data ' . UPDATED_ALERT);
+        }
+        else {
+            return redirect('account-information')->with('success', 'Data ' . UPDATED_ALERT);
+        }
     }
 
     /**

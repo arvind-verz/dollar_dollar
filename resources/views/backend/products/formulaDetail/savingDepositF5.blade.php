@@ -1,5 +1,5 @@
 <div class="display-none" id="savingDepositF5">
-    @if(isset($product) && (in_array($product->formula_id,[SAVING_DEPOSIT_F5,WEALTH_DEPOSIT_F5,FOREIGN_CURRENCY_DEPOSIT_F6])))
+    @if(isset($product) && (in_array($product->formula_id,[SAVING_DEPOSIT_F5,PRIVILEGE_DEPOSIT_F5,FOREIGN_CURRENCY_DEPOSIT_F6])))
         @if(count($product->product_range))
             <?php //dd(old('min_placement')[0]); ?>
             @foreach($product->product_range as $key => $value)

@@ -14,6 +14,7 @@ use App\ContactEnquiry;
 use App\HealthInsuranceEnquiry;
 use App\LifeInsuranceEnquiry;
 use App\PromotionProducts;
+use App\Brand;
 use Illuminate\Support\Facades\DB;
 use App\Mail\UpdateDetailNotify;
 use Illuminate\Support\Facades\Mail;
@@ -463,6 +464,16 @@ class UsersController extends Controller
                         $users->status = 1;
                     } else {
                         $users->status = 0;
+                    }
+                }elseif ($type == 'bulk_brand_remove') {
+                    $users = Brand::find($id);
+                    $users->delete_status = 1;
+                } elseif ($type == 'bulk_brand_status_update') {
+                    $users = Brand::find($id);
+                    if ($select_type == 'active') {
+                        $users->display = 1;
+                    } else {
+                        $users->display = 0;
                     }
                 } elseif ($type == 'bulk_enquiry_remove') {
                     $users = ContactEnquiry::find($id);
