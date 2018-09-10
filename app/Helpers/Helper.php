@@ -15,6 +15,7 @@ use App\Blog;
 use App\Tag;
 use App\Page;
 use App\PromotionProducts;
+use App\ProductManagement;
 use App\PromotionTypes;
 use App\PromotionFormula;
 Use Carbon\Carbon;
@@ -691,6 +692,48 @@ class Helper
         }
        // $products = $products->sortByDesc('featured');
         return $products;
+    }
+
+
+    public static function getCustomerReportData($id)
+    {
+        DB::connection()->enableQueryLog();
+        $customer_reports = ProductManagement::join('users', 'product_managements.user_id', '=', 'users.id')
+            ->join('brands', 'product_managements.bank_id', '=', 'brands.id')
+            ->where('users.id', $id)
+            ->get();
+            //dd(DB::getQueryLog());
+        //dd($customer_reports);
+        $count = $customer_reports->count();
+        $table_tag = [];
+        for($j=1;$j<$count;$j++) {
+            $table_tag[] = '<td></td>';
+        }
+        //dd($table_tag);
+        $i = 1;
+        foreach($customer_reports as $customer_report) {
+        
+        if($i!=1) { ?> <tr> <?php } ?>
+            <td><?php echo $customer_report->title; ?></td>
+        <td><?php echo ucwords($customer_report->account_name); ?></td>
+        <td><?php echo '$'.$customer_report->amount; ?></td>
+        <td><?php echo date('d-m-Y', strtotime($customer_report->end_date)); ?></td>
+        <td>
+            
+            <?php
+                if($customer_report->status==1) {
+                    echo 'Active';
+                }
+                else {
+                    echo 'Inactive';
+                }
+            ?>
+        </td>
+        <?php if($i!=1) { ?> </tr> <?php }
+        if($i==1) { ?> </tr> <?php }
+        $i++;
+        }
+        
     }
 
 }
