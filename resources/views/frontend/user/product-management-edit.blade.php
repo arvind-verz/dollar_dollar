@@ -53,7 +53,7 @@
                         </div>
                         <div class="ps-dashboard__content">
                             {!! Form::open(['route' => ['product-management.update', $product_management->id], 'class'  =>  'ps-form--product-management', 'method' =>  'POST']) !!}
-                                <div class="ps-form__header"><a class="ps-btn" href="#">Add Products</a></div>
+                                <!-- <div class="ps-form__header"><a class="ps-btn" href="#">Add Products</a></div> -->
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
