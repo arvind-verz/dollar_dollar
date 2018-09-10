@@ -972,7 +972,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -1069,7 +1069,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -1152,7 +1152,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -1273,7 +1273,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -1405,7 +1405,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -2405,7 +2405,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -2502,7 +2502,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2,SAVING_DEPOSIT_F1,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2, SAVING_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -2583,7 +2583,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2,SAVING_DEPOSIT_F1,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2, SAVING_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -2703,7 +2703,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2,SAVING_DEPOSIT_F1,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2, SAVING_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -2835,7 +2835,7 @@ class PagesFrontController extends Controller
                             $minTenure = min($placementTenures);
                         }
                     }
-                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2,SAVING_DEPOSIT_F1,PRIVILEGE_DEPOSIT_F1])) {
+                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2, SAVING_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F1])) {
                         $product->tenure_category = DAYS;
                     } else {
                         $product->tenure_category = MONTHS;
@@ -3061,11 +3061,11 @@ class PagesFrontController extends Controller
                     $searchValue = $defaultPlacement;
                 }
                 $searchFilter['search_value'] = $searchValue;
-                $salary = $searchFilter['salary'] = isset($searchFilter['salary']) ? (int)$searchFilter['salary'] : $defaultSalary;
-                $giro = $searchFilter['giro'] = isset($searchFilter['giro']) ? (int)$searchFilter['giro'] : $defaultGiro;
-                $spend = $searchFilter['spend'] = isset($searchFilter['spend']) ? (int)$searchFilter['spend'] : $defaultSpend;
-                $loan = $searchFilter['loan'] = isset($searchFilter['loan']) ? (int)$searchFilter['loan'] : $defaultLoan;
-                $privilege = $searchFilter['privilege'] = isset($searchFilter['privilege']) ? (int)$searchFilter['privilege'] : $defaultPrivilege;
+                $salary = $searchFilter['salary'] = isset($searchFilter['salary']) ? (int)$searchFilter['salary'] : 0;
+                $giro = $searchFilter['giro'] = isset($searchFilter['giro']) ? (int)$searchFilter['giro'] : 0;
+                $spend = $searchFilter['spend'] = isset($searchFilter['spend']) ? (int)$searchFilter['spend'] : 0;
+                $loan = $searchFilter['loan'] = isset($searchFilter['loan']) ? (int)$searchFilter['loan'] : 0;
+                $privilege = $searchFilter['privilege'] = isset($searchFilter['privilege']) ? (int)$searchFilter['privilege'] : 0;
                 $searchFilter['filter'] = $searchFilter['filter'] ? $searchFilter['filter'] : PLACEMENT;
 
             }
@@ -3403,30 +3403,30 @@ class PagesFrontController extends Controller
                 $highlight = null;
                 $criteriaCount = 0;
                 $criteriaMatchCount = 0;
-                $searchValue = 0;
+                //$searchValue = 0;
 
                 if ($salary > 0 && $baseDetail->minimum_salary <= $salary) {
-                    $searchValue = $searchValue + $salary;
+                    //$searchValue = $searchValue + $salary;
                     $criteriaCount++;
                     if ($spend > 0 && $baseDetail->minimum_spend <= $spend) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
-                        $searchValue = $searchValue + $spend;
+                        //$searchValue = $searchValue + $spend;
                     }
                     if ($spend > 0 && $baseDetail->minimum_insurance <= ($privilege / 2)) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
-                        $searchValue = $searchValue + ($privilege / (2 * 12));
+                        //$searchValue = $searchValue + ($privilege / (2 * 12));
                     }
                     if ($spend > 0 && $baseDetail->minimum_investment <= ($privilege / 2)) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
-                        $searchValue = $searchValue + ($privilege / (2 * 12));
+                        //$searchValue = $searchValue + ($privilege / (2 * 12));
                     }
                     if ($loan > 0 && $baseDetail->minimum_home_loan <= $loan) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
-                        $searchValue = $searchValue + ($loan / 12);
+                        // $searchValue = $searchValue + ($loan / 12);
                     }
 
                     if ($criteriaMatchCount == 1) {
@@ -3463,7 +3463,7 @@ class PagesFrontController extends Controller
                         $maxRanges[] = $productRange->max_range;
                         if ($searchValue >= $productRange->min_range && $status == true) {
                             if ($searchValue > 0) {
-                                $placement = (int)$searchValue;
+                                $placement = (int)$searchValue / 12;
                             } else {
                                 $placement = (int)$searchValue;
                             }
@@ -3475,12 +3475,19 @@ class PagesFrontController extends Controller
                         }
                     }
                 }
-                //dd($placement);
+
                 if ($placement > 0) {
-                    foreach ($productRanges as $productRange) {
+                    foreach ($productRanges as $productRangesKey => $productRange) {
                         $productRange->criteria_a_highlight = false;
                         $productRange->criteria_b_highlight = false;
-                        if ($placement >= $productRange->min_range && $placement <= $productRange->max_range) {
+                        if (($placement*12) >= $productRange->first_cap_amount && ((count($productRanges) - 1) == $productRangesKey)) {
+                            if ($status == true) {
+                                $productRange->$highlight = true;
+                            }
+                            $totalInterest = $productRange->$criteria;
+
+                            $interestEarn = (($productRange->first_cap_amount) * ($totalInterest / 100)+(($placement - $productRange->first_cap_amount) * 12 * ($productRange->board_rate / 100)));
+                        } elseif ($placement >= $productRange->min_range && $placement <= $productRange->max_range) {
                             if ($status == true) {
                                 $productRange->$highlight = true;
                             }

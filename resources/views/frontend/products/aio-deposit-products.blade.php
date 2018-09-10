@@ -973,8 +973,27 @@ ${{ Helper::inThousand($range->min_range) }} TO
 @if($key==0)
 <td class=" text-center @if($product->highlight==true ) highlight @endif"
 rowspan="6">
-Total=
-${{ Helper::inThousand($product->interest_earned).' ( '.$product->total_interest.'%) ' }}</td>
+
+    @if($product->placement > $range->first_cap_amount)
+        First
+        ${{ Helper::inThousand($range->first_cap_amount) }}
+        -
+        ${{ Helper::inThousand(($range->first_cap_amount*($product->total_interest/100))) }}
+        (
+        {{ $product->total_interest }}%), next
+        ${{ Helper::inThousand(($product->placement-$range->first_cap_amount)) }}
+        -
+        ${{ Helper::inThousand((($range->board_rate/100)*($product->placement-$range->first_cap_amount))) }}
+        ({{ $range->board_rate }}%)
+        <br/>
+        Total =
+        ${{ Helper::inThousand($product->interest_earned) }}
+    @else
+        Total =
+        ${{ Helper::inThousand($product->interest_earned) }}
+        ({{$product->total_interest}}%)
+    @endif
+</td>
 @endif
 </tr>
 

@@ -560,8 +560,8 @@ class Helper
         //dd($amount);
         if ($amount > 999999) {
             $amount = $amount / 1000000;
-            $intVal = intval($amount);
-            if (($amount - $intVal) > 0) {
+            $intVal = intval(number_format((float)$amount, 2, '.', ''));
+            if (($amount - $intVal) > 0.009) {
                 $amount = number_format((float)$amount, 2, '.', '').'M';
             }else{
                 $amount = $intVal.'M';
@@ -571,7 +571,7 @@ class Helper
         elseif ($amount > 999) {
             $amount = $amount / 1000;
             $intVal = intval($amount);
-            if (($amount - $intVal) > 0) {
+            if (($amount - $intVal) > 0.009) {
                 $amount = number_format((float)$amount, 2, '.', '').'K';
             }else{
                 $amount = $intVal.'K';
@@ -579,7 +579,7 @@ class Helper
 
         } else {
             $intVal = intval($amount);
-            if(($amount-$intVal)>0)
+            if(($amount-$intVal)>0.009)
             {
                 $amount = number_format((float)$amount, 2, '.', '');
             }
