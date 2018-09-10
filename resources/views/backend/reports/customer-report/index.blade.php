@@ -24,36 +24,28 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table class="table table-bordered" id="report">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Consent</th>
                                     <th>Bank Name</th>
                                     <th>Account Name</th>
-                                    <th>Email</th>
-                                    <th>Contact Number</th>
                                     <th>Deposit Amount</th>
-                                    <th>Privacy</th>
+                                    <th>End Date</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if(count($customer_reports))
-                                    @foreach($customer_reports as $customer_report)
+                                @if(count($customer_reports_groups))
+                                    @foreach($customer_reports_groups as $customer_reports_group)
+                                    @php
+                                        $crs = $customer_reports->where('users_id', $customer_reports_group->users_id);
+                                    @endphp
                                 <tr>
-                                    <td>{{ ucfirst($customer_report->first_name) . ' ' . ucfirst($customer_report->last_name) }}</td>
-                                    <td><img src="{{ asset($customer_report->brand_logo) }}" width="50"> {{ $customer_report->title }}</td>
-                                    <td>{{ ucwords($customer_report->account_name) }}</td>
-                                    <td>{{ $customer_report->email }}</td>
-                                    <td>{{ $customer_report->tel_phone }}</td>
-                                    <td>{{ $customer_report->amount }}</td>
-                                    <td>{{ $customer_report->privacy }}</td>
-                                    <td> @if($customer_report->status==1)
-                                            Active
-                                        @else
-                                            Inactive
-                                        @endif</td>
-                                </tr>
+                                    <td rowspan="@if($crs->count()==0) {{ 1 }} @else {{ $crs->count() }} @endif">{{ ucfirst($customer_reports_group->first_name) . ' ' . ucfirst($customer_reports_group->last_name) }}<br/>{{ $customer_reports_group->email }}</td>
+                                    <td rowspan="@if($crs->count()==0) {{ 1 }} @else {{ $crs->count() }} @endif">-</td>
+                                    {{ Helper::getCustomerReportData($customer_reports_group->users_id) }}
                                     @endforeach
                                 @else
                                 <tr>

@@ -762,7 +762,7 @@
                             text: 'Export Customers Report',
                             extend: 'excel',
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                                columns: [0, 1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
                                 var today = new Date();
