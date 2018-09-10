@@ -623,34 +623,73 @@ class Helper
             //->where('promotion_products.promotion_end', '>=', $datetime)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
-            ->orderBy('promotion_products.'.$byOrderValue, 'DESC')
             ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
                 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
                 'currency.icon as currency_icon', 'currency.currency as currency_name')
             ->get();
 
         foreach ($products as $key => &$product) {
-            $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
             $maxTenure = 0;
             $minTenure = 0;
-            if (count($placementPeriod)) {
-                $placementTenures = [];
-                foreach ($placementPeriod as $period) {
-                    $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                    if ($value > 0) {
-                        $placementTenures[] = $value;
+            if ($product->promotion_period == ONGOING) {
+                $product->tenure_category = ONGOING;
+            } else {
+                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                if (count($placementPeriod)) {
+                    $placementTenures = [];
+                    foreach ($placementPeriod as $period) {
+                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                        if ($value > 0) {
+                            $placementTenures[] = $value;
+                        }
+                    }
+                    if (count($placementTenures)) {
+                        $maxTenure = max($placementTenures);
+                        $minTenure = min($placementTenures);
                     }
                 }
-                if (count($placementTenures)) {
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
+                if (in_array($product->formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                    $product->tenure_category = DAYS;
+                } else {
+                    $product->tenure_category = MONTHS;
                 }
             }
+
             $product->max_tenure = $maxTenure;
             $product->min_tenure = $minTenure;
-
-
+            if ($product->promotion_period == ONGOING) {
+                $product->tenure_value = ONGOING;
+            } else {
+                $product->tenure_value = $maxTenure;
+            }
         }
+        $products1 = $products->where('featured',1);
+        $products0 = $products->where('featured',0);
+
+        if ($byOrderValue == 'minimum_placement_amount') {
+            $products = $products->sortByDesc('minimum_placement_amount');
+        } elseif ($byOrderValue == 'maximum_interest_rate') {
+            $products = $products->sortByDesc('maximum_interest_rate');
+        } elseif ($byOrderValue == 'promotion_period') {
+            $results = collect();
+            $products11 = $products1->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+            $products12 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+            $products13 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+            $products01 = $products0->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+            $products02 = $products0->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+            $products03 = $products0->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+
+            $productsArray = [$products11,$products12,$products13,$products01,$products02,$products03];
+            foreach ($productsArray as $p)
+            {
+                if ($p->count()) {
+                    $results = $results->concat($p);
+                }
+            }
+
+            $products = $results;
+        }
+       // $products = $products->sortByDesc('featured');
         return $products;
     }
 
