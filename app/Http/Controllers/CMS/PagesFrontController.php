@@ -564,8 +564,7 @@ class PagesFrontController extends Controller
                         $results = $results->merge($products3);
                     }
                     $products = $results->sortByDesc('featured');
-
-                }
+                }  
             } else {
                 if ($filter == PLACEMENT) {
                     $products = $products->sortByDesc('minimum_placement_amount');
@@ -633,8 +632,8 @@ class PagesFrontController extends Controller
                         $results = $results->merge($products3);
                     }
                     $remainingProducts = $results->sortByDesc('featured');
-
                 }
+
             }
 
         }
@@ -3486,7 +3485,7 @@ class PagesFrontController extends Controller
                             }
                             $totalInterest = $productRange->$criteria;
 
-                            $interestEarn = (($productRange->first_cap_amount) * ($totalInterest / 100)+(($placement - $productRange->first_cap_amount) * 12 * ($productRange->board_rate / 100)));
+                            $interestEarn = (($productRange->first_cap_amount) * ($totalInterest / 100)+((($placement*12) - $productRange->first_cap_amount) * ($productRange->board_rate / 100)));
                         } elseif ($placement >= $productRange->min_range && $placement <= $productRange->max_range) {
                             if ($status == true) {
                                 $productRange->$highlight = true;
