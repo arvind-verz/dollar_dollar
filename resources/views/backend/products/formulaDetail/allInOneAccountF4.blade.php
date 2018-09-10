@@ -67,15 +67,15 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="">First Cap Amount</label>
                                         <input type="text" class="form-control only_numeric" id=""
-                                               name="first_cap_amount_aioa3" value="@if(isset($value->first_cap_amount)){{$value->first_cap_amount}} @endif"
+                                               name="first_cap_amount_aioa4" value="@if(isset($value->first_cap_amount)){{$value->first_cap_amount}} @endif"
                                                placeholder="">
 
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="">Board Rate</label>
                                         <input type="text" class="form-control only_numeric" id=""
-                                               name="bonus_interest_remaining_amount_aioa3"
-                                               value="@if(isset($value->bonus_interest_remaining_amount)){{ $value->bonus_interest_remaining_amount  }} @endif"
+                                               name="board_rate_aioa4"
+                                               value="@if(isset($value->board_rate)){{ $value->board_rate  }} @endif"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -233,14 +233,14 @@
                     <div class="col-md-6 mb-3">
                         <label for="">First Cap Amount</label>
                         <input type="text" class="form-control only_numeric" id=""
-                               name="first_cap_amount_aioa3" value=""
+                               name="first_cap_amount_aioa4" value=""
                                placeholder="">
 
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="">Bonus Interest (Remaining)</label>
                         <input type="text" class="form-control only_numeric" id=""
-                               name="bonus_interest_remaining_amount_aioa3"
+                               name="board_rate_aioa4"
                                value=""
                                placeholder="">
                     </div>

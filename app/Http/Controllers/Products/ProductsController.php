@@ -318,6 +318,8 @@ class ProductsController extends Controller
                 $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
                 $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
                 $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
+                $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa4;
+                $range['board_rate'] = (float)$request->board_rate_aioa4;
                 $range['min_range'] = (int)$v;
                 $range['max_range'] = (int)$max[$k];
                 $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
@@ -663,6 +665,8 @@ class ProductsController extends Controller
                 $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
                 $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
                 $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
+                $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa4;
+                $range['board_rate'] = (float)$request->board_rate_aioa4;
                 $range['min_range'] = (int)$v;
                 $range['max_range'] = (int)$max[$k];
                 $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];

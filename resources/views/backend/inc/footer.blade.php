@@ -1592,6 +1592,12 @@
                         var InvestmentMinAmount = allInOneAccountF4.find('input[name="minimum_investment_aioa4"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
+                        var boardRate = allInOneAccountF4.find('input[name="board_rate_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var firstCapAmount = allInOneAccountF4.find('input[name="first_cap_amount_aioa4"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
                         var minPlacements = allInOneAccountF4.find('input[name^="min_placement_aioa4"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -1628,6 +1634,14 @@
                         }
                         if (InvestmentMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Investment) is required.';
+                            i++;
+                        }
+                        if (boardRate == '') {
+                            errors[i] = 'The board rate is required.';
+                            i++;
+                        }
+                        if (firstCapAmount == '') {
+                            errors[i] = 'The first cap amount is required.';
                             i++;
                         }
                         $.each(minPlacements, function (k, v) {
