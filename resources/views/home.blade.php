@@ -2,8 +2,6 @@
 @section('title', $page->title)
 @section('content')
     <?php
-    //dd(Auth::User()->first_name);
-
     $slug = HOME_SLUG;
     //get banners
     $banners = \Helper::getBanners($slug);
@@ -1345,7 +1343,6 @@
                                 <div class="product-row-01 clearfix">
                                     <?php
                                     $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT,'promotion_period');
-                                    $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -1670,7 +1667,6 @@
                                 <div class="product-row-01 clearfix">
                                     <?php
                                     $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT,'promotion_period');
-                                    $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
