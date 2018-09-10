@@ -95,6 +95,7 @@ function resizeHeader() {
     }
 }
 
+function owlCarousel(element)  line 98 file main.js edit
 function owlCarousel(element) {
     if (element.length > 0) {
         element.each(function() {
@@ -116,6 +117,7 @@ function owlCarousel(element) {
                 dataNavRight = (el.data('owl-nav-right')) ? el.data('owl-nav-right') : "<i class='fa fa-angle-right'></i>",
                 duration = el.data('owl-duration'),
                 animateStyle = el.data('owl-animated'),
+                hoverpause = el.data('owl-hoverpause'),
                 datamouseDrag = (el.data('owl-mousedrag') == 'on') ? true : false;
             if (el.children.length > 1) {
                 el.owlCarousel({
@@ -137,6 +139,7 @@ function owlCarousel(element) {
                     dots: dataDots,
                     items: dataDefaultItem,
                     animateOut: animateStyle,
+                    autoplayHoverPause: hoverpause,
                     responsive: {
                         0: {
                             items: dataItemXS
