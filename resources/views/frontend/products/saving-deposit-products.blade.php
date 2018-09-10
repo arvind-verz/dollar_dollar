@@ -721,10 +721,9 @@ Average interest rate @if($product->total_interest <=0)
                                                                             - @else
                                                                             ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                         <br>
-<span>
-Total interest rate {{ $product->total_interest }}
-    % throughout 1 Year
-</span>
+                                                                            <span>
+                                                                            {{BASE_EFFECTIVE_RATE}}
+                                                                            </span>
 
                                                                     </h2>
                                                                 </div>

@@ -506,6 +506,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
@@ -969,6 +973,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
@@ -1067,6 +1075,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
@@ -1150,6 +1162,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
@@ -1271,6 +1287,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
@@ -1403,6 +1423,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
@@ -1704,6 +1728,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
@@ -1782,6 +1810,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
@@ -1901,6 +1933,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
@@ -2030,6 +2066,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
@@ -2401,6 +2441,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
@@ -2499,6 +2543,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2, SAVING_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F1])) {
@@ -2580,6 +2628,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2, SAVING_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F1])) {
@@ -2700,6 +2752,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2, SAVING_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F1])) {
@@ -2832,6 +2888,10 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
+                            if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                         }
                     }
                     if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2, SAVING_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F1])) {
