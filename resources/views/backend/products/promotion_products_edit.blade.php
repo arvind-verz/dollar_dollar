@@ -138,17 +138,40 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="promotion_period" class="col-sm-2 control-label">Placement
-                                            Period</label>
 
-                                        <div class="col-sm-10">
+                                        <label for="promotion_period"
+                                               class="col-sm-2 control-label">@if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT)
+                                                Criteria @else Placement Period @endif</label>
+
+                                        <div class="@if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT) col-sm-10 @else col-sm-8  @endif">
                                             <input type="text"
                                                    class="form-control @if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT) only_numeric @endif"
                                                    name="promotion_period" id="promotion-period"
                                                    onchange="addCounter(this);"
                                                    value="{{$product->promotion_period}}"
-                                                   {{--@if(($product->promotion_start==null) && ($product->promotion_end==null)) readonly="readonly" @endif--}}>
+                                                    {{--@if(($product->promotion_start==null) && ($product->promotion_end==null)) readonly="readonly" @endif--}}>
                                         </div>
+                                        @if($product->promotion_type_id!=ALL_IN_ONE_ACCOUNT)
+                                            <div class="col-sm-2 " id="ongoing-1">
+
+                                                @if($product->promotion_period==ONGOING)
+                                                    <button type="button" data-status="true" id="ongoing-status-1"
+                                                            class="btn btn-block btn-success btn-social"
+                                                            onclick="changeOnGoingStatus1(this)"><i
+                                                                class="fa fa-check"></i>
+                                                        Ongoing
+                                                    </button>
+                                                @else
+                                                    <button type="button" data-status="false" id="ongoing-status-1"
+                                                            class="btn btn-block btn-danger btn-social"
+                                                            onclick="changeOnGoingStatus1(this)"><i
+                                                                class="fa fa-times"></i>
+                                                        Ongoing
+                                                    </button>
+                                                @endif
+                                            </div>
+                                        @endif
+
                                     </div>
 
 
@@ -210,31 +233,31 @@
                                         </div>
                                     </div>
 
-                                        <div class="form-group display-none" id="until-end-section">
-                                            <label for="title" class="col-sm-2 control-label">Until End Date</label>
+                                    <div class="form-group " id="until-end-section">
+                                        <label for="title" class="col-sm-2 control-label">Until End Date</label>
 
-                                            <div class="col-sm-10 ">
+                                        <div class="col-sm-10 ">
 
-                                                <div class="input-group date ">
-                                                    <div class="input-group-btn">
-                                                        <button type="button" class="btn btn-danger">
-                                                            Date
-                                                        </button>
-                                                    </div>
-                                                    <input type="text" class="form-control pull-right datepicker1"
-                                                           data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}"
-                                                           name="until_end_date" id="until-end-date"
-                                                           {{--@if((!empty($product->promotion_start)) || (!empty($product->promotion_end))) disabled="disabled" @endif--}}
-                                                           data-date="{{ $product->until_end_date ? date('Y-m-d', strtotime($product->until_end_date )) : null }}"
-                                                           value="{{ $product->until_end_date ? date('Y-m-d', strtotime($product->until_end_date )) : null }}">
+                                            <div class="input-group date ">
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-danger">
+                                                        Date
+                                                    </button>
+                                                </div>
+                                                <input type="text" class="form-control pull-right datepicker1"
+                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}"
+                                                       name="until_end_date" id="until-end-date"
+                                                        {{--@if((!empty($product->promotion_start)) || (!empty($product->promotion_end))) disabled="disabled" @endif--}}
+                                                       data-date="{{ $product->until_end_date ? date('Y-m-d', strtotime($product->until_end_date )) : null }}"
+                                                       value="{{ $product->until_end_date ? date('Y-m-d', strtotime($product->until_end_date )) : null }}">
 
-                                                    <div class="input-group-addon ">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </div>
+                                                <div class="input-group-addon ">
+                                                    <i class="fa fa-calendar"></i>
                                                 </div>
                                             </div>
-
                                         </div>
+
+                                    </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Status</label>
@@ -509,12 +532,12 @@
                 '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
             ];
-            if (jQuery.inArray(formula, utilFormula) !== -1) {
+            /*if (jQuery.inArray(formula, utilFormula) !== -1) {
 
-                $('#until-end-section').removeClass('display-none');
+             $('#until-end-section').removeClass('display-none');
 
 
-            }
+             }*/
             if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
 

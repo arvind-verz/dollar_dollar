@@ -356,7 +356,7 @@
                                 <div class="product-row-01 clearfix">
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT,'promotion_period');
-                                    $products = $products->sortByDesc('max_tenure');
+
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -692,7 +692,6 @@
                                 <div class="product-row-01 clearfix">
                                     <?php
                                     $products = \Helper::getHomeProducts(SAVING_DEPOSIT,'promotion_period');
-                                    $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -1026,7 +1025,6 @@
                                 <div class="product-row-01 clearfix">
                                     <?php
                                     $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT,'promotion_period');
-                                    $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)
@@ -1347,6 +1345,7 @@
                                 <div class="product-row-01 clearfix">
                                     <?php
                                     $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT,'promotion_period');
+                                    $products = $products->sortByDesc('max_tenure');
 
                                     $i = 1;$featured = []; ?>
                                     @foreach($products as $product)

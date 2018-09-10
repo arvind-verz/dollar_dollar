@@ -270,8 +270,8 @@ define('MINIMUM', "1");
 define('MAXIMUM', "2");
 
 //words
-define('ONGOING', "ONGOING");
-define('EXPIRED', "EXPIRED");
+define('ONGOING', "Ongoing");
+define('EXPIRED', "Expired");
 
 //Error Message
 define('CRITERIA_ERROR', "Sorry. Products do not meet your search criteria");

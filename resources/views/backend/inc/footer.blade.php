@@ -97,11 +97,10 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $( ".only_numeric" ).on( "keydown", function( event ) {
-           if(event.keyCode==189)
-           {
-            event.preventDefault();
-           }
+        $(".only_numeric").on("keydown", function (event) {
+            if (event.keyCode == 189) {
+                event.preventDefault();
+            }
         })
         $(".only_numeric").numeric();
     });
@@ -194,67 +193,71 @@
 <script src="{{ asset('backend/dist/js/jquery.bootstrap.wizard.js')}}"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var bulk_arr = [];
         var bulk_arr1 = [];
 
         /*$("input[name='bluk_remove[]']").on("click", function() {
-            var value = $(this).val();
-            
-            $(this).each(function() {
-                if($(this).is(":checked")) {
-                    bulk_arr1.push(value);
-                    $("div.bulk_status").removeClass("hide");
-                }
-                else {
-                    bulk_arr1.pop(value);
-                }
-            });            
+         var value = $(this).val();
 
-            if(bulk_arr1.length<1) {
-                $("div.bulk_status").addClass("hide");
-                $("div.bulk_status").find(".badge").text('');
-            }
-            else {
-                $("div.bulk_status").removeClass("hide");
-                $("div.bulk_status").find(".badge").text(bulk_arr1.length);
-            }
-            //alert(bulk_arr);
-        });
+         $(this).each(function() {
+         if($(this).is(":checked")) {
+         bulk_arr1.push(value);
+         $("div.bulk_status").removeClass("hide");
+         }
+         else {
+         bulk_arr1.pop(value);
+         }
+         });
 
-        $("input[name='all_bulk_update']").on("click", function() {
-            bulk_arr1 = [];
-            
-            if($(this).is(":checked")) {
-                $("input[name='bluk_remove[]']").each(function() {
-                    
-                    var value = $(this).val();
-                    $(this).prop("checked", true);
-                    bulk_arr1.push(value);
-                    $("div.bulk_status").removeClass("hide");
-                });
-                $("div.bulk_status").find(".badge").text(bulk_arr1.length);
-            }
-            else {
-                $("input[name='bluk_remove[]']").prop("checked", false);
-                $("input[name='bluk_remove[]']").each(function() {
-                    var value = $(this).val();
-                    $(this).prop("checked", false);
-                    bulk_arr1.pop(value);
-                    $("div.bulk_status").addClass("hide");
-                });
-                $("div.bulk_status").find(".badge").text('');
-            }
-        });*/
+         if(bulk_arr1.length<1) {
+         $("div.bulk_status").addClass("hide");
+         $("div.bulk_status").find(".badge").text('');
+         }
+         else {
+         $("div.bulk_status").removeClass("hide");
+         $("div.bulk_status").find(".badge").text(bulk_arr1.length);
+         }
+         //alert(bulk_arr);
+         });
 
-        $("select[name='select_type']").on("change", function() {
+         $("input[name='all_bulk_update']").on("click", function() {
+         bulk_arr1 = [];
+
+         if($(this).is(":checked")) {
+         $("input[name='bluk_remove[]']").each(function() {
+
+         var value = $(this).val();
+         $(this).prop("checked", true);
+         bulk_arr1.push(value);
+         $("div.bulk_status").removeClass("hide");
+         });
+         $("div.bulk_status").find(".badge").text(bulk_arr1.length);
+         }
+         else {
+         $("input[name='bluk_remove[]']").prop("checked", false);
+         $("input[name='bluk_remove[]']").each(function() {
+         var value = $(this).val();
+         $(this).prop("checked", false);
+         bulk_arr1.pop(value);
+         $("div.bulk_status").addClass("hide");
+         });
+         $("div.bulk_status").find(".badge").text('');
+         }
+         });*/
+
+        $("select[name='select_type']").on("change", function () {
             var select_type = $(this).val();
             var type = $("input[name='bulk_update_type']").val();
-            if(select_type!='') {
+            if (select_type != '') {
                 var r = confirm("Are you sure?");
-                if(r==true) {
-                    $.post("{{ route('user-bulk-remove') }}", {id:bulk_arr1, type:type, select_type: select_type}, function(data) {
-                        if(data.trim()=='success') {
+                if (r == true) {
+                    $.post("{{ route('user-bulk-remove') }}", {
+                        id: bulk_arr1,
+                        type: type,
+                        select_type: select_type
+                    }, function (data) {
+                        if (data.trim() == 'success') {
                             window.location.reload();
                         }
                     });
@@ -262,22 +265,22 @@
             }
         });
 
-        $("input[name='bluk_remove[]']").on("click", function() {
+        $("input[name='bluk_remove[]']").on("click", function () {
             var value = $(this).val();
-            
-            $(this).each(function() {
-                if($(this).is(":checked")) {
+
+            $(this).each(function () {
+                if ($(this).is(":checked")) {
                     bulk_arr.push(value);
                     bulk_arr1.push(value);
-                    $("a.bulk_remove, div.bulk_status").removeClass("hide");                    
+                    $("a.bulk_remove, div.bulk_status").removeClass("hide");
                 }
                 else {
                     bulk_arr.pop(value);
                     bulk_arr1.pop(value);
                 }
-            });            
+            });
 
-            if(bulk_arr.length<1) {
+            if (bulk_arr.length < 1) {
                 $("a.bulk_remove, div.bulk_status").addClass("hide");
                 $("a.bluk_remove, div.bulk_status").find(".badge").text('');
             }
@@ -289,11 +292,11 @@
             //alert(bulk_arr);
         });
 
-        $("input[name='all_bulk_remove']").on("click", function() {
+        $("input[name='all_bulk_remove']").on("click", function () {
             bulk_arr = [];
-            
-            if($(this).is(":checked")) {
-                $("input[name='bluk_remove[]']").each(function() {
+
+            if ($(this).is(":checked")) {
+                $("input[name='bluk_remove[]']").each(function () {
                     var value = $(this).val();
                     $(this).prop("checked", true);
                     bulk_arr.push(value);
@@ -305,7 +308,7 @@
             }
             else {
                 $("input[name='bluk_remove[]").prop("checked", false);
-                $("input[name='bluk_remove[]']").each(function() {
+                $("input[name='bluk_remove[]']").each(function () {
                     var value = $(this).val();
                     $(this).prop("checked", false);
                     bulk_arr.pop(value);
@@ -316,12 +319,12 @@
             }
         });
 
-        $("a.bulk_remove").on("click", function() {
+        $("a.bulk_remove").on("click", function () {
             var r = confirm("Are you sure?");
             var type = $("input[name='bulk_remove_type']").val();
-            if(r==true) {
-                $.post("{{ route('user-bulk-remove') }}", {id:bulk_arr, type:type}, function(data) {
-                    if(data.trim()=='success') {
+            if (r == true) {
+                $.post("{{ route('user-bulk-remove') }}", {id: bulk_arr, type: type}, function (data) {
+                    if (data.trim() == 'success') {
                         window.location.reload();
                     }
                 });
@@ -349,7 +352,7 @@
                     "aoColumnDefs": [{
                         "aTargets": [0, 1],
                         "bSortable": false,
-                    
+
                     }]
                 });
         $('#admins').DataTable(
@@ -360,7 +363,7 @@
                     "aoColumnDefs": [{
                         "aTargets": [0],
                         "bSortable": false,
-                    
+
                     }]
                 });
         $('#banners').DataTable(
@@ -383,27 +386,27 @@
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                           extend: 'pdf',
-                           footer: true,
-                           exportOptions: {
+                            extend: 'pdf',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             }
-                       },
-                       {
-                           extend: 'csv',
-                           footer: true,
-                           exportOptions: {
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             }
-                          
-                       },
-                       {
-                           extend: 'excel',
-                           footer: true,
-                           exportOptions: {
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             }
-                       }   
+                        }
                     ],
                     "pageLength": 10,
                     'ordering': true,
@@ -411,7 +414,7 @@
                     "aoColumnDefs": [{
                         "aTargets": [0],
                         "bSortable": false,
-                    
+
                     }],
 
                 });
@@ -421,9 +424,9 @@
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                           extend: 'pdf',
-                           footer: true,
-                           exportOptions: {
+                            extend: 'pdf',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -438,13 +441,13 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Contact '+ today;
+                                return 'Contact ' + today;
                             }
-                       },
-                       {
-                           extend: 'csv',
-                           footer: true,
-                           exportOptions: {
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -459,14 +462,14 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Contact '+ today;
+                                return 'Contact ' + today;
                             }
-                          
-                       },
-                       {
-                           extend: 'excel',
-                           footer: true,
-                           exportOptions: {
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -481,9 +484,9 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Contact '+ today;
+                                return 'Contact ' + today;
                             }
-                       }   
+                        }
                     ],
                     "pageLength": 10,
                     'ordering': true,
@@ -491,20 +494,20 @@
                     "aoColumnDefs": [{
                         "aTargets": [0],
                         "bSortable": false,
-                    
+
                     }],
 
                 });
 
-        
+
         $('#life').DataTable(
                 {
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                           extend: 'pdf',
-                           footer: true,
-                           exportOptions: {
+                            extend: 'pdf',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -519,13 +522,13 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Life '+ today;
+                                return 'Life ' + today;
                             }
-                       },
-                       {
-                           extend: 'csv',
-                           footer: true,
-                           exportOptions: {
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -540,14 +543,14 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Life '+ today;
+                                return 'Life ' + today;
                             }
-                          
-                       },
-                       {
-                           extend: 'excel',
-                           footer: true,
-                           exportOptions: {
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -562,9 +565,9 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Life '+ today;
+                                return 'Life ' + today;
                             }
-                       }   
+                        }
                     ],
                     "pageLength": 10,
                     'ordering': true,
@@ -572,7 +575,7 @@
                     "aoColumnDefs": [{
                         "aTargets": [0],
                         "bSortable": false,
-                    
+
                     }],
 
                 });
@@ -582,9 +585,9 @@
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                           extend: 'pdf',
-                           footer: true,
-                           exportOptions: {
+                            extend: 'pdf',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -599,13 +602,13 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Invest '+ today;
+                                return 'Invest ' + today;
                             }
-                       },
-                       {
-                           extend: 'csv',
-                           footer: true,
-                           exportOptions: {
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -620,14 +623,14 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Invest '+ today;
+                                return 'Invest ' + today;
                             }
-                          
-                       },
-                       {
-                           extend: 'excel',
-                           footer: true,
-                           exportOptions: {
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -642,9 +645,9 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Invest '+ today;
+                                return 'Invest ' + today;
                             }
-                       }   
+                        }
                     ],
                     "pageLength": 10,
                     'ordering': true,
@@ -652,7 +655,7 @@
                     "aoColumnDefs": [{
                         "aTargets": [0],
                         "bSortable": false,
-                    
+
                     }],
 
                 });
@@ -662,9 +665,9 @@
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                           extend: 'pdf',
-                           footer: true,
-                           exportOptions: {
+                            extend: 'pdf',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -679,13 +682,13 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Health '+ today;
+                                return 'Health ' + today;
                             }
-                       },
-                       {
-                           extend: 'csv',
-                           footer: true,
-                           exportOptions: {
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -700,14 +703,14 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Health '+ today;
+                                return 'Health ' + today;
                             }
-                          
-                       },
-                       {
-                           extend: 'excel',
-                           footer: true,
-                           exportOptions: {
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
                             filename: function () {
@@ -722,9 +725,9 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Health '+ today;
+                                return 'Health ' + today;
                             }
-                       }   
+                        }
                     ],
                     "pageLength": 10,
                     'ordering': true,
@@ -732,7 +735,7 @@
                     "aoColumnDefs": [{
                         "aTargets": [0],
                         "bSortable": false,
-                    
+
                     }],
 
                 });
@@ -773,7 +776,7 @@
                                     mm = '0' + mm
                                 }
                                 today = yyyy + '' + mm + '' + dd;
-                                return 'Customers-Report '+ today;
+                                return 'Customers-Report ' + today;
                             }
                         }
                     ],
@@ -793,7 +796,7 @@
                 var errors = new Array();
                 var i = 0;
 
-                var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+                var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
                 var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
                 var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
                 var SDP1 = [
@@ -854,7 +857,7 @@
                         errors[i] = 'The product type is required.';
                         i++;
                     }
-                    if (!(!startDate && !endDate) && (!startDate || !endDate) ) {
+                    if (!(!startDate && !endDate) && (!startDate || !endDate)) {
                         errors[i] = 'The date is required.';
                         i++;
                     }
@@ -868,11 +871,11 @@
                         i++;
                     }
 
-                    if ((!promotionPeriod)&&(ongoingStatus=='false')) {
+                    if ((!promotionPeriod) && (ongoingStatus == 'false')) {
                         errors[i] = 'The promotion period is required.';
                         i++;
                     }
-                    if ((!untilEndDate)&&(jQuery.inArray(formula, utilFormula) !== -1)) {
+                    if ((!untilEndDate) && (jQuery.inArray(formula, utilFormula) !== -1)) {
                         errors[i] = 'The until end date is required.';
                         i++;
                     }
@@ -880,10 +883,9 @@
                 if (index == 0) {
                     var productType = $.trim($('#product-type').val());
                     var currency = $.trim($('#currency').val());
-                    if((productType=='<?php echo FOREIGN_CURRENCY_DEPOSIT ;?>') && (currency.length ==0))
-                    {
-                            errors[i] = 'The currency type is required.';
-                            i++;
+                    if ((productType == '<?php echo FOREIGN_CURRENCY_DEPOSIT ;?>') && (currency.length == 0)) {
+                        errors[i] = 'The currency type is required.';
+                        i++;
                     }
 
                     if (jQuery.inArray(formula, FDP1) !== -1) {
@@ -944,25 +946,26 @@
                             });
                         }
                         /*if (rangeError == false) {
-                            $.ajax({
-                                method: "POST",
-                                url: "{{url('/admin/check-range')}}",
-                                data: {max_placement: maxPlacements, min_placement: minPlacements},
-                                cache: false,
-                                async: false,
-                                success: function (data) {
-                                    //
-                                    if (data == 1) {
-                                        errors[i] = 'Please check your placement range ';
-                                        i++;
-                                    }
-                                    if (data == 2) {
-                                        errors[i] = 'Max Placement must be greater than Min Placement';
-                                        i++;
-                                    }
-                                }
-                            });
-                        }*/
+                         $.ajax({
+                         method: "POST",
+                         url: "
+                        {{url('/admin/check-range')}}",
+                         data: {max_placement: maxPlacements, min_placement: minPlacements},
+                         cache: false,
+                         async: false,
+                         success: function (data) {
+                         //
+                         if (data == 1) {
+                         errors[i] = 'Please check your placement range ';
+                         i++;
+                         }
+                         if (data == 2) {
+                         errors[i] = 'Max Placement must be greater than Min Placement';
+                         i++;
+                         }
+                         }
+                         });
+                         }*/
 
                         $.each(minPlacements, function (k, v) {
 
@@ -1233,11 +1236,11 @@
                             return $.trim($(this).val());
                         }).get();
                         /*var LoanMinAmount = allInOneAccountF1.find('input[name="minimum_loan_pa_aioa1"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var LoanBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_loan_aioa1"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();*/
+                         return $.trim($(this).val());
+                         }).get();
+                         var LoanBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_loan_aioa1"]').map(function () {
+                         return $.trim($(this).val());
+                         }).get();*/
                         var BonusAmount = allInOneAccountF1.find('input[name="minimum_bonus_aioa1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -1296,13 +1299,13 @@
                             i++;
                         }
                         /*if (LoanMinAmount == '') {
-                            errors[i] = 'The minimum requirement amount (Loan) is required.';
-                            i++;
-                        }
-                        if (LoanBonusInterest == '') {
-                            errors[i] = 'The  bonus interest (Loan) is required.';
-                            i++;
-                        }*/
+                         errors[i] = 'The minimum requirement amount (Loan) is required.';
+                         i++;
+                         }
+                         if (LoanBonusInterest == '') {
+                         errors[i] = 'The  bonus interest (Loan) is required.';
+                         i++;
+                         }*/
                         if (BonusAmount == '') {
                             errors[i] = 'The  first cap amount is required.';
                             i++;
@@ -1337,7 +1340,7 @@
                         var SalaryMinAmount = allInOneAccountF2.find('input[name="minimum_salary_aioa2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                         var maxPlacements = allInOneAccountF2.find('input[name^="max_placement_aioa2"]').map(function () {
+                        var maxPlacements = allInOneAccountF2.find('input[name^="max_placement_aioa2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var bonusInterestA = allInOneAccountF2.find('input[name^="bonus_interest_criteria_a_aioa2"]').map(function () {
@@ -1392,39 +1395,40 @@
                         var min = 0;
                         $.each(maxPlacements, function (k, v) {
                             minPlacements[k] = Number(min);
-                            min =  Number(v) + Number(1);
+                            min = Number(v) + Number(1);
                         });
 
                         /*if (rangeError == false) {
-                            $.ajax({
-                                method: "POST",
-                                url: "{{url('/admin/check-range')}}",
-                                data: {max_placement: maxPlacements, min_placement: minPlacements},
-                                cache: false,
-                                async: false,
-                                success: function (data) {
+                         $.ajax({
+                         method: "POST",
+                         url: "
+                        {{url('/admin/check-range')}}",
+                         data: {max_placement: maxPlacements, min_placement: minPlacements},
+                         cache: false,
+                         async: false,
+                         success: function (data) {
 
-                                    if (data == 1) {
-                                        errors[i] = 'Please check your placement range ';
-                                        i++;
-                                    }
-                                    if (data == 2) {
-                                        errors[i] = 'Max Placement must be greater than Min Placement';
-                                        i++;
-                                    }
-                                }
-                            });
-                        }
+                         if (data == 1) {
+                         errors[i] = 'Please check your placement range ';
+                         i++;
+                         }
+                         if (data == 2) {
+                         errors[i] = 'Max Placement must be greater than Min Placement';
+                         i++;
+                         }
+                         }
+                         });
+                         }
 
-                        $.each(minPlacements, function (k, v) {
+                         $.each(minPlacements, function (k, v) {
 
-                            if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
-                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
-                                i++;
+                         if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
+                         errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                         i++;
 
-                                return false;
-                            }
-                        });*/
+                         return false;
+                         }
+                         });*/
 
                     }
                     if (formula == 9) {
@@ -1738,7 +1742,7 @@
         var formula = $("#formula").val();
         var range_id = $(id).data('range-id');
         range_id++;
-        var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>','<?php echo PRIVILEGE_DEPOSIT_F6; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+        var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
         var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
         var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
         var SDP1 = [
@@ -1757,15 +1761,15 @@
             var productType = $("#product-type").val();
 
             /*var legends = new Array();
-            var data = $('#fixDepositF1').find('select[name^="legend[0]"]').serializeArray();
-            $.each($('select[name^="legend"]'), function() {
-                legends.push($(this).val());
-            });*/
+             var data = $('#fixDepositF1').find('select[name^="legend[0]"]').serializeArray();
+             $.each($('select[name^="legend"]'), function() {
+             legends.push($(this).val());
+             });*/
             var formula_detail_id = data.length - 1;
             jQuery.ajax({
                 type: "POST",
                 url: "{{url('/admin/add-more-placement-range')}}",
-                data: {detail: data, range_id: range_id, formula: formula, product_type:productType}
+                data: {detail: data, range_id: range_id, formula: formula, product_type: productType}
             }).done(function (data) {
                 console.log(data);
                 $('#new-placement-range').append(data);
@@ -1829,7 +1833,7 @@
 
         var counterValue = $("#promotion-period").val();
 
-        var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>','<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+        var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
         var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
         var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
         var SDP1 = [
@@ -1865,7 +1869,8 @@
 
         if (jQuery.inArray(formula, SDP6) !== -1) {
             $("#saving_placement_range_f4_" + range_id).remove();
-        }if (jQuery.inArray(formula, SDP1) !== -1) {
+        }
+        if (jQuery.inArray(formula, SDP1) !== -1) {
             $("#saving_placement_range_f1_" + range_id).remove();
         }
         if (formula == 8) {
@@ -1990,75 +1995,84 @@
 
     $('.iconpicker').iconpicker();
 
-    function dateChange(obj)
-    {
+    function dateChange(obj) {
         var ongoingButton;
         var startDate = $("#promotion_start_date").val();
         var endDate = $("#promotion_end_date").val();
-        if((startDate.length == 0)&&(endDate.length == 0))
-        {
+        if ((startDate.length == 0) && (endDate.length == 0)) {
             ongoingButton = '<button type="button" data-status="true" id="ongoing-status" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
-            $('#promotion-period').val('Ongoing'); /*
-            $('#promotion-period').attr('readonly', true);
-            $('#until-end-date').attr('disabled', false);*/
-        }else{
+            $('#promotion-period').val('Ongoing');
+            /*
+             $('#promotion-period').attr('readonly', true);
+             $('#until-end-date').attr('disabled', false);*/
+        } else {
             ongoingButton = '<button type="button" data-status="false" id="ongoing-status" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
             /*$('#promotion-period').attr('readonly', false);
-            $('#until-end-date').val('');
-            $('#until-end-date').attr('disabled', true);*/
+             $('#until-end-date').val('');
+             $('#until-end-date').attr('disabled', true);*/
         }
         $('#ongoing').html(ongoingButton);
     }
-    function changeOnGoingStatus(obj)
-    {
+    function changeOnGoingStatus(obj) {
         var ongoingButton;
         var status = $(obj).data('status');
         var startDate = $("#promotion_start_date").data('date');
         var endDate = $("#promotion_end_date").data('date');
 
-        if(status==true)
-        {
-            if((startDate.length==0)&&(endDate.length==0))
-            {
+        if (status == true) {
+            if ((startDate.length == 0) && (endDate.length == 0)) {
                 var d = new Date();
 
-                var month = d.getMonth()+1;
+                var month = d.getMonth() + 1;
                 var day = d.getDate();
 
                 var output = d.getFullYear() + '-' +
-                        ((''+month).length<2 ? '0' : '') + month + '-' +
-                        ((''+day).length<2 ? '0' : '') + day;
-                startDate = endDate = output ;
+                        (('' + month).length < 2 ? '0' : '') + month + '-' +
+                        (('' + day).length < 2 ? '0' : '') + day;
+                startDate = endDate = output;
             }
             $("#promotion_start_date").val(startDate);
             $("#promotion_end_date").val(endDate);
             ongoingButton = '<button type="button" data-status="false" id="ongoing-status" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i> Ongoing</button>';
-           /* $('#promotion-period').attr('readonly', false);
-            $('#until-end-date').val('');
-            $('#until-end-date').attr('disabled', true);*/
-        }else{
+            /* $('#promotion-period').attr('readonly', false);
+             $('#until-end-date').val('');
+             $('#until-end-date').attr('disabled', true);*/
+        } else {
             $("#promotion_start_date").val(null);
             $("#promotion_end_date").val(null);
             ongoingButton = '<button type="button" data-status="true" id="ongoing-status" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i> Ongoing</button>';
-            $('#promotion-period').val('Ongoing'); /*
-            $('#promotion-period').attr('readonly', true);
-            $('#until-end-date').attr('disabled', false);*/
+            /*
+             $('#promotion-period').attr('readonly', true);
+             $('#until-end-date').attr('disabled', false);*/
         }
         $('#ongoing').html(ongoingButton);
 
 
     }
-    function changeApplyStatus(obj)
-    {
+    function changeOnGoingStatus1(obj) {
+        var ongoingButton;
+        var status = $(obj).data('status');
+
+        if (status == true) {
+            ongoingButton = '<button type="button" data-status="false" id="ongoing-status-1" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus1(this)"><i class="fa fa-times"></i> Ongoing</button>';
+            $('#promotion-period').val('');
+        } else {
+            ongoingButton = '<button type="button" data-status="true" id="ongoing-status-1" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus1(this)"><i class="fa fa-check"></i> Ongoing</button>';
+            $('#promotion-period').val('{{ONGOING}}');
+        }
+        $('#ongoing-1').html(ongoingButton);
+
+
+    }
+    function changeApplyStatus(obj) {
         var applyButton;
         var status = $(obj).data('status');
 
-        if(status==true)
-        {
+        if (status == true) {
             $('#link_ad').attr('readonly', 'readonly');
             $("#apply-link-status").val("0");
             applyButton = '<button type="button" data-status="false" id="" class="btn btn-block btn-danger  btn-social" onclick="changeApplyStatus(this)"><i class="fa fa-times"></i>Disable</button>';
-        }else{
+        } else {
             $('#link_ad').removeAttr('readonly');
             $("#apply-link-status").val("1");
             applyButton = '<button type="button" data-status="true" id="" class="btn btn-block btn-success btn-social" onclick="changeApplyStatus(this)"><i class="fa fa-check"></i>Enable</button>';
