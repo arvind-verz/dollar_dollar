@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Reports;
 
 use App\Http\Controllers\Controller;
 use App\ProductManagement;
+use Exporter;
+use Excel;
+use App\Exports\CustomersReportExport;
 
 class ReportController extends Controller
 {
@@ -42,5 +45,9 @@ class ReportController extends Controller
         return view('backend.reports.product-report.index', [
             'product_reports' => $product_reports,
         ]);
+    }
+
+    public function customer_report_excel() {
+        return Excel::download(new CustomersReportExport, 'customer_reports.xlsx');
     }
 }

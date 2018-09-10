@@ -6017,3 +6017,39 @@ span.ps-post__meta a {
 .ps-form--product-management .row input[name='bank_id_other']{
     margin-top: 50px;
 }
+
+.color1{
+    background: #4BACC6;
+    font-size: 18px;
+    color: #fff;
+}
+.color2{
+    background: #92D050;
+}
+.c-table1{
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+}
+.c-table1 td{
+    width: 16.666%;
+    border: 1px solid #fff;
+    padding: 5px 20px;
+}
+.c-table1 tr:nth-child(2n+1){
+    background: #E9F1F5;
+}
+.c-table1 tr:nth-child(2n){
+    background: #D0E3EA;
+}
+.ps-product--2 .table .ps-criteria-detail .ps-block--product-info{
+    width: 270px;
+}
+.ps-product--2 .table .ps-criteria-detail .row .row{
+    overflow-x: scroll;
+}
+.table-new{
+    display: flex;
+    width: max-content;
+    width: -moz-max-content;
+}
