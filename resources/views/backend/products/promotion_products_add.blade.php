@@ -138,8 +138,15 @@
                                     @else
                                         <div class="form-group">
                                             {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-8">
                                                 {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => ''])}}
+                                            </div>
+                                            <div class="col-sm-2 " id="ongoing-1">
+                                                <button type="button" data-status="false" id="ongoing-status-1"
+                                                        class="btn btn-block btn-danger btn-social"
+                                                        onclick="changeOnGoingStatus1(this)"><i class="fa fa-times"></i>
+                                                    Ongoing
+                                                </button>
                                             </div>
                                         </div>
                                     @endif
@@ -194,7 +201,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group display-none" id="until-end-section">
+                                    <div class="form-group " id="until-end-section">
                                         <label for="title" class="col-sm-2 control-label">Until End Date</label>
 
                                         <div class="col-sm-10 ">

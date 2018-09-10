@@ -59,6 +59,29 @@
                             </div>
                             <div class="col-sm-2">&emsp;</div>
                         </div>
+                        <div class="form-group ">
+                            <label for="title" class="col-sm-2 control-label"></label>
+
+                            <div class="col-sm-8 ">
+                                <div class="form-row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">First Cap Amount</label>
+                                        <input type="text" class="form-control only_numeric" id=""
+                                               name="first_cap_amount_aioa3" value="@if(isset($value->first_cap_amount)){{$value->first_cap_amount}} @endif"
+                                               placeholder="">
+
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Board Rate</label>
+                                        <input type="text" class="form-control only_numeric" id=""
+                                               name="bonus_interest_remaining_amount_aioa3"
+                                               value="@if(isset($value->bonus_interest_remaining_amount)){{ $value->bonus_interest_remaining_amount  }} @endif"
+                                               placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">&emsp;</div>
+                        </div>
                 @endif
                 <div id="aioa_placement_range_f4_{{$key}}">
 
@@ -198,6 +221,29 @@
                                placeholder="">
                     </div>
 
+                </div>
+            </div>
+            <div class="col-sm-2">&emsp;</div>
+        </div>
+        <div class="form-group ">
+            <label for="title" class="col-sm-2 control-label"></label>
+
+            <div class="col-sm-8 ">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="">First Cap Amount</label>
+                        <input type="text" class="form-control only_numeric" id=""
+                               name="first_cap_amount_aioa3" value=""
+                               placeholder="">
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="">Bonus Interest (Remaining)</label>
+                        <input type="text" class="form-control only_numeric" id=""
+                               name="bonus_interest_remaining_amount_aioa3"
+                               value=""
+                               placeholder="">
+                    </div>
                 </div>
             </div>
             <div class="col-sm-2">&emsp;</div>

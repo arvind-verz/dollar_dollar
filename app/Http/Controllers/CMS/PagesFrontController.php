@@ -113,7 +113,7 @@ class PagesFrontController extends Controller
             $brands = Brand::where('delete_status', 0)->where('display', 1)->orderBy('title', 'asc')->get();
 
             if ($page->is_dynamic == 1) {
-                
+
                 if ($slug == CONTACT_SLUG) {
                     return view('frontend.CMS.contact', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == HEALTH_INSURANCE_ENQUIRY) {
@@ -130,8 +130,8 @@ class PagesFrontController extends Controller
                     } else {
                         return view('auth.login', compact("redirect_url"));
                     }
-                }elseif ($slug == INVESTMENT_ENQUIRY) {
-                    
+                } elseif ($slug == INVESTMENT_ENQUIRY) {
+
                     $redirect_url = INVESTMENT_ENQUIRY;
                     if (Auth::check()) {
                         return view('frontend.CMS.investment-enquiry', compact("brands", "page", "systemSetting", "banners"));
@@ -489,6 +489,42 @@ class PagesFrontController extends Controller
                 $product->product_ranges = $ranges;
                 $product->total_interest = $resultInterestEarnPercent;
                 $product->total_interest_earn = round($resultInterestEarn, 2);
+                $maxTenure = 0;
+                $minTenure = 0;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                        }
+                    }
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
+                    }
+                }
+
+                $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
+
                 if ($status == true) {
                     $product->placement = $placement;
                     //dd($product);
@@ -497,32 +533,6 @@ class PagesFrontController extends Controller
                     $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
-            }
-
-            $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
-            $maxTenure = 0;
-            $minTenure = 0;
-            if (count($placementPeriod)) {
-                $placementTenures = [];
-                foreach ($placementPeriod as $period) {
-                    $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                    if ($value > 0) {
-                        $placementTenures[] = $value;
-                    }
-                }
-                if (count($placementTenures)) {
-                    $maxTenure = max($placementTenures);
-                    $minTenure = min($placementTenures);
-                }
-            }
-
-            $product->max_tenure = $maxTenure;
-            $product->min_tenure = $minTenure;
-
-            if ($sortBy == MINIMUM) {
-                $product->tenure_value = $minTenure;
-            } else {
-                $product->tenure_value = $maxTenure;
             }
 
         }
@@ -540,7 +550,21 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortBy('min_tenure');
+                    $results = collect();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure');
+                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure');
+                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $products = $results->sortByDesc('featured');
+
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -548,8 +572,20 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortByDesc('max_tenure');
-
+                    $results = collect();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $products = $results->sortByDesc('featured');
                 }
             }
 
@@ -562,7 +598,20 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortBy('min_tenure');
+                    $results = collect();
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure');
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure');
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $remainingProducts = $results->sortByDesc('featured');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -570,7 +619,20 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortByDesc('max_tenure');
+                    $results = collect();
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $remainingProducts = $results->sortByDesc('featured');
 
                 }
             }
@@ -893,20 +955,36 @@ class PagesFrontController extends Controller
 
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                        }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -972,24 +1050,38 @@ class PagesFrontController extends Controller
 
                     }
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                        }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -1043,20 +1135,36 @@ class PagesFrontController extends Controller
 
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                        }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -1146,24 +1254,38 @@ class PagesFrontController extends Controller
 
 
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                        }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -1264,24 +1386,38 @@ class PagesFrontController extends Controller
                     $product->placement = $placement;
                     $product->total_interest = 0;
                 }
-                $placementPeriod = explode("|", $product->promotion_period);
-
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $placementTenures[] = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                        }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -1306,7 +1442,21 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortBy('min_tenure');
+                    $results = collect();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure');
+                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure');
+                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $products = $results->sortByDesc('featured');
+
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -1314,10 +1464,24 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortByDesc('max_tenure');
-
+                    $results = collect();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    //dd($products1,$products2,$products3);
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $products = $results->sortByDesc('featured');
                 }
             }
+
 
         }
         if ($remainingProducts->count()) {
@@ -1328,7 +1492,20 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortBy('min_tenure');
+                    $results = collect();
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure');
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure');
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $remainingProducts = $results->sortByDesc('featured');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -1336,7 +1513,20 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortByDesc('max_tenure');
+                    $results = collect();
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $remainingProducts = $results->sortByDesc('featured');
 
                 }
             }
@@ -1353,7 +1543,6 @@ class PagesFrontController extends Controller
 
     public function saving($request)
     {
-        //dd($request);
         $ads_manage = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
@@ -1500,27 +1689,35 @@ class PagesFrontController extends Controller
                         //dd($totalInterest);
                     }
                 }
-
-                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                        if ($value > 0) {
-                            $placementTenures[] = $value;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
                         }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
-                $product->max_tenure = $maxTenure;
-                $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -1570,26 +1767,35 @@ class PagesFrontController extends Controller
                         $product->placement = $placement;
                     }
                 }
-                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                        if ($value > 0) {
-                            $placementTenures[] = $value;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
                         }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
-                $product->max_tenure = $maxTenure;
-                $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -1680,26 +1886,35 @@ class PagesFrontController extends Controller
 
 
                 }
-                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                        if ($value > 0) {
-                            $placementTenures[] = $value;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
                         }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
-                $product->max_tenure = $maxTenure;
-                $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -1800,26 +2015,38 @@ class PagesFrontController extends Controller
                     $product->placement = $placement;
                     $product->total_interest = 0;
                 }
-                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                        if ($value > 0) {
-                            $placementTenures[] = $value;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
                         }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -1844,7 +2071,21 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortBy('min_tenure');
+                    $results = collect();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure');
+                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure');
+                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $products = $results->sortByDesc('featured');
+
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -1852,8 +2093,20 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortByDesc('max_tenure');
-
+                    $results = collect();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $products = $results->sortByDesc('featured');
                 }
             }
 
@@ -1866,7 +2119,20 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortBy('min_tenure');
+                    $results = collect();
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure');
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure');
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $remainingProducts = $results->sortByDesc('featured');
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -1874,7 +2140,20 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortByDesc('max_tenure');
+                    $results = collect();
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $remainingProducts = $results->sortByDesc('featured');
 
                 }
             }
@@ -2107,26 +2386,38 @@ class PagesFrontController extends Controller
                 $product->total_interest_earn = round($resultInterestEarn, 2);
                 $product->placement = $placement;
 
-                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                        if ($value > 0) {
-                            $placementTenures[] = $value;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
                         }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -2192,26 +2483,38 @@ class PagesFrontController extends Controller
                         //dd($product);
                     }
                 }
-                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                        if ($value > 0) {
-                            $placementTenures[] = $value;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
                         }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2,SAVING_DEPOSIT_F1,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -2261,26 +2564,38 @@ class PagesFrontController extends Controller
                         $product->placement = $placement;
                     }
                 }
-                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                        if ($value > 0) {
-                            $placementTenures[] = $value;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
                         }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2,SAVING_DEPOSIT_F1,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -2369,26 +2684,38 @@ class PagesFrontController extends Controller
 
 
                 }
-                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                        if ($value > 0) {
-                            $placementTenures[] = $value;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
                         }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2,SAVING_DEPOSIT_F1,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
@@ -2489,29 +2816,42 @@ class PagesFrontController extends Controller
                     $product->placement = $placement;
                     $product->total_interest = 0;
                 }
-                $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                 $maxTenure = 0;
                 $minTenure = 0;
-                if (count($placementPeriod)) {
-                    $placementTenures = [];
-                    foreach ($placementPeriod as $period) {
-                        $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-                        if ($value > 0) {
-                            $placementTenures[] = $value;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
                         }
                     }
-                    if (count($placementTenures)) {
-                        $maxTenure = max($placementTenures);
-                        $minTenure = min($placementTenures);
+                    if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F2,SAVING_DEPOSIT_F1,PRIVILEGE_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
                     }
                 }
+
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
                     $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
+
                 if ($status == true) {
                     $filterProducts[] = $product;
                 } else {
@@ -2533,7 +2873,21 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortBy('min_tenure');
+                    $results = collect();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure');
+                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure');
+                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $products = $results->sortByDesc('featured');
+
                 }
             } else {
                 if ($filter == PLACEMENT) {
@@ -2541,8 +2895,20 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $products = $products->sortByDesc('max_tenure');
-
+                    $results = collect();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $products = $results->sortByDesc('featured');
                 }
             }
 
@@ -2555,15 +2921,41 @@ class PagesFrontController extends Controller
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortBy('min_tenure');
+                    $results = collect();
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure');
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure');
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $remainingProducts = $results->sortByDesc('featured');
                 }
             } else {
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('upto_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
                 } elseif ($filter == TENURE) {
-                    $remainingProducts = $remainingProducts->sortByDesc('max_tenure');
+                    $results = collect();
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $remainingProducts = $results->sortByDesc('featured');
 
                 }
             }
