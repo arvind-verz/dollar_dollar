@@ -620,8 +620,6 @@ class Helper
                 'promotion_formula.id')
             ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
             ->where('promotion_products.promotion_type_id', '=', $productType)
-            //->where('promotion_products.promotion_start', '<=', $datetime)
-            //->where('promotion_products.promotion_end', '>=', $datetime)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
@@ -664,33 +662,35 @@ class Helper
                 $product->tenure_value = $maxTenure;
             }
         }
-        $products1 = $products->where('featured',1);
-        $products0 = $products->where('featured',0);
 
         if ($byOrderValue == 'minimum_placement_amount') {
-            $products = $products->sortByDesc('minimum_placement_amount');
+            $products = $products->sortByDesc('minimum_placement_amount')->values();
         } elseif ($byOrderValue == 'maximum_interest_rate') {
-            $products = $products->sortByDesc('maximum_interest_rate');
+            $products = $products->sortByDesc('maximum_interest_rate')->values();
         } elseif ($byOrderValue == 'promotion_period') {
-            $results = collect();
-            $products11 = $products1->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-            $products12 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-            $products13 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
-            $products01 = $products0->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-            $products02 = $products0->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-            $products03 = $products0->where('tenure_category', DAYS)->sortByDesc('max_tenure');
-
-            $productsArray = [$products11,$products12,$products13,$products01,$products02,$products03];
-            foreach ($productsArray as $p)
+            if($productType==ALL_IN_ONE_ACCOUNT)
             {
-                if ($p->count()) {
-                    $results = $results->concat($p);
-                }
-            }
+                $products = $products->sortByDesc('promotion_period')->values();
+            }else
+            {
 
-            $products = $results;
+            $results = collect();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
+                    if ($products1->count()) {
+                        $results = $results->merge($products1);
+                    }
+                    if ($products2->count()) {
+                        $results = $results->merge($products2);
+                    }
+                    if ($products3->count()) {
+                        $results = $results->merge($products3);
+                    }
+                    $products = $results;
+                    }
         }
-       // $products = $products->sortByDesc('featured');
+        $products = $products->sortByDesc('featured')->values();
         return $products;
     }
 

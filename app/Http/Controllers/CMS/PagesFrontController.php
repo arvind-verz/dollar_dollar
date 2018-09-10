@@ -546,14 +546,14 @@ class PagesFrontController extends Controller
 
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortBy('minimum_placement_amount');
+                    $products = $products->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('maximum_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure');
-                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure');
-                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -563,18 +563,18 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $products = $results->sortByDesc('featured');
-                }  
+                    $products = $results;
+                }
             } else {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortByDesc('minimum_placement_amount');
+                    $products = $products->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('maximum_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -584,23 +584,24 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $products = $results->sortByDesc('featured');
+                    $products = $results;
                 }
             }
-
+            $products = $products->sortByDesc('featured')->values();
         }
         if ($remainingProducts->count()) {
 
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure');
-                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure');
-                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
+
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -610,18 +611,18 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $remainingProducts = $results->sortByDesc('featured');
+                    $remainingProducts = $results;
                 }
             } else {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -631,13 +632,12 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $remainingProducts = $results->sortByDesc('featured');
+                    $remainingProducts = $results;
+
                 }
-
             }
-
+            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-
         return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", 'ads_manage'));
 
     }
@@ -1437,14 +1437,14 @@ class PagesFrontController extends Controller
 
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortBy('minimum_placement_amount');
+                    $products = $products->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('maximum_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure');
-                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure');
-                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -1454,20 +1454,18 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $products = $results->sortByDesc('featured');
-
+                    $products = $results;
                 }
             } else {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortByDesc('minimum_placement_amount');
+                    $products = $products->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('maximum_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
-                    //dd($products1,$products2,$products3);
+                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -1477,24 +1475,24 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $products = $results->sortByDesc('featured');
+                    $products = $results;
                 }
             }
-
-
+            $products = $products->sortByDesc('featured')->values();
         }
         if ($remainingProducts->count()) {
 
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure');
-                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure');
-                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
+
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -1504,18 +1502,18 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $remainingProducts = $results->sortByDesc('featured');
+                    $remainingProducts = $results;
                 }
             } else {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -1525,11 +1523,11 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $remainingProducts = $results->sortByDesc('featured');
+                    $remainingProducts = $results;
 
                 }
             }
-
+            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
         return view('frontend.products.privilege-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts"));
 
@@ -2066,14 +2064,14 @@ class PagesFrontController extends Controller
 
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortBy('minimum_placement_amount');
+                    $products = $products->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('maximum_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure');
-                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure');
-                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -2083,19 +2081,18 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $products = $results->sortByDesc('featured');
-
+                    $products = $results;
                 }
             } else {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortByDesc('minimum_placement_amount');
+                    $products = $products->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('maximum_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -2105,23 +2102,24 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $products = $results->sortByDesc('featured');
+                    $products = $results;
                 }
             }
-
+            $products = $products->sortByDesc('featured')->values();
         }
         if ($remainingProducts->count()) {
 
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure');
-                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure');
-                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
+
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -2131,18 +2129,18 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $remainingProducts = $results->sortByDesc('featured');
+                    $remainingProducts = $results;
                 }
             } else {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -2152,11 +2150,11 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $remainingProducts = $results->sortByDesc('featured');
+                    $remainingProducts = $results;
 
                 }
             }
-
+            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
         return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", "ads_manage"));
     }
@@ -2868,14 +2866,14 @@ class PagesFrontController extends Controller
 
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortBy('minimum_placement_amount');
+                    $products = $products->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('maximum_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure');
-                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure');
-                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -2885,19 +2883,18 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $products = $results->sortByDesc('featured');
-
+                    $products = $results;
                 }
             } else {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortByDesc('minimum_placement_amount');
+                    $products = $products->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('maximum_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -2907,23 +2904,24 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $products = $results->sortByDesc('featured');
+                    $products = $results;
                 }
             }
-
+            $products = $products->sortByDesc('featured')->values();
         }
         if ($remainingProducts->count()) {
 
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure');
-                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure');
-                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure');
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
+
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -2933,18 +2931,18 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $remainingProducts = $results->sortByDesc('featured');
+                    $remainingProducts = $results;
                 }
             } else {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == TENURE) {
                     $results = collect();
-                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure');
-                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure');
-                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure');
+                    $products1 = $remainingProducts->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
+                    $products2 = $remainingProducts->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
+                    $products3 = $remainingProducts->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
@@ -2954,11 +2952,11 @@ class PagesFrontController extends Controller
                     if ($products3->count()) {
                         $results = $results->merge($products3);
                     }
-                    $remainingProducts = $results->sortByDesc('featured');
+                    $remainingProducts = $results;
 
                 }
             }
-
+            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
         return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts", "currencies"));
 
@@ -3479,13 +3477,13 @@ class PagesFrontController extends Controller
                     foreach ($productRanges as $productRangesKey => $productRange) {
                         $productRange->criteria_a_highlight = false;
                         $productRange->criteria_b_highlight = false;
-                        if (($placement*12) >= $productRange->first_cap_amount && ((count($productRanges) - 1) == $productRangesKey)) {
+                        if (($placement * 12) >= $productRange->first_cap_amount && ((count($productRanges) - 1) == $productRangesKey)) {
                             if ($status == true) {
                                 $productRange->$highlight = true;
                             }
                             $totalInterest = $productRange->$criteria;
 
-                            $interestEarn = (($productRange->first_cap_amount) * ($totalInterest / 100)+((($placement*12) - $productRange->first_cap_amount) * ($productRange->board_rate / 100)));
+                            $interestEarn = (($productRange->first_cap_amount) * ($totalInterest / 100) + ((($placement * 12) - $productRange->first_cap_amount) * ($productRange->board_rate / 100)));
                         } elseif ($placement >= $productRange->min_range && $placement <= $productRange->max_range) {
                             if ($status == true) {
                                 $productRange->$highlight = true;
@@ -3515,40 +3513,42 @@ class PagesFrontController extends Controller
         if ($products->count()) {
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortBy('minimum_placement_amount');
+                    $products = $products->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('maximum_interest_rate');
+                    $products = $products->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == CRITERIA) {
-                    $products = $products->sortBy('promotion_period');
+                    $products = $products->sortBy('promotion_period')->values();
                 }
             } else {
                 if ($filter == PLACEMENT) {
-                    $products = $products->sortByDesc('minimum_placement_amount');
+                    $products = $products->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('maximum_interest_rate');
+                    $products = $products->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == CRITERIA) {
-                    $products = $products->sortByDesc('promotion_period');
+                    $products = $products->sortByDesc('promotion_period')->values();
                 }
             }
+            $products = $products->sortByDesc('featured')->values();
         }
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate')->values();
                 } elseif ($filter == CRITERIA) {
-                    $remainingProducts = $remainingProducts->sortBy('promotion_period');
+                    $remainingProducts = $remainingProducts->sortBy('promotion_period')->values();
                 }
             } else {
                 if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount');
+                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate');
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate')->values();
                 } elseif ($filter == CRITERIA) {
-                    $remainingProducts = $remainingProducts->sortByDesc('promotion_period');
+                    $remainingProducts = $remainingProducts->sortByDesc('promotion_period')->values();
                 }
             }
+            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
 
         //dd($products);
