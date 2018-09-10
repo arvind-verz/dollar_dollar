@@ -6014,3 +6014,7 @@ span.ps-post__meta a {
 .ps-home-fixed-deposit.ps-tabs-root .productGridContainer.target-content .product-col-01:nth-child(2){
     padding-right: 20px;
 }
+
+.ps-form--product-management .row input[name='bank_id_other']{
+    margin-top: 50px;
+}

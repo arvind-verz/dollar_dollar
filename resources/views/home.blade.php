@@ -16,7 +16,7 @@
             <div class="ps-slider--home owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
                  data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1"
                  data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000"
-                 data-owl-mousedrag="on" data-owl-animated="true">
+                 data-owl-mousedrag="on" data-owl-animated="false" data-owl-hoverpause="true">
                 @foreach($banners as $banner)
                     @if($banner->display==1 && strtotime(date('Y-m-d', strtotime('now')))<=strtotime(date('Y-m-d', strtotime($banner->banner_expiry))) && strtotime(date('Y-m-d', strtotime('now')))>=strtotime(date('Y-m-d', strtotime($banner->banner_start_date))))
                     <a href="{{ $banner->banner_link }}" target="_blank">
@@ -40,8 +40,8 @@
         </div>
     @elseif($banners->count()== 1)
         @foreach($banners as $banner)
-            <div class="ps-hero bg--cover" data-background="{{asset($banner->banner_image )}}"><img
-                        src="{{asset($banner->banner_image )}}" alt=""></div>
+            <div class="ps-hero bg--cover" data-background="{{asset($banner->fixed_banner )}}"><img
+                        src="{{asset($banner->fixed_banner )}}" alt=""></div>
         @endforeach
     @endif
 
