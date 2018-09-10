@@ -269,6 +269,7 @@ Route::group(array('prefix' => 'admin'), function () {
 
     /* REPORTS */
     Route::get('/customer-report', 'Reports\ReportController@customer_report')->name('customer-report');
+    Route::get('/customer-report-excel', 'Reports\ReportController@customer_report_excel')->name('customer-report-excel');
     Route::get('/product-report', 'Reports\ReportController@product_report')->name('product-report');
     Route::get('/reminder-email', 'Products\ProductsController@reminder')->name('reminder-email');
 
