@@ -1035,6 +1035,7 @@ class PagesFrontController extends Controller
                         if (in_array($product->promotion_formula_id, [PRIVILEGE_DEPOSIT_F2])) {
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
+                            $product->tenure_highlight = true;
                             //$product->max_tenure = $tenure;
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
@@ -1673,7 +1674,7 @@ class PagesFrontController extends Controller
                         if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F2])) {
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
-
+                            $product->tenure_highlight = true;
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
                             $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
@@ -2466,6 +2467,7 @@ class PagesFrontController extends Controller
                         if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F3])) {
                             $tenure = $productRange->tenure;
                             $tenureTotal = 12;
+                            $product->tenure_highlight = true;
                             // $product->max_tenure = $tenure;
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
