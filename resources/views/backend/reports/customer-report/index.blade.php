@@ -18,6 +18,7 @@
             <div class="col-xs-12">
                 <div class="box box-info ">
                     <div class="box-header with-border">
+                        <a href="{{ route('customer-report-excel') }}" class="btn btn-default pull-right">Export Excel</a>
                         <i class="fa fa-file-text" aria-hidden="true"></i>
 
                         <h3 class="box-title">{{CUSTOMER_MODULE_SINGLE . ' ' . REPORT_MODULE_SINGLE}}</h3>
