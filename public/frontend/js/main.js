@@ -95,7 +95,6 @@ function resizeHeader() {
     }
 }
 
-function owlCarousel(element)  line 98 file main.js edit
 function owlCarousel(element) {
     if (element.length > 0) {
         element.each(function() {
