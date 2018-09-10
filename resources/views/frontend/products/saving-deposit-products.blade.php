@@ -490,11 +490,12 @@ Total interest rate @if(($product->total_interest)<=0)
                                                             </thead>
                                                             <tbody>
                                                             @foreach($product->product_ranges as $key => $productRange)
+
                                                                 <tr class="@if($productRange->placement_highlight==true &&  $productRange->placement_value==true ) highlight @endif">
                                                                     <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                                     @if($key==0)
                                                                         <td rowspan="{{count($product->product_ranges)}}"
-                                                                            class="center color-border-none">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
+                                                                            class="center color-border-none @if( $product->tenure_highlight = true) highlight @endif">{{ $productRange->tenure}} {{\Helper::days_or_month_or_year(2, $product->tenure)}}</td>
                                                                     @endif
                                                                     <td class=" center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
                                                                             - @else {{ $productRange->bonus_interest . '%' }} @endif</td>
@@ -720,10 +721,9 @@ Average interest rate @if($product->total_interest <=0)
                                                                             - @else
                                                                             ${{ Helper::inThousand($product->total_interest_earn) }} @endif
                                                                         <br>
-<span>
-Total interest rate {{ $product->total_interest }}
-    % throughout 1 Year
-</span>
+                                                                            <span>
+                                                                            {{BASE_EFFECTIVE_RATE}}
+                                                                            </span>
 
                                                                     </h2>
                                                                 </div>
