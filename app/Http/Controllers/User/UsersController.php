@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use App\ProductManagement;
+use App\AdsManagement;
 use App\ContactEnquiry;
 use App\HealthInsuranceEnquiry;
 use App\LifeInsuranceEnquiry;
@@ -470,6 +471,16 @@ class UsersController extends Controller
                     $users->delete_status = 1;
                 } elseif ($type == 'bulk_brand_status_update') {
                     $users = Brand::find($id);
+                    if ($select_type == 'active') {
+                        $users->display = 1;
+                    } else {
+                        $users->display = 0;
+                    }
+                }elseif ($type == 'bulk_ads_remove') {
+                    $users = AdsManagement::find($id);
+                    $users->delete_status = 1;
+                } elseif ($type == 'bulk_ads_status_update') {
+                    $users = AdsManagement::find($id);
                     if ($select_type == 'active') {
                         $users->display = 1;
                     } else {
