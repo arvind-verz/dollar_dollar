@@ -280,3 +280,6 @@ define('NILL', "NIL");
 define('MONTHS', "Months");
 define('DAYS', "Days");
 
+
+// single lines for product result
+define('BASE_EFFECTIVE_RATE', "Base on effective interest rate");

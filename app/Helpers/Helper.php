@@ -645,6 +645,10 @@ class Helper
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
                         $minTenure = min($placementTenures);
+                        if(count($placementTenures)>3)
+                            {
+                                $product->promotion_period = $minTenure.' - '.$maxTenure;
+                            }
                     }
                 }
                 if (in_array($product->formula_id, [SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {
@@ -670,14 +674,14 @@ class Helper
         } elseif ($byOrderValue == 'promotion_period') {
             if($productType==ALL_IN_ONE_ACCOUNT)
             {
-                $products = $products->sortByDesc('promotion_period')->values();
+                $products = $products->sortBy('promotion_period')->values();
             }else
             {
 
             $results = collect();
-                    $products1 = $products->where('tenure_category', ONGOING)->sortByDesc('max_tenure')->values();
-                    $products2 = $products->where('tenure_category', MONTHS)->sortByDesc('max_tenure')->values();
-                    $products3 = $products->where('tenure_category', DAYS)->sortByDesc('max_tenure')->values();
+                    $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                    $products2 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                    $products3 = $products->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
                     if ($products1->count()) {
                         $results = $results->merge($products1);
                     }
