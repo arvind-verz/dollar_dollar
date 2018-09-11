@@ -3176,7 +3176,7 @@ button {
 
 .ps-slider--home .owl-dots {
     position: absolute;
-    bottom: 40px;
+    bottom: 10px;
     left: 0;
     width: 100%;
     text-align: center;
@@ -3184,8 +3184,8 @@ button {
 
 .ps-slider--home .owl-dot {
     display: inline-block;
-    width: 9px;
-    height: 9px;
+    width: 12px;
+    height: 12px;
     background-color: #4e4e4d;
     margin-right: 10px;
     -webkit-border-radius: 2px;
@@ -6009,8 +6009,8 @@ span.ps-post__meta a {
     margin-right: -20px; 
 }
  
-.ps-home-fixed-deposit.ps-tabs-root .productGridContainer.target-content .product-col-01:nth-child(2){
-    padding-right: 20px;
+.ps-home-fixed-deposit.ps-tabs-root .productGridContainer.target-content .dump-padding-left{
+    padding-left: 10px;
 }
 
 .ps-form--product-management .row input[name='bank_id_other']{
