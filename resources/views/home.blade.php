@@ -153,7 +153,7 @@ $products = \Helper::getHomeProducts(FIX_DEPOSIT,'maximum_interest_rate');
 $i = 1;$featured = []; ?>
 @foreach($products as $product)
 @if($product->featured==1)
-<?php $featured[] = $i;  ?>
+<?php $featured[] = $i; ?>
 <div class="product-col-01">
 <div class="ps-slider--feature-product saving">
 <div class="ps-block--short-product second highlight"
@@ -200,7 +200,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -301,7 +301,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -411,7 +411,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -533,7 +533,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -636,7 +636,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -745,7 +745,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -866,7 +866,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -968,7 +968,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -1077,7 +1077,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -1197,7 +1197,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -1291,7 +1291,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -1386,7 +1386,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -1505,7 +1505,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -1609,7 +1609,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
@@ -1720,7 +1720,7 @@ $featured_width = 3;
 $featured_width = 4;
 }
 ?>
-<div class="product-col-0{{ $featured_width }}">
+<div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
 data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
