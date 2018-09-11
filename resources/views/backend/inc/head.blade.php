@@ -63,7 +63,7 @@
 <link rel="stylesheet" href="{{ asset('backend/dist/bootstrap-tagsinput.css') }}"/>
 <style>
 input[type='checkbox'] {
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
 }
 	</style>
