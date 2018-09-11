@@ -1837,8 +1837,7 @@ href="https://www.facebook.com/dollardollar.sg/">DollarDollar</a>
 </div>
 <div class="ps-block--home-signup">
 <h3>Create an account to manage your privilege easily. <strong> It is free!</strong></h3><a
-class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i
-class="fa fa-facebook"></i> Signup with facebook</a><a
+class="ps-btn ps-btn--yellow" href="{{ url('login/facebook') }}"><i class="fab fa-facebook-f"></i> Signup with facebook</a><a
 class="ps-btn ps-btn--outline" href="{{ url('login/google') }}">Sign Up with
 email</a>
 </div>

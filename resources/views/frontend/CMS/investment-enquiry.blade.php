@@ -261,7 +261,7 @@
     {{--contact us or what we offer section end--}}
 <script type="text/javascript">
     $(document).ready(function() {
-        inputs_checked();
+        /*inputs_checked();
         var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
         inputs.prop("disabled", true);
         $("input[name='components[]'], input[name='gender'], input[name='smoke'], input[name='time[]']").on("change", function() {
@@ -276,7 +276,7 @@
             else {
                 $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("disabled", true);
             }
-        } 
+        }*/ 
     });
 
     $(document).ready(function () {
