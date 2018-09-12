@@ -164,7 +164,7 @@ data-mh="product"><img
 src="{{ asset($product->brand_logo) }}"
 alt="">
 <h4 class="slider-heading">
-<strong>up to <span class="highlight">{{ $product->maximum_interest_rate  }}
+<strong>up to <span class="highlight-slider">{{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 
@@ -218,7 +218,7 @@ data-owl-nav-right="<i class='fa fa-angle-right'></i>">
 <div class="ps-block--short-product"><img
 src="<?php echo asset($product->brand_logo); ?>"
 alt="">
-<h4 class="slider-heading"><strong>up to <span class="highlight"> {{ $product->maximum_interest_rate  }}
+<h4 class="slider-heading"><strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 
@@ -497,7 +497,7 @@ $i = 1;$featured = []; ?>
 data-mh="product"><img
 src="{{ asset($product->brand_logo) }}"
 alt="">
-<h4 class="slider-heading"><strong>up to <span class="highlight"> {{ $product->maximum_interest_rate  }}
+<h4 class="slider-heading"><strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 
@@ -551,7 +551,7 @@ data-owl-nav-right="<i class='fa fa-angle-right'></i>">
 <div class="ps-block--short-product"><img
 src="<?php echo asset($product->brand_logo); ?>"
 alt="">
-<h4 class="slider-heading"><strong>up to <span class="highlight"> {{ $product->maximum_interest_rate  }}
+<h4 class="slider-heading"><strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 
@@ -830,7 +830,7 @@ $i = 1;$featured = []; ?>
 data-mh="product"><img
 src="{{ asset($product->brand_logo) }}"
 alt="">
-<h4 class="slider-heading"><strong>up to <span class="highlight"> {{ $product->maximum_interest_rate  }}
+<h4 class="slider-heading"><strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 
@@ -884,7 +884,7 @@ data-owl-nav-right="<i class='fa fa-angle-right'></i>">
 <div class="ps-block--short-product"><img
 src="<?php echo asset($product->brand_logo); ?>"
 alt="">
-<h4 class="slider-heading"><strong>up to <span class="highlight"> {{ $product->maximum_interest_rate  }}
+<h4 class="slider-heading"><strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 
@@ -1165,7 +1165,7 @@ $i = 1;$featured = []; ?>
 data-mh="product"><img
 src="{{ asset($product->brand_logo) }}"
 alt="">
-<h4 class="slider-heading"><strong>up to <span class="highlight"> {{ $product->maximum_interest_rate  }}
+<h4 class="slider-heading"><strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 
@@ -1215,7 +1215,7 @@ data-owl-nav-right="<i class='fa fa-angle-right'></i>">
 <div class="ps-block--short-product"><img
 src="<?php echo asset($product->brand_logo); ?>"
 alt="">
-<h4 class="slider-heading"><strong>up to <span class="highlight"> {{ $product->maximum_interest_rate  }}
+<h4 class="slider-heading"><strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 
@@ -1355,7 +1355,7 @@ data-mh="product"><img
 src="{{ asset($product->brand_logo) }}"
 alt="">
 <h4 class="slider-heading">
-<strong>up to <span class="highlight"> {{ $product->promotion_period }} Criteria</span></strong>
+<strong>up to <span class="highlight-slider"> {{ $product->promotion_period }} Criteria</span></strong>
 </h4>
 
 <div class="ps-block__info">
@@ -1406,7 +1406,7 @@ data-owl-nav-right="<i class='fa fa-angle-right'></i>">
 src="<?php echo asset($product->brand_logo); ?>"
 alt="">
 <h4 class="slider-heading">
-<strong>up to <span class="highlight"> {{ $product->promotion_period }} Criteria</span></strong>
+<strong>up to <span class="highlight-slider"> {{ $product->promotion_period }} Criteria</span></strong>
 </h4>
 
 <div class="ps-block__info">
@@ -1468,7 +1468,7 @@ $i = 1;$featured = []; ?>
 data-mh="product"><img
 src="{{ asset($product->brand_logo) }}"
 alt="">
-<h4 class="slider-heading"><strong>up to <span class="highlight"> {{ $product->maximum_interest_rate  }}
+<h4 class="slider-heading"><strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 
@@ -1523,7 +1523,7 @@ data-owl-nav-right="<i class='fa fa-angle-right'></i>">
 <div class="ps-block--short-product"><img
 src="<?php echo asset($product->brand_logo); ?>"
 alt="">
-<h4 class="slider-heading"><strong>up to <span class="highlight"> {{ $product->maximum_interest_rate  }}
+<h4 class="slider-heading"><strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate  }}
 %</span></strong>
 </h4>
 

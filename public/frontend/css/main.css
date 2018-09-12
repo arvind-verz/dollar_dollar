@@ -2174,6 +2174,12 @@ button {
     font-weight: 700;
 }
 
+.ps-block--short-product .highlight-slider {
+    text-transform: uppercase;
+    color: #3db54a;
+    font-weight: 700;
+}
+
 .ps-block--short-product .ps-block__info {
     padding-bottom: 20px;
 }
