@@ -174,7 +174,7 @@
                                         @if(isset($searchFilter['filter']))
                                             <h4>
                                                 @if($searchFilter['filter']==INTEREST)
-                                                    up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                                    <strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}%</span></strong>
                                                 @endif
                                                 @if($searchFilter['filter']==PLACEMENT)
                                                     Min: <strong>

@@ -193,7 +193,7 @@ src="{{ asset($product->brand_logo) }}" alt="">
 @if(isset($searchFilter['filter']))
 <h4 class="slider-heading">
 @if($searchFilter['filter']==INTEREST)
-up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+<strong>up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}%</span></strong>
 @endif
 @if($searchFilter['filter']==PLACEMENT)
 Min: <strong>
