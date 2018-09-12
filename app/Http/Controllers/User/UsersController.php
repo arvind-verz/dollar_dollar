@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use App\ProductManagement;
+use App\AdsManagement;
 use App\ContactEnquiry;
 use App\HealthInsuranceEnquiry;
 use App\LifeInsuranceEnquiry;
@@ -112,6 +113,8 @@ class UsersController extends Controller
         $user->email = $request->input('email');
         $user->tel_phone = $request->input('tel_phone');
         $user->status = $request->input('status');
+        $user->email_notification = isset($request->email_notification) ? $request->email_notification : 0;
+        $user->adviser = isset($request->adviser) ? $request->adviser : 0;
         $user->updated_at_admin = Carbon::now()->toDateTimeString();
         $user->save();
 
@@ -470,6 +473,16 @@ class UsersController extends Controller
                     $users->delete_status = 1;
                 } elseif ($type == 'bulk_brand_status_update') {
                     $users = Brand::find($id);
+                    if ($select_type == 'active') {
+                        $users->display = 1;
+                    } else {
+                        $users->display = 0;
+                    }
+                }elseif ($type == 'bulk_ads_remove') {
+                    $users = AdsManagement::find($id);
+                    $users->delete_status = 1;
+                } elseif ($type == 'bulk_ads_status_update') {
+                    $users = AdsManagement::find($id);
                     if ($select_type == 'active') {
                         $users->display = 1;
                     } else {

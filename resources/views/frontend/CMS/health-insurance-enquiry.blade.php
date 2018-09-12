@@ -236,19 +236,14 @@
 <script type="text/javascript">
     $(document).ready(function() {
         inputs_checked();
-        var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
+        /*var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
         inputs.prop("disabled", true);
         $("input[name='coverage'], input[name='level'], input[name='time[]']").on("change", function() {
             inputs_checked();
-        });
+        });*/
 
         function inputs_checked() {
-            if($("input[name='coverage']").is(":checked")==true && $("input[name='level']").is(":checked")==true && $("input[name='time[]']").is(":checked")==true) {
-                inputs.prop("disabled", false);
-            }
-            else {
-                $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("disabled", true);
-            }
+            $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("disabled", true);
         }
 
         $("input[name='level']").on("change", function() {

@@ -81,7 +81,7 @@ method="post">
 value="{{ isset($searchFilter['salary']) ? $searchFilter['salary'] : '' }}">
 </div>
 @if(isset($toolTips->salary))
-<a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->salary}}"><i
+<a class="ps-tooltip" href="javascript:void(0)" data-tooltip="{{$toolTips->salary}}"><i
 class="fa fa-exclamation-circle"></i></a>
 @endif
 </div>
@@ -92,7 +92,7 @@ class="fa fa-exclamation-circle"></i></a>
 value="{{ isset($searchFilter['giro']) ? $searchFilter['giro'] : '' }}">
 </div>
 @if(isset($toolTips->payment))
-<a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->payment}}"><i
+<a class="ps-tooltip" href="javascript:void(0)" data-tooltip="{{$toolTips->payment}}"><i
 class="fa fa-exclamation-circle"></i></a>
 @endif
 </div>
@@ -103,7 +103,7 @@ class="fa fa-exclamation-circle"></i></a>
 value="{{ isset($searchFilter['spend']) ? $searchFilter['spend'] : '' }}">
 </div>
 @if(isset($toolTips->spend))
-<a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->spend}}"><i
+<a class="ps-tooltip" href="javascript:void(0)" data-tooltip="{{$toolTips->spend}}"><i
 class="fa fa-exclamation-circle"></i></a>
 @endif
 </div>
@@ -114,7 +114,7 @@ class="fa fa-exclamation-circle"></i></a>
 value="{{ isset($searchFilter['privilege']) ? $searchFilter['privilege'] : '' }}">
 </div>
 @if(isset($toolTips->privilege))
-<a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->privilege}}"><i
+<a class="ps-tooltip" href="javascript:void(0)" data-tooltip="{{$toolTips->privilege}}"><i
 class="fa fa-exclamation-circle"></i></a>
 @endif
 </div>
@@ -125,7 +125,7 @@ class="fa fa-exclamation-circle"></i></a>
 value="{{ isset($searchFilter['loan']) ? $searchFilter['loan'] : '' }}">
 </div>
 @if(isset($toolTips->loan))
-<a class="ps-tooltip" href="#logo-detail" data-tooltip="{{$toolTips->loan}}"><i
+<a class="ps-tooltip" href="javascript:void(0)" data-tooltip="{{$toolTips->loan}}"><i
 class="fa fa-exclamation-circle"></i></a>
 @endif
 </div>

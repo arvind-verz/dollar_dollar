@@ -106,6 +106,25 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Newsletter</label>
+
+                                <div class="col-sm-10">
+
+                                    <input type="checkbox" value="1" name="email_notification" @if($user->email_notification==1) checked @endif>
+                                        
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Consent to have marketing information</label>
+
+                                <div class="col-sm-10">
+
+                                        <input type="checkbox" value="1" name="adviser" @if($user->adviser==1) checked @endif>
+                                            
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                         <!-- /.box-body -->

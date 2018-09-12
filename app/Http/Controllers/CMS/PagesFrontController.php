@@ -688,8 +688,12 @@ class PagesFrontController extends Controller
         return view('frontend.contact', compact("brands", "page", "systemSetting", "banners"));
     }
 
-    public function getBlogByCategories($id = null)
+    public function getBlogByCategories($id = NULL, Request $request)
     {
+        //dd($request->all());
+        if(isset($request->blog_id)) {
+            $id = $request->blog_id;
+        }
         $page = Page::where('pages.slug', BLOG_URL)
             ->where('delete_status', 0)->first();
         if (!$page) {
@@ -712,9 +716,12 @@ class PagesFrontController extends Controller
             $query = $query->where('pages.menu_id', $id);
         }
 
+        if(isset($request->b_search)) {
+            $query = $query->where('pages.name', 'LIKE', '%'.$request->b_search.'%')
+            ->orwhere('pages.meta_title', 'LIKE', '%'.$request->b_search.'%');
+        }
         if (Auth::guest()) {
             $details = $query->whereIn('after_login', [0, null])->paginate(5);
-
         } else {
             $details = $query->paginate(5);
         }

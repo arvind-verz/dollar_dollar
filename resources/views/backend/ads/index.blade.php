@@ -1,5 +1,6 @@
 @extends('backend.layouts.app')
 @section('content')
+@php if($type=='index') {$type='account';} @endphp
     <section class="content-header">
 
         <h1>
@@ -8,7 +9,8 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
-            <li class="active">{{ADS_MANAGEMENT}}</li>
+            <li><a href="{{ route('ads.index', ['type'=>$type]) }}">{{ADS_MANAGEMENT}}</a></li>
+            <li class="active">{{ ucfirst($type) }}</li>
         </ol>
     </section>
 
@@ -33,7 +35,17 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-
+                        <a class="btn btn-app delete bulk_remove hide" title="Delete Ads"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
+                        <div class="form-group col-md-2 bulk_status hide">
+                          <span class="badge"></span>
+                          <select class="form-control" name="select_type">
+                            <option value="">-- Select --</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                          </select>
+                        </div> 
+                        <input type="hidden" name="bulk_remove_type" value="bulk_ads_remove">
+                        <input type="hidden" name="bulk_update_type" value="bulk_ads_status_update">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>
@@ -42,6 +54,7 @@
                                         <table id="banners" class="table ">
                                             <thead>
                                             <tr>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete/Update</th>
                                                 @if($type=='product')
                                                 <th>Product Page</th>
                                                 @elseif($type=='blog')
@@ -61,6 +74,9 @@
                                             @if($ads->count())
                                                 @foreach($ads as $ad)
                                                     <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="bluk_remove[]" value="{{ $ad->id }}">
+                                                        </td>
                                                         @if($type=='product' || $type=='blog')
                                                             <td>
                                                                 {{  $ad->page_type  }}

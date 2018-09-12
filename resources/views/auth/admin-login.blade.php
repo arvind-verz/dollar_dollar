@@ -49,7 +49,7 @@
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox"
-                                                   name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                                   name="remember" {{ old('remember') ? 'checked' : '' }}> <span class="ml-10">Remember Me</span>
                                         </label>
                                     </div>
                                 </div>

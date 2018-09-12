@@ -295,7 +295,7 @@ class MenuController extends Controller
 
             if (count($ids)) {
                 if (count($ids) <= 1) {
-                    $update_query = Menu::where('id', $ids)->update(['main' => 0, 'parent' => 0, 'child' => 0]);
+                    $update_query = Menu::where('id', $ids)->update(['delete_status' => 1]);
                 }
                 $updateDeleteStatus = Menu::whereIn('id', $ids)
                     ->update(['delete_status' => 1]);
