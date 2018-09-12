@@ -26,13 +26,13 @@
                             href="@if($menu['slug'] != null) {{route('slug',[$menu['slug']]) }} @else javascript:void(0) @endif"><i class="{{ $menu['icon'] }}"></i>{{$menu['title']}}</a>
 
                     @if($menu['slug'] == BLOG_URL)
-                        <ul class="sub-menu">
+                        <!-- <ul class="sub-menu">
                             <?php
-
+                        
                             $parentCategories = Helper::getBlogMenus();
                             printCategories($parentCategories, BLOG_MENU_ID);
                             ?>
-                        </ul>
+                        </ul> -->
                     @else
                         <ul class="sub-menu">
                             <?php

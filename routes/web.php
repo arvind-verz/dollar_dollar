@@ -75,8 +75,12 @@ Route::post('/post-life-enquiry', 'Enquiry\EnquiryFrontController@postLifeEnquir
 Route::post('/investment-enquiry', 'Enquiry\EnquiryFrontController@investmentEnquiry')->name('investment-enquiry');
 
 /*Blog module end*/
-Route::get('/get-blog-by-category/{id}', 'CMS\PagesFrontController@getBlogByCategories')->name('get-blog-by-category');
 Route::get('/blog-list', 'CMS\PagesFrontController@getBlogByCategories')->name('blog-list');
+Route::get('/get-blog-by-category/{id}', 'CMS\PagesFrontController@getBlogByCategories')->name('get-blog-by-category');
+
+Route::get('/blog-search', 'CMS\PagesFrontController@getBlogByCategories')->name('blog-search');
+
+
 Route::post('/combine-criteria-filter', 'CMS\PagesFrontController@combineCriteriaFilter')->name('combine-criteria-filter');
 
 /* TAGS FRONTEND */
