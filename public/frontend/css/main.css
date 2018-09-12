@@ -2571,6 +2571,7 @@ button {
     font-size: 15px;
     color: #303030;
     background: transparent;
+    text-align: center;
 }
 
 .ps-table--product-managerment tbody tr td:last-child button {

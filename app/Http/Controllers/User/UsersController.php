@@ -113,6 +113,8 @@ class UsersController extends Controller
         $user->email = $request->input('email');
         $user->tel_phone = $request->input('tel_phone');
         $user->status = $request->input('status');
+        $user->email_notification = isset($request->email_notification) ? $request->email_notification : 0;
+        $user->adviser = isset($request->adviser) ? $request->adviser : 0;
         $user->updated_at_admin = Carbon::now()->toDateTimeString();
         $user->save();
 

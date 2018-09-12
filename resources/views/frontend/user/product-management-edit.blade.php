@@ -111,13 +111,13 @@
                                             <div class="col-xs-6">
                                                 <div class="form-group">
                                                     <label>Start Date</label>
-                                                    <input class="form-control datepicker" name="start_date" type="text" placeholder="" autocomplete="off" value="{{ date("Y-m-d", strtotime($product_management->start_date)) }}">
+                                                    <input class="form-control datepicker" name="start_date" type="text" placeholder="" autocomplete="off" value="@if(!empty($product_management->start_date)) {{ date("Y-m-d", strtotime($product_management->start_date)) }} @endif">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <div class="form-group">
                                                     <label>End Date</label>
-                                                    <input class="form-control datepicker" name="end_date" type="text" placeholder="" autocomplete="off" value="{{ date("Y-m-d", strtotime($product_management->end_date)) }}">
+                                                    <input class="form-control datepicker" name="end_date" type="text" placeholder="" autocomplete="off" value="@if(!empty($product_management->end_date)){{ date("Y-m-d", strtotime($product_management->end_date)) }} @endif">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -186,6 +186,22 @@
         if($("input[name='dod_reminder']").is(":checked")!==false) {
             $("select[name='reminder[]']").prop("disabled", true);
             $(".select2").select2("val", " ");
+        }
+
+        dod_onoff();
+        $("input[name='start_date'], input[name='end_date']").on("change", function() {
+            dod_onoff();
+        });
+
+        function dod_onoff() {
+            var start_date = $("input[name='end_date']").val();
+            var end_date = $("input[name='end_date']").val();
+            if(start_date=='' || end_date=='') {
+                $("input[name='dod_reminder']").attr("disabled", true);
+            }
+            else {
+                $("input[name='dod_reminder']").attr("disabled", false);
+            }
         }
     </script>
     <script type="text/javascript">
