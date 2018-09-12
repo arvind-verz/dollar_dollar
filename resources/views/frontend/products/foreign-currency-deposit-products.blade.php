@@ -669,7 +669,7 @@ ${{ Helper::inThousand($product->total_interest_earn) }} @endif
 <br>
 <span>
 Total interest rate @if(($product->total_interest)<=0)
-- @else ${{ $product->total_interest }}%
+- @else {{ $product->total_interest }}%
 for {{$product->duration}} {{\Helper::days_or_month_or_year(2, $product->duration)}} @endif
 </span>
 </h2>
