@@ -11,9 +11,8 @@
                             <h5>Salary</h5>
 
                             <div class="ps-block__content">
-                                <p>Credit Salary of $2k through giro</p></div>
-                            <div class="ps-block__content content-detail" data="formula-1-salary">
-                                <a class="ps-block__more" href="">SHOW DETAILS</a></div>
+                                <p>Credit Salary of $2k through giro</p>
+                                <a class="ps-block__more content-detail" data-detail-id="formula-1-salary">SHOW DETAILS</a></div>
                         </div>
                         <div class="ps-block--product-info">
                             <h5>Payment</h5>

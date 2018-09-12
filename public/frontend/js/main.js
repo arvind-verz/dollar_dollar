@@ -293,6 +293,14 @@ $(".currency").on("change", function () {
     document.getElementById('search-form').submit();
 
 });
+
+$(".content-detail").on("change", function () {
+    $(this).html("LESS DETAILS");
+    var detailId = $(this).data('detail-id');
+    detailId.css('display-none');
+});
+
+
 /*$("body").on("click", "img.brand_img", function () {
  if ($(this).prev().prop("checked")) {
  $("input[name='brand_id']").prop("checked", false);
