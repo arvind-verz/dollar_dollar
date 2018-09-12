@@ -30,7 +30,24 @@
     @endif
     <main class="ps-main">
         <div class="container">
-            <div class="row">
+            <?php
+            //$pageName = strtok($page->name, " ");;
+            $pageName = explode(' ', trim($page->name));
+            $pageHeading = $pageName[0];
+            // $a =  array_shift($arr);
+            unset($pageName[0]);
+            ?>
+            {{--Page content start--}}
+            @if($page->slug!=THANK_SLUG)
+                        <h3 class="ps-heading mb-35">
+                            <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                        </h3>
+
+                        {!!  $page->contents !!}
+            @else
+                {!!  $page->contents !!}
+            @endif
+            <div class="row mt-20">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                     <div class="ps-sidebar">
                         <h3 class="ps-heading"><span> My </span> Account</h3>
