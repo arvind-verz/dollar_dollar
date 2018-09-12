@@ -27,15 +27,16 @@ function printBlogCategories($parentCategories, $parent = 0, $id, $deep = 0) {//
     <?php } ?>
 @endif
 <?php } ?>
-{!! Form::open(['class' => 'form-horizontal','url' => 'blog-search', 'method' => 'GET', 'id' => 'blog_search']) !!}
-<div class="col-md-9 col-md-offset-3 mb-20">
-    <input type="hidden" name="blog_id" value="{{ $id }}">
-    <input class="form-control" type="text" name="b_search" value="" placeholder="Search...">
-</div>
-{!! Form::close() !!}
+
 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
     <div class="ps-sidebar">
         <h3>Blog</h3>
+        {!! Form::open(['class' => 'form-horizontal','url' => 'blog-search', 'method' => 'GET', 'id' => 'blog_search']) !!}
+        <div class="mb-20">
+            <input type="hidden" name="blog_id" value="{{ $id }}">
+            <input class="form-control" type="text" name="b_search" value="" placeholder="Search...">
+        </div>
+        {!! Form::close() !!}
         <ul class="ps-list--sidebar">
             <li class="@if(!isset($id)) current @endif"><a href="{{ url(BLOG_URL) }}">All</a></li>
             <?php
