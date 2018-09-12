@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\ProductManagement;
 use Exporter;
 use Excel;
+use DB;
 use App\Exports\CustomersReportExport;
 
 class ReportController extends Controller
@@ -26,11 +27,13 @@ class ReportController extends Controller
             ->select('users.id as users_id', 'users.*', 'brands.*', 'product_managements.*')
             ->get();
 
+        DB::connection()->enableQueryLog();
         $customer_reports_groups = ProductManagement::join('users', 'product_managements.user_id', '=', 'users.id')
             ->join('brands', 'product_managements.bank_id', '=', 'brands.id')
             ->groupBy('users.id')
-            ->select('users.id as users_id', 'users.*', 'brands.*', 'product_managements.*')
+            ->select('users.id as users_id', 'users.subscribe as users_subscribe', 'users.*', 'brands.*', 'product_managements.*')
             ->get();
+        //dd(DB::getQueryLog());
 //dd($customer_reports);
         return view('backend.reports.customer-report.index', [
             'customer_reports'  =>  $customer_reports,
@@ -48,6 +51,6 @@ class ReportController extends Controller
     }
 
     public function customer_report_excel() {
-        return Excel::download(new CustomersReportExport, 'customer_reports.xlsx');
+        return Excel::download(new CustomersReportExport, 'profile '.date("Ymd").'.xlsx');
     }
 }

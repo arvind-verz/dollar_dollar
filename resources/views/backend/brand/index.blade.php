@@ -34,7 +34,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
+                        <a class="btn btn-app delete bulk_remove hide" title="Delete Brand"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
                         <div class="form-group col-md-2 bulk_status hide">
                           <span class="badge"></span>
                           <select class="form-control" name="select_type">
@@ -55,6 +55,7 @@
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete/Update</th>
                                                 <th>Title</th>
+                                                <th>Status</th>
                                                 <th>Link</th>
                                                 <th>Target</th>
                                                 <th>Logo</th>
@@ -73,6 +74,13 @@
                                                         </td>
                                                         <td>
                                                             {{ $brand->title }}
+                                                        </td>
+                                                        <td>
+                                                            @if($brand->display==1)
+                                                            Active
+                                                            @else
+                                                            Inactive
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             {!! $brand->brand_link   !!}

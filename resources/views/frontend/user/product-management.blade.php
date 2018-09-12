@@ -136,6 +136,7 @@
                                 </div>
                                 <div class="form-group submit">
                                     <p>"<span>*</span>" are mandatory fields.</p>
+                                    <p>Add any products or promotions you have to keep track of your total assets across all the banks and institution in Singapore. We will also send reminder(s) to you when your promotion due date is near to maximise the bonus interest you can earn.</p>
                                     <button type="submit" class="ps-btn">Add Products</button>
                                 </div>
                             {{ Form::close() }}
@@ -224,6 +225,22 @@
                 $("select[name='reminder[]']").prop("disabled", false);
             }
         });
+
+        dod_onoff();
+        $("input[name='start_date'], input[name='end_date']").on("change", function() {
+            dod_onoff();
+        });
+
+        function dod_onoff() {
+            var start_date = $("input[name='end_date']").val();
+            var end_date = $("input[name='end_date']").val();
+            if(start_date=='' || end_date=='') {
+                $("input[name='dod_reminder']").attr("disabled", true);
+            }
+            else {
+                $("input[name='dod_reminder']").attr("disabled", false);
+            }
+        }
     </script>
     <script type="text/javascript">
         $(document).ready( function () {

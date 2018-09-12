@@ -17,7 +17,7 @@ data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration
 data-owl-mousedrag="on" data-owl-animated="false" data-owl-hoverpause="true">
 @foreach($banners as $banner)
 @if($banner->display==1 && strtotime(date('Y-m-d', strtotime('now')))<=strtotime(date('Y-m-d', strtotime($banner->banner_expiry))) && strtotime(date('Y-m-d', strtotime('now')))>=strtotime(date('Y-m-d', strtotime($banner->banner_start_date))))
-<a href="{{ $banner->banner_link }}" target="_blank">
+<a href="{{ !empty($banner->banner_link) ? $banner->banner_link : 'javascript:void(0)' }}" target="_blank">
 <div class="ps-banner bg--cover" data-background="{{asset($banner->banner_image )}}"><img
 src="{{asset($banner->banner_image )}}" alt="">
 
@@ -27,7 +27,7 @@ src="{{asset($banner->banner_image )}}" alt="">
 </div>
 </a>
 @else
-<a href="{{ $banner->fixed_banner_link }}" target="_blank">
+<a href="{{ !empty($banner->fixed_banner_link) ? $banner->fixed_banner_link : 'javascript:void(0)' }}" target="_blank">
 <div class="ps-banner bg--cover" data-background="{{asset($banner->fixed_banner )}}"><img
 src="{{asset($banner->fixed_banner )}}" alt="">
 </div>
@@ -38,8 +38,11 @@ src="{{asset($banner->fixed_banner )}}" alt="">
 </div>
 @elseif($banners->count()== 1)
 @foreach($banners as $banner)
-<div class="ps-hero bg--cover" data-background="{{asset($banner->fixed_banner )}}"><img
-src="{{asset($banner->fixed_banner )}}" alt=""></div>
+<a href="{{ !empty($banner->fixed_banner_link) ? $banner->fixed_banner_link : 'javascript:void(0)' }}" target="_blank">
+<div class="ps-banner bg--cover" data-background="{{asset($banner->fixed_banner )}}"><img
+src="{{asset($banner->fixed_banner )}}" alt="">
+</div>
+</a>
 @endforeach
 @endif
 

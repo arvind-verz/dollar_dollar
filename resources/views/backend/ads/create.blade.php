@@ -7,7 +7,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('banner.index', ['type'=>$type]) }}">{{ADS_MANAGEMENT}}</a></li>
+            <li><a href="{{ route('ads.index', ['type'=>$type]) }}">{{ADS_MANAGEMENT}}</a></li>
             <li class="active">{{ADS_MODULE_SINGLE.' '.ADD_ACTION}}</li>
         </ol>
     </section>
@@ -83,8 +83,11 @@
                                     </select>
                                 </div>
                             </div>
+                            <a href="{{ route('ads.index', ['type'=>$type]) }}" class="btn btn-warning pull-right ml-10"><i class="fa  fa-close"></i> Cancel
+                            </a>
                             <button type="submit" class="btn btn-info pull-right"><i class="fa  fa-check"></i> Add
                             </button>
+
 
                         </div>
                         <!-- /.box-footer -->

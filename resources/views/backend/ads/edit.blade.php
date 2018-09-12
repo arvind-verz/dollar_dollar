@@ -1,5 +1,6 @@
 @extends('backend.layouts.app')
 @section('content')
+@php if($type=='index') {$type='account';} @endphp
     <section class="content-header">
         <h1>
             {{strtoupper( ADS_MANAGEMENT )}}
@@ -7,11 +8,10 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('banner.index', ['type'=>$type]) }}">{{ADS_MANAGEMENT}}</a></li>
+            <li><a href="{{ route('ads.index', ['type'=>$type]) }}">{{ADS_MANAGEMENT}}</a></li>
             <li class="active">{{ADS_MODULE_SINGLE.' '.ADD_ACTION}}</li>
         </ol>
     </section>
-    @php if($type=='index') {$type='account';} @endphp
 
     <!-- Main content -->
     <section class="content">
