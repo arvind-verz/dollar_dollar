@@ -452,7 +452,7 @@
                                                 ${{ Helper::inThousand($product->placement) }}</h4>
                                         @endif
                                         <p><strong>{{ $value . ' ' . $type }}</strong>-
-                                            ${{ Helper::inThousand($interestEarns[$tenureKey]) }}
+                                            ${{ Helper::inRoundTwoDecimal($interestEarns[$tenureKey]) }}
                                             ({{ $bonusInterests[$tenureKey] . '%' }})</p>
                                     @endforeach
 

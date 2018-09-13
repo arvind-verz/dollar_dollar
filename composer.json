@@ -21,7 +21,6 @@
     "maatwebsite/excel": "^3.0",
     "spatie/laravel-activitylog": "^2.5",
     "spatie/laravel-permission": "^2.9",
-    "sunspikes/clamav-validator": "^1.4",
     "unisharp/laravel-filemanager": "~1.8"
   },
   "require-dev": {

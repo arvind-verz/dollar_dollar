@@ -6059,3 +6059,9 @@ span.ps-post__meta a {
     width: max-content;
     width: -moz-max-content;
 }
+.content-detail{
+    cursor: pointer;
+}
+.ps-criteria-detail__content{
+    display: none;
+}

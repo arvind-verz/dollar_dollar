@@ -486,7 +486,7 @@ ${{ Helper::inThousand($product->placement) }}</h4>
 @endif
 <p><strong>{{ $value . ' ' . $type }}</strong>
 - {{$product->currency_code}}
-${{ Helper::inThousand($interestEarns[$tenureKey]) }}
+${{ Helper::inRoundTwoDecimal($interestEarns[$tenureKey]) }}
 ({{ $bonusInterests[$tenureKey] . '%' }})</p>
 @endforeach
 
@@ -569,7 +569,7 @@ ${{ Helper::inThousand($product->placement) }}</h4>
 <h2> @if(($product->total_interest_earn)<=0)
 - @else
 {{$product->currency_code}}
-${{ Helper::inThousand($product->total_interest_earn) }} @endif
+${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 <br>
 <span>
 Total interest rate @if(($product->total_interest)<=0)
@@ -665,7 +665,7 @@ ${{ Helper::inThousand($product->placement) }}</h4>
 <h2>@if(($product->total_interest_earn)<=0)
 - @else
 {{$product->currency_code}}
-${{ Helper::inThousand($product->total_interest_earn) }} @endif
+${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 <br>
 <span>
 Total interest rate @if(($product->total_interest)<=0)
@@ -766,7 +766,7 @@ ${{ Helper::inThousand($product->placement) }}</h4>
 <h2>@if($product->total_interest_earn <=0)
 - @else
 {{$product->currency_code}}
-${{ Helper::inThousand($product->total_interest_earn) }} @endif
+${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 <br>
 <span>
 Average interest rate @if($product->total_interest <=0)
@@ -868,7 +868,7 @@ ${{ Helper::inThousand($product->placement) }}</h4>
 <h2>@if($product->total_interest_earn <=0 )
 - @else
 {{$product->currency_code}}
-${{ Helper::inThousand($product->total_interest_earn) }} @endif
+${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 <br>
 <span>
 {{BASE_EFFECTIVE_RATE}}
@@ -961,7 +961,7 @@ ${{ Helper::inThousand($product->placement) }}</h4>
 
 <h2> @if(($product->total_interest_earn)<=0)
 - @else
-${{ Helper::inThousand($product->total_interest_earn) }} @endif
+${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 <br>
 <span>
 Total interest rate @if(($product->total_interest)<=0)
