@@ -1255,9 +1255,9 @@
                         }).get();
 
 
-                        if (Number(minPlacement) < Number(minPlacementAmount) || Number(maxPlacement) < Number(minPlacementAmount)) {
+                        if (Number(minPlacement) > Number(minPlacementAmount) || Number(maxPlacement) > Number(minPlacementAmount)) {
 
-                            errors[i] = 'All placement must be greater than or equal minimum placement amount.';
+                            errors[i] = 'All placement must be less than or equal maximum placement amount.';
                             i++;
 
                         }
@@ -1492,9 +1492,9 @@
                         }).get();
 
 
-                        if (Number(minPlacement) < Number(minPlacementAmount) || Number(maxPlacement) < Number(minPlacementAmount)) {
+                        if (Number(minPlacement) > Number(minPlacementAmount) || Number(maxPlacement) > Number(minPlacementAmount)) {
 
-                            errors[i] = 'All placement must be greater than or equal minimum placement amount.';
+                            errors[i] = 'All placement must be less than or equal maximum placement amount.';
                             i++;
 
                         }
@@ -1696,15 +1696,15 @@
 
                         $.each(minPlacements, function (k, v) {
 
-                            if (Number(v) < Number(minPlacementAmount)) {
+                            if (Number(v) > Number(minPlacementAmount)) {
 
-                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                                errors[i] = 'All placement must be less than or equal to maximum placement amount.';
                                 i++;
 
                                 return false;
                             }
-                            if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
-                                errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
+                            if (Number(maxPlacements[k]) > Number(minPlacementAmount)) {
+                                errors[i] = 'All placement must be less than or equal to maximum placement amount.';
                                 i++;
 
                                 return false;

@@ -126,7 +126,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('minimum_placement_amount', 'Minimum Placement Amount',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('minimum_placement_amount', 'Minimum Placement Amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('minimum_placement_amount', $product->minimum_placement_amount, ['id'=>'minimum-placement-amount','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
@@ -503,8 +503,11 @@
             }
             if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
                 $('#apply-link').removeClass('display-none');
+                $('#placement-amount-content').html("Maximum Placement Amount");
             } else {
                 $('#apply-link').addClass('display-none');
+                $('#placement-amount-content').html("Minimum Placement Amount");
+
             }
 
             if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {

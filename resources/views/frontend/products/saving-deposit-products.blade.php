@@ -753,7 +753,7 @@ alt="" target="_blank"></a>
 @if($product->promotion_formula_id==SAVING_DEPOSIT_F5 )
 
 <div class="ps-product__table fullwidth">
-<div class="ps-table-wrap">
+<div class="ps-table-wrap" style="overflow-x:  scroll;">
 <table class="ps-table ps-table--product">
 <thead>
 <tr>
