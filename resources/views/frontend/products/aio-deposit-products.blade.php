@@ -952,12 +952,12 @@
                                                             <tr>
                                                                 <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
                                                                     style="width: 30%">@if($key==0)
-                                                                        <${{ Helper::inThousand($range->max_range+1) }}
+                                                                        Less than ${{ Helper::inThousand($range->max_range+1) }}
                                                                     @elseif((count($productRanges)-1)==$key)
-                                                                        >${{ Helper::inThousand($range->min_range) }}
+                                                                        ${{ Helper::inThousand($range->min_range) }} Or Above
                                                                     @else
                                                                         ${{ Helper::inThousand($range->min_range) }} TO
-                                                                        <${{ Helper::inThousand($range->max_range+1) }} @endif</td>
+                                                                         ${{ Helper::inThousand($range->max_range+1) }} @endif</td>
                                                                 <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
                                                                     @if($range->bonus_interest_criteria_a<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria_a }}
@@ -1653,13 +1653,13 @@
                                                                                 <tr>
                                                                                     <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
                                                                                         style="width: 30%">@if($key==0)
-                                                                                            <${{ Helper::inThousand($range->max_range+1) }}
+                                                                                            Less than ${{ Helper::inThousand($range->max_range+1) }}
                                                                                         @elseif((count($productRanges)-1)==$key)
-                                                                                            >${{ Helper::inThousand($range->min_range) }}
+                                                                                            ${{ Helper::inThousand($range->min_range) }} Or Above
                                                                                         @else
                                                                                             ${{ Helper::inThousand($range->min_range) }}
                                                                                             TO
-                                                                                            <${{ Helper::inThousand($range->max_range+1) }} @endif</td>
+                                                                                            ${{ Helper::inThousand($range->max_range+1) }} @endif</td>
                                                                                     <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
                                                                                         @if($range->bonus_interest_criteria_a<=0)
                                                                                             - @else  {{ $range->bonus_interest_criteria_a }}

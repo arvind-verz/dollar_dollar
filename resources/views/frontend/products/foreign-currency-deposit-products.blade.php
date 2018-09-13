@@ -901,7 +901,7 @@ alt="" target="_blank"></a>
 @if($product->promotion_formula_id==FOREIGN_CURRENCY_DEPOSIT_F6 )
 
 <div class="ps-product__table fullwidth">
-<div class="ps-table-wrap">
+<div class="ps-table-wrap" FOREIGN_CURRENCY_DEPOSIT_F1>
 <table class="ps-table ps-table--product">
 <thead>
 <tr>
