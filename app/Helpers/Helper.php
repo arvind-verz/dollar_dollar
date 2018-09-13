@@ -590,13 +590,14 @@ class Helper
     }
     public static function inRoundTwoDecimal($amount)
     {
-     $intVal = intval(number_format((float)$amount, 2, '.', ''));
-     if (($amount - $intVal) > 0.009) {
-                $amount = number_format((float)$amount, 2, '.', '');
+        $intVal = intval(number_format((float)$amount, 2, '.', ''));
+        if (($amount - $intVal) > 0.009) {
+                $amount = number_format((float)$amount, 2);
             }else{
                 $amount = $intVal;
             }
-        return $amount;
+           return  $amount;
+
     }
 
     public static function todayDate()

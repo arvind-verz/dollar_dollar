@@ -770,25 +770,25 @@ alt="" target="_blank"></a>
 <td style=" @if($key==3) background-color: #D3D3D3; @endif ">{{ $heading }}</td>
 @if($key==0)
 @foreach($product->monthly_saving_amount as $amount)
-<td class="center">{{ '$' . $amount }}</td>
+<td class="center">{{ '$' . Helper::inRoundTwoDecimal($amount) }}</td>
 @endforeach
 
 @elseif($key==1)
 @foreach($product->base_interests as $baseInterest )
 <td class="center">@if($baseInterest <=0 )
-- @else {{ '$' .$baseInterest }} @endif   </td>
+- @else {{ '$' .Helper::inRoundTwoDecimal($baseInterest) }} @endif   </td>
 @endforeach
 @elseif($key==2)
 @foreach($product->additional_interests as $additionalInterest)
 <td class="center">@if($additionalInterest <=0 )
-- @else {{ '$' .$additionalInterest }} @endif  </td>
+- @else {{ '$' .Helper::inRoundTwoDecimal($additionalInterest) }} @endif  </td>
 @endforeach
 @elseif($key==3)
 <td style=" background-color: #D3D3D3; "
 colspan="{{count($product->months)}}"></td>
 <td class="center"
 style=" background-color: #D3D3D3; ">@if($product->total_interest_earn <=0 )
-- @else {{ '$' . $product->total_interest_earn }} @endif
+- @else {{ '$' . Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 {{-- <br/>
 <span>
 Total interest rate {{ $product->total_interest }}%

@@ -919,21 +919,21 @@ alt="" target="_blank"></a>
 @if($key==0)
 @foreach($product->monthly_saving_amount as $amount)
 <td class="center">
-${{$amount}}</td>
+${{Helper::inRoundTwoDecimal($amount)}}</td>
 @endforeach
 
 @elseif($key==1)
 @foreach($product->base_interests as $baseInterest )
 <td class="center">@if($baseInterest <=0 )
 - @else
-${{$baseInterest}} @endif   </td>
+${{Helper::inRoundTwoDecimal($baseInterest)}} @endif   </td>
 @endforeach
 
 @elseif($key==2)
 @foreach($product->additional_interests as $additionalInterest)
 <td class="center">@if($additionalInterest <=0 )
 - @else
-${{$additionalInterest}} @endif  </td>
+${{Helper::inRoundTwoDecimal($additionalInterest)}} @endif  </td>
 @endforeach
 @elseif($key==3)
 <td class="center"
@@ -941,7 +941,7 @@ colspan="{{count($product->months)}}"></td>
 <td class="center">@if($product->total_interest_earn <=0 )
 - @else
 {{$product->currency_code}}
-${{$product->total_interest_earn }} @endif
+${{Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 {{-- <br/>
 <span>
 Total interest rate {{ $product->total_interest }}%
