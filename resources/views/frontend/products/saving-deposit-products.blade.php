@@ -894,7 +894,6 @@ alt=""></a>
 @foreach($remainingProducts as $product)
 <?php
 $ads = $product->ads;
-//dd($ads);
 ?>
 
 @if($page->slug=='saving-deposit-mode' && isset($ads[3]->ad_horizontal_image_popup_top))
@@ -1381,7 +1380,29 @@ alt="" target="_blank"></a>
 @endif
 @endif
 
+                                            @if(empty($product->formula_id))
+                                                @if(!empty($product->ads_placement))
+                                                    @php
+                                                    $ads =
+                                                    json_decode($product->ads_placement);
+                                                    if(!empty($ads[2]->ad_horizontal_image_popup))
+                                                    {
+                                                    @endphp
+                                                    <div class="ps-poster-popup">
+                                                        <div class="close-popup">
+                                                            <i class="fa fa-times"
+                                                               aria-hidden="true"></i>
+                                                        </div>
 
+                                                        <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
+                                                                    src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                                    alt=""
+                                                                    target="_blank"></a>
+
+                                                    </div>
+                                                    @php } @endphp
+                                                @endif
+                                            @endif
 <div class="ps-product__detail">
 {!! $product->product_footer !!}
 </div>
