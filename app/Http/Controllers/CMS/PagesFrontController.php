@@ -340,7 +340,7 @@ class PagesFrontController extends Controller
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
             // ->where('promotion_products.formula_id', '=', 6)
             ->where('promotion_products.delete_status', '=', 0)
@@ -536,8 +536,47 @@ class PagesFrontController extends Controller
                     $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
-            }
+            }elseif (empty($product->promotion_formula_id)) {
+                $maxTenure = 0;
+                $minTenure = 0;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                            if (count($placementTenures) > 3) {
+                                $product->promotion_period = $minTenure . ' - ' . $maxTenure;
+                            }
+                        }
+                    }
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
+                    }
+                }
 
+                $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
+                $remainingProducts[] = $product;
+            }
         }
         $remainingProducts = collect($remainingProducts);
         if (count($searchFilter)) {
@@ -801,7 +840,7 @@ class PagesFrontController extends Controller
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', PRIVILEGE_DEPOSIT)
             // ->where('promotion_products.formula_id', '=', 6)
             //->where('promotion_products.promotion_start', '<=', $start_date)
@@ -1454,6 +1493,48 @@ class PagesFrontController extends Controller
                 }
 
             }
+            elseif (empty($product->promotion_formula_id)) { 
+                $maxTenure = 0;
+                $minTenure = 0;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                            if (count($placementTenures) > 3) {
+                                $product->promotion_period = $minTenure . ' - ' . $maxTenure;
+                            }
+                        }
+                    }
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
+                    }
+                }
+
+                $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
+                $remainingProducts[] = $product;
+            }
+
         }
         $remainingProducts = collect($remainingProducts);
         if (count($searchFilter)) {
@@ -1507,7 +1588,6 @@ class PagesFrontController extends Controller
             $products = $products->sortByDesc('featured')->values();
         }
         if ($remainingProducts->count()) {
-
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
                     $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount')->values();
@@ -1589,7 +1669,7 @@ class PagesFrontController extends Controller
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
             //->where('promotion_products.formula_id', '=', 2)
             //->where('promotion_products.promotion_start', '<=', $start_date)
@@ -2093,6 +2173,48 @@ class PagesFrontController extends Controller
                 }
 
             }
+            elseif (empty($product->promotion_formula_id)) {
+                $maxTenure = 0;
+                $minTenure = 0;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                            if (count($placementTenures) > 3) {
+                                $product->promotion_period = $minTenure . ' - ' . $maxTenure;
+                            }
+                        }
+                    }
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
+                    }
+                }
+
+                $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
+                $remainingProducts[] = $product;
+            }
+
         }
         $remainingProducts = collect($remainingProducts);
         if (count($searchFilter)) {
@@ -2253,8 +2375,8 @@ class PagesFrontController extends Controller
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
+            ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            ->where('promotion_types.id', '=', FOREIGN_CURRENCY_DEPOSIT)
             // ->where('promotion_products.formula_id', '=', 6)
             //->where('promotion_products.promotion_start', '<=', $start_date)
             //->where('promotion_products.promotion_end', '>=', $end_date)
@@ -2329,7 +2451,7 @@ class PagesFrontController extends Controller
             $status = false;
             $product->max_tenure = 0;
             $product->min_tenure = 0;
-
+            $ranges = null;
             if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F1])) {
                 $tenures = json_decode($product->tenure);
                 //including end day so 1 day add in end date
@@ -2910,7 +3032,49 @@ class PagesFrontController extends Controller
                     $remainingProducts[] = $product;
                 }
 
+            } elseif (empty($product->promotion_formula_id)) {
+                $maxTenure = 0;
+                $minTenure = 0;
+                if ($product->promotion_period == ONGOING) {
+                    $product->tenure_category = ONGOING;
+                } else {
+                    $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                    if (count($placementPeriod)) {
+                        $placementTenures = [];
+                        foreach ($placementPeriod as $period) {
+                            $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                            if ($value > 0) {
+                                $placementTenures[] = $value;
+                            }
+                        }
+                        if (count($placementTenures)) {
+                            $maxTenure = max($placementTenures);
+                            $minTenure = min($placementTenures);
+                            if (count($placementTenures) > 3) {
+                                $product->promotion_period = $minTenure . ' - ' . $maxTenure;
+                            }
+                        }
+                    }
+                    if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        $product->tenure_category = DAYS;
+                    } else {
+                        $product->tenure_category = MONTHS;
+                    }
+                }
+
+                $product->max_tenure = $maxTenure;
+                $product->min_tenure = $minTenure;
+                if ($sortBy == MINIMUM) {
+                    $product->tenure_value = $minTenure;
+                } elseif ($product->promotion_period == ONGOING) {
+                    $product->tenure_value = ONGOING;
+                } else {
+                    $product->tenure_value = $maxTenure;
+                }
+                $remainingProducts[] = $product;
             }
+
+
         }
         $remainingProducts = collect($remainingProducts);
         if (count($searchFilter)) {
@@ -3047,16 +3211,15 @@ class PagesFrontController extends Controller
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             //->where('promotion_products.formula_id', '=', 7)
-            ->where('promotion_formula.promotion_id', '=', ALL_IN_ONE_ACCOUNT)
+            ->where('promotion_types.id', '=', ALL_IN_ONE_ACCOUNT)
             //->where('promotion_products.promotion_start', '<=', $start_date)
             //->where('promotion_products.promotion_end', '>=', $end_date)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id')
             ->get();
-
         $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
         $brands = $details['brands'];
         if ($promotion_products->count() && $brands->count()) {
@@ -3514,7 +3677,7 @@ class PagesFrontController extends Controller
 
                         $maxRanges[] = $productRange->max_range;
                         if ($criteriaValue >= $productRange->min_range && $status == true) {
-                                $criteriaValue = (int)$criteriaValue;
+                            $criteriaValue = (int)$criteriaValue;
                         } elseif (empty($criteriaValue) && (count($productRanges) - 1) == ($key)) {
                             $criteriaValue = $productRange->min_range;
                             $criteria = "bonus_interest_criteria_b";
@@ -3561,7 +3724,10 @@ class PagesFrontController extends Controller
                 } elseif ($status == false) {
                     $remainingProducts[] = $product;
                 }
+            } elseif (empty($product->promotion_formula_id)) {
+                $remainingProducts[] = $product;
             }
+
         }
         $products = collect($filterProducts);
         $remainingProducts = collect($remainingProducts);

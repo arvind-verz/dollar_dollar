@@ -318,6 +318,10 @@
                                         <div class="col-sm-2">
                                         </div>
                                     </div>
+                                    <div class="form-group " id="formula-details-error-section">
+                                        <h3 class="col-sm-12 col-md-12 col-lg-12 text-danger"> Formula details
+                                            unavailable</h3>
+                                    </div>
                                     @include('backend.products.formulaDetail.fixDepositF1')
                                     @include('backend.products.formulaDetail.savingDepositF1')
                                     @include('backend.products.formulaDetail.savingDepositF3')
@@ -541,10 +545,14 @@
 
 
              }*/
+
+            if (formula == 0) {
+                $('#formula-details-error-section').removeClass('display-none');
+            } else {
+                $('#formula-details-error-section').addClass('display-none');
+            }
             if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
-
-
             }
             if (jQuery.inArray(formula, SDP3) !== -1) {
                 //alert("Hello");
@@ -648,6 +656,11 @@
                 '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
             ];
+            if (formula == 0) {
+                $('#formula-details-error-section').removeClass('display-none');
+            } else {
+                $('#formula-details-error-section').addClass('display-none');
+            }
             if (jQuery.inArray(formula, utilFormula) !== -1) {
 
                 $('#until-end-section').removeClass('display-none');

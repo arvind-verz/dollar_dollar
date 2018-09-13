@@ -38,7 +38,7 @@ class ProductsController extends Controller
         $productType = $this->productType($productTypeId);
         $toolTips = ToolTip::where('promotion_id', $productTypeId)->first();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
-        return view('backend.products.promotion_products', compact('CheckLayoutPermission', 'defaultSearch', 'products', 'productType', 'productTypeId','toolTips'));
+        return view('backend.products.promotion_products', compact('CheckLayoutPermission', 'defaultSearch', 'products', 'productType', 'productTypeId', 'toolTips'));
     }
 
     public function promotion_products_add($productTypeId)
@@ -152,181 +152,184 @@ class ProductsController extends Controller
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
-        if(isset($request->until_end_date))
-        {
+        if (isset($request->until_end_date)) {
             $product->until_end_date = $request->until_end_date;
-        }else{
+        } else {
             $product->until_end_date = null;
         }
         $product->maximum_interest_rate = $request->maximum_interest_rate;
         $product->minimum_placement_amount = $request->minimum_placement_amount;
-        $ranges = [];
+        $ranges = null;
+
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
             $product->currency = $request->currency;
         }
-        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F6,FOREIGN_CURRENCY_DEPOSIT_F1])) {
-            foreach ($request->min_placement as $k => $v) {
-                $max = $request->max_placement;
-                $legends = $request->legend;
-                $bonusInterest = $request->bonus_interest;
-                $range = [];
-                $range['min_range'] = (int)$v;
-                $range['max_range'] = (int)$max[$k];
-                $range['legend'] = (int)$legends[$k];
-                $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
-                $ranges[] = $range;
-
-            }
-
-            $tenure = $request->tenure;
-            $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
-            $ranges = json_encode(array_values($ranges));
-            //dd($ranges);
-            $product->tenure = $tenure;
-        }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
-            foreach ($request->min_placement_sdp1 as $k => $v) {
-                $max = $request->max_placement_sdp1;
-                $bonusInterest = $request->bonus_interest_sdp1;
-                $boardInterest = $request->board_rate_sdp1;
-                $range = [];
-                if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
-                    $range['tenure'] = $request->tenure_sdp1;
+        if ($request->formula) {
+            $ranges = [];
+            if (in_array($product->formula_id, [FIX_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F6, FOREIGN_CURRENCY_DEPOSIT_F1])) {
+                foreach ($request->min_placement as $k => $v) {
+                    $max = $request->max_placement;
+                    $legends = $request->legend;
+                    $bonusInterest = $request->bonus_interest;
+                    $range = [];
+                    $range['min_range'] = (int)$v;
+                    $range['max_range'] = (int)$max[$k];
+                    $range['legend'] = (int)$legends[$k];
+                    $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
+                    $ranges[] = $range;
 
                 }
-                $range['min_range'] = (int)$v;
-                $range['max_range'] = (int)$max[$k];
-                $range['bonus_interest'] = (float)$bonusInterest[$k];
-                $range['board_rate'] = (float)$boardInterest[$k];
-                $ranges[] = $range;
+
+                $tenure = $request->tenure;
+                $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
+                $ranges = json_encode(array_values($ranges));
+                //dd($ranges);
+                $product->tenure = $tenure;
             }
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, PRIVILEGE_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
-            $range['min_range'] = (int)$request->min_placement_sdp3;
-            $range['max_range'] = (int)$request->max_placement_sdp3;
-            $range['air'] = (float)$request->air_sdp3;
-            $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
-            $ranges[] = $range;
+            if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+                foreach ($request->min_placement_sdp1 as $k => $v) {
+                    $max = $request->max_placement_sdp1;
+                    $bonusInterest = $request->bonus_interest_sdp1;
+                    $boardInterest = $request->board_rate_sdp1;
+                    $range = [];
+                    if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+                        $range['tenure'] = $request->tenure_sdp1;
 
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, PRIVILEGE_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
-            $min = 1;
-            $previousMax = 0;
-            foreach ($request->max_placement_sdp4 as $k => $v) {
-                $bonusInterest = $request->bonus_interest_sdp4;
-                $boardInterest = $request->board_rate_sdp4;
-                $range = [];
-                $range['min_range'] = (int)$min;
-                $range['max_range'] = (int)$v + $previousMax;
-                $range['bonus_interest'] = (float)$bonusInterest[$k];
-                $range['board_rate'] = (float)$boardInterest[$k];
-                $ranges[] = $range;
-                $min = $range['max_range'] + 1;
-                $previousMax = $range['max_range'];
+                    }
+                    $range['min_range'] = (int)$v;
+                    $range['max_range'] = (int)$max[$k];
+                    $range['bonus_interest'] = (float)$bonusInterest[$k];
+                    $range['board_rate'] = (float)$boardInterest[$k];
+                    $ranges[] = $range;
+                }
+                $ranges = json_encode($ranges);
             }
-            $ranges = json_encode($ranges);
-
-        }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, PRIVILEGE_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
-            $range['min_range'] = (int)$request->min_placement_sdp5;
-            $range['max_range'] = (int)$request->max_placement_sdp5;
-            $range['base_interest'] = (float)$request->base_interest_sdp5;
-            $range['bonus_interest'] = (float)$request->bonus_interest_sdp5;
-            $range['placement_month'] = (int)$request->placement_month_sdp5;
-            $range['display_month'] = (int)$request->display_month_sdp5;
-            $ranges[] = $range;
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F1])) {
-            $range['min_range'] = (int)$request->min_placement_aioa1;
-            $range['max_range'] = (int)$request->max_placement_aioa1;
-
-            $range['minimum_salary'] = (int)$request->minimum_salary_aioa1;
-            $range['bonus_interest_salary'] = (float)$request->bonus_interest_salary_aioa1;
-            $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa1;
-            $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
-            $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
-            $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
-            $range['minimum_privilege_pa'] = (int)$request->minimum_privilege_pa_aioa1;
-            $range['bonus_interest_privilege'] = (float)$request->bonus_interest_privilege_aioa1;
-            //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
-            //$range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
-            $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
-            $range['bonus_interest'] = (float)$request->bonus_interest_bonus_aioa1;
-            $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa1;
-            $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa1;
-
-            $ranges[] = $range;
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
-            $min = 1;
-            $previousMax = 0;
-            foreach ($request->max_placement_aioa2 as $k => $v) {
-
-                $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
-                $bonusInterestB = $request->bonus_interest_criteria_b_aioa2;
-                $range = [];
-                $range['minimum_spend'] = (int)$request->minimum_spend_aioa2;
-                $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
-                $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
-                $range['min_range'] = (int)$min;
-                $range['max_range'] = (int)$v + $previousMax;
-                $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
-                $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+            if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, PRIVILEGE_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
+                $range['min_range'] = (int)$request->min_placement_sdp3;
+                $range['max_range'] = (int)$request->max_placement_sdp3;
+                $range['air'] = (float)$request->air_sdp3;
+                $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
                 $ranges[] = $range;
-                $min = $range['max_range'] + 1;
-                $previousMax = $range['max_range'];
+
+                $ranges = json_encode($ranges);
             }
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F3])) {
-            $range['min_range'] = (int)$request->min_placement_aioa3;
-            $range['max_range'] = (int)$request->max_placement_aioa3;
+            if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, PRIVILEGE_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+                $min = 1;
+                $previousMax = 0;
+                foreach ($request->max_placement_sdp4 as $k => $v) {
+                    $bonusInterest = $request->bonus_interest_sdp4;
+                    $boardInterest = $request->board_rate_sdp4;
+                    $range = [];
+                    $range['min_range'] = (int)$min;
+                    $range['max_range'] = (int)$v + $previousMax;
+                    $range['bonus_interest'] = (float)$bonusInterest[$k];
+                    $range['board_rate'] = (float)$boardInterest[$k];
+                    $ranges[] = $range;
+                    $min = $range['max_range'] + 1;
+                    $previousMax = $range['max_range'];
+                }
+                $ranges = json_encode($ranges);
 
-            $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
-            $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
-            $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
-            $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
-            $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
-            $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
-            $range['minimum_education_loan'] = (int)$request->minimum_education_loan_aioa3;
-            $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa3;
-            $range['minimum_unit_trust'] = (int)$request->minimum_unit_trust_aioa3;
-            $range['requirement_criteria1'] = (int)$request->requirement_criteria1_aioa3;
-            $range['bonus_interest_criteria1'] = (float)$request->bonus_interest_criteria1_aioa3;
-            $range['requirement_criteria2'] = (int)$request->requirement_criteria2_aioa3;
-            $range['bonus_interest_criteria2'] = (float)$request->bonus_interest_criteria2_aioa3;
-            $range['requirement_criteria3'] = (int)$request->requirement_criteria3_aioa3;
-            $range['bonus_interest_criteria3'] = (float)$request->bonus_interest_criteria3_aioa3;
-            $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa3;
-            $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa3;
-
-            $ranges[] = $range;
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F4])) {
-            foreach ($request->min_placement_aioa4 as $k => $v) {
-                $max = $request->max_placement_aioa4;
-                $bonusInterestA = $request->bonus_interest_criteria_a_aioa4;
-                $bonusInterestB = $request->bonus_interest_criteria_b_aioa4;
-                $range = [];
-                $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
-                $range['minimum_spend'] = (int)$request->minimum_spend_aioa4;
-                $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
-                $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
-                $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
-                $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa4;
-                $range['board_rate'] = (float)$request->board_rate_aioa4;
-                $range['min_range'] = (int)$v;
-                $range['max_range'] = (int)$max[$k];
-                $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
-                $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+            }
+            if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, PRIVILEGE_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
+                $range['min_range'] = (int)$request->min_placement_sdp5;
+                $range['max_range'] = (int)$request->max_placement_sdp5;
+                $range['base_interest'] = (float)$request->base_interest_sdp5;
+                $range['bonus_interest'] = (float)$request->bonus_interest_sdp5;
+                $range['placement_month'] = (int)$request->placement_month_sdp5;
+                $range['display_month'] = (int)$request->display_month_sdp5;
                 $ranges[] = $range;
+                $ranges = json_encode($ranges);
             }
-            $ranges = json_encode($ranges);
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F1])) {
+                $range['min_range'] = (int)$request->min_placement_aioa1;
+                $range['max_range'] = (int)$request->max_placement_aioa1;
+
+                $range['minimum_salary'] = (int)$request->minimum_salary_aioa1;
+                $range['bonus_interest_salary'] = (float)$request->bonus_interest_salary_aioa1;
+                $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa1;
+                $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
+                $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
+                $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
+                $range['minimum_privilege_pa'] = (int)$request->minimum_privilege_pa_aioa1;
+                $range['bonus_interest_privilege'] = (float)$request->bonus_interest_privilege_aioa1;
+                //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
+                //$range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
+                $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
+                $range['bonus_interest'] = (float)$request->bonus_interest_bonus_aioa1;
+                $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa1;
+                $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa1;
+
+                $ranges[] = $range;
+                $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
+                $min = 1;
+                $previousMax = 0;
+                foreach ($request->max_placement_aioa2 as $k => $v) {
+
+                    $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
+                    $bonusInterestB = $request->bonus_interest_criteria_b_aioa2;
+                    $range = [];
+                    $range['minimum_spend'] = (int)$request->minimum_spend_aioa2;
+                    $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
+                    $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
+                    $range['min_range'] = (int)$min;
+                    $range['max_range'] = (int)$v + $previousMax;
+                    $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
+                    $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+                    $ranges[] = $range;
+                    $min = $range['max_range'] + 1;
+                    $previousMax = $range['max_range'];
+                }
+                $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F3])) {
+                $range['min_range'] = (int)$request->min_placement_aioa3;
+                $range['max_range'] = (int)$request->max_placement_aioa3;
+
+                $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
+                $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
+                $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
+                $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
+                $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
+                $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
+                $range['minimum_education_loan'] = (int)$request->minimum_education_loan_aioa3;
+                $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa3;
+                $range['minimum_unit_trust'] = (int)$request->minimum_unit_trust_aioa3;
+                $range['requirement_criteria1'] = (int)$request->requirement_criteria1_aioa3;
+                $range['bonus_interest_criteria1'] = (float)$request->bonus_interest_criteria1_aioa3;
+                $range['requirement_criteria2'] = (int)$request->requirement_criteria2_aioa3;
+                $range['bonus_interest_criteria2'] = (float)$request->bonus_interest_criteria2_aioa3;
+                $range['requirement_criteria3'] = (int)$request->requirement_criteria3_aioa3;
+                $range['bonus_interest_criteria3'] = (float)$request->bonus_interest_criteria3_aioa3;
+                $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa3;
+                $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa3;
+
+                $ranges[] = $range;
+                $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F4])) {
+                foreach ($request->min_placement_aioa4 as $k => $v) {
+                    $max = $request->max_placement_aioa4;
+                    $bonusInterestA = $request->bonus_interest_criteria_a_aioa4;
+                    $bonusInterestB = $request->bonus_interest_criteria_b_aioa4;
+                    $range = [];
+                    $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
+                    $range['minimum_spend'] = (int)$request->minimum_spend_aioa4;
+                    $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
+                    $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
+                    $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
+                    $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa4;
+                    $range['board_rate'] = (float)$request->board_rate_aioa4;
+                    $range['min_range'] = (int)$v;
+                    $range['max_range'] = (int)$max[$k];
+                    $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
+                    $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+                    $ranges[] = $range;
+                }
+                $ranges = json_encode($ranges);
+            }
         }
         function intVal($x)
         {
@@ -499,181 +502,183 @@ class ProductsController extends Controller
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
         $product->promotion_period = $request->promotion_period;
-        if(isset($request->until_end_date))
-        {
+        if (isset($request->until_end_date)) {
             $product->until_end_date = $request->until_end_date;
-        }else{
+        } else {
             $product->until_end_date = null;
         }
         $product->maximum_interest_rate = $request->maximum_interest_rate;
         $product->minimum_placement_amount = $request->minimum_placement_amount;
-        $ranges = [];
+        $ranges = null;
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
             $product->currency = $request->currency;
         }
-        if (in_array($product->formula_id, [FIX_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F6,FOREIGN_CURRENCY_DEPOSIT_F1])) {
-            foreach ($request->min_placement as $k => $v) {
-                $max = $request->max_placement;
-                $legends = $request->legend;
-                $bonusInterest = $request->bonus_interest;
-                $range = [];
-                $range['min_range'] = (int)$v;
-                $range['max_range'] = (int)$max[$k];
-                $range['legend'] = (int)$legends[$k];
-                $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
-                $ranges[] = $range;
-
-            }
-
-            $tenure = $request->tenure;
-            $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
-            $ranges = json_encode(array_values($ranges));
-            //dd($ranges);
-            $product->tenure = $tenure;
-        }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
-            foreach ($request->min_placement_sdp1 as $k => $v) {
-                $max = $request->max_placement_sdp1;
-                $bonusInterest = $request->bonus_interest_sdp1;
-                $boardInterest = $request->board_rate_sdp1;
-                $range = [];
-                if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
-                    $range['tenure'] = $request->tenure_sdp1;
+        if ($request->formula) {
+            $ranges = [];
+            if (in_array($product->formula_id, [FIX_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F6, FOREIGN_CURRENCY_DEPOSIT_F1])) {
+                foreach ($request->min_placement as $k => $v) {
+                    $max = $request->max_placement;
+                    $legends = $request->legend;
+                    $bonusInterest = $request->bonus_interest;
+                    $range = [];
+                    $range['min_range'] = (int)$v;
+                    $range['max_range'] = (int)$max[$k];
+                    $range['legend'] = (int)$legends[$k];
+                    $range['bonus_interest'] = array_values(array_map('floatVal', $bonusInterest[$k]));
+                    $ranges[] = $range;
 
                 }
-                $range['min_range'] = (int)$v;
-                $range['max_range'] = (int)$max[$k];
-                $range['bonus_interest'] = (float)$bonusInterest[$k];
-                $range['board_rate'] = (float)$boardInterest[$k];
-                $ranges[] = $range;
+
+                $tenure = $request->tenure;
+                $tenure = json_encode(array_values(array_map('intVal', $tenure[0])));
+                $ranges = json_encode(array_values($ranges));
+                //dd($ranges);
+                $product->tenure = $tenure;
             }
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, PRIVILEGE_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
-            $range['min_range'] = (int)$request->min_placement_sdp3;
-            $range['max_range'] = (int)$request->max_placement_sdp3;
-            $range['air'] = (float)$request->air_sdp3;
-            $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
-            $ranges[] = $range;
+            if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+                foreach ($request->min_placement_sdp1 as $k => $v) {
+                    $max = $request->max_placement_sdp1;
+                    $bonusInterest = $request->bonus_interest_sdp1;
+                    $boardInterest = $request->board_rate_sdp1;
+                    $range = [];
+                    if (in_array($product->formula_id, [SAVING_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F2, FOREIGN_CURRENCY_DEPOSIT_F3])) {
+                        $range['tenure'] = $request->tenure_sdp1;
 
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, PRIVILEGE_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
-            $min = 1;
-            $previousMax = 0;
-            foreach ($request->max_placement_sdp4 as $k => $v) {
-                $bonusInterest = $request->bonus_interest_sdp4;
-                $boardInterest = $request->board_rate_sdp4;
-                $range = [];
-                $range['min_range'] = (int)$min;
-                $range['max_range'] = (int)$v + $previousMax;
-                $range['bonus_interest'] = (float)$bonusInterest[$k];
-                $range['board_rate'] = (float)$boardInterest[$k];
-                $ranges[] = $range;
-                $min = $range['max_range'] + 1;
-                $previousMax = $range['max_range'];
+                    }
+                    $range['min_range'] = (int)$v;
+                    $range['max_range'] = (int)$max[$k];
+                    $range['bonus_interest'] = (float)$bonusInterest[$k];
+                    $range['board_rate'] = (float)$boardInterest[$k];
+                    $ranges[] = $range;
+                }
+                $ranges = json_encode($ranges);
             }
-            $ranges = json_encode($ranges);
-
-        }
-        if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, PRIVILEGE_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
-            $range['min_range'] = (int)$request->min_placement_sdp5;
-            $range['max_range'] = (int)$request->max_placement_sdp5;
-            $range['base_interest'] = (float)$request->base_interest_sdp5;
-            $range['bonus_interest'] = (float)$request->bonus_interest_sdp5;
-            $range['placement_month'] = (int)$request->placement_month_sdp5;
-            $range['display_month'] = (int)$request->display_month_sdp5;
-            $ranges[] = $range;
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F1])) {
-            $range['min_range'] = (int)$request->min_placement_aioa1;
-            $range['max_range'] = (int)$request->max_placement_aioa1;
-
-            $range['minimum_salary'] = (int)$request->minimum_salary_aioa1;
-            $range['bonus_interest_salary'] = (float)$request->bonus_interest_salary_aioa1;
-            $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa1;
-            $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
-            $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
-            $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
-            $range['minimum_privilege_pa'] = (int)$request->minimum_privilege_pa_aioa1;
-            $range['bonus_interest_privilege'] = (float)$request->bonus_interest_privilege_aioa1;
-            //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
-            //$range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
-            $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
-            $range['bonus_interest'] = (float)$request->bonus_interest_bonus_aioa1;
-            $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa1;
-            $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa1;
-
-            $ranges[] = $range;
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
-            $min = 1;
-            $previousMax = 0;
-            foreach ($request->max_placement_aioa2 as $k => $v) {
-
-                $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
-                $bonusInterestB = $request->bonus_interest_criteria_b_aioa2;
-                $range = [];
-                $range['minimum_spend'] = (int)$request->minimum_spend_aioa2;
-                $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
-                $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
-                $range['min_range'] = (int)$min;
-                $range['max_range'] = (int)$v + $previousMax;
-                $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
-                $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+            if (in_array($product->formula_id, [SAVING_DEPOSIT_F3, PRIVILEGE_DEPOSIT_F3, FOREIGN_CURRENCY_DEPOSIT_F4])) {
+                $range['min_range'] = (int)$request->min_placement_sdp3;
+                $range['max_range'] = (int)$request->max_placement_sdp3;
+                $range['air'] = (float)$request->air_sdp3;
+                $range['sibor_rate'] = (float)$request->sibor_rate_sdp3;
                 $ranges[] = $range;
-                $min = $range['max_range'] + 1;
-                $previousMax = $range['max_range'];
+
+                $ranges = json_encode($ranges);
             }
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F3])) {
-            $range['min_range'] = (int)$request->min_placement_aioa3;
-            $range['max_range'] = (int)$request->max_placement_aioa3;
+            if (in_array($product->formula_id, [SAVING_DEPOSIT_F4, PRIVILEGE_DEPOSIT_F4, FOREIGN_CURRENCY_DEPOSIT_F5])) {
+                $min = 1;
+                $previousMax = 0;
+                foreach ($request->max_placement_sdp4 as $k => $v) {
+                    $bonusInterest = $request->bonus_interest_sdp4;
+                    $boardInterest = $request->board_rate_sdp4;
+                    $range = [];
+                    $range['min_range'] = (int)$min;
+                    $range['max_range'] = (int)$v + $previousMax;
+                    $range['bonus_interest'] = (float)$bonusInterest[$k];
+                    $range['board_rate'] = (float)$boardInterest[$k];
+                    $ranges[] = $range;
+                    $min = $range['max_range'] + 1;
+                    $previousMax = $range['max_range'];
+                }
+                $ranges = json_encode($ranges);
 
-            $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
-            $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
-            $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
-            $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
-            $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
-            $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
-            $range['minimum_education_loan'] = (int)$request->minimum_education_loan_aioa3;
-            $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa3;
-            $range['minimum_unit_trust'] = (int)$request->minimum_unit_trust_aioa3;
-            $range['requirement_criteria1'] = (int)$request->requirement_criteria1_aioa3;
-            $range['bonus_interest_criteria1'] = (float)$request->bonus_interest_criteria1_aioa3;
-            $range['requirement_criteria2'] = (int)$request->requirement_criteria2_aioa3;
-            $range['bonus_interest_criteria2'] = (float)$request->bonus_interest_criteria2_aioa3;
-            $range['requirement_criteria3'] = (int)$request->requirement_criteria3_aioa3;
-            $range['bonus_interest_criteria3'] = (float)$request->bonus_interest_criteria3_aioa3;
-            $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa3;
-            $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa3;
-
-            $ranges[] = $range;
-            $ranges = json_encode($ranges);
-        }
-        if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F4])) {
-            foreach ($request->min_placement_aioa4 as $k => $v) {
-                $max = $request->max_placement_aioa4;
-                $bonusInterestA = $request->bonus_interest_criteria_a_aioa4;
-                $bonusInterestB = $request->bonus_interest_criteria_b_aioa4;
-                $range = [];
-                $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
-                $range['minimum_spend'] = (int)$request->minimum_spend_aioa4;
-                $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
-                $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
-                $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
-                $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa4;
-                $range['board_rate'] = (float)$request->board_rate_aioa4;
-                $range['min_range'] = (int)$v;
-                $range['max_range'] = (int)$max[$k];
-                $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
-                $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+            }
+            if (in_array($product->formula_id, [SAVING_DEPOSIT_F5, PRIVILEGE_DEPOSIT_F5, FOREIGN_CURRENCY_DEPOSIT_F6])) {
+                $range['min_range'] = (int)$request->min_placement_sdp5;
+                $range['max_range'] = (int)$request->max_placement_sdp5;
+                $range['base_interest'] = (float)$request->base_interest_sdp5;
+                $range['bonus_interest'] = (float)$request->bonus_interest_sdp5;
+                $range['placement_month'] = (int)$request->placement_month_sdp5;
+                $range['display_month'] = (int)$request->display_month_sdp5;
                 $ranges[] = $range;
+                $ranges = json_encode($ranges);
             }
-            $ranges = json_encode($ranges);
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F1])) {
+                $range['min_range'] = (int)$request->min_placement_aioa1;
+                $range['max_range'] = (int)$request->max_placement_aioa1;
+
+                $range['minimum_salary'] = (int)$request->minimum_salary_aioa1;
+                $range['bonus_interest_salary'] = (float)$request->bonus_interest_salary_aioa1;
+                $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa1;
+                $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
+                $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
+                $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
+                $range['minimum_privilege_pa'] = (int)$request->minimum_privilege_pa_aioa1;
+                $range['bonus_interest_privilege'] = (float)$request->bonus_interest_privilege_aioa1;
+                //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
+                //$range['bonus_interest_loan'] = (float)$request->bonus_interest_loan_aioa1;
+                $range['bonus_amount'] = (int)$request->minimum_bonus_aioa1;
+                $range['bonus_interest'] = (float)$request->bonus_interest_bonus_aioa1;
+                $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa1;
+                $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa1;
+
+                $ranges[] = $range;
+                $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F2])) {
+                $min = 1;
+                $previousMax = 0;
+                foreach ($request->max_placement_aioa2 as $k => $v) {
+
+                    $bonusInterestA = $request->bonus_interest_criteria_a_aioa2;
+                    $bonusInterestB = $request->bonus_interest_criteria_b_aioa2;
+                    $range = [];
+                    $range['minimum_spend'] = (int)$request->minimum_spend_aioa2;
+                    $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
+                    $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
+                    $range['min_range'] = (int)$min;
+                    $range['max_range'] = (int)$v + $previousMax;
+                    $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
+                    $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+                    $ranges[] = $range;
+                    $min = $range['max_range'] + 1;
+                    $previousMax = $range['max_range'];
+                }
+                $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F3])) {
+                $range['min_range'] = (int)$request->min_placement_aioa3;
+                $range['max_range'] = (int)$request->max_placement_aioa3;
+
+                $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
+                $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
+                $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
+                $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
+                $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
+                $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
+                $range['minimum_education_loan'] = (int)$request->minimum_education_loan_aioa3;
+                $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa3;
+                $range['minimum_unit_trust'] = (int)$request->minimum_unit_trust_aioa3;
+                $range['requirement_criteria1'] = (int)$request->requirement_criteria1_aioa3;
+                $range['bonus_interest_criteria1'] = (float)$request->bonus_interest_criteria1_aioa3;
+                $range['requirement_criteria2'] = (int)$request->requirement_criteria2_aioa3;
+                $range['bonus_interest_criteria2'] = (float)$request->bonus_interest_criteria2_aioa3;
+                $range['requirement_criteria3'] = (int)$request->requirement_criteria3_aioa3;
+                $range['bonus_interest_criteria3'] = (float)$request->bonus_interest_criteria3_aioa3;
+                $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa3;
+                $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa3;
+
+                $ranges[] = $range;
+                $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F4])) {
+                foreach ($request->min_placement_aioa4 as $k => $v) {
+                    $max = $request->max_placement_aioa4;
+                    $bonusInterestA = $request->bonus_interest_criteria_a_aioa4;
+                    $bonusInterestB = $request->bonus_interest_criteria_b_aioa4;
+                    $range = [];
+                    $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
+                    $range['minimum_spend'] = (int)$request->minimum_spend_aioa4;
+                    $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
+                    $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
+                    $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
+                    $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa4;
+                    $range['board_rate'] = (float)$request->board_rate_aioa4;
+                    $range['min_range'] = (int)$v;
+                    $range['max_range'] = (int)$max[$k];
+                    $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
+                    $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+                    $ranges[] = $range;
+                }
+                $ranges = json_encode($ranges);
+            }
         }
         function intVal($x)
         {
