@@ -294,10 +294,24 @@ $(".currency").on("change", function () {
 
 });
 
-$(".content-detail").on("change", function () {
-    $(this).html("LESS DETAILS");
-    var detailId = $(this).data('detail-id');
-    detailId.css('display-none');
+$(".content-detail").on("click", function () {
+    var headingText = $(this).text();
+    var formulaDetailId = $(this).data('formula');
+
+    if(headingText=="SHOW DETAILS")
+    {
+        $(".content-detail").html("SHOW DETAILS");
+        $(this).html("LESS DETAILS");
+        var detailId = $(this).data('detail-id');
+        var content = $('#'+detailId).html();
+        $('#formula-'+formulaDetailId+'-details').html(content);
+        $('#formula-'+formulaDetailId+'-details').css('display','block');
+
+    }else{
+        $(this).html("SHOW DETAILS");
+        $('#formula-'+formulaDetailId+'-details').css('display','none');
+    }
+
 });
 
 
@@ -373,9 +387,9 @@ $(document).ready(function () {
         $(this).children(".sub-menu").slideToggle();
     });
 
-    $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-block--product-info .ps-block__content .ps-block__more").click(function () {
+    /*$(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-block--product-info .ps-block__content .ps-block__more").click(function () {
         var n = $(this).attr("href").replace("#", "");
         $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content").css("display", "none");
         $(".ps-criteria-detail__content#" + n).css("display", "block");
-    })
+    })*/
 });

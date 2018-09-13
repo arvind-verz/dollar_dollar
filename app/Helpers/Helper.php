@@ -588,6 +588,16 @@ class Helper
         }
         return $amount;
     }
+    public static function inRoundTwoDecimal($amount)
+    {
+     $intVal = intval(number_format((float)$amount, 2, '.', ''));
+     if (($amount - $intVal) > 0.009) {
+                $amount = number_format((float)$amount, 2, '.', '');
+            }else{
+                $amount = $intVal;
+            }
+        return $amount;
+    }
 
     public static function todayDate()
     {
@@ -716,14 +726,14 @@ class Helper
         //dd($table_tag);
         $i = 1;
         foreach($customer_reports as $customer_report) {
-        
+
         if($i!=1) { ?> <tr> <?php } ?>
             <td><?php echo $customer_report->title; ?></td>
         <td><?php echo ucwords($customer_report->account_name); ?></td>
         <td><?php echo '$'.$customer_report->amount; ?></td>
         <td><?php echo date('d-m-Y', strtotime($customer_report->end_date)); ?></td>
         <td>
-            
+
             <?php
                 if($customer_report->status==1) {
                     echo 'Active';
@@ -737,7 +747,7 @@ class Helper
         if($i==1) { ?> </tr> <?php }
         $i++;
         }
-        
+
     }
 
 }
