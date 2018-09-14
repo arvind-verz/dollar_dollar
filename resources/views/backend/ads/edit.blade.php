@@ -74,6 +74,10 @@
                                     <label>Ad Link</label>
                                     <input type="text" name="ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)" value="{{ $ads->ad_link }}">
                                 </div>
+                                <div class="form-group">
+                                        <label for="">Ad Range Date</label>
+                                        <input type="text" name="ad_range_date" class="form-control" value="">
+                                </div>
                                 @if($type=='account')
                                 <div class="form-group">
                                     <label>Horizontal Banner</label>
@@ -140,5 +144,13 @@
                     }
                 });
             }
+
+$(function() {
+  $('input[name="ad_range_date"]').daterangepicker({
+    opens: 'left'
+  }, function(start, end, label) {
+    $('input[name="ad_range_date"]').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+  });
+});
     </script>
 @endsection

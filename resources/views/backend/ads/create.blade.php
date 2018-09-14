@@ -65,6 +65,14 @@
                                     <label>Ad Link</label>
                                     <input type="text" name="ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
+                                <div class="form-group">
+                                    <div class="col-sm-2 control-label">
+                                        <label for="">Ad Range Date</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="ad_start_date" class="form-control datepicker1" value="{{ date('Y-m-d') . ' - ' . date('Y-m-d') }}">
+                                    </div>
+                                </div>
                                 @if($type=='account')
                                 <div class="form-group">
                                     <label>Horizontal Banner</label>

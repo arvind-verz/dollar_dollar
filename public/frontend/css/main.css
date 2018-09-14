@@ -4380,12 +4380,12 @@ footer.ps-footer .ps-site-info p span {
 }
 
 footer.ps-footer .ps-footer__center {
-    border-right: 1px solid #3f4c50;
+    /* border-right: 1px solid #3f4c50; */
     padding: 0 50px;
 }
 
 footer.ps-footer .ps-footer__content {
-    padding: 60px 0;
+    padding: 30px 0;
 }
 
 footer.ps-footer .ps-footer__copyright {
@@ -5324,7 +5324,7 @@ html .bg--parallax {
     display: block;
     float: left;
     width: 20%;
-    padding: 0px 5px;
+    padding: 0px 10px;
     /* margin: 10px 0; */
 }
 
@@ -6017,7 +6017,7 @@ span.ps-post__meta a {
 }
  
 .dump-padding-left{
-    padding-left: 5px;
+    padding-left: 10px;
 }
 
 .ps-form--product-management .row input[name='bank_id_other']{
@@ -6080,7 +6080,7 @@ span.ps-post__meta a {
 }
 
 .ps-form--contact.ps-form--register a {
-	color: #3db54a;
+    color: #3db54a;
 }
 
 @media only screen and (max-width: 1200px){
@@ -6098,40 +6098,44 @@ span.ps-post__meta a {
     }
 }
 @media only screen and (max-width: 990px){
-	.ps-slider--home .owl-dot {
-		height: 15px;
-		width: 15px;
-	}
+    .ps-slider--home .owl-dot {
+        height: 15px;
+        width: 15px;
+    }
 
-	.ps-home-blog {
-		padding-top: 15px;
-	}
+    .ps-home-blog {
+        padding-top: 15px;
+    }
+
+    .ps-table tbody tr td {
+        min-width: 90px;
+    }
 
 .ps-form--login .submit {
-	max-width: 302px;
+    max-width: 302px;
 }
 
 .ps-block--desposit, .ps-page--deposit
 {
-	padding: 20px 0;
+    padding: 20px 0;
 }
 
 .ps-block--desposit .ps-block__header {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 /* .p_facebook, .ps-form--contact.ps-form--register button[type=submit] {
-	width: 100%;
-	text-align: center;
+    width: 100%;
+    text-align: center;
 } */
 
 .ps-tab.active {
-	padding-bottom: 0;
+    padding-bottom: 0;
 }
 
-	.ps-home-blog .ps-section__left .ps-heading, .ps-block--image .ps-heading {
-		margin-bottom: 20px;
-	}
+    .ps-home-blog .ps-section__left .ps-heading, .ps-block--image .ps-heading {
+        margin-bottom: 20px;
+    }
 
     .ps-call-in-action .ps-btn{
         margin: auto;
