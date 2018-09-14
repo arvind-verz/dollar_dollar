@@ -199,6 +199,10 @@ define('CONTACT_US_SECTION', "Contact Us Now");
 define('OFFER_SECTION', "What We Offer");
 define('CONTACT_US_SECTION_VALUE', "contact_us_section");
 define('OFFER_SECTION_VALUE', "offer_section");
+define('FOOTER3', "Footer 3");
+define('FOOTER4', "Footer 4");
+define('FOOTER3_VALUE', "footer3");
+define('FOOTER4_VALUE', "footer4");
 
 //value for enquiry option store in constants
 define('PRIVATE_COVERAGE', "Private Hospital");

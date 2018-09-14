@@ -386,7 +386,7 @@
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                            extend: 'pdf',
+                            extend: 'print',
                             footer: true,
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
@@ -424,7 +424,7 @@
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                            extend: 'pdf',
+                            extend: 'print',
                             footer: true,
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
@@ -505,7 +505,7 @@
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                            extend: 'pdf',
+                            extend: 'print',
                             footer: true,
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
@@ -585,7 +585,7 @@
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                            extend: 'pdf',
+                            extend: 'print',
                             footer: true,
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
@@ -665,7 +665,7 @@
                     dom: 'lBfrtip',
                     buttons: [
                         {
-                            extend: 'pdf',
+                            extend: 'print',
                             footer: true,
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
