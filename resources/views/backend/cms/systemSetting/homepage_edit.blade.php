@@ -34,7 +34,7 @@
                             <!-- Custom Tabs (Pulled to the right) -->
 
                             <div class="tab-content">
-                                <div class="tab-pane active" id="homepage_links">
+                                <div class="tab-pane active" id="">
                                     <div class="form-group">
                                         {{Form::label('homepage_link_title', 'Title',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
