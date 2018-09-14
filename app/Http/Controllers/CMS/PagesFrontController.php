@@ -290,7 +290,7 @@ class PagesFrontController extends Controller
                 $relatedBlog = array_random($relatedBlog, 3);
                 return view("frontend.Blog.blog-detail", compact("page", "systemSetting", "banners", "relatedBlog", 'tags', 'ads'));
             } else {
-                return view("frontend.CMS.page", compact("page", "systemSetting", "banners"));
+                return view("frontend.CMS.page", compact("page", "systemSetting", "banners", 'slug'));
             }
         }
 

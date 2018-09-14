@@ -16,6 +16,7 @@ class BlogFrontController extends Controller
      */
     public function  getBlogByCategories($id = null)
     {
+        
         $page = Page::where('pages.slug', BLOG_URL)
             ->where('delete_status', 0)->first();
         if (!$page) {
@@ -81,6 +82,6 @@ class BlogFrontController extends Controller
         }
 
 
-        return view("frontend.Blog.blog-detail", compact("details", "page", "banners", 'systemSetting'));
+        return view("frontend.Blog.blog-detail", compact("details", "page", "banners", 'systemSetting', 'slug'));
     }
 }
