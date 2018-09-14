@@ -6107,6 +6107,10 @@ span.ps-post__meta a {
         padding-top: 15px;
     }
 
+    .ps-table tbody tr td {
+        min-width: 90px;
+    }
+
 .ps-form--login .submit {
     max-width: 302px;
 }
