@@ -102,7 +102,7 @@ class BlogController extends Controller
 
         $page = new Page();
         $page->name = ucfirst($request->name);
-        $page->blog_image_ads_link = $request->blog_image_ads_link;
+        $page->disable_ads = $request->disable_ads;
         $page->title = ucfirst($request->title);
         $page->slug = str_slug($request->slug);
 
@@ -128,7 +128,7 @@ class BlogController extends Controller
             $image->move($destinationPath, $imageName);
             $page->blog_image = $destinationPath . '/' . $imageName;
         }
-        if (isset($request->blog_image_ads)) {
+        /*if (isset($request->blog_image_ads)) {
 
             $image = $request->blog_image_ads;
             // Get filename with the extension
@@ -143,7 +143,7 @@ class BlogController extends Controller
             // Upload Image
             $image->move($destinationPath, $imageName);
             $page->blog_image_ads = $destinationPath . '/' . $imageName;
-        }
+        }*/
 
         $tags = [];
         if (isset($request->tags)) {
@@ -273,7 +273,7 @@ class BlogController extends Controller
 
         $oldPage = $page;
         $page->name = ucfirst($request->name);
-        $page->blog_image_ads_link = $request->blog_image_ads_link;
+        $page->disable_ads = $request->disable_ads;
         $page->title = ucfirst($request->title);
         if (isset($request->slug)) {
             $page->slug = str_slug($request->slug);
@@ -303,7 +303,7 @@ class BlogController extends Controller
             $image->move($destinationPath, $imageName);
             $page->blog_image = $destinationPath . '/' . $imageName;
         }
-        if (isset($request->blog_image_ads)) {
+        /*if (isset($request->blog_image_ads)) {
 
             $image = $request->blog_image_ads;
             // Get filename with the extension
@@ -318,7 +318,7 @@ class BlogController extends Controller
             // Upload Image
             $image->move($destinationPath, $imageName);
             $page->blog_image_ads = $destinationPath . '/' . $imageName;
-        }
+        }*/
 
         $tags = [];
         if (isset($request->tags)) {
