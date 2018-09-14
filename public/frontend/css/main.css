@@ -2784,7 +2784,7 @@ button {
 
 .ps-product--2 {
     margin-bottom: 30px;
-    padding: 40px 40px 0;
+    padding: 20px 40px 0;
     background-color: #fffcf5;
 }
 
@@ -5204,10 +5204,10 @@ html .bg--parallax {
 
 .ps-poster-popup .close-popup {
     position: absolute;
-    top: 60px;
-    right: 45px;
+    top: 10px;
+    right: 10px;
     z-index: 1;
-    color: #fff;
+    color: #000;
     cursor: pointer;
 }
 
@@ -5934,7 +5934,7 @@ span.ps-post__meta a {
 
 @media (max-width: 768px) {
     .ps-section__footer:before, .ps-section__footer:after{
-        display: none;
+        width: 20%;
     }
 }
 
@@ -6059,9 +6059,227 @@ span.ps-post__meta a {
     width: max-content;
     width: -moz-max-content;
 }
-.content-detail{
-    cursor: pointer;
+
+    .ps-product .ps-product__info.sp-only{
+        display: none;
+        padding: 15px 20px;
+        font-family: "Montserrat", sans-serif;
+        font-size: 11px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #3db54a;
+        line-height: 15px;
+        border: 1px solid #3db54a;
+        -webkit-border-radius: 3px 3px 0 0;
+        -moz-border-radius: 3px 3px 0 0;
+        -ms-border-radius: 3px 3px 0 0;
+        border-radius: 3px 3px 0 0;
+    }
+.btn.refresh.sp-only{
+    display: none !important;
 }
-.ps-criteria-detail__content{
-    display: none;
+
+.ps-form--contact.ps-form--register a {
+	color: #3db54a;
 }
+
+@media only screen and (max-width: 1200px){
+    .ps-footer__logo{
+        text-align: center;
+    }
+    .ps-block--desposit .ps-block__header{
+        padding: 0;
+    }
+    .ps-block--desposit{
+        padding-bottom: 0;
+    }
+    .ps-home-blog{
+        padding-top: 40px;
+    }
+}
+@media only screen and (max-width: 990px){
+	.ps-slider--home .owl-dot {
+		height: 15px;
+		width: 15px;
+	}
+
+	.ps-home-blog {
+		padding-top: 15px;
+	}
+
+.ps-form--login .submit {
+	max-width: 302px;
+}
+
+.ps-block--desposit, .ps-page--deposit
+{
+	padding: 20px 0;
+}
+
+.ps-block--desposit .ps-block__header {
+	margin-bottom: 10px;
+}
+
+/* .p_facebook, .ps-form--contact.ps-form--register button[type=submit] {
+	width: 100%;
+	text-align: center;
+} */
+
+.ps-tab.active {
+	padding-bottom: 0;
+}
+
+	.ps-home-blog .ps-section__left .ps-heading, .ps-block--image .ps-heading {
+		margin-bottom: 20px;
+	}
+
+    .ps-call-in-action .ps-btn{
+        margin: auto;
+        display: table;
+    }
+    .ps-form--login.ps-form--contact img, .ps-form--contact.ps-form--register img{
+        display: none;
+    }
+    .ps-form--contact.ps-form--register a {
+        color: #3db54a;
+    }
+    .ps-form--contact.ps-form--register .ps-btn--blue{
+        color: #fff;
+    }
+    .ps-block--legend-table .ps-block__content{
+        display: none;
+    }
+    .ps-block--legend-table .ps-block__content p{
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .ps-block--legend-table .ps-block__header{
+        position: relative;
+        cursor: pointer;
+    }
+    .ps-block--legend-table .ps-block__header span{
+        position: absolute;
+        top: 17px;
+        right: 20px;
+        display: inline-block;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #fff;
+    }
+    .ps-product__action .ps-btn.ps-btn--red{
+        margin-top: 5px;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .ps-home--partners .owl-slider.nav-outside .owl-nav{
+        width: 96%;
+    }
+    .ps-home--partners .owl-slider.nav-outside .owl-nav .owl-next{
+        margin-right: 0 !important;
+    }
+    .ps-wiget--footer .ps-list--arrow-right{
+        display: none;
+    }
+    .ps-wiget--footer  h3{
+        cursor: pointer;
+    }
+    .ps-footer__center .col-lg-4{
+        width: 100%;
+        border-bottom: 2px dotted #076b9c;
+    }
+    .ps-logo img{
+        width: 60%;
+    }
+    .menu-toggle span, .menu-toggle:before, .menu-toggle:after{
+        width: 28px;
+    }
+    .menu-toggle:before{
+        top: 10px;
+    }
+    .menu-toggle:after{
+        bottom: 10px;
+    }
+}
+@media only screen and (max-width: 768px){
+    .ps-block__actions{
+        width: 100%;
+    }
+    .ps-form--login .submit .row .col-xs-6{
+        width: 100%;
+    }
+    .ps-form--filter .ps-form__values{
+        padding-right: 50px;
+    }
+    
+    .ps-product .ps-product__info.sp-only{
+        display: inline-block;
+        margin-left: 20px;
+    }
+    .ps-form--enquiry.ps-form--health-insurance .col-xs-3{
+        padding-right: 0;
+    }
+    .ps-form--enquiry.ps-form--health-insurance .col-xs-3 .form-control{
+        padding-left: 0;
+    }
+    .ps-form__content .form-group.recaptcha{
+        margin-top: 10px;
+    }
+    .ps-form--enquiry.ps-form--health-insurance button{
+        width: 100%;
+    }
+    .ps-form--enquiry.ps-form--health-insurance img{
+        display: none;
+    }
+}
+@media only screen and (max-width: 570px) {
+    .ps-block--home-signup .ps-btn{
+        width: 250px;
+        text-align: center;
+        margin: 10px auto !important;
+        display: table;
+    }
+}
+@media only screen and (max-width: 500px){
+    .catListing > li > a{
+        min-width: 101px;
+    }
+    .ps-form--contact.ps-form--register button[type=submit]{
+        width: 260px;
+        margin-bottom: 15px;
+    }
+    .ps-product .ps-product__info.sp-only{
+        margin-left: 0px;
+        margin-top: 10px;
+        width: 133px;
+    }
+}
+@media (max-width: 479px){
+    .form-group.form-group--nest{
+        width: 81%;
+    }
+    .btn.refresh.sp-only{
+        display: inline-block !important;
+        position: absolute;
+        right: -22%;
+        top: 0;
+        width: 20%;
+    }
+    .sm-only{
+        display: none;
+    }
+    .form-group--nest.for{
+        float: right;
+        width: 75%;
+    }
+    .currency.for{
+        position: absolute;
+        top: -60px;
+        width: 23%;
+    }
+    .btn{
+        width: 100%;
+    }
+}
+
+
+
