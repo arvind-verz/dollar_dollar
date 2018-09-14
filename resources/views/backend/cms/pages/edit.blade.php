@@ -69,6 +69,8 @@
                                                         @if(CONTACT_US_SECTION_VALUE == $page->contact_or_offer) selected="selected" @endif>{{CONTACT_US_SECTION}}</option>
                                                 <option value="{{OFFER_SECTION_VALUE}}"
                                                         @if(OFFER_SECTION_VALUE == $page->contact_or_offer) selected="selected" @endif>{{OFFER_SECTION}}</option>
+                                                        <option value="{{FOOTER3_VALUE}}" @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER3}}</option>
+                                                <option value="{{FOOTER4_VALUE}}" @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER4}}</option>
                                             </select>
                                         </div>
                                     </div>

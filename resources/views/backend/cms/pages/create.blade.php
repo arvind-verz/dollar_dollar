@@ -65,6 +65,8 @@
                                                 <option value="null" >Select display section</option>
                                                 <option value="{{CONTACT_US_SECTION_VALUE}}">{{CONTACT_US_SECTION}}</option>
                                                 <option value="{{OFFER_SECTION_VALUE}}">{{OFFER_SECTION}}</option>
+                                                <option value="{{FOOTER3_VALUE}}">{{FOOTER3}}</option>
+                                                <option value="{{FOOTER4_VALUE}}">{{FOOTER4}}</option>
                                             </select>
                                         </div>
                                     </div>

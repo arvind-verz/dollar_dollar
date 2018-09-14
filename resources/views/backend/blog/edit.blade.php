@@ -67,7 +67,7 @@
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
                                                     <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImageads(this, '{{ $page->id }}');"><i class="fas fa-times fa-lg"></i></a>
-                                                    <img class="attachment-img" src="{!! asset($page->blog_image) !!}"
+                                                    <img class="attachment-img" src="{!! asset($page->blog_image_ads) !!}"
                                                          alt="Blog Image ads">
                                                 </div>
                                             </div>
@@ -107,6 +107,8 @@
                                                         @if(CONTACT_US_SECTION_VALUE == $page->contact_or_offer) selected="selected" @endif>{{CONTACT_US_SECTION}}</option>
                                                 <option value="{{OFFER_SECTION_VALUE}}"
                                                         @if(OFFER_SECTION_VALUE == $page->contact_or_offer) selected="selected" @endif>{{OFFER_SECTION}}</option>
+                                                        <option value="{{FOOTER3_VALUE}}" @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER3}}</option>
+                                                <option value="{{FOOTER4_VALUE}}" @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER4}}</option>
                                             </select>
                                         </div>
                                     </div>

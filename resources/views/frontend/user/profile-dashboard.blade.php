@@ -121,12 +121,14 @@
                                                     <tr>
                                                         <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
                                                             @if(!empty($value->brand_logo))
+                                                            <span style="opacity: 0;position: absolute;"> {{ $value->title }} </span>
                                                             <img src="{{ asset($value->brand_logo) }}"></td>
                                                             @elseif($value->other_bank)
                                                             {{ $value->other_bank }}
                                                             @else
                                                             -
                                                             @endif
+
                                                         <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
                                                         <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
                                                         <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>

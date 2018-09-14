@@ -206,7 +206,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -307,7 +307,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -417,7 +417,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -539,7 +539,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -642,7 +642,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -751,7 +751,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -872,7 +872,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -974,7 +974,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -1083,7 +1083,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -1203,7 +1203,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -1297,7 +1297,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -1392,7 +1392,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -1511,7 +1511,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -1615,7 +1615,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
@@ -1726,7 +1726,7 @@ $featured_width = 4;
 <div class="product-col-0{{ $featured_width }} dump-padding-left">
 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
 data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
-data-owl-gap="20" data-owl-nav="true" data-owl-dots="false"
+data-owl-gap="10" data-owl-nav="true" data-owl-dots="false"
 data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
 data-owl-item-sm="2" data-owl-item-md="{{ $featured_item }}"
 data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000"
