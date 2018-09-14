@@ -386,6 +386,15 @@ $(document).ready(function () {
     $("body").on("click", ".menu--mobile > li.menu-item-has-children", function () {
         $(this).children(".sub-menu").slideToggle();
     });
+    $("body").on("click", ".ps-block--legend-table .ps-block__header", function () {
+        $(this).next().slideToggle();
+    });
+    $("body").on("click", ".ps-wiget--footer h3", function () {
+        $(this).next().slideToggle();
+    });
+    $(".ps-block--legend-table .ps-block__header").append("<span></span>");
+    
+    
 
     /*$(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-block--product-info .ps-block__content .ps-block__more").click(function () {
         var n = $(this).attr("href").replace("#", "");
