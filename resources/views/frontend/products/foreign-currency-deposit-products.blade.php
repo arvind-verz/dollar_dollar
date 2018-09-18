@@ -347,7 +347,7 @@ class="fa fa-refresh"></i></a>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="{{ $j }}">
-                        <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
+                        <div class="ps-product__header"><img class="pc-only" src="{{ asset($product->brand_logo) }}" alt="">
 
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
@@ -390,6 +390,7 @@ class="fa fa-refresh"></i></a>
                                     {{$product->currency_name}} ({{$product->currency_code}})
                                 </p>
                             </div>
+                            <img class="sp-only" src="{{ asset($product->brand_logo) }}" alt="">
                         </div>
                         <div class="ps-product__content">
                             <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
