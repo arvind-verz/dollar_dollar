@@ -116,6 +116,7 @@ function owlCarousel(element) {
                 dataNavRight = (el.data('owl-nav-right')) ? el.data('owl-nav-right') : "<i class='fa fa-angle-right'></i>",
                 duration = el.data('owl-duration'),
                 animateStyle = el.data('owl-animated'),
+                smartspeed = el.data('owl-smartspeed'),
                 hoverpause = el.data('owl-hoverpause'),
                 datamouseDrag = (el.data('owl-mousedrag') == 'on') ? true : false;
             if (el.children.length > 1) {
@@ -138,6 +139,7 @@ function owlCarousel(element) {
                     dots: dataDots,
                     items: dataDefaultItem,
                     animateOut: animateStyle,
+                    smartSpeed: smartspeed,
                     autoplayHoverPause: hoverpause,
                     responsive: {
                         0: {
@@ -394,7 +396,18 @@ $(document).ready(function () {
     });
     $(".ps-block--legend-table .ps-block__header").append("<span></span>");
     
+    $(".ps-block--short-product.second.highlight.sp-only").parent().addClass("sp-only");
     
+    $(".ps-list--sidebar .current").append("<div><span></span></div>");
+    $(".ps-list--sidebar .current div").click(function(){
+        if($(this).parents().hasClass("active")){
+            $(this).parents().removeClass("active");
+        }
+        else{
+            $(this).parents().addClass("active");
+        }
+        $(this).parents().nextAll(".ps-list--sidebar li").slideToggle();
+    })
 
     /*$(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-block--product-info .ps-block__content .ps-block__more").click(function () {
         var n = $(this).attr("href").replace("#", "");
