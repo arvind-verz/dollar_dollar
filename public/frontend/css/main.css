@@ -6277,12 +6277,12 @@ span.ps-post__meta a {
     .ps-page--deposit .ps-product__poster{
         display: none;
     }
-    .ps-list--sidebar .current{
+    .ps-list--sidebar.menu-sibar li{
+        display: none;
+    }
+    .ps-list--sidebar.menu-sibar .current{
         position: relative;
         display: block;
-    }
-    .ps-list--sidebar li{
-        display: none;
     }
     .ps-list--sidebar .current div{
         position: absolute;
@@ -6353,6 +6353,9 @@ span.ps-post__meta a {
     .ps-block--highlight.text-center.mb-35 .ps-btn{
         width: 100%;
     }
+    .ps-sidebar{
+        margin-bottom: 20px;
+    }
 }
 @media only screen and (max-width: 570px) {
     .ps-block--home-signup .ps-btn{
@@ -6420,6 +6423,9 @@ span.ps-post__meta a {
         width: 18%;
         top: -60px;
         padding: 0px;
+    }
+    .ps-heading.mb-35.pl-15 span{
+        font-size: 30px;
     }
 }
 
