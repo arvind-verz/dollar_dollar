@@ -43,7 +43,8 @@
                                         <option value="all-in-one-deposit-mode">All in One Deposit</option>
                                     </select>
                                 </div>
-                                @elseif($type=='blog')
+                                @endif
+                                @if($type=='blog')
                                 <div class="form-group">
                                     <label>Blog Page</label>
                                     <select class="form-control" name="page_type">
@@ -65,15 +66,7 @@
                                     <label>Ad Link</label>
                                     <input type="text" name="ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-2 control-label">
-                                        <label for="">Ad Range Date</label>
-                                    </div>
-                                    <div class="col-sm-10">
-                                        <input type="text" name="ad_start_date" class="form-control datepicker1" value="{{ date('Y-m-d') . ' - ' . date('Y-m-d') }}">
-                                    </div>
-                                </div>
-                                @if($type=='account')
+                                @if($type=='account' || $type=='blog')
                                 <div class="form-group">
                                     <label>Horizontal Banner</label>
                                     <input type="file" name="horizontal_banner_ad_image" class="form-control">
@@ -83,6 +76,19 @@
                                     <input type="text" name="horizontal_banner_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
                                 @endif
+                                <div class="form-group">
+                                    <label>Paid Ad Image</label>
+                                    <input type="file" name="paid_ad_image" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Paid Ad Link</label>
+                                    <input type="text" name="paid_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Ad Range Date</label>
+                                    <input type="text" name="ad_start_date" class="form-control date_range" value="">
+                                </div>
+                                
                                 <div class="form-group">
                                     <label>Display?</label>
                                     <select class="form-control" name="display">

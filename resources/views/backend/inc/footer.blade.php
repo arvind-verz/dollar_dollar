@@ -117,6 +117,16 @@
         });
     });
 
+    $(function() {
+      $('.date_range').daterangepicker({
+        opens: 'left',
+        locale: {
+            format: 'YYYY/MM/DD'
+        }
+      }, function(start, end, label) {
+        $('.date_range').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+      });
+    });
 </script>
 
 <!-- ./wrapper -->

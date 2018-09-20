@@ -91,6 +91,11 @@
                         @endif
                     </div>
                 </div>
+                @if(count($ads))
+                <div class="pt-2">
+                <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->horizontal_banner_ad_image) }}" alt=""></a>
+                </div>
+                @endif
             </div>
             <div class="col-lg-4 col-md-12 {{--col-lg-pull-7--}}">
                 <div class="ps-post--feature">
@@ -123,7 +128,22 @@
                             </div>
                     </div>
                     @if(count($ads) && ($page->disable_ads==1))
-                    <div class="ps-post__thumbnail ads pc-only"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
+                    @php
+                        $current_time = strtotime(date('Y-m-d', strtotime('now'))); 
+                        $ad_start_date = strtotime($ads[0]->ad_start_date);
+                        $ad_end_date = strtotime($ads[0]->ad_end_date);
+                    @endphp
+                    
+                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
+                    <div class="pt-2">
+                        asdsa
+                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
+                    </div>
+                    @else
+                    <div class="pt-2">
+                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                    </div>
+                    @endif
                     @endif
                 </div>
             </div>

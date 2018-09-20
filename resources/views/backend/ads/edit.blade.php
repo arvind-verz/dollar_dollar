@@ -63,7 +63,7 @@
                                     @if(isset($ads->ad_image) && ($ads->ad_image != ''))
                                         <div class="col-sm-2">                                        
                                             <div class="attachment-block clearfix">
-                                                <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $ads->id }}');"><i class="fas fa-times fa-lg"></i></a>
+                                                <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $ads->id }}', 'normal');"><i class="fas fa-times fa-lg"></i></a>
                                                 <img class="attachment-img" src="{!! asset($ads->ad_image) !!}"
                                                      alt="Banner Image">
                                             </div>
@@ -74,29 +74,47 @@
                                     <label>Ad Link</label>
                                     <input type="text" name="ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)" value="{{ $ads->ad_link }}">
                                 </div>
-                                <div class="form-group">
-                                        <label for="">Ad Range Date</label>
-                                        <input type="text" name="ad_range_date" class="form-control" value="">
-                                </div>
-                                @if($type=='account')
-                                <div class="form-group">
+                                @if($type=='account' || $type=='blog')
+                                <div class="form-group horizonal_banner">
                                     <label>Horizontal Banner</label>
                                     <input type="file" name="horizontal_banner_ad_image" class="form-control">
                                     @if(isset($ads->horizontal_banner_ad_image) && ($ads->horizontal_banner_ad_image != ''))
                                         <div class="col-sm-2">                                        
                                             <div class="attachment-block clearfix">
-                                                <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $ads->id }}');"><i class="fas fa-times fa-lg"></i></a>
+                                                <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $ads->id }}', 'horizontal');"><i class="fas fa-times fa-lg"></i></a>
                                                 <img class="attachment-img" src="{!! asset($ads->horizontal_banner_ad_image) !!}"
                                                      alt="Banner Image">
                                             </div>
                                         </div>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group horizonal_banner">
                                     <label>Horizontal Banner Link</label>
                                     <input type="text" name="horizontal_banner_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)" value="{{ $ads->horizontal_banner_ad_link }}">
                                 </div>
                                 @endif
+                                <div class="form-group">
+                                    <label>Paid Ad Image</label>
+                                    <input type="file" name="paid_ad_image" class="form-control">
+                                    @if(isset($ads->paid_ad_image) && ($ads->paid_ad_image != ''))
+                                        <div class="col-sm-2">                                        
+                                            <div class="attachment-block clearfix">
+                                                <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $ads->id }}', 'paid');"><i class="fas fa-times fa-lg"></i></a>
+                                                <img class="attachment-img" src="{!! asset($ads->paid_ad_image) !!}"
+                                                     alt="Banner Image">
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>                               
+                                <div class="form-group">
+                                    <label>Paid Ad Link</label>
+                                    <input type="text" name="paid_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)" value="{{ $ads->paid_ad_link }}">
+                                </div>
+                                <div class="form-group">
+                                        <label for="">Ad Range Date</label>
+                                        <input type="text" name="ad_range_date" class="form-control date_range" value="">
+                                </div>
+                                
                                 <div class="form-group">
                                     <label>Display?</label>
                                     <select class="form-control" name="display">
@@ -131,11 +149,11 @@
     </section>
     <!-- /.content -->
     <script>
-            function removeImage(ref, id) {
+            function removeImage(ref, id, place) {
                 $.ajax({
                     method: "POST",
                     url: "{{ route('remove-image') }}",
-                    data: "type=ads&id="+id,
+                    data: "type=ads&id="+id+"&place="+place,
                     cache: false,
                     success: function(data) {
                         if(data.trim()=='success') {
@@ -145,12 +163,22 @@
                 });
             }
 
-$(function() {
-  $('input[name="ad_range_date"]').daterangepicker({
-    opens: 'left'
-  }, function(start, end, label) {
-    $('input[name="ad_range_date"]').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
-  });
-});
+            $(document).ready(function() {
+                showhide();
+            });
+
+            $("select[name='page_type']").on("change", function() {
+                showhide();
+            });
+
+            function showhide() {
+                var name = $("select[name='page_type']").val();
+                if(name=='blog') {
+                    $(".horizonal_banner").addClass("hide");
+                }
+                else {
+                    $(".horizonal_banner").removeClass("hide");
+                }
+            }
     </script>
 @endsection
