@@ -34,6 +34,7 @@ class AdminController extends Controller
     public function removeImage(Request $request) {
         $type = $request->type;
         $id = $request->id;
+        $place = $request->place;
         $ad_type = isset($request->ad_type) ? $request->ad_type : '';
         $status = 0;
         if($type=='banner') {
@@ -59,8 +60,16 @@ class AdminController extends Controller
         }
         elseif($type=='ads') {
             $upd_query = AdsManagement::find($id);
-
-            $upd_query->ad_image = null;
+            if($place=='horizontal') {
+                $upd_query->horizontal_banner_ad_image = null;
+            }
+            if($place=='normal') {
+                $upd_query->ad_image = null;
+            }
+            if($place=='paid') {
+                $upd_query->paid_ad_image = null;
+            }
+            
             $upd_query->save();
             echo "success";
         }

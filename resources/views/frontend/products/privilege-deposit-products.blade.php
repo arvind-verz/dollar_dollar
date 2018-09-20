@@ -970,10 +970,23 @@ class="fa fa-angle-down"></i></a>
 <!-- <div class="close-popup">
 <i class="fa fa-times" aria-hidden="true"></i>
 </div> -->
+@php
+
+$current_time = strtotime(date('Y-m-d', strtotime('now'))); 
+$ad_start_date = strtotime($ads_manage[0]->ad_start_date);
+$ad_end_date = strtotime($ads_manage[0]->ad_end_date);
+@endphp
+@if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
+    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
+target="_blank"><img
+src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
+alt=""></a>
+@else
 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
 target="_blank"><img
 src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
 alt=""></a>
+@endif
 </div>
 @endif
 @elseif(empty($remainingProducts->count()) && $j==$products->count())
@@ -982,10 +995,23 @@ alt=""></a>
 <!-- <div class="close-popup">
 <i class="fa fa-times" aria-hidden="true"></i>
 </div> -->
+@php
+
+$current_time = strtotime(date('Y-m-d', strtotime('now'))); 
+$ad_start_date = strtotime($ads_manage[0]->ad_start_date);
+$ad_end_date = strtotime($ads_manage[0]->ad_end_date);
+@endphp
+@if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
+    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
+target="_blank"><img
+src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
+alt=""></a>
+@else
 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
 target="_blank"><img
 src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
 alt=""></a>
+@endif
 </div>
 @endif
 @endif
@@ -1646,10 +1672,23 @@ class="fa fa-angle-down"></i></a>
 <!-- <div class="close-popup">
 <i class="fa fa-times" aria-hidden="true"></i>
 </div> -->
+@php
+
+$current_time = strtotime(date('Y-m-d', strtotime('now'))); 
+$ad_start_date = strtotime($ads_manage[0]->ad_start_date);
+$ad_end_date = strtotime($ads_manage[0]->ad_end_date);
+@endphp
+@if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
+    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
+target="_blank"><img
+src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
+alt=""></a>
+@else
 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
 target="_blank"><img
 src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
 alt=""></a>
+@endif
 </div>
 @endif
 @elseif(empty($products->count()) && $j==$remainingProducts->count())
@@ -1658,10 +1697,23 @@ alt=""></a>
 <!-- <div class="close-popup">
 <i class="fa fa-times" aria-hidden="true"></i>
 </div> -->
+@php
+
+$current_time = strtotime(date('Y-m-d', strtotime('now'))); 
+$ad_start_date = strtotime($ads_manage[0]->ad_start_date);
+$ad_end_date = strtotime($ads_manage[0]->ad_end_date);
+@endphp
+@if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
+    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
+target="_blank"><img
+src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
+alt=""></a>
+@else
 <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
 target="_blank"><img
 src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
 alt=""></a>
+@endif
 </div>
 @endif
 @endif

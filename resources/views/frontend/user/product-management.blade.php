@@ -41,9 +41,21 @@
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         @if(count($ads))
-                        <div class="pt-2 pc-only">
-                            <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                        @php
+                        $current_time = strtotime(date('Y-m-d', strtotime('now'))); 
+                        $ad_start_date = strtotime($ads[0]->ad_start_date);
+                        $ad_end_date = strtotime($ads[0]->ad_end_date);
+                        @endphp
+
+                        @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
+                        <div class="pt-2">
+                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
                         </div>
+                        @else
+                        <div class="pt-2">
+                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                        </div>
+                        @endif
                         @endif
                     </div>
                 </div>
