@@ -40,7 +40,7 @@
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                        @if(count($ads))
-                        <div class="pt-2">
+                        <div class="pt-2 pc-only">
                             <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
                         </div>
                         @endif

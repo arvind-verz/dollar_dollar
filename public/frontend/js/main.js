@@ -183,7 +183,7 @@ function productCollapse() {
         }
         else {
             $(this).removeClass('active');
-            $(this).html("Show Detail <i class='fa fa-angle-down'></i>")
+            $(this).html("More Detail <i class='fa fa-angle-down'></i>")
             $(this).closest('.ps-product').find('.ps-product__detail').slideUp();
         }
 
@@ -398,15 +398,15 @@ $(document).ready(function () {
     
     $(".ps-block--short-product.second.highlight.sp-only").parent().addClass("sp-only");
     
-    $(".ps-list--sidebar .current").append("<div><span></span></div>");
-    $(".ps-list--sidebar .current div").click(function(){
-        if($(this).parents().hasClass("active")){
-            $(this).parents().removeClass("active");
+    $(".ps-list--sidebar.menu-sibar .current").append("<div><span></span></div>");
+    $(".ps-list--sidebar.menu-sibar .current div").click(function(){
+        if($(this).parent().hasClass("active")){
+            $(this).parent().removeClass("active");
         }
         else{
-            $(this).parents().addClass("active");
+            $(this).parent().addClass("active");
         }
-        $(this).parents().nextAll(".ps-list--sidebar li").slideToggle();
+        $(this).parent().nextAll(".ps-list--sidebar.menu-sibar li").slideToggle();
     })
 
     /*$(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-block--product-info .ps-block__content .ps-block__more").click(function () {

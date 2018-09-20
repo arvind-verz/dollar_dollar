@@ -37,7 +37,7 @@ function printBlogCategories($parentCategories, $parent = 0, $id, $deep = 0) {//
             <input class="form-control" type="text" name="b_search" value="" placeholder="Search...">
         </div>
         {!! Form::close() !!}
-        <ul class="ps-list--sidebar">
+        <ul class="ps-list--sidebar menu-sibar">
             <li class="@if(!isset($id)) current @endif"><a href="{{ url(BLOG_URL) }}">All</a></li>
             <?php
 
@@ -50,7 +50,7 @@ function printBlogCategories($parentCategories, $parent = 0, $id, $deep = 0) {//
         </ul>
     </div>
     @if(count($ads))
-    <div class="ps-post__thumbnail ads"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
+    <div class="ps-post__thumbnail ads pc-only"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
     @endif
 </div>
 <script type="text/javascript">

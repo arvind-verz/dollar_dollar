@@ -70,6 +70,7 @@
         <div class="container">            
             
             <div class="col-lg-8 col-md-12{{-- col-lg-push-5--}}">
+                <div class="ps-post__thumbnail sp-only"><img src="{{ asset($page->blog_image) }}" alt=""></div>
                 <div class="ps-post--detail">
                     <div class="ps-post__header">
                         <h3>{{$page->name}}</h3><span class="ps-post__meta"><a href="{{ url('get-blog-by-category/' . $page->menu_id)}}"> {{$page->menu_title}}</a></span>
@@ -93,7 +94,7 @@
             </div>
             <div class="col-lg-4 col-md-12 {{--col-lg-pull-7--}}">
                 <div class="ps-post--feature">
-                    <div class="ps-post__thumbnail"><img src="{{ asset($page->blog_image) }}" alt=""></div>
+                    <div class="ps-post__thumbnail pc-only"><img src="{{ asset($page->blog_image) }}" alt=""></div>
                     @if(count($relatedBlog))
                         @foreach($relatedBlog as $blog)
                             @php $short_description = substr($blog->short_description, 0, 70).'...'; @endphp
@@ -107,6 +108,10 @@
                             </div>
                         @endforeach
                     @endif
+                    
+                    @if(count($ads) && ($page->disable_ads==1))
+                    <div class="ps-post__thumbnail ads sp-only"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
+                    @endif
                     <div class="ps-fanpage">
                         <div class="fb-page" data-href="https://www.facebook.com/dollardollar.sg/"
                                  data-tabs="timeline" data-width="500" data-height="280" data-small-header="false"
@@ -118,7 +123,7 @@
                             </div>
                     </div>
                     @if(count($ads) && ($page->disable_ads==1))
-                    <div class="ps-post__thumbnail ads"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
+                    <div class="ps-post__thumbnail ads pc-only"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
                     @endif
                 </div>
             </div>

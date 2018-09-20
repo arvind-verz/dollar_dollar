@@ -30,23 +30,7 @@
     @endif
     <main class="ps-main">
         <div class="container">
-            <?php
-            //$pageName = strtok($page->name, " ");;
-            $pageName = explode(' ', trim($page->name));
-            $pageHeading = $pageName[0];
-            // $a =  array_shift($arr);
-            unset($pageName[0]);
-            ?>
-            {{--Page content start--}}
-            @if($page->slug!=THANK_SLUG)
-                        <h3 class="ps-heading mb-35">
-                            <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
-                        </h3>
-
-                        {!!  $page->contents !!}
-            @else
-                {!!  $page->contents !!}
-            @endif
+            
             <div class="row mt-20">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                     <div class="ps-sidebar">
@@ -57,7 +41,7 @@
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         @if(count($ads))
-                        <div class="pt-2">
+                        <div class="pt-2 pc-only">
                             <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
                         </div>
                         @endif
@@ -65,9 +49,26 @@
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
                     <div class="ps-dashboard">
-                        <div class="ps-dashboard__header">
+                        <?php
+                        //$pageName = strtok($page->name, " ");;
+                        $pageName = explode(' ', trim($page->name));
+                        $pageHeading = $pageName[0];
+                        // $a =  array_shift($arr);
+                        unset($pageName[0]);
+                        ?>
+                        {{--Page content start--}}
+                        @if($page->slug!=THANK_SLUG)
+                                    <h3 class="ps-heading mb-35">
+                                        <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                                    </h3>
+
+                                    {!!  $page->contents !!}
+                        @else
+                            {!!  $page->contents !!}
+                        @endif
+                        <!-- <div class="ps-dashboard__header">
                             <h3>Product Management</h3>
-                        </div>
+                        </div> -->
                         <div class="ps-dashboard__content">
                             {!! Form::open(['route' => 'product-management.store', 'class'  =>  'ps-form--product-management', 'method' =>  'POST']) !!}
                                 <!-- <div class="ps-form__header"><a class="ps-btn" href="#">Add Products</a></div> -->
