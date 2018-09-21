@@ -2785,7 +2785,7 @@ button {
 .ps-product--2 {
     margin-bottom: 30px;
     padding: 20px 40px 0;
-    background-color: #fffcf5;
+    background-color: #fff;
 }
 
 .ps-product--2 .ps-product__promo {
@@ -3076,6 +3076,9 @@ button {
 @media (max-width: 767px) {
     .ps-banner__content > img {
         max-width: 200px;
+    }
+    .slider-class{
+         display: none !important;
     }
 
     .ps-banner h3 {
@@ -6091,7 +6094,7 @@ span.ps-post__meta a {
 
     .ps-product .ps-product__info.sp-only{
         display: none;
-        padding: 15px 20px;
+        padding: 15px 10px;
         font-family: "Montserrat", sans-serif;
         font-size: 11px;
         text-transform: uppercase;
@@ -6280,10 +6283,13 @@ span.ps-post__meta a {
     .ps-form--filter .ps-form__values{
         padding-right: 50px;
     }
-    
+    .ps-product .ps-product__more{
+        padding: 15px 10px;
+    }
     .ps-product .ps-product__info.sp-only{
         display: inline-block;
-        margin-left: 20px !important;
+        margin-left: 10px !important;
+        padding: 15px 10px;
     }
     .ps-form--enquiry.ps-form--health-insurance .col-xs-3{
         padding-right: 0;
@@ -6406,7 +6412,6 @@ span.ps-post__meta a {
     .ps-product .ps-product__info.sp-only{
         margin-left: 0px;
         margin-top: 10px;
-        width: 133px;
     }
 }
 @media (max-width: 479px){
@@ -6460,12 +6465,6 @@ span.ps-post__meta a {
 }
 
 
-@media (max-width:420px) {
-    .ps-product .ps-product__info.sp-only{
-        margin: 10px auto !important;
-        display: table;
-    }
-}
 
 .col-lg-9 .ps-heading.mb-35{
  max-width: 50%;

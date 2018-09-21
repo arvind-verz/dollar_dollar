@@ -2648,7 +2648,66 @@ $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT,'maximum_interest_rate');
 $i = 1;$featured = []; ?>
 @foreach($products as $product)
 
+@if($product->featured==1)
 
+@php $featured[] = $i;  @endphp
+<div class="product-col-01">
+<div class="ps-slider--feature-product saving">
+<div class="ps-block--short-product second highlight" data-mh="product">
+<img alt="" src="{{ asset($product->brand_logo) }}">
+<h4 class="slider-heading">
+<strong>
+up to
+<span class="highlight-slider">
+{{ $product->maximum_interest_rate  }}
+
+
+
+%
+</span>
+</strong>
+</h4>
+<div class="ps-block__info">
+<p class="highlight highlight-bg">
+<strong>
+rate:
+</strong>
+{{ $product->maximum_interest_rate }}
+
+
+
+%
+</p>
+<p>
+<strong>
+Min:
+</strong>
+SGD
+
+
+
+${{ Helper::inThousand($product->minimum_placement_amount) }}
+</p>
+@if($product->max_tenure > 0)
+<p>
+{{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
+</p>
+@else
+<p>
+{{$product->promotion_period}}
+</p>
+@endif
+</div>
+<a class="ps-btn" href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
+More info
+</a>
+</img>
+</div>
+</div>
+</div>
+@php $i++; @endphp
+
+@endif
 
 @endforeach
 <?php $i = 1;$featured_item = 5 - count($featured);
@@ -2771,75 +2830,6 @@ $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT,'maximum_interest_rate');
 
 $i = 1;$featured = []; ?>
 @foreach($products as $product)
-
-
-
-@if($product->featured==1)
-
-
-
-@php $featured[] = $i;  @endphp
-<div class="product-col-01">
-<div class="ps-slider--feature-product saving">
-<div class="ps-block--short-product second highlight" data-mh="product">
-<img alt="" src="{{ asset($product->brand_logo) }}">
-<h4 class="slider-heading">
-<strong>
-up to
-<span class="highlight-slider">
-{{ $product->maximum_interest_rate  }}
-
-
-
-%
-</span>
-</strong>
-</h4>
-<div class="ps-block__info">
-<p class="highlight highlight-bg">
-<strong>
-rate:
-</strong>
-{{ $product->maximum_interest_rate }}
-
-
-
-%
-</p>
-<p>
-<strong>
-Min:
-</strong>
-SGD
-
-
-
-${{ Helper::inThousand($product->minimum_placement_amount) }}
-</p>
-@if($product->max_tenure > 0)
-<p>
-{{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-</p>
-@else
-<p>
-{{$product->promotion_period}}
-</p>
-@endif
-</div>
-<a class="ps-btn" href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-More info
-</a>
-</img>
-</div>
-</div>
-</div>
-@php $i++; @endphp
-
-
-
-@endif
-
-
 
 @endforeach
 <?php $i = 1;$featured_item = 5 - count($featured);

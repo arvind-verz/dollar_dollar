@@ -111,8 +111,8 @@
                                     <input type="text" name="paid_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)" value="{{ $ads->paid_ad_link }}">
                                 </div>
                                 <div class="form-group">
-                                        <label for="">Ad Range Date</label>
-                                        <input type="text" name="ad_range_date" class="form-control date_range" value="">
+                                        <label for="">Ad Range Date  </label>
+                                        <input type="text" name="ad_range_date" class="form-control date_range" value="@if(empty($ads->ad_start_date) || empty($ads->ad_end_date)) {{ date('Y/m/d') .' - '. date('Y/m/d') }} @else {{ date('Y/m/d', strtotime($ads->ad_start_date)) .' - '. date('Y/m/d', strtotime($ads->ad_end_date)) }} @endif" autocomplete="off">
                                 </div>
                                 
                                 <div class="form-group">
