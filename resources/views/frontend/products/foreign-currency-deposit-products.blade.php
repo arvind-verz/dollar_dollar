@@ -412,7 +412,6 @@ alt=""></a></div>
 $product_id = $product->promotion_product_id;
 $tenures = $product->tenure;
 $productRanges = $product->product_ranges;
-$ads = $product->ads_placement;
 $interestEarns = $product->interest_earns;
 $bonusInterests = $product->bonus_interests;
 ?>
@@ -1071,7 +1070,6 @@ alt=""></a>
 @if($remainingProducts->count())
 
 <?php
-$ads = $product->ads;
 $j = 1;?>
 @foreach($remainingProducts as $product)
 <?php
@@ -1156,7 +1154,6 @@ alt=""></a></div>
 $product_id = $product->promotion_product_id;
 $tenures = $product->tenure;
 $productRanges = $product->product_ranges;
-$ads = $product->ads_placement;
 $interestEarns = $product->interest_earns;
 $bonusInterests = $product->bonus_interests;
 ?>
