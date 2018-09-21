@@ -361,7 +361,7 @@ $j = 1;
 @foreach($products as $product)
 <?php
 $productRanges = $product->product_range;
-$ads = $product->ads_placement;
+$ads = json_decode($product->ads_placement);
 /*echo 'Interest: ' . $product->maximum_interest_rate . '<br/>';
 echo 'Placement: ' . $product->minimum_placement_amount . '<br/>';
 echo 'Tenure: ' . $product->max_tenure . '<br/>'; */
@@ -1119,7 +1119,7 @@ alt=""></a>
 @foreach($remainingProducts as $product)
 <?php
 $productRanges = $product->product_range;
-$ads = $product->ads_placement;
+$ads = json_decode($product->ads_placement);
 
 ?>
 @if($page->slug==AIO_DEPOSIT_MODE && isset($ads[3]->ad_horizontal_image_popup_top))
