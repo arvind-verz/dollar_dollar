@@ -3096,10 +3096,11 @@ button {
     .nill{
         padding: 0 !important;
     }
-    .ps-table-wrap{
+    .ps-product .ps-table-wrap{
         overflow-x: scroll;
         overflow-y: auto;
         margin-bottom: 20px;
+        display: none;
     }
 }
 @media (min-width:769px) {
