@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Ad Range Date</label>
-                                    <input type="text" name="ad_start_date" class="form-control date_range" value="">
+                                    <input type="text" name="ad_range_date" class="form-control date_range" value="">
                                 </div>
                                 
                                 <div class="form-group">
