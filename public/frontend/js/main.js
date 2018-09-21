@@ -196,11 +196,13 @@ function moreInfo() {
             $(this).addClass('active');
             $(this).html("Info Less <i class='fa fa-angle-up'></i>")
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideDown();
+            $(this).closest('.ps-product').find('.ps-table-wrap').slideDown();
         }
         else {
             $(this).removeClass('active');
             $(this).html("More Info <i class='fa fa-angle-down'></i>")
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideUp();
+            $(this).closest('.ps-product').find('.ps-table-wrap').slideUp();
         }
 
     });
