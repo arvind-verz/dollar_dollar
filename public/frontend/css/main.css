@@ -3083,7 +3083,7 @@ button {
     }
 }
 @media (max-width: 768px) {
-    .ps-table--product-3, .ps-product__table,.ps-table--product,.slider-class,.ps-criteria-detail{
+    .ps-table--product-3,.ps-table--product,.slider-class,.ps-criteria-detail{
         display: none ;
     }
     /*.ps-table--product-3.active, .ps-product__table.active, .ps-table--product.active, .slider-class.active, .ps-criteria-detail.active{*/
@@ -3095,6 +3095,11 @@ button {
     }
     .nill{
         padding: 0 !important;
+    }
+    .ps-table-wrap{
+        overflow-x: scroll;
+        overflow-y: auto;
+        margin-bottom: 20px;
     }
 }
 @media (min-width:769px) {
