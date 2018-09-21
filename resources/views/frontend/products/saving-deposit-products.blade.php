@@ -848,6 +848,7 @@ alt="" target="_blank"></a>
 <div class="ps-product__footer"><a
 class="ps-product__more" href="#">More
 Detail<i
+class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only" href="#">More info<i
 class="fa fa-angle-down"></i></a>
 </div>
 </div>
@@ -1435,6 +1436,7 @@ alt="" target="_blank"></a>
 <div class="ps-product__footer"><a
 class="ps-product__more" href="#">More
 Detail<i
+class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only" href="#">More info<i
 class="fa fa-angle-down"></i></a>
 </div>
 </div>
