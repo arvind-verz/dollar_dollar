@@ -3083,14 +3083,19 @@ button {
     }
 }
 @media (max-width: 768px) {
-    .ps-table--product-3,.ps-product__table,.ps-table--product,.slider-class,.ps-criteria-detail{
-        display: none !important;
+    .ps-table--product-3, .ps-product__table,.ps-table--product,.slider-class,.ps-criteria-detail{
+        display: none ;
     }
+    /*.ps-table--product-3.active, .ps-product__table.active, .ps-table--product.active, .slider-class.active, .ps-criteria-detail.active{*/
+    /*    display: block;*/
+    /*}*/
     .ps-product__panel
     {
         width: 100% !important;
     }
-
+    .nill{
+        padding: 0 !important;
+    }
 }
 @media (min-width:769px) {
     .aio-product{
@@ -6101,6 +6106,25 @@ span.ps-post__meta a {
     color: #3db54a;
 }
 
+.ps-product--2 .ps-product__info {
+    display: inline-block;
+    padding: 15px 20px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #3db54a;
+    line-height: 15px;
+    border: 1px solid #3db54a;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    -ms-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+.ps-product--2 .ps-product__info i {
+    margin-left: 5px;
+}
+
 @media only screen and (min-width: 768px){
     
     .owl-item.sp-only{
@@ -6253,7 +6277,7 @@ span.ps-post__meta a {
     
     .ps-product .ps-product__info.sp-only{
         display: inline-block;
-        margin-left: 20px;
+        margin-left: 20px !important;
     }
     .ps-form--enquiry.ps-form--health-insurance .col-xs-3{
         padding-right: 0;
@@ -6430,4 +6454,21 @@ span.ps-post__meta a {
 }
 
 
+@media (max-width:420px) {
+    .ps-product .ps-product__info.sp-only{
+        margin: 10px auto !important;
+        display: table;
+    }
+}
 
+.col-lg-9 .ps-heading.mb-35{
+ max-width: 50%;
+    font-size: 35px;
+}
+
+
+.ps-footer .ps-wiget--footer .ps-logo{
+    margin-top: -30px;
+    margin-bottom: 20px;
+    display: inline-flex;
+}

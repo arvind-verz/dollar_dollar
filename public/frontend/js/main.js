@@ -189,7 +189,22 @@ function productCollapse() {
 
     });
 }
+function moreInfo() {
+    $('.ps-product__info').on('click', function (e) {
+        e.preventDefault();
+        if (!$(this).hasClass('active')) {
+            $(this).addClass('active');
+            $(this).html("Info Less <i class='fa fa-angle-up'></i>")
+            $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideDown();
+        }
+        else {
+            $(this).removeClass('active');
+            $(this).html("More Info <i class='fa fa-angle-down'></i>")
+            $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideUp();
+        }
 
+    });
+}
 function backToTop() {
     var scrollPos = 0;
     var element = $('#totop');
@@ -237,6 +252,7 @@ $(document).ready(function () {
     productCollapse();
     backToTop();
     tabs();
+    moreInfo();
     $(".only_numeric").on("keydown", function (event) {
         if (event.keyCode == 189) {
             event.preventDefault();
