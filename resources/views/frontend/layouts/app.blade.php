@@ -72,8 +72,8 @@ if (!$systemSetting) {
 @include('frontend.includes.footer')
         <!-- Footer END -->
 <div class="totop">
-      <div id="totop"><span>backtotop<i class="fa fa-arrow-right"></i></span></div>
-      <a class="profile" href="{{ url(PROFILEDASHBOARD) }}"><span>profile page<i class="fa fa-arrow-right"></i></span></a><!-- 
+      <div id="totop"><span>Back to Top<i class="fa fa-arrow-right"></i></span></div>
+      <a class="profile" href="{{ url(PROFILEDASHBOARD) }}"><span>Profile Page<i class="fa fa-arrow-right"></i></span></a><!--
       <a class="placement" href="javascript:void(0)"><span>placement amount<i class="fa fa-arrow-right"></i></span></a> -->
     </div>
 
