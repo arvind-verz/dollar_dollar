@@ -384,7 +384,7 @@ class PagesFrontController extends Controller
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
                 $searchFilter['filter'] = PLACEMENT;
-                $searchFilter['sort_by'] = MAXIMUM;
+                $searchFilter['sort_by'] = INTEREST;
             } else {
                 $placement = 0;
                 $searchFilter = $request;
@@ -883,7 +883,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -1714,7 +1714,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -2426,7 +2426,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -3265,7 +3265,7 @@ class PagesFrontController extends Controller
                 $searchFilter['spend'] = $defaultSpend;
                 $searchFilter['privilege'] = $defaultLoan;
                 $searchFilter['loan'] = $defaultPrivilege;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
