@@ -19,14 +19,13 @@
                 <div class="box box-info ">
                     <div class="box-header with-border">
                         <a href="{{ route('customer-report-excel') }}" class="btn btn-default pull-right">Export Excel</a>
-                        <button type="button" class="btn btn-default print_btn  pull-right mr-10">Print</button>
                         <i class="fa fa-file-text" aria-hidden="true"></i>
 
                         <h3 class="box-title">{{CUSTOMER_MODULE_SINGLE . ' ' . REPORT_MODULE_SINGLE}}</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table border="1" cellpadding="3" class="table table-bordered" id="table">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>User Details</th>
@@ -66,19 +65,5 @@
         </div>
         <!-- /.row -->
     </section>
-    <script type="text/javascript">
-        $(".print_btn").click(function() {
-            printData();
-        });
-
-        function printData()
-{
-   var divToPrint=document.getElementById("table");
-   newWin= window.open("");
-   newWin.document.write(divToPrint.outerHTML);
-   newWin.print();
-   newWin.close();
-}
-    </script>
     <!-- /.content -->
 @endsection
