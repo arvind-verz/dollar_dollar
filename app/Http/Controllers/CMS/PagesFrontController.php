@@ -329,7 +329,7 @@ class PagesFrontController extends Controller
 //dd($ads_manage);
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -829,7 +829,7 @@ class PagesFrontController extends Controller
 
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -1658,7 +1658,7 @@ class PagesFrontController extends Controller
 
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -2363,7 +2363,7 @@ class PagesFrontController extends Controller
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $currency = isset($request['currency']) ? $request['currency'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -3197,7 +3197,7 @@ class PagesFrontController extends Controller
             ->get();
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
