@@ -8,15 +8,15 @@ use App\Http\Controllers\Controller;
 use App\Page;
 use App\ProductManagement;
 use App\User;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Redirect;
-use Socialite;
-use Validator;
+use Illuminate\Support\Facades\Redirect;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -187,7 +187,7 @@ class LoginController extends Controller
         $user     = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-        return Redirect::back();
+        return redirect('/');
     }
 
     public function findOrCreateUser($user, $provider)
