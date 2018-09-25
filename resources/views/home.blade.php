@@ -134,7 +134,7 @@ Need something?
         <form action="{{ route('product-search') }}" class="ps-form--search" data-mh="home-search" method="POST">
             <div class="form-group">
                 <select class="form-control" name="account_type" required="required">
-                    <option value="">
+                    <option value="" disabled="disabled" selected="selected">
                         Select account Type
                     </option>
                     <option value="1">
