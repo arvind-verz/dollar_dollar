@@ -178,7 +178,7 @@ value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] :
 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
 <div class="form-group ">
 <select class="form-control sort-by" name="sort_by">
-<option value="">Sort by</option>
+    <option value="" disabled="disabled" selected="selected">Sort by</option>
 <option value="1"
 @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
 Ascending
