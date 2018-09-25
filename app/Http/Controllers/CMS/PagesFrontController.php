@@ -383,8 +383,8 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
-                $searchFilter['sort_by'] = INTEREST;
+                $searchFilter['filter'] = INTEREST;
+                $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
                 $searchFilter = $request;
