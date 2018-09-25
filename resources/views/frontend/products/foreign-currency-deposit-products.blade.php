@@ -573,7 +573,7 @@ ${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 <br>
 <span>
 Total interest rate @if(($product->total_interest)<=0)
-- @else {{ $product->total_interest }}% P.A
+- @else {{ $product->total_interest }}% P.A.
 for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
 </span>
 
@@ -669,7 +669,7 @@ ${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 <br>
 <span>
 Total interest rate @if(($product->total_interest)<=0)
-- @else {{ $product->total_interest }}% P.A
+- @else {{ $product->total_interest }}% P.A.
 for {{$product->duration}} {{\Helper::days_or_month_or_year(2, $product->duration)}} @endif
 </span>
 </h2>
@@ -945,7 +945,7 @@ colspan="{{count($product->months)}}"></td>
 ${{Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 {{-- <br/>
 <span>
-Total interest rate {{ $product->total_interest }}% P.A
+Total interest rate {{ $product->total_interest }}% P.A.
 </span>--}}
 </td>
 @endif
@@ -966,7 +966,7 @@ ${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
 <br>
 <span>
 Total interest rate @if(($product->total_interest)<=0)
-- @else {{ $product->total_interest }}% P.A
+- @else {{ $product->total_interest }}% P.A.
 for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
 </span>
 </h2>
@@ -1651,7 +1651,7 @@ colspan="{{count($product->months)}}"></td>
 ${{$product->total_interest_earn }} @endif
 {{-- <br/>
 <span>
-Total interest rate {{ $product->total_interest }}% P.A
+Total interest rate {{ $product->total_interest }}% P.A.
 </span>--}}
 </td>
 @endif
