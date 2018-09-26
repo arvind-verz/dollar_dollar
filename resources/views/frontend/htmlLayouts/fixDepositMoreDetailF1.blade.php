@@ -7,10 +7,10 @@
             <li>Placement done at Branch</li>
         </ul>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-            <div class="ps-product__actions"><a class="ps-btn ps-btn--outline"
-                                                href="">Main
-                    Page</a><a class="ps-btn ps-btn--outline"
-                               href="">T&amp;CA</a>
+            <div class="ps-product__actions"><a class="ps-btn ps-btn--outline" target="_blank"
+                                                href="#">Main
+                    Page</a><a class="ps-btn ps-btn--outline" target="_blank"
+                               href="#">T&amp;CA</a>
             </div>
         </div>
     </div>
