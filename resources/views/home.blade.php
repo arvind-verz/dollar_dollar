@@ -272,7 +272,7 @@ Need something?
                                     @foreach($products as $product)
                                         @if($product->featured==1)
                                             <?php $featured[] = $i; ?>
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -661,7 +661,7 @@ Need something?
 
 
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -1028,7 +1028,7 @@ Need something?
                                     @foreach($products as $product)
                                         @if($product->featured==1)
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -1423,7 +1423,7 @@ Need something?
 
 
                                             @php $featured[] = $i;  @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -1807,7 +1807,7 @@ Need something?
 
 
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -2183,7 +2183,7 @@ Need something?
 
 
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -2600,7 +2600,7 @@ Need something?
                                         @if($product->featured==1)
 
                                             @php $featured[] = $i;  @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -3097,7 +3097,7 @@ Need something?
 
 
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -3457,7 +3457,7 @@ Need something?
                                     @foreach($products as $product)
                                         @if($product->featured==1)
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -3879,7 +3879,7 @@ Need something?
 
 
                                             @php $featured[] = $i;  @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -4250,7 +4250,7 @@ Need something?
 
 
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -4614,7 +4614,7 @@ Need something?
 
 
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -5018,7 +5018,7 @@ Need something?
 
 
                                             @php $featured[] = $i;  @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -5407,7 +5407,7 @@ Need something?
 
 
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">
@@ -5795,7 +5795,7 @@ Need something?
 
 
                                             @php $featured[] = $i; @endphp
-                                            <div class="product-col-01">
+                                            <div class="product-col-01 home-featured">
                                                 <div class="ps-slider--feature-product saving">
                                                     <div class="ps-block--short-product second highlight"
                                                          data-mh="product">

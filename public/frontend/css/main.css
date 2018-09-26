@@ -5353,7 +5353,7 @@ html .bg--parallax {
     display: block;
     float: left;
     width: 20%;
-    padding: 0px 10px;
+    /*padding: 0px 10px;*/
     /* margin: 10px 0; */
 }
 
@@ -6074,7 +6074,7 @@ span.ps-post__meta a {
 }
 
 .dump-padding-left {
-    padding-left: 10px;
+    padding-left: 5px;
 }
 
 .ps-form--product-management .row input[name='bank_id_other'] {
@@ -6592,4 +6592,7 @@ span.ps-post__meta a {
 
 .important-underline {
     text-decoration: underline !important;
+}
+.home-featured{
+    padding: 0px 5px !important;
 }
