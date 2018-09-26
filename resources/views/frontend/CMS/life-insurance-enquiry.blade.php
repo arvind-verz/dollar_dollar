@@ -185,7 +185,7 @@
                     <label for="time-5">{{TIME_OTHER}}</label>
                 </div>
                 <div class="short-form mb-10">
-                    <input class="form-control" type="text" id="other_value" name="other_value"
+                    <input class="form-control" type="text" id="other-value" name="other_value" data-target="time-5"
                            onkeyup="checkOtherValidation(this)" placeholder="Please Specify"
                            value="{{old('other_value')}}">
                 </div>
@@ -281,7 +281,7 @@
         });*/
 
         function inputs_checked() {
-            $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
+            $(" input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
         } 
     });
 
