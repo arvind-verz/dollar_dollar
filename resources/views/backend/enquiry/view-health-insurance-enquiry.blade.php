@@ -58,6 +58,14 @@
                                             {{ $enquiry->level }}
                                         </td>
                                     </tr>
+                                @if($enquiry->level ==YES)
+                                    <tr>
+                                        <th>2.1 What health conditions you have?</th>
+                                        <td>
+                                            {{ $enquiry->health_condition }}
+                                        </td>
+                                    </tr>
+                                    @endif
                                     <tr>
                                         <th>3. When is the best time to reach you?</th>
                                         <td>
