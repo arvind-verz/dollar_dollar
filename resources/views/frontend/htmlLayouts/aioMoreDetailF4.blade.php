@@ -101,15 +101,18 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                     <h4 class="ps-product__heading">Criteria</h4>
                     <ul class="ps-list--arrow-circle">
                         <li>Fresh funds #</li>
                         <li>RHB Fixed Deposit account</li>
                         <li>Placement done at Branch</li>
                     </ul>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                        <div class="ps-product__actions"><a class="ps-btn ps-btn--outline" target="_blank" href="#">Main Page</a><a class="ps-btn ps-btn--outline" href="#" target="_blank">T&amp;C</a></div>
+                    </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
                     <h4 class="ps-product__heading">Keypoints</h4>
                     <ul class="ps-list--arrow-circle">
                         <li>Receive interest upfront</li>
@@ -117,12 +120,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-            <div class="ps-product__actions"><a class="ps-btn ps-btn--black" href="#">Main Page</a><a
-                        class="ps-btn ps-btn--outline" href="#">T&amp;C</a></div>
         </div>
     </div>
 </div>
