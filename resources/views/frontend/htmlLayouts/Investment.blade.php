@@ -4,11 +4,10 @@
             <p>Ensure that your Medical Needs are well taken care of with suitable Insurance policies. Find out more by comparing plans from different Health Insurers.</p>
             <p>Do try it, it is a free service to ensure your needs are fulfilled!</p>
         </div>
-        <img src="/dollar_dollar/public/uploads/images/block/health.png" alt="" /></div>
+        <img src="/dollar_dollar/public/uploads/images/block/investment-banner.png" alt="" /></div>
     <div class="ps-block--highlight text-center mb-35">
         <h4>Find The Right Health Insurance Policy Cater To Your Needs</h4>
-        <button class="ps-btn enquiry-url" type="button" data-toggle="modal" data-target="#myModalInsurance">Get Quotes </button>
-    </div>
+        <button class="ps-btn" type="button" data-toggle="modal" data-target="#myModalInsurance">Get Quotes</button></div>
     <div class="ps-insurgence">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 "><img class="mb-30" src="/dollar_dollar/public/uploads/images/pages/health.jpg" alt="" /></div>

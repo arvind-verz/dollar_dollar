@@ -365,7 +365,23 @@ $(window).on('load', function () {
 function clickSliderhome(id) {
     $(".ps-slider--home .owl-dot:nth-child(" + id + ")").click();
 }
+function checkOtherValidation(obj) {
 
+    var textareaLength = $(obj).val().length;
+    var target = $(obj).data('target');
+
+    if (textareaLength == 0) {
+        $('#'+target).prop('checked', false);
+    }
+    else {
+        $('#' + target).prop('checked', true);
+    }
+}
+$('#time-5').change(function () {
+    if (!$(this).is(":checked")) {
+        $('#other-value').val("");
+    }
+});
 $(document).ready(function () {
     $(".aboutpage").click(function () {
         var currentid = $(this).parent('.catListing li').attr('id');
