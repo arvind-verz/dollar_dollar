@@ -6596,3 +6596,21 @@ span.ps-post__meta a {
 .home-featured{
     padding: 0px 5px !important;
 }
+.top-search-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+.top-search-wrapper button{
+    background: url(../img/search.png) no-repeat;
+    color: #e94416;
+    border: none;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 0px;
+}

@@ -111,7 +111,7 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder</label>
-                                            <select class="form-control select2" name="reminder[]" multiple="multiple">
+                                            <select class="form-control select2" id="reminder" name="reminder[]" multiple="multiple">
                                                 <option value="1 Day" @if(in_array('1 Day', $product_reminder)) selected @endif>1 Day</option>
                                                 <option value="1 Week" @if(in_array('1 Week', $product_reminder)) selected @endif>1 Week</option>
                                                 <option value="2 Week" @if(in_array('2 Week', $product_reminder)) selected @endif>2 Week</option>
@@ -133,9 +133,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                                <div class="form-group">
+                                                <div class="form-group submit">
                                                     <label>Do not Send Reminders</label>
                                                     <input type="checkbox" class="form-control" name="dod_reminder" value="1" @if($product_management->dod_reminder==1) checked @endif>
+                                                    <p>"<span>*</span>" are mandatory fields.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -148,7 +149,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group submit">
-                                    <p>"<span>*</span>" are mandatory fields.</p>
                                     <button type="submit" class="ps-btn">Submit</button>
                                 </div>
                             {{ Form::close() }}
@@ -173,7 +173,19 @@
                 $("input[name='bank_id_other']").addClass("hide").attr("required", false);
             }
         });
-
+        $("input[name='end_date']").on("change", function () {
+            var valueLenght = $(this).val().length;
+            if (valueLenght == 0) {
+                $("#reminder").attr("disabled", true);
+                $("input[name='dod_reminder']").prop('checked', false);
+                $("input[name='dod_reminder']").attr("disabled", true);
+                $(".select2").select2("val", " ");
+            }
+            else {
+                $("#reminder").attr("disabled", false);
+                $("input[name='dod_reminder']").attr("disabled", false);
+            }
+        });
         var value = $("select[name='bank_id']").val();
             
         if(value==0) {
@@ -200,7 +212,7 @@
             $(".select2").select2("val", " ");
         }
 
-        dod_onoff();
+        /*dod_onoff();
         $("input[name='start_date'], input[name='end_date']").on("change", function() {
             dod_onoff();
         });
@@ -214,11 +226,19 @@
             else {
                 $("input[name='dod_reminder']").attr("disabled", false);
             }
-        }
+        }*/
     </script>
     <script type="text/javascript">
         $(document).ready( function () {
             $('.select2').select2();
+            if ($("input[name='end_date']").val().length!=0) {
+                $("#reminder").attr("disabled", false);
+                $("input[name='dod_reminder']").attr("disabled", false);
+            }else{
+                $("#reminder").attr("disabled", true);
+                $("input[name='dod_reminder']").attr("disabled", true);
+            }
+
         } );
     </script>
     {{--Page content end--}}

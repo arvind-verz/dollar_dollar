@@ -99,7 +99,7 @@
                                 </div>
                             </div>.
                             @endif
-                            <div class="ps-block--box info no-border">
+                            <div class="ps-block--box info no-border" style="padding: 0;">
                                 <div class="ps-block__header">
                                     <h5><img src="img/icons/file.png" alt="">All my Accounts</h5><!-- <a href="#">View all</a> -->
                                 </div>
@@ -134,13 +134,13 @@
                                                         <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
                                                             @if(!empty($value->brand_logo))
                                                             <span style="opacity: 0;position: absolute;"> {{ $value->title }} </span>
-                                                            <img src="{{ asset($value->brand_logo) }}"></td>
+                                                            <img src="{{ asset($value->brand_logo) }}">
                                                             @elseif($value->other_bank)
                                                             {{ $value->other_bank }}
                                                             @else
                                                             -
                                                             @endif
-
+                                                        </td>
                                                         <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
                                                         <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
                                                         <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>
@@ -235,7 +235,15 @@
     </main>
     <script type="text/javascript">
         $(document).ready( function () {
-            $('#datatable, #datatable1').DataTable();
+            $('#datatable').DataTable({
+                "pageLength": 10,
+                'ordering': true,
+                "aoColumnDefs": [{
+                    "aTargets": [8],
+                    "bSortable": false,
+
+                }]
+            });
         } );
     </script>
     {{--Page content end--}}
