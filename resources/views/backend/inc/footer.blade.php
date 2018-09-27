@@ -830,6 +830,7 @@
                     '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                     '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
                 ];
+
                 var SDP6 = [
                     '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
                 ];
@@ -892,9 +893,9 @@
                         i++;
                     }
 
-                    if ((!promotionPeriod) && (ongoingStatus == 'false')) {
-                        errors[i] = 'The promotion period is required.';
-                        i++;
+                    if ((!promotionPeriod) && (ongoingStatus == 'false')&&(jQuery.inArray(formula, utilFormula) == -1)) {
+                            errors[i] = 'The promotion period is required.';
+                            i++;
                     }
                     if ((!untilEndDate) && (jQuery.inArray(formula, utilFormula) !== -1)) {
                         errors[i] = 'The until end date is required.';
