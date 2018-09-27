@@ -744,7 +744,7 @@ class PagesFrontController extends Controller
         $page = Page::where('pages.slug', BLOG_URL)
             ->where('delete_status', 0)->first();
         if (!$page) {
-            return redirect()->action('Blog\BlogController@index')->with('error', OPPS_ALERT);
+            return back()->with('error', OPPS_ALERT);
         }
         $systemSetting = \Helper::getSystemSetting();
         if (!$systemSetting) {
@@ -762,10 +762,11 @@ class PagesFrontController extends Controller
         if (!is_null($id)) {
             $query = $query->where('pages.menu_id', $id);
         }
-
+        $blogSearch = null;
         if (isset($request->b_search)) {
+            $blogSearch = $request->b_search;
             $query = $query->where('pages.name', 'LIKE', '%' . $request->b_search . '%')
-                ->orwhere('pages.meta_title', 'LIKE', '%' . $request->b_search . '%');
+                ->orwhere('menus.title', 'LIKE', '%' . $request->b_search . '%');
         }
         if (Auth::guest()) {
             $details = $query->whereIn('after_login', [0, null])->paginate(5);
@@ -780,7 +781,14 @@ class PagesFrontController extends Controller
             ->inRandomOrder()
             ->get();
 //dd($ads);
-        return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads'));
+        if(!$details->count())
+        {
+            \Session::flash('error', SEARCH_RESULT_ERROR);
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads','blogSearch'));
+        }else{
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads','blogSearch'));
+        }
+
     }
 
     public function search_tags($slug)
