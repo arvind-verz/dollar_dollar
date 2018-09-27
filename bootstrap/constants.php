@@ -283,6 +283,7 @@ define('NOT_ELIGIBLE', "Placement amount not eligible for this promotion/product
 define('NILL', "NIL");
 define('MONTHS', "Months");
 define('DAYS', "Days");
+define('UNTIL', "Until");
 
 
 // single lines for product result

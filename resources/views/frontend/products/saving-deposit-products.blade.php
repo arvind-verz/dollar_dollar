@@ -366,7 +366,7 @@ class="fa fa-refresh"></i></a>
                                     @elseif($product->promotion_end < $todayStartDate)
                                         {{EXPIRED}}
                                     @elseif($product->promotion_end > $todayStartDate)
-                                        {{ date('M d, Y', strtotime($product->promotion_start)) . ' to ' . date('M d, Y', strtotime($product->promotion_end)) }}
+                                        {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
                                     @endif
                                 </p>
 
@@ -962,7 +962,7 @@ Total interest rate @if(($product->total_interest)<=0)
                                     @elseif($product->promotion_end < $todayStartDate)
                                         {{EXPIRED}}
                                     @elseif($product->promotion_end > $todayStartDate)
-                                        {{ date('M d, Y', strtotime($product->promotion_start)) . ' to ' . date('M d, Y', strtotime($product->promotion_end)) }}
+                                        {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
                                     @endif
                                 </p>
 
