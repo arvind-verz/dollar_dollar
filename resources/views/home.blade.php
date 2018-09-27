@@ -303,15 +303,13 @@ Need something?
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -422,15 +420,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -560,15 +556,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -615,15 +609,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -695,15 +687,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -804,15 +794,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -943,15 +931,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -994,15 +980,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -1035,16 +1019,15 @@ Need something?
                                                         <img alt="" src="{{ asset($product->brand_logo) }}">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -1068,15 +1051,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class="highlight highlight-bg">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -1149,16 +1130,15 @@ Need something?
                                                         <img alt="" src="<?php echo asset($product->brand_logo); ?>">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -1182,15 +1162,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -1249,16 +1227,15 @@ Need something?
                                                         <img alt="" src="{{ asset($product->brand_logo) }}">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -1282,15 +1259,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class="highlight highlight-bg">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -1306,16 +1281,15 @@ Need something?
                                                         <img alt="" src="<?php echo asset($product->brand_logo); ?>">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -1339,15 +1313,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url('fixed-deposit-mode'); ?>">
@@ -1457,15 +1429,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -1565,15 +1535,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -1702,15 +1670,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -1753,15 +1719,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -1842,15 +1806,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -1951,15 +1913,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -1982,14 +1942,6 @@ Need something?
 
 
                                     $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'minimum_placement_amount');
-
-
-
-
-
-
-
-
 
 
 
@@ -2081,15 +2033,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -2133,15 +2083,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -2190,16 +2138,15 @@ Need something?
                                                         <img alt="" src="{{ asset($product->brand_logo) }}">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -2223,15 +2170,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -2304,16 +2249,15 @@ Need something?
                                                         <img alt="" src="<?php echo asset($product->brand_logo); ?>">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -2337,15 +2281,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -2434,16 +2376,15 @@ Need something?
                                                         <img alt="" src="{{ asset($product->brand_logo) }}">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -2467,15 +2408,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -2491,16 +2430,15 @@ Need something?
                                                         <img alt="" src="<?php echo asset($product->brand_logo); ?>">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -2524,15 +2462,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
@@ -2637,15 +2573,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -2744,15 +2678,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -2868,15 +2800,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -2922,15 +2852,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -2956,18 +2884,76 @@ Need something?
 
                                     $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'minimum_placement_amount');
 
-
-
-
-
-
-
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
+                                        @foreach($products as $product)
 
 
 
-                                    @endforeach
+                                            @if($product->featured==1)
+
+
+
+                                                @php $featured[] = $i; @endphp
+                                                <div class="product-col-01 home-featured">
+                                                    <div class="ps-slider--feature-product saving">
+                                                        <div class="ps-block--short-product second highlight"
+                                                             data-mh="product">
+                                                            <img alt="" src="{{ asset($product->brand_logo) }}">
+                                                            <h4 class="slider-heading">
+                                                                <strong>
+                                                                    Min:
+                                                                <span class="highlight-slider">
+                                                                SGD
+                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </span>
+                                                                </strong>
+                                                            </h4>
+
+                                                            <div class="ps-block__info">
+                                                                <p>
+                                                                    <strong>
+                                                                        rate:
+                                                                    </strong>
+                                                                    {{ $product->maximum_interest_rate }}
+
+
+                                                                    %
+                                                                </p>
+
+                                                                <p class="highlight highlight-bg">
+                                                                    <strong>
+                                                                        Min:
+                                                                    </strong>
+                                                                    SGD
+
+
+                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </p>
+                                                                <p>
+                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                                </p>
+                                                            </div>
+                                                            <a class="ps-btn"
+                                                               href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
+                                                                More info
+                                                            </a>
+                                                            </img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @php $i++; @endphp
+
+
+
+                                            @endif
+
+
+
+                                        @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -3050,15 +3036,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -3088,77 +3072,6 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-
-
-
-                                        @if($product->featured==1)
-
-
-
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-                                                                <span class="highlight-slider">
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                                </span>
-                                                            </strong>
-                                                        </h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-
-
-                                                                %
-                                                            </p>
-
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-
-
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-
-
-
-                                        @endif
-
-
-
-                                    @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -3241,15 +3154,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -3293,15 +3204,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -3334,11 +3243,70 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
+                                        @foreach($products as $product)
+                                            @if($product->featured==1)
+                                                @php $featured[] = $i; @endphp
+                                                <div class="product-col-01 home-featured">
+                                                    <div class="ps-slider--feature-product saving">
+                                                        <div class="ps-block--short-product second highlight"
+                                                             data-mh="product">
+                                                            <img alt="" src="{{ asset($product->brand_logo) }}">
+                                                            <h4 class="slider-heading">
+                                                                <strong>
+                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
+                                                                </strong>
+                                                            </h4>
+
+                                                            <div class="ps-block__info">
+                                                                <p>
+                                                                    <strong>
+                                                                        rate:
+                                                                    </strong>
+                                                                    {{ $product->maximum_interest_rate }}
+
+
+                                                                    %
+                                                                </p>
+
+                                                                <p>
+                                                                    <strong>
+                                                                        Min:
+                                                                    </strong>
+                                                                    SGD
+
+
+                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </p>
+                                                                <p class=" highlight highlight-bg ">
+                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                                </p>
+                                                            </div>
+                                                            <a class="ps-btn"
+                                                               href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
+                                                                More info
+                                                            </a>
+                                                            </img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @php $i++; @endphp
 
 
 
-                                    @endforeach
+                                            @endif
+                                        @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -3393,16 +3361,15 @@ Need something?
                                                         <img alt="" src="<?php echo asset($product->brand_logo); ?>">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -3426,15 +3393,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -3454,81 +3419,6 @@ Need something?
                                     <?php
                                     $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'promotion_period');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-
-
-                                                                %
-                                                            </p>
-
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-
-
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <strong>
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                    </span>
-                                                                </strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                            @else
-                                                                <strong>
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                </strong>
-                                                            @endif
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-
-
-
-                                        @endif
-
-
-
-                                    @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -3583,16 +3473,15 @@ Need something?
                                                         <img alt="" src="{{ asset($product->brand_logo) }}">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -3616,15 +3505,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -3640,16 +3527,15 @@ Need something?
                                                         <img alt="" src="<?php echo asset($product->brand_logo); ?>">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -3673,15 +3559,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
@@ -3744,11 +3628,77 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
+                                        @foreach($products as $product)
 
 
 
-                                    @endforeach
+                                            @if($product->featured==1)
+
+
+
+                                                @php $featured[] = $i;  @endphp
+                                                <div class="product-col-01 home-featured">
+                                                    <div class="ps-slider--feature-product saving">
+                                                        <div class="ps-block--short-product second highlight"
+                                                             data-mh="product">
+                                                            <img alt="" src="{{ asset($product->brand_logo) }}">
+                                                            <h4 class="slider-heading">
+                                                                <strong>
+                                                                    Up to
+<span class="highlight-slider">
+{{ $product->maximum_interest_rate  }}
+
+
+    %
+</span>
+                                                                </strong>
+                                                            </h4>
+
+                                                            <div class="ps-block__info">
+                                                                <p class="highlight highlight-bg">
+                                                                    <strong>
+                                                                        rate:
+                                                                    </strong>
+                                                                    {{ $product->maximum_interest_rate }}
+
+
+                                                                    %
+                                                                </p>
+
+                                                                <p>
+                                                                    <strong>
+                                                                        Min:
+                                                                    </strong>
+                                                                    SGD
+
+
+                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </p>
+
+                                                                <p>
+                                                                    {{ $product->promotion_period }}
+
+
+
+                                                                    {{CRITERIA}}
+                                                                </p>
+                                                            </div>
+                                                            <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
+                                                                More info
+                                                            </a>
+                                                            </img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @php $i++; @endphp
+
+
+
+                                            @endif
+
+
+
+                                        @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -3870,77 +3820,7 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
 
-
-
-                                        @if($product->featured==1)
-
-
-
-                                            @php $featured[] = $i;  @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-<span class="highlight-slider">
-{{ $product->maximum_interest_rate  }}
-
-
-    %
-</span>
-                                                            </strong>
-                                                        </h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-
-
-                                                                %
-                                                            </p>
-
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-
-
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-
-                                                            <p>
-                                                                {{ $product->promotion_period }}
-
-
-
-                                                                {{CRITERIA}}
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-
-
-
-                                        @endif
-
-
-
-                                    @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -4117,11 +3997,75 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
+                                        @foreach($products as $product)
 
 
 
-                                    @endforeach
+                                            @if($product->featured==1)
+
+
+
+                                                @php $featured[] = $i; @endphp
+                                                <div class="product-col-01 home-featured">
+                                                    <div class="ps-slider--feature-product saving">
+                                                        <div class="ps-block--short-product second highlight"
+                                                             data-mh="product">
+                                                            <img alt="" src="{{ asset($product->brand_logo) }}">
+                                                            <h4 class="slider-heading">
+                                                                <strong>
+                                                                    Min:
+                                                                <span class="highlight-slider">
+                                                                SGD
+                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </span>
+                                                                </strong>
+                                                            </h4>
+
+                                                            <div class="ps-block__info">
+                                                                <p>
+                                                                    <strong>
+                                                                        rate:
+                                                                    </strong>
+                                                                    {{ $product->maximum_interest_rate }}
+
+
+                                                                    %
+                                                                </p>
+
+                                                                <p class="highlight highlight-bg">
+                                                                    <strong>
+                                                                        Min:
+                                                                    </strong>
+                                                                    SGD
+
+
+                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </p>
+
+                                                                <p>
+                                                                    {{ $product->promotion_period }}
+
+
+
+                                                                    {{CRITERIA}}
+                                                                </p>
+                                                            </div>
+                                                            <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
+                                                                More info
+                                                            </a>
+                                                            </img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @php $i++; @endphp
+
+
+
+                                            @endif
+
+
+
+                                        @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -4241,75 +4185,7 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
 
-
-
-                                        @if($product->featured==1)
-
-
-
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-                                                                <span class="highlight-slider">
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                                </span>
-                                                            </strong>
-                                                        </h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-
-
-                                                                %
-                                                            </p>
-
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-
-
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-
-                                                            <p>
-                                                                {{ $product->promotion_period }}
-
-
-
-                                                                {{CRITERIA}}
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-
-
-
-                                        @endif
-
-
-
-                                    @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -4482,11 +4358,74 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
+                                        @foreach($products as $product)
 
 
 
-                                    @endforeach
+                                            @if($product->featured==1)
+
+
+
+                                                @php $featured[] = $i; @endphp
+                                                <div class="product-col-01 home-featured">
+                                                    <div class="ps-slider--feature-product saving">
+                                                        <div class="ps-block--short-product second highlight"
+                                                             data-mh="product">
+                                                            <img alt="" src="{{ asset($product->brand_logo) }}">
+                                                            <h4 class="slider-heading">
+                                                                <strong>
+                                                                    Up to
+<span class="highlight-slider">
+{{ $product->promotion_period }} Criteria
+</span>
+                                                                </strong>
+                                                            </h4>
+
+                                                            <div class="ps-block__info">
+                                                                <p>
+                                                                    <strong>
+                                                                        rate:
+                                                                    </strong>
+                                                                    {{ $product->maximum_interest_rate }}
+
+
+                                                                    %
+                                                                </p>
+
+                                                                <p>
+                                                                    <strong>
+                                                                        Min:
+                                                                    </strong>
+                                                                    SGD
+
+
+                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </p>
+
+                                                                <p class="highlight highlight-bg">
+                                                                    {{ $product->promotion_period }}
+
+
+
+                                                                    {{CRITERIA}}
+                                                                </p>
+                                                            </div>
+                                                            <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
+                                                                More info
+                                                            </a>
+                                                            </img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @php $i++; @endphp
+
+
+
+                                            @endif
+
+
+
+                                        @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -4605,74 +4544,7 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
 
-
-
-                                        @if($product->featured==1)
-
-
-
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-<span class="highlight-slider">
-{{ $product->promotion_period }} Criteria
-</span>
-                                                            </strong>
-                                                        </h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-
-
-                                                                %
-                                                            </p>
-
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-
-
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-
-                                                            <p class="highlight highlight-bg">
-                                                                {{ $product->promotion_period }}
-
-
-
-                                                                {{CRITERIA}}
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-
-
-
-                                        @endif
-
-
-
-                                    @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -4877,9 +4749,80 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
+                                        @foreach($products as $product)
 
-                                    @endforeach
+
+
+                                            @if($product->featured==1)
+
+
+
+                                                @php $featured[] = $i;  @endphp
+                                                <div class="product-col-01 home-featured">
+                                                    <div class="ps-slider--feature-product saving">
+                                                        <div class="ps-block--short-product second highlight"
+                                                             data-mh="product">
+                                                            <img alt="" src="{{ asset($product->brand_logo) }}">
+                                                            <h4 class="slider-heading">
+                                                                <strong>
+                                                                    Up to
+<span class="highlight-slider">
+{{ $product->maximum_interest_rate  }}
+
+
+    %
+</span>
+                                                                </strong>
+                                                            </h4>
+
+                                                            <div class="ps-block__info">
+                                                                <p class="highlight highlight-bg">
+                                                                    <strong>
+                                                                        rate:
+                                                                    </strong>
+                                                                    {{ $product->maximum_interest_rate }}
+
+
+                                                                    %
+                                                                </p>
+
+                                                                <p>
+                                                                    <strong>
+                                                                        Min:
+                                                                    </strong>
+                                                                    {{$product->currency_code}}
+
+
+                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </p>
+                                                                <p>
+                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                                </p>
+                                                            </div>
+                                                            <a class="ps-btn"
+                                                               href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
+                                                                More
+
+
+                                                                info
+                                                            </a>
+                                                            </img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @php $i++; @endphp
+
+
+
+                                            @endif
+
+
+
+                                        @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -4964,15 +4907,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
@@ -5009,82 +4950,7 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
 
-
-
-                                        @if($product->featured==1)
-
-
-
-                                            @php $featured[] = $i;  @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-<span class="highlight-slider">
-{{ $product->maximum_interest_rate  }}
-
-
-    %
-</span>
-                                                            </strong>
-                                                        </h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-
-
-                                                                %
-                                                            </p>
-
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                {{$product->currency_code}}
-
-
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
-                                                            More
-
-
-                                                            info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-
-
-
-                                        @endif
-
-
-
-                                    @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -5169,15 +5035,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
@@ -5226,15 +5090,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
@@ -5270,11 +5132,78 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
+                                        @foreach($products as $product)
 
 
 
-                                    @endforeach
+                                            @if($product->featured==1)
+
+
+
+                                                @php $featured[] = $i; @endphp
+                                                <div class="product-col-01 home-featured">
+                                                    <div class="ps-slider--feature-product saving">
+                                                        <div class="ps-block--short-product second highlight"
+                                                             data-mh="product">
+                                                            <img alt="" src="{{ asset($product->brand_logo) }}">
+                                                            <h4 class="slider-heading">
+                                                                <strong>
+                                                                    Min:
+                                                                <span class="highlight-slider">
+                                                                {{$product->currency_code}}
+                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                            </span>
+                                                                </strong>
+                                                            </h4>
+
+                                                            <div class="ps-block__info">
+                                                                <p>
+                                                                    <strong>
+                                                                        rate:
+                                                                    </strong>
+                                                                    {{ $product->maximum_interest_rate }}
+
+
+                                                                    %
+                                                                </p>
+
+                                                                <p class="highlight highlight-bg">
+                                                                    <strong>
+                                                                        Min:
+                                                                    </strong>
+                                                                    {{$product->currency_code}}
+
+
+                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </p>
+                                                                <p>
+                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                                </p>
+                                                            </div>
+                                                            <a class="ps-btn"
+                                                               href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
+                                                                More
+
+
+                                                                info
+                                                            </a>
+                                                            </img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @php $i++; @endphp
+
+
+
+                                            @endif
+
+
+
+                                        @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -5357,15 +5286,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
@@ -5398,80 +5325,7 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
 
-
-
-                                        @if($product->featured==1)
-
-
-
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-                                                                <span class="highlight-slider">
-                                                                {{$product->currency_code}}
-                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </span>
-                                                            </strong>
-                                                        </h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-
-
-                                                                %
-                                                            </p>
-
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                {{$product->currency_code}}
-
-
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
-                                                            More
-
-
-                                                            info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-
-
-
-                                        @endif
-
-
-
-                                    @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -5554,15 +5408,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
@@ -5609,15 +5461,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p>
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p>
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                           <p>
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
@@ -5653,11 +5503,82 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
+                                        @foreach($products as $product)
 
 
 
-                                    @endforeach
+                                            @if($product->featured==1)
+
+
+
+                                                @php $featured[] = $i; @endphp
+                                                <div class="product-col-01 home-featured">
+                                                    <div class="ps-slider--feature-product saving">
+                                                        <div class="ps-block--short-product second highlight"
+                                                             data-mh="product">
+                                                            <img alt="" src="{{ asset($product->brand_logo) }}">
+                                                            <h4 class="slider-heading">
+                                                                <strong>
+                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
+                                                                </strong>
+                                                            </h4>
+
+                                                            <div class="ps-block__info">
+                                                                <p>
+                                                                    <strong>
+                                                                        rate:
+                                                                    </strong>
+                                                                    {{ $product->maximum_interest_rate }}
+
+
+                                                                    %
+                                                                </p>
+
+                                                                <p>
+                                                                    <strong>
+                                                                        Min:
+                                                                    </strong>
+                                                                    {{$product->currency_code}}
+
+
+                                                                    ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                                </p>
+                                                                <p class=" highlight highlight-bg ">
+                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                                </p>
+                                                            </div>
+                                                            <a class="ps-btn"
+                                                               href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
+                                                                More
+
+
+                                                                info
+                                                            </a>
+                                                            </img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @php $i++; @endphp
+
+
+
+                                            @endif
+
+
+
+                                        @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -5712,16 +5633,15 @@ Need something?
                                                         <img alt="" src="<?php echo asset($product->brand_logo); ?>">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -5745,15 +5665,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
@@ -5786,85 +5704,7 @@ Need something?
 
 
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
 
-
-
-                                        @if($product->featured==1)
-
-
-
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-
-
-                                                                %
-                                                            </p>
-
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                {{$product->currency_code}}
-
-
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
-                                                            More
-
-
-                                                            info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-
-
-
-                                        @endif
-
-
-
-                                    @endforeach
                                     <?php $i = 1;$featured_item = 5 - count($featured);
 
 
@@ -5919,16 +5759,15 @@ Need something?
                                                         <img alt="" src="{{ asset($product->brand_logo) }}">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -5952,15 +5791,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
@@ -5979,16 +5816,15 @@ Need something?
                                                         <img alt="" src="<?php echo asset($product->brand_logo); ?>">
                                                         <h4 class="slider-heading">
                                                             <strong>
-                                                                @if($product->max_tenure > 0)
-                                                                    <span class="highlight-slider">
-                                                                    {{ $product->max_tenure }}
-                                                                         </span>
-                                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->max_tenure)}} @else {{\Helper::days_or_month_or_year(2,  $product->max_tenure)}} @endif
-                                                                @else
-                                                                    <span class="highlight-slider">
-                                                                    {{$product->promotion_period}}
-                                                                    </span>
-                                                                @endif
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                                    @elseif($product->tenure_value > 0)
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                                    @elseif(is_numeric($product->promotion_period))
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                                    @else
+                                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                                    @endif
                                                             </strong>
                                                         </h4>
 
@@ -6012,15 +5848,13 @@ Need something?
 
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
-                                                            @if($product->max_tenure > 0)
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}} @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{DAYS}} @else {{MONTHS}} @endif
-                                                                </p>
-                                                            @else
-                                                                <p class=" highlight highlight-bg ">
-                                                                    {{$product->promotion_period}}
-                                                                </p>
-                                                            @endif
+                                                            <p class=" highlight highlight-bg ">
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+	{{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+@else
+	{{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+@endif
+                                                            </p>
                                                         </div>
                                                         <a class="ps-btn"
                                                            href="<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE); ?>">
