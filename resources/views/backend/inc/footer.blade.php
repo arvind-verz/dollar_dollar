@@ -439,7 +439,88 @@
                     }],
 
                 });
+        $('#customer-report').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6,7]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Profile ' + today;
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6,7]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Profile ' + today;
+                            }
 
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6,7]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Profile ' + today;
+                            }
+                        }
+                    ],
+                    "pageLength": 10,
+                    'ordering': true,
+                    'order': [[0, 'asc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [],
+                        "bSortable": false,
+
+                    }],
+
+                });
         $('#contact').DataTable(
                 {
                     dom: 'lBfrtip',
@@ -455,13 +536,14 @@
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Contact ' + today;
                             }
                         },
@@ -476,13 +558,14 @@
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Contact ' + today;
                             }
 
@@ -498,13 +581,14 @@
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Contact ' + today;
                             }
                         }
@@ -529,20 +613,21 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Life ' + today;
                             }
                         },
@@ -550,20 +635,21 @@
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Life ' + today;
                             }
 
@@ -572,20 +658,21 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Life ' + today;
                             }
                         }
@@ -609,20 +696,21 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Invest ' + today;
                             }
                         },
@@ -630,20 +718,21 @@
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Invest ' + today;
                             }
 
@@ -652,20 +741,21 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Invest ' + today;
                             }
                         }
@@ -689,20 +779,21 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [1, 2, 3, 4, 5, 6,7,8]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Health ' + today;
                             }
                         },
@@ -710,20 +801,21 @@
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [1, 2, 3, 4, 5, 6,7,8]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Health ' + today;
                             }
 
@@ -732,20 +824,21 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [1, 2, 3, 4, 5, 6,7,8]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
+                                var yy= yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
                                 if (mm < 10) {
                                     mm = '0' + mm
                                 }
-                                today = yyyy + '' + mm + '' + dd;
+                                today = yy + '' + mm + '' + dd;
                                 return 'Health ' + today;
                             }
                         }
@@ -830,6 +923,7 @@
                     '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                     '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
                 ];
+
                 var SDP6 = [
                     '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
                 ];
@@ -892,9 +986,9 @@
                         i++;
                     }
 
-                    if ((!promotionPeriod) && (ongoingStatus == 'false')) {
-                        errors[i] = 'The promotion period is required.';
-                        i++;
+                    if ((!promotionPeriod) && (ongoingStatus == 'false')&&(jQuery.inArray(formula, utilFormula) == -1)) {
+                            errors[i] = 'The promotion period is required.';
+                            i++;
                     }
                     if ((!untilEndDate) && (jQuery.inArray(formula, utilFormula) !== -1)) {
                         errors[i] = 'The until end date is required.';

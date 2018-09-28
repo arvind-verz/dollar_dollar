@@ -298,6 +298,12 @@ function addCommas(nStr) {
 $(".search_type").on("click", function () {
 
     $(".search_type").removeClass("active");
+    var filterValue = $(this).addClass("active").find("input[name='filter']").val();
+    if (filterValue == 'Interest') {
+        $(".sort-by").prop('selectedIndex', 2);
+    } else {
+        $(".sort-by").prop('selectedIndex', 1);
+    }
     $("input[name='filter']").prop("checked", false);
     $(this).addClass("active").find("input[name='filter']").prop("checked", true);
     document.getElementById('search-form').submit();
@@ -318,18 +324,17 @@ $(".content-detail").on("click", function () {
     var headingText = $(this).text();
     var formulaDetailId = $(this).data('formula');
 
-    if(headingText=="SHOW DETAILS")
-    {
+    if (headingText == "SHOW DETAILS") {
         $(".content-detail").html("SHOW DETAILS");
         $(this).html("LESS DETAILS");
         var detailId = $(this).data('detail-id');
-        var content = $('#'+detailId).html();
-        $('#formula-'+formulaDetailId+'-details').html(content);
-        $('#formula-'+formulaDetailId+'-details').css('display','block');
+        var content = $('#' + detailId).html();
+        $('#formula-' + formulaDetailId + '-details').html(content);
+        $('#formula-' + formulaDetailId + '-details').css('display', 'block');
 
-    }else{
+    } else {
         $(this).html("SHOW DETAILS");
-        $('#formula-'+formulaDetailId+'-details').css('display','none');
+        $('#formula-' + formulaDetailId + '-details').css('display', 'none');
     }
 
 });
@@ -360,7 +365,23 @@ $(window).on('load', function () {
 function clickSliderhome(id) {
     $(".ps-slider--home .owl-dot:nth-child(" + id + ")").click();
 }
+function checkOtherValidation(obj) {
 
+    var textareaLength = $(obj).val().length;
+    var target = $(obj).data('target');
+
+    if (textareaLength == 0) {
+        $('#'+target).prop('checked', false);
+    }
+    else {
+        $('#' + target).prop('checked', true);
+    }
+}
+$('#time-5').change(function () {
+    if (!$(this).is(":checked")) {
+        $('#other-value').val("");
+    }
+});
 $(document).ready(function () {
     $(".aboutpage").click(function () {
         var currentid = $(this).parent('.catListing li').attr('id');
@@ -413,23 +434,23 @@ $(document).ready(function () {
         $(this).next().slideToggle();
     });
     $(".ps-block--legend-table .ps-block__header").append("<span></span>");
-    
+
     $(".ps-block--short-product.second.highlight.sp-only").parent().addClass("sp-only");
-    
+
     $(".ps-list--sidebar.menu-sibar .current").append("<div><span></span></div>");
-    $(".ps-list--sidebar.menu-sibar .current div").click(function(){
-        if($(this).parent().hasClass("active")){
+    $(".ps-list--sidebar.menu-sibar .current div").click(function () {
+        if ($(this).parent().hasClass("active")) {
             $(this).parent().removeClass("active");
         }
-        else{
+        else {
             $(this).parent().addClass("active");
         }
         $(this).parent().nextAll(".ps-list--sidebar.menu-sibar li").slideToggle();
     })
 
     /*$(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-block--product-info .ps-block__content .ps-block__more").click(function () {
-        var n = $(this).attr("href").replace("#", "");
-        $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content").css("display", "none");
-        $(".ps-criteria-detail__content#" + n).css("display", "block");
-    })*/
+     var n = $(this).attr("href").replace("#", "");
+     $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content").css("display", "none");
+     $(".ps-criteria-detail__content#" + n).css("display", "block");
+     })*/
 });

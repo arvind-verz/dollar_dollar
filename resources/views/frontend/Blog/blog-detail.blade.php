@@ -36,31 +36,9 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="{{ route('index') }}"><i class="fa fa-home"></i> Home</a></li>
-                @if(isset($page->menu_id))
-                <?php
-                $breadcums = Helper::getBreadCumsCategoryByMenus($page->menu_id);
-                $breadCumsCount = count($breadcums) - 1;
-                ?>
-                @for($i=0; $i<=$breadCumsCount;$i++)
-                {{-- @php dd($breadcums[$i],$breadCumsCount); @endphp--}}
-                        <!--
-                    check if product division and breadcums division same
-                    when category only one product that time redirect direct to product page
-                    that time need to check for reducing double breadcum of category
-                    -->
-                @if($breadcums[$i]['id'] == $page->menu_id)
-                    <li class="active">{{$breadcums[$i]['title']}}</li>
-
-                @else
-                    <li>
-                        <a href="{{ route("slug",["slug"=>$breadcums[$i]['slug']]) }}"> {{$breadcums[$i]['title']}}</a>
-                    </li>
-                @endif
-                @endfor
-
-                @else
-                    <li class="active">{{$page->name}}</li>
-                @endif
+                <li><a href="{{ route('blog-list') }}"> Blog Main Page</a></li>
+                <li><a href="{{ route('get-blog-by-category',['id'=>$page->menu_id]) }}">{{$page->menu_title}}</a></li>
+                @include('frontend.includes.breadcrumb')
             </ol>
         </div>
     </div>

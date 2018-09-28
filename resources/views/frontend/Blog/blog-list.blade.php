@@ -40,6 +40,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
 </div>
 
 {{--Page content start--}}
+@include('frontend.includes.messages')
 <main class="ps-main">
 <div class="container">
 <div class="row">

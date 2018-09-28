@@ -46,6 +46,17 @@
     {{--Page content start--}}
     <main class="ps-main">
         <div class="container">
+            @if(session('error'))
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger m-b-0">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            {!! session('error') !!}
+                        </div>
+                    </div>
+                </div>
+            @endif
             <?php
             //$pageName = strtok($page->name, " ");;
             $pageName = explode(' ', trim($page->name));
@@ -174,7 +185,7 @@
                     <label for="time-5">{{TIME_OTHER}}</label>
                 </div>
                 <div class="short-form mb-10">
-                    <input class="form-control" type="text" id="other_value" name="other_value"
+                    <input class="form-control" type="text" id="other-value" name="other_value" data-target="time-5"
                            onkeyup="checkOtherValidation(this)" placeholder="Please Specify"
                            value="{{old('other_value')}}">
                 </div>
@@ -190,7 +201,7 @@
                 @endif
             </div>
             <div class="form-group">
-                <label>Fullname</label>
+                <label>Full Name</label>
 
                 <div class="form-icon"><i class="fa fa-user"></i>
                     <input class="form-control" type="text" name="full_name" placeholder="Enter Name Here"
@@ -224,13 +235,14 @@
                         <div class="form-icon"><i class="fa fa-globe"></i>
                             <input class="form-control" type="text" placeholder="+65" name="country_code"
                                    value="{{ old('country_code') ? old('country_code') : (Auth::user()->country_code) ? Auth::user()->country_code : '+65' }}">
-                                   <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit Info</a>
-                        </div>
-                        @if ($errors->has('country_code'))
-                            <span class="text-danger">
+                            @if ($errors->has('country_code'))
+                                <span class="text-danger">
                                                     <strong>{{ $errors->first('country_code') }}</strong>
                                                     </span>
-                        @endif
+                            @endif
+                            <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit Info</a>
+                        </div>
+
                     </div>
                     <div class="col-xs-9">
                         <div class="form-icon"><i class="fa fa-mobile-phone"></i>
@@ -269,7 +281,7 @@
         });*/
 
         function inputs_checked() {
-            $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("disabled", true);
+            $(" input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
         } 
     });
 

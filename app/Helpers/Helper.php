@@ -528,7 +528,30 @@ class Helper
         }
         return $day;
     }
-
+public static function daysOrMonthForSlider($tenure_type, $tenure)
+    {
+        $day = 'Invalid';
+        if ($tenure_type == 1) {
+            if ($tenure > 1) {
+                $day = 'Days';
+            } else {
+                $day = 'Day';
+            }
+        } elseif ($tenure_type == 2) {
+            if ($tenure > 1) {
+                $day = 'MTHS';
+            } else {
+                $day = 'MTH';
+            }
+        } elseif ($tenure_type == 3) {
+            if ($tenure > 1) {
+                $day = 'Years';
+            } else {
+                $day = 'Year';
+            }
+        }
+        return $day;
+    }
     public static function get_page_detail($slug = HOME_SLUG)
     {
         //dd($slug);
@@ -656,7 +679,7 @@ class Helper
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
                         $minTenure = min($placementTenures);
-                        if(count($placementTenures)>3)
+                        if(count($placementTenures)>4)
                             {
                                 $product->promotion_period = $minTenure.' - '.$maxTenure;
                             }
@@ -675,6 +698,17 @@ class Helper
                 $product->tenure_value = ONGOING;
             } else {
                 $product->tenure_value = $maxTenure;
+            }
+             $todayDate = Carbon::today();
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $product->until_end_date)->endOfDay();
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = 0;
+                }
+            } else {
+                $product->remaining_days = null;
             }
         }
 
@@ -728,11 +762,16 @@ class Helper
         $i = 1;
         foreach($customer_reports as $customer_report) {
 
-        if($i!=1) { ?> <tr> <?php } ?>
+        if($i!=1) { ?> <tr>
+            <td style='display: none'><?php echo ucfirst($customer_report->first_name) . ' ' . ucfirst($customer_report->last_name).'<br/>'. $customer_report->email.'<br/>'. $customer_report->country_code . $customer_report->tel_phone; ?></td></td>
+            <td></td>
+            <td></td>
+            <?php } ?>
+
             <td><?php echo $customer_report->title; ?></td>
         <td><?php echo ucwords($customer_report->account_name); ?></td>
         <td><?php echo '$'.$customer_report->amount; ?></td>
-        <td><?php echo date('d-m-Y', strtotime($customer_report->end_date)); ?></td>
+        <td><?php if($customer_report->end_date) {echo date('d-m-Y', strtotime($customer_report->end_date));} ?></td>
         <td>
 
             <?php

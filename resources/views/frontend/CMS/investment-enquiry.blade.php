@@ -55,11 +55,12 @@
             ?>
             {{--Page content start--}}
             @if($page->slug!=THANK_SLUG)
-                        <h3 class="ps-heading mb-35">
-                            <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
-                        </h3>
+                <h3 class="ps-heading mb-35">
+                    <span>@if(!empty($page->icon))<i
+                                class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                </h3>
 
-                        {!!  $page->contents !!}
+                {!!  $page->contents !!}
             @else
                 {!!  $page->contents !!}
             @endif
@@ -114,7 +115,8 @@
                 <h5 class="ps-heading--3">3. What is your date of birth?</h5>
 
                 <div class="ps-form-icon max-500"><i class="fa fa-calendar"></i>
-                    <input class="form-control " id="datepicker" value="{{old('dob')}}" name="dob" type="text" placeholder="">
+                    <input class="form-control " id="datepicker" value="{{old('dob')}}" name="dob" type="text"
+                           placeholder="">
                 </div>
                 @if ($errors->has('dob'))
                     <span class="text-danger">
@@ -146,7 +148,9 @@
             <div class="form-group">
                 <h5 class="ps-heading--3">5. When is the best time to reach you?</h5>
 
-                <p>One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</p>
+                <p>One of representative from DollarDollar's partner will go through the different quotes from different
+                    insurers that is most suitable to your needs. I consent that this assigned representative can
+                    contact me via the various communication (Voice Call, SMS and Email)</p>
 
                 <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="time-1" value="{{TIME_ANYTIME}}" name="time[]"
@@ -174,7 +178,7 @@
                     <label for="time-5">{{TIME_OTHER}}</label>
                 </div>
                 <div class="short-form mb-10">
-                    <input class="form-control" type="text" id="other_value" name="other_value"
+                    <input class="form-control" type="text" id="other-value" name="other_value" data-target="time-5"
                            onkeyup="checkOtherValidation(this)" placeholder="Please Specify"
                            value="{{old('other_value')}}">
                 </div>
@@ -224,13 +228,15 @@
                         <div class="form-icon"><i class="fa fa-globe"></i>
                             <input class="form-control" type="text" placeholder="+65" name="country_code"
                                    value="{{ old('country_code') ? old('country_code') : (Auth::user()->country_code) ? Auth::user()->country_code : '+65' }}">
-                                   <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit Info</a>
-                        </div>
-                        @if ($errors->has('country_code'))
-                            <span class="text-danger">
+                            @if ($errors->has('country_code'))
+                                <span class="text-danger">
                                                     <strong>{{ $errors->first('country_code') }}</strong>
                                                     </span>
-                        @endif
+                            @endif
+                            <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit
+                                Info</a>
+                        </div>
+
                     </div>
                     <div class="col-xs-9">
                         <div class="form-icon"><i class="fa fa-mobile-phone"></i>
@@ -259,29 +265,29 @@
         {!! $systemSetting->{$page->contact_or_offer} !!}
     @endif
     {{--contact us or what we offer section end--}}
-<script type="text/javascript">
-    $(document).ready(function() {
-        inputs_checked();
-        /*var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
-        inputs.prop("disabled", true);
-        $("input[name='components[]'], input[name='gender'], input[name='smoke'], input[name='time[]']").on("change", function() {
+    <script type="text/javascript">
+        $(document).ready(function () {
             inputs_checked();
-        });*/
+            /*var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
+             inputs.prop("disabled", true);
+             $("input[name='components[]'], input[name='gender'], input[name='smoke'], input[name='time[]']").on("change", function() {
+             inputs_checked();
+             });*/
 
-        function inputs_checked() {
-            $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("disabled", true);
-        } 
-    });
-
-    $(document).ready(function () {
-        //Date picker
-        $('#datepicker').datepicker({
-            autoclose: true,
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-100:+0",
-            dateFormat: "yy-mm-dd"
+            function inputs_checked() {
+                $("input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
+            }
         });
-    });
-</script>
+
+        $(document).ready(function () {
+            //Date picker
+            $('#datepicker').datepicker({
+                autoclose: true,
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0",
+                dateFormat: "yy-mm-dd"
+            });
+        });
+    </script>
 @endsection

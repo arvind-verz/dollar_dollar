@@ -151,6 +151,11 @@ class EnquiryFrontController extends Controller
                 $fields ['other_value'] = 'required';
             }
         }
+        if (isset($request->level)) {
+            if ($request->level==YES) {
+                $fields ['health_condition'] = 'required';
+            }
+        }
         $validator = Validator::make($request->all(), $fields);
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());

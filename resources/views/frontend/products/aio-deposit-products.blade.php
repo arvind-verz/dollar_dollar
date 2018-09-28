@@ -178,7 +178,7 @@ value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] :
 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
 <div class="form-group ">
 <select class="form-control sort-by" name="sort_by">
-<option value="">Sort by</option>
+    <option value="" disabled="disabled" selected="selected">Sort by</option>
 <option value="1"
 @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
 Ascending
@@ -217,28 +217,28 @@ class="fa fa-refresh"></i></a>
 <div class="ps-block--short-product second highlight" data-mh="product"><img
 src="{{ asset($product->brand_logo) }}" alt="">
 @if(isset($searchFilter['filter']))
-<h4 class="slider-heading">
-@if($searchFilter['filter']==INTEREST)
-up to <strong> {{ $product->maximum_interest_rate }}%</strong>
-@endif
-@if($searchFilter['filter']==PLACEMENT)
-Min: <strong>
-SGD
-${{ Helper::inThousand($product->minimum_placement_amount) }}
-</strong>
-@endif
-@if($searchFilter['filter']==TENURE)
-@if($product->promotion_end == null)
-<strong>{{ONGOING}}</strong>
-@else
-<strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
-@endif
+        <h4>
+            <strong>
+                @if($searchFilter['filter']==INTEREST)
+                    Up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}%</span>
+                @endif
+                @if($searchFilter['filter']==PLACEMENT)
+                    Min:   <span class="highlight-slider">
+                            SGD ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
+                @endif
+                @if($searchFilter['filter']==TENURE)
+                    @if($product->tenure_value > 0)
+                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>@if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                    @else
+                        <span class="highlight-slider"> {{$product->promotion_period}} </span>
+                    @endif
 
-@endif
-@if($searchFilter['filter']==CRITERIA)
-up to <strong> {{ $product->promotion_period }} Criteria</strong>
-@endif
-</h4>
+                @endif
+                @if($searchFilter['filter']==CRITERIA)
+                    up to  <span class="highlight-slider"> {{ $product->promotion_period }} Criteria </span>
+                @endif
+            </strong>
+        </h4>
 @endif
 <div class="ps-block__info">
 <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
@@ -287,28 +287,28 @@ data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
 <div class="ps-block--short-product second" data-mh="product"><img
 src="{{ asset($product->brand_logo) }}" alt="">
 @if(isset($searchFilter['filter']))
-<h4 class="slider-heading">
-@if($searchFilter['filter']==INTEREST)
-up to <strong> {{ $product->maximum_interest_rate }}%</strong>
-@endif
-@if($searchFilter['filter']==PLACEMENT)
-Min: <strong>
-SGD
-${{ Helper::inThousand($product->minimum_placement_amount) }}
-</strong>
-@endif
-@if($searchFilter['filter']==TENURE)
-@if($product->promotion_end == null)
-<strong>{{ONGOING}}</strong>
-@else
-<strong> {{ $product->promotion_period }}</strong> {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}
-@endif
+        <h4>
+            <strong>
+                @if($searchFilter['filter']==INTEREST)
+                    Up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}%</span>
+                @endif
+                @if($searchFilter['filter']==PLACEMENT)
+                    Min:   <span class="highlight-slider">
+                            SGD ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
+                @endif
+                @if($searchFilter['filter']==TENURE)
+                    @if($product->tenure_value > 0)
+                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>@if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
+                    @else
+                        <span class="highlight-slider"> {{$product->promotion_period}} </span>
+                    @endif
 
-@endif
-@if($searchFilter['filter']==CRITERIA)
-up to <strong> {{ $product->promotion_period }} Criteria</strong>
-@endif
-</h4>
+                @endif
+                @if($searchFilter['filter']==CRITERIA)
+                    up to  <span class="highlight-slider"> {{ $product->promotion_period }} Criteria </span>
+                @endif
+            </strong>
+        </h4>
 @endif
 
 <div class="ps-block__info">

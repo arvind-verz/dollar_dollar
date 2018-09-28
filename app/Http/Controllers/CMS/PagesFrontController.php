@@ -329,7 +329,7 @@ class PagesFrontController extends Controller
 //dd($ads_manage);
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -383,7 +383,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -407,7 +407,16 @@ class PagesFrontController extends Controller
             $product->ads = json_decode($product->ads_placement);
 
             $product->tenure = $tenures;
-            $product->remaining_days = $remainingDays; // remaining in days
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = 0;
+                }
+            } else {
+                $product->remaining_days = null;
+            }
             $status = false;
 
             if (in_array($product->promotion_formula_id, [FIX_DEPOSIT_F1])) {
@@ -506,7 +515,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -536,7 +545,7 @@ class PagesFrontController extends Controller
                     $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
-            }elseif (empty($product->promotion_formula_id)) {
+            } elseif (empty($product->promotion_formula_id)) {
                 $maxTenure = 0;
                 $minTenure = 0;
                 if ($product->promotion_period == ONGOING) {
@@ -554,7 +563,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -735,7 +744,7 @@ class PagesFrontController extends Controller
         $page = Page::where('pages.slug', BLOG_URL)
             ->where('delete_status', 0)->first();
         if (!$page) {
-            return redirect()->action('Blog\BlogController@index')->with('error', OPPS_ALERT);
+            return back()->with('error', OPPS_ALERT);
         }
         $systemSetting = \Helper::getSystemSetting();
         if (!$systemSetting) {
@@ -753,10 +762,11 @@ class PagesFrontController extends Controller
         if (!is_null($id)) {
             $query = $query->where('pages.menu_id', $id);
         }
-
+        $blogSearch = null;
         if (isset($request->b_search)) {
+            $blogSearch = $request->b_search;
             $query = $query->where('pages.name', 'LIKE', '%' . $request->b_search . '%')
-                ->orwhere('pages.meta_title', 'LIKE', '%' . $request->b_search . '%');
+                ->orwhere('menus.title', 'LIKE', '%' . $request->b_search . '%');
         }
         if (Auth::guest()) {
             $details = $query->whereIn('after_login', [0, null])->paginate(5);
@@ -771,7 +781,14 @@ class PagesFrontController extends Controller
             ->inRandomOrder()
             ->get();
 //dd($ads);
-        return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads'));
+        if(!$details->count())
+        {
+            \Session::flash('error', SEARCH_RESULT_ERROR);
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads','blogSearch'));
+        }else{
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads','blogSearch'));
+        }
+
     }
 
     public function search_tags($slug)
@@ -829,7 +846,7 @@ class PagesFrontController extends Controller
 
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -883,7 +900,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -904,7 +921,16 @@ class PagesFrontController extends Controller
             $tenureType = \Helper::days_or_month_or_year(2, $startDate->diffInMonths($endDate->copy()->addDay()));
             $product->ads = json_decode($product->ads_placement);
             $product->product_ranges = $productRanges;
-            $product->remaining_days = $tenure; // remaining in days
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = 0;
+                }
+            } else {
+                $product->remaining_days = null;
+            }
             $status = false;
             $product->max_tenure = 0;
 
@@ -916,7 +942,6 @@ class PagesFrontController extends Controller
                 $product->ads = json_decode($product->ads_placement);
 
                 $product->tenure = $tenures;
-                $product->remaining_days = $remainingDays; // remaining in days
                 $totalInterestPercent = 0;
                 $totalInterest = 0;
                 $ranges = [];
@@ -1018,7 +1043,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1119,7 +1144,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1205,7 +1230,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1329,7 +1354,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1464,7 +1489,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1492,8 +1517,7 @@ class PagesFrontController extends Controller
                     $remainingProducts[] = $product;
                 }
 
-            }
-            elseif (empty($product->promotion_formula_id)) { 
+            } elseif (empty($product->promotion_formula_id)) {
                 $maxTenure = 0;
                 $minTenure = 0;
                 if ($product->promotion_period == ONGOING) {
@@ -1511,7 +1535,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1658,7 +1682,7 @@ class PagesFrontController extends Controller
 
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -1714,7 +1738,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -1735,10 +1759,18 @@ class PagesFrontController extends Controller
             $tenureType = \Helper::days_or_month_or_year(2, $startDate->diffInMonths($endDate->copy()->addDay()));
             $product->ads = json_decode($product->ads_placement);
             $product->product_ranges = $productRanges;
-            $product->remaining_days = $tenure; // remaining in days
             $status = false;
             $product->max_tenure = 0;
-
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = 0;
+                }
+            } else {
+                $product->remaining_days = null;
+            }
             if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2])) {
                 $maxPlacements = [];
 
@@ -1782,7 +1814,11 @@ class PagesFrontController extends Controller
                             $product->tenure_highlight = true;
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
-                            $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            $tenure = 0;
+                            if ($untilEndDate > $todayDate) {
+                                $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            }
+
                         }
                         $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
@@ -1809,7 +1845,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1890,7 +1926,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2012,7 +2048,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2144,7 +2180,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2172,8 +2208,7 @@ class PagesFrontController extends Controller
                     $remainingProducts[] = $product;
                 }
 
-            }
-            elseif (empty($product->promotion_formula_id)) {
+            } elseif (empty($product->promotion_formula_id)) {
                 $maxTenure = 0;
                 $minTenure = 0;
                 if ($product->promotion_period == ONGOING) {
@@ -2191,7 +2226,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2363,7 +2398,7 @@ class PagesFrontController extends Controller
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $currency = isset($request['currency']) ? $request['currency'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -2426,7 +2461,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -2447,11 +2482,20 @@ class PagesFrontController extends Controller
             $tenureType = \Helper::days_or_month_or_year(2, $startDate->diffInMonths($endDate->copy()->addDay()));
             $product->ads = json_decode($product->ads_placement);
             $product->product_ranges = $productRanges;
-            $product->remaining_days = $tenure; // remaining in days
             $status = false;
             $product->max_tenure = 0;
             $product->min_tenure = 0;
             $ranges = null;
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = 0;
+                }
+            } else {
+                $product->remaining_days = null;
+            }
             if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F1])) {
                 $tenures = json_decode($product->tenure);
                 //including end day so 1 day add in end date
@@ -2460,7 +2504,6 @@ class PagesFrontController extends Controller
                 $product->ads = json_decode($product->ads_placement);
 
                 $product->tenure = $tenures;
-                $product->remaining_days = $remainingDays; // remaining in days
                 $totalInterestPercent = 0;
                 $totalInterest = 0;
                 $ranges = [];
@@ -2560,7 +2603,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2661,7 +2704,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2745,7 +2788,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2868,7 +2911,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -3003,7 +3046,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -3050,7 +3093,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -3197,7 +3240,7 @@ class PagesFrontController extends Controller
             ->get();
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -3265,7 +3308,7 @@ class PagesFrontController extends Controller
                 $searchFilter['spend'] = $defaultSpend;
                 $searchFilter['privilege'] = $defaultLoan;
                 $searchFilter['loan'] = $defaultPrivilege;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
