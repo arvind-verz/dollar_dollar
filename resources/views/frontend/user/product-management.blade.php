@@ -198,82 +198,88 @@
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                         <div class="row">
-                                            <div class="form-group submit">
-                                                <button type="submit" class="ps-btn">Add Products</button>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                <div class="form-group submit">
+                                                    <button type="submit" class="ps-btn">Add Products</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    {{ Form::close() }}
-                                    <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product-managerment" id="datatable">
-                                            <thead>
-                                            <tr>
-                                                <th>Bank</th>
-                                                <th>Account
-                                                    <br> Name
-                                                </th>
-                                                <th>Amount</th>
-                                                <th>tenure
-                                                    <br> (M= months,
-                                                    <br> D = Days)
-                                                    <br> Y = Years)
-                                                </th>
-                                                <th>Start Date</th>
-                                                <th>End Date</th>
-                                                <th>Interest Earned</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @if(count($user_products))
-                                                @foreach($user_products as $value)
-                                                    @php
-                                                    $curr_date = date("Y-m-d", strtotime('now'));
-                                                    $start_date = date("Y-m-d", strtotime($value->start_date));
-                                                    $end_date = date("Y-m-d", strtotime($value->end_date));
-                                                    @endphp
-                                                    <tr>
-                                                        <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
-                                                            @if(!empty($value->brand_logo))
-                                                                <span style="opacity: 0;position: absolute;"> {{ $value->title }} </span>
-                                                                <img src="{{ asset($value->brand_logo) }}">
-                                                            @elseif($value->other_bank)
-                                                                {{ $value->other_bank }}
-                                                            @else
-                                                                -
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
-                                                        <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
-                                                        <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>
-                                                        <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
-                                                        <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
-                                                        <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
-                                                        <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date)))
-                                                                Ongoing @else Expired @endif</td>
-                                                        <td>
-                                                            <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}">
-                                                                <button type="button" class="ps-btn--action warning">
-                                                                    Edit
-                                                                </button>
-                                                            </a>
-                                                            <a onclick="return confirm('Are you sure to delete?')"
-                                                               href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}">
-                                                                <button type="button" class="ps-btn--action success">
-                                                                    Delete
-                                                                </button>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
+                                </div>
+                                {{ Form::close() }}
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                        <div class="ps-table-wrap">
+                                            <table class="ps-table ps-table--product-managerment" id="datatable">
+                                                <thead>
                                                 <tr>
-                                                    <td class="text-center" colspan="9">No data found.</td>
+                                                    <th>Bank</th>
+                                                    <th>Account
+                                                        <br> Name
+                                                    </th>
+                                                    <th>Amount</th>
+                                                    <th>tenure
+                                                        <br> (M= months,
+                                                        <br> D = Days)
+                                                        <br> Y = Years)
+                                                    </th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Interest Earned</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
-                                            @endif
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                @if(count($user_products))
+                                                    @foreach($user_products as $value)
+                                                        @php
+                                                        $curr_date = date("Y-m-d", strtotime('now'));
+                                                        $start_date = date("Y-m-d", strtotime($value->start_date));
+                                                        $end_date = date("Y-m-d", strtotime($value->end_date));
+                                                        @endphp
+                                                        <tr>
+                                                            <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
+                                                                @if(!empty($value->brand_logo))
+                                                                    <span style="opacity: 0;position: absolute;"> {{ $value->title }} </span>
+                                                                    <img src="{{ asset($value->brand_logo) }}">
+                                                                @elseif($value->other_bank)
+                                                                    {{ $value->other_bank }}
+                                                                @else
+                                                                    -
+                                                                @endif
+                                                            </td>
+                                                            <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
+                                                            <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
+                                                            <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>
+                                                            <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
+                                                            <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
+                                                            <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
+                                                            <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date)))
+                                                                    Ongoing @else Expired @endif</td>
+                                                            <td>
+                                                                <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}">
+                                                                    <button type="button" class="ps-btn--action warning">
+                                                                        Edit
+                                                                    </button>
+                                                                </a>
+                                                                <a onclick="return confirm('Are you sure to delete?')"
+                                                                   href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}">
+                                                                    <button type="button" class="ps-btn--action success">
+                                                                        Delete
+                                                                    </button>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td class="text-center" colspan="9">No data found.</td>
+                                                    </tr>
+                                                @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

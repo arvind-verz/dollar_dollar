@@ -762,11 +762,16 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
         $i = 1;
         foreach($customer_reports as $customer_report) {
 
-        if($i!=1) { ?> <tr> <?php } ?>
+        if($i!=1) { ?> <tr>
+            <td><?php echo ucfirst($customer_report->first_name) . ' ' . ucfirst($customer_report->last_name).'<br/>'. $customer_report->email.'<br/>'. $customer_report->country_code . $customer_report->tel_phone; ?></td></td>
+            <td style='display: none'></td>
+            <td></td>
+            <?php } ?>
+
             <td><?php echo $customer_report->title; ?></td>
         <td><?php echo ucwords($customer_report->account_name); ?></td>
         <td><?php echo '$'.$customer_report->amount; ?></td>
-        <td><?php echo date('d-m-Y', strtotime($customer_report->end_date)); ?></td>
+        <td><?php if($customer_report->end_date) {echo date('d-m-Y', strtotime($customer_report->end_date));} ?></td>
         <td>
 
             <?php

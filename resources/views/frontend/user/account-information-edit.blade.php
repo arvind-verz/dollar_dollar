@@ -94,7 +94,7 @@
                                     </p> -->
                                     {!! Form::hidden('location', isset($location) ? $location : '')  !!}
                                     <p><strong> Subscribe to our weekly newsletter </strong><input type="checkbox" class="form-control" name="email_notification" @if(AUTH::user()->email_notification==1) checked @endif></p>
-                                    <p><strong> I would like to be informed of products, services, offers provided by dollardollar.sg and it’s business partners. I have consent to have marketing information sent to me via the various communication (SMS, voice call and emails). </strong><input type="checkbox" class="form-control" name="adviser" @if(AUTH::user()->adviser==1) checked @endif></p>
+                                    <p><input type="checkbox" class="form-control" name="adviser" @if(AUTH::user()->adviser==1) checked @endif><strong> I would like to be informed of products, services, offers provided by dollardollar.sg and it’s business partners. I have consent to have marketing information sent to me via the various communication (SMS, voice call and emails). </strong></p>
                                     <button type="submit" class="btn btn-success">Save</button>
                                     {!! Form::close() !!}
                                 </div>

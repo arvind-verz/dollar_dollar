@@ -36,7 +36,7 @@ function printBlogCategories($parentCategories, $parent = 0, $id, $deep = 0) {//
             <input type="hidden" name="blog_id" value="{{ $id }}">
 
             <div class="top-search-wrapper">
-                <input class="form-control" type="text" name="b_search" value="" placeholder="Search...">
+                <input class="form-control" type="text" name="b_search" value="@if(isset($blogSearch)) {{$blogSearch}} @endif" placeholder="Search...">
                 <button type="submit"></button>
             </div>
         </div>
