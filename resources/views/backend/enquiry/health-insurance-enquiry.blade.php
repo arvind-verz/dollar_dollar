@@ -32,7 +32,7 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="health" class="table ">
+                                        <table id="health" class="table table-bordered">
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>

@@ -425,6 +425,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $("body").on("click", ".menu--mobile > li.menu-item-has-children", function () {
+        $(".menu--mobile > li > ul ").hide();
         $(this).children(".sub-menu").slideToggle();
     });
     $("body").on("click", ".ps-block--legend-table .ps-block__header", function () {

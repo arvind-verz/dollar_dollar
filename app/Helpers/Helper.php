@@ -763,8 +763,8 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
         foreach($customer_reports as $customer_report) {
 
         if($i!=1) { ?> <tr>
-            <td style='display: none'><?php echo ucfirst($customer_report->first_name) . ' ' . ucfirst($customer_report->last_name).'<br/>'. $customer_report->email.'<br/>'. $customer_report->country_code . $customer_report->tel_phone; ?></td></td>
-            <td></td>
+            <td><?php echo ucfirst($customer_report->first_name) . ' ' . ucfirst($customer_report->last_name).'<br/>'. $customer_report->email.'<br/>'. $customer_report->country_code . $customer_report->tel_phone; ?></td></td>
+            <td style='display: none'></td>
             <td></td>
             <?php } ?>
 

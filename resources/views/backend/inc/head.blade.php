@@ -13,7 +13,8 @@
 <link rel="stylesheet" href="{{ asset('backend/bower_components/Ionicons/css/ionicons.min.css') }}">
 <!-- DataTables -->
 <link rel="stylesheet" href="{{ asset('backend/bower_components/DataTables/datatables.min.css') }}">
-<link rel="stylesheet" href="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/css/buttons.dataTables.min.css') }}">
+<link rel="stylesheet"
+      href="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/css/buttons.dataTables.min.css') }}">
 <!-- Theme style -->
 <link rel="stylesheet" href="{{ asset('backend/dist/css/AdminLTE.css') }} ">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -55,15 +56,25 @@
 <script src="{{ asset('js/tinymce/tinymce.min.js') }}" id="script"></script>
 <script src="{{ asset('js/tinymce/jquery.tinymce.min.js') }}" id="script"></script>
 <script src="{{ asset('js/tinymce/plugins/variable/plugin.min.js') }}"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 
+//paste this code under the head tag or in a separate js file.
+// Wait for window load
+<script>
+    $(window).load(function () {
+// Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");
+    });
+</script>
 <!-- Google Font -->
 <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 {{--tag css--}}
 <link rel="stylesheet" href="{{ asset('backend/dist/bootstrap-tagsinput.css') }}"/>
 <style>
-input[type='checkbox'] {
-    height: 25px;
-    width: 25px;
-}
-	</style>
+    input[type='checkbox'] {
+        height: 25px;
+        width: 25px;
+    }
+</style>
