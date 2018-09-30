@@ -4,7 +4,7 @@
 @include('backend.inc.head')
 
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="se-pre-con"></div>
+{{--<div class="se-pre-con"></div>--}}
 <div class="wrapper" id="">
     <header class="main-header">
         @include('backend.inc.navbar')

@@ -56,17 +56,14 @@
 <script src="{{ asset('js/tinymce/tinymce.min.js') }}" id="script"></script>
 <script src="{{ asset('js/tinymce/jquery.tinymce.min.js') }}" id="script"></script>
 <script src="{{ asset('js/tinymce/plugins/variable/plugin.min.js') }}"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+{{--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
-
-//paste this code under the head tag or in a separate js file.
-// Wait for window load
 <script>
     $(window).load(function () {
 // Animate loader off screen
         $(".se-pre-con").fadeOut("slow");
     });
-</script>
+</script>--}}
 <!-- Google Font -->
 <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">

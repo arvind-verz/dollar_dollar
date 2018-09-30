@@ -2757,7 +2757,12 @@ button {
     }
 
     .ps-product .ps-product__header .ps-product__promo {
-        float: none;
+        float: right;
+    }
+    
+    .ps-product__content {
+        clear:both;
+        margin:15px auto 0px;
     }
 
     .ps-product .ps-product__header .ps-product__promo p {
@@ -3585,9 +3590,9 @@ button {
     color: #3db54a;
 }
 
-.ps-form--login .submit {
+/*.ps-form--login .submit {
     max-width: 260px;
-}
+}*/
 
 .ps-form--login .submit .row {
     margin: 0 -5px;
@@ -3690,6 +3695,9 @@ button {
         -ms-transform: translate(0, 0);
         -o-transform: translate(0, 0);
         transform: translate(0, 0);
+    }
+    .ps-form--login .submit {
+        max-width: 100%;
     }
 }
 
@@ -5947,7 +5955,8 @@ span.ps-post__meta a {
         width: 100%;
     }
     .ps-home-fixed-deposit.ps-tabs-root .catListing > li > a {
-        min-width:80px;
+        min-width:70px;
+        font-size:11px;
         padding: 10px 10px;
     }
 }
@@ -6020,10 +6029,14 @@ span.ps-post__meta a {
 }
 
 @media (max-width: 500px) {
-    .ps-product--2 .ps-product__action {
+    /*.ps-product--2 .ps-product__action {
         text-align: center;
         float: none;
         width: 100%;
+    }*/
+    
+    .ps-product--2 .ps-product__action .ps-btn {
+        margin-right:0px;
     }
 
     /*.ps-product.ps-product--2 {
@@ -6048,6 +6061,10 @@ span.ps-post__meta a {
 @media (max-width: 768px) {
     .ps-page--deposit .ps-product .ps-product__header > img {
         margin: auto;
+        width: 130px;
+    }
+    .ps-product .ps-product__heading {
+        text-align:center;
     }
 }
 
@@ -6224,10 +6241,6 @@ span.ps-post__meta a {
         min-width: 90px;
     }
 
-    .ps-form--login .submit {
-        max-width: 302px;
-    }
-
     .ps-block--desposit, .ps-page--deposit {
         padding: 20px 0;
     }
@@ -6350,10 +6363,6 @@ span.ps-post__meta a {
 
 @media only screen and (max-width: 768px) {
     .ps-block__actions {
-        width: 100%;
-    }
-
-    .ps-form--login .submit .row .col-xs-6 {
         width: 100%;
     }
 
@@ -6515,11 +6524,21 @@ span.ps-post__meta a {
     .ps-tooltip:before {
         left:auto;
         right: 0%;
-        -webkit-transform: translateX(0%);
-        -moz-transform: translateX(0%);
-        -ms-transform: translateX(0%);
-        -o-transform: translateX(0%);
-        transform: translateX(0%);
+        bottom:100%;
+        margin-bottom:15px;
+        -webkit-transform: translate(0%,0%);
+        -moz-transform: translate(0%,0%);
+        -ms-transform: translate(0%,0%);
+        -o-transform: translate(0%,0%);
+        transform: translate(0%,0%);
+    }
+
+    .ps-form--login .submit {
+        max-width: 302px;
+    }
+
+    .ps-form--login .submit .row .col-xs-6 {
+        width: 100%;
     }
 }
 
@@ -6529,6 +6548,9 @@ span.ps-post__meta a {
         text-align: center;
         margin: 10px auto !important;
         display: table;
+    }
+    .ps-product--2, .ps-product {
+        padding:20px 15px 0px;
     }
 }
 
@@ -6678,4 +6700,18 @@ span.ps-post__meta a {
 .ps-form--filter .form-control.currency{
     font-weight:bold;
     text-align:center;
+}
+@media (max-width: 425px) {
+    #search-form .owl-nav{
+        display : none !important;
+    }
+}
+@media (max-width: 375px) {
+    .ps-page--deposit .ps-product .ps-product__header > img {
+        width: auto;
+        max-width:30%;
+    }
+    .ps-product .ps-product__header .ps-product__promo p {
+        font-size:12px;
+    }
 }

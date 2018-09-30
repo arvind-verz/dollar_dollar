@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\AdsManagement;
 use App\Page;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class AdsController extends Controller
 {
@@ -17,21 +17,22 @@ class AdsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct()
+    public function __construct()
     {
         $this->middleware('auth:admin');
     }
-    public function index($type=NULL)
+
+    public function index($type = NULL)
     {
-        
+
 
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, ADS_MODULE_ID);
 
         $ads = AdsManagement::where('delete_status', 0)
-        ->where('page', $type)
-        ->get();
-        
-        return view("backend.ads.index" , compact("ads", "CheckLayoutPermission", "type"));
+            ->where('page', $type)
+            ->get();
+
+        return view("backend.ads.index", compact("ads", "CheckLayoutPermission", "type"));
     }
 
     /**
@@ -39,19 +40,19 @@ class AdsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($type=NULL)
+    public function create($type = NULL)
     {
 
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, ADS_MODULE_ID);
 
 
-        return view("backend.ads.create" , compact("CheckLayoutPermission", "type"));
+        return view("backend.ads.create", compact("CheckLayoutPermission", "type"));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -60,12 +61,14 @@ class AdsController extends Controller
         $validatorFields = [
             'title' => 'required',
             'ad_image' => 'required|image|nullable|max:1999',
-            'ad_link'   =>  'required',
-            'page'  =>  'required'
+            'ad_link' => 'required',
+            'page' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $validatorFields);
-
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
         if (!is_dir('uploads')) {
             mkdir('uploads');
         }
@@ -75,7 +78,7 @@ class AdsController extends Controller
         }
 
         $destinationPath = 'uploads/ads'; // upload path
-        $ad_image = $horizontal_banner_ad_image = $paid_ad_image = '';
+        $ad_image = $horizontal_banner_ad_image = $paid_ad_image = $horizontal_paid_ad_image = '';
         if ($request->hasFile('ad_image')) {
 
             // Get filename with the extension
@@ -115,11 +118,22 @@ class AdsController extends Controller
             // Upload Image
             $request->file('paid_ad_image')->move($destinationPath, $paid_ad_image);
         }
+        if ($request->hasFile('horizontal_paid_ad_image')) {
 
+            // Get filename with the extension
+            $filenameWithExt = $request->file('horizontal_paid_ad_image')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('horizontal_paid_ad_image')->getClientOriginalExtension();
+            // Filename to store
+            $horizontal_paid_ad_image = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('horizontal_paid_ad_image')->move($destinationPath, $horizontal_paid_ad_image);
+        }
         $ads = new AdsManagement;
         $page_type = NULL;
-        if($request->page=='product' || $request->page=='blog')
-        {
+        if ($request->page == 'product' || $request->page == 'blog') {
             $page_type = $request->page_type;
         }
         $ad_range_date = explode('-', $request->ad_range_date);
@@ -135,8 +149,10 @@ class AdsController extends Controller
         $ads->horizontal_banner_ad_link = $request->horizontal_banner_ad_link;
         $ads->paid_ad_image = $destinationPath . "/" . $paid_ad_image;
         $ads->paid_ad_link = $request->paid_ad_link;
-        $ads->ad_start_date = $ad_start_date;
-        $ads->ad_end_date = $ad_end_date;
+        $ads->horizontal_paid_ad_image = $destinationPath . "/" . $horizontal_paid_ad_image;
+        $ads->horizontal_paid_ad_link = $request->horizontal_paid_ad_link;
+        $ads->ad_start_date = \Helper::startOfDayBefore($ad_start_date);
+        $ads->ad_end_date = \Helper::endOfDayAfter($ad_end_date);
         $ads->display = $request->display;
         $ads->created_at = Carbon::now()->toDateTimeString();
         $ads->save();
@@ -153,14 +169,14 @@ class AdsController extends Controller
             ])
             ->log(CREATE);
 
-        
-        return redirect('admin/ads/'.$request->page)->with('success', strip_tags($ads->title) . ' ' . ADDED_ALERT);
+
+        return redirect('admin/ads/' . $request->page)->with('success', strip_tags($ads->title) . ' ' . ADDED_ALERT);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -171,43 +187,45 @@ class AdsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, $type=NULL)
+    public function edit($id, $type = NULL)
     {
 
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, ADS_MODULE_ID);
 
         $ads = AdsManagement::find($id);
-        return view("backend.ads.edit" , compact("ads", "CheckLayoutPermission", "type"));
+        return view("backend.ads.edit", compact("ads", "CheckLayoutPermission", "type"));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $type=NULL)
+    public function update(Request $request, $id, $type = NULL)
     {
         $ads = AdsManagement::find($id);
         $oldAds = $ads;
         if (!$ads) {
-            return redirect('admin/ads/'.$request->page)->with('error', OPPS_ALERT);
+            return redirect('admin/ads/' . $request->page)->with('error', OPPS_ALERT);
         }
 
         //dd($request->all());
         $validatorFields = [
             'title' => 'required',
-            'ad_image' => 'required|image|nullable|max:1999',
-            'ad_link'   =>  'required',
-            'page'  =>  'required'
+            'ad_image' => 'image|nullable|max:1999',
+            'ad_link' => 'required',
+            'page' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $validatorFields);
-
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
         if (!is_dir('uploads')) {
             mkdir('uploads');
         }
@@ -218,7 +236,7 @@ class AdsController extends Controller
 
 
         $destinationPath = 'uploads/ads'; // upload path
-        $ad_image = $horizontal_banner_ad_image = $paid_ad_image = '';
+        $ad_image = $horizontal_banner_ad_image = $paid_ad_image = $horizontal_paid_ad_image='';
         if ($request->hasFile('ad_image')) {
 
             // Get filename with the extension
@@ -280,10 +298,28 @@ class AdsController extends Controller
             }
             $ads->paid_ad_image = $destinationPath . '/' . $paid_ad_image;
         }
+        if ($request->hasFile('horizontal_paid_ad_image')) {
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('horizontal_paid_ad_image')->getClientOriginalName();
+            // Get just filename
+            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            // Get just ext
+            $extension = $request->file('horizontal_paid_ad_image')->getClientOriginalExtension();
+            // Filename to store
+            $horizontal_paid_ad_image = $filename . '_' . time() . '.' . $extension;
+            // Upload Image
+            $request->file('horizontal_paid_ad_image')->move($destinationPath, $horizontal_paid_ad_image);
+        }
+        if ($request->hasFile('horizontal_paid_ad_image')) {
+            if ($ads->horizontal_paid_ad_image != 'noimage.jpg') {
+                \File::delete($ads->horizontal_paid_ad_image);
+            }
+            $ads->horizontal_paid_ad_image = $destinationPath . '/' . $horizontal_paid_ad_image;
+        }
 
         $page_type = NULL;
-        if($request->page=='product' || $request->page=='blog')
-        {
+        if ($request->page == 'product' || $request->page == 'blog') {
             $page_type = $request->page_type;
         }
         $ad_range_date = explode('-', $request->ad_range_date);
@@ -296,8 +332,9 @@ class AdsController extends Controller
         $ads->ad_link = $request->ad_link;
         $ads->horizontal_banner_ad_link = $request->horizontal_banner_ad_link;
         $ads->paid_ad_link = $request->paid_ad_link;
-        $ads->ad_start_date = $ad_start_date;
-        $ads->ad_end_date = $ad_end_date;
+        $ads->horizontal_paid_ad_link = $request->horizontal_paid_ad_link;
+        $ads->ad_start_date = \Helper::startOfDayBefore($ad_start_date);
+        $ads->ad_end_date = \Helper::endOfDayAfter($ad_end_date);
         $ads->display = $request->display;
         $ads->created_at = Carbon::now()->toDateTimeString();
         $ads->save();
@@ -314,17 +351,17 @@ class AdsController extends Controller
                 'new' => $newAds
             ])
             ->log(UPDATE);
-        
-        return redirect('admin/ads/'.$request->page)->with('success', strip_tags($newAds->title) . ' ' . UPDATED_ALERT);
+
+        return redirect('admin/ads/' . $request->page)->with('success', strip_tags($newAds->title) . ' ' . UPDATED_ALERT);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $type=NULL)
+    public function destroy($id, $type = NULL)
     {
         $Ads = AdsManagement::where('id', $id)->first();
 
@@ -343,6 +380,6 @@ class AdsController extends Controller
             ])
             ->log(DELETE);
 
-        return redirect('admin/ads/'.$type)->with('success', strip_tags($Ads->title) . ' ' . DELETED_ALERT);
+        return redirect('admin/ads/' . $type)->with('success', strip_tags($Ads->title) . ' ' . DELETED_ALERT);
     }
 }

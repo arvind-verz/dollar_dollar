@@ -13,20 +13,20 @@
 
     {{--Page content start--}}
     @if(count($errors) > 0)
-    <div class="col-md-12">
-        <div class="box-body">
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> Error!</h4>
-                @foreach($errors->all() as $error)
-                    <p>
-                        {!!  $error !!}
-                    </p>
-                @endforeach
+        <div class="col-md-12">
+            <div class="box-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                    @foreach($errors->all() as $error)
+                        <p>
+                            {!!  $error !!}
+                        </p>
+                    @endforeach
 
+                </div>
             </div>
         </div>
-    </div>
     @endif
     <main class="ps-main">
         <div class="container">
@@ -40,21 +40,25 @@
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         @if(count($ads))
-                        @php
-                        $current_time = strtotime(date('Y-m-d', strtotime('now'))); 
-                        $ad_start_date = strtotime($ads[0]->ad_start_date);
-                        $ad_end_date = strtotime($ads[0]->ad_end_date);
-                        @endphp
+                            @if(($ads[0]->display==1))
+                                @php
+                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                                $ad_start_date = strtotime($ads[0]->ad_start_date);
+                                $ad_end_date = strtotime($ads[0]->ad_end_date);
+                                @endphp
 
-                        @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                        <div class="pt-2">
-                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                        </div>
-                        @else
-                        <div class="pt-2">
-                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                        </div>
-                        @endif
+                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
+                                    <div class="pt-2">
+                                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
+                                           target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
+                                    </div>
+                                @else
+                                    <div class="pt-2">
+                                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
+                                           target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                                    </div>
+                                @endif
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -65,80 +69,103 @@
                         </div>
                         <div class="ps-dashboard__content">
                             <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
+
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
                                     <h5><img src="img/icons/user.png" alt="">Account Information</h5>
                                 </div>
                                 <div class="ps-block__content">
                                     <h5>Contact Information</h5>
+
                                     <p><strong> Name: </strong> {{ AUTH::user()->first_name }}</p>
+
                                     <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
                                 </div>
                             </div>
                             @if(count($products))
-                            <div class="ps-block--box info recommended-product">
-                                <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">Featured products</h5><!-- <a href="#">View all</a> -->
-                                </div>
-                                <div class="ps-block__content">
-                                    <div class="c-list ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="2" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
-                                        @foreach($products as $product)
-                                        <div class="ps-block--short-product second"><img src="{{ asset($product->brand_logo) }}" alt="">
-                                            <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong></h4>
-                                            <div class="ps-block__info">
-                                                <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}
-                                                                %</p>
-                                                <p><strong>Min:</strong> SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}</p>
-                                                <p class="highlight">{{ $product->promotion_period }}
-                                                                {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
-                                            </div><a class="ps-btn" href="@if($product->promotion_type_id==1) fixed-deposit-mode @elseif($product->promotion_type_id==2) saving-deposit-mode @elseif($product->promotion_type_id==3) all-in-one-deposit-mode @elseif($product->promotion_type_id==4) privilege-deposit-mode @elseif($product->promotion_type_id==5) foreign-currency-deposit-mode @endif">More info</a>
-                                        </div>
-                                        @endforeach
+                                <div class="ps-block--box info recommended-product">
+                                    <div class="ps-block__header">
+                                        <h5><img src="img/icons/file.png" alt="">Featured products</h5>
+                                        <!-- <a href="#">View all</a> -->
                                     </div>
-                                </div>
-                            </div>.
+                                    <div class="ps-block__content">
+                                        <div class="c-list ps-slider--feature-product saving nav-outside owl-slider"
+                                             data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
+                                             data-owl-gap="0" data-owl-nav="true" data-owl-dots="false"
+                                             data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1"
+                                             data-owl-item-md="2" data-owl-item-lg="3" data-owl-duration="1000"
+                                             data-owl-mousedrag="on"
+                                             data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
+                                             data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
+                                            @foreach($products as $product)
+                                                <div class="ps-block--short-product second"><img
+                                                            src="{{ asset($product->brand_logo) }}" alt="">
+                                                    <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                                    </h4>
+
+                                                    <div class="ps-block__info">
+                                                        <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}
+                                                            %</p>
+
+                                                        <p><strong>Min:</strong> SGD
+                                                            ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                                                        </p>
+
+                                                        <p class="highlight">{{ $product->promotion_period }}
+                                                            {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                    </div>
+                                                    <a class="ps-btn"
+                                                       href="@if($product->promotion_type_id==1) fixed-deposit-mode @elseif($product->promotion_type_id==2) saving-deposit-mode @elseif($product->promotion_type_id==3) all-in-one-deposit-mode @elseif($product->promotion_type_id==4) privilege-deposit-mode @elseif($product->promotion_type_id==5) foreign-currency-deposit-mode @endif">More
+                                                        info</a>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>.
                             @endif
                             <div class="ps-block--box info no-border" style="padding: 0;">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">All my Accounts</h5><!-- <a href="#">View all</a> -->
+                                    <h5><img src="img/icons/file.png" alt="">All my Accounts</h5>
+                                    <!-- <a href="#">View all</a> -->
                                 </div>
                                 <div class="ps-block__content">
                                     <div class="ps-table-wrap">
                                         <table class="ps-table ps-table--product-managerment" id="datatable">
                                             <thead>
-                                                <tr>
-                                                    <th>Bank</th>
-                                                    <th>Account
-                                                        <br> Name</th>
-                                                    <th>Amount</th>
-                                                    <th>Tenure
-                                                        <br> (M= months,
-                                                        <br> D = Days)</th>
-                                                    <th>Start Date</th>
-                                                    <th>End Date</th>
-                                                    <th>Interest Earned</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
+                                            <tr>
+                                                <th>Bank</th>
+                                                <th>Account
+                                                    <br> Name
+                                                </th>
+                                                <th>Amount</th>
+                                                <th>Tenure
+                                                    <br> (M= months,
+                                                    <br> D = Days)
+                                                </th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Interest Earned</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
                                             </thead>
                                             <tbody>
-                                                        @if(count($user_products))
-                                                    @foreach($user_products as $value)
-                                                        @php
-                                                            $curr_date = date("Y-m-d", strtotime('now'));
-                                                            $start_date = date("Y-m-d", strtotime($value->start_date));
-                                                            $end_date = date("Y-m-d", strtotime($value->end_date));
-                                                        @endphp
+                                            @if(count($user_products))
+                                                @foreach($user_products as $value)
+                                                    @php
+                                                    $curr_date = date("Y-m-d", strtotime('now'));
+                                                    $start_date = date("Y-m-d", strtotime($value->start_date));
+                                                    $end_date = date("Y-m-d", strtotime($value->end_date));
+                                                    @endphp
                                                     <tr>
                                                         <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
                                                             @if(!empty($value->brand_logo))
-                                                            <span style="opacity: 0;position: absolute;"> {{ $value->title }} </span>
-                                                            <img src="{{ asset($value->brand_logo) }}">
+                                                                <span style="opacity: 0;position: absolute;"> {{ $value->title }} </span>
+                                                                <img src="{{ asset($value->brand_logo) }}">
                                                             @elseif($value->other_bank)
-                                                            {{ $value->other_bank }}
+                                                                {{ $value->other_bank }}
                                                             @else
-                                                            -
+                                                                -
                                                             @endif
                                                         </td>
                                                         <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
@@ -147,29 +174,59 @@
                                                         <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
                                                         <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
                                                         <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
-                                                        <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date))) Ongoing @else Expired @endif</td>
+                                                        <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date)))
+                                                                Ongoing @else Expired @endif</td>
                                                         <td>
-                                                            <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
-                                                            <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>
+                                                            <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}">
+                                                                <button type="button" class="ps-btn--action warning">
+                                                                    Edit
+                                                                </button>
+                                                            </a>
+                                                            <a onclick="return confirm('Are you sure to delete?')"
+                                                               href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}">
+                                                                <button type="button" class="ps-btn--action success">
+                                                                    Delete
+                                                                </button>
+                                                            </a>
                                                         </td>
                                                     </tr>
-                                                    @endforeach
-                                                @else
+                                                @endforeach
+                                            @else
                                                 <tr>
                                                     <td class="text-center" colspan="9">No data found.</td>
                                                 </tr>
-                                                @endif
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
                             @if(count($ads))
-                            <div class="pt-2">
-                                <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->horizontal_banner_ad_image) }}" alt=""></a>
-                            </div>
-                            @endif
-                            <!-- <div class="ps-block--box no-border">
+                                @if(($ads[0]->display==1))
+                                    @php
+                                    $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                                    $ad_start_date = strtotime($ads[0]->ad_start_date);
+                                    $ad_end_date = strtotime($ads[0]->ad_end_date);
+                                    @endphp
+
+                                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->horizontal_paid_ad_image))
+                                        <div class="pt-2">
+                                            <a href="{{ isset($ads[0]->horizontal_paid_ad_link) ? asset($ads[0]->horizontal_paid_ad_link) : '#' }}"
+                                               target="_blank"><img src="{{ asset($ads[0]->horizontal_paid_ad_image) }}"
+                                                                    alt=""></a>
+                                        </div>
+                                    @else
+                                        <div class="pt-2">
+                                            <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}"
+                                               target="_blank"><img
+                                                        src="{{ asset($ads[0]->horizontal_banner_ad_image) }}"
+                                                        alt=""/></a>
+                                        </div>
+                                        @endif
+                                        @endif
+                                        @endif
+
+                                                <!-- <div class="ps-block--box no-border">
                                 <div class="ps-block__header">
                                     <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><a href="#">View all</a>
                                 </div>
@@ -194,15 +251,15 @@
                                             </thead>
                                             <tbody>
                                                         @if(count($user_products))
-                                                    @foreach($user_products as $value)
-                                                        @php
-                                                            $curr_date = date("Y-m-d", strtotime('now'));
-                                                            $start_date = date("Y-m-d", strtotime($value->start_date));
-                                                            $end_date = date("Y-m-d", strtotime($value->end_date));
-                                                        @endphp
-                                                        @if(strtotime('now')>=strtotime('-2 week', strtotime($value->end_date)))
-                                                    <tr>
-                                                        <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
+                                        @foreach($user_products as $value)
+                                        @php
+                                                $curr_date = date("Y-m-d", strtotime('now'));
+                                                $start_date = date("Y-m-d", strtotime($value->start_date));
+                                                $end_date = date("Y-m-d", strtotime($value->end_date));
+                                            @endphp
+                                        @if(strtotime('now')>=strtotime('-2 week', strtotime($value->end_date)))
+                                                <tr>
+                                                    <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
                                                         <td>{{ $value->account_name }}</td>
                                                         <td>{{ $value->amount }}</td>
                                                         <td>{{ $value->tenure }}</td>
@@ -216,17 +273,17 @@
                                                         </td>
                                                     </tr>
                                                     @endif
-                                                    @endforeach
-                                                @else
+                                        @endforeach
+                                        @else
                                                 <tr>
                                                     <td class="text-center" colspan="9">No data found.</td>
                                                 </tr>
                                                 @endif
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </div> -->
+                                </div> -->
                         </div>
                     </div>
                 </div>
@@ -234,7 +291,7 @@
         </div>
     </main>
     <script type="text/javascript">
-        $(document).ready( function () {
+        $(document).ready(function () {
             $('#datatable').DataTable({
                 "pageLength": 10,
                 'ordering': true,
@@ -244,7 +301,7 @@
 
                 }]
             });
-        } );
+        });
     </script>
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}

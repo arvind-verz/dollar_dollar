@@ -253,7 +253,7 @@ ${{ Helper::inThousand($product->minimum_placement_amount) }}
 
 <p class="@if($searchFilter['filter']==CRITERIA) highlight highlight-bg @endif">{{ $product->promotion_period }} {{CRITERIA}}</p>
 </div>
-<a class="ps-btn" href="#{{ $i }}">More info</a>
+<a class="ps-btn" href="#{{ $i }}">More data</a>
 </div>
 </div>
 </div>
@@ -323,7 +323,7 @@ ${{ Helper::inThousand($product->minimum_placement_amount) }}
 
 <p class="@if($searchFilter['filter']==CRITERIA) highlight highlight-bg @endif">{{ $product->promotion_period }} {{CRITERIA}}</p>
 </div>
-<a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
+<a class="ps-btn" href="#{{ (count($featured)+$i) }}">More data</a>
 </div>
 @php $i++; @endphp
 @endif
@@ -526,7 +526,7 @@ alt="" target="_blank"></a>
 {!! $product->product_footer !!}
 </div>
 <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only" href="#">More info<i
+class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only" href="#">More data<i
 class="fa fa-angle-down"></i></a></div>
 </div>
 </div>
@@ -668,7 +668,7 @@ alt="" target="_blank"></a>
 {!! $product->product_footer !!}
 </div>
 <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only" href="#">More info<i
+class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only" href="#">More data<i
 class="fa fa-angle-down"></i></a></div>
 </div>
 </div>
@@ -1268,7 +1268,7 @@ alt="" target="_blank"></a>
 <div class="ps-product__footer"><a class="ps-product__more"
 href="#">More Detail<i
 class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
-href="#">More info<i
+href="#">More data<i
 class="fa fa-angle-down"></i></a></div>
 </div>
 </div>
@@ -1413,7 +1413,7 @@ alt="" target="_blank"></a>
 <div class="ps-product__footer"><a class="ps-product__more"
 href="#">More Detail<i
 class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
-href="#">More info<i
+href="#">More data<i
 class="fa fa-angle-down"></i></a></div>
 </div>
 </div>
@@ -1837,7 +1837,7 @@ class="ps-product__more"
 href="#">More Detail<i
 class="fa fa-angle-down"></i></a><a
 class="ps-product__info sp-only"
-href="#">More info<i
+href="#">More data<i
 class="fa fa-angle-down"></i></a>
 </div>
 </div>
