@@ -221,7 +221,7 @@ class="fa fa-refresh"></i></a>
                                                 @endif
                                             </p>
                                         </div>
-                                        <a class="ps-btn" href="#{{ $i }}">More info</a>
+                                        <a class="ps-btn" href="#{{ $i }}">More data</a>
                                     </div>
                                 </div>
                             </div>
@@ -302,7 +302,7 @@ class="fa fa-refresh"></i></a>
                                                 @endif
                                             </p>
                                         </div>
-                                        <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More info</a>
+                                        <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More data</a>
                                     </div>
                                     @php $i++; @endphp
                                 @endif
@@ -970,7 +970,7 @@ Total interest rate @if(($product->total_interest)<=0)
                                                                                     Detail<i
                                                                                             class="fa fa-angle-down"></i></a><a
                                                                                         class="ps-product__info sp-only"
-                                                                                        href="#">More info<i
+                                                                                        href="#">More data<i
                                                                                             class="fa fa-angle-down"></i></a>
                                                                             </div>
                         </div>
@@ -1671,7 +1671,7 @@ Total interest rate @if(($product->total_interest)<=0)
                                                                                     Detail<i
                                                                                             class="fa fa-angle-down"></i></a><a
                                                                                         class="ps-product__info sp-only"
-                                                                                        href="#">More info<i
+                                                                                        href="#">More data<i
                                                                                             class="fa fa-angle-down"></i></a>
                                                                             </div>
                         </div>

@@ -41,22 +41,24 @@
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         @if(count($ads))
-                            @php
-                            $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                            $ad_start_date = strtotime($ads[0]->ad_start_date);
-                            $ad_end_date = strtotime($ads[0]->ad_end_date);
-                            @endphp
+                            @if(($ads[0]->display==1))
+                                @php
+                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                                $ad_start_date = strtotime($ads[0]->ad_start_date);
+                                $ad_end_date = strtotime($ads[0]->ad_end_date);
+                                @endphp
 
-                            @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                                <div class="pt-2">
-                                    <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
-                                       target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                                </div>
-                            @else
-                                <div class="pt-2">
-                                    <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
-                                       target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                                </div>
+                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
+                                    <div class="pt-2">
+                                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
+                                           target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
+                                    </div>
+                                @else
+                                    <div class="pt-2">
+                                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
+                                           target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                                    </div>
+                                @endif
                             @endif
                         @endif
                     </div>
@@ -259,13 +261,15 @@
                                                                     Ongoing @else Expired @endif</td>
                                                             <td>
                                                                 <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}">
-                                                                    <button type="button" class="ps-btn--action warning">
+                                                                    <button type="button"
+                                                                            class="ps-btn--action warning">
                                                                         Edit
                                                                     </button>
                                                                 </a>
                                                                 <a onclick="return confirm('Are you sure to delete?')"
                                                                    href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}">
-                                                                    <button type="button" class="ps-btn--action success">
+                                                                    <button type="button"
+                                                                            class="ps-btn--action success">
                                                                         Delete
                                                                     </button>
                                                                 </a>
@@ -290,7 +294,7 @@
     </main>
     <script type="text/javascript">
         $(document).ready(function () {
-            if ($("input[name='end_date']").val().length!=0) {
+            if ($("input[name='end_date']").val().length != 0) {
                 $("#reminder").attr("disabled", false);
                 $("input[name='dod_reminder']").attr("disabled", false);
             }
@@ -341,21 +345,21 @@
         });
 
         /*dod_onoff();
-        $("input[name='start_date'], input[name='end_date']").on("change", function () {
-            dod_onoff();
-        });
+         $("input[name='start_date'], input[name='end_date']").on("change", function () {
+         dod_onoff();
+         });
 
-        function dod_onoff() {
-            var start_date = $("input[name='start_date']").val();
-            var end_date = $("input[name='end_date']").val();
-            if (start_date == '' || end_date == '') {
-                $("input[name='dod_reminder']").prop('checked', false);
-                $("input[name='dod_reminder']").attr("disabled", true);
-            }
-            else {
-                $("input[name='dod_reminder']").attr("disabled", false);
-            }
-        }*/
+         function dod_onoff() {
+         var start_date = $("input[name='start_date']").val();
+         var end_date = $("input[name='end_date']").val();
+         if (start_date == '' || end_date == '') {
+         $("input[name='dod_reminder']").prop('checked', false);
+         $("input[name='dod_reminder']").attr("disabled", true);
+         }
+         else {
+         $("input[name='dod_reminder']").attr("disabled", false);
+         }
+         }*/
     </script>
     <script type="text/javascript">
         $(document).ready(function () {

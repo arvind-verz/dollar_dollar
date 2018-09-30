@@ -67,9 +67,10 @@ More</a>
 @endif
 {{ $details->links() }}
 
+{{--
 @if(count($ads))
 @php
-$current_time = strtotime(date('Y-m-d', strtotime('now'))); 
+$current_time = strtotime(date('Y-m-d', strtotime('now')));
 $ad_start_date = strtotime($ads[0]->ad_start_date);
 $ad_end_date = strtotime($ads[0]->ad_end_date);
 @endphp
@@ -84,6 +85,7 @@ $ad_end_date = strtotime($ads[0]->ad_end_date);
 </div>
 @endif
 @endif
+--}}
 </div>
 </div>
 </div>

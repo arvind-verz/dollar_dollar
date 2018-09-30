@@ -14,20 +14,20 @@
     {{--Page content start--}}
     @include('frontend.includes.messages')
     @if(count($errors) > 0)
-    <div class="col-md-12">
-        <div class="box-body">
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> Error!</h4>
-                @foreach($errors->all() as $error)
-                    <p>
-                        {!!  $error !!}
-                    </p>
-                @endforeach
+        <div class="col-md-12">
+            <div class="box-body">
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                    @foreach($errors->all() as $error)
+                        <p>
+                            {!!  $error !!}
+                        </p>
+                    @endforeach
 
+                </div>
             </div>
         </div>
-    </div>
     @endif
     <main class="ps-main">
         <div class="container">
@@ -41,21 +41,25 @@
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         @if(count($ads))
-                        @php
-                        $current_time = strtotime(date('Y-m-d', strtotime('now'))); 
-                        $ad_start_date = strtotime($ads[0]->ad_start_date);
-                        $ad_end_date = strtotime($ads[0]->ad_end_date);
-                        @endphp
+                            @if(($ads[0]->display==1))
+                                @php
+                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                                $ad_start_date = strtotime($ads[0]->ad_start_date);
+                                $ad_end_date = strtotime($ads[0]->ad_end_date);
+                                @endphp
 
-                        @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                        <div class="pt-2">
-                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                        </div>
-                        @else
-                        <div class="pt-2">
-                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                        </div>
-                        @endif
+                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
+                                    <div class="pt-2">
+                                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
+                                           target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
+                                    </div>
+                                @else
+                                    <div class="pt-2">
+                                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
+                                           target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                                    </div>
+                                @endif
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -66,14 +70,23 @@
                         </div>
                         <div class="ps-dashboard__content">
                             <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
+
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5><a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location' => 'account-information']) }}">Edit</a>
+                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5><a
+                                            href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location' => 'account-information']) }}">Edit</a>
                                 </div>
                                 <div class="ps-block__content">
                                     <h5>Contact Information</h5>
-                                    <p><strong> Name: </strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</p>
-                                    <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p><a class="ps-link" href="{{ route('user.resetpassword', ['id'    =>  AUTH::user()->id]) }}">Change password</a>
+
+                                    <p><strong>
+                                            Name: </strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}
+                                    </p>
+
+                                    <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p><a
+                                            class="ps-link"
+                                            href="{{ route('user.resetpassword', ['id'    =>  AUTH::user()->id]) }}">Change
+                                        password</a>
                                 </div>
                             </div>
                             <!-- <div class="ps-block--box recommended-product">
