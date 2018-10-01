@@ -1452,7 +1452,7 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     </div>
                     @if($products->count()<2 && $remainingProducts->count()>=2)
-                        
+
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
