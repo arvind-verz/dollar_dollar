@@ -309,7 +309,7 @@ class PagesFrontController extends Controller
 
     public function fixDepositMode($details)
     {
-        return $this->fixed($request = null);
+        return $this->fixed([]);
     }
 
     public function search_fixed_deposit(Request $request)
@@ -342,12 +342,22 @@ class PagesFrontController extends Controller
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
-            // ->where('promotion_products.formula_id', '=', 6)
+            ->whereNotNull('promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
+        $nonFormulaProducts = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
+            ->whereNull('promotion_products.formula_id')
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->orderBy('promotion_products.created_at', 'DESC')
+            ->select('promotion_products.*', 'brands.*')
+            ->inRandomOrder()
+            ->first();
 
         $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
         $brands = $details['brands'];
@@ -362,7 +372,6 @@ class PagesFrontController extends Controller
         $filterProducts = [];
         $remainingProducts = [];
         //dd($products);
-
         if (!count($request)) {
 
             $searchFilter = [];
@@ -689,7 +698,7 @@ class PagesFrontController extends Controller
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", 'ads_manage'));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", 'ads_manage',"nonFormulaProducts"));
 
     }
 
@@ -859,14 +868,22 @@ class PagesFrontController extends Controller
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', PRIVILEGE_DEPOSIT)
-            // ->where('promotion_products.formula_id', '=', 6)
-            //->where('promotion_products.promotion_start', '<=', $start_date)
-            //->where('promotion_products.promotion_end', '>=', $end_date)
+            ->whereNotNull('promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
+        $nonFormulaProducts = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->where('promotion_products.promotion_type_id', '=', PRIVILEGE_DEPOSIT)
+            ->whereNull('promotion_products.formula_id')
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->orderBy('promotion_products.created_at', 'DESC')
+            ->select('promotion_products.*', 'brands.*')
+            ->inRandomOrder()
+            ->first();
 
         $details = \Helper::get_page_detail(PRIVILEGE_DEPOSIT_MODE);
         $brands = $details['brands'];
@@ -1659,7 +1676,7 @@ class PagesFrontController extends Controller
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-        return view('frontend.products.privilege-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts"));
+        return view('frontend.products.privilege-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts","nonFormulaProducts"));
 
     }
 
@@ -1695,15 +1712,22 @@ class PagesFrontController extends Controller
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
-            //->where('promotion_products.formula_id', '=', 2)
-            //->where('promotion_products.promotion_start', '<=', $start_date)
-            //->where('promotion_products.promotion_end', '>=', $end_date)
+            ->whereNotNull('promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
-
+        $nonFormulaProducts = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
+            ->whereNull('promotion_products.formula_id')
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->orderBy('promotion_products.created_at', 'DESC')
+            ->select('promotion_products.*', 'brands.*')
+            ->inRandomOrder()
+            ->first();
         $details = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
         $brands = $details['brands'];
         if ($products->count() && $brands->count()) {
@@ -2351,7 +2375,7 @@ class PagesFrontController extends Controller
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", "ads_manage"));
+        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", "ads_manage","nonFormulaProducts"));
     }
 
     public function product_search_homepage(Request $request)
@@ -2412,14 +2436,23 @@ class PagesFrontController extends Controller
             ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_types.id', '=', FOREIGN_CURRENCY_DEPOSIT)
-            // ->where('promotion_products.formula_id', '=', 6)
-            //->where('promotion_products.promotion_start', '<=', $start_date)
-            //->where('promotion_products.promotion_end', '>=', $end_date)
+            ->whereNotNull('promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'currency.code as currency_code', 'currency.icon as currency_icon', 'currency.currency as currency_name')
             ->get();
+        $nonFormulaProducts = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->where('promotion_products.promotion_type_id', '=', FOREIGN_CURRENCY_DEPOSIT)
+            ->whereNull('promotion_products.formula_id')
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->orderBy('promotion_products.created_at', 'DESC')
+            ->select('promotion_products.*', 'brands.*')
+            ->inRandomOrder()
+            ->first();
+
 
 
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
@@ -3219,7 +3252,7 @@ class PagesFrontController extends Controller
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts", "currencies"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts", "currencies","nonFormulaProducts"));
 
     }
 
@@ -3255,7 +3288,7 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            //->where('promotion_products.formula_id', '=', 7)
+            ->whereNotNull('promotion_products.formula_id')
             ->where('promotion_types.id', '=', ALL_IN_ONE_ACCOUNT)
             //->where('promotion_products.promotion_start', '<=', $start_date)
             //->where('promotion_products.promotion_end', '>=', $end_date)
@@ -3263,6 +3296,17 @@ class PagesFrontController extends Controller
             ->where('promotion_products.status', '=', 1)
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id')
             ->get();
+        $nonFormulaProducts = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->where('promotion_products.promotion_type_id', '=', ALL_IN_ONE_ACCOUNT)
+            ->whereNull('promotion_products.formula_id')
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->orderBy('promotion_products.created_at', 'DESC')
+            ->select('promotion_products.*', 'brands.*')
+            ->inRandomOrder()
+            ->first();
+
         $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
         $brands = $details['brands'];
         if ($promotion_products->count() && $brands->count()) {
@@ -3817,7 +3861,7 @@ class PagesFrontController extends Controller
         }
 
         //dd($products);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage", "toolTips"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage", "toolTips","nonFormulaProducts"));
     }
 
     public function combineCriteriaFilter(Request $request)
