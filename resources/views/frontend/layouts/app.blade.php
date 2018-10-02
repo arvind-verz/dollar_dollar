@@ -29,12 +29,15 @@ if (!$systemSetting) {
 
     <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!--WARNING: Respond.js doesn't work if you view the page via file://-->
-    <!--[if lt IE 9]>
+
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
     <script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/plugin.js') }}"></script>
     <script src="{{ asset('frontend/js/modernizr.js') }}"></script>
     <script type="text/javascript">
+
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
@@ -42,12 +45,14 @@ if (!$systemSetting) {
         var APP_URL = {!! json_encode(url('/')) !!}
     </script>
     <script>
-        // Wait for window load
-        $(window).load(function () {
-            // Animate loader off screen
-            $(".se-pre-con").fadeOut("slow");
-            ;
+        $(document).ready(function () {
+            owlCarousel($('.owl-slider'));
         });
+        $(window).load(function () {
+         // Animate loader off screen
+         $(".se-pre-con").fadeOut("slow");
+         ;
+         });
     </script>
     <style type="text/css">
         .ps-form--filter .active {
@@ -119,8 +124,6 @@ if (!$systemSetting) {
         $('#datatable').DataTable();
     });
 </script>
-
-<script src="{{ asset('frontend/js/plugin.js') }}"></script>
 <script src="{{ asset('frontend/js/jquery.numeric.js') }}"></script>
 <script src="{{ asset('frontend/plugins/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('frontend/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
