@@ -357,7 +357,7 @@ class PagesFrontController extends Controller
             ->orderBy('promotion_products.created_at', 'DESC')
             ->select('promotion_products.*', 'brands.*')
             ->inRandomOrder()
-            ->first();
+            ->get();
 
         $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
         $brands = $details['brands'];
@@ -883,7 +883,7 @@ class PagesFrontController extends Controller
             ->orderBy('promotion_products.created_at', 'DESC')
             ->select('promotion_products.*', 'brands.*')
             ->inRandomOrder()
-            ->first();
+            ->get();
 
         $details = \Helper::get_page_detail(PRIVILEGE_DEPOSIT_MODE);
         $brands = $details['brands'];
@@ -1727,7 +1727,7 @@ class PagesFrontController extends Controller
             ->orderBy('promotion_products.created_at', 'DESC')
             ->select('promotion_products.*', 'brands.*')
             ->inRandomOrder()
-            ->first();
+            ->get();
         $details = \Helper::get_page_detail(SAVING_DEPOSIT_MODE);
         $brands = $details['brands'];
         if ($products->count() && $brands->count()) {
@@ -2451,7 +2451,7 @@ class PagesFrontController extends Controller
             ->orderBy('promotion_products.created_at', 'DESC')
             ->select('promotion_products.*', 'brands.*')
             ->inRandomOrder()
-            ->first();
+            ->get();
 
 
 
@@ -3305,7 +3305,7 @@ class PagesFrontController extends Controller
             ->orderBy('promotion_products.created_at', 'DESC')
             ->select('promotion_products.*', 'brands.*')
             ->inRandomOrder()
-            ->first();
+            ->get();
 
         $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
         $brands = $details['brands'];

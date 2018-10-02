@@ -352,7 +352,7 @@ class="fa fa-refresh"></i></a>
                     @endif
 
                     <div class="ps-product @if($product->featured==1) featured-1 @endif"
-                         id="{{ $j }}">
+                         id="p-{{ $j }}">
 
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
                             <?php
@@ -499,81 +499,8 @@ class="fa fa-refresh"></i></a>
                         </div>
                     </div>
                     @if(count($products)>=2)
-                            @if(!empty($nonFormulaProducts) && $j==2)
-                                <?php $product = $nonFormulaProducts; ?>
-                                <div class="ps-product @if($product->featured==1) featured-1 @endif"
-                                     id="{{ $j }}">
-
-                                    <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
-                                        <?php
-                                        $todayStartDate = \Helper::startOfDayBefore();
-                                        $todayEndDate = \Helper::endOfDayAfter();
-                                        ?>
-                                        <div class="ps-product__promo">
-                                            <p>
-                                                <span class="highlight"> Promo: </span>
-                                                @if($product->promotion_end == null)
-                                                    {{ONGOING}}
-                                                @elseif($product->promotion_end < $todayStartDate)
-                                                    {{EXPIRED}}
-                                                @elseif($product->promotion_end > $todayStartDate)
-                                                    {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
-                                                @endif
-                                            </p>
-
-                                            <p class="text-uppercase">
-                                                <?php
-                                                if ($product->promotion_end > $todayStartDate) {
-                                                    $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                                    $end_date = new DateTime(date("Y-m-d",
-                                                            strtotime($product->promotion_end)));
-                                                    $interval = date_diff($end_date, $start_date);
-                                                    echo $interval->format('%a days left');
-                                                }
-                                                ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="ps-product__content">
-                                        <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                        @if(isset($ads[0]))
-                                            <?php
-                                            if(!empty($ads[0]->ad_image_horizontal)) {
-                                            ?>
-                                            <div class="ps-product__poster"><a
-                                                        href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                        target="_blank"><img
-                                                            src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                            alt=""></a></div>
-                                            <?php } ?>
-                                        @endif
-                                        <div class="clearfix"></div>
-                                        @if(isset($ads[2]))
-                                            <?php
-                                            if (!empty($ads[2]->ad_horizontal_image_popup)) {
-                                            ?>
-                                            <div class="ps-poster-popup">
-                                                <div class="close-popup">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                </div>
-
-                                                <a target="_blank"
-                                                   href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                            src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                            alt="" target="_blank"></a>
-
-                                            </div>
-                                            <?php } ?>
-                                        @endif
-                                        <div class="ps-product__detail">
-                                            {!! $product->product_footer !!}
-                                        </div>
-                                        <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                                        class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
-                                                                                            href="#">More data<i
-                                                        class="fa fa-angle-down"></i></a></div>
-                                    </div>
-                                </div>
+                            @if($nonFormulaProducts->count() && $j==2)
+                                @include('frontend.products.none-formula-products')
                             @endif
 
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==2)
@@ -601,81 +528,8 @@ class="fa fa-refresh"></i></a>
                             </div>
                         @endif
                     @elseif(empty($remainingProducts->count()) && $j==$products->count())
-                            @if(!empty($nonFormulaProducts))
-                                <?php $product = $nonFormulaProducts; ?>
-                                <div class="ps-product @if($product->featured==1) featured-1 @endif"
-                                     id="{{ $j }}">
-
-                                    <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
-                                        <?php
-                                        $todayStartDate = \Helper::startOfDayBefore();
-                                        $todayEndDate = \Helper::endOfDayAfter();
-                                        ?>
-                                        <div class="ps-product__promo">
-                                            <p>
-                                                <span class="highlight"> Promo: </span>
-                                                @if($product->promotion_end == null)
-                                                    {{ONGOING}}
-                                                @elseif($product->promotion_end < $todayStartDate)
-                                                    {{EXPIRED}}
-                                                @elseif($product->promotion_end > $todayStartDate)
-                                                    {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
-                                                @endif
-                                            </p>
-
-                                            <p class="text-uppercase">
-                                                <?php
-                                                if ($product->promotion_end > $todayStartDate) {
-                                                    $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                                    $end_date = new DateTime(date("Y-m-d",
-                                                            strtotime($product->promotion_end)));
-                                                    $interval = date_diff($end_date, $start_date);
-                                                    echo $interval->format('%a days left');
-                                                }
-                                                ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="ps-product__content">
-                                        <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                        @if(isset($ads[0]))
-                                            <?php
-                                            if(!empty($ads[0]->ad_image_horizontal)) {
-                                            ?>
-                                            <div class="ps-product__poster"><a
-                                                        href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                        target="_blank"><img
-                                                            src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                            alt=""></a></div>
-                                            <?php } ?>
-                                        @endif
-                                        <div class="clearfix"></div>
-                                        @if(isset($ads[2]))
-                                            <?php
-                                            if (!empty($ads[2]->ad_horizontal_image_popup)) {
-                                            ?>
-                                            <div class="ps-poster-popup">
-                                                <div class="close-popup">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                </div>
-
-                                                <a target="_blank"
-                                                   href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                            src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                            alt="" target="_blank"></a>
-
-                                            </div>
-                                            <?php } ?>
-                                        @endif
-                                        <div class="ps-product__detail">
-                                            {!! $product->product_footer !!}
-                                        </div>
-                                        <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                                        class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
-                                                                                            href="#">More data<i
-                                                        class="fa fa-angle-down"></i></a></div>
-                                    </div>
-                                </div>
+                            @if($nonFormulaProducts->count())
+                                @include('frontend.products.none-formula-products')
                             @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
@@ -739,7 +593,7 @@ class="fa fa-refresh"></i></a>
                     @endif
                     @if($product->formula_id==FIX_DEPOSIT_F1)
                         <div class="ps-product @if($product->featured==1) featured-1 @endif"
-                             id="{{ $j }}">
+                             id="r-{{ $j }}">
 
                             <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
                                 <?php
@@ -882,82 +736,9 @@ class="fa fa-refresh"></i></a>
                         </div>
                     @endif
                     @if($products->count()<2 && $remainingProducts->count()>=2)
-                        @if(!empty($nonFormulaProducts)&& $j==2)
-                            <?php $product = $nonFormulaProducts; ?>
-                            <div class="ps-product @if($product->featured==1) featured-1 @endif"
-                                 id="{{ $j }}">
-
-                                <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
-                                    <?php
-                                    $todayStartDate = \Helper::startOfDayBefore();
-                                    $todayEndDate = \Helper::endOfDayAfter();
-                                    ?>
-                                    <div class="ps-product__promo">
-                                        <p>
-                                            <span class="highlight"> Promo: </span>
-                                            @if($product->promotion_end == null)
-                                                {{ONGOING}}
-                                            @elseif($product->promotion_end < $todayStartDate)
-                                                {{EXPIRED}}
-                                            @elseif($product->promotion_end > $todayStartDate)
-                                                {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
-                                            @endif
-                                        </p>
-
-                                        <p class="text-uppercase">
-                                            <?php
-                                            if ($product->promotion_end > $todayStartDate) {
-                                                $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                                $end_date = new DateTime(date("Y-m-d",
-                                                        strtotime($product->promotion_end)));
-                                                $interval = date_diff($end_date, $start_date);
-                                                echo $interval->format('%a days left');
-                                            }
-                                            ?>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="ps-product__content">
-                                    <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                    @if(isset($ads[0]))
-                                        <?php
-                                        if(!empty($ads[0]->ad_image_horizontal)) {
-                                        ?>
-                                        <div class="ps-product__poster"><a
-                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                    target="_blank"><img
-                                                        src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                        alt=""></a></div>
-                                        <?php } ?>
-                                    @endif
-                                    <div class="clearfix"></div>
-                                    @if(isset($ads[2]))
-                                        <?php
-                                        if (!empty($ads[2]->ad_horizontal_image_popup)) {
-                                        ?>
-                                        <div class="ps-poster-popup">
-                                            <div class="close-popup">
-                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                            </div>
-
-                                            <a target="_blank"
-                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                        alt="" target="_blank"></a>
-
-                                        </div>
-                                        <?php } ?>
-                                    @endif
-                                    <div class="ps-product__detail">
-                                        {!! $product->product_footer !!}
-                                    </div>
-                                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                                    class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
-                                                                                        href="#">More data<i
-                                                    class="fa fa-angle-down"></i></a></div>
-                                </div>
-                            </div>
-                        @endif
+                            @if($nonFormulaProducts->count() && $j==2)
+                                @include('frontend.products.none-formula-products')
+                            @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -983,82 +764,9 @@ class="fa fa-refresh"></i></a>
                             </div>
                         @endif
                     @elseif(empty($products->count()) && $j==$remainingProducts->count())
-                        @if(!empty($nonFormulaProducts))
-                            <?php $product = $nonFormulaProducts; ?>
-                            <div class="ps-product @if($product->featured==1) featured-1 @endif"
-                                 id="{{ $j }}">
-
-                                <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
-                                    <?php
-                                    $todayStartDate = \Helper::startOfDayBefore();
-                                    $todayEndDate = \Helper::endOfDayAfter();
-                                    ?>
-                                    <div class="ps-product__promo">
-                                        <p>
-                                            <span class="highlight"> Promo: </span>
-                                            @if($product->promotion_end == null)
-                                                {{ONGOING}}
-                                            @elseif($product->promotion_end < $todayStartDate)
-                                                {{EXPIRED}}
-                                            @elseif($product->promotion_end > $todayStartDate)
-                                                {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
-                                            @endif
-                                        </p>
-
-                                        <p class="text-uppercase">
-                                            <?php
-                                            if ($product->promotion_end > $todayStartDate) {
-                                                $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                                $end_date = new DateTime(date("Y-m-d",
-                                                        strtotime($product->promotion_end)));
-                                                $interval = date_diff($end_date, $start_date);
-                                                echo $interval->format('%a days left');
-                                            }
-                                            ?>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="ps-product__content">
-                                    <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                    @if(isset($ads[0]))
-                                        <?php
-                                        if(!empty($ads[0]->ad_image_horizontal)) {
-                                        ?>
-                                        <div class="ps-product__poster"><a
-                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                    target="_blank"><img
-                                                        src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                        alt=""></a></div>
-                                        <?php } ?>
-                                    @endif
-                                    <div class="clearfix"></div>
-                                    @if(isset($ads[2]))
-                                        <?php
-                                        if (!empty($ads[2]->ad_horizontal_image_popup)) {
-                                        ?>
-                                        <div class="ps-poster-popup">
-                                            <div class="close-popup">
-                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                            </div>
-
-                                            <a target="_blank"
-                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                        alt="" target="_blank"></a>
-
-                                        </div>
-                                        <?php } ?>
-                                    @endif
-                                    <div class="ps-product__detail">
-                                        {!! $product->product_footer !!}
-                                    </div>
-                                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                                    class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
-                                                                                        href="#">More data<i
-                                                    class="fa fa-angle-down"></i></a></div>
-                                </div>
-                            </div>
-                        @endif
+                            @if($nonFormulaProducts->count())
+                                @include('frontend.products.none-formula-products')
+                            @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">

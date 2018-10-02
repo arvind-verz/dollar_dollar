@@ -203,17 +203,17 @@ class="fa fa-refresh"></i></a>
                             {{$product->currency_code}}
                                                             ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
                                                     @endif
-                                                        @if($searchFilter['filter']==TENURE)
-                                                            @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                            @elseif($product->tenure_value > 0)
-                                                                <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                            @elseif(is_numeric($product->promotion_period))
-                                                                <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                            @else
-                                                                <span class="highlight-slider"> {{ $product->tenure_value }} </span>
-                                                            @endif
+                                                    @if($searchFilter['filter']==TENURE)
+                                                        @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                            <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                        @elseif($product->tenure_value > 0)
+                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                        @elseif(is_numeric($product->promotion_period))
+                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                        @else
+                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>
                                                         @endif
+                                                    @endif
                                                     @if($searchFilter['filter']==CRITERIA)
                                                         up to  <span class="highlight-slider"> {{ $product->promotion_period }}
                                                             Criteria </span>
@@ -282,17 +282,17 @@ class="fa fa-refresh"></i></a>
                             {{$product->currency_code}}
                                                         ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
                                                 @endif
-                                                    @if($searchFilter['filter']==TENURE)
-                                                        @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                            <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                        @elseif($product->tenure_value > 0)
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                        @elseif(is_numeric($product->promotion_period))
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                        @else
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>
-                                                        @endif
+                                                @if($searchFilter['filter']==TENURE)
+                                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                                    @elseif($product->tenure_value > 0)
+                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                    @elseif(is_numeric($product->promotion_period))
+                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                    @else
+                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
                                                     @endif
+                                                @endif
                                                 @if($searchFilter['filter']==CRITERIA)
                                                     up to  <span class="highlight-slider"> {{ $product->promotion_period }}
                                                         Criteria </span>
@@ -309,6 +309,7 @@ class="fa fa-refresh"></i></a>
                                                 <strong>Min:</strong> SGD
                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                             </p>
+
                                             <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -359,7 +360,7 @@ class="fa fa-refresh"></i></a>
                         </div>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
-                         id="{{ $j }}">
+                         id="p-{{ $j }}">
                         <div class="ps-product__header"><img class="pc-only" src="{{ asset($product->brand_logo) }}"
                                                              alt="">
 
@@ -1023,6 +1024,9 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     </div>
                     @if(count($products)>=2)
+                        @if($nonFormulaProducts->count() && $j==2)
+                            @include('frontend.products.none-formula-products')
+                        @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -1048,6 +1052,9 @@ Total interest rate @if(($product->total_interest)<=0)
                             </div>
                         @endif
                     @elseif(empty($remainingProducts->count()) && $j==$products->count())
+                        @if($nonFormulaProducts->count() )
+                            @include('frontend.products.none-formula-products')
+                        @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -1100,7 +1107,7 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
-                         id="{{ $j }}">
+                         id="r-{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 
                             <?php
@@ -1744,6 +1751,9 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     </div>
                     @if($products->count()<2 && $remainingProducts->count()>=2)
+                        @if($nonFormulaProducts->count() && $j==2)
+                            @include('frontend.products.none-formula-products')
+                        @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -1769,6 +1779,9 @@ Total interest rate @if(($product->total_interest)<=0)
                             </div>
                         @endif
                     @elseif(empty($products->count()) && $j==$remainingProducts->count())
+                        @if($nonFormulaProducts->count())
+                            @include('frontend.products.none-formula-products')
+                        @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FOREIGN_CURRENCY_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">

@@ -13,6 +13,7 @@
     "chumper/zipper": "^1.0",
     "cyber-duck/laravel-excel": "^1.2",
     "fideloper/proxy": "~3.3",
+    "guzzlehttp/guzzle": "^6.3",
     "itsjavi/bootstrap-colorpicker": "^2.5",
     "laravel/framework": "5.5.*",
     "laravel/socialite": "^3.0",

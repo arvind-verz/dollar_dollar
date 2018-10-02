@@ -217,7 +217,7 @@ class="fa fa-refresh"></i></a>
                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                 @else
-                                                   {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
                                                 @endif
                                             </p>
                                         </div>
@@ -298,7 +298,7 @@ class="fa fa-refresh"></i></a>
                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                 @else
-                                                   {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
+                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
                                                 @endif
                                             </p>
                                         </div>
@@ -351,7 +351,7 @@ class="fa fa-refresh"></i></a>
                         </div>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
-                         id="{{ $j }}">
+                         id="p-{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 
                             <?php
@@ -866,6 +866,9 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     </div>
                     @if(count($products)>=2)
+                        @if($nonFormulaProducts->count() && $j==2)
+                            @include('frontend.products.none-formula-products')
+                        @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -891,6 +894,9 @@ Total interest rate @if(($product->total_interest)<=0)
                             </div>
                         @endif
                     @elseif(empty($remainingProducts->count()) && $j==$products->count())
+                        @if($nonFormulaProducts->count())
+                            @include('frontend.products.none-formula-products')
+                        @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -947,7 +953,7 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
-                         id="{{ $j }}">
+                         id="r-{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 
                             <?php
@@ -1452,7 +1458,9 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     </div>
                     @if($products->count()<2 && $remainingProducts->count()>=2)
-
+                        @if($nonFormulaProducts->count() && $j==2)
+                            @include('frontend.products.none-formula-products')
+                        @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -1478,6 +1486,9 @@ Total interest rate @if(($product->total_interest)<=0)
                             </div>
                         @endif
                     @elseif(empty($products->count()) && $j==$remainingProducts->count())
+                        @if($nonFormulaProducts->count())
+                            @include('frontend.products.none-formula-products')
+                        @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -1506,8 +1517,6 @@ Total interest rate @if(($product->total_interest)<=0)
                     @php $j++; @endphp
                 @endforeach
             @endif
-
-
         </div>
     </div>
     {{--Page content end--}}
