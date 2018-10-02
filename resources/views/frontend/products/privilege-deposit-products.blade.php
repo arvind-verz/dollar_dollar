@@ -346,7 +346,7 @@ class="fa fa-refresh"></i></a>
                         </div>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
-                         id="{{ $j }}">
+                         id="p-{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 
                             <?php
@@ -976,6 +976,9 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     </div>
                     @if(count($products)>=2)
+                            @if($nonFormulaProducts->count() && $j==2)
+                                @include('frontend.products.none-formula-products')
+                            @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==PRIVILEGE_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -1001,6 +1004,9 @@ Total interest rate @if(($product->total_interest)<=0)
                             </div>
                         @endif
                     @elseif(empty($remainingProducts->count()) && $j==$products->count())
+                            @if($nonFormulaProducts->count() )
+                                @include('frontend.products.none-formula-products')
+                            @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==PRIVILEGE_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -1056,7 +1062,7 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
-                         id="{{ $j }}">
+                         id="r-{{ $j }}">
                         <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
 
                             <?php
@@ -1677,6 +1683,9 @@ Total interest rate @if(($product->total_interest)<=0)
                         </div>
                     </div>
                     @if($products->count()<2 && $remainingProducts->count()>=2)
+                            @if($nonFormulaProducts->count() && $j==2)
+                                @include('frontend.products.none-formula-products')
+                            @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==PRIVILEGE_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -1702,6 +1711,9 @@ Total interest rate @if(($product->total_interest)<=0)
                             </div>
                         @endif
                     @elseif(empty($products->count()) && $j==$remainingProducts->count())
+                            @if($nonFormulaProducts->count())
+                                @include('frontend.products.none-formula-products')
+                            @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==PRIVILEGE_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">

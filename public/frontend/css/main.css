@@ -5250,8 +5250,8 @@ html .bg--parallax {
 .ps-poster-popup .close-popup {
     position: absolute;
     font-size:24px;
-    top: 10px;
-    right: 25px;
+    top: 5%;
+    right: 4%;
     z-index: 1;
     color: #000;
     cursor: pointer;

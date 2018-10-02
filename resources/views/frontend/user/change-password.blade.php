@@ -62,7 +62,7 @@
                                     {!! Form::open(['route' => ['user.resetpassword.update', AUTH::user()->id], 'method'   => 'POST']) !!}
                                     <p><strong> Old Password: </strong> <input type="password" class="form-control" name="old_password" placeholder="Enter old password" value="{{ old('old_password') }}"></p>
                                     <p><strong> New Password: </strong><input type="password" class="form-control" name="new_password" placeholder="Enter new password" value="{{ old('new_password') }}"></p>
-                                    <p><strong> Confirm Password: </strong><input type="password" class="form-control only_numeric" name="new_password_confirmation" placeholder="Enter contact number" value=""></p>
+                                    <p><strong> Confirm Password: </strong><input type="password" class="form-control" name="new_password_confirmation" placeholder="Enter contact number" value=""></p>
                                     <button type="submit" class="btn btn-success">Save</button>
                                     {!! Form::close() !!}
                                 </div>

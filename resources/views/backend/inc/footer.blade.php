@@ -977,16 +977,16 @@
                         i++;
                     }
 
-                    if (!minPlacementAmount) {
+                    if (!minPlacementAmount &&(formula != '')) {
                         errors[i] = 'The minimum placement is required.';
                         i++;
                     }
-                    if (!maxInterestRate) {
+                    if (!maxInterestRate &&(formula != '')) {
                         errors[i] = 'The maximum interest rate is required.';
                         i++;
                     }
 
-                    if ((!promotionPeriod) && (ongoingStatus == 'false')&&(jQuery.inArray(formula, utilFormula) == -1)) {
+                    if ((!promotionPeriod) && (ongoingStatus == 'false')&&(formula != '')&&(jQuery.inArray(formula, utilFormula) == -1)) {
                             errors[i] = 'The promotion period is required.';
                             i++;
                     }
