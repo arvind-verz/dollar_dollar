@@ -4181,7 +4181,7 @@
                 }
         );
         $(".ps-tab-list li").on("click", function () {
-
+                    //owlCarousel($('.owl-slider'));
                     $(".ps-tab-list li").removeClass("current");
                     $(this).addClass("current");
                     var id = $(this).find("a").attr("href");
@@ -4202,6 +4202,7 @@
                         $("div.view_all_types a").attr("href", "foreign-currency-deposit-mode");
                     }
                     $("div" + id).find("ul.catListing li:first a").click();
+
 
                 }
         );

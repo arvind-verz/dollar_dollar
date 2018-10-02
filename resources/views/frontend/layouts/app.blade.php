@@ -45,9 +45,9 @@ if (!$systemSetting) {
         var APP_URL = {!! json_encode(url('/')) !!}
     </script>
     <script>
-        $(document).ready(function () {
+        window.onload = function() {
             owlCarousel($('.owl-slider'));
-        });
+        };
         $(window).load(function () {
          // Animate loader off screen
          $(".se-pre-con").fadeOut("slow");
