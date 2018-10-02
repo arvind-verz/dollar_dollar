@@ -95,75 +95,6 @@ function resizeHeader() {
     }
 }
 
-function owlCarousel(element) {
-    if (element.length > 0) {
-        element.each(function () {
-            var el = $(this),
-                dataAuto = el.data('owl-auto'),
-                dataLoop = el.data('owl-loop'),
-                dataSpeed = el.data('owl-speed'),
-                dataGap = el.data('owl-gap'),
-                dataNav = el.data('owl-nav'),
-                dataDots = el.data('owl-dots'),
-                dataAnimateIn = (el.data('owl-animate-in')) ? el.data('owl-animate-in') : '',
-                dataAnimateOut = (el.data('owl-animate-out')) ? el.data('owl-animate-out') : '',
-                dataDefaultItem = el.data('owl-item'),
-                dataItemXS = el.data('owl-item-xs'),
-                dataItemSM = el.data('owl-item-sm'),
-                dataItemMD = el.data('owl-item-md'),
-                dataItemLG = el.data('owl-item-lg'),
-                dataNavLeft = (el.data('owl-nav-left')) ? el.data('owl-nav-left') : "<i class='fa fa-angle-left'></i>",
-                dataNavRight = (el.data('owl-nav-right')) ? el.data('owl-nav-right') : "<i class='fa fa-angle-right'></i>",
-                duration = el.data('owl-duration'),
-                animateStyle = el.data('owl-animated'),
-                smartspeed = el.data('owl-smartspeed'),
-                hoverpause = el.data('owl-hoverpause'),
-                datamouseDrag = (el.data('owl-mousedrag') == 'on') ? true : false;
-            if (el.children.length > 1) {
-                el.owlCarousel({
-                    animateIn: dataAnimateIn,
-                    animateOut: dataAnimateOut,
-                    margin: dataGap,
-                    autoplay: dataAuto,
-                    autoplayTimeout: dataSpeed,
-                    autoplayHoverPause: true,
-                    loop: dataLoop,
-                    nav: dataNav,
-                    mouseDrag: datamouseDrag,
-                    touchDrag: true,
-                    autoplaySpeed: duration,
-                    navSpeed: duration,
-                    dotsSpeed: duration,
-                    dragEndSpeed: duration,
-                    navText: [dataNavLeft, dataNavRight],
-                    dots: dataDots,
-                    items: dataDefaultItem,
-                    animateOut: animateStyle,
-                    smartSpeed: smartspeed,
-                    autoplayHoverPause: hoverpause,
-                    responsive: {
-                        0: {
-                            items: dataItemXS
-                        },
-                        480: {
-                            items: dataItemSM
-                        },
-                        768: {
-                            items: dataItemMD
-                        },
-                        992: {
-                            items: dataItemLG
-                        },
-                        1200: {
-                            items: dataDefaultItem
-                        }
-                    }
-                });
-            }
-        });
-    }
-}
-
 function bootstrapSelect() {
     $('select.ps-select').selectpicker();
 }
@@ -248,7 +179,6 @@ $(document).ready(function () {
     backgroundImage();
     menuBtnToggle();
     subMenuToggle();
-    owlCarousel($('.owl-slider'));
     bootstrapSelect();
     dateTimePicker();
     productCollapse();
