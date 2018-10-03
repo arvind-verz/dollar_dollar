@@ -319,7 +319,8 @@ $(document).ready(function () {
         $("#" + currentid).addClass('selected');
         //alert(currentid);
         $(".target-content").hide();
-        $('#' + $(this).attr('target')).show();
+        var target = $(this).attr('target');
+        setTimeout(function(){ $('#' + target ).show() }, 100);
         window.dispatchEvent(new Event('resize'));
     });
 });

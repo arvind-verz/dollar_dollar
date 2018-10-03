@@ -4181,6 +4181,7 @@
                 }
         );
         $(".ps-tab-list li").on("click", function () {
+
                     //owlCarousel($('.owl-slider'));
                     $(".ps-tab-list li").removeClass("current");
                     $(this).addClass("current");
@@ -4201,8 +4202,13 @@
                     else if (title == 'Foreign Currency') {
                         $("div.view_all_types a").attr("href", "foreign-currency-deposit-mode");
                     }
-                    $("div" + id).find("ul.catListing li:first a").click();
+                    var nextTarget = $("div" + id).find("ul.catListing li:first a");
+                    var targetId = nextTarget.attr("target");
 
+                    var carousel = $("#" + targetId).find(".owl-slider");
+                    carousel.hide();
+                    nextTarget.click();
+                    setTimeout(function(){ carousel.show() }, 100);
 
                 }
         );
