@@ -397,80 +397,85 @@ class="fa fa-refresh"></i></a>
                                                 alt=""></a></div>
                                 <?php } ?>
                             @endif
-                            <div class="ps-product__table">
-                                <div class="ps-table-wrap">
-                                    <table class="ps-table ps-table--product">
-                                        <thead>
-                                        <tr>
-                                            <th>Type</th>
-                                            <th>Placement</th>
-                                            @foreach($tenures as  $tenure)
-                                                <?php
-                                                $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
-                                                ?>
-                                                <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
-                                            @endforeach
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($productRanges as $rangeKey => $range)
-                                            <?php
-                                            $bonusInterestHighlight = $range->bonus_interest_highlight;
-                                            ?>
-                                            <tr class="@if($range->placement_highlight==true)highlight @endif">
-                                                <td>
+
+                            @if(!empty($product->promotion_formula_id))
+                                <div class="ps-product__table">
+                                    <div class="ps-table-wrap">
+                                        <table class="ps-table ps-table--product">
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Placement</th>
+                                                @foreach($tenures as  $tenure)
                                                     <?php
-                                                    $legendImage = null;
-                                                    if (isset($range->legend)) {
-                                                        $legend = DB::table('system_setting_legend_table')->find($range->legend);
-                                                        if ($legend) {
-                                                            $legendImage = $legend->icon;
-                                                        }
-                                                    }
+                                                    $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                     ?>
-                                                    @if($legendImage)
-                                                        <img src="{{ asset($legendImage) }}" alt="">
-                                                    @endif
-                                                </td>
-                                                <td class="@if($range->placement_value==true)highlight @endif">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
-                                                @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
-                                                    <td class="text-center @if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
-                                                            - @else {{ $bonus_interest . '%' }} @endif </td>
+                                                    <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
                                                 @endforeach
                                             </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($productRanges as $rangeKey => $range)
+                                                <?php
+                                                $bonusInterestHighlight = $range->bonus_interest_highlight;
+                                                ?>
+                                                <tr class="@if($range->placement_highlight==true)highlight @endif">
+                                                    <td>
+                                                        <?php
+                                                        $legendImage = null;
+                                                        if (isset($range->legend)) {
+                                                            $legend = DB::table('system_setting_legend_table')->find($range->legend);
+                                                            if ($legend) {
+                                                                $legendImage = $legend->icon;
+                                                            }
+                                                        }
+                                                        ?>
+                                                        @if($legendImage)
+                                                            <img src="{{ asset($legendImage) }}" alt="">
+                                                        @endif
+                                                    </td>
+                                                    <td class="@if($range->placement_value==true)highlight @endif">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
+                                                    @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
+                                                        <td class="text-center @if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
+                                                                - @else {{ $bonus_interest . '%' }} @endif </td>
+                                                    @endforeach
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                            @if(isset($ads[1]))
-                                <?php
-                                if(!empty($ads[1]->ad_image_vertical)) {
-                                ?>
-                                <div class="ps-product__poster">
-                                    <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
-                                                alt=""></a>
-                                </div>
-                                <div class="clearfix"></div>
-                                <?php } ?>
-                            @endif
-                            <div class="ps-product__panel">
-                                @if(count($interestEarns))
-                                    @foreach($tenures as $tenureKey => $value)
-                                        <?php $type = Helper::days_or_month_or_year(2, $value); ?>
-                                        @if($tenureKey==0)
-                                            <h4>Possible interest(s) earned for SGD
-                                                ${{ Helper::inThousand($product->placement) }}</h4>
-                                        @endif
-                                        <p><strong>{{ $value . ' ' . $type }}</strong>-
-                                            ${{ Helper::inRoundTwoDecimal($interestEarns[$tenureKey]) }}
-                                            ({{ $bonusInterests[$tenureKey] . '%' }})</p>
-                                    @endforeach
 
+                                @if(isset($ads[1]))
+                                    <?php
+                                    if(!empty($ads[1]->ad_image_vertical)) {
+                                    ?>
+                                    <div class="ps-product__poster">
+                                        <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
+                                           target="_blank"><img
+                                                    src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
+                                                    alt=""></a>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <?php } ?>
                                 @endif
-                            </div>
+                                <div class="ps-product__panel">
+                                    @if(count($interestEarns))
+                                        @foreach($tenures as $tenureKey => $value)
+                                            <?php $type = Helper::days_or_month_or_year(2, $value); ?>
+                                            @if($tenureKey==0)
+                                                <h4>Possible interest(s) earned for SGD
+                                                    ${{ Helper::inThousand($product->placement) }}</h4>
+                                            @endif
+                                            <p><strong>{{ $value . ' ' . $type }}</strong>-
+                                                ${{ Helper::inRoundTwoDecimal($interestEarns[$tenureKey]) }}
+                                                ({{ $bonusInterests[$tenureKey] . '%' }})</p>
+                                        @endforeach
+
+                                    @endif
+                                </div>
+                            @endif
+
                             <div class="clearfix"></div>
                             @if(isset($ads[2]))
                                 <?php
@@ -499,10 +504,6 @@ class="fa fa-refresh"></i></a>
                         </div>
                     </div>
                     @if(count($products)>=2)
-                            @if($nonFormulaProducts->count() && $j==2)
-                                @include('frontend.products.none-formula-products')
-                            @endif
-
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -528,9 +529,6 @@ class="fa fa-refresh"></i></a>
                             </div>
                         @endif
                     @elseif(empty($remainingProducts->count()) && $j==$products->count())
-                            @if($nonFormulaProducts->count())
-                                @include('frontend.products.none-formula-products')
-                            @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -638,75 +636,77 @@ class="fa fa-refresh"></i></a>
                                                     alt=""></a></div>
                                     <?php } ?>
                                 @endif
-                                <div class="ps-product__table">
-                                    <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product">
-                                            <thead>
-                                            <tr>
-                                                <th>Type</th>
-                                                <th>Placement</th>
-                                                @foreach($tenures as  $tenure)
-                                                    <?php
-                                                    $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
-                                                    ?>
-                                                    <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
-                                                @endforeach
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($productRanges as $rangeKey => $range)
-                                                <?php
-                                                $bonusInterestHighlight = $range->bonus_interest_highlight;
-                                                ?>
-                                                <tr class="@if($range->placement_highlight==true)highlight @endif ">
-                                                    <td>
+                                @if(!empty($product->promotion_formula_id))
+                                    <div class="ps-product__table">
+                                        <div class="ps-table-wrap">
+                                            <table class="ps-table ps-table--product">
+                                                <thead>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Placement</th>
+                                                    @foreach($tenures as  $tenure)
                                                         <?php
-                                                        $legendImage = null;
-                                                        if (isset($range->legend)) {
-                                                            $legend = DB::table('system_setting_legend_table')->find($range->legend);
-                                                            if ($legend) {
-                                                                $legendImage = $legend->icon;
-                                                            }
-                                                        }
+                                                        $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                         ?>
-                                                        @if($legendImage)
-                                                            <img src="{{ asset($legendImage) }}" alt="">
-                                                        @endif
-                                                    </td>
-                                                    <td class="@if($range->placement_value==true)highlight @endif">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
-                                                    @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
-                                                        <td class=" text-center @if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
-                                                                - @else {{ $bonus_interest . '%' }} @endif </td>
+                                                        <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
                                                     @endforeach
                                                 </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($productRanges as $rangeKey => $range)
+                                                    <?php
+                                                    $bonusInterestHighlight = $range->bonus_interest_highlight;
+                                                    ?>
+                                                    <tr class="@if($range->placement_highlight==true)highlight @endif ">
+                                                        <td>
+                                                            <?php
+                                                            $legendImage = null;
+                                                            if (isset($range->legend)) {
+                                                                $legend = DB::table('system_setting_legend_table')->find($range->legend);
+                                                                if ($legend) {
+                                                                    $legendImage = $legend->icon;
+                                                                }
+                                                            }
+                                                            ?>
+                                                            @if($legendImage)
+                                                                <img src="{{ asset($legendImage) }}" alt="">
+                                                            @endif
+                                                        </td>
+                                                        <td class="@if($range->placement_value==true)highlight @endif">{{ '$' . Helper::inThousand($range->min_range) . ' - $' . Helper::inThousand($range->max_range) }}</td>
+                                                        @foreach($range->bonus_interest as $bonus_key => $bonus_interest)
+                                                            <td class=" text-center @if($bonusInterestHighlight[$bonus_key]==true)highlight @endif">@if($bonus_interest<=0)
+                                                                    - @else {{ $bonus_interest . '%' }} @endif </td>
+                                                        @endforeach
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                                @if(isset($ads[1]))
-                                    <?php
-                                    if(!empty($ads[1]->ad_image_vertical)) {
-                                    ?>
-                                    <div class="ps-product__poster">
-                                        <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
-                                           target="_blank"><img
-                                                    src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
-                                                    alt=""></a>
+                                    @if(isset($ads[1]))
+                                        <?php
+                                        if(!empty($ads[1]->ad_image_vertical)) {
+                                        ?>
+                                        <div class="ps-product__poster">
+                                            <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
+                                               target="_blank"><img
+                                                        src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
+                                                        alt=""></a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <?php } ?>
+                                    @endif
+                                    <div class="ps-product__panel">
+
+                                        <h4>Possible interest(s) earned for SGD
+                                            ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                        <p>
+                                            <span class="nill"> {{ NILL }}</span><br/>
+                                            {{NOT_ELIGIBLE}}
+                                        </p>
                                     </div>
-                                    <div class="clearfix"></div>
-                                    <?php } ?>
                                 @endif
-                                <div class="ps-product__panel">
-
-                                    <h4>Possible interest(s) earned for SGD
-                                        ${{ Helper::inThousand($product->placement) }}</h4>
-
-                                    <p>
-                                        <span class="nill"> {{ NILL }}</span><br/>
-                                        {{NOT_ELIGIBLE}}
-                                    </p>
-                                </div>
                                 <div class="clearfix"></div>
                                 @if(isset($ads[2]))
                                     <?php
@@ -736,9 +736,6 @@ class="fa fa-refresh"></i></a>
                         </div>
                     @endif
                     @if($products->count()<2 && $remainingProducts->count()>=2)
-                            @if($nonFormulaProducts->count() && $j==2)
-                                @include('frontend.products.none-formula-products')
-                            @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==2)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">
@@ -764,9 +761,6 @@ class="fa fa-refresh"></i></a>
                             </div>
                         @endif
                     @elseif(empty($products->count()) && $j==$remainingProducts->count())
-                            @if($nonFormulaProducts->count())
-                                @include('frontend.products.none-formula-products')
-                            @endif
                         @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE)
                             <div class="ps-poster-popup">
                                 <!-- <div class="close-popup">

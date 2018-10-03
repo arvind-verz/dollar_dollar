@@ -342,13 +342,13 @@ class PagesFrontController extends Controller
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
-            ->whereNotNull('promotion_products.formula_id')
+            //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
-        $nonFormulaProducts = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        /*$nonFormulaProducts = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
             ->whereNull('promotion_products.formula_id')
@@ -357,7 +357,7 @@ class PagesFrontController extends Controller
             ->orderBy('promotion_products.created_at', 'DESC')
             ->select('promotion_products.*', 'brands.*')
             ->inRandomOrder()
-            ->get();
+            ->get();*/
 
         $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
         $brands = $details['brands'];
@@ -593,7 +593,7 @@ class PagesFrontController extends Controller
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
-                $remainingProducts[] = $product;
+                $filterProducts[] = $product;
             }
         }
         $remainingProducts = collect($remainingProducts);
@@ -698,7 +698,7 @@ class PagesFrontController extends Controller
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", 'ads_manage',"nonFormulaProducts"));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", 'ads_manage'));
 
     }
 
