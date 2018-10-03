@@ -22,6 +22,7 @@
                            target="_blank">
                             <div class="ps-banner bg--cover" data-background="{{asset($banner->banner_image )}}">
                                 <img alt="" src="{{asset($banner->banner_image )}}">
+
                                 <div class="ps-banner__content">
                                     {!! $banner->banner_content !!}
                                 </div>
@@ -181,6 +182,7 @@
                                         Fixed Deposit
                                     </strong>
                                 </h3>
+
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
                                         <li class="selected" id="catList1">
@@ -205,248 +207,19 @@
                                 <div class="product-row-01 clearfix pc-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            <?php $featured[] = $i; ?>
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                          <span class="highlight-slider">
-                            {{ $product->maximum_interest_rate  }}
-                              %
-                          </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-                                        @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
+                                    $i = 1;$featured = [];
                                     ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                @endif
-                                                @if ($product->promotion_type_id ==FIX_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                        <span class="highlight-slider">
-                          {{ $product->maximum_interest_rate  }}
-                            %
-                        </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                    @if($products->count())
+                                        @include('homePcProductsSlider');
+                                    @endif
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'maximum_interest_rate');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            <?php $featured[] = $i; ?>
-                                            @php $i++; @endphp
-                                        @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                      <span class="highlight-slider">
-                        {{ $product->maximum_interest_rate  }}
-                          %
-                      </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==FIX_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                    <span class="highlight-slider">
-                      {{ $product->maximum_interest_rate  }}
-                        %
-                    </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                    @if($products->count())
+                                        @include('homeSpProductsSlider');
+                                    @endif
                                 </div>
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-2"
@@ -455,243 +228,17 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'minimum_placement_amount');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-                  <span class="highlight-slider">
-                    SGD ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                  </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homePcProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==FIX_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-                <span class="highlight-slider">
-                  SGD
-                  ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'minimum_placement_amount');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homeSpProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-              <span class="highlight-slider">
-                SGD ${{ Helper::inThousand($product->minimum_placement_amount) }}
-              </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==FIX_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-            <span class="highlight-slider">
-              SGD
-              ${{ Helper::inThousand($product->minimum_placement_amount) }}
-            </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-3"
@@ -700,277 +247,17 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'promotion_period');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-              </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-              </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-              </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-              </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homePcProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==FIX_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-            </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'promotion_period');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homeSpProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-            </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==FIX_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-          </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-          </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-          </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-          </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url('fixed-deposit-mode'); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -983,6 +270,7 @@
                                         Saving Deposit
                                     </strong>
                                 </h3>
+
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
                                         <li class="selected" id="catList4">
@@ -1008,239 +296,17 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'maximum_interest_rate');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i;  @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                  <span class="highlight-slider">
-                    {{ $product->maximum_interest_rate  }} %
-                  </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homePcProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==SAVING_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                <span class="highlight-slider">
-                  {{ $product->maximum_interest_rate  }} %
-                </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'maximum_interest_rate');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
+                                        @if($products->count())
+                                            @include('homeSpProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-              <span class="highlight-slider">
-                {{ $product->maximum_interest_rate  }} %
-              </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==SAVING_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-            <span class="highlight-slider">
-              {{ $product->maximum_interest_rate  }} %
-            </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-5"
@@ -1249,241 +315,17 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'minimum_placement_amount');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-              <span class="highlight-slider">
-                SGD
-                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-              </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homePcProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==SAVING_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-            <span class="highlight-slider">
-              SGD
-              ${{ Helper::inThousand($product->minimum_placement_amount) }}
-            </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'minimum_placement_amount');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-            <span class="highlight-slider">
-              SGD
-              ${{ Helper::inThousand($product->minimum_placement_amount) }}
-            </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==SAVING_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-          <span class="highlight-slider">
-            SGD
-            ${{ Helper::inThousand($product->minimum_placement_amount) }}
-          </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                        @if($products->count())
+                                            @include('homeSpProductsSlider');
+                                        @endif
                                 </div>
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-6"
@@ -1492,273 +334,17 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'promotion_period');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-              </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-              </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-              </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-              </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homePcProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==SAVING_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-            </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'promotion_period');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-            </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==SAVING_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-          </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-          </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-          </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-          </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(SAVING_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                        @if($products->count())
+                                            @include('homeSpProductsSlider');
+                                        @endif
                                 </div>
                             </div>
                         </div>
@@ -1771,6 +357,7 @@
                                         Privilege Deposit
                                     </strong>
                                 </h3>
+
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
                                         <li class="selected" id="catList7">
@@ -1796,241 +383,17 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'maximum_interest_rate');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i;  @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                  <span class="highlight-slider">
-                    {{ $product->maximum_interest_rate  }}
-                      %
-                  </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homePcProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==PRIVILEGE_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                <span class="highlight-slider">
-                  {{ $product->maximum_interest_rate  }}
-                    %
-                </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'maximum_interest_rate');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-              <span class="highlight-slider">
-                {{ $product->maximum_interest_rate  }}
-                  %
-              </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==PRIVILEGE_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-            <span class="highlight-slider">
-              {{ $product->maximum_interest_rate  }}
-                %
-            </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                        @if($products->count())
+                                            @include('homeSpProductsSlider');
+                                        @endif
                                 </div>
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-8"
@@ -2039,239 +402,17 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'minimum_placement_amount');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-              <span class="highlight-slider">
-                SGD
-                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-              </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homePcProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==PRIVILEGE_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-            <span class="highlight-slider">
-              SGD
-              ${{ Helper::inThousand($product->minimum_placement_amount) }}
-            </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'minimum_placement_amount');
                                     $i = 1;$featured = []; ?>
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-            <span class="highlight-slider">
-              SGD
-              ${{ Helper::inThousand($product->minimum_placement_amount) }}
-            </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==PRIVILEGE_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-          <span class="highlight-slider">
-            SGD
-            ${{ Helper::inThousand($product->minimum_placement_amount) }}
-          </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                        @if($products->count())
+                                            @include('homeSpProductsSlider');
+                                        @endif
                                 </div>
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-9"
@@ -2280,271 +421,17 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'promotion_period');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-              </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-              </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-              </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-              </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
+                                        @if($products->count())
+                                            @include('homePcProductsSlider');
                                         @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==PRIVILEGE_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-            </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'promotion_period');
                                     $i = 1;$featured = []; ?>
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-            </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-            </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==PRIVILEGE_DEPOSIT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
-          </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-          </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                                                @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-          </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                                                @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
-          </span>
-                                                                @endif
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p class=" highlight highlight-bg ">
-                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                                                @else
-                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0) {{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}} @endif
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn"
-                                                           href="<?php echo url(PRIVILEGE_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                        @if($products->count())
+                                            @include('homeSpProductsSlider');
+                                        @endif
                                 </div>
                             </div>
                         </div>
@@ -2557,6 +444,7 @@
                                         All in One Deposit
                                     </strong>
                                 </h3>
+
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
                                         <li class="selected" id="catList10">
@@ -2582,344 +470,7 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT, 'maximum_interest_rate');
                                     $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i;  @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                  <span class="highlight-slider">
-                    {{ $product->maximum_interest_rate  }}
-                      %
-                  </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                {{ $product->promotion_period }}
-                                                                {{CRITERIA}}
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-                                        @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==ALL_IN_ONE_ACCOUNT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-                <span class="highlight-slider">
-                  {{ $product->maximum_interest_rate  }}
-                    %
-                </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                <?php echo $product->
-                                                                promotion_period; ?>
-                                                                {{CRITERIA}}
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if($product->featured==1)
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-              <span class="highlight-slider">
-                {{ $product->maximum_interest_rate  }}
-                  %
-              </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                {{ $product->promotion_period }}
-                                                                {{CRITERIA}}
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                                @if ($product->promotion_type_id ==ALL_IN_ONE_ACCOUNT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Up to
-            <span class="highlight-slider">
-              {{ $product->maximum_interest_rate  }}
-                %
-            </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p>
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                <?php echo $product->
-                                                                promotion_period; ?>
-                                                                {{CRITERIA}}
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-11"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
-                                    @foreach($products as $product)
-                                        @if($product->featured==1)
-                                            @php $featured[] = $i; @endphp
-                                            <div class="product-col-01 home-featured">
-                                                <div class="ps-slider--feature-product saving">
-                                                    <div class="ps-block--short-product second highlight"
-                                                         data-mh="product">
-                                                        <img alt="" src="{{ asset($product->brand_logo) }}">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-              <span class="highlight-slider">
-                SGD
-                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-              </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                {{ $product->promotion_period }}
-                                                                {{CRITERIA}}
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @php $i++; @endphp
-                                        @endif
-                                    @endforeach
-                                    <?php $i = 1;$featured_item = 5 - count($featured);
-                                    $featured_count = count($featured);
-                                    $featured_width = 12;
-                                    if ($featured_count == 1) {
-                                        $featured_width = 2;
-                                    } elseif ($featured_count == 2) {
-                                        $featured_width = 3;
-                                    } elseif ($featured_count == 3) {
-                                        $featured_width = 4;
-                                    }
-                                    ?>
-                                    <div class="product-col-0{{ $featured_width }} dump-padding-left">
-                                        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
-                                             data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                                             data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                                             data-owl-item-lg="{{ $featured_item }}"
-                                             data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
-                                             data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
-                                             data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
-                                             data-owl-nav-right="<i class='fa fa-angle-right'></i>"
-                                             data-owl-speed="5000">
-                                            @foreach ($products as $product)
-                                                @if ($product->promotion_type_id ==ALL_IN_ONE_ACCOUNT && $product->featured==0)
-                                                    <div class="ps-block--short-product">
-                                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                                        <h4 class="slider-heading">
-                                                            <strong>
-                                                                Min:
-            <span class="highlight-slider">
-              SGD
-              ${{ Helper::inThousand($product->minimum_placement_amount) }}
-            </span>
-                                                            </strong>
-                                                        </h4>
-                                                        <div class="ps-block__info">
-                                                            <p>
-                                                                <strong>
-                                                                    rate:
-                                                                </strong>
-                                                                {{ $product->maximum_interest_rate }}
-                                                                %
-                                                            </p>
-                                                            <p class="highlight highlight-bg">
-                                                                <strong>
-                                                                    Min:
-                                                                </strong>
-                                                                SGD
-                                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                                            </p>
-                                                            <p>
-                                                                <?php echo $product->
-                                                                promotion_period; ?>
-                                                                {{CRITERIA}}
-                                                            </p>
-                                                        </div>
-                                                        <a class="ps-btn" href="<?php echo url(AIO_DEPOSIT_MODE); ?>">
-                                                            More info
-                                                        </a>
-                                                        </img>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
@@ -2960,6 +511,7 @@
             </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -2968,6 +520,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
                                                                     Min:
@@ -2975,6 +528,7 @@
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 {{ $product->promotion_period }}
                                                                 {{CRITERIA}}
@@ -2998,6 +552,7 @@
           </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3006,6 +561,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
                                                                     Min:
@@ -3013,6 +569,7 @@
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 <?php echo $product->
                                                                 promotion_period; ?>
@@ -3052,6 +609,7 @@
               </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3060,6 +618,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3067,6 +626,7 @@
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 {{ $product->promotion_period }}
                                                                 {{CRITERIA}}
@@ -3115,6 +675,7 @@
             </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3123,6 +684,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3130,6 +692,7 @@
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 <?php echo $product->
                                                                 promotion_period; ?>
@@ -3184,6 +747,7 @@
             </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3192,6 +756,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3199,6 +764,7 @@
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 {{ $product->promotion_period }}
                                                                 {{CRITERIA}}
@@ -3221,6 +787,7 @@
           </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3229,6 +796,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3236,6 +804,7 @@
                                                                 SGD
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 <?php echo $product->
                                                                 promotion_period; ?>
@@ -3263,6 +832,7 @@
                                         Foreign Currency Deposit
                                     </strong>
                                 </h3>
+
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
                                         <li class="selected" id="catList13">
@@ -3305,6 +875,7 @@
                   </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
@@ -3313,6 +884,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3320,6 +892,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3374,6 +947,7 @@
                 </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
@@ -3382,6 +956,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3389,6 +964,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3448,6 +1024,7 @@
               </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
@@ -3456,6 +1033,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3463,6 +1041,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3491,6 +1070,7 @@
             </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
@@ -3499,6 +1079,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3506,6 +1087,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3550,6 +1132,7 @@
               </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3558,6 +1141,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
                                                                     Min:
@@ -3565,6 +1149,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3619,6 +1204,7 @@
             </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3627,6 +1213,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
                                                                     Min:
@@ -3634,6 +1221,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3693,6 +1281,7 @@
             </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3701,6 +1290,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
                                                                     Min:
@@ -3708,6 +1298,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3736,6 +1327,7 @@
           </span>
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3744,6 +1336,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p class="highlight highlight-bg">
                                                                 <strong>
                                                                     Min:
@@ -3751,6 +1344,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3789,20 +1383,21 @@
                                                         <h4 class="slider-heading">
                                                             <strong>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
+                                                                    <span class="highlight-slider"> {{ $product->remaining_days }}
               </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                                 @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
               </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
                                                                 @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
               </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
                                                                 @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
               </span>
                                                                 @endif
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3811,6 +1406,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3818,6 +1414,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p class=" highlight highlight-bg ">
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3866,20 +1463,21 @@
                                                         <h4 class="slider-heading">
                                                             <strong>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
+                                                                    <span class="highlight-slider"> {{ $product->remaining_days }}
             </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                                 @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
             </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
                                                                 @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
             </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
                                                                 @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
             </span>
                                                                 @endif
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3888,6 +1486,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3895,6 +1494,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p class=" highlight highlight-bg ">
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3948,20 +1548,21 @@
                                                         <h4 class="slider-heading">
                                                             <strong>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
+                                                                    <span class="highlight-slider"> {{ $product->remaining_days }}
             </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                                 @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
             </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
                                                                 @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
             </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
                                                                 @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
             </span>
                                                                 @endif
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -3970,6 +1571,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -3977,6 +1579,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p class=" highlight highlight-bg ">
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -3999,20 +1602,21 @@
                                                         <h4 class="slider-heading">
                                                             <strong>
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                                                    <span class="highlight-slider"> {{ $product->remaining_days }} 
+                                                                    <span class="highlight-slider"> {{ $product->remaining_days }}
           </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                                 @elseif($product->tenure_value > 0)
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
           </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
                                                                 @elseif(is_numeric($product->promotion_period))
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
           </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
                                                                 @else
-                                                                    <span class="highlight-slider"> {{ $product->tenure_value }} 
+                                                                    <span class="highlight-slider"> {{ $product->tenure_value }}
           </span>
                                                                 @endif
                                                             </strong>
                                                         </h4>
+
                                                         <div class="ps-block__info">
                                                             <p>
                                                                 <strong>
@@ -4021,6 +1625,7 @@
                                                                 {{ $product->maximum_interest_rate }}
                                                                 %
                                                             </p>
+
                                                             <p>
                                                                 <strong>
                                                                     Min:
@@ -4028,6 +1633,7 @@
                                                                 {{$product->currency_code}}
                                                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                             </p>
+
                                                             <p class=" highlight highlight-bg ">
                                                                 @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                                     {{ $product->remaining_days }}  {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
@@ -4074,6 +1680,7 @@
                                     </strong>
                                 </h3>
                             </a>
+
                             <div class="ps-slider-navigation" data-slider="ps-slider--home-blog">
                                 <a class="ps-prev" href="javascript:void(0);">
                                     <i class="fa fa-caret-left">
@@ -4095,6 +1702,7 @@
                                         <a class="ps-post__overlay" href="{{ url($blog->slug) }}">
                                         </a>
                                         <img alt="" height="250px" src="{{ asset($blog->blog_image) }}">
+
                                         <div class="ps-post__posted">
                   <span class="date">
                     {{ date("d", strtotime($blog->created_at)) }}
@@ -4109,6 +1717,7 @@
                                         <a class="ps-post__title" href="{{ url($blog->slug) }}">
                                             {{ $blog->name }}
                                         </a>
+
                                         <p>
                                             {!! $blog->short_description !!}
                                         </p>
@@ -4162,7 +1771,7 @@
                                 loop: true,
                                 margin: 10,
                                 items: 1,
-                                lazyLoad:true
+                                lazyLoad: true
                             }
                     );
                     $('.ps-next').click(function () {
@@ -4208,7 +1817,9 @@
                     var carousel = $("#" + targetId).find(".owl-slider");
                     carousel.hide();
                     nextTarget.click();
-                    setTimeout(function(){ carousel.show() }, 100);
+                    setTimeout(function () {
+                        carousel.show()
+                    }, 100);
 
                 }
         );

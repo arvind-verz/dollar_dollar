@@ -188,11 +188,11 @@ class="fa fa-refresh"></i></a>
                                                         @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                             <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                         @elseif($product->tenure_value > 0)
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
                                                         @elseif(is_numeric($product->promotion_period))
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
                                                         @else
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span>
                                                         @endif
                                                     @endif
                                                     @if($searchFilter['filter']==CRITERIA)
@@ -269,11 +269,11 @@ class="fa fa-refresh"></i></a>
                                                         @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                             <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                         @elseif($product->tenure_value > 0)
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
                                                         @elseif(is_numeric($product->promotion_period))
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
                                                         @else
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span>
                                                         @endif
                                                     @endif
                                                     @if($searchFilter['filter']==CRITERIA)
@@ -767,176 +767,86 @@ class="fa fa-refresh"></i></a>
                                                         @endif
                                                                 <!-- FORMULA 4 -->
                                                     @elseif($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F4)
-                                                    <div class="ps-product__table">
-                                                        <div class="ps-table-wrap">
-                                                            <table class="ps-table ps-table--product text-center">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>Account Balance
-                                                                    </th>
-                                                                    <th class="center">Base Interest
-                                                                    </th>
-                                                                    <th class="center">Bonus
-                                                                        Interest
-                                                                    </th>
-                                                                    <th class="center">Total
-                                                                        Interest
-                                                                    </th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <?php $prevMaxRange = 0;  $totalRange = 0; ?>
-                                                                @foreach($product->product_ranges as $key => $productRange)
-                                                                    <tr class="@if($product->highlight>=$key) highlight @endif">
-                                                                        <td>@if($key==0) FIRST
-                                                                            - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }}
-                                                                            @elseif($key == (count($product->product_ranges) - 1))
-                                                                                ABOVE {{ '$' . Helper::inThousand($prevMaxRange) }}
-                                                                            @else NEXT
-                                                                                - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }} @endif</td>
-                                                                        <td class="center">@if($productRange->board_rate <=0 )
-                                                                                - @else {{ $productRange->board_rate }}
-                                                                                % @endif
-                                                                        </td>
-                                                                        <td class="center">@if($productRange->bonus_interest <=0 )
-                                                                                - @else {{ $productRange->bonus_interest }}
-                                                                                % @endif
-
-                                                                        </td>
-                                                                        <td class="center">@if($productRange->total_interest <=0 )
-                                                                                - @else {{ $productRange->total_interest }}
-                                                                                % @endif
-
-                                                                        </td>
-                                                                    </tr>
-                                                                    <?php if ($key != (count($product->product_ranges) - 1)) {
-                                                                    $prevMaxRange = $productRange->max_range;
-                                                                    } ?>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                    @if(count($product->ads))
-                                                        <?php
-                                                        if(!empty($ads[1]->ad_image_vertical)) {
-                                                        ?>
-                                                        <div class="ps-product__poster">
-                                                            <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
-                                                               target="_blank"><img
-                                                                        src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
-                                                                        alt=""></a>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        <?php } ?>
-                                                    @endif
-                                                    <div class="ps-product__panel">
-                                                        <h4>Possible interest(s) earned for SGD
-                                                            ${{ Helper::inThousand($product->placement) }}</h4>
-
-                                                        <h2>@if($product->total_interest_earn <=0 )
-                                                                - @else
-                                                                ${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
-                                                            <br>
-                                                            <span>
-                                                            {{BASE_EFFECTIVE_RATE}}
-                                                            </span>
-                                                        </h2>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                    @if(!empty($product->ads_placement))
-                                                        @php
-                                                        $ads = json_decode($product->ads_placement);
-                                                        if(!empty($ads[2]->ad_horizontal_image_popup))
-                                                        {
-                                                        @endphp
-                                                        <div class="ps-poster-popup">
-                                                            <div class="close-popup">
-                                                                <i class="fa fa-times"
-                                                                   aria-hidden="true"></i>
-                                                            </div>
-
-                                                            <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                        alt="" target="_blank"></a>
-
-                                                        </div>
-                                                        @php } @endphp
-                                                        @endif
-
-                                                                <!-- FORMULA 5 -->
-                                                    @elseif($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F5 )
-
-                                                        <div class="ps-product__table fullwidth">
+                                                        <div class="ps-product__table">
                                                             <div class="ps-table-wrap">
-                                                                <table class="ps-table ps-table--product">
+                                                                <table class="ps-table ps-table--product text-center">
                                                                     <thead>
                                                                     <tr>
-                                                                        <th></th>
-                                                                        @foreach($product->months as $month)
-                                                                            <th class="center">{{ 'MONTH ' . $month }}</th>
-                                                                        @endforeach
-                                                                        <th class="center">{{ 'END OF 2 YEARS' }}</th>
+                                                                        <th>Account Balance
+                                                                        </th>
+                                                                        <th class="center">Base Interest
+                                                                        </th>
+                                                                        <th class="center">Bonus
+                                                                            Interest
+                                                                        </th>
+                                                                        <th class="center">Total
+                                                                            Interest
+                                                                        </th>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                    @foreach($product->row_headings as $key => $heading)
-                                                                        <tr class="@if($product->highlight==true ) highlight @endif">
-                                                                            <td>{{ $heading }}</td>
-                                                                            @if($key==0)
-                                                                                @foreach($product->monthly_saving_amount as $amount)
-                                                                                    <td class="center">{{ '$' . Helper::inRoundTwoDecimal($amount) }}</td>
-                                                                                @endforeach
+                                                                    <?php $prevMaxRange = 0;  $totalRange = 0; ?>
+                                                                    @foreach($product->product_ranges as $key => $productRange)
+                                                                        <tr class="@if($product->highlight>=$key) highlight @endif">
+                                                                            <td>@if($key==0) FIRST
+                                                                                - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }}
+                                                                                @elseif($key == (count($product->product_ranges) - 1))
+                                                                                    ABOVE {{ '$' . Helper::inThousand($prevMaxRange) }}
+                                                                                @else NEXT
+                                                                                    - {{ '$' . Helper::inThousand($productRange->max_range - $prevMaxRange) }} @endif</td>
+                                                                            <td class="center">@if($productRange->board_rate <=0 )
+                                                                                    - @else {{ $productRange->board_rate }}
+                                                                                    % @endif
+                                                                            </td>
+                                                                            <td class="center">@if($productRange->bonus_interest <=0 )
+                                                                                    - @else {{ $productRange->bonus_interest }}
+                                                                                    % @endif
 
-                                                                            @elseif($key==1)
-                                                                                @foreach($product->base_interests as $baseInterest )
-                                                                                    <td class="center">@if($baseInterest <=0 )
-                                                                                            - @else {{ '$' . Helper::inRoundTwoDecimal($baseInterest) }} @endif   </td>
-                                                                                @endforeach
+                                                                            </td>
+                                                                            <td class="center">@if($productRange->total_interest <=0 )
+                                                                                    - @else {{ $productRange->total_interest }}
+                                                                                    % @endif
 
-                                                                            @elseif($key==2)
-                                                                                @foreach($product->additional_interests as $additionalInterest)
-                                                                                    <td class="center">@if($additionalInterest <=0 )
-                                                                                            - @else {{ '$' . Helper::inRoundTwoDecimal($additionalInterest) }} @endif  </td>
-                                                                                @endforeach
-                                                                            @elseif($key==3)
-                                                                                <td colspan="{{count($product->months)}}"></td>
-                                                                                <td class="center">@if($product->total_interest_earn <=0 )
-                                                                                        - @else {{ '$' .Helper::inRoundTwoDecimal($product->total_interest_earn)  }} @endif
-                                                                                    {{-- <br/>
-                                                                                    <span>
-                                                                                    Total interest rate {{ $product->total_interest }}% P.A.
-                                                                                    </span>--}}
-                                                                                    {{--<span>Based the Effective interest Rate</span>--}}
-                                                                                </td>
-                                                                            @endif
+                                                                            </td>
                                                                         </tr>
+                                                                        <?php if ($key != (count($product->product_ranges) - 1)) {
+                                                                        $prevMaxRange = $productRange->max_range;
+                                                                        } ?>
                                                                     @endforeach
                                                                     </tbody>
                                                                 </table>
                                                             </div>
                                                         </div>
-                                                        <div class="ps-product__panel aio-product">
-                                                            <h4>Possible interest(s) earned for
-                                                                SGD
+                                                        @if(count($product->ads))
+                                                            <?php
+                                                            if(!empty($ads[1]->ad_image_vertical)) {
+                                                            ?>
+                                                            <div class="ps-product__poster">
+                                                                <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
+                                                                   target="_blank"><img
+                                                                            src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
+                                                                            alt=""></a>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <?php } ?>
+                                                        @endif
+                                                        <div class="ps-product__panel">
+                                                            <h4>Possible interest(s) earned for SGD
                                                                 ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                            <h2> @if(($product->total_interest_earn)<=0)
+                                                            <h2>@if($product->total_interest_earn <=0 )
                                                                     - @else
                                                                     ${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
                                                                 <br>
-                                                                <span>
-                                                                Total interest rate @if(($product->total_interest)<=0)
-                                                                        - @else {{ $product->total_interest }}% P.A.
-                                                                        for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
-                                                                </span>
+                                                            <span>
+                                                            {{BASE_EFFECTIVE_RATE}}
+                                                            </span>
                                                             </h2>
                                                         </div>
                                                         <div class="clearfix"></div>
                                                         @if(!empty($product->ads_placement))
                                                             @php
-                                                            $ads =
-                                                            json_decode($product->ads_placement);
+                                                            $ads = json_decode($product->ads_placement);
                                                             if(!empty($ads[2]->ad_horizontal_image_popup))
                                                             {
                                                             @endphp
@@ -948,49 +858,139 @@ class="fa fa-refresh"></i></a>
 
                                                                 <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                             src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                            alt=""
-                                                                            target="_blank"></a>
+                                                                            alt="" target="_blank"></a>
 
                                                             </div>
                                                             @php } @endphp
-                                                        @endif
-                                                    @elseif(empty($product->promotion_formula_id))
-                                                        @if(!empty($product->ads_placement))
-                                                            @php
-                                                            $ads =
-                                                            json_decode($product->ads_placement);
-                                                            if(!empty($ads[2]->ad_horizontal_image_popup))
-                                                            {
-                                                            @endphp
-                                                            <div class="ps-poster-popup">
-                                                                <div class="close-popup">
-                                                                    <i class="fa fa-times"
-                                                                       aria-hidden="true"></i>
+                                                            @endif
+
+                                                                    <!-- FORMULA 5 -->
+                                                        @elseif($product->promotion_formula_id==PRIVILEGE_DEPOSIT_F5 )
+
+                                                            <div class="ps-product__table fullwidth">
+                                                                <div class="ps-table-wrap">
+                                                                    <table class="ps-table ps-table--product">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th></th>
+                                                                            @foreach($product->months as $month)
+                                                                                <th class="center">{{ 'MONTH ' . $month }}</th>
+                                                                            @endforeach
+                                                                            <th class="center">{{ 'END OF 2 YEARS' }}</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        @foreach($product->row_headings as $key => $heading)
+                                                                            <tr class="@if($product->highlight==true ) highlight @endif">
+                                                                                <td>{{ $heading }}</td>
+                                                                                @if($key==0)
+                                                                                    @foreach($product->monthly_saving_amount as $amount)
+                                                                                        <td class="center">{{ '$' . Helper::inRoundTwoDecimal($amount) }}</td>
+                                                                                    @endforeach
+
+                                                                                @elseif($key==1)
+                                                                                    @foreach($product->base_interests as $baseInterest )
+                                                                                        <td class="center">@if($baseInterest <=0 )
+                                                                                                - @else {{ '$' . Helper::inRoundTwoDecimal($baseInterest) }} @endif   </td>
+                                                                                    @endforeach
+
+                                                                                @elseif($key==2)
+                                                                                    @foreach($product->additional_interests as $additionalInterest)
+                                                                                        <td class="center">@if($additionalInterest <=0 )
+                                                                                                - @else {{ '$' . Helper::inRoundTwoDecimal($additionalInterest) }} @endif  </td>
+                                                                                    @endforeach
+                                                                                @elseif($key==3)
+                                                                                    <td colspan="{{count($product->months)}}"></td>
+                                                                                    <td class="center">@if($product->total_interest_earn <=0 )
+                                                                                            - @else {{ '$' .Helper::inRoundTwoDecimal($product->total_interest_earn)  }} @endif
+                                                                                        {{-- <br/>
+                                                                                        <span>
+                                                                                        Total interest rate {{ $product->total_interest }}% P.A.
+                                                                                        </span>--}}
+                                                                                        {{--<span>Based the Effective interest Rate</span>--}}
+                                                                                    </td>
+                                                                                @endif
+                                                                            </tr>
+                                                                        @endforeach
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
-
-                                                                <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
-                                                                            src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                            alt=""
-                                                                            target="_blank"></a>
-
                                                             </div>
-                                                            @php } @endphp
+                                                            <div class="ps-product__panel aio-product">
+                                                                <h4>Possible interest(s) earned for
+                                                                    SGD
+                                                                    ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                                                <h2> @if(($product->total_interest_earn)<=0)
+                                                                        - @else
+                                                                        ${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
+                                                                    <br>
+                                                                <span>
+                                                                Total interest rate @if(($product->total_interest)<=0)
+                                                                        - @else {{ $product->total_interest }}% P.A.
+                                                                        for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
+                                                                </span>
+                                                                </h2>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            @if(!empty($product->ads_placement))
+                                                                @php
+                                                                $ads =
+                                                                json_decode($product->ads_placement);
+                                                                if(!empty($ads[2]->ad_horizontal_image_popup))
+                                                                {
+                                                                @endphp
+                                                                <div class="ps-poster-popup">
+                                                                    <div class="close-popup">
+                                                                        <i class="fa fa-times"
+                                                                           aria-hidden="true"></i>
+                                                                    </div>
+
+                                                                    <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                                                alt=""
+                                                                                target="_blank"></a>
+
+                                                                </div>
+                                                                @php } @endphp
+                                                            @endif
+                                                        @elseif(empty($product->promotion_formula_id))
+                                                            @if(!empty($product->ads_placement))
+                                                                @php
+                                                                $ads =
+                                                                json_decode($product->ads_placement);
+                                                                if(!empty($ads[2]->ad_horizontal_image_popup))
+                                                                {
+                                                                @endphp
+                                                                <div class="ps-poster-popup">
+                                                                    <div class="close-popup">
+                                                                        <i class="fa fa-times"
+                                                                           aria-hidden="true"></i>
+                                                                    </div>
+
+                                                                    <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
+                                                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                                                alt=""
+                                                                                target="_blank"></a>
+
+                                                                </div>
+                                                                @php } @endphp
+                                                            @endif
                                                         @endif
-                                                    @endif
 
 
-                                                    <div class="ps-product__detail">
-                                                        {!! $product->product_footer !!}
-                                                    </div>
-                                                    <div class="ps-product__footer"><a
-                                                                class="ps-product__more"
-                                                                href="#">More
-                                                            Detail<i
-                                                                    class="fa fa-angle-down"></i></a><a
-                                                                class="ps-product__info sp-only"
-                                                                href="#">More data<i
-                                                                    class="fa fa-angle-down"></i></a>
-                                                    </div>
+                                                        <div class="ps-product__detail">
+                                                            {!! $product->product_footer !!}
+                                                        </div>
+                                                        <div class="ps-product__footer"><a
+                                                                    class="ps-product__more"
+                                                                    href="#">More
+                                                                Detail<i
+                                                                        class="fa fa-angle-down"></i></a><a
+                                                                    class="ps-product__info sp-only"
+                                                                    href="#">More data<i
+                                                                        class="fa fa-angle-down"></i></a>
+                                                        </div>
                         </div>
                     </div>
                     @if(count($products)>=2)
@@ -1654,41 +1654,41 @@ class="fa fa-refresh"></i></a>
                                                                 @php } @endphp
                                                             @endif
 
-                                                    @elseif(empty($product->promotion_formula_id))
-                                                        @if(!empty($product->ads_placement))
-                                                            @php
-                                                            $ads =
-                                                            json_decode($product->ads_placement);
-                                                            if(!empty($ads[2]->ad_horizontal_image_popup))
-                                                            {
-                                                            @endphp
-                                                            <div class="ps-poster-popup">
-                                                                <div class="close-popup">
-                                                                    <i class="fa fa-times"
-                                                                       aria-hidden="true"></i>
+                                                        @elseif(empty($product->promotion_formula_id))
+                                                            @if(!empty($product->ads_placement))
+                                                                @php
+                                                                $ads =
+                                                                json_decode($product->ads_placement);
+                                                                if(!empty($ads[2]->ad_horizontal_image_popup))
+                                                                {
+                                                                @endphp
+                                                                <div class="ps-poster-popup">
+                                                                    <div class="close-popup">
+                                                                        <i class="fa fa-times"
+                                                                           aria-hidden="true"></i>
+                                                                    </div>
+
+                                                                    <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
+                                                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                                                alt=""
+                                                                                target="_blank"></a>
+
                                                                 </div>
-
-                                                                <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
-                                                                            src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                            alt=""
-                                                                            target="_blank"></a>
-
-                                                            </div>
-                                                            @php } @endphp
+                                                                @php } @endphp
+                                                            @endif
                                                         @endif
-                                                    @endif
-                                                    <div class="ps-product__detail">
-                                                        {!! $product->product_footer !!}
-                                                    </div>
-                                                    <div class="ps-product__footer"><a
-                                                                class="ps-product__more"
-                                                                href="#">More
-                                                            Detail<i
-                                                                    class="fa fa-angle-down"></i></a><a
-                                                                class="ps-product__info sp-only"
-                                                                href="#">More data<i
-                                                                    class="fa fa-angle-down"></i></a>
-                                                    </div>
+                                                        <div class="ps-product__detail">
+                                                            {!! $product->product_footer !!}
+                                                        </div>
+                                                        <div class="ps-product__footer"><a
+                                                                    class="ps-product__more"
+                                                                    href="#">More
+                                                                Detail<i
+                                                                        class="fa fa-angle-down"></i></a><a
+                                                                    class="ps-product__info sp-only"
+                                                                    href="#">More data<i
+                                                                        class="fa fa-angle-down"></i></a>
+                                                        </div>
                         </div>
                     </div>
                     @if($products->count()<2 && $remainingProducts->count()>=2)

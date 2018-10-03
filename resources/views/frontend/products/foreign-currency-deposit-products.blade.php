@@ -207,11 +207,11 @@ class="fa fa-refresh"></i></a>
                                                         @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                             <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                         @elseif($product->tenure_value > 0)
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
                                                         @elseif(is_numeric($product->promotion_period))
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
                                                         @else
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span>
                                                         @endif
                                                     @endif
                                                     @if($searchFilter['filter']==CRITERIA)
@@ -286,11 +286,11 @@ class="fa fa-refresh"></i></a>
                                                     @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                                         <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
                                                     @elseif($product->tenure_value > 0)
-                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
                                                     @elseif(is_numeric($product->promotion_period))
-                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
                                                     @else
-                                                        <span class="highlight-slider"> {{ $product->tenure_value }} </span>
+                                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>
                                                     @endif
                                                 @endif
                                                 @if($searchFilter['filter']==CRITERIA)

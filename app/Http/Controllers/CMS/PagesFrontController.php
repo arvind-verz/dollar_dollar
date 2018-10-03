@@ -421,7 +421,7 @@ class PagesFrontController extends Controller
                 if ($untilEndDate > $todayDate) {
                     $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
                 } else {
-                    $product->remaining_days = 0;
+                    $product->remaining_days = EXPIRED;
                 }
             } else {
                 $product->remaining_days = null;
@@ -539,7 +539,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -587,7 +587,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -933,7 +933,7 @@ class PagesFrontController extends Controller
                 if ($untilEndDate > $todayDate) {
                     $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
                 } else {
-                    $product->remaining_days = 0;
+                    $product->remaining_days = EXPIRED;
                 }
             } else {
                 $product->remaining_days = null;
@@ -1065,7 +1065,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1166,7 +1166,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1252,7 +1252,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1376,7 +1376,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1511,7 +1511,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1557,7 +1557,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1771,7 +1771,7 @@ class PagesFrontController extends Controller
                 if ($untilEndDate > $todayDate) {
                     $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
                 } else {
-                    $product->remaining_days = 0;
+                    $product->remaining_days = EXPIRED;
                 }
             } else {
                 $product->remaining_days = null;
@@ -1862,7 +1862,7 @@ class PagesFrontController extends Controller
                     }
                 }
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1943,7 +1943,7 @@ class PagesFrontController extends Controller
                     }
                 }
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2065,7 +2065,7 @@ class PagesFrontController extends Controller
                     }
                 }
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2200,7 +2200,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2246,7 +2246,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2495,7 +2495,7 @@ class PagesFrontController extends Controller
                 if ($untilEndDate > $todayDate) {
                     $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
                 } else {
-                    $product->remaining_days = 0;
+                    $product->remaining_days = EXPIRED;
                 }
             } else {
                 $product->remaining_days = null;
@@ -2622,7 +2622,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2723,7 +2723,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2807,7 +2807,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2930,7 +2930,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -3065,7 +3065,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -3112,7 +3112,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
