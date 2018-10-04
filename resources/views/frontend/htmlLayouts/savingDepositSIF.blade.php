@@ -1,4 +1,5 @@
-<p>Earn 1% P.A. on your entire account balance when you do not withdraw and deposit a mininum of S$500 monthly. Continue earning 0.8% P.A.&nbsp; if there is no withdrawal, for months with withdrawal you still receive 0.05% P.A&nbsp;</p>
+<p>Cash is still necessary. Keep it safe for a rainy day or that nice holiday. Start saving with just S$200 through monthly giro fund transfer to earn bonus interest rate</p>
+<p>&nbsp;</p>
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
         <h4 class="ps-product__heading">Criteria</h4>
