@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\AdsManagement;
 use App\Brand;
 use App\Currency;
 use App\DefaultSearch;
@@ -12,10 +13,9 @@ use App\PromotionProducts;
 use App\systemSettingLegendTable;
 use App\ToolTip;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\AdsManagement;
+use Illuminate\Support\Facades\DB;
 
 class PagesFrontController extends Controller
 {
@@ -790,12 +790,11 @@ class PagesFrontController extends Controller
             ->inRandomOrder()
             ->get();
 //dd($ads);
-        if(!$details->count())
-        {
+        if (!$details->count()) {
             \Session::flash('error', SEARCH_RESULT_ERROR);
-            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads','blogSearch'));
-        }else{
-            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads','blogSearch'));
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch'));
+        } else {
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch'));
         }
 
     }
@@ -2425,7 +2424,6 @@ class PagesFrontController extends Controller
             ->get();
 
 
-
         $details = \Helper::get_page_detail(FOREIGN_CURRENCY_DEPOSIT_MODE);
         $brands = $details['brands'];
         $currencies = null;
@@ -4044,85 +4042,93 @@ class PagesFrontController extends Controller
                             <th class="combine-criteria-padding">Giro</th>
                             <th class="combine-criteria-padding">SPEND</th>
                             <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           name="life_insurance" onchange="changeCriteria(this);"
-                                        <?php if ($product->life_insurance) {
-                                            echo "checked = checked";
-                                        } ?> value="true" id="life-insurance-<?php echo $product->product_id; ?>"/>
-                                    <label for="life-insurance-<?php echo $product->product_id; ?>">Life
-                                        Insurance</label>
+                                Loan
+                                <div class="row">
+                                    <div class="width-50">
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
+                                                <?php if ($product->housing_loan) {
+                                                    echo "checked = checked";
+                                                } ?>
+                                                   name="housing_loan"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   value="true" id="housing-loan-<?php echo $product->product_id; ?>">
+                                            <label
+                                                for="housing-loan-<?php echo $product->product_id; ?>">Housing</label>
+                                        </div>
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   name="education_loan" onchange="changeCriteria(this);"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   value="true" id='education-loan-<?php echo $product->product_id; ?>'
+                                                <?php if ($product->education_loan) {
+                                                    echo "checked = checked";
+                                                } ?>/>
+                                            <label
+                                                for="education-loan-<?php echo $product->product_id; ?>">Education</label>
+                                        </div>
+                                    </div>
+                                    <div class="width-50">
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
+                                                   name="hire_loan" value="true"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   id="hire-loan-<?php echo $product->product_id; ?>"
+                                                <?php if ($product->hire_loan) {
+                                                    echo "checked = checked";
+                                                } ?>/>
+                                            <label for="hire-loan-<?php echo $product->product_id; ?>">Hire
+                                                loan</label>
+                                        </div>
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   name="renovation_loan" onchange="changeCriteria(this);"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   value="true" id="renovation-loan-<?php echo $product->product_id; ?>"
+                                                <?php if ($product->renovation_loan) {
+                                                    echo "checked = checked";
+                                                } ?>/>
+                                            <label
+                                                for="renovation-loan-<?php echo $product->product_id; ?>">Renovation</label>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </th>
                             <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
-                                        <?php if ($product->housing_loan) {
-                                            echo "checked = checked";
-                                        } ?>
-                                           name="housing_loan"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           value="true" id="housing-loan-<?php echo $product->product_id; ?>">
-                                    <label for="housing-loan-<?php echo $product->product_id; ?>">Housing Loan</label>
+                                Wealth
+                                <div class="row">
+                                    <div class="width-50">
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   name="life_insurance" onchange="changeCriteria(this);"
+                                                <?php if ($product->life_insurance) {
+                                                    echo "checked = checked";
+                                                } ?> value="true"
+                                                   id="life-insurance-<?php echo $product->product_id; ?>"/>
+                                            <label
+                                                for="life-insurance-<?php echo $product->product_id; ?>">Insurance</label>
+                                        </div>
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
+                                                   name="unit_trust" value="true"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   id="unit-trust-<?php echo $product->product_id; ?>"
+                                                <?php if ($product->unit_trust) {
+                                                    echo "checked = checked";
+                                                } ?>/>
+                                            <label for="unit-trust-<?php echo $product->product_id; ?>">Unit</label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </th>
-                            <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           name="education_loan" onchange="changeCriteria(this);"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           value="true" id='education-loan-<?php echo $product->product_id; ?>'
-                                        <?php if ($product->education_loan) {
-                                            echo "checked = checked";
-                                        } ?>/>
-                                    <label for="education-loan-<?php echo $product->product_id; ?>">Education
-                                        Loan</label>
-                                </div>
-                            </th>
-                            <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
-                                           name="hire_loan" value="true"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           id="hire-loan-<?php echo $product->product_id; ?>"
-                                        <?php if ($product->hire_loan) {
-                                            echo "checked = checked";
-                                        } ?>/>
-                                    <label for="hire-loan-<?php echo $product->product_id; ?>">Hire Purchase
-                                        loan</label>
-                                </div>
-                            </th>
-                            <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           name="renovation_loan" onchange="changeCriteria(this);"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           value="true" id="renovation-loan-<?php echo $product->product_id; ?>"
-                                        <?php if ($product->renovation_loan) {
-                                            echo "checked = checked";
-                                        } ?>/>
-                                    <label for="renovation-loan-<?php echo $product->product_id; ?>">Renovation
-                                        loan</label>
-                                </div>
-                            </th>
-                            <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
-                                           name="unit_trust" value="true"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           id="unit-trust-<?php echo $product->product_id; ?>"
-                                        <?php if ($product->unit_trust) {
-                                            echo "checked = checked";
-                                        } ?>/>
-                                    <label for="unit-trust-<?php echo $product->product_id; ?>">Unit Trust</label>
-                                </div>
+
                             </th>
                         </tr>
                         </thead>
@@ -4133,7 +4139,7 @@ class PagesFrontController extends Controller
                                 <td class="text-center <?php if ($product->criteria_1 == true) {
                                     echo "highlight";
                                 } ?> "
-                                    colspan="3">1 Criteria Met
+                                    colspan="2">1 Criteria Met
                                     - <?php if ($range->bonus_interest_criteria1 <= 0) {
                                         echo "-";
                                     } else {
@@ -4143,7 +4149,7 @@ class PagesFrontController extends Controller
                                 <td class=" text-center  <?php if ($product->criteria_2 == true) {
                                     echo "highlight";
                                 } ?> "
-                                    colspan="3">2 Criteria
+                                    colspan="2">2 Criteria
                                     - <?php if ($range->bonus_interest_criteria2 <= 0) {
                                         echo "-";
                                     } else {
@@ -4154,7 +4160,7 @@ class PagesFrontController extends Controller
                                 <td class="text-center  <?php if ($product->criteria_3 == true) {
                                     echo "highlight";
                                 } ?>"
-                                    colspan="3">3 Criteria - <?php if ($range->bonus_interest_criteria3 <= 0) {
+                                    colspan="1">3 Criteria - <?php if ($range->bonus_interest_criteria3 <= 0) {
                                         echo " - ";
                                     } else {
                                         echo "$range->bonus_interest_criteria3" . '%';
@@ -4169,7 +4175,7 @@ class PagesFrontController extends Controller
                                 <td class=" text-center <?php if ($product->highlight == true) {
                                     echo 'highlight';
                                 } ?>"
-                                    colspan="9">
+                                    colspan="5">
 
                                     <?php if ($range->placement > $range->first_cap_amount) {
                                         echo "First ";

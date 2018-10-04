@@ -343,12 +343,12 @@ $(window).on('load resize', function () {
 });
 
 $(document).ready(function () {
-    $(".ps-checkbox input[type=checkbox]:checked").parent().parent().addClass("active");
+    $(".ps-checkbox input[type=checkbox]:checked").parent().parent().parent().parent().addClass("active");
 
     $("body").on("click", ".combine-criteria-padding .ps-checkbox label", function () {
         setTimeout(function () {
             $(".combine-criteria-padding .ps-checkbox input[type=checkbox]:checked").each(function () {
-                $(this).parent().parent().addClass("active");
+                $(this).parent().parent().parent().parent().addClass("active");
             });
         }, 100);
     });
