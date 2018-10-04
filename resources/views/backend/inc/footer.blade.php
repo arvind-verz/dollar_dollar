@@ -857,7 +857,7 @@
                 {
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[7, 'desc'], [6, 'desc']],
+                    'order': [[8, 'desc'], [7, 'desc']],
                     "columnDefs": []
                 });
         $('#menus').DataTable(
