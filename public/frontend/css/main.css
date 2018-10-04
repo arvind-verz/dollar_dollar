@@ -2649,7 +2649,7 @@ button {
 .ps-product .ps-product__panel h4 {
     margin-bottom: 0;
     display: block;
-    padding: 15px 25px;
+    padding: 10px 48px 10px 48px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
@@ -2665,7 +2665,7 @@ button {
 
 .ps-product .ps-product__panel p {
     margin-bottom: 0;
-    padding: 15px 25px;
+    padding: 10px 48px 10px 48px;
     font-family: "Montserrat", sans-serif;
     color: #303030;
     border-bottom: 1px solid #e9e9e9;
@@ -2831,7 +2831,7 @@ button {
 .ps-product--2 .ps-product__panel h4 {
     margin-bottom: 0;
     display: block;
-    padding: 15px 25px;
+    padding: 10px 48px 10px 48px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
@@ -2847,7 +2847,7 @@ button {
 
 .ps-product--2 .ps-product__panel p {
     margin-bottom: 0;
-    padding: 15px 25px;
+    padding: 10px 48px 10px 48px;
     font-family: "Montserrat", sans-serif;
     color: #303030;
     border-bottom: 1px solid #e9e9e9;
