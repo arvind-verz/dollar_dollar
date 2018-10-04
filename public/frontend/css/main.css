@@ -2140,7 +2140,7 @@ button {
     margin-bottom: 15px;
     text-align: center;
     font-family: "Montserrat", sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 300;
 }
 
@@ -5250,8 +5250,8 @@ html .bg--parallax {
 .ps-poster-popup .close-popup {
     position: absolute;
     font-size:24px;
-    top: 10px;
-    right: 25px;
+    top: 5%;
+    right: 4%;
     z-index: 1;
     color: #000;
     cursor: pointer;
@@ -5840,7 +5840,7 @@ span.ps-post__meta a {
 }
 
 .slider-heading {
-    font-size: 22px !important;
+    font-size: 20px !important;
 }
 
 .ps-table-wrap .combine-criteria-padding.active {
@@ -6700,6 +6700,14 @@ span.ps-post__meta a {
 .ps-form--filter .form-control.currency{
     font-weight:bold;
     text-align:center;
+}
+.slider-font{
+    font-weight: normal;
+    color: #3f545c;
+}
+.ps-block__info .highlight-bg .slider-font{
+    font-weight: bold;
+    color: #3f545c;
 }
 @media (max-width: 425px) {
     #search-form .owl-nav{

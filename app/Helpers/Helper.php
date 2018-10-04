@@ -1,26 +1,7 @@
 <?php
 namespace App\Helpers\Helper;
 
-use App\Banner;
-use App\Brand;
-use App\Category;
-use App\Homepage;
-use App\Menu;
-use App\Pricelist;
-use App\Product;
-use App\SystemSetting;
-use Auth;
-use App\BlogCategory;
-use App\Blog;
-use App\Tag;
-use App\Page;
-use App\PromotionProducts;
-use App\ProductManagement;
-use App\PromotionTypes;
-use App\PromotionFormula;
-Use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
+use App\Banner;use App\BlogCategory;use App\Brand;use App\Category;use App\Homepage;use App\Menu;use App\Page;use App\Pricelist;use App\Product;use App\ProductManagement;use App\PromotionFormula;use App\PromotionProducts;use App\PromotionTypes;use App\SystemSetting;use App\Tag;use Auth;use Carbon\Carbon;use Illuminate\Support\Facades\DB;use Illuminate\Support\Facades\Response;
 
 class Helper
 {
@@ -506,48 +487,55 @@ class Helper
 
     public static function days_or_month_or_year($tenure_type, $tenure)
     {
-        $day = 'Invalid';
-        if ($tenure_type == 1) {
-            if ($tenure > 1) {
-                $day = 'Days';
-            } else {
-                $day = 'Day';
-            }
-        } elseif ($tenure_type == 2) {
-            if ($tenure > 1) {
-                $day = 'Months';
-            } else {
-                $day = 'Month';
-            }
-        } elseif ($tenure_type == 3) {
-            if ($tenure > 1) {
-                $day = 'Years';
-            } else {
-                $day = 'Year';
+        $day = '';
+        if(is_numeric($tenure))
+        {
+                if ($tenure_type == 1) {
+                if ($tenure > 1) {
+                    $day = 'Days';
+                } else {
+                    $day = 'Day';
+                }
+            } elseif ($tenure_type == 2) {
+                if ($tenure > 1) {
+                    $day = 'Months';
+                } else {
+                    $day = 'Month';
+                }
+            } elseif ($tenure_type == 3) {
+                if ($tenure > 1) {
+                    $day = 'Years';
+                } else {
+                    $day = 'Year';
+                }
             }
         }
+
         return $day;
     }
 public static function daysOrMonthForSlider($tenure_type, $tenure)
     {
-        $day = 'Invalid';
-        if ($tenure_type == 1) {
-            if ($tenure > 1) {
-                $day = 'Days';
-            } else {
-                $day = 'Day';
-            }
-        } elseif ($tenure_type == 2) {
-            if ($tenure > 1) {
-                $day = 'MTHS';
-            } else {
-                $day = 'MTH';
-            }
-        } elseif ($tenure_type == 3) {
-            if ($tenure > 1) {
-                $day = 'Years';
-            } else {
-                $day = 'Year';
+        $day = '';
+        if(is_numeric($tenure))
+        {
+            if ($tenure_type == 1) {
+                if ($tenure > 1) {
+                    $day = 'Days';
+                } else {
+                    $day = 'Day';
+                }
+            } elseif ($tenure_type == 2) {
+                if ($tenure > 1) {
+                    $day = 'MTHS';
+                } else {
+                    $day = 'MTH';
+                }
+            } elseif ($tenure_type == 3) {
+                if ($tenure > 1) {
+                    $day = 'Years';
+                } else {
+                    $day = 'Year';
+                }
             }
         }
         return $day;
@@ -660,10 +648,40 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
                 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
                 'currency.icon as currency_icon', 'currency.currency as currency_name')
             ->get();
-
+        $searchFilter=null;
+        if ($byOrderValue == 'minimum_placement_amount') {
+            $searchFilter = PLACEMENT;
+        } elseif ($byOrderValue == 'maximum_interest_rate') {
+           $searchFilter = INTEREST;
+        } elseif ($byOrderValue == 'promotion_period') {
+             $searchFilter = TENURE;
+            if($productType==ALL_IN_ONE_ACCOUNT)
+                {
+                    $searchFilter = CRITERIA;
+                }
+        }
+        $productUrl = null;
+        if($productType==FIX_DEPOSIT)
+        {
+            $productUrl=FIXED_DEPOSIT_MODE;
+        }
+        elseif($productType==SAVING_DEPOSIT){
+             $productUrl=SAVING_DEPOSIT_MODE;
+        }
+        elseif($productType==PRIVILEGE_DEPOSIT){
+             $productUrl=PRIVILEGE_DEPOSIT_MODE;
+        }
+        elseif($productType==FOREIGN_CURRENCY_DEPOSIT){
+             $productUrl=FOREIGN_CURRENCY_DEPOSIT_MODE;
+        }
+        elseif($productType==ALL_IN_ONE_ACCOUNT){
+             $productUrl=AIO_DEPOSIT_MODE;
+        }
         foreach ($products as $key => &$product) {
             $maxTenure = 0;
             $minTenure = 0;
+            $product->by_order_value = $searchFilter;
+            $product->product_url = $productUrl;
             if ($product->promotion_period == ONGOING) {
                 $product->tenure_category = ONGOING;
             } else {
@@ -705,11 +723,13 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
                 if ($untilEndDate > $todayDate) {
                     $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
                 } else {
-                    $product->remaining_days = 0;
+                    $product->remaining_days = EXPIRED;
                 }
             } else {
                 $product->remaining_days = null;
             }
+
+
         }
 
         if ($byOrderValue == 'minimum_placement_amount') {

@@ -208,134 +208,7 @@
 
             <!-- Search form end -->
             @if(count($products))
-                <div class="product-row-01 clearfix slider-class">
-                    @php $i = 1;$featured = []; @endphp
-                    @foreach($products as $product)
-                        @if($product->featured==1)
-                            @php $featured[] = $i; @endphp
-                            <div class="product-col-01">
-                                <div class="ps-slider--feature-product saving">
-                                    <div class="ps-block--short-product second highlight" data-mh="product"><img
-                                                src="{{ asset($product->brand_logo) }}" alt="">
-                                        @if(isset($searchFilter['filter']))
-                                            <h4>
-                                                <strong>
-                                                    @if($searchFilter['filter']==INTEREST)
-                                                        Up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
-                                                            %</span>
-                                                    @endif
-                                                    @if($searchFilter['filter']==PLACEMENT)
-                                                        Min:   <span class="highlight-slider">
-                            SGD ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
-                                                    @endif
-                                                    @if($searchFilter['filter']==TENURE)
-                                                        @if($product->tenure_value > 0)
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>@if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
-                                                        @else
-                                                            <span class="highlight-slider"> {{$product->promotion_period}} </span>
-                                                        @endif
-
-                                                    @endif
-                                                    @if($searchFilter['filter']==CRITERIA)
-                                                        up to  <span class="highlight-slider"> {{ $product->promotion_period }}
-                                                            Criteria </span>
-                                                    @endif
-                                                </strong>
-                                            </h4>
-                                        @endif
-                                        <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
-                                                <strong>
-                                                    rate: </strong>{{ $product->maximum_interest_rate }}%</p>
-
-                                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
-                                                <strong>Min:</strong>
-                                                SGD
-                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                            </p>
-
-                                            <p class="@if($searchFilter['filter']==CRITERIA) highlight highlight-bg @endif">{{ $product->promotion_period }} {{CRITERIA}}</p>
-                                        </div>
-                                        <a class="ps-btn" href="#{{ $i }}">More data</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @php $i++; @endphp
-                        @endif
-                    @endforeach
-                    @php $i = 1;$featured_item = 5-count($featured);
-                    $featured_count = count($featured);
-                    $featured_width = 12;
-                    if($featured_count==1) {
-                    $featured_width = 2;
-                    }
-                    elseif($featured_count==2) {
-                    $featured_width = 3;
-                    }
-                    elseif($featured_count==3) {
-                    $featured_width = 4;
-                    }
-                    @endphp
-                    <div class="product-col-0{{ $featured_width }}">
-                        <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true"
-                             data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true"
-                             data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
-                             data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}"
-                             data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on"
-                             data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
-                             data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
-                            @php $i = 1; @endphp
-                            @foreach($products as $product)
-                                @if($product->featured==0)
-                                    <div class="ps-block--short-product second" data-mh="product"><img
-                                                src="{{ asset($product->brand_logo) }}" alt="">
-                                        @if(isset($searchFilter['filter']))
-                                            <h4>
-                                                <strong>
-                                                    @if($searchFilter['filter']==INTEREST)
-                                                        Up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
-                                                            %</span>
-                                                    @endif
-                                                    @if($searchFilter['filter']==PLACEMENT)
-                                                        Min:   <span class="highlight-slider">
-                            SGD ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
-                                                    @endif
-                                                    @if($searchFilter['filter']==TENURE)
-                                                        @if($product->tenure_value > 0)
-                                                            <span class="highlight-slider"> {{ $product->tenure_value }} </span>@if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1])) {{\Helper::days_or_month_or_year(1,  $product->tenure_value)}} @else {{\Helper::days_or_month_or_year(2,  $product->tenure_value)}} @endif
-                                                        @else
-                                                            <span class="highlight-slider"> {{$product->promotion_period}} </span>
-                                                        @endif
-
-                                                    @endif
-                                                    @if($searchFilter['filter']==CRITERIA)
-                                                        up to  <span class="highlight-slider"> {{ $product->promotion_period }}
-                                                            Criteria </span>
-                                                    @endif
-                                                </strong>
-                                            </h4>
-                                        @endif
-
-                                        <div class="ps-block__info">
-                                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
-                                                <strong>
-                                                    rate: </strong>{{ $product->maximum_interest_rate }}%</p>
-
-                                            <p class=" @if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
-                                                <strong>Min:</strong> SGD
-                                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
-                                            </p>
-
-                                            <p class="@if($searchFilter['filter']==CRITERIA) highlight highlight-bg @endif">{{ $product->promotion_period }} {{CRITERIA}}</p>
-                                        </div>
-                                        <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More data</a>
-                                    </div>
-                                    @php $i++; @endphp
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
+                @include('productsInnerSlider')
             @endif
             @if(count($legendtable))
                 <div class="ps-block--legend-table">
@@ -536,161 +409,684 @@
                                                     class="fa fa-angle-down"></i></a></div>
                                 </div>
                             </div>
-                            @endif
+                            <!-- TIER BASE -->
+                        @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
+                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
+                                 id="p-{{ $j }}">
+                                <div class="ps-product__header"><img
+                                            src="{{ asset($product->brand_logo) }}" alt="">
+                                    @if(!empty($product->apply_link_status))
+                                        <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                           href="{{$product->apply_link}}">Apply
+                                                Now</a></div>@endif
+                                </div>
+                                <div class="ps-product__content">
 
-                                    <!-- TIER BASE -->
-                            @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
-                                <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
-                                     id="p-{{ $j }}">
-                                    <div class="ps-product__header"><img
-                                                src="{{ asset($product->brand_logo) }}" alt="">
-                                        @if(!empty($product->apply_link_status))
-                                            <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                               href="{{$product->apply_link}}">Apply
-                                                    Now</a></div>@endif
+                                    <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
+                                    @if(!empty($product->ads_placement))
+                                        @php
+                                        $ads = json_decode($product->ads_placement);
+                                        if(!empty($ads[0]->ad_image_horizontal)) {
+                                        @endphp
+                                        <div class="ps-product__poster"><a
+                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                                    target="_blank"><img
+                                                        src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                        alt=""></a></div>
+                                        @php } @endphp
+                                    @endif
+
+
+                                    <div class="ps-table-wrap">
+                                        <table class="ps-table ps-table--product ps-table--product-2">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-left">Balance</th>
+                                                <th class="text-left">Criteria a <br/><span
+                                                            class="subtitle">(spend)</span></th>
+                                                <th class="text-left">Criteria b <br/><span class="subtitle">(Spend + Salary/Giro)</span>
+                                                </th>
+                                                <th class="text-left">Interest Earned for each Tier</th>
+                                                <th class="text-left">Total Interest Earned
+                                                    for {{ Helper::inThousand($product->placement) }}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $prevMaxRange = 0;  $totalRange = 0; ?>
+                                            @foreach($productRanges as $key=>$range)
+                                                <?php
+                                                $totalRange = 0 + ($range->max_range - $prevMaxRange);
+                                                if ($key != (count($productRanges) - 1)) {
+
+                                                }
+                                                ?>
+                                                <tr>
+                                                    <td class=" @if($product->highlight_index>=$key &&($product->criteria_b_highlight==true || $product->criteria_a_highlight==true) ) highlight @endif ">
+                                                        <?php
+                                                        if ($key == 0) {
+                                                            echo "First ";
+                                                            echo "$" . Helper::inThousand($range->max_range);
+                                                        } elseif ($key == (count($productRanges) - 1)) {
+                                                            echo "Above ";
+                                                            echo "$" . Helper::inThousand(($prevMaxRange));
+                                                        } else {
+                                                            echo "Next ";
+                                                            echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
+                                                        } ?>
+                                                    </td>
+                                                    <td class="text-center @if($product->highlight_index>=$key &&($product->criteria_a_highlight==true) ) highlight @endif">
+                                                        @if($range->bonus_interest_criteria_a<=0)
+                                                            - @else  {{ $range->bonus_interest_criteria_a }}% @endif
+                                                    </td>
+                                                    <td class="text-center @if($product->highlight_index>=$key &&($product->criteria_b_highlight==true) ) highlight @endif  ">
+                                                        @if($range->bonus_interest_criteria_b<=0)
+                                                            - @else  {{ $range->bonus_interest_criteria_b }}% @endif
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        if ($key == 0) {
+                                                            echo "First ";
+                                                            echo "$" . Helper::inThousand($range->max_range);
+                                                        } elseif ($key == (count($productRanges) - 1)) {
+                                                            echo "Above ";
+                                                            echo "$" . Helper::inThousand(($prevMaxRange));
+                                                        } else {
+                                                            echo "Next ";
+                                                            echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
+                                                        } if ($key != (count($productRanges) - 1)) {
+                                                            $prevMaxRange = $range->max_range;
+                                                        }?>
+                                                        -${{ Helper::inRoundTwoDecimal($range->interest_earn) }}
+                                                        ({{ $range->criteria }}%)
+                                                    </td>
+                                                    @if($key==0)
+                                                        <td class="text-center  @if($product->highlight==true) highlight @endif"
+                                                            rowspan="{{count($productRanges)}}">
+                                                            ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
+                                                            <br> base on effective interest rate
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="ps-product__content">
+                                    <div class="ps-product__panel aio-product">
 
-                                        <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                        @if(!empty($product->ads_placement))
-                                            @php
-                                            $ads = json_decode($product->ads_placement);
-                                            if(!empty($ads[0]->ad_image_horizontal)) {
-                                            @endphp
-                                            <div class="ps-product__poster"><a
-                                                        href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                        target="_blank"><img
-                                                            src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                            alt=""></a></div>
-                                            @php } @endphp
-                                        @endif
+                                        <h4>Total Interest Earned for SGD
+                                            ${{Helper::inThousand($product->placement)}}</h4>
 
+                                        <p class="center">
+                                            <span class="nill"> ${{ Helper::inRoundTwoDecimal($product->interest_earned) }} </span><br/>
+                                            Base on effective interest rate
+                                        </p>
+                                    </div>
+                                    <div class="clearfix"></div>
 
-                                        <div class="ps-table-wrap">
-                                            <table class="ps-table ps-table--product ps-table--product-2">
+                                    @if(!empty($product->ads_placement))
+                                        @php
+                                        $ads = json_decode($product->ads_placement);
+                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        @endphp
+                                        <div class="ps-poster-popup">
+                                            <div class="close-popup">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </div>
+
+                                            <a target="_blank"
+                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                        alt="" target="_blank"></a>
+
+                                        </div>
+                                        @php } @endphp
+                                    @endif
+                                    <div class="ps-product__detail">
+                                        {!! $product->product_footer !!}
+                                    </div>
+                                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
+                                                    class="fa fa-angle-down"></i></a><a
+                                                class="ps-product__info sp-only" href="#">More data<i
+                                                    class="fa fa-angle-down"></i></a></div>
+                                </div>
+                            </div>
+                            <!-- COMBINE TIER BASE -->
+                        @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
+                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
+                                 id="p-{{ $j }}">
+                                <div class="ps-product__header"><img
+                                            src="{{ asset($product->brand_logo) }}"
+                                            alt="">
+
+                                    @if(!empty($product->apply_link_status))
+                                        <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                           href="{{$product->apply_link}}">Apply
+                                                Now</a></div>@endif
+                                </div>
+                                <div class="ps-product__content">
+                                    <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
+                                    @if(!empty($product->ads_placement))
+                                        @php
+                                        $ads = json_decode($product->ads_placement);
+                                        if(!empty($ads[0]->ad_image_horizontal)) {
+                                        @endphp
+                                        <div class="ps-product__poster"><a
+                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                                    target="_blank"><img
+                                                        src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                        alt=""></a></div>
+                                        @php } @endphp
+                                    @endif
+                                    <h4 class="ps-product__heading"><strong
+                                                class="highlight">{{$product->product_name}}
+                                            :</strong>
+                                        Fulfil up to 3 criteria and earn up
+                                        to @if($product->maximum_interest_rate<=0)
+                                            - @else  {{ $product->maximum_interest_rate }}% @endif
+                                    </h4>
+
+                                    <div class="ps-table-wrap" id='{{$product->product_id}}'>
+                                        <form id="form-{{$product->product_id}}"
+                                              class="ps-form--filter" method="post">
+                                            <table class="ps-table ps-table--product ps-table--product-3">
                                                 <thead>
                                                 <tr>
-                                                    <th class="text-left">Balance</th>
-                                                    <th class="text-left">Criteria a <br/><span
-                                                                class="subtitle">(spend)</span></th>
-                                                    <th class="text-left">Criteria b <br/><span class="subtitle">(Spend + Salary/Giro)</span>
+                                                    <th class="combine-criteria-padding">CRITERIA</th>
+                                                    <th class="combine-criteria-padding">SALARY</th>
+                                                    <th class="combine-criteria-padding">Giro</th>
+                                                    <th class="combine-criteria-padding">SPEND</th>
+                                                    <th class="combine-criteria-padding">
+                                                        <div class="ps-checkbox">
+                                                            <input class="form-control" type="checkbox"
+                                                                   data-product-id="{{$product->product_id}}"
+                                                                   name="life_insurance"
+                                                                   onchange="changeCriteria(this);"
+                                                                   @if($product->life_insurance) checked=checked
+                                                                   @endif value="true"
+                                                                   id="life-insurance-{{$product->product_id}}"/>
+                                                            <label for="life-insurance-{{$product->product_id}}">Life
+                                                                Insurance</label>
+                                                        </div>
                                                     </th>
-                                                    <th class="text-left">Interest Earned for each Tier</th>
-                                                    <th class="text-left">Total Interest Earned
-                                                        for {{ Helper::inThousand($product->placement) }}</th>
+                                                    <th class="combine-criteria-padding">
+                                                        <div class="ps-checkbox">
+                                                            <input class="form-control" type="checkbox"
+                                                                   onchange="changeCriteria(this);"
+                                                                   @if($product->housing_loan) checked=checked
+                                                                   @endif
+                                                                   name="housing_loan"
+                                                                   data-product-id="{{$product->product_id}}"
+                                                                   value="true"
+                                                                   id="housing-loan-{{$product->product_id}}">
+                                                            <label for="housing-loan-{{$product->product_id}}">Housing
+                                                                Loan</label>
+                                                        </div>
+                                                    </th>
+                                                    <th class="combine-criteria-padding">
+                                                        <div class="ps-checkbox">
+                                                            <input class="form-control" type="checkbox"
+                                                                   name="education_loan"
+                                                                   onchange="changeCriteria(this);"
+                                                                   data-product-id="{{$product->product_id}}"
+                                                                   value="true"
+                                                                   id='education-loan-{{$product->product_id}}'
+                                                                   @if($product->education_loan) checked=checked @endif/>
+                                                            <label for="education-loan-{{$product->product_id}}">Education
+                                                                Loan</label>
+                                                        </div>
+                                                    </th>
+                                                    <th class="combine-criteria-padding">
+                                                        <div class="ps-checkbox">
+                                                            <input class="form-control" type="checkbox"
+                                                                   onchange="changeCriteria(this);"
+                                                                   name="hire_loan" value="true"
+                                                                   data-product-id="{{$product->product_id}}"
+                                                                   id="hire-loan-{{$product->product_id}}"
+                                                                   @if($product->hire_loan) checked=checked @endif/>
+                                                            <label for="hire-loan-{{$product->product_id}}">Hire
+                                                                Purchase loan</label>
+                                                        </div>
+                                                    </th>
+                                                    <th class="combine-criteria-padding">
+                                                        <div class="ps-checkbox">
+                                                            <input class="form-control" type="checkbox"
+                                                                   name="renovation_loan"
+                                                                   onchange="changeCriteria(this);"
+                                                                   data-product-id="{{$product->product_id}}"
+                                                                   value="true"
+                                                                   id="renovation-loan-{{$product->product_id}}"
+                                                                   @if($product->renovation_loan) checked=checked @endif/>
+                                                            <label for="renovation-loan-{{$product->product_id}}">Renovation
+                                                                loan</label>
+                                                        </div>
+                                                    </th>
+                                                    <th class="combine-criteria-padding">
+                                                        <div class="ps-checkbox">
+                                                            <input class="form-control" type="checkbox"
+                                                                   onchange="changeCriteria(this);"
+                                                                   name="unit_trust" value="true"
+                                                                   data-product-id="{{$product->product_id}}"
+                                                                   id="unit-trust-{{$product->product_id}}"
+                                                                   @if($product->unit_trust) checked=checked @endif/>
+                                                            <label for="unit-trust-{{$product->product_id}}">Unit
+                                                                Trust</label>
+                                                        </div>
+                                                    </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php $prevMaxRange = 0;  $totalRange = 0; ?>
-                                                @foreach($productRanges as $key=>$range)
-                                                    <?php
-                                                    $totalRange = 0 + ($range->max_range - $prevMaxRange);
-                                                    if ($key != (count($productRanges) - 1)) {
-
-                                                    }
-                                                    ?>
+                                                @foreach($productRanges as $range)
                                                     <tr>
-                                                        <td class=" @if($product->highlight_index>=$key &&($product->criteria_b_highlight==true || $product->criteria_a_highlight==true) ) highlight @endif ">
-                                                            <?php
-                                                            if ($key == 0) {
-                                                                echo "First ";
-                                                                echo "$" . Helper::inThousand($range->max_range);
-                                                            } elseif ($key == (count($productRanges) - 1)) {
-                                                                echo "Above ";
-                                                                echo "$" . Helper::inThousand(($prevMaxRange));
-                                                            } else {
-                                                                echo "Next ";
-                                                                echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
-                                                            } ?>
+                                                        <td colspan="1" class="text-left">Bonus Interest PA</td>
+                                                        <td class="text-center @if($product->criteria_1==true ) highlight @endif"
+                                                            colspan="3">1 Criteria Met
+                                                            - @if($range->bonus_interest_criteria1<=0)
+                                                                - @else  {{ $range->bonus_interest_criteria1 }}
+                                                                % @endif
                                                         </td>
-                                                        <td class="text-center @if($product->highlight_index>=$key &&($product->criteria_a_highlight==true) ) highlight @endif">
-                                                            @if($range->bonus_interest_criteria_a<=0)
-                                                                - @else  {{ $range->bonus_interest_criteria_a }}% @endif
+                                                        <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
+                                                            colspan="3">2 Criteria
+                                                            - @if($range->bonus_interest_criteria2<=0)
+                                                                - @else  {{ $range->bonus_interest_criteria2 }}
+                                                                % @endif
                                                         </td>
-                                                        <td class="text-center @if($product->highlight_index>=$key &&($product->criteria_b_highlight==true) ) highlight @endif  ">
-                                                            @if($range->bonus_interest_criteria_b<=0)
-                                                                - @else  {{ $range->bonus_interest_criteria_b }}% @endif
+                                                        <td class="text-center @if($product->criteria_3==true ) highlight @endif"
+                                                            colspan="3">3
+                                                            Criteria @if($range->bonus_interest_criteria3<=0)
+                                                                - @else  {{ $range->bonus_interest_criteria3 }}
+                                                                % @endif
                                                         </td>
-                                                        <td>
-                                                            <?php
-                                                            if ($key == 0) {
-                                                                echo "First ";
-                                                                echo "$" . Helper::inThousand($range->max_range);
-                                                            } elseif ($key == (count($productRanges) - 1)) {
-                                                                echo "Above ";
-                                                                echo "$" . Helper::inThousand(($prevMaxRange));
-                                                            } else {
-                                                                echo "Next ";
-                                                                echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
-                                                            } if ($key != (count($productRanges) - 1)) {
-                                                                $prevMaxRange = $range->max_range;
-                                                            }?>
-                                                            -${{ Helper::inRoundTwoDecimal($range->interest_earn) }}
-                                                            ({{ $range->criteria }}%)
-                                                        </td>
-                                                        @if($key==0)
-                                                            <td class="text-center  @if($product->highlight==true) highlight @endif"
-                                                                rowspan="{{count($productRanges)}}">
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="1" class="text-left">Total Bonus Interest
+                                                            Earned for
+                                                            ${{ Helper::inThousand($range->placement) }}</td>
+                                                        <td class=" text-center @if($product->highlight==true ) highlight @endif"
+                                                            colspan="9">
+
+                                                            @if($range->placement > $range->first_cap_amount)
+                                                                First
+                                                                ${{ Helper::inThousand($range->first_cap_amount) }}
+                                                                -
+                                                                ${{ Helper::inRoundTwoDecimal(($range->first_cap_amount*($product->total_interest/100))) }}
+                                                                (
+                                                                {{ $product->total_interest }}%), next
+                                                                ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
+                                                                -
+                                                                ${{ Helper::inRoundTwoDecimal((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
+                                                                ({{ $range->bonus_interest_remaining_amount }}%)
+                                                                <br/>
+                                                                Total =
                                                                 ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
-                                                                <br> base on effective interest rate
-                                                            </td>
-                                                        @endif
+                                                            @else
+                                                                Total =
+                                                                ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
+                                                                ({{$product->total_interest}}%)
+                                                            @endif
+                                                        </td>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
                                             </table>
-                                        </div>
-                                        <div class="ps-product__panel aio-product">
+                                        </form>
+                                    </div>
+                                    <?php
+                                    $range = $productRanges[0];
+                                    ?>
 
-                                            <h4>Total Interest Earned for SGD
-                                                ${{Helper::inThousand($product->placement)}}</h4>
+                                    <div class="ps-product__panel aio-product">
 
-                                            <p class="center">
-                                                <span class="nill"> ${{ Helper::inRoundTwoDecimal($product->interest_earned) }} </span><br/>
-                                                Base on effective interest rate
-                                            </p>
-                                        </div>
-                                        <div class="clearfix"></div>
+                                        <h4>Total Bonus Interest Earned for SGD
+                                            ${{Helper::inThousand($range->placement)}}</h4>
 
-                                        @if(!empty($product->ads_placement))
-                                            @php
-                                            $ads = json_decode($product->ads_placement);
-                                            if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                                            @endphp
-                                            <div class="ps-poster-popup">
-                                                <div class="close-popup">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                </div>
+                                        <p class="center">
+                                            <span class="nill"> ${{ Helper::inThousand($product->interest_earned) }} </span><br/>
+                                            @if($range->placement > $range->first_cap_amount)
+                                                First
+                                                ${{ Helper::inThousand($range->first_cap_amount) }} -
+                                                ${{ Helper::inRoundTwoDecimal(($range->first_cap_amount*($product->total_interest/100))) }}
+                                                (
+                                                {{ $product->total_interest }}%), Remaining
+                                                ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
+                                                -
+                                                ${{ Helper::inRoundTwoDecimal((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
+                                                ({{ $range->bonus_interest_remaining_amount }}%) <br/> Total
+                                                =
+                                                ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
+                                            @else
+                                                Total =
+                                                ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
+                                                ({{$product->total_interest}}%)
+                                            @endif
+                                        </p>
+                                    </div>
+                                    <div class="clearfix"></div>
 
-                                                <a target="_blank"
-                                                   href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                            src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                            alt="" target="_blank"></a>
-
+                                    @if(!empty($product->ads_placement))
+                                        @php
+                                        $ads = json_decode($product->ads_placement);
+                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        @endphp
+                                        <div class="ps-poster-popup">
+                                            <div class="close-popup">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
                                             </div>
-                                            @php } @endphp
-                                        @endif
-                                        <div class="ps-product__detail">
-                                            {!! $product->product_footer !!}
+
+                                            <a target="_blank"
+                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                        alt="" target="_blank"></a>
+
                                         </div>
-                                        <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
-                                                        class="fa fa-angle-down"></i></a><a
-                                                    class="ps-product__info sp-only" href="#">More data<i
-                                                        class="fa fa-angle-down"></i></a></div>
+                                        @php } @endphp
+                                    @endif
+                                    <div class="ps-product__detail">
+                                        {!! $product->product_footer !!}
+                                    </div>
+                                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More
+                                            Detail<i
+                                                    class="fa fa-angle-down"></i></a><a
+                                                class="ps-product__info sp-only" href="#">More
+                                            info<i
+                                                    class="fa fa-angle-down"></i></a></div>
+                                </div>
+                            </div>
+                            <!-- DBS CRITERIA -->
+                        @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
+
+                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
+                                 id="p-{{ $j }}">
+                                <div class="ps-product__header"><img
+                                            src="{{ asset($product->brand_logo) }}"
+                                            alt="">
+
+                                    @if(!empty($product->apply_link_status))
+                                        <div class="ps-product__action"><a class="ps-btn ps-btn--red"
+                                                                           href="{{$product->apply_link}}">Apply
+                                                Now</a></div>@endif
+                                </div>
+                                <div class="ps-product__content">
+                                    <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
+                                    @if(!empty($product->ads_placement))
+                                        @php
+                                        $ads = json_decode($product->ads_placement);
+                                        if(!empty($ads[0]->ad_image_horizontal)) {
+                                        @endphp
+                                        <div class="ps-product__poster"><a
+                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                                    target="_blank"><img
+                                                        src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                        alt=""></a></div>
+                                        @php } @endphp
+                                    @endif
+                                    <div class="ps-table-wrap">
+                                        <table class="ps-table ps-table--product">
+                                            <thead>
+                                            <tr>
+                                                <th>Monthly Transaction</th>
+                                                <th>Criteria A <br/><span class="subtitle">(Salary + 1 category)</span>
+                                                </th>
+                                                <th>Criteria A <br/><span
+                                                            class="subtitle">(Salary + 2 OR more Cateogry)</span>
+                                                </th>
+                                                <th>Total Interest Earned for SGD
+                                                    ${{ Helper::inThousand($product->placement) }}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            @foreach($productRanges as $range)
+
+                                            @endforeach
+                                            @foreach($productRanges as $key=>$range)
+                                                <tr>
+                                                    <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
+                                                        style="width: 30%">@if($key==0)
+                                                            Less than
+                                                            ${{ Helper::inThousand($range->max_range+1) }}
+                                                        @elseif((count($productRanges)-1)==$key)
+                                                            ${{ Helper::inThousand($range->min_range) }} Or
+                                                            Above
+                                                        @else
+                                                            ${{ Helper::inThousand($range->min_range) }} TO
+                                                            ${{ Helper::inThousand($range->max_range+1) }} @endif</td>
+                                                    <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
+                                                        @if($range->bonus_interest_criteria_a<=0)
+                                                            - @else  {{ $range->bonus_interest_criteria_a }}
+                                                        % @endif
+
+                                                    </td>
+                                                    <td class="text-center @if($range->criteria_b_highlight==true ) highlight @endif">
+                                                        @if($range->bonus_interest_criteria_b<=0)
+                                                            - @else  {{ $range->bonus_interest_criteria_b }}
+                                                        % @endif
+
+                                                    </td>
+                                                    @if($key==0)
+                                                        <td class=" text-center @if($product->highlight==true ) highlight @endif"
+                                                            rowspan="6">
+
+                                                            @if($product->placement > $range->first_cap_amount)
+                                                                First
+                                                                ${{ Helper::inThousand($range->first_cap_amount) }}
+                                                                -
+                                                                ${{ Helper::inRoundTwoDecimal(($range->first_cap_amount*($product->total_interest/100))) }}
+                                                                (
+                                                                {{ $product->total_interest }}%), next
+                                                                ${{ Helper::inThousand(($product->placement-$range->first_cap_amount)) }}
+                                                                -
+                                                                ${{ Helper::inRoundTwoDecimal((($range->board_rate/100)*($product->placement-$range->first_cap_amount))) }}
+                                                                ({{ $range->board_rate }}%)
+                                                                <br/>
+                                                                Total =
+                                                                ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
+                                                            @else
+                                                                Total =
+                                                                ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
+                                                                ({{$product->total_interest}}%)
+                                                            @endif
+                                                        </td>
+                                                    @endif
+                                                </tr>
+
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="ps-product__panel aio-product">
+
+                                        <h4>Total Interest Earned for SGD
+                                            ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                        <p class="center">
+                                            <span class="nill">  ${{ Helper::inRoundTwoDecimal($product->interest_earned).' ( '.$product->total_interest.'%) ' }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    @if(!empty($product->ads_placement))
+                                        @php
+                                        $ads = json_decode($product->ads_placement);
+                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        @endphp
+                                        <div class="ps-poster-popup">
+                                            <div class="close-popup">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </div>
+
+                                            <a target="_blank"
+                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                        alt="" target="_blank"></a>
+
+                                        </div>
+                                        @php } @endphp
+                                    @endif
+                                    <div class="ps-product__detail">
+                                        {!! $product->product_footer !!}
+                                    </div>
+                                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More
+                                            Detail<i class="fa fa-angle-down"></i></a><a
+                                                class="ps-product__info sp-only" href="#">More
+                                            info<i class="fa fa-angle-down"></i></a></div>
+                                </div>
+                            </div>
+                        @elseif(empty($product->formula_id))
+                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
+                                 id="r-{{ $j }}">
+                                <div class="ps-product__header"><img
+                                            src="{{ asset($product->brand_logo) }}"
+                                            alt="">
+
+                                    @if(!empty($product->apply_link_status))
+                                        <div class="ps-product__action"><a
+                                                    class="ps-btn ps-btn--red"
+                                                    href="{{$product->apply_link}}">Apply
+                                                Now</a></div>@endif
+                                </div>
+                                <div class="ps-product__content">
+                                    <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
+                                    @if(!empty($product->ads_placement))
+                                        @php
+                                        $ads = json_decode($product->ads_placement);
+                                        if(!empty($ads[0]->ad_image_horizontal)) {
+                                        @endphp
+                                        <div class="ps-product__poster"><a
+                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                                    target="_blank"><img
+                                                        src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                        alt=""></a></div>
+                                        @php } @endphp
+                                    @endif
+                                    <div class="clearfix"></div>
+                                    @if(!empty($product->ads_placement))
+                                        @php
+                                        $ads = json_decode($product->ads_placement);
+                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                        @endphp
+                                        <div class="ps-poster-popup">
+                                            <div class="close-popup">
+                                                <i class="fa fa-times"
+                                                   aria-hidden="true"></i>
+                                            </div>
+
+                                            <a target="_blank"
+                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                        alt="" target="_blank"></a>
+
+                                        </div>
+                                        @php } @endphp
+                                    @endif
+                                    <div class="ps-product__detail">
+                                        {!! $product->product_footer !!}
+                                    </div>
+                                    <div class="ps-product__footer"><a
+                                                class="ps-product__more"
+                                                href="#">More Detail<i
+                                                    class="fa fa-angle-down"></i></a><a
+                                                class="ps-product__info sp-only"
+                                                href="#">More data<i
+                                                    class="fa fa-angle-down"></i></a>
                                     </div>
                                 </div>
+                            </div>
+                        @endif
+                        @if(count($products)>=2)
+
+                            @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==2)
+                                <div class="ps-poster-popup">
+                                    <!-- <div class="close-popup">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div> -->
+                                    @php
+                                    $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                                    $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
+                                    $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
+                                    @endphp
+                                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
+                                        <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
+                                           target="_blank"><img
+                                                    src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
+                                                    alt=""></a>
+                                    @else
+                                        <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
+                                           target="_blank"><img
+                                                    src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                                    alt=""></a>
+                                    @endif
+                                </div>
+                            @endif
+                        @elseif(empty($remainingProducts->count()) && $j==$products->count())
+
+                            @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE)
+                                <div class="ps-poster-popup">
+                                    <!-- <div class="close-popup">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div> -->
+                                    @php
+                                    $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                                    $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
+                                    $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
+                                    @endphp
+                                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
+                                        <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
+                                           target="_blank"><img
+                                                    src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
+                                                    alt=""></a>
+                                    @else
+                                        <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
+                                           target="_blank"><img
+                                                    src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                                    alt=""></a>
+                                    @endif
+                                </div>
+                            @endif
+                        @endif
+                        @php $j++; @endphp
+                        @endforeach
+                    @else
+                        <div class="ps-block--legend-table">
+                            <div class="ps-block__header">
+                            </div>
+                            <div class="ps-block__content text-center">
+                                <p>{{CRITERIA_ERROR}}</p>
+                            </div>
+                        </div>
+
+                    @endif
+                    @if($remainingProducts->count())
+
+                        @foreach($remainingProducts as $product)
+                            <?php
+                            $productRanges = $product->product_range;
+                            $ads = json_decode($product->ads_placement);
+
+                            ?>
+                            @if($page->slug==AIO_DEPOSIT_MODE && isset($ads[3]->ad_horizontal_image_popup_top))
+
+                                <div class="ps-poster-popup">
+                                    <div class="close-popup">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </div>
+                                    <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : 'javascript:void(0)' }}"
+                                       target="_blank"><img
+                                                src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
+                                                alt=""></a>
+                                </div>
                                 @endif
-                                        <!-- COMBINE TIER BASE -->
-                                @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
+                                        <!-- INDIVIDUAL CRITERIA BASE -->
+                                @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
-                                         id="p-{{ $j }}">
+                                         id="r-{{ $j }}">
                                         <div class="ps-product__header"><img
                                                     src="{{ asset($product->brand_logo) }}"
                                                     alt="">
 
                                             @if(!empty($product->apply_link_status))
-                                                <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                                   href="{{$product->apply_link}}">Apply
+                                                <div class="ps-product__action"><a
+                                                            class="ps-btn ps-btn--red"
+                                                            href="{{$product->apply_link}}">Apply
                                                         Now</a></div>@endif
                                         </div>
                                         <div class="ps-product__content">
@@ -707,159 +1103,73 @@
                                                                 alt=""></a></div>
                                                 @php } @endphp
                                             @endif
-                                            <h4 class="ps-product__heading"><strong
-                                                        class="highlight">{{$product->product_name}}
-                                                    :</strong>
-                                                Fulfil up to 3 criteria and earn up
-                                                to @if($product->maximum_interest_rate<=0)
-                                                    - @else  {{ $product->maximum_interest_rate }}% @endif
-                                            </h4>
-
-                                            <div class="ps-table-wrap" id='{{$product->product_id}}'>
-                                                <form id="form-{{$product->product_id}}"
-                                                      class="ps-form--filter" method="post">
-                                                    <table class="ps-table ps-table--product ps-table--product-3">
-                                                        <thead>
+                                            <div class="ps-table-wrap">
+                                                <table class="ps-table ps-table--product ps-table--product-3">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>CRITERIA</th>
+                                                        <th>SALARY</th>
+                                                        <th>PAYMENT</th>
+                                                        <th>SPEND</th>
+                                                        <th>PRIVILEGE</th>
+                                                        <th>BONUS(OPTIONAL)</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($productRanges as $range)
+                                                        @php
+                                                        //dd($range);
+                                                        @endphp
                                                         <tr>
-                                                            <th class="combine-criteria-padding">CRITERIA</th>
-                                                            <th class="combine-criteria-padding">SALARY</th>
-                                                            <th class="combine-criteria-padding">Giro</th>
-                                                            <th class="combine-criteria-padding">SPEND</th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control" type="checkbox"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           name="life_insurance"
-                                                                           onchange="changeCriteria(this);"
-                                                                           @if($product->life_insurance) checked=checked
-                                                                           @endif value="true"
-                                                                           id="life-insurance-{{$product->product_id}}"/>
-                                                                    <label for="life-insurance-{{$product->product_id}}">Life
-                                                                        Insurance</label>
-                                                                </div>
-                                                            </th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control" type="checkbox"
-                                                                           onchange="changeCriteria(this);"
-                                                                           @if($product->housing_loan) checked=checked
-                                                                           @endif
-                                                                           name="housing_loan"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           value="true"
-                                                                           id="housing-loan-{{$product->product_id}}">
-                                                                    <label for="housing-loan-{{$product->product_id}}">Housing
-                                                                        Loan</label>
-                                                                </div>
-                                                            </th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control" type="checkbox"
-                                                                           name="education_loan"
-                                                                           onchange="changeCriteria(this);"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           value="true"
-                                                                           id='education-loan-{{$product->product_id}}'
-                                                                           @if($product->education_loan) checked=checked @endif/>
-                                                                    <label for="education-loan-{{$product->product_id}}">Education
-                                                                        Loan</label>
-                                                                </div>
-                                                            </th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control" type="checkbox"
-                                                                           onchange="changeCriteria(this);"
-                                                                           name="hire_loan" value="true"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           id="hire-loan-{{$product->product_id}}"
-                                                                           @if($product->hire_loan) checked=checked @endif/>
-                                                                    <label for="hire-loan-{{$product->product_id}}">Hire
-                                                                        Purchase loan</label>
-                                                                </div>
-                                                            </th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control" type="checkbox"
-                                                                           name="renovation_loan"
-                                                                           onchange="changeCriteria(this);"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           value="true"
-                                                                           id="renovation-loan-{{$product->product_id}}"
-                                                                           @if($product->renovation_loan) checked=checked @endif/>
-                                                                    <label for="renovation-loan-{{$product->product_id}}">Renovation
-                                                                        loan</label>
-                                                                </div>
-                                                            </th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control" type="checkbox"
-                                                                           onchange="changeCriteria(this);"
-                                                                           name="unit_trust" value="true"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           id="unit-trust-{{$product->product_id}}"
-                                                                           @if($product->unit_trust) checked=checked @endif/>
-                                                                    <label for="unit-trust-{{$product->product_id}}">Unit
-                                                                        Trust</label>
-                                                                </div>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @foreach($productRanges as $range)
-                                                            <tr>
-                                                                <td colspan="1" class="text-left">Bonus Interest PA</td>
-                                                                <td class="text-center @if($product->criteria_1==true ) highlight @endif"
-                                                                    colspan="3">1 Criteria Met
-                                                                    - @if($range->bonus_interest_criteria1<=0)
-                                                                        - @else  {{ $range->bonus_interest_criteria1 }}
-                                                                        % @endif
-                                                                </td>
-                                                                <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
-                                                                    colspan="3">2 Criteria
-                                                                    - @if($range->bonus_interest_criteria2<=0)
-                                                                        - @else  {{ $range->bonus_interest_criteria2 }}
-                                                                        % @endif
-                                                                </td>
-                                                                <td class="text-center @if($product->criteria_3==true ) highlight @endif"
-                                                                    colspan="3">3
-                                                                    Criteria @if($range->bonus_interest_criteria3<=0)
-                                                                        - @else  {{ $range->bonus_interest_criteria3 }}
-                                                                        % @endif
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="1" class="text-left">Total Bonus Interest
-                                                                    Earned for
-                                                                    ${{ Helper::inThousand($range->placement) }}</td>
-                                                                <td class=" text-center @if($product->highlight==true ) highlight @endif"
-                                                                    colspan="9">
+                                                            <td>Bonus Interest PA</td>
+                                                            <td class="text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
+                                                                    - @else {{ $range->bonus_interest_salary }}
+                                                                    % @endif
 
-                                                                    @if($range->placement > $range->first_cap_amount)
-                                                                        First
-                                                                        ${{ Helper::inThousand($range->first_cap_amount) }}
-                                                                        -
-                                                                        ${{ Helper::inRoundTwoDecimal(($range->first_cap_amount*($product->total_interest/100))) }}
-                                                                        (
-                                                                        {{ $product->total_interest }}%), next
-                                                                        ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
-                                                                        -
-                                                                        ${{ Helper::inRoundTwoDecimal((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                                        ({{ $range->bonus_interest_remaining_amount }}%)
-                                                                        <br/>
-                                                                        Total =
-                                                                        ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
-                                                                    @else
-                                                                        Total =
-                                                                        ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
-                                                                        ({{$product->total_interest}}%)
-                                                                    @endif
-                                                                </td>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </form>
+                                                            </td>
+                                                            <td class="text-center @if($product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
+                                                                    - @else {{ $range->bonus_interest_giro_payment }}
+                                                                    % @endif
+
+                                                            </td>
+                                                            <td class="text-center @if($product->spend_highlight==true ) highlight @endif">
+                                                                @if($range->bonus_interest_spend<=0)
+                                                                    - @else {{ $range->bonus_interest_spend }}
+                                                                % @endif
+
+                                                            </td>
+                                                            <td class="text-center @if($product->privilege_highlight==true ) highlight @endif">
+                                                                Up
+                                                                to @if($range->bonus_interest_privilege<=0)
+                                                                    - @else  {{ $range->bonus_interest_privilege }}
+                                                                    % @endif
+                                                            </td>
+                                                            <td class="text-center @if($product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
+                                                                    - @else  {{ $range->bonus_interest }}
+                                                                    % @endif
+                                                                on
+                                                                first
+                                                                ${{ Helper::inThousand($range->first_cap_amount) }}
+                                                                if
+                                                                account more
+                                                                than
+                                                                ${{ Helper::inThousand($range->bonus_amount) }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">Total Bonus Interest Earned for
+                                                                ${{Helper::inThousand($range->placement)}}</td>
+                                                            <td class="text-center @if($product->highlight==true ) highlight @endif"
+                                                                colspan="4">
+
+                                                                <span class="nill"> {{ NILL }}</span><br/>
+
+                                                                <p>{{NOT_ELIGIBLE}}</p>
+
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
                                             </div>
                                             <?php
                                             $range = $productRanges[0];
@@ -870,29 +1180,11 @@
                                                 <h4>Total Bonus Interest Earned for SGD
                                                     ${{Helper::inThousand($range->placement)}}</h4>
 
-                                                <p class="center">
-                                                    <span class="nill"> ${{ Helper::inThousand($product->interest_earned) }} </span><br/>
-                                                    @if($range->placement > $range->first_cap_amount)
-                                                        First
-                                                        ${{ Helper::inThousand($range->first_cap_amount) }} -
-                                                        ${{ Helper::inRoundTwoDecimal(($range->first_cap_amount*($product->total_interest/100))) }}
-                                                        (
-                                                        {{ $product->total_interest }}%), Remaining
-                                                        ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
-                                                        -
-                                                        ${{ Helper::inRoundTwoDecimal((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                        ({{ $range->bonus_interest_remaining_amount }}%) <br/> Total
-                                                        =
-                                                        ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
-                                                    @else
-                                                        Total =
-                                                        ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
-                                                        ({{$product->total_interest}}%)
-                                                    @endif
-                                                </p>
+                                                <span class="nill"> {{ NILL }}</span><br/>
+
+                                                <p class="center">{{NOT_ELIGIBLE}}</p>
                                             </div>
                                             <div class="clearfix"></div>
-
                                             @if(!empty($product->ads_placement))
                                                 @php
                                                 $ads = json_decode($product->ads_placement);
@@ -914,7 +1206,385 @@
                                             <div class="ps-product__detail">
                                                 {!! $product->product_footer !!}
                                             </div>
-                                            <div class="ps-product__footer"><a class="ps-product__more" href="#">More
+                                            <div class="ps-product__footer"><a class="ps-product__more"
+                                                                               href="#">More Detail<i
+                                                            class="fa fa-angle-down"></i></a><a
+                                                        class="ps-product__info sp-only"
+                                                        href="#">More data<i
+                                                            class="fa fa-angle-down"></i></a></div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- TIER BASE -->
+                                @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
+                                    <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
+                                         id="r-{{ $j }}">
+                                        <div class="ps-product__header"><img
+                                                    src="{{ asset($product->brand_logo) }}" alt="">
+
+                                            @if(!empty($product->apply_link_status))
+                                                <div class="ps-product__action"><a
+                                                            class="ps-btn ps-btn--red"
+                                                            href="{{$product->apply_link}}">Apply
+                                                        Now</a></div>@endif
+                                        </div>
+                                        <div class="ps-product__content">
+
+                                            <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
+                                            @if(!empty($product->ads_placement))
+                                                @php
+                                                $ads = json_decode($product->ads_placement);
+                                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                                @endphp
+                                                <div class="ps-product__poster"><a
+                                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                                            target="_blank"><img
+                                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                                alt=""></a></div>
+                                                @php } @endphp
+                                            @endif
+
+
+                                            <div class="ps-table-wrap">
+                                                <table class="ps-table ps-table--product ps-table--product-2">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Balance</th>
+                                                        <th>Criteria a (spend)</th>
+                                                        <th>Criteria b (Spend + Salary/Giro)</th>
+                                                        <th>Interest Earned for each Tier</th>
+                                                        <th>Total Interest Earned
+                                                            for {{ Helper::inThousand($product->placement) }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php $prevMaxRange = 0;  $totalRange = 0; ?>
+                                                    @foreach($productRanges as $key=>$range)
+                                                        <?php
+                                                        $totalRange = 0 + ($range->max_range - $prevMaxRange);
+                                                        if ($key != (count($productRanges) - 1)) {
+
+                                                        }
+                                                        ?>
+                                                        <tr>
+                                                            <td class=" @if($product->highlight_index>=$key &&($product->criteria_b_highlight==true || $product->criteria_a_highlight==true) ) highlight @endif ">
+                                                                <?php
+                                                                if ($key == 0) {
+                                                                    echo "First ";
+                                                                    echo "$" . Helper::inThousand($range->max_range);
+                                                                } elseif ($key == (count($productRanges) - 1)) {
+                                                                    echo "Above ";
+                                                                    echo "$" . Helper::inThousand(($prevMaxRange));
+                                                                } else {
+                                                                    echo "Next ";
+                                                                    echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
+                                                                } ?>
+                                                            </td>
+                                                            <td class="text-center @if($product->highlight_index>=$key &&($product->criteria_a_highlight==true) ) highlight @endif">
+                                                                @if($range->bonus_interest_criteria_a<=0)
+                                                                    - @else  {{ $range->bonus_interest_criteria_a }}
+                                                                % @endif
+                                                            </td>
+                                                            <td class="text-center @if($product->highlight_index>=$key &&($product->criteria_b_highlight==true) ) highlight @endif  ">
+                                                                @if($range->bonus_interest_criteria_b<=0)
+                                                                    - @else  {{ $range->bonus_interest_criteria_b }}
+                                                                % @endif
+                                                            </td>
+                                                            <td>
+                                                                <?php
+                                                                if ($key == 0) {
+                                                                    echo "First ";
+                                                                    echo "$" . Helper::inThousand($range->max_range);
+                                                                } elseif ($key == (count($productRanges) - 1)) {
+                                                                    echo "Above ";
+                                                                    echo "$" . Helper::inThousand(($prevMaxRange));
+                                                                } else {
+                                                                    echo "Next ";
+                                                                    echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
+                                                                } if ($key != (count($productRanges) - 1)) {
+                                                                    $prevMaxRange = $range->max_range;
+                                                                }?>
+                                                                -${{ Helper::inThousand($range->interest_earn) }}
+                                                                ({{ $range->criteria }}%)
+                                                            </td>
+                                                            @if($key==0)
+                                                                <td class="text-center  @if($product->highlight==true) highlight @endif"
+                                                                    rowspan="{{count($productRanges)}}">
+                                                                    <span class="nill"> {{ NILL }}</span><br/>
+
+                                                                    <p>{{NOT_ELIGIBLE}}</p>
+                                                                </td>
+                                                            @endif
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="ps-product__panel aio-product">
+
+                                                <h4>Total Interest Earned for SGD
+                                                    ${{Helper::inThousand($product->placement)}}</h4>
+
+                                                <span class="nill"> {{ NILL }}</span><br/>
+
+                                                <p class="center">{{NOT_ELIGIBLE}}</p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            @if(!empty($product->ads_placement))
+                                                @php
+                                                $ads = json_decode($product->ads_placement);
+                                                if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                                @endphp
+                                                <div class="ps-poster-popup">
+                                                    <div class="close-popup">
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                    </div>
+
+                                                    <a target="_blank"
+                                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                                alt="" target="_blank"></a>
+
+                                                </div>
+                                                @php } @endphp
+                                            @endif
+                                            <div class="ps-product__detail">
+                                                {!! $product->product_footer !!}
+                                            </div>
+                                            <div class="ps-product__footer"><a class="ps-product__more"
+                                                                               href="#">More Detail<i
+                                                            class="fa fa-angle-down"></i></a><a
+                                                        class="ps-product__info sp-only"
+                                                        href="#">More data<i
+                                                            class="fa fa-angle-down"></i></a></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- COMBINE TIER BASE -->
+                                @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
+                                    <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
+                                         id="r-{{ $j }}">
+                                        <div class="ps-product__header"><img
+                                                    src="{{ asset($product->brand_logo) }}"
+                                                    alt="">
+
+                                            @if(!empty($product->apply_link_status))
+                                                <div class="ps-product__action"><a
+                                                            class="ps-btn ps-btn--red"
+                                                            href="{{$product->apply_link}}">Apply
+                                                        Now</a></div>@endif
+                                        </div>
+                                        <div class="ps-product__content">
+                                            <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
+                                            @if(!empty($product->ads_placement))
+                                                @php
+                                                $ads = json_decode($product->ads_placement);
+                                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                                @endphp
+                                                <div class="ps-product__poster"><a
+                                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                                            target="_blank"><img
+                                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                                alt=""></a></div>
+                                                @php } @endphp
+                                            @endif
+                                            <h4 class="ps-product__heading"><strong
+                                                        class="highlight">{{$product->product_name}}
+                                                    :</strong>
+                                                Fulfil up to 3 criteria and earn up
+                                                to @if($product->maximum_interest_rate<=0)
+                                                    - @else  {{ $product->maximum_interest_rate }}
+                                                    % @endif
+                                            </h4>
+
+                                            <div class="ps-table-wrap"
+                                                 id='{{$product->product_id}}'>
+                                                <form id="form-{{$product->product_id}}"
+                                                      class="ps-form--filter" method="post">
+                                                    <table class="ps-table ps-table--product ps-table--product-3">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="combine-criteria-padding">
+                                                                CRITERIA
+                                                            </th>
+                                                            <th class="combine-criteria-padding">
+                                                                SALARY
+                                                            </th>
+                                                            <th class="combine-criteria-padding">
+                                                                Giro
+                                                            </th>
+                                                            <th class="combine-criteria-padding">
+                                                                SPEND
+                                                            </th>
+                                                            <th class="combine-criteria-padding">
+                                                                <div class="ps-checkbox">
+                                                                    <input class="form-control"
+                                                                           type="checkbox"
+                                                                           data-product-id="{{$product->product_id}}"
+                                                                           name="life_insurance"
+                                                                           data-status="0"
+                                                                           onchange="changeCriteria(this);"
+                                                                           @if($product->life_insurance) checked=checked
+                                                                           @endif value="true"
+                                                                           id="life-insurance-{{$product->product_id}}"/>
+                                                                    <label for="life-insurance-{{$product->product_id}}">Life
+                                                                        Insurance</label>
+                                                                </div>
+                                                            </th>
+                                                            <th class="combine-criteria-padding">
+                                                                <div class="ps-checkbox">
+                                                                    <input class="form-control"
+                                                                           type="checkbox"
+                                                                           onchange="changeCriteria(this);"
+                                                                           @if($product->housing_loan) checked=checked
+                                                                           @endif
+                                                                           name="housing_loan"
+                                                                           data-product-id="{{$product->product_id}}"
+                                                                           value="true"
+                                                                           data-status="0"
+                                                                           id="housing-loan-{{$product->product_id}}">
+                                                                    <label for="housing-loan-{{$product->product_id}}">Housing
+                                                                        Loan</label>
+                                                                </div>
+                                                            </th>
+                                                            <th class="combine-criteria-padding">
+                                                                <div class="ps-checkbox">
+                                                                    <input class="form-control"
+                                                                           type="checkbox"
+                                                                           name="education_loan"
+                                                                           onchange="changeCriteria(this);"
+                                                                           data-product-id="{{$product->product_id}}"
+                                                                           value="true"
+                                                                           data-status="0"
+                                                                           id='education-loan-{{$product->product_id}}'
+                                                                           @if($product->education_loan) checked=checked @endif/>
+                                                                    <label for="education-loan-{{$product->product_id}}">Education
+                                                                        Loan</label>
+                                                                </div>
+                                                            </th>
+                                                            <th class="combine-criteria-padding">
+                                                                <div class="ps-checkbox">
+                                                                    <input class="form-control"
+                                                                           type="checkbox"
+                                                                           onchange="changeCriteria(this);"
+                                                                           name="hire_loan"
+                                                                           value="true"
+                                                                           data-status="0"
+                                                                           data-product-id="{{$product->product_id}}"
+                                                                           id="hire-loan-{{$product->product_id}}"
+                                                                           @if($product->hire_loan) checked=checked @endif/>
+                                                                    <label for="hire-loan-{{$product->product_id}}">Hire
+                                                                        Purchase loan</label>
+                                                                </div>
+                                                            </th>
+                                                            <th class="combine-criteria-padding">
+                                                                <div class="ps-checkbox">
+                                                                    <input class="form-control"
+                                                                           type="checkbox"
+                                                                           name="renovation_loan"
+                                                                           onchange="changeCriteria(this);"
+                                                                           data-product-id="{{$product->product_id}}"
+                                                                           value="true"
+                                                                           data-status="0"
+                                                                           id="renovation-loan-{{$product->product_id}}"
+                                                                           @if($product->renovation_loan) checked=checked @endif/>
+                                                                    <label for="renovation-loan-{{$product->product_id}}">Renovation
+                                                                        loan</label>
+                                                                </div>
+                                                            </th>
+                                                            <th class="combine-criteria-padding">
+                                                                <div class="ps-checkbox">
+                                                                    <input class="form-control"
+                                                                           type="checkbox"
+                                                                           onchange="changeCriteria(this);"
+                                                                           name="unit_trust"
+                                                                           value="true"
+                                                                           data-status="0"
+                                                                           data-product-id="{{$product->product_id}}"
+                                                                           id="unit-trust-{{$product->product_id}}"
+                                                                           @if($product->unit_trust) checked=checked @endif/>
+                                                                    <label for="unit-trust-{{$product->product_id}}">Unit
+                                                                        Trust</label>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($productRanges as $range)
+                                                            <tr>
+                                                                <td>Bonus Interest PA</td>
+                                                                <td class="text-center @if($product->criteria_1==true ) highlight @endif"
+                                                                    colspan="3">1 Criteria Met
+                                                                    - @if($range->bonus_interest_criteria1<=0)
+                                                                        - @else  {{ $range->bonus_interest_criteria1 }}
+                                                                        % @endif
+                                                                </td>
+                                                                <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
+                                                                    colspan="3">2 Criteria
+                                                                    - @if($range->bonus_interest_criteria2<=0)
+                                                                        - @else  {{ $range->bonus_interest_criteria2 }}
+                                                                        % @endif
+                                                                </td>
+                                                                <td class="text-center @if($product->criteria_3==true ) highlight @endif"
+                                                                    colspan="3">3
+                                                                    Criteria @if($range->bonus_interest_criteria3<=0)
+                                                                        - @else  {{ $range->bonus_interest_criteria3 }}
+                                                                        % @endif
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="1">Total Bonus Interest
+                                                                    Earned for
+                                                                    ${{ Helper::inThousand($range->placement) }}</td>
+                                                                <td class=" text-center @if($product->highlight==true ) highlight @endif"
+                                                                    colspan="9">
+
+                                                                    <span class="nill"> {{ NILL }}</span><br/>
+
+                                                                    <p>{{NOT_ELIGIBLE}}</p>
+                                                                </td>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </div>
+                                            <div class="ps-product__panel aio-product">
+
+                                                <h4>Total Interest Earned for SGD
+                                                    ${{ Helper::inThousand($product->placement) }}</h4>
+
+                                                <span class="nill"> {{ NILL }}</span><br/>
+
+                                                <p class="center">{{NOT_ELIGIBLE}}</p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            @if(!empty($product->ads_placement))
+                                                @php
+                                                $ads = json_decode($product->ads_placement);
+                                                if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                                @endphp
+                                                <div class="ps-poster-popup">
+                                                    <div class="close-popup">
+                                                        <i class="fa fa-times"
+                                                           aria-hidden="true"></i>
+                                                    </div>
+
+                                                    <a target="_blank"
+                                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                                alt="" target="_blank"></a>
+
+                                                </div>
+                                                @php } @endphp
+                                            @endif
+                                            <div class="ps-product__detail">
+                                                {!! $product->product_footer !!}
+                                            </div>
+                                            <div class="ps-product__footer"><a
+                                                        class="ps-product__more" href="#">More
                                                     Detail<i
                                                             class="fa fa-angle-down"></i></a><a
                                                         class="ps-product__info sp-only" href="#">More
@@ -922,1012 +1592,264 @@
                                                             class="fa fa-angle-down"></i></a></div>
                                         </div>
                                     </div>
-                                    @endif
-                                            <!-- DBS CRITERIA -->
-                                    @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
 
-                                        <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
-                                             id="p-{{ $j }}">
-                                            <div class="ps-product__header"><img
-                                                        src="{{ asset($product->brand_logo) }}"
-                                                        alt="">
+                                    <!-- DBS CRITERIA -->
+                                @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
 
-                                                @if(!empty($product->apply_link_status))
-                                                    <div class="ps-product__action"><a class="ps-btn ps-btn--red"
-                                                                                       href="{{$product->apply_link}}">Apply
-                                                            Now</a></div>@endif
-                                            </div>
-                                            <div class="ps-product__content">
-                                                <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                                @if(!empty($product->ads_placement))
-                                                    @php
-                                                    $ads = json_decode($product->ads_placement);
-                                                    if(!empty($ads[0]->ad_image_horizontal)) {
-                                                    @endphp
-                                                    <div class="ps-product__poster"><a
-                                                                href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                                target="_blank"><img
-                                                                    src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                                    alt=""></a></div>
-                                                    @php } @endphp
-                                                @endif
-                                                <div class="ps-table-wrap">
-                                                    <table class="ps-table ps-table--product">
-                                                        <thead>
+                                    <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
+                                         id="r-{{ $j }}">
+                                        <div class="ps-product__header"><img
+                                                    src="{{ asset($product->brand_logo) }}"
+                                                    alt="">
+
+                                            @if(!empty($product->apply_link_status))
+                                                <div class="ps-product__action"><a
+                                                            class="ps-btn ps-btn--red"
+                                                            href="{{$product->apply_link}}">Apply
+                                                        Now</a></div>@endif
+                                        </div>
+                                        <div class="ps-product__content">
+                                            <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
+                                            @if(!empty($product->ads_placement))
+                                                @php
+                                                $ads = json_decode($product->ads_placement);
+                                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                                @endphp
+                                                <div class="ps-product__poster"><a
+                                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                                            target="_blank"><img
+                                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                                alt=""></a></div>
+                                                @php } @endphp
+                                            @endif
+                                            <div class="ps-table-wrap">
+                                                <table class="ps-table ps-table--product">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Monthly Transaction</th>
+                                                        <th>Criteria a (Salary + 1 category)
+                                                        </th>
+                                                        <th>Criteria b (Salary + 2 OR more
+                                                            Cateogry)
+                                                        </th>
+                                                        <th>Total Interest Earned for
+                                                            ${{ Helper::inThousand($product->placement) }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    @foreach($productRanges as $range)
+
+                                                    @endforeach
+                                                    @foreach($productRanges as $key=>$range)
                                                         <tr>
-                                                            <th>Monthly Transaction</th>
-                                                            <th>Criteria A <br/><span class="subtitle">(Salary + 1 category)</span>
-                                                            </th>
-                                                            <th>Criteria A <br/><span class="subtitle">(Salary + 2 OR more Cateogry)</span>
-                                                            </th>
-                                                            <th>Total Interest Earned for SGD
-                                                                ${{ Helper::inThousand($product->placement) }}</th>
+                                                            <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
+                                                                style="width: 30%">@if($key==0)
+                                                                    Less than
+                                                                    ${{ Helper::inThousand($range->max_range+1) }}
+                                                                @elseif((count($productRanges)-1)==$key)
+                                                                    ${{ Helper::inThousand($range->min_range) }}
+                                                                    Or Above
+                                                                @else
+                                                                    ${{ Helper::inThousand($range->min_range) }}
+                                                                    TO
+                                                                    ${{ Helper::inThousand($range->max_range+1) }} @endif</td>
+                                                            <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
+                                                                @if($range->bonus_interest_criteria_a<=0)
+                                                                    - @else  {{ $range->bonus_interest_criteria_a }}
+                                                                % @endif
+
+                                                            </td>
+                                                            <td class="text-center @if($range->criteria_b_highlight==true ) highlight @endif">
+                                                                @if($range->bonus_interest_criteria_b<=0)
+                                                                    - @else  {{ $range->bonus_interest_criteria_b }}
+                                                                % @endif
+
+                                                            </td>
+                                                            @if($key==0)
+                                                                <td class=" text-center @if($product->highlight==true ) highlight @endif"
+                                                                    rowspan="6">
+                                                                    <span class="nill"> {{ NILL }}</span><br/>
+
+                                                                    <p>{{NOT_ELIGIBLE}}</p>
+                                                                </td>
+                                                            @endif
                                                         </tr>
-                                                        </thead>
-                                                        <tbody>
 
-                                                        @foreach($productRanges as $range)
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <?php
+                                            $range = $productRanges[0];
+                                            ?>
 
-                                                        @endforeach
-                                                        @foreach($productRanges as $key=>$range)
-                                                            <tr>
-                                                                <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
-                                                                    style="width: 30%">@if($key==0)
-                                                                        Less than
-                                                                        ${{ Helper::inThousand($range->max_range+1) }}
-                                                                    @elseif((count($productRanges)-1)==$key)
-                                                                        ${{ Helper::inThousand($range->min_range) }} Or
-                                                                        Above
-                                                                    @else
-                                                                        ${{ Helper::inThousand($range->min_range) }} TO
-                                                                        ${{ Helper::inThousand($range->max_range+1) }} @endif</td>
-                                                                <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
-                                                                    @if($range->bonus_interest_criteria_a<=0)
-                                                                        - @else  {{ $range->bonus_interest_criteria_a }}
-                                                                    % @endif
+                                            <div class="ps-product__panel aio-product">
 
-                                                                </td>
-                                                                <td class="text-center @if($range->criteria_b_highlight==true ) highlight @endif">
-                                                                    @if($range->bonus_interest_criteria_b<=0)
-                                                                        - @else  {{ $range->bonus_interest_criteria_b }}
-                                                                    % @endif
+                                                <h4>Total Interest Earned for SGD
+                                                    ${{ Helper::inThousand($product->placement) }}</h4>
 
-                                                                </td>
-                                                                @if($key==0)
-                                                                    <td class=" text-center @if($product->highlight==true ) highlight @endif"
-                                                                        rowspan="6">
+                                                <span class="nill"> {{ NILL }}</span><br/>
 
-                                                                        @if($product->placement > $range->first_cap_amount)
-                                                                            First
-                                                                            ${{ Helper::inThousand($range->first_cap_amount) }}
-                                                                            -
-                                                                            ${{ Helper::inRoundTwoDecimal(($range->first_cap_amount*($product->total_interest/100))) }}
-                                                                            (
-                                                                            {{ $product->total_interest }}%), next
-                                                                            ${{ Helper::inThousand(($product->placement-$range->first_cap_amount)) }}
-                                                                            -
-                                                                            ${{ Helper::inRoundTwoDecimal((($range->board_rate/100)*($product->placement-$range->first_cap_amount))) }}
-                                                                            ({{ $range->board_rate }}%)
-                                                                            <br/>
-                                                                            Total =
-                                                                            ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
-                                                                        @else
-                                                                            Total =
-                                                                            ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
-                                                                            ({{$product->total_interest}}%)
-                                                                        @endif
-                                                                    </td>
-                                                                @endif
-                                                            </tr>
-
-                                                        @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="ps-product__panel aio-product">
-
-                                                    <h4>Total Interest Earned for SGD
-                                                        ${{ Helper::inThousand($product->placement) }}</h4>
-
-                                                    <p class="center">
-                                                        <span class="nill">  ${{ Helper::inRoundTwoDecimal($product->interest_earned).' ( '.$product->total_interest.'%) ' }}</span>
-                                                    </p>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                                @if(!empty($product->ads_placement))
-                                                    @php
-                                                    $ads = json_decode($product->ads_placement);
-                                                    if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                                                    @endphp
-                                                    <div class="ps-poster-popup">
-                                                        <div class="close-popup">
-                                                            <i class="fa fa-times" aria-hidden="true"></i>
-                                                        </div>
-
-                                                        <a target="_blank"
-                                                           href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                                    src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                    alt="" target="_blank"></a>
-
+                                                <p class="center">{{NOT_ELIGIBLE}}</p>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            @if(!empty($product->ads_placement))
+                                                @php
+                                                $ads = json_decode($product->ads_placement);
+                                                if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                                @endphp
+                                                <div class="ps-poster-popup">
+                                                    <div class="close-popup">
+                                                        <i class="fa fa-times"
+                                                           aria-hidden="true"></i>
                                                     </div>
-                                                    @php } @endphp
-                                                @endif
-                                                <div class="ps-product__detail">
-                                                    {!! $product->product_footer !!}
+
+                                                    <a target="_blank"
+                                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                                alt="" target="_blank"></a>
+
                                                 </div>
-                                                <div class="ps-product__footer"><a class="ps-product__more" href="#">More
-                                                        Detail<i class="fa fa-angle-down"></i></a><a
-                                                            class="ps-product__info sp-only" href="#">More
-                                                        info<i class="fa fa-angle-down"></i></a></div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    @if(count($products)>=2)
-                                            @if($nonFormulaProducts->count() && $j==2)
-                                                @include('frontend.products.none-formula-products')
+                                                @php } @endphp
                                             @endif
-                                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==2)
-                                            <div class="ps-poster-popup">
-                                                <!-- <div class="close-popup">
-                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                                </div> -->
-                                                @php
-                                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                                @endphp
-                                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                                       target="_blank"><img
-                                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                                alt=""></a>
-                                                @else
-                                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                                       target="_blank"><img
-                                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                                alt=""></a>
-                                                @endif
+                                            <div class="ps-product__detail">
+                                                {!! $product->product_footer !!}
                                             </div>
-                                        @endif
-                                    @elseif(empty($remainingProducts->count()) && $j==$products->count())
-                                            @if($nonFormulaProducts->count())
-                                                @include('frontend.products.none-formula-products')
-                                            @endif
-                                        @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE)
-                                            <div class="ps-poster-popup">
-                                                <!-- <div class="close-popup">
-                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                                </div> -->
-                                                @php
-                                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                                @endphp
-                                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                                       target="_blank"><img
-                                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                                alt=""></a>
-                                                @else
-                                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                                       target="_blank"><img
-                                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                                alt=""></a>
-                                                @endif
+                                            <div class="ps-product__footer"><a
+                                                        class="ps-product__more" href="#">More
+                                                    Detail<i class="fa fa-angle-down"></i></a><a
+                                                        class="ps-product__info sp-only"
+                                                        href="#">More
+                                                    info<i class="fa fa-angle-down"></i></a>
                                             </div>
-                                        @endif
-                                    @endif
-                                    @php $j++; @endphp
-                                    @endforeach
-                                @else
-                                    <div class="ps-block--legend-table">
-                                        <div class="ps-block__header">
-                                        </div>
-                                        <div class="ps-block__content text-center">
-                                            <p>{{CRITERIA_ERROR}}</p>
                                         </div>
                                     </div>
 
-                                @endif
-                                @if($remainingProducts->count())
+                                @elseif(empty($product->formula_id))
+                                    <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
+                                         id="r-{{ $j }}">
+                                        <div class="ps-product__header"><img
+                                                    src="{{ asset($product->brand_logo) }}"
+                                                    alt="">
 
-                                    @foreach($remainingProducts as $product)
-                                        <?php
-                                        $productRanges = $product->product_range;
-                                        $ads = json_decode($product->ads_placement);
-
-                                        ?>
-                                        @if($page->slug==AIO_DEPOSIT_MODE && isset($ads[3]->ad_horizontal_image_popup_top))
-
-                                            <div class="ps-poster-popup">
-                                                <div class="close-popup">
-                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                </div>
-                                                <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : 'javascript:void(0)' }}"
-                                                   target="_blank"><img
-                                                            src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
-                                                            alt=""></a>
-                                            </div>
+                                            @if(!empty($product->apply_link_status))
+                                                <div class="ps-product__action"><a
+                                                            class="ps-btn ps-btn--red"
+                                                            href="{{$product->apply_link}}">Apply
+                                                        Now</a></div>@endif
+                                        </div>
+                                        <div class="ps-product__content">
+                                            <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
+                                            @if(!empty($product->ads_placement))
+                                                @php
+                                                $ads = json_decode($product->ads_placement);
+                                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                                @endphp
+                                                <div class="ps-product__poster"><a
+                                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                                            target="_blank"><img
+                                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                                alt=""></a></div>
+                                                @php } @endphp
                                             @endif
-                                                    <!-- INDIVIDUAL CRITERIA BASE -->
-                                            @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
-                                                <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
-                                                     id="r-{{ $j }}">
-                                                    <div class="ps-product__header"><img
-                                                                src="{{ asset($product->brand_logo) }}"
-                                                                alt="">
-
-                                                        @if(!empty($product->apply_link_status))
-                                                            <div class="ps-product__action"><a
-                                                                        class="ps-btn ps-btn--red"
-                                                                        href="{{$product->apply_link}}">Apply
-                                                                    Now</a></div>@endif
+                                            <div class="clearfix"></div>
+                                            @if(!empty($product->ads_placement))
+                                                @php
+                                                $ads = json_decode($product->ads_placement);
+                                                if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                                                @endphp
+                                                <div class="ps-poster-popup">
+                                                    <div class="close-popup">
+                                                        <i class="fa fa-times"
+                                                           aria-hidden="true"></i>
                                                     </div>
-                                                    <div class="ps-product__content">
-                                                        <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                                        @if(!empty($product->ads_placement))
-                                                            @php
-                                                            $ads = json_decode($product->ads_placement);
-                                                            if(!empty($ads[0]->ad_image_horizontal)) {
-                                                            @endphp
-                                                            <div class="ps-product__poster"><a
-                                                                        href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                                        target="_blank"><img
-                                                                            src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                                            alt=""></a></div>
-                                                            @php } @endphp
-                                                        @endif
-                                                        <div class="ps-table-wrap">
-                                                            <table class="ps-table ps-table--product ps-table--product-3">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>CRITERIA</th>
-                                                                    <th>SALARY</th>
-                                                                    <th>PAYMENT</th>
-                                                                    <th>SPEND</th>
-                                                                    <th>PRIVILEGE</th>
-                                                                    <th>BONUS(OPTIONAL)</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                @foreach($productRanges as $range)
-                                                                    @php
-                                                                    //dd($range);
-                                                                    @endphp
-                                                                    <tr>
-                                                                        <td>Bonus Interest PA</td>
-                                                                        <td class="text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
-                                                                                - @else {{ $range->bonus_interest_salary }}
-                                                                                % @endif
 
-                                                                        </td>
-                                                                        <td class="text-center @if($product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
-                                                                                - @else {{ $range->bonus_interest_giro_payment }}
-                                                                                % @endif
+                                                    <a target="_blank"
+                                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                                                alt="" target="_blank"></a>
 
-                                                                        </td>
-                                                                        <td class="text-center @if($product->spend_highlight==true ) highlight @endif">
-                                                                            @if($range->bonus_interest_spend<=0)
-                                                                                - @else {{ $range->bonus_interest_spend }}
-                                                                            % @endif
-
-                                                                        </td>
-                                                                        <td class="text-center @if($product->privilege_highlight==true ) highlight @endif">
-                                                                            Up
-                                                                            to @if($range->bonus_interest_privilege<=0)
-                                                                                - @else  {{ $range->bonus_interest_privilege }}
-                                                                                % @endif
-                                                                        </td>
-                                                                        <td class="text-center @if($product->bonus_highlight==true ) highlight @endif">@if($range->bonus_interest<=0)
-                                                                                - @else  {{ $range->bonus_interest }}
-                                                                                % @endif
-                                                                            on
-                                                                            first
-                                                                            ${{ Helper::inThousand($range->first_cap_amount) }}
-                                                                            if
-                                                                            account more
-                                                                            than
-                                                                            ${{ Helper::inThousand($range->bonus_amount) }}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td colspan="2">Total Bonus Interest Earned for
-                                                                            ${{Helper::inThousand($range->placement)}}</td>
-                                                                        <td class="text-center @if($product->highlight==true ) highlight @endif"
-                                                                            colspan="4">
-
-                                                                            <span class="nill"> {{ NILL }}</span><br/>
-
-                                                                            <p>{{NOT_ELIGIBLE}}</p>
-
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <?php
-                                                        $range = $productRanges[0];
-                                                        ?>
-
-                                                        <div class="ps-product__panel aio-product">
-
-                                                            <h4>Total Bonus Interest Earned for SGD
-                                                                ${{Helper::inThousand($range->placement)}}</h4>
-
-                                                            <span class="nill"> {{ NILL }}</span><br/>
-
-                                                            <p class="center">{{NOT_ELIGIBLE}}</p>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        @if(!empty($product->ads_placement))
-                                                            @php
-                                                            $ads = json_decode($product->ads_placement);
-                                                            if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                                                            @endphp
-                                                            <div class="ps-poster-popup">
-                                                                <div class="close-popup">
-                                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                                </div>
-
-                                                                <a target="_blank"
-                                                                   href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                                            src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                            alt="" target="_blank"></a>
-
-                                                            </div>
-                                                            @php } @endphp
-                                                        @endif
-                                                        <div class="ps-product__detail">
-                                                            {!! $product->product_footer !!}
-                                                        </div>
-                                                        <div class="ps-product__footer"><a class="ps-product__more"
-                                                                                           href="#">More Detail<i
-                                                                        class="fa fa-angle-down"></i></a><a
-                                                                    class="ps-product__info sp-only"
-                                                                    href="#">More data<i
-                                                                        class="fa fa-angle-down"></i></a></div>
-                                                    </div>
                                                 </div>
-                                                @endif
+                                                @php } @endphp
+                                            @endif
+                                            <div class="ps-product__detail">
+                                                {!! $product->product_footer !!}
+                                            </div>
+                                            <div class="ps-product__footer"><a
+                                                        class="ps-product__more"
+                                                        href="#">More Detail<i
+                                                            class="fa fa-angle-down"></i></a><a
+                                                        class="ps-product__info sp-only"
+                                                        href="#">More data<i
+                                                            class="fa fa-angle-down"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                @if($products->count()<2 && $remainingProducts->count()>=2)
 
-                                                        <!-- TIER BASE -->
-                                                @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
-                                                    <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
-                                                         id="r-{{ $j }}">
-                                                        <div class="ps-product__header"><img
-                                                                    src="{{ asset($product->brand_logo) }}" alt="">
+                                    @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==2)
+                                        <div class="ps-poster-popup">
+                                            <!-- <div class="close-popup">
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                            </div> -->
+                                            @php
 
-                                                            @if(!empty($product->apply_link_status))
-                                                                <div class="ps-product__action"><a
-                                                                            class="ps-btn ps-btn--red"
-                                                                            href="{{$product->apply_link}}">Apply
-                                                                        Now</a></div>@endif
-                                                        </div>
-                                                        <div class="ps-product__content">
+                                            $current_time = strtotime(date('Y-m-d',
+                                            strtotime('now')));
+                                            $ad_start_date =
+                                            strtotime($ads_manage[0]->ad_start_date);
+                                            $ad_end_date =
+                                            strtotime($ads_manage[0]->ad_end_date);
+                                            @endphp
+                                            @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
+                                                <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
+                                                   target="_blank"><img
+                                                            src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
+                                                            alt=""></a>
+                                            @else
+                                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
+                                                   target="_blank"><img
+                                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                                            alt=""></a>
+                                            @endif
 
-                                                            <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                                            @if(!empty($product->ads_placement))
-                                                                @php
-                                                                $ads = json_decode($product->ads_placement);
-                                                                if(!empty($ads[0]->ad_image_horizontal)) {
-                                                                @endphp
-                                                                <div class="ps-product__poster"><a
-                                                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                                            target="_blank"><img
-                                                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                                                alt=""></a></div>
-                                                                @php } @endphp
-                                                            @endif
+                                        </div>
+                                    @endif
+                                @elseif(empty($products->count()) && $j==$remainingProducts->count())
 
+                                    @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE)
+                                        <div class="ps-poster-popup">
+                                            <!-- <div class="close-popup">
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                            </div> -->
+                                            @php
 
-                                                            <div class="ps-table-wrap">
-                                                                <table class="ps-table ps-table--product ps-table--product-2">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th>Balance</th>
-                                                                        <th>Criteria a (spend)</th>
-                                                                        <th>Criteria b (Spend + Salary/Giro)</th>
-                                                                        <th>Interest Earned for each Tier</th>
-                                                                        <th>Total Interest Earned
-                                                                            for {{ Helper::inThousand($product->placement) }}</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <?php $prevMaxRange = 0;  $totalRange = 0; ?>
-                                                                    @foreach($productRanges as $key=>$range)
-                                                                        <?php
-                                                                        $totalRange = 0 + ($range->max_range - $prevMaxRange);
-                                                                        if ($key != (count($productRanges) - 1)) {
-
-                                                                        }
-                                                                        ?>
-                                                                        <tr>
-                                                                            <td class=" @if($product->highlight_index>=$key &&($product->criteria_b_highlight==true || $product->criteria_a_highlight==true) ) highlight @endif ">
-                                                                                <?php
-                                                                                if ($key == 0) {
-                                                                                    echo "First ";
-                                                                                    echo "$" . Helper::inThousand($range->max_range);
-                                                                                } elseif ($key == (count($productRanges) - 1)) {
-                                                                                    echo "Above ";
-                                                                                    echo "$" . Helper::inThousand(($prevMaxRange));
-                                                                                } else {
-                                                                                    echo "Next ";
-                                                                                    echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
-                                                                                } ?>
-                                                                            </td>
-                                                                            <td class="text-center @if($product->highlight_index>=$key &&($product->criteria_a_highlight==true) ) highlight @endif">
-                                                                                @if($range->bonus_interest_criteria_a<=0)
-                                                                                    - @else  {{ $range->bonus_interest_criteria_a }}
-                                                                                % @endif
-                                                                            </td>
-                                                                            <td class="text-center @if($product->highlight_index>=$key &&($product->criteria_b_highlight==true) ) highlight @endif  ">
-                                                                                @if($range->bonus_interest_criteria_b<=0)
-                                                                                    - @else  {{ $range->bonus_interest_criteria_b }}
-                                                                                % @endif
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
-                                                                                if ($key == 0) {
-                                                                                    echo "First ";
-                                                                                    echo "$" . Helper::inThousand($range->max_range);
-                                                                                } elseif ($key == (count($productRanges) - 1)) {
-                                                                                    echo "Above ";
-                                                                                    echo "$" . Helper::inThousand(($prevMaxRange));
-                                                                                } else {
-                                                                                    echo "Next ";
-                                                                                    echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
-                                                                                } if ($key != (count($productRanges) - 1)) {
-                                                                                    $prevMaxRange = $range->max_range;
-                                                                                }?>
-                                                                                -${{ Helper::inThousand($range->interest_earn) }}
-                                                                                ({{ $range->criteria }}%)
-                                                                            </td>
-                                                                            @if($key==0)
-                                                                                <td class="text-center  @if($product->highlight==true) highlight @endif"
-                                                                                    rowspan="{{count($productRanges)}}">
-                                                                                    <span class="nill"> {{ NILL }}</span><br/>
-
-                                                                                    <p>{{NOT_ELIGIBLE}}</p>
-                                                                                </td>
-                                                                            @endif
-                                                                        </tr>
-                                                                    @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="ps-product__panel aio-product">
-
-                                                                <h4>Total Interest Earned for SGD
-                                                                    ${{Helper::inThousand($product->placement)}}</h4>
-
-                                                                <span class="nill"> {{ NILL }}</span><br/>
-
-                                                                <p class="center">{{NOT_ELIGIBLE}}</p>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                            @if(!empty($product->ads_placement))
-                                                                @php
-                                                                $ads = json_decode($product->ads_placement);
-                                                                if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                                                                @endphp
-                                                                <div class="ps-poster-popup">
-                                                                    <div class="close-popup">
-                                                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                                                    </div>
-
-                                                                    <a target="_blank"
-                                                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                                                src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                                alt="" target="_blank"></a>
-
-                                                                </div>
-                                                                @php } @endphp
-                                                            @endif
-                                                            <div class="ps-product__detail">
-                                                                {!! $product->product_footer !!}
-                                                            </div>
-                                                            <div class="ps-product__footer"><a class="ps-product__more"
-                                                                                               href="#">More Detail<i
-                                                                            class="fa fa-angle-down"></i></a><a
-                                                                        class="ps-product__info sp-only"
-                                                                        href="#">More data<i
-                                                                            class="fa fa-angle-down"></i></a></div>
-                                                        </div>
-                                                    </div>
-                                                    @endif
-                                                            <!-- COMBINE TIER BASE -->
-                                                    @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
-                                                        <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
-                                                             id="r-{{ $j }}">
-                                                            <div class="ps-product__header"><img
-                                                                        src="{{ asset($product->brand_logo) }}"
-                                                                        alt="">
-
-                                                                @if(!empty($product->apply_link_status))
-                                                                    <div class="ps-product__action"><a
-                                                                                class="ps-btn ps-btn--red"
-                                                                                href="{{$product->apply_link}}">Apply
-                                                                            Now</a></div>@endif
-                                                            </div>
-                                                            <div class="ps-product__content">
-                                                                <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                                                @if(!empty($product->ads_placement))
-                                                                    @php
-                                                                    $ads = json_decode($product->ads_placement);
-                                                                    if(!empty($ads[0]->ad_image_horizontal)) {
-                                                                    @endphp
-                                                                    <div class="ps-product__poster"><a
-                                                                                href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                                                target="_blank"><img
-                                                                                    src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                                                    alt=""></a></div>
-                                                                    @php } @endphp
-                                                                @endif
-                                                                <h4 class="ps-product__heading"><strong
-                                                                            class="highlight">{{$product->product_name}}
-                                                                        :</strong>
-                                                                    Fulfil up to 3 criteria and earn up
-                                                                    to @if($product->maximum_interest_rate<=0)
-                                                                        - @else  {{ $product->maximum_interest_rate }}
-                                                                        % @endif
-                                                                </h4>
-
-                                                                <div class="ps-table-wrap"
-                                                                     id='{{$product->product_id}}'>
-                                                                    <form id="form-{{$product->product_id}}"
-                                                                          class="ps-form--filter" method="post">
-                                                                        <table class="ps-table ps-table--product ps-table--product-3">
-                                                                            <thead>
-                                                                            <tr>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    CRITERIA
-                                                                                </th>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    SALARY
-                                                                                </th>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    Giro
-                                                                                </th>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    SPEND
-                                                                                </th>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    <div class="ps-checkbox">
-                                                                                        <input class="form-control"
-                                                                                               type="checkbox"
-                                                                                               data-product-id="{{$product->product_id}}"
-                                                                                               name="life_insurance"
-                                                                                               data-status="0"
-                                                                                               onchange="changeCriteria(this);"
-                                                                                               @if($product->life_insurance) checked=checked
-                                                                                               @endif value="true"
-                                                                                               id="life-insurance-{{$product->product_id}}"/>
-                                                                                        <label for="life-insurance-{{$product->product_id}}">Life
-                                                                                            Insurance</label>
-                                                                                    </div>
-                                                                                </th>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    <div class="ps-checkbox">
-                                                                                        <input class="form-control"
-                                                                                               type="checkbox"
-                                                                                               onchange="changeCriteria(this);"
-                                                                                               @if($product->housing_loan) checked=checked
-                                                                                               @endif
-                                                                                               name="housing_loan"
-                                                                                               data-product-id="{{$product->product_id}}"
-                                                                                               value="true"
-                                                                                               data-status="0"
-                                                                                               id="housing-loan-{{$product->product_id}}">
-                                                                                        <label for="housing-loan-{{$product->product_id}}">Housing
-                                                                                            Loan</label>
-                                                                                    </div>
-                                                                                </th>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    <div class="ps-checkbox">
-                                                                                        <input class="form-control"
-                                                                                               type="checkbox"
-                                                                                               name="education_loan"
-                                                                                               onchange="changeCriteria(this);"
-                                                                                               data-product-id="{{$product->product_id}}"
-                                                                                               value="true"
-                                                                                               data-status="0"
-                                                                                               id='education-loan-{{$product->product_id}}'
-                                                                                               @if($product->education_loan) checked=checked @endif/>
-                                                                                        <label for="education-loan-{{$product->product_id}}">Education
-                                                                                            Loan</label>
-                                                                                    </div>
-                                                                                </th>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    <div class="ps-checkbox">
-                                                                                        <input class="form-control"
-                                                                                               type="checkbox"
-                                                                                               onchange="changeCriteria(this);"
-                                                                                               name="hire_loan"
-                                                                                               value="true"
-                                                                                               data-status="0"
-                                                                                               data-product-id="{{$product->product_id}}"
-                                                                                               id="hire-loan-{{$product->product_id}}"
-                                                                                               @if($product->hire_loan) checked=checked @endif/>
-                                                                                        <label for="hire-loan-{{$product->product_id}}">Hire
-                                                                                            Purchase loan</label>
-                                                                                    </div>
-                                                                                </th>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    <div class="ps-checkbox">
-                                                                                        <input class="form-control"
-                                                                                               type="checkbox"
-                                                                                               name="renovation_loan"
-                                                                                               onchange="changeCriteria(this);"
-                                                                                               data-product-id="{{$product->product_id}}"
-                                                                                               value="true"
-                                                                                               data-status="0"
-                                                                                               id="renovation-loan-{{$product->product_id}}"
-                                                                                               @if($product->renovation_loan) checked=checked @endif/>
-                                                                                        <label for="renovation-loan-{{$product->product_id}}">Renovation
-                                                                                            loan</label>
-                                                                                    </div>
-                                                                                </th>
-                                                                                <th class="combine-criteria-padding">
-                                                                                    <div class="ps-checkbox">
-                                                                                        <input class="form-control"
-                                                                                               type="checkbox"
-                                                                                               onchange="changeCriteria(this);"
-                                                                                               name="unit_trust"
-                                                                                               value="true"
-                                                                                               data-status="0"
-                                                                                               data-product-id="{{$product->product_id}}"
-                                                                                               id="unit-trust-{{$product->product_id}}"
-                                                                                               @if($product->unit_trust) checked=checked @endif/>
-                                                                                        <label for="unit-trust-{{$product->product_id}}">Unit
-                                                                                            Trust</label>
-                                                                                    </div>
-                                                                                </th>
-                                                                            </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                            @foreach($productRanges as $range)
-                                                                                <tr>
-                                                                                    <td>Bonus Interest PA</td>
-                                                                                    <td class="text-center @if($product->criteria_1==true ) highlight @endif"
-                                                                                        colspan="3">1 Criteria Met
-                                                                                        - @if($range->bonus_interest_criteria1<=0)
-                                                                                            - @else  {{ $range->bonus_interest_criteria1 }}
-                                                                                            % @endif
-                                                                                    </td>
-                                                                                    <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
-                                                                                        colspan="3">2 Criteria
-                                                                                        - @if($range->bonus_interest_criteria2<=0)
-                                                                                            - @else  {{ $range->bonus_interest_criteria2 }}
-                                                                                            % @endif
-                                                                                    </td>
-                                                                                    <td class="text-center @if($product->criteria_3==true ) highlight @endif"
-                                                                                        colspan="3">3
-                                                                                        Criteria @if($range->bonus_interest_criteria3<=0)
-                                                                                            - @else  {{ $range->bonus_interest_criteria3 }}
-                                                                                            % @endif
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td colspan="1">Total Bonus Interest
-                                                                                        Earned for
-                                                                                        ${{ Helper::inThousand($range->placement) }}</td>
-                                                                                    <td class=" text-center @if($product->highlight==true ) highlight @endif"
-                                                                                        colspan="9">
-
-                                                                                        <span class="nill"> {{ NILL }}</span><br/>
-
-                                                                                        <p>{{NOT_ELIGIBLE}}</p>
-                                                                                    </td>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            @endforeach
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </form>
-                                                                </div>
-                                                                <div class="ps-product__panel aio-product">
-
-                                                                    <h4>Total Interest Earned for SGD
-                                                                        ${{ Helper::inThousand($product->placement) }}</h4>
-
-                                                                    <span class="nill"> {{ NILL }}</span><br/>
-
-                                                                    <p class="center">{{NOT_ELIGIBLE}}</p>
-                                                                </div>
-                                                                <div class="clearfix"></div>
-                                                                @if(!empty($product->ads_placement))
-                                                                    @php
-                                                                    $ads = json_decode($product->ads_placement);
-                                                                    if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                                                                    @endphp
-                                                                    <div class="ps-poster-popup">
-                                                                        <div class="close-popup">
-                                                                            <i class="fa fa-times"
-                                                                               aria-hidden="true"></i>
-                                                                        </div>
-
-                                                                        <a target="_blank"
-                                                                           href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                                                    src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                                    alt="" target="_blank"></a>
-
-                                                                    </div>
-                                                                    @php } @endphp
-                                                                @endif
-                                                                <div class="ps-product__detail">
-                                                                    {!! $product->product_footer !!}
-                                                                </div>
-                                                                <div class="ps-product__footer"><a
-                                                                            class="ps-product__more" href="#">More
-                                                                        Detail<i
-                                                                                class="fa fa-angle-down"></i></a><a
-                                                                            class="ps-product__info sp-only" href="#">More
-                                                                        info<i
-                                                                                class="fa fa-angle-down"></i></a></div>
-                                                            </div>
-                                                        </div>
-                                                        @endif
-                                                                <!-- DBS CRITERIA -->
-                                                        @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F4)
-
-                                                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
-                                                                 id="r-{{ $j }}">
-                                                                <div class="ps-product__header"><img
-                                                                            src="{{ asset($product->brand_logo) }}"
-                                                                            alt="">
-
-                                                                    @if(!empty($product->apply_link_status))
-                                                                        <div class="ps-product__action"><a
-                                                                                    class="ps-btn ps-btn--red"
-                                                                                    href="{{$product->apply_link}}">Apply
-                                                                                Now</a></div>@endif
-                                                                </div>
-                                                                <div class="ps-product__content">
-                                                                    <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                                                    @if(!empty($product->ads_placement))
-                                                                        @php
-                                                                        $ads = json_decode($product->ads_placement);
-                                                                        if(!empty($ads[0]->ad_image_horizontal)) {
-                                                                        @endphp
-                                                                        <div class="ps-product__poster"><a
-                                                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                                                    target="_blank"><img
-                                                                                        src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                                                        alt=""></a></div>
-                                                                        @php } @endphp
-                                                                    @endif
-                                                                    <div class="ps-table-wrap">
-                                                                        <table class="ps-table ps-table--product">
-                                                                            <thead>
-                                                                            <tr>
-                                                                                <th>Monthly Transaction</th>
-                                                                                <th>Criteria a (Salary + 1 category)
-                                                                                </th>
-                                                                                <th>Criteria b (Salary + 2 OR more
-                                                                                    Cateogry)
-                                                                                </th>
-                                                                                <th>Total Interest Earned for
-                                                                                    ${{ Helper::inThousand($product->placement) }}</th>
-                                                                            </tr>
-                                                                            </thead>
-                                                                            <tbody>
-
-                                                                            @foreach($productRanges as $range)
-
-                                                                            @endforeach
-                                                                            @foreach($productRanges as $key=>$range)
-                                                                                <tr>
-                                                                                    <td class="@if($range->criteria_a_highlight==true || $range->criteria_b_highlight==true ) highlight @endif"
-                                                                                        style="width: 30%">@if($key==0)
-                                                                                            Less than
-                                                                                            ${{ Helper::inThousand($range->max_range+1) }}
-                                                                                        @elseif((count($productRanges)-1)==$key)
-                                                                                            ${{ Helper::inThousand($range->min_range) }}
-                                                                                            Or Above
-                                                                                        @else
-                                                                                            ${{ Helper::inThousand($range->min_range) }}
-                                                                                            TO
-                                                                                            ${{ Helper::inThousand($range->max_range+1) }} @endif</td>
-                                                                                    <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
-                                                                                        @if($range->bonus_interest_criteria_a<=0)
-                                                                                            - @else  {{ $range->bonus_interest_criteria_a }}
-                                                                                        % @endif
-
-                                                                                    </td>
-                                                                                    <td class="text-center @if($range->criteria_b_highlight==true ) highlight @endif">
-                                                                                        @if($range->bonus_interest_criteria_b<=0)
-                                                                                            - @else  {{ $range->bonus_interest_criteria_b }}
-                                                                                        % @endif
-
-                                                                                    </td>
-                                                                                    @if($key==0)
-                                                                                        <td class=" text-center @if($product->highlight==true ) highlight @endif"
-                                                                                            rowspan="6">
-                                                                                            <span class="nill"> {{ NILL }}</span><br/>
-
-                                                                                            <p>{{NOT_ELIGIBLE}}</p>
-                                                                                        </td>
-                                                                                    @endif
-                                                                                </tr>
-
-                                                                            @endforeach
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <?php
-                                                                    $range = $productRanges[0];
-                                                                    ?>
-
-                                                                    <div class="ps-product__panel aio-product">
-
-                                                                        <h4>Total Interest Earned for SGD
-                                                                            ${{ Helper::inThousand($product->placement) }}</h4>
-
-                                                                        <span class="nill"> {{ NILL }}</span><br/>
-
-                                                                        <p class="center">{{NOT_ELIGIBLE}}</p>
-                                                                    </div>
-                                                                    <div class="clearfix"></div>
-                                                                    @if(!empty($product->ads_placement))
-                                                                        @php
-                                                                        $ads = json_decode($product->ads_placement);
-                                                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                                                                        @endphp
-                                                                        <div class="ps-poster-popup">
-                                                                            <div class="close-popup">
-                                                                                <i class="fa fa-times"
-                                                                                   aria-hidden="true"></i>
-                                                                            </div>
-
-                                                                            <a target="_blank"
-                                                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                                        alt="" target="_blank"></a>
-
-                                                                        </div>
-                                                                        @php } @endphp
-                                                                    @endif
-                                                                    <div class="ps-product__detail">
-                                                                        {!! $product->product_footer !!}
-                                                                    </div>
-                                                                    <div class="ps-product__footer"><a
-                                                                                class="ps-product__more" href="#">More
-                                                                            Detail<i class="fa fa-angle-down"></i></a><a
-                                                                                class="ps-product__info sp-only"
-                                                                                href="#">More
-                                                                            info<i class="fa fa-angle-down"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endif
-                                                        @if(empty($product->formula_id))
-                                                            <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
-                                                                 id="r-{{ $j }}">
-                                                                <div class="ps-product__header"><img
-                                                                            src="{{ asset($product->brand_logo) }}"
-                                                                            alt="">
-
-                                                                    @if(!empty($product->apply_link_status))
-                                                                        <div class="ps-product__action"><a
-                                                                                    class="ps-btn ps-btn--red"
-                                                                                    href="{{$product->apply_link}}">Apply
-                                                                                Now</a></div>@endif
-                                                                </div>
-                                                                <div class="ps-product__content">
-                                                                    <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
-                                                                    @if(!empty($product->ads_placement))
-                                                                        @php
-                                                                        $ads = json_decode($product->ads_placement);
-                                                                        if(!empty($ads[0]->ad_image_horizontal)) {
-                                                                        @endphp
-                                                                        <div class="ps-product__poster"><a
-                                                                                    href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                                                                    target="_blank"><img
-                                                                                        src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                                                                        alt=""></a></div>
-                                                                        @php } @endphp
-                                                                    @endif
-                                                                    <div class="clearfix"></div>
-                                                                    @if(!empty($product->ads_placement))
-                                                                        @php
-                                                                        $ads = json_decode($product->ads_placement);
-                                                                        if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                                                                        @endphp
-                                                                        <div class="ps-poster-popup">
-                                                                            <div class="close-popup">
-                                                                                <i class="fa fa-times"
-                                                                                   aria-hidden="true"></i>
-                                                                            </div>
-
-                                                                            <a target="_blank"
-                                                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                                                                        src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                                        alt="" target="_blank"></a>
-
-                                                                        </div>
-                                                                        @php } @endphp
-                                                                    @endif
-                                                                    <div class="ps-product__detail">
-                                                                        {!! $product->product_footer !!}
-                                                                    </div>
-                                                                    <div class="ps-product__footer"><a
-                                                                                class="ps-product__more"
-                                                                                href="#">More Detail<i
-                                                                                    class="fa fa-angle-down"></i></a><a
-                                                                                class="ps-product__info sp-only"
-                                                                                href="#">More data<i
-                                                                                    class="fa fa-angle-down"></i></a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endif
-                                                        @if($products->count()<2 && $remainingProducts->count()>=2)
-                                                                @if($nonFormulaProducts->count() && $j==2)
-                                                                    @include('frontend.products.none-formula-products')
-                                                                @endif
-                                                            @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE && $j==2)
-                                                                <div class="ps-poster-popup">
-                                                                    <!-- <div class="close-popup">
-                                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                                    </div> -->
-                                                                    @php
-
-                                                                    $current_time = strtotime(date('Y-m-d',
-                                                                    strtotime('now')));
-                                                                    $ad_start_date =
-                                                                    strtotime($ads_manage[0]->ad_start_date);
-                                                                    $ad_end_date =
-                                                                    strtotime($ads_manage[0]->ad_end_date);
-                                                                    @endphp
-                                                                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                                                        <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                                                           target="_blank"><img
-                                                                                    src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                                                    alt=""></a>
-                                                                    @else
-                                                                        <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                                                           target="_blank"><img
-                                                                                    src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                                                    alt=""></a>
-                                                                    @endif
-
-                                                                </div>
-                                                            @endif
-                                                        @elseif(empty($products->count()) && $j==$remainingProducts->count())
-                                                                @if($nonFormulaProducts->count())
-                                                                    @include('frontend.products.none-formula-products')
-                                                                @endif
-                                                            @if(count($ads_manage) && $ads_manage[0]->page_type==AIO_DEPOSIT_MODE)
-                                                                <div class="ps-poster-popup">
-                                                                    <!-- <div class="close-popup">
-                                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                                    </div> -->
-                                                                    @php
-
-                                                                    $current_time = strtotime(date('Y-m-d',
-                                                                    strtotime('now')));
-                                                                    $ad_start_date =
-                                                                    strtotime($ads_manage[0]->ad_start_date);
-                                                                    $ad_end_date =
-                                                                    strtotime($ads_manage[0]->ad_end_date);
-                                                                    @endphp
-                                                                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                                                        <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                                                           target="_blank"><img
-                                                                                    src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                                                    alt=""></a>
-                                                                    @else
-                                                                        <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                                                           target="_blank"><img
-                                                                                    src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                                                    alt=""></a>
-                                                                    @endif
-                                                                </div>
-                                                            @endif
-                                                        @endif
-                                                        @php $j++; @endphp
-                                                        @endforeach
-                                                    @endif
+                                            $current_time = strtotime(date('Y-m-d',
+                                            strtotime('now')));
+                                            $ad_start_date =
+                                            strtotime($ads_manage[0]->ad_start_date);
+                                            $ad_end_date =
+                                            strtotime($ads_manage[0]->ad_end_date);
+                                            @endphp
+                                            @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
+                                                <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
+                                                   target="_blank"><img
+                                                            src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
+                                                            alt=""></a>
+                                            @else
+                                                <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
+                                                   target="_blank"><img
+                                                            src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
+                                                            alt=""></a>
+                                            @endif
+                                        </div>
+                                    @endif
+                                @endif
+                                @php $j++; @endphp
+                                @endforeach
+                            @endif
         </div>
     </div>
     <script type="text/javascript">
