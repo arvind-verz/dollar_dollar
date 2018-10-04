@@ -3203,7 +3203,9 @@ button {
     margin-right: -70px;
     float: right;
 }
-
+.owl-slider:not(.owl-loaded){
+    opacity: 0;
+}
 @media (max-width: 1199px) {
     .owl-slider.nav-outside .owl-prev, .owl-slider.nav-outside .owl-next {
         margin: 0 !important;
