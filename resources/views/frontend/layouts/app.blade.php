@@ -35,7 +35,7 @@ if (!$systemSetting) {
     <![endif]-->
     <script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
     <script src="{{ asset('frontend/js/plugin.js') }}"></script>
-    <script src="{{ asset('frontend/js/modernizr.js') }}"></script>
+    {{--<script src="{{ asset('frontend/js/modernizr.js') }}"></script>--}}
     <script type="text/javascript">
 
         window.Laravel = {!! json_encode([
@@ -48,11 +48,6 @@ if (!$systemSetting) {
         window.onload = function() {
             owlCarousel($('.owl-slider'));
         };
-        $(window).load(function () {
-         // Animate loader off screen
-         $(".se-pre-con").fadeOut("slow");
-         ;
-         });
     </script>
     <style type="text/css">
         .ps-form--filter .active {
@@ -71,7 +66,7 @@ if (!$systemSetting) {
 
 </head>
 <body>
-<div class="se-pre-con"></div>
+{{--<div class="se-pre-con"></div>--}}
 <div id="fb-root"></div>
 <script>(function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
