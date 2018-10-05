@@ -696,7 +696,7 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
                             },
                             filename: function () {
                                 var today = new Date();
@@ -718,7 +718,7 @@
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
                             },
                             filename: function () {
                                 var today = new Date();
@@ -741,7 +741,7 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
                             },
                             filename: function () {
                                 var today = new Date();
@@ -762,9 +762,9 @@
                     ],
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[0, 'asc']],
+                    'order': [[12, 'desc']],
                     "aoColumnDefs": [{
-                        "aTargets": [0],
+                        "aTargets": [0,13],
                         "bSortable": false,
 
                     }],
