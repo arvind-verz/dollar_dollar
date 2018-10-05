@@ -77,7 +77,7 @@
                                            value="{{ $ads->title }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>@if($type=='account')Vertical Ad Banner @else Ad
+                                    <label>@if($type=='account' ||$type=='blog')Vertical Ad Banner @else Ad
                                         Image @endif </label>
                                     <input type="file" name="ad_image" class="form-control">
                                     @if(isset($ads->ad_image) && ($ads->ad_image != ''))
@@ -93,14 +93,14 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>@if($type=='account')Vertical Ad Banner Link @else Ad
+                                    <label>@if($type=='account' ||$type=='blog')Vertical Ad Banner Link @else Ad
                                         Link @endif</label>
                                     <input type="text" name="ad_link" class="form-control"
                                            placeholder="Enter Ad link (example: https://www.google.com)"
                                            value="{{ $ads->ad_link }}">
                                 </div>
                                     <div class="form-group horizonal_banner">
-                                        <label>@if($type=='account')Horizontal Ad Banner @else
+                                        <label>@if($type=='account' ||$type=='blog')Horizontal Ad Banner @else
                                                 Horizontal Banner @endif</label>
                                         <input type="file" name="horizontal_banner_ad_image" class="form-control">
                                         @if(isset($ads->horizontal_banner_ad_image) && ($ads->horizontal_banner_ad_image != ''))
@@ -117,14 +117,14 @@
                                         @endif
                                     </div>
                                     <div class="form-group horizonal_banner">
-                                        <label>@if($type=='account')Horizontal Ad Banner Link @else
+                                        <label>@if($type=='account' ||$type=='blog')Horizontal Ad Banner Link @else
                                                 Horizontal Banner Link @endif</label>
                                         <input type="text" name="horizontal_banner_ad_link" class="form-control"
                                                placeholder="Enter Ad link (example: https://www.google.com)"
                                                value="{{ $ads->horizontal_banner_ad_link }}">
                                     </div>
                                 <div class="form-group">
-                                    <label>@if($type=='account')Paid Vertical Ad  @else Paid Ad
+                                    <label>@if($type=='account' ||$type=='blog')Paid Vertical Ad  @else Paid Ad
                                         Image @endif</label>
                                     <input type="file" name="paid_ad_image" class="form-control">
                                     @if(isset($ads->paid_ad_image) && ($ads->paid_ad_image != ''))
@@ -140,13 +140,13 @@
                                     @endif
                                 </div>
                                 <div class="form-group">
-                                    <label>@if($type=='account')Paid Vertical Ad Link  @else Paid Ad
+                                    <label>@if($type=='account' ||$type=='blog')Paid Vertical Ad Link  @else Paid Ad
                                         Link @endif</label>
                                     <input type="text" name="paid_ad_link" class="form-control"
                                            placeholder="Enter Ad link (example: https://www.google.com)"
                                            value="{{ $ads->paid_ad_link }}">
                                 </div>
-                                @if($type=='account')
+                                @if($type=='account' ||$type=='blog')
                                     <div class="form-group">
                                         <label>Paid Horizontal Ad</label>
                                         <input type="file" name="horizontal_paid_ad_image" class="form-control">

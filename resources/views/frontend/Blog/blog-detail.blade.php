@@ -72,13 +72,27 @@
                 </div>
                 @if(count($ads) && ($page->disable_ads==0))
                     @if(($ads[0]->display==1))
+                        @php
+                        $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                        $ad_start_date = strtotime($ads[0]->ad_start_date);
+                        $ad_end_date = strtotime($ads[0]->ad_end_date);
+                        @endphp
 
-                        @if(!empty($ads[0]->horizontal_banner_ad_image))
+                        @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->horizontal_paid_ad_image))
                             <div class="pt-2">
-                                <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}"
-                                   target="_blank"><img src="{{ asset($ads[0]->horizontal_banner_ad_image) }}"
+                                <a href="{{ isset($ads[0]->horizontal_paid_ad_link) ? asset($ads[0]->horizontal_paid_ad_link) : '#' }}"
+                                   target="_blank"><img src="{{ asset($ads[0]->horizontal_paid_ad_image) }}"
                                                         alt=""></a>
                             </div>
+                        @else
+
+                            @if(!empty($ads[0]->horizontal_banner_ad_image))
+                                <div class="pt-2">
+                                    <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}"
+                                       target="_blank"><img src="{{ asset($ads[0]->horizontal_banner_ad_image) }}"
+                                                            alt=""></a>
+                                </div>
+                            @endif
                         @endif
                     @endif
                 @endif
@@ -132,10 +146,10 @@
                                        target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
                                 </div>
                             @else
-                                <div class="pt-2">
-                                    <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
-                                       target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                                </div>
+                                {{-- <div class="pt-2">
+                                     <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
+                                        target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                                 </div>--}}
                             @endif
                         @endif
                     @endif
