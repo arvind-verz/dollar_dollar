@@ -49,7 +49,7 @@
                                     <label>Blog Page</label>
                                     <select class="form-control" name="page_type">
                                         <option value="">Select</option>
-                                        <option value="blog">Blog</option>
+                                        {{--<option value="blog">Blog</option>--}}
                                         <option value="blog-inner">Blog Inner</option>
                                     </select>
                                 </div>

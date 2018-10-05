@@ -116,7 +116,7 @@
 
                     @if(count($ads) && ($page->disable_ads==0))
                         @if(($ads[0]->display==1))
-                            <div class="ps-post__thumbnail ads sp-only"><a href="{{ $ads[0]->ad_link }}"
+                            <div class="ps-post__thumbnail ads"><a href="{{ $ads[0]->ad_link }}"
                                                                            target="_blank"><img
                                             src="{{ asset($ads[0]->ad_image) }}" alt=""
                                             title="{{ $ads[0]->title }}"></a></div>
