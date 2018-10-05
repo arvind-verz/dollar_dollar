@@ -220,6 +220,14 @@ define('COMPONENTS_INVESTMENT', "Investment");
 define('COMPONENTS_SAVING', "Savings");
 define('GENDER_MALE', "Male");
 define('GENDER_FEMALE', "Female");
+define('GOAL_INCOME', "Building passive income");
+define('GOAL_FAMILY', "Starting a family");
+define('GOAL_RETIREMENT', "Retirement");
+define('GOAL_OTHER', "Other");
+define('RISK_CONSERVATIVE', "Conservative");
+define('RISK_MODERATE', "Moderately Conservative");
+define('RISK_BALANCED', "Balanced");
+define('RISK_GROWTH', "Growth");
 
 //salutation constants
 define('MR', "Mr.");

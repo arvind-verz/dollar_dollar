@@ -47,33 +47,54 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>1. What components of life insurance are you interested in?</th>
+                                        <th>1. What is current your financial goal?</th>
                                         <td>
-                                            @if(isset($enquiry->components))
-                                                {{implode(', ',unserialize($enquiry->components))}}
+                                            @if(isset($enquiry->goals))
+                                                {{implode(', ',unserialize($enquiry->goals))}}
+
+                                            @endif
+                                        </td>
+
+                                    </tr>
+                                    @if(isset($enquiry->goal_other_value))
+                                        <tr>
+                                            <th>Other</th>
+                                            <td>
+                                                {{ $enquiry->goal_other_value }}
+                                            </td>
+
+                                        </tr>
+                                    @endif
+                                    <tr>
+                                        <th>2. Do you have any experience in investment?</th>
+                                        <td>
+                                            {{ $enquiry->experience }}
+                                        </td>
+
+                                    </tr>
+                                    @if(isset($enquiry->experience_detail))
+                                        <tr>
+                                            <th>Experience detail</th>
+                                            <td>
+                                                {{ $enquiry->experience_detail }}
+                                            </td>
+
+                                        </tr>
+                                    @endif
+                                    <tr>
+                                        <th>3. Which Risk Profile do you fall into?</th>
+                                        <td>
+                                            @if(isset($enquiry->risks))
+                                                {{implode(', ',unserialize($enquiry->risks))}}
 
                                             @endif
                                         </td>
 
                                     </tr>
                                     <tr>
-                                        <th>2. What is your gender?</th>
+                                        <th>4. What is your age?</th>
                                         <td>
-                                            {{ $enquiry->gender }}
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <th>3. What is your date of birth?</th>
-                                        <td>
-                                            {{ date("Y-m-d", strtotime($enquiry->dob)) }}
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <th>4. Are you a smoker?</th>
-                                        <td>
-                                            {{ $enquiry->smoke }}
+                                            {{ $enquiry->age }}
                                         </td>
 
                                     </tr>
@@ -85,14 +106,15 @@
 
                                             @endif
                                         </td>
-
                                     </tr>
-                                    <tr>
-                                        <th>Other</th>
-                                        <td>
-                                            {{ $enquiry->other_value }}
-                                        </td>
-                                    </tr>
+                                    @if(isset($enquiry->other_value))
+                                        <tr>
+                                            <th>Other</th>
+                                            <td>
+                                                {{ $enquiry->other_value }}
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endif
                             </table>
                         </div>

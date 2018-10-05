@@ -49,7 +49,7 @@
                                     <label>Blog Page</label>
                                     <select class="form-control" name="page_type">
                                         <option value="">Select</option>
-                                        <option value="blog">Blog</option>
+                                        {{--<option value="blog">Blog</option>--}}
                                         <option value="blog-inner">Blog Inner</option>
                                     </select>
                                 </div>
@@ -59,11 +59,11 @@
                                     <input type="text" name="title" class="form-control" placeholder="Enter title">
                                 </div>
                                 <div class="form-group">
-                                    <label>@if($type=='account')Vertical Ad Banner @else Ad Image @endif </label>
+                                    <label>@if($type=='account'||$type=='blog')Vertical Ad Banner @else Ad Image @endif </label>
                                     <input type="file" name="ad_image" class="form-control">
                                 </div>                                
                                 <div class="form-group">
-                                    <label>@if($type=='account')Vertical Ad Banner Link @else Ad Link @endif</label>
+                                    <label>@if($type=='account'||$type=='blog')Vertical Ad Banner Link @else Ad Link @endif</label>
                                     <input type="text" name="ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
                                 @if($type=='account' || $type=='blog')
@@ -77,14 +77,14 @@
                                 </div>
                                 @endif
                                 <div class="form-group">
-                                    <label>@if($type=='account')Paid Vertical Ad  @else Paid Ad Image @endif</label>
+                                    <label>@if($type=='account'||$type=='blog')Paid Vertical Ad  @else Paid Ad Image @endif</label>
                                     <input type="file" name="paid_ad_image" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label>@if($type=='account')Paid Vertical Ad Link  @else Paid Ad Link @endif</label>
+                                    <label>@if($type=='account'||$type=='blog')Paid Vertical Ad Link  @else Paid Ad Link @endif</label>
                                     <input type="text" name="paid_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
-                                @if($type=='account')
+                                @if($type=='account'||$type=='blog')
                                 <div class="form-group">
                                     <label>Paid Horizontal Ad</label>
                                     <input type="file" name="horizontal_paid_ad_image" class="form-control">

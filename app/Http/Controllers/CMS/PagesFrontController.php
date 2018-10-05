@@ -1122,7 +1122,14 @@ class PagesFrontController extends Controller
                             //$product->max_tenure = $tenure;
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
-                            $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            $tenure = 0;
+                            if ($product->promotion_period == ONGOING) {
+                                $tenure = 1;
+                                $tenureTotal = 1;
+                            }
+                            elseif ($untilEndDate > $todayDate) {
+                                $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            }
                         }
                         $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
@@ -1819,9 +1826,14 @@ class PagesFrontController extends Controller
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
                             $tenure = 0;
-                            if ($untilEndDate > $todayDate) {
+                            if ($product->promotion_period == ONGOING) {
+                                $tenure = 1;
+                                $tenureTotal = 1;
+                            }
+                            elseif ($untilEndDate > $todayDate) {
                                 $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                             }
+
 
                         }
                         $product->duration = $tenure;
@@ -2678,7 +2690,14 @@ class PagesFrontController extends Controller
                             // $product->max_tenure = $tenure;
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
-                            $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            $tenure = 0;
+                            if ($product->promotion_period == ONGOING) {
+                                $tenure = 1;
+                                $tenureTotal = 1;
+                            }
+                            elseif ($untilEndDate > $todayDate) {
+                                $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            }
                         }
                         $product->duration = $tenure;
 

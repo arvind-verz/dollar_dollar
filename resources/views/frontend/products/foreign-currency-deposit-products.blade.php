@@ -441,7 +441,7 @@ class="fa fa-refresh"></i></a>
                                                         <span>
                                                         Total interest rate @if(($product->total_interest)<=0)
                                                                 - @else {{ $product->total_interest }}% P.A.
-                                                                for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif
+                                                                @if($product->promotion_period!=ONGOING)for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif @endif
                                                         </span>
 
                                                 </h2>

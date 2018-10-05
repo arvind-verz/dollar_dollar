@@ -64,20 +64,20 @@
                                                     <th>Blog Page</th>
                                                 @endif
                                                 <th>Title</th>
-                                                <th>@if($type=='account')Vertical Ad Banner @else Ad Image @endif</th>
-                                                <th>@if($type=='account')Vertical Ad Banner Link @else Ad
+                                                <th>@if($type=='account' || $type=='blog')Vertical Ad Banner @else Ad Image @endif</th>
+                                                <th>@if($type=='account' || $type=='blog')Vertical Ad Banner Link @else Ad
                                                     Link @endif</th>
                                                 @if($type=='account' || $type=='blog')
-                                                    <th>@if($type=='account')Horizontal Ad Banner @else Horizontal
+                                                    <th>@if($type=='account' || $type=='blog')Horizontal Ad Banner @else Horizontal
                                                         Banner @endif</th>
-                                                    <th>@if($type=='account')Horizontal Ad Banner Link @else Horizontal
+                                                    <th>@if($type=='account' || $type=='blog')Horizontal Ad Banner Link @else Horizontal
                                                         Banner Link @endif</th>
                                                 @endif
-                                                <th>@if($type=='account')Paid Vertical Ad  @else Paid Ad
+                                                <th>@if($type=='account' || $type=='blog')Paid Vertical Ad  @else Paid Ad
                                                     Image @endif</th>
-                                                <th>@if($type=='account')Paid Vertical Ad Link  @else Paid Ad
+                                                <th>@if($type=='account' || $type=='blog')Paid Vertical Ad Link  @else Paid Ad
                                                     Link @endif</th>
-                                                @if($type=='account')
+                                                @if($type=='account' || $type=='blog')
                                                     <th>Paid Horizontal Ad</th>
                                                     <th>Paid Horizontal Ad Link</th>
                                                 @endif
@@ -145,7 +145,7 @@
                                                                     target="_blank">{{$ad->paid_ad_link}}</a>
                                                             @endif
                                                         </td>
-                                                        @if($type=='account')
+                                                        @if($type=='account' || $type=='blog')
                                                             <td>
                                                                 @if(!empty($ad->horizontal_paid_ad_image))
                                                                     <img src="{{ asset($ad->horizontal_paid_ad_image) }}"
