@@ -116,24 +116,6 @@
 
                     @if(count($ads) && ($page->disable_ads==0))
                         @if(($ads[0]->display==1))
-                            <div class="ps-post__thumbnail ads"><a href="{{ $ads[0]->ad_link }}"
-                                                                           target="_blank"><img
-                                            src="{{ asset($ads[0]->ad_image) }}" alt=""
-                                            title="{{ $ads[0]->title }}"></a></div>
-                        @endif
-                    @endif
-                    <div class="ps-fanpage">
-                        <div class="fb-page" data-href="https://www.facebook.com/dollardollar.sg/"
-                             data-tabs="timeline" data-width="500" data-height="280" data-small-header="false"
-                             data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                            <blockquote cite="https://www.facebook.com/dollardollar.sg/"
-                                        class="fb-xfbml-parse-ignore"><a
-                                        href="https://www.facebook.com/dollardollar.sg/">DollarDollar</a>
-                            </blockquote>
-                        </div>
-                    </div>
-                    @if(count($ads) && ($page->disable_ads==0))
-                        @if(($ads[0]->display==1))
                             @php
                             $current_time = strtotime(date('Y-m-d', strtotime('now')));
                             $ad_start_date = strtotime($ads[0]->ad_start_date);
@@ -153,6 +135,17 @@
                             @endif
                         @endif
                     @endif
+                    <div class="ps-fanpage">
+                        <div class="fb-page" data-href="https://www.facebook.com/dollardollar.sg/"
+                             data-tabs="timeline" data-width="500" data-height="280" data-small-header="false"
+                             data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                            <blockquote cite="https://www.facebook.com/dollardollar.sg/"
+                                        class="fb-xfbml-parse-ignore"><a
+                                        href="https://www.facebook.com/dollardollar.sg/">DollarDollar</a>
+                            </blockquote>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
