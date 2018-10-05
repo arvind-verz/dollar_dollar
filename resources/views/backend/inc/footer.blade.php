@@ -930,7 +930,7 @@
                 if (index == 1) {
                     var name = $.trim($('#name').val());
                     var bank = $.trim($('#bank').val());
-                    var ongoingStatus = $.trim($('#ongoing-status').data('status'));
+                    var ongoingStatus = $.trim($('#ongoing-status-1').data('status'));
                     var productType = $.trim($('#product-type').val());
                     var currency = $.trim($('#currency').val());
                     var maxInterestRate = $.trim($('#maximum-interest-rate').val());
@@ -990,7 +990,7 @@
                             errors[i] = 'The promotion period is required.';
                             i++;
                     }
-                    if ((!untilEndDate) && (jQuery.inArray(formula, utilFormula) !== -1)) {
+                    if ((!untilEndDate) && (jQuery.inArray(formula, utilFormula) !== -1)&& (ongoingStatus == 'false')) {
                         errors[i] = 'The until end date is required.';
                         i++;
                     }
@@ -2185,9 +2185,12 @@
         if (status == true) {
             ongoingButton = '<button type="button" data-status="false" id="ongoing-status-1" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus1(this)"><i class="fa fa-times"></i> Ongoing</button>';
             $('#promotion-period').val('');
+            $('#until-end-date').attr('disabled', false);
         } else {
             ongoingButton = '<button type="button" data-status="true" id="ongoing-status-1" class="btn btn-block btn-success btn-social" onclick="changeOnGoingStatus1(this)"><i class="fa fa-check"></i> Ongoing</button>';
             $('#promotion-period').val('{{ONGOING}}');
+            $('#until-end-date').val('');
+            $('#until-end-date').attr('disabled', true);
         }
         $('#ongoing-1').html(ongoingButton);
 

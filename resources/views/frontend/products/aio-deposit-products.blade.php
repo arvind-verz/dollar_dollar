@@ -675,8 +675,6 @@
                                                         </div>
 
                                                     </th>
-
-
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -1423,95 +1421,84 @@
                                                                 SPEND
                                                             </th>
                                                             <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control"
-                                                                           type="checkbox"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           name="life_insurance"
-                                                                           data-status="0"
-                                                                           onchange="changeCriteria(this);"
-                                                                           @if($product->life_insurance) checked=checked
-                                                                           @endif value="true"
-                                                                           id="life-insurance-{{$product->product_id}}"/>
-                                                                    <label for="life-insurance-{{$product->product_id}}">Life
-                                                                        Insurance</label>
+                                                                Loan
+                                                                <div class="row">
+                                                                    <div class="width-50">
+                                                                        <div class="ps-checkbox">
+                                                                            <input class="form-control" type="checkbox"
+                                                                                   onchange="" disabled="disabled"
+                                                                                   @if($product->housing_loan)
+                                                                                   @endif
+                                                                                   name="housing_loan"
+                                                                                   data-product-id="{{$product->product_id}}"
+                                                                                   value="true"
+                                                                                   id="housing-loan-{{$product->product_id}}">
+                                                                            <label for="housing-loan-{{$product->product_id}}">Housing</label>
+                                                                        </div>
+                                                                        <div class="ps-checkbox">
+                                                                            <input class="form-control" type="checkbox"
+                                                                                   name="education_loan"
+                                                                                   onchange=""  disabled="disabled"
+                                                                                   data-product-id="{{$product->product_id}}"
+                                                                                   value="true"
+                                                                                   id='education-loan-{{$product->product_id}}'
+                                                                                   @if($product->education_loan)  @endif/>
+                                                                            <label for="education-loan-{{$product->product_id}}">Education</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="width-50">
+                                                                        <div class="ps-checkbox">
+                                                                            <input class="form-control" type="checkbox"
+                                                                                   onchange=""  disabled="disabled"
+                                                                                   name="hire_loan" value="true"
+                                                                                   data-product-id="{{$product->product_id}}"
+                                                                                   id="hire-loan-{{$product->product_id}}"
+                                                                                   @if($product->hire_loan)  @endif/>
+                                                                            <label for="hire-loan-{{$product->product_id}}">Hire
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="ps-checkbox">
+                                                                            <input class="form-control" type="checkbox"
+                                                                                   name="renovation_loan"
+                                                                                   onchange=""  disabled="disabled"
+                                                                                   data-product-id="{{$product->product_id}}"
+                                                                                   value="true"
+                                                                                   id="renovation-loan-{{$product->product_id}}"
+                                                                                   @if($product->renovation_loan)  @endif/>
+                                                                            <label for="renovation-loan-{{$product->product_id}}">Renovation
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
+
                                                             </th>
                                                             <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control"
-                                                                           type="checkbox"
-                                                                           onchange="changeCriteria(this);"
-                                                                           @if($product->housing_loan) checked=checked
-                                                                           @endif
-                                                                           name="housing_loan"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           value="true"
-                                                                           data-status="0"
-                                                                           id="housing-loan-{{$product->product_id}}">
-                                                                    <label for="housing-loan-{{$product->product_id}}">Housing
-                                                                        Loan</label>
+                                                                Wealth
+                                                                <div class="row">
+                                                                    <div class="width-50">
+                                                                        <div class="ps-checkbox">
+                                                                            <input class="form-control" type="checkbox"
+                                                                                   data-product-id="{{$product->product_id}}"
+                                                                                   name="life_insurance"
+                                                                                   onchange=""  disabled="disabled"
+                                                                                   @if($product->life_insurance)
+                                                                                   @endif value="true"
+                                                                                   id="life-insurance-{{$product->product_id}}"/>
+                                                                            <label for="life-insurance-{{$product->product_id}}">Insurance</label>
+                                                                        </div>
+                                                                        <div class="ps-checkbox">
+                                                                            <input class="form-control" type="checkbox"
+                                                                                   onchange=""  disabled="disabled"
+                                                                                   name="unit_trust" value="true"
+                                                                                   data-product-id="{{$product->product_id}}"
+                                                                                   id="unit-trust-{{$product->product_id}}"
+                                                                                   @if($product->unit_trust)  @endif/>
+                                                                            <label for="unit-trust-{{$product->product_id}}">Unit
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control"
-                                                                           type="checkbox"
-                                                                           name="education_loan"
-                                                                           onchange="changeCriteria(this);"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           value="true"
-                                                                           data-status="0"
-                                                                           id='education-loan-{{$product->product_id}}'
-                                                                           @if($product->education_loan) checked=checked @endif/>
-                                                                    <label for="education-loan-{{$product->product_id}}">Education
-                                                                        Loan</label>
-                                                                </div>
-                                                            </th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control"
-                                                                           type="checkbox"
-                                                                           onchange="changeCriteria(this);"
-                                                                           name="hire_loan"
-                                                                           value="true"
-                                                                           data-status="0"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           id="hire-loan-{{$product->product_id}}"
-                                                                           @if($product->hire_loan) checked=checked @endif/>
-                                                                    <label for="hire-loan-{{$product->product_id}}">Hire
-                                                                        Purchase loan</label>
-                                                                </div>
-                                                            </th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control"
-                                                                           type="checkbox"
-                                                                           name="renovation_loan"
-                                                                           onchange="changeCriteria(this);"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           value="true"
-                                                                           data-status="0"
-                                                                           id="renovation-loan-{{$product->product_id}}"
-                                                                           @if($product->renovation_loan) checked=checked @endif/>
-                                                                    <label for="renovation-loan-{{$product->product_id}}">Renovation
-                                                                        loan</label>
-                                                                </div>
-                                                            </th>
-                                                            <th class="combine-criteria-padding">
-                                                                <div class="ps-checkbox">
-                                                                    <input class="form-control"
-                                                                           type="checkbox"
-                                                                           onchange="changeCriteria(this);"
-                                                                           name="unit_trust"
-                                                                           value="true"
-                                                                           data-status="0"
-                                                                           data-product-id="{{$product->product_id}}"
-                                                                           id="unit-trust-{{$product->product_id}}"
-                                                                           @if($product->unit_trust) checked=checked @endif/>
-                                                                    <label for="unit-trust-{{$product->product_id}}">Unit
-                                                                        Trust</label>
-                                                                </div>
+
                                                             </th>
                                                         </tr>
                                                         </thead>
@@ -1520,19 +1507,19 @@
                                                             <tr>
                                                                 <td>Bonus Interest PA</td>
                                                                 <td class="text-center @if($product->criteria_1==true ) highlight @endif"
-                                                                    colspan="3">1 Criteria Met
+                                                                    colspan="2">1 Criteria Met
                                                                     - @if($range->bonus_interest_criteria1<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria1 }}
                                                                         % @endif
                                                                 </td>
                                                                 <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
-                                                                    colspan="3">2 Criteria
+                                                                    colspan="2">2 Criteria
                                                                     - @if($range->bonus_interest_criteria2<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria2 }}
                                                                         % @endif
                                                                 </td>
                                                                 <td class="text-center @if($product->criteria_3==true ) highlight @endif"
-                                                                    colspan="3">3
+                                                                    colspan="1">3
                                                                     Criteria @if($range->bonus_interest_criteria3<=0)
                                                                         - @else  {{ $range->bonus_interest_criteria3 }}
                                                                         % @endif
@@ -1543,7 +1530,7 @@
                                                                     Earned for
                                                                     ${{ Helper::inThousand($range->placement) }}</td>
                                                                 <td class=" text-center @if($product->highlight==true ) highlight @endif"
-                                                                    colspan="9">
+                                                                    colspan="5">
 
                                                                     <span class="nill"> {{ NILL }}</span><br/>
 
