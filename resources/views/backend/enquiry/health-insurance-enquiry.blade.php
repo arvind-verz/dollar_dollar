@@ -39,8 +39,9 @@
                                                 <th>Full name</th>
                                                 <th>Email</th>
                                                 <th>Contact number</th>
-                                                <th>1. type of coverage...</th>
-                                                <th>2. existing health...</th>
+                                                <th>1. Type of coverage...</th>
+                                                <th>2. Existing health...</th>
+                                                <th>2.1 Health Conditions...</th>
                                                 <th>3. best time to reach...</th>
                                                 <th>Other</th>
                                                 <th>Created on</th>
@@ -68,6 +69,9 @@
                                                         </td>
                                                         <td>
                                                             {{ $enquiry->level }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $enquiry->health_condition }}
                                                         </td>
                                                         <td>
                                                             @if(isset($enquiry->times))

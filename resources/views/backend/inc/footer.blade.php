@@ -521,7 +521,7 @@
                     }],
 
                 });
-        $('#contact').DataTable(
+        $('#contact-table').DataTable(
                 {
                     dom: 'lBfrtip',
                     buttons: [
@@ -595,9 +595,9 @@
                     ],
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[0, 'asc']],
+                    'order': [[6, 'desc']],
                     "aoColumnDefs": [{
-                        "aTargets": [0],
+                        "aTargets": [0,7],
                         "bSortable": false,
 
                     }],
@@ -679,9 +679,9 @@
                     ],
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[0, 'asc']],
+                    'order': [[10, 'desc']],
                     "aoColumnDefs": [{
-                        "aTargets": [0],
+                        "aTargets": [0,11],
                         "bSortable": false,
 
                     }],
@@ -779,7 +779,7 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9]
                             },
                             filename: function () {
                                 var today = new Date();
@@ -801,7 +801,7 @@
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9]
                             },
                             filename: function () {
                                 var today = new Date();
@@ -824,7 +824,7 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8]
+                                columns: [1, 2, 3, 4, 5, 6,7,8,9]
                             },
                             filename: function () {
                                 var today = new Date();
@@ -845,9 +845,9 @@
                     ],
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[0, 'asc']],
+                    'order': [[9, 'desc']],
                     "aoColumnDefs": [{
-                        "aTargets": [0],
+                        "aTargets": [0,10],
                         "bSortable": false,
 
                     }],

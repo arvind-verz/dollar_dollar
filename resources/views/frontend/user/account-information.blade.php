@@ -34,10 +34,9 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                     <div class="ps-sidebar">
-                        <h3 class="ps-heading"><span> My </span> Account</h3>
                         <ul class="ps-list--sidebar">
-                            <li><a href="{{ url('profile-dashboard') }}">My Profile Dashboard</a></li>
-                            <li class="current"><a href="{{ url('account-information') }}">Account Information</a></li>
+                            <li><a href="{{ url('profile-dashboard') }}">Profile Dashboard</a></li>
+                            <li class="current"><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         @if(count($ads))
@@ -66,7 +65,7 @@
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
                     <div class="ps-dashboard">
                         <div class="ps-dashboard__header">
-                            <h3>Account Information</h3>
+                            <h3>Profile Information</h3>
                         </div>
                         <div class="ps-dashboard__content">
                             <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>

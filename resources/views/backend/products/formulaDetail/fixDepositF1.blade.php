@@ -72,8 +72,9 @@
                         </div>
                     </div>
                     <?php $bonusInterest = $value->bonus_interest;
-                    $tenures = json_decode($product->tenure); ?>
-                    @if(count($product->tenure))
+                    $tenures = json_decode($product->tenure);
+                    ?>
+                    @if(count($tenures))
 
 
                         @foreach($tenures as $k => $v)

@@ -33,10 +33,9 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                     <div class="ps-sidebar">
-                        <h3 class="ps-heading"><span> My </span> Account</h3>
                         <ul class="ps-list--sidebar">
-                            <li><a href="{{ url('profile-dashboard') }}">My Profile Dashboard</a></li>
-                            <li><a href="{{ url('account-information') }}">Account Information</a></li>
+                            <li><a href="{{ url('profile-dashboard') }}">Profile Dashboard</a></li>
+                            <li><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         @if(count($ads))
@@ -87,7 +86,7 @@
                                         </select>
                                         <input type="text" class="form-control hide" name="bank_id_other"
                                                value="{{ $product_management->other_bank }}"
-                                               placeholder="Enter bank name">
+                                               placeholder="Enter Bank or Financial Institution name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
@@ -136,8 +135,9 @@
                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
                                     <div class="form-group">
                                         <label>Reminder</label>
-                                        <select class="form-control select2" id="reminder" name="reminder[]"
-                                                multiple="multiple">
+                                        <select  class="form-control select2-multiple " id="reminder" disabled="disabled"
+                                                 name="reminder[]" multiple="multiple"
+                                                 style="width: 100%;height:45px;">
                                             <option value="1 Day"
                                                     @if(in_array('1 Day', $product_reminder)) selected @endif>1 Day
                                             </option>
@@ -168,16 +168,6 @@
                                                        value="@if(!empty($product_management->end_date)){{ date("Y-m-d", strtotime($product_management->end_date)) }} @endif">
                                             </div>
                                         </div>
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                            <div class="form-group submit">
-                                                <label>Do not Send Reminders</label>
-                                                <input type="checkbox" class="form-control" name="dod_reminder"
-                                                       value="1"
-                                                       @if($product_management->dod_reminder==1) checked @endif>
-
-                                                <p>"<span>*</span>" are mandatory fields.</p>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
@@ -188,9 +178,29 @@
                                                value="{{ $product_management->interest_earned }}">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group submit">
-                                <button type="submit" class="ps-btn">Submit</button>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                            <div class="form-group submit">
+                                                <label>Do not Send Reminders</label>
+                                                <input type="checkbox" class="form-control" name="dod_reminder"
+                                                       @if(old('dod_reminder')==1) checked @endif>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                            <div class="form-group submit">
+                                                <p>"<span>*</span>" are mandatory fields.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                            <div class="form-group submit">
+                                                <button type="submit" class="ps-btn">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             {{ Form::close() }}
                         </div>
