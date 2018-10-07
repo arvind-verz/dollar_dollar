@@ -32,7 +32,7 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="contact" class="table table-bordered">
+                                        <table id="contact-table" class="table table-bordered">
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
@@ -40,7 +40,7 @@
                                                 <th>Email</th>
                                                 <th>Contact number</th>
                                                 <th>Subject</th>
-                                                <th>Message</th>
+                                                <th>Message&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Created on</th>
                                                 <th>Action</th>
                                             </tr>

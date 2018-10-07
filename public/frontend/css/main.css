@@ -3551,7 +3551,7 @@ button {
 }
 
 .ps-form--product-management {
-    margin-bottom: 50px;
+    margin-bottom: auto;
 }
 
 .ps-form--product-management .ps-form__header {

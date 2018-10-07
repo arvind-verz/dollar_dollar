@@ -106,7 +106,7 @@ class EnquiryFrontController extends Controller
             'country_code' => 'required|max:255',
             'telephone' => 'required|min:8|max:255',
             'subject' => 'required|max:255',
-            'message' => 'required|max:255',
+            'message' => 'required|max:3500',
             'g-recaptcha-response' => 'required|captcha'
         ];
         $this->validate($request, $fields);

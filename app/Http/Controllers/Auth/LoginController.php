@@ -60,9 +60,9 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         // Validate the form data
-        $this->validate($request, [
+        /*$this->validate($request, [
         'g-recaptcha-response' => 'required|captcha'
-        ]);
+        ]);*/
         return array_merge($request->only($this->username(), 'password'), ['status' => 1, 'delete_status' => 0]);
     }
 

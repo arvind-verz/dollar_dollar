@@ -34,10 +34,9 @@
             <div class="row mt-20">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                     <div class="ps-sidebar">
-                        <h3 class="ps-heading"><span> My </span> Account</h3>
                         <ul class="ps-list--sidebar">
-                            <li><a href="{{ url('profile-dashboard') }}">My Profile Dashboard</a></li>
-                            <li><a href="{{ url('account-information') }}">Account Information</a></li>
+                            <li><a href="{{ url('profile-dashboard') }}">Profile Dashboard</a></li>
+                            <li><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         @if(count($ads))
@@ -103,7 +102,7 @@
                                                 <option value="0">Other</option>
                                             </select>
                                             <input type="text" class="form-control hide" name="bank_id_other" value=""
-                                                   placeholder="Enter bank name">
+                                                   placeholder="Enter Bank or Financial Institution name">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
@@ -121,27 +120,32 @@
                                             <!-- <span class="suffix_k">K</span> -->
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                        <div class="input-group form-group">
-                                            <label>Tenure</label>
-                                            <input type="text" class="form-control " name="tenure"
-                                                   value="{{ old('tenure') }}">
-
-                                            <div class="input-group-btn" style="width: 50%;">
-                                                <select class="form-control mt-30" name="tenure_calender">
-                                                    <option value="D" selected>Days</option>
-                                                    <option value="M">Months</option>
-                                                    <option value="Y">Years</option>
-                                                </select>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                                <div class="form-group">
+                                                    <label>Tenure</label>
+                                                    <input type="text" class="form-control " name="tenure"
+                                                           value="{{ old('tenure') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                                <div class="form-group">
+                                                    <select class="form-control mt-30" name="tenure_calender">
+                                                        <option value="D" selected>Days</option>
+                                                        <option value="M">Months</option>
+                                                        <option value="Y">Years</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder</label>
-                                            <select class="form-control select2" id="reminder" disabled="disabled"
+                                            <select  class="form-control select2-multiple " id="reminder" disabled="disabled"
                                                     name="reminder[]" multiple="multiple"
-                                                    style="width: 100%">
+                                                    style="width: 100%;height:45px;">
                                                 <option value="1 Day">1 Day</option>
                                                 <option value="1 Week">1 Week</option>
                                                 <option value="2 Week">2 Week</option>
@@ -182,25 +186,18 @@
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                                 <div class="form-group submit">
                                                     <label>Do not Send Reminders</label>
-                                                    <input type="checkbox" class="form-control" name="dod_reminder"
+                                                    <input type="checkbox" class="form-control" disabled="disabled" name="dod_reminder"
                                                            @if(old('dod_reminder')==1) checked @endif>
 
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                                <div class="form-group submit">
                                                     <p>"<span>*</span>" are mandatory fields.</p>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
-                                                <div class="form-group submit">
-                                                    <p>Add any products or promotions you have to keep track of your
-                                                        total assets across all the banks and institution in Singapore.
-                                                        We will also send reminder(s) to you when your promotion due
-                                                        date is near to maximise the bonus interest you can earn.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                                 <div class="form-group submit">
                                                     <button type="submit" class="ps-btn">Add Products</button>
                                                 </div>
@@ -220,7 +217,7 @@
                                                         <br> Name
                                                     </th>
                                                     <th>Amount</th>
-                                                    <th>tenure
+                                                    <th>Tenure
                                                         <br> (M= months,
                                                         <br> D = Days)
                                                         <br> Y = Years)
