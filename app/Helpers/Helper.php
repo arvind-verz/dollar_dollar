@@ -357,7 +357,7 @@ class Helper
         $sel_query = Tag::where('title', '=', $slug)->get();
         $tag_id = $sel_query[0]->id;
         $tags_found = [];
-        $sel_query = Page::whereNotNull('tags')->get();
+        $sel_query = Page::whereNotNull('tags')->where('delete_status',0)->get();
         //dd($sel_query[0]->tags);
         foreach ($sel_query as $value) {
             $mytags = json_decode($value->tags);
