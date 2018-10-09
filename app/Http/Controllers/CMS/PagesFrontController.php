@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Tag;
 
 class PagesFrontController extends Controller
 {
@@ -779,26 +780,41 @@ class PagesFrontController extends Controller
         $blogSearch = null;
         if (isset($request->b_search)) {
             $blogSearch = $request->b_search;
-            $query = $query->where('pages.name', 'LIKE', '%' . $request->b_search . '%')
-                ->orwhere('menus.title', 'LIKE', '%' . $request->b_search . '%');
-
-            $tags = Tag::where('title','LIKE', '%' . $request->b_search . '%')->get();
-            $tag_id = $sel_query[0]->id;
-            $tags_found = [];
-            $sel_query = Page::whereNotNull('tags')->where('delete_status',0)->get();
-            //dd($sel_query[0]->tags);
-            foreach ($sel_query as $value) {
-                $mytags = json_decode($value->tags);
-                //print_r($tag_id);
-                if (in_array($tag_id, $mytags)) {
-                    $tags_found[] = $value->id;
+            $tags = Tag::where('title', 'LIKE', '%' . $request->b_search . '%')->get();
+            $tagFound = [];
+            if ($tags->count()) {
+                $tags = $tags->pluck('id')->all();
+                $pagesTagNotNull = Page::whereNotNull('tags')->where('delete_status', 0)->get();
+                //dd($sel_query[0]->tags);
+                if ($pagesTagNotNull->count()) {
+                    foreach ($pagesTagNotNull as $page) {
+                        $pageTags = json_decode($page->tags);
+                        //print_r($tag_id);
+                        $commonTags=[];
+                        if (count($pageTags) && count($tags)) {
+                            $commonTags = array_intersect($pageTags,$tags);
+                            if(count($commonTags))
+                            {
+                                $tagFound[]= $page->id;
+                            }
+                        }
+                    }
                 }
             }
+
+            $query = $query->where('pages.name', 'LIKE', '%' . $request->b_search . '%')
+                ->orwhere('menus.title', 'LIKE', '%' . $request->b_search . '%');
+            //dd($tagFound);
+            if(count($tagFound))
+            {
+                $query->orWhereIn('pages.id', [$tagFound]);
+            }
+
         }
         if (Auth::guest()) {
-            $details = $query->whereIn('after_login', [0, null])->paginate(5);
+            $details = $query->whereIn('after_login', [0, null])->paginate(8);
         } else {
-            $details = $query->paginate(5);
+            $details = $query->paginate(8);
         }
 
         $ads = AdsManagement::where('delete_status', 0)

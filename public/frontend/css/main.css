@@ -1212,8 +1212,8 @@ button {
 
 .ps-post .ps-post__meta {
     display: block;
-    padding-bottom: 25px;
-    margin-bottom: 25px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
     font-family: "Montserrat", sans-serif;
     font-size: 14px;
     color: #3db54a;
