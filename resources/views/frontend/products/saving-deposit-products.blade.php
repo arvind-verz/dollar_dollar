@@ -224,22 +224,7 @@ class="fa fa-refresh"></i></a>
                                         {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
                                     @endif
                                 </p>
-
-                                <p class="text-uppercase">
-                                    <?php
-                                    $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                    if ((!is_null($product->remaining_days)) && (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1]))) {
-                                        echo $product->remaining_days . ' ' . \Helper::days_or_month_or_year(1, $product->remaining_days) . ' left';
-                                    } elseif ($product->promotion_end > $todayStartDate) {
-
-                                        $end_date = new DateTime(date("Y-m-d",
-                                                strtotime($product->promotion_end)));
-                                        $interval = date_diff($end_date, $start_date);
-                                        echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
-
-                                    }
-                                    ?>
-                                </p>
+                                
                             </div>
                         </div>
                         <div class="ps-product__content">
@@ -839,23 +824,6 @@ class="fa fa-refresh"></i></a>
                                     @elseif($product->promotion_end > $todayStartDate)
                                         {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
                                     @endif
-                                </p>
-
-                                <p class="text-uppercase">
-                                    <?php
-                                    $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                    if ((!is_null($product->remaining_days)) && (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1]))) {
-                                    echo $product->remaining_days. ' ' . \Helper::days_or_month_or_year(1, $product->remaining_days) . ' left';
-                                    }
-                                    elseif ($product->promotion_end > $todayStartDate) {
-
-                                    $end_date = new DateTime(date("Y-m-d",
-                                    strtotime($product->promotion_end)));
-                                    $interval = date_diff($end_date, $start_date);
-                                    echo $interval->format('%a') . ' ' . \Helper::days_or_month_or_year(1, $interval->format('%a')) . ' left';
-
-                                    }
-                                    ?>
                                 </p>
                             </div>
                         </div>

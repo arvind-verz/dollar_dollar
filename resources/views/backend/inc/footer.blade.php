@@ -1045,7 +1045,7 @@
                             }
 
                         });
-                        if (tenureError == false) {
+                        /*if (tenureError == false) {
                             $.ajax({
                                 method: "POST",
                                 url: "{{url('/admin/check-tenure')}}",
@@ -1059,7 +1059,7 @@
                                     }
                                 }
                             });
-                        }
+                        }*/
                         /*if (rangeError == false) {
                          $.ajax({
                          method: "POST",

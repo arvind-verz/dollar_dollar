@@ -125,13 +125,13 @@ function moreInfo() {
         e.preventDefault();
         if (!$(this).hasClass('active')) {
             $(this).addClass('active');
-            $(this).html("Info Less <i class='fa fa-angle-up'></i>")
+            $(this).html("Data Less <i class='fa fa-angle-up'></i>")
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideDown();
             $(this).closest('.ps-product').find('.ps-table-wrap').slideDown();
         }
         else {
             $(this).removeClass('active');
-            $(this).html("More Info <i class='fa fa-angle-down'></i>")
+            $(this).html("More Data <i class='fa fa-angle-down'></i>")
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideUp();
             $(this).closest('.ps-product').find('.ps-table-wrap').slideUp();
         }

@@ -93,6 +93,10 @@ class BlogController extends Controller
         } else {
             $fields['slug'] = 'required';
         }
+        if($request->menu_id=="null")
+        {
+            $fields['category'] = 'required';
+        }
         $validator = Validator::make($request->all(), $fields);
 
         if ($validator->getMessageBag()->count()) {
@@ -258,6 +262,10 @@ class BlogController extends Controller
             $validatorFields ['slug'] = 'required';
             $validatorFields ['contents'] = 'required';
 
+        }
+        if($request->menu_id=="null")
+        {
+            $validatorFields['category'] = 'required';
         }
         $this->validate($request, $validatorFields);
 

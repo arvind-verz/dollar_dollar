@@ -293,6 +293,7 @@ define('MONTHS', "Months");
 define('DAYS', "Days");
 define('UNTIL', "Until");
 define('SEARCH_RESULT_ERROR', "There are no results that match your search");
+define('BLOG_NOT_FOUND', "");
 
 
 // single lines for product result

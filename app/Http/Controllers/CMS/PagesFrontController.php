@@ -7,6 +7,7 @@ use App\Brand;
 use App\Currency;
 use App\DefaultSearch;
 use App\Http\Controllers\Controller;
+use App\Menu;
 use App\Page;
 use App\ProductManagement;
 use App\PromotionProducts;
@@ -16,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Tag;
 
 class PagesFrontController extends Controller
 {
@@ -746,7 +748,7 @@ class PagesFrontController extends Controller
 
     public function getBlogByCategories($id = NULL, Request $request)
     {
-        //dd($request->all());
+        //dd($request->all(),$id);
         if (isset($request->blog_id)) {
             $id = $request->blog_id;
         }
@@ -760,6 +762,7 @@ class PagesFrontController extends Controller
             return back()->with('error', OPPS_ALERT);
         }
 
+
 //get banners
         $banners = \Helper::getBanners(BLOG_URL);
 
@@ -768,19 +771,50 @@ class PagesFrontController extends Controller
             ->where('pages.is_blog', 1)
             ->select('pages.*', 'menus.title as menu_title')
             ->orderBy('pages.id', 'DESC');
+        $menu = null;
         if (!is_null($id)) {
             $query = $query->where('pages.menu_id', $id);
+            $menu = Menu::where('id', $id)->where('delete_status', 0)->first();
+
         }
         $blogSearch = null;
         if (isset($request->b_search)) {
             $blogSearch = $request->b_search;
+            $tags = Tag::where('title', 'LIKE', '%' . $request->b_search . '%')->get();
+            $tagFound = [];
+            if ($tags->count()) {
+                $tags = $tags->pluck('id')->all();
+                $pagesTagNotNull = Page::whereNotNull('tags')->where('delete_status', 0)->get();
+                //dd($sel_query[0]->tags);
+                if ($pagesTagNotNull->count()) {
+                    foreach ($pagesTagNotNull as $page) {
+                        $pageTags = json_decode($page->tags);
+                        //print_r($tag_id);
+                        $commonTags=[];
+                        if (count($pageTags) && count($tags)) {
+                            $commonTags = array_intersect($pageTags,$tags);
+                            if(count($commonTags))
+                            {
+                                $tagFound[]= $page->id;
+                            }
+                        }
+                    }
+                }
+            }
+
             $query = $query->where('pages.name', 'LIKE', '%' . $request->b_search . '%')
                 ->orwhere('menus.title', 'LIKE', '%' . $request->b_search . '%');
+            //dd($tagFound);
+            if(count($tagFound))
+            {
+                $query->orWhereIn('pages.id', [$tagFound]);
+            }
+
         }
         if (Auth::guest()) {
-            $details = $query->whereIn('after_login', [0, null])->paginate(5);
+            $details = $query->whereIn('after_login', [0, null])->paginate(8);
         } else {
-            $details = $query->paginate(5);
+            $details = $query->paginate(8);
         }
 
         $ads = AdsManagement::where('delete_status', 0)
@@ -791,10 +825,12 @@ class PagesFrontController extends Controller
             ->get();
 //dd($ads);
         if (!$details->count()) {
-            \Session::flash('error', SEARCH_RESULT_ERROR);
-            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch'));
+            if (isset($request->b_search)) {
+                \Session::flash('error', SEARCH_RESULT_ERROR);
+            }
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch', 'menu'));
         } else {
-            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch'));
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch', 'menu'));
         }
 
     }
@@ -1126,8 +1162,7 @@ class PagesFrontController extends Controller
                             if ($product->promotion_period == ONGOING) {
                                 $tenure = 1;
                                 $tenureTotal = 1;
-                            }
-                            elseif ($untilEndDate > $todayDate) {
+                            } elseif ($untilEndDate > $todayDate) {
                                 $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                             }
                         }
@@ -1829,8 +1864,7 @@ class PagesFrontController extends Controller
                             if ($product->promotion_period == ONGOING) {
                                 $tenure = 1;
                                 $tenureTotal = 1;
-                            }
-                            elseif ($untilEndDate > $todayDate) {
+                            } elseif ($untilEndDate > $todayDate) {
                                 $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                             }
 
@@ -2694,8 +2728,7 @@ class PagesFrontController extends Controller
                             if ($product->promotion_period == ONGOING) {
                                 $tenure = 1;
                                 $tenureTotal = 1;
-                            }
-                            elseif ($untilEndDate > $todayDate) {
+                            } elseif ($untilEndDate > $todayDate) {
                                 $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                             }
                         }
