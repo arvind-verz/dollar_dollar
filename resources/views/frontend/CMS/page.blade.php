@@ -62,7 +62,7 @@
     @if($page->slug!=THANK_SLUG)
         <main class="ps-main">
             <div class="container">
-                <h3 class="ps-heading mb-35 pl-15">
+                <h3 class="ps-heading mb-20 pl-15">
                     <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
                 </h3>
 
@@ -92,7 +92,7 @@
             $(".ps-block--highlight button").remove();
             $(".enquiry-url button").remove();
             $(".ps-block--highlight h4").after('<a class="ps-btn" href="'+redirect_url+'">Get quotes</a>');
-            $(".enquiry-url").html('<a class="ps-btn" href="'+redirect_url+'">Enquire now</a>');
+            $(".enquiry-url").html('<a class="ps-btn" href="'+redirect_url+'">Get quotes</a>');
         }
     });
 </script>

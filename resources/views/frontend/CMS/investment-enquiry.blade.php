@@ -55,7 +55,7 @@
             ?>
             {{--Page content start--}}
             @if($page->slug!=THANK_SLUG)
-                <h3 class="ps-heading mb-35">
+                <h3 class="ps-heading mb-20">
                     <span>@if(!empty($page->icon))<i
                                 class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
                 </h3>

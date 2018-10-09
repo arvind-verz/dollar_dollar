@@ -226,17 +226,6 @@ class="fa fa-refresh"></i></a>
                                     @endif
                                 </p>
 
-                                <p class="text-uppercase">
-                                    <?php
-                                    if ($product->promotion_end > $todayStartDate) {
-                                        $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                        $end_date = new DateTime(date("Y-m-d",
-                                                strtotime($product->promotion_end)));
-                                        $interval = date_diff($end_date, $start_date);
-                                        echo $interval->format('%a days left');
-                                    }
-                                    ?>
-                                </p>
                             </div>
                         </div>
                         <div class="ps-product__content">
@@ -463,18 +452,6 @@ class="fa fa-refresh"></i></a>
                                         @elseif($product->promotion_end > $todayStartDate)
                                             {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
                                         @endif
-                                    </p>
-
-                                    <p class="text-uppercase">
-                                        <?php
-                                        if ($product->promotion_end > $todayStartDate) {
-                                            $start_date = new DateTime(date("Y-m-d", strtotime("now")));
-                                            $end_date = new DateTime(date("Y-m-d",
-                                                    strtotime($product->promotion_end)));
-                                            $interval = date_diff($end_date, $start_date);
-                                            echo $interval->format('%a days left');
-                                        }
-                                        ?>
                                     </p>
                                 </div>
                             </div>
