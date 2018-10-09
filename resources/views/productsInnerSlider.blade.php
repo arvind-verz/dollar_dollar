@@ -71,7 +71,7 @@
                                 </p>
                             @endif
                         </div>
-                        <a class="ps-btn" href="#{{ $i }}">More data</a>
+                        <a class="ps-btn" href="#p-{{ $i }}">More data</a>
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@
                                 </p>
                             @endif
                         </div>
-                        <a class="ps-btn" href="#{{ (count($featured)+$i) }}">More data</a>
+                        <a class="ps-btn" href="#p-{{ (count($featured)+$i) }}">More data</a>
                     </div>
                     @php $i++; @endphp
                 @endif
