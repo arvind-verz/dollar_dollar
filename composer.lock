@@ -2481,16 +2481,16 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "2.8.3",
+            "version": "2.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "354cf7122fc5333b055447bc7f81ec6ff8c7fb3d"
+                "reference": "28f481486706d22255879965f4f57b7562d13c3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/354cf7122fc5333b055447bc7f81ec6ff8c7fb3d",
-                "reference": "354cf7122fc5333b055447bc7f81ec6ff8c7fb3d",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/28f481486706d22255879965f4f57b7562d13c3b",
+                "reference": "28f481486706d22255879965f4f57b7562d13c3b",
                 "shasum": ""
             },
             "require": {
@@ -2547,7 +2547,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2018-09-01T06:37:32+00:00"
+            "time": "2018-09-23T12:00:26+00:00"
         },
         {
             "name": "spatie/laravel-permission",
