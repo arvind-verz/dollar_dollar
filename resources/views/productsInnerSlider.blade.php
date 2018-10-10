@@ -58,7 +58,7 @@
                             @else
                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
                                     @if($product->promotion_period==ONGOING)
-                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                         {{ $product->promotion_period }}
                                     @else
                                         @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                             {{ $product->remaining_days }}  <span
@@ -156,7 +156,7 @@
                             @else
                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
                                     @if($product->promotion_period==ONGOING)
-                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                        {{ $product->promotion_period }}
                                     @else
                                         @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                             {{ $product->remaining_days }}  <span

@@ -117,8 +117,8 @@ class SystemSettingController extends Controller
         $oldSystemSetting->footer = $request->footer;
         $oldSystemSetting->contact_us_section = $request->contact_us_section;
         $oldSystemSetting->offer_section = $request->offer_section;
-        $oldSystemSetting->contact_us_section = $request->footer3;
-        $oldSystemSetting->offer_section = $request->footer4;
+        $oldSystemSetting->footer3 = $request->footer_3;
+        $oldSystemSetting->footer4 = $request->footer_4;
         $oldSystemSetting->created_at = Carbon::now()->toDateTimeString();
         if (isset($request->contact_addresses) && ($request->contact_addresses != null)) {
             $oldSystemSetting->contact_addresses = serialize(array_filter($request->contact_addresses));
