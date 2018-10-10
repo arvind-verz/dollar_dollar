@@ -216,9 +216,20 @@ class PagesController extends Controller
                 return redirect()->back()->withInput($request->input())->withErrors(['The slug' . ALREADY_TAKEN_ALERT]);
             }
         }
-
-        
-
+        $tooltip=[];
+        if(isset($request->reminder_tooltip))
+        {
+            $tooltip['reminder_tooltip'] = $request->reminder_tooltip;
+        }else{
+            $tooltip['reminder_tooltip'] = '';
+        }
+        if(isset($request->interest_earn_tooltip))
+        {
+            $tooltip['interest_earn_tooltip'] = $request->interest_earn_tooltip;
+        }else{
+            $tooltip['interest_earn_tooltip'] = '';
+        }
+        $page->tooltip = json_encode([$tooltip]);
 
         $oldPage = $page;
         $page->name = ucfirst($request->name);

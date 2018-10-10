@@ -68,6 +68,11 @@
                         //$pageName = strtok($page->name, " ");;
                         $pageName = explode(' ', trim($page->name));
                         $pageHeading = $pageName[0];
+                        $tooltips = \GuzzleHttp\json_decode($page->tooltip);
+                        $toolTip = null;
+                        if (count($tooltips)) {
+                            $toolTip = $tooltips[0];
+                        }
                         // $a =  array_shift($arr);
                         unset($pageName[0]);
                         ?>
@@ -138,12 +143,19 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            </div>
                                         </div>
+                                    </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
                                         <div class="form-group">
-                                            <label>Reminder</label>
-                                            <select  class="form-control select2-multiple " id="reminder" disabled="disabled"
+                                            <label>Reminder
+                                            </label>
+                                            @if(isset($toolTip->reminder_tooltip))
+                                                <a class="ps-tooltip" href="javascript:void(0)"
+                                                   data-tooltip="{{$toolTip->reminder_tooltip}}"><i
+                                                            class="fa fa-exclamation-circle"></i></a>
+                                            @endif
+                                            <select class="form-control select2-multiple " id="reminder"
+                                                    disabled="disabled"
                                                     name="reminder[]" multiple="multiple"
                                                     style="width: 100%;height:45px;">
                                                 <option value="1 Day">1 Day</option>
@@ -175,7 +187,13 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
-                                            <label>Interested earned</label>
+                                            <label>Interested earned
+                                            </label>
+                                            @if(isset($toolTip->interest_earn_tooltip))
+                                                <a class="ps-tooltip" href="javascript:void(0)"
+                                                   data-tooltip="{{$toolTip->interest_earn_tooltip}}"><i
+                                                            class="fa fa-exclamation-circle"></i></a>
+                                            @endif
                                             <input class="form-control" name="interest_earned" type="text"
                                                    placeholder="Enter Interest Rate &/OR in dollar amount"
                                                    value="{{ old('interest_earned') }}">
@@ -186,7 +204,8 @@
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                                 <div class="form-group submit">
                                                     <label>Do not Send Reminders</label>
-                                                    <input type="checkbox" class="form-control" disabled="disabled" name="dod_reminder"
+                                                    <input type="checkbox" class="form-control" disabled="disabled"
+                                                           name="dod_reminder"
                                                            @if(old('dod_reminder')==1) checked @endif>
 
 

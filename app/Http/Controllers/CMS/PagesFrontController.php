@@ -78,9 +78,42 @@ class PagesFrontController extends Controller
                 ->where('promotion_products.featured', '=', 1)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
-                ->orderBy('promotion_products.featured', 'DESC')
                 ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
                 ->get();
+            /*if($products->count())
+            {
+                foreach($products as &$product)
+                {
+                    $maxTenure = 0;
+                    $minTenure = 0;
+                    if ($product->promotion_period == ONGOING) {
+                        $product->tenure_category = ONGOING;
+                    } elseif($product->promotion_type_id!=ALL_IN_ONE_ACCOUNT) {
+                        $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
+                        if (count($placementPeriod)) {
+                            $placementTenures = [];
+                            foreach ($placementPeriod as $period) {
+                                $value = (int)filter_var($period, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                                if ($value > 0) {
+                                    $placementTenures[] = $value;
+                                }
+                            }
+                            if (count($placementTenures)) {
+                                $maxTenure = max($placementTenures);
+                                $minTenure = min($placementTenures);
+                                if (count($placementTenures) > 4) {
+                                    $product->promotion_period = $minTenure . ' - ' . $maxTenure;
+                                }
+                            }
+                        }
+                        if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                            $product->tenure_category = DAYS;
+                        } else {
+                            $product->tenure_category = MONTHS;
+                        }
+                    }
+                }
+            }*/
             //dd($products);
 
             $user_products_ending = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')

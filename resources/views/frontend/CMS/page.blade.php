@@ -91,8 +91,8 @@
         if(auth_check==1) {
             $(".ps-block--highlight button").remove();
             $(".enquiry-url button").remove();
-            $(".ps-block--highlight h4").after('<a class="ps-btn" href="'+redirect_url+'">Get quotes</a>');
-            $(".enquiry-url").html('<a class="ps-btn" href="'+redirect_url+'">Get quotes</a>');
+            $(".ps-block--highlight h4").after('<a class="ps-btn" href="'+redirect_url+'">Enquire now</a>');
+            $(".enquiry-url").html('<a class="ps-btn" href="'+redirect_url+'">Enquire now</a>');
         }
     });
 </script>
