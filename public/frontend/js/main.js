@@ -188,8 +188,11 @@ $(document).ready(function () {
     tabs();
     moreInfo();
     $(".ps-btn--checkbox").click(function(){
-        // $(".ps-loan-popup").slideTo;
-        if(document.getElementById("checkbox").checked == true){
+       var checkId = $(this).find('.checkbox');
+        var checked = checkId.is(':checked');
+        $(".checkbox").prop('checked', false);
+        if(checked){
+            $(checkId).prop('checked', true);
             $(".ps-loan-popup").css('display','block');
         }
         else{

@@ -215,10 +215,10 @@
             </div>
             <div class="ps-product featured-1">
                 <div class="ps-product__header">
-                    <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/ocbc_1533044523.png" alt="">
+                    <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/uob_1532959156.png" alt="">
                     <div class="ps-product__promo left">
                         <label class="ps-btn--checkbox">
-                            <input type="checkbox" id="checkbox"><span></span>Shortlist this Loan
+                            <input type="checkbox" id="checkbox-1" class="checkbox"><span></span>Shortlist this Loan
                         </label>
                     </div>
                 </div>
@@ -286,7 +286,79 @@
                     <!-- <a class="ps-product__info sp-only" href="#">More data<i class="fa fa-angle-down"></i></a> -->
                 </div>
             </div>
-
+            <div class="ps-product featured-1">
+                <div class="ps-product__header">
+                    <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/ocbc_1533044523.png" alt="">
+                    <div class="ps-product__promo left">
+                        <label class="ps-btn--checkbox">
+                            <input type="checkbox" id="checkbox-2" class="checkbox"><span></span>Shortlist this Loan
+                        </label>
+                    </div>
+                </div>
+                <div class="ps-loan__text1">BOC Fixed Deposit Rate (FHR) Housing Loan</div>
+                <div class="ps-loan-content ps-loan-content1">
+                    <table class="ps-table ps-table--product">
+                        <thead>
+                        <tr>
+                            <th>YEARS</th>
+                            <th>INTEREST RATE (PA)</th>
+                            <th>Monthly Installment</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="highlight">YEAR 1</td>
+                            <td>1.5% (1mth Sibor + 1.5%)</td>
+                            <td class="highlight">$700 / mth</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">YEAR 2</td>
+                            <td>1.5% (1mth Sibor + 1.5%)</td>
+                            <td class="highlight">$700 / mth</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">YEAR 3</td>
+                            <td>1.5% (1mth Sibor + 1.5%)</td>
+                            <td class="highlight">$700 / mth</td>
+                        </tr>
+                        <tr>
+                            <td class="highlight">THEREAFTER</td>
+                            <td>2.3% (1mth Sibor + 2.3%)</td>
+                            <td class="highlight">$500 / mth</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="ps-loan-right">
+                        <h4>For 600k loan with 30 years Loan Tenure</h4>
+                        <p>Rate Type : <strong>Floating (Sibor)</strong></p>
+                        <p>Interest Rate : <strong>2.3% (3 Years)</strong></p>
+                        <p>Lock In : <strong>2 Years</strong></p>
+                        <p>Monthly Installments : <strong>$500 (3 Years Avg.)</strong></p>
+                        <p>Property Type : <strong>Private/HDB (Completed)</strong></p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="ps-product__detail">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                            <h4 class="ps-product__heading">Keypoints</h4>
+                            <ul class="ps-list--arrow-circle">
+                                <li>Receive interest upfront</li>
+                                <li>Deposit into main account</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                            <div class="ps-product__actions"><a class="ps-btn ps-btn--outline" href="#">Main Page</a><a class="ps-btn ps-btn--outline" href="#">T&amp;C</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ps-product__footer">
+                    <a class="ps-product__more" href="#">More Detail <i class="fa fa-angle-down"></i></a>
+                    <!-- <a class="ps-product__info sp-only" href="#">More data<i class="fa fa-angle-down"></i></a> -->
+                </div>
+            </div>
         </div>
         {{--Page content end--}}
         {{--contact us or what we offer section start--}}
@@ -296,7 +368,7 @@
         {{--contact us or what we offer section end--}}
         <div class="ps-loan-popup">
             <p>Speak with a mortgage specialist to know more about the loan you have shortlisted!</p>
-            <a href="">ENQUIRE NOW</a>
+            <a href="{{url('loan-enquiry')}}">ENQUIRE NOW</a>
         </div>
 
 

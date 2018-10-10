@@ -99,19 +99,34 @@
                                             @foreach($products as $product)
                                                 <div class="ps-block--short-product second"><img
                                                             src="{{ asset($product->brand_logo) }}" alt="">
-                                                    <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                                    <h4><strong>up to   <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
+                                                                %</span></strong>
                                                     </h4>
 
                                                     <div class="ps-block__info">
-                                                        <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}
+                                                        <p><span class="slider-font">Rate: </span>{{ $product->maximum_interest_rate }}
                                                             %</p>
 
-                                                        <p><strong>Min:</strong> SGD
+                                                        <p><span class="slider-font">Min:</span> SGD
                                                             ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                         </p>
 
-                                                        <p class="highlight">{{ $product->promotion_period }}
-                                                            {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                        <p class="highlight highlight-bg ">
+                                                            @if($product->promotion_period==ONGOING)
+                                                                 {{ $product->promotion_period }}
+                                                            @elseif($product->promotion_type_id!=ALL_IN_ONE_ACCOUNT)
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                    {{ $product->remaining_days }}  <span
+                                                                            class="slider-font">{{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}</span>
+                                                                @else
+                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0)
+                                                                        <span
+                                                                                class="slider-font">{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}</span> @endif
+                                                                @endif
+                                                            @else
+                                                                {{ $product->promotion_period }} Criteria
+                                                            @endif
+                                                        </p>
                                                     </div>
                                                     <a class="ps-btn"
                                                        href="@if($product->promotion_type_id==1) fixed-deposit-mode @elseif($product->promotion_type_id==2) saving-deposit-mode @elseif($product->promotion_type_id==3) all-in-one-deposit-mode @elseif($product->promotion_type_id==4) privilege-deposit-mode @elseif($product->promotion_type_id==5) foreign-currency-deposit-mode @endif">More

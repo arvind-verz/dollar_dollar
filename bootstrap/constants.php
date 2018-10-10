@@ -188,6 +188,7 @@ define('PRIVILEGE_DEPOSIT_MODE', "privilege-deposit-mode");
 define('FOREIGN_CURRENCY_DEPOSIT_MODE', "foreign-currency-deposit-mode");
 define('AIO_DEPOSIT_MODE', "all-in-one-deposit-mode");
 define('LOAN_MODE', "loan");
+define('LOAN_ENQUIRY', "loan-enquiry");
 define('TERMS_CONDITION', "terms-and-condition");
 define('PROFILEDASHBOARD', "profile-dashboard");
 define('ACCOUNTINFO', "account-information");

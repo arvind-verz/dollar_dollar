@@ -74,21 +74,30 @@ class PagesFrontController extends Controller
 
             $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
                 ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-                ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+                ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                 ->where('promotion_products.featured', '=', 1)
                 ->where('promotion_products.delete_status', '=', 0)
                 ->where('promotion_products.status', '=', 1)
                 ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
                 ->get();
-            /*if($products->count())
-            {
-                foreach($products as &$product)
-                {
+            if ($products->count()) {
+                $todayDate = Carbon::today();
+                foreach ($products as &$product) {
+                    if (!is_null($product->until_end_date)) {
+                        $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                        if ($untilEndDate > $todayDate) {
+                            $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                        } else {
+                            $product->remaining_days = EXPIRED;
+                        }
+                    } else {
+                        $product->remaining_days = null;
+                    }
                     $maxTenure = 0;
                     $minTenure = 0;
                     if ($product->promotion_period == ONGOING) {
                         $product->tenure_category = ONGOING;
-                    } elseif($product->promotion_type_id!=ALL_IN_ONE_ACCOUNT) {
+                    } elseif ($product->promotion_type_id != ALL_IN_ONE_ACCOUNT) {
                         $placementPeriod = \Helper::multiExplode(array(",", ".", "|", ":"), $product->promotion_period);
                         if (count($placementPeriod)) {
                             $placementTenures = [];
@@ -106,14 +115,37 @@ class PagesFrontController extends Controller
                                 }
                             }
                         }
-                        if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1])) {
+                        if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, PRIVILEGE_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2])) {
                             $product->tenure_category = DAYS;
                         } else {
                             $product->tenure_category = MONTHS;
                         }
+                        $product->max_tenure = $maxTenure;
+                        $product->min_tenure = $minTenure;
+                        $product->tenure_value = $maxTenure;
+                    } else {
+                        $product->tenure_category = CRITERIA;
                     }
                 }
-            }*/
+                $results = collect();
+                $products1 = $products->where('tenure_category', ONGOING)->sortBy('min_tenure')->values();
+                $products2 = $products->where('tenure_category', CRITERIA)->sortBy('promotion_period')->values();
+                $products3 = $products->where('tenure_category', MONTHS)->sortBy('min_tenure')->values();
+                $products4 = $products->where('tenure_category', DAYS)->sortBy('min_tenure')->values();
+                if ($products1->count()) {
+                    $results = $results->merge($products1);
+                }
+                if ($products2->count()) {
+                    $results = $results->merge($products2);
+                }
+                if ($products3->count()) {
+                    $results = $results->merge($products3);
+                }
+                if ($products4->count()) {
+                    $results = $results->merge($products4);
+                }
+                $products = $results;
+            }
             //dd($products);
 
             $user_products_ending = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
@@ -173,6 +205,9 @@ class PagesFrontController extends Controller
                     } else {
                         return view('auth.login', compact("redirect_url"));
                     }
+                } elseif ($slug == LOAN_ENQUIRY) {
+                    return view('frontend.CMS.loan-enquiry', compact("brands", "page", "systemSetting", "banners"));
+
                 } elseif ($slug == REGISTRATION) {
                     return view('frontend.CMS.registration', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == PROFILEDASHBOARD) {
