@@ -187,6 +187,16 @@ $(document).ready(function () {
     backToTop();
     tabs();
     moreInfo();
+    $(".ps-btn--checkbox").click(function(){
+        // $(".ps-loan-popup").slideTo;
+        if(document.getElementById("checkbox").checked == true){
+            $(".ps-loan-popup").css('display','block');
+        }
+        else{
+            $(".ps-loan-popup").css('display','none');
+
+        }
+    })
     $(".only_numeric").on("keydown", function (event) {
         if (event.keyCode == 189) {
             event.preventDefault();
