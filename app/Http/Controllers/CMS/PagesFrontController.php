@@ -12,12 +12,12 @@ use App\Page;
 use App\ProductManagement;
 use App\PromotionProducts;
 use App\systemSettingLegendTable;
+use App\Tag;
 use App\ToolTip;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Tag;
 
 class PagesFrontController extends Controller
 {
@@ -259,6 +259,17 @@ class PagesFrontController extends Controller
 
                     /*sent all pages detail into this function and than return to blade file*/
                     return $this->aioDepositMode($details);
+
+                } elseif ($slug == LOAN_MODE) {
+
+                    $details = [];
+                    $details['brands'] = $brands;
+                    $details['page'] = $page;
+                    $details['systemSetting'] = $systemSetting;
+                    $details['banners'] = $banners;
+
+                    /*sent all pages detail into this function and than return to blade file*/
+                    return $this->loanMode($details);
 
                 } elseif ($slug == TERMS_CONDITION) {
                     $details = [];
@@ -760,6 +771,13 @@ class PagesFrontController extends Controller
 
     }
 
+    public function loanMode()
+    {
+        $request = [];
+        return $this->loan($request);
+
+    }
+
     public function getContactForm()
     {
         $page = Page::where('delete_status', 0)->where('slug', CONTACT_SLUG)->first();
@@ -823,12 +841,11 @@ class PagesFrontController extends Controller
                     foreach ($pagesTagNotNull as $page) {
                         $pageTags = json_decode($page->tags);
                         //print_r($tag_id);
-                        $commonTags=[];
+                        $commonTags = [];
                         if (count($pageTags) && count($tags)) {
-                            $commonTags = array_intersect($pageTags,$tags);
-                            if(count($commonTags))
-                            {
-                                $tagFound[]= $page->id;
+                            $commonTags = array_intersect($pageTags, $tags);
+                            if (count($commonTags)) {
+                                $tagFound[] = $page->id;
                             }
                         }
                     }
@@ -838,8 +855,7 @@ class PagesFrontController extends Controller
             $query = $query->where('pages.name', 'LIKE', '%' . $request->b_search . '%')
                 ->orwhere('menus.title', 'LIKE', '%' . $request->b_search . '%');
             //dd($tagFound);
-            if(count($tagFound))
-            {
+            if (count($tagFound)) {
                 $query->orWhereIn('pages.id', [$tagFound]);
             }
 
@@ -3904,6 +3920,168 @@ class PagesFrontController extends Controller
 
         //dd($products);
         return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage", "toolTips"));
+    }
+
+    public
+    function search_loan(Request $request)
+    {
+        return $this->loan($request->all());
+    }
+
+    public
+    function loan($request)
+    {
+        $ads_manage = AdsManagement::where('delete_status', 0)
+            ->where('display', 1)
+            ->where('page', 'product')
+            ->where('page_type', LOAN_MODE)
+            ->inRandomOrder()
+            ->get();
+        $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
+        $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
+
+        $start_date = \Helper::startOfDayBefore();
+        $end_date = \Helper::endOfDayAfter();
+
+
+        DB::connection()->enableQueryLog();
+        $legendtable = systemSettingLegendTable::where('page_type', '=', LOAN)
+            ->where('delete_status', 0)
+            ->get();
+        $toolTips = ToolTip::where('promotion_id', LOAN)->first();
+
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            //->whereNotNull('promotion_products.formula_id')
+            ->where('promotion_types.id', '=', LOAN)
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id')
+            ->get();
+
+        $details = \Helper::get_page_detail(LOAN_MODE);
+        $brands = $details['brands'];
+        if ($promotion_products->count() && $brands->count()) {
+            $productsBrandIds = $promotion_products->pluck('bank_id')->all();
+            $brands = $brands->whereIn('id', $productsBrandIds);
+        }
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+
+        $filterProducts = [];
+        $remainingProducts = [];
+        if ($promotion_products->count()) {
+            foreach ($promotion_products as $key => $product) {
+                $defaultSearch = DefaultSearch::where('promotion_id', LOAN)->first();
+                if ($defaultSearch) {
+                    $defaultPlacement = $defaultSearch->placement;
+                    $defaultSalary = $defaultSearch->salary;
+                    $defaultGiro = $defaultSearch->payment;
+                    $defaultSpend = $defaultSearch->spend;
+                    $defaultLoan = $defaultSearch->loan;
+                    $defaultPrivilege = $defaultSearch->privilege;
+
+                } else {
+                    $defaultPlacement = 0;
+                    $defaultSalary = 0;
+                    $defaultGiro = 0;
+                    $defaultSpend = 0;
+                    $defaultLoan = 0;
+                    $defaultPrivilege = 0;
+
+                }
+                if (!count($request)) {
+                    $placement = 0;
+                    $searchValue = $defaultPlacement;
+                    $salary = $defaultSalary;
+                    $giro = $defaultGiro;
+                    $spend = $defaultSpend;
+                    $loan = $defaultLoan;
+                    $privilege = $defaultPrivilege;
+                    $searchFilter['search_value'] = $defaultPlacement;
+                    $searchFilter['salary'] = $defaultSalary;
+                    $searchFilter['giro'] = $defaultGiro;
+                    $searchFilter['spend'] = $defaultSpend;
+                    $searchFilter['privilege'] = $defaultLoan;
+                    $searchFilter['loan'] = $defaultPrivilege;
+                    $searchFilter['filter'] = INTEREST;
+                    $searchFilter['sort_by'] = MAXIMUM;
+                } else {
+                    $placement = 0;
+                    $searchFilter = $request;
+                    $searchValue = str_replace(',', '', $searchFilter['search_value']);
+                    if (!is_numeric($searchValue)) {
+                        $searchValue = $defaultPlacement;
+                    }
+                    $searchFilter['search_value'] = $searchValue;
+                    $salary = $searchFilter['salary'] = isset($searchFilter['salary']) ? (int)$searchFilter['salary'] : 0;
+                    $giro = $searchFilter['giro'] = isset($searchFilter['giro']) ? (int)$searchFilter['giro'] : 0;
+                    $spend = $searchFilter['spend'] = isset($searchFilter['spend']) ? (int)$searchFilter['spend'] : 0;
+                    $loan = $searchFilter['loan'] = isset($searchFilter['loan']) ? (int)$searchFilter['loan'] : 0;
+                    $privilege = $searchFilter['privilege'] = isset($searchFilter['privilege']) ? (int)$searchFilter['privilege'] : 0;
+                    $searchFilter['filter'] = $searchFilter['filter'] ? $searchFilter['filter'] : PLACEMENT;
+
+                }
+                $status = false;
+                $productRanges = json_decode($product->product_range);
+                //dd($searchFilter);
+                if ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F1) {
+
+                } elseif (empty($product->promotion_formula_id)) {
+                    $filterProducts[] = $product;
+                }
+
+            }
+        }
+        $products = collect($filterProducts);
+        $remainingProducts = collect($remainingProducts);
+        //dd($sortBy,$filter);
+        if ($products->count()) {
+            if ($sortBy == MINIMUM) {
+                if ($filter == PLACEMENT) {
+                    $products = $products->sortBy('minimum_placement_amount')->values();
+                } elseif ($filter == INTEREST) {
+                    $products = $products->sortBy('maximum_interest_rate')->values();
+                } elseif ($filter == CRITERIA) {
+                    $products = $products->sortBy('promotion_period')->values();
+                }
+            } else {
+                if ($filter == PLACEMENT) {
+                    $products = $products->sortByDesc('minimum_placement_amount')->values();
+                } elseif ($filter == INTEREST) {
+                    $products = $products->sortByDesc('maximum_interest_rate')->values();
+                } elseif ($filter == CRITERIA) {
+                    $products = $products->sortByDesc('promotion_period')->values();
+                }
+            }
+            $products = $products->sortByDesc('featured')->values();
+        }
+        if ($remainingProducts->count()) {
+            if ($sortBy == MINIMUM) {
+                if ($filter == PLACEMENT) {
+                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount')->values();
+                } elseif ($filter == INTEREST) {
+                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate')->values();
+                } elseif ($filter == CRITERIA) {
+                    $remainingProducts = $remainingProducts->sortBy('promotion_period')->values();
+                }
+            } else {
+                if ($filter == PLACEMENT) {
+                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount')->values();
+                } elseif ($filter == INTEREST) {
+                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate')->values();
+                } elseif ($filter == CRITERIA) {
+                    $remainingProducts = $remainingProducts->sortByDesc('promotion_period')->values();
+                }
+            }
+            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
+        }
+
+        //dd($products);
+        return view('frontend.products.loan', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage", "toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)

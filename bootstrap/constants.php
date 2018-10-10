@@ -187,6 +187,7 @@ define('SAVING_DEPOSIT_MODE', "saving-deposit-mode");
 define('PRIVILEGE_DEPOSIT_MODE', "privilege-deposit-mode");
 define('FOREIGN_CURRENCY_DEPOSIT_MODE', "foreign-currency-deposit-mode");
 define('AIO_DEPOSIT_MODE', "all-in-one-deposit-mode");
+define('LOAN_MODE', "loan");
 define('TERMS_CONDITION', "terms-and-condition");
 define('PROFILEDASHBOARD', "profile-dashboard");
 define('ACCOUNTINFO', "account-information");
@@ -242,6 +243,7 @@ define('SAVING_DEPOSIT', 2);
 define('ALL_IN_ONE_ACCOUNT', 3);
 define('PRIVILEGE_DEPOSIT', 4);
 define('FOREIGN_CURRENCY_DEPOSIT', 5);
+define('LOAN', 6);
 //formula type ids
 define('FIX_DEPOSIT_F1', 1);
 define('SAVING_DEPOSIT_F1', 2);
