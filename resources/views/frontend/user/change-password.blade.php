@@ -34,10 +34,9 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                     <div class="ps-sidebar">
-                        <h3 class="ps-heading"><span> My </span> Account</h3>
                         <ul class="ps-list--sidebar">
-                            <li><a href="{{ url('profile-dashboard') }}">My Profile Dashboard</a></li>
-                            <li class="current"><a href="{{ url('account-information') }}">Account Information</a></li>
+                            <li><a href="{{ url('profile-dashboard') }}">Profile Dashboard</a></li>
+                            <li class="current"><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
                         @if(count($ads))
@@ -62,7 +61,7 @@
                                     {!! Form::open(['route' => ['user.resetpassword.update', AUTH::user()->id], 'method'   => 'POST']) !!}
                                     <p><strong> Old Password: </strong> <input type="password" class="form-control" name="old_password" placeholder="Enter old password" value="{{ old('old_password') }}"></p>
                                     <p><strong> New Password: </strong><input type="password" class="form-control" name="new_password" placeholder="Enter new password" value="{{ old('new_password') }}"></p>
-                                    <p><strong> Confirm Password: </strong><input type="password" class="form-control only_numeric" name="new_password_confirmation" placeholder="Enter contact number" value=""></p>
+                                    <p><strong> Confirm Password: </strong><input type="password" class="form-control" name="new_password_confirmation" placeholder="Enter contact number" value=""></p>
                                     <button type="submit" class="btn btn-success">Save</button>
                                     {!! Form::close() !!}
                                 </div>

@@ -55,98 +55,152 @@
             ?>
             {{--Page content start--}}
             @if($page->slug!=THANK_SLUG)
-                        <h3 class="ps-heading mb-35">
-                            <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
-                        </h3>
+                <h3 class="ps-heading mb-20">
+                    <span>@if(!empty($page->icon))<i
+                                class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                </h3>
 
-                        {!!  $page->contents !!}
+                {!!  $page->contents !!}
             @else
                 {!!  $page->contents !!}
             @endif
             {!! Form::open(['url' => ['investment-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="form-group">
-                <h5 class="ps-heading--3">1. What type of life insurance are you looking for?</h5>
+                <h5 class="ps-heading--3">1. What is current your financial goal?</h5>
 
                 <div class="ps-checkbox ps-checkbox--inline">
-                    <input class="form-control" type="checkbox" id="component-1" value="{{COMPONENTS_PROTECTION}}"
-                           name="components[]"
-                    @if (!is_null(old('components'))) {{ in_array(COMPONENTS_PROTECTION,old('components'))? "CHECKED" : "" }} @endif/>
-                    <label for="component-1">{{COMPONENTS_PROTECTION}}</label>
+                    <input class="form-control" type="checkbox" id="goal-1" value="{{GOAL_INCOME}}"
+                           name="goals[]"
+                    @if (!is_null(old('goals'))) {{ in_array(GOAL_INCOME,old('goals'))? "CHECKED" : "" }} @endif/>
+                    <label for="goal-1">{{GOAL_INCOME}}</label>
                 </div>
                 <div class="ps-checkbox ps-checkbox--inline">
-                    <input class="form-control" type="checkbox" id="component-3" value="{{COMPONENTS_SAVING}}"
-                           name="components[]"
-                    @if (!is_null(old('components'))) {{ in_array(COMPONENTS_SAVING,old('components'))? "CHECKED" : "" }} @endif/>
-                    <label for="component-3">{{COMPONENTS_SAVING}}</label>
+                    <input class="form-control" type="checkbox" id="goal-2" value="{{GOAL_FAMILY}}"
+                           name="goals[]"
+                    @if (!is_null(old('goals'))) {{ in_array(GOAL_FAMILY,old('goals'))? "CHECKED" : "" }} @endif/>
+                    <label for="goal-2">{{GOAL_FAMILY}}</label>
                 </div>
                 <div class="ps-checkbox ps-checkbox--inline">
-                    <input class="form-control" type="checkbox" id="component-2" value="{{COMPONENTS_INVESTMENT}}"
-                           name="components[]"
-                    @if (!is_null(old('components'))) {{ in_array(COMPONENTS_INVESTMENT,old('components'))? "CHECKED" : "" }} @endif/>
-                    <label for="component-2">{{COMPONENTS_INVESTMENT}}</label>
+                    <input class="form-control" type="checkbox" id="goal-3" value="{{GOAL_RETIREMENT}}"
+                           name="goals[]"
+                    @if (!is_null(old('goals'))) {{ in_array(GOAL_RETIREMENT,old('goals'))? "CHECKED" : "" }} @endif/>
+                    <label for="goal-3">{{GOAL_RETIREMENT}}</label>
                 </div>
-                @if ($errors->has('components'))
+                <div class="ps-checkbox ps-checkbox--inline">
+                    <input class="form-control" type="checkbox" id="goal-4" value="{{GOAL_OTHER}}" name="goals[]"
+                    @if (!is_null(old('goals'))) {{ in_array(GOAL_OTHER,old('goals'))? "CHECKED" : "" }} @endif/>
+                    <label for="goal-4">{{GOAL_OTHER}}</label>
+                </div>
+                <div class="short-form mb-10">
+                    <input class="form-control" type="text" id="goal-other-value" name="goal_other_value"
+                           data-target="goal-4"
+                           onkeyup="checkOtherValidation(this)" placeholder="Please Specify"
+                           value="{{old('goal_other_value')}}">
+                </div>
+                @if ($errors->has('goal_other_value'))
                     <span class="text-danger">
-                                                    <strong>{{ $errors->first('components') }}</strong>
+                                                    <strong>{{ $errors->first('goal_other_value') }}</strong>
+                                                    </span>
+                @endif
+                @if ($errors->has('goals'))
+                    <span class="text-danger">
+                                                    <strong>{{ $errors->first('goals') }}</strong>
                                                     </span>
                 @endif
             </div>
             <div class="form-group">
-                <h5 class="ps-heading--3">2. What is your gender?</h5>
+                <h5 class="ps-heading--3">2. Do you have any experience in investment?</h5>
 
                 <div class="ps-radio ps-radio--inline">
-                    <input class="form-control" type="radio" value="{{GENDER_MALE}}" id="gender-1" name="gender"
-                           @if (old('gender')==GENDER_MALE) checked="CHECKED"@endif/>
-                    <label for="gender-1">{{GENDER_MALE}}</label>
+                    <input class="form-control" type="radio" value="{{YES}}" id="level-1" name="experience"
+                           @if (old('experience')==YES) checked="CHECKED"@endif/>
+                    <label for="level-1">{{YES}}</label>
                 </div>
                 <div class="ps-radio ps-radio--inline">
-                    <input class="form-control" type="radio" value="{{GENDER_FEMALE}}" id="gender-2" name="gender"
-                           @if (old('gender')==GENDER_FEMALE) checked="CHECKED"@endif/>
-                    <label for="gender-2">{{GENDER_FEMALE}}</label>
+                    <input class="form-control" type="radio" value="{{NO}}" id="level-2" name="experience"
+                           @if (old('experience')==NO) checked="CHECKED"@endif />
+                    <label for="level-2">{{NO}}</label>
                 </div>
-                @if ($errors->has('gender'))
+                @if ($errors->has('experience'))
                     <span class="text-danger">
-                                                    <strong>{{ $errors->first('gender') }}</strong>
+                                                    <strong>{{ $errors->first('experience') }}</strong>
+                                                    </span>
+                @endif
+                <div class="short-form mb-10 hide">
+                    <label>Please briefly state about you experience</label>
+                    <input class="form-control" type="text" id="experience-detail" name="experience_detail"
+                           placeholder=""
+                           value="">
+                </div>
+                @if ($errors->has('experience_detail'))
+                    <span class="text-danger" id="experience-detail-error">
+                                                    <strong>{{ $errors->first('experience_detail') }}</strong>
+                                                    </span>
+                @endif
+
+            </div>
+            <div class="form-group">
+                <h5 class="ps-heading--3">3. Which Risk Profile do you fall into?</h5>
+
+                <div class="ps-checkbox ps-checkbox--inline">
+                    <input class="form-control" type="checkbox" id="risk-1" value="{{RISK_CONSERVATIVE}}"
+                           name="risks[]"
+                    @if (!is_null(old('risks'))) {{ in_array(RISK_CONSERVATIVE,old('risks'))? "CHECKED" : "" }} @endif/>
+                    <label for="risk-1"><strong>Conservative</strong> - Your primary goal is to protect your capital and
+                        seek moderate
+                        returns. You do not wish to take more than a low level of risk and is uncomfortable with short
+                        term price fluctuations.</label>
+                </div>
+                <div class="ps-checkbox ps-checkbox--inline">
+                    <input class="form-control" type="checkbox" id="risk-2" value="{{RISK_MODERATE}}"
+                           name="risks[]"
+                    @if (!is_null(old('risks'))) {{ in_array(RISK_MODERATE,old('risks'))? "CHECKED" : "" }} @endif/>
+                    <label for="risk-2"><strong>Moderately Conservative</strong> - You have a general understanding of
+                        the investment
+                        markets, but would like to have a broader understanding in order to explore the possibilities.
+                        You are willing to accept minor price fluctuations.</label>
+                </div>
+                <div class="ps-checkbox ps-checkbox--inline">
+                    <input class="form-control" type="checkbox" id="risk-3" value="{{RISK_BALANCED}}"
+                           name="risks[]"
+                    @if (!is_null(old('risks'))) {{ in_array(RISK_BALANCED,old('risks'))? "CHECKED" : "" }} @endif/>
+                    <label for="risk-3"><strong>Balanced</strong> - You wish to adopt a diversified portfolio to
+                        somewhat protect you
+                        from inflation and tax. Therefore you are willing to accept some price fluctuations in exchange
+                        for some potential capital growth.</label>
+                </div>
+                <div class="ps-checkbox ps-checkbox--inline">
+                    <input class="form-control" type="checkbox" id="risk-4" value="{{RISK_GROWTH}}"
+                           name="risks[]"
+                    @if (!is_null(old('risks'))) {{ in_array(RISK_GROWTH,old('risks'))? "CHECKED" : "" }} @endif/>
+                    <label for="risk-4"><strong>Growth</strong> - You can accept very high levels of variability in
+                        investment returns,
+                        as you understand that the higher the risks associated with investments, potentially the higher
+                        level of returns expected.</label>
+                </div>
+                @if ($errors->has('risks'))
+                    <span class="text-danger">
+                                                    <strong>{{ $errors->first('risks') }}</strong>
                                                     </span>
                 @endif
             </div>
             <div class="form-group">
-                <h5 class="ps-heading--3">3. What is your date of birth?</h5>
-
-                <div class="ps-form-icon max-500"><i class="fa fa-calendar"></i>
-                    <input class="form-control " id="datepicker" value="{{old('dob')}}" name="dob" type="text" placeholder="">
-                </div>
-                @if ($errors->has('dob'))
+                <h5 class="ps-heading--3">4. What is your age?</h5>
+                <input class="form-control only_numeric" type="text" id="age" name="age" data-target=""
+                        placeholder=""
+                       value="{{old('age')}}">
+                @if ($errors->has('age'))
                     <span class="text-danger">
-                                                    <strong>{{ $errors->first('dob') }}</strong>
-                                                    </span>
-                @endif
-            </div>
-            <div class="form-group">
-                <h5 class="ps-heading--3">4. Are you a smoker?</h5>
-
-                <p>Have you smoked any nicotine or tobacco products in the last 12 months?</p>
-
-                <div class="ps-radio ps-radio--inline">
-                    <input class="form-control" type="radio" value="{{YES}}" id="smoke-1" name="smoke"
-                           @if (old('smoke')==YES) checked="CHECKED"@endif/>
-                    <label for="smoke-1">{{YES}}</label>
-                </div>
-                <div class="ps-radio ps-radio--inline">
-                    <input class="form-control" type="radio" value="{{NO}}" id="smoke-2" name="smoke"
-                           @if (old('smoke')==NO) checked="CHECKED"@endif/>
-                    <label for="smoke-2">{{NO}}</label>
-                </div>
-                @if ($errors->has('smoke'))
-                    <span class="text-danger">
-                                                    <strong>{{ $errors->first('smoke') }}</strong>
+                                                    <strong>{{ $errors->first('age') }}</strong>
                                                     </span>
                 @endif
             </div>
             <div class="form-group">
                 <h5 class="ps-heading--3">5. When is the best time to reach you?</h5>
 
-                <p>One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</p>
+                <p>One of representative from DollarDollar's partner will go through the different quotes from different
+                    insurers that is most suitable to your needs. I consent that this assigned representative can
+                    contact me via the various communication (Voice Call, SMS and Email)</p>
 
                 <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="time-1" value="{{TIME_ANYTIME}}" name="time[]"
@@ -174,7 +228,7 @@
                     <label for="time-5">{{TIME_OTHER}}</label>
                 </div>
                 <div class="short-form mb-10">
-                    <input class="form-control" type="text" id="other_value" name="other_value"
+                    <input class="form-control" type="text" id="other-value" name="other_value" data-target="time-5"
                            onkeyup="checkOtherValidation(this)" placeholder="Please Specify"
                            value="{{old('other_value')}}">
                 </div>
@@ -224,13 +278,15 @@
                         <div class="form-icon"><i class="fa fa-globe"></i>
                             <input class="form-control" type="text" placeholder="+65" name="country_code"
                                    value="{{ old('country_code') ? old('country_code') : (Auth::user()->country_code) ? Auth::user()->country_code : '+65' }}">
-                                   <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit Info</a>
-                        </div>
-                        @if ($errors->has('country_code'))
-                            <span class="text-danger">
+                            @if ($errors->has('country_code'))
+                                <span class="text-danger">
                                                     <strong>{{ $errors->first('country_code') }}</strong>
                                                     </span>
-                        @endif
+                            @endif
+                            <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit
+                                Info</a>
+                        </div>
+
                     </div>
                     <div class="col-xs-9">
                         <div class="form-icon"><i class="fa fa-mobile-phone"></i>
@@ -259,29 +315,32 @@
         {!! $systemSetting->{$page->contact_or_offer} !!}
     @endif
     {{--contact us or what we offer section end--}}
-<script type="text/javascript">
-    $(document).ready(function() {
-        inputs_checked();
-        /*var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
-        inputs.prop("disabled", true);
-        $("input[name='components[]'], input[name='gender'], input[name='smoke'], input[name='time[]']").on("change", function() {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
             inputs_checked();
-        });*/
+            /*var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
+             inputs.prop("disabled", true);
+             $("input[name='coverage'], input[name='level'], input[name='time[]']").on("change", function() {
+             inputs_checked();
+             });*/
 
-        function inputs_checked() {
-            $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("disabled", true);
-        } 
-    });
-
-    $(document).ready(function () {
-        //Date picker
-        $('#datepicker').datepicker({
-            autoclose: true,
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-100:+0",
-            dateFormat: "yy-mm-dd"
+            if ($("#level-1").is(":checked")) {
+                $("input[name='experience_detail']").parent("div").removeClass("hide");
+            }
         });
-    });
-</script>
+        function inputs_checked() {
+            $(" input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
+        }
+
+        $("input[name='experience']").on("change", function () {
+            if ($(this).val() == '<?php echo YES; ?>') {
+                $("input[name='experience_detail']").parent("div").removeClass("hide");
+            }
+            else {
+                $("input[name='experience_detail']").parent("div").addClass("hide");
+                $('#experience-detail-error').html("");
+            }
+        });
+    </script>
 @endsection

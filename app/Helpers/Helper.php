@@ -1,26 +1,7 @@
 <?php
 namespace App\Helpers\Helper;
 
-use App\Banner;
-use App\Brand;
-use App\Category;
-use App\Homepage;
-use App\Menu;
-use App\Pricelist;
-use App\Product;
-use App\SystemSetting;
-use Auth;
-use App\BlogCategory;
-use App\Blog;
-use App\Tag;
-use App\Page;
-use App\PromotionProducts;
-use App\ProductManagement;
-use App\PromotionTypes;
-use App\PromotionFormula;
-Use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
+use App\Banner;use App\BlogCategory;use App\Brand;use App\Category;use App\Homepage;use App\Menu;use App\Page;use App\Pricelist;use App\Product;use App\ProductManagement;use App\PromotionFormula;use App\PromotionProducts;use App\PromotionTypes;use App\SystemSetting;use App\Tag;use Auth;use Carbon\Carbon;use Illuminate\Support\Facades\DB;use Illuminate\Support\Facades\Response;
 
 class Helper
 {
@@ -376,7 +357,7 @@ class Helper
         $sel_query = Tag::where('title', '=', $slug)->get();
         $tag_id = $sel_query[0]->id;
         $tags_found = [];
-        $sel_query = Page::whereNotNull('tags')->get();
+        $sel_query = Page::whereNotNull('tags')->where('delete_status',0)->get();
         //dd($sel_query[0]->tags);
         foreach ($sel_query as $value) {
             $mytags = json_decode($value->tags);
@@ -506,29 +487,59 @@ class Helper
 
     public static function days_or_month_or_year($tenure_type, $tenure)
     {
-        $day = 'Invalid';
-        if ($tenure_type == 1) {
-            if ($tenure > 1) {
-                $day = 'Days';
-            } else {
-                $day = 'Day';
+        $day = '';
+        if(is_numeric($tenure))
+        {
+                if ($tenure_type == 1) {
+                if ($tenure > 1) {
+                    $day = 'Days';
+                } else {
+                    $day = 'Day';
+                }
+            } elseif ($tenure_type == 2) {
+                if ($tenure > 1) {
+                    $day = 'Months';
+                } else {
+                    $day = 'Month';
+                }
+            } elseif ($tenure_type == 3) {
+                if ($tenure > 1) {
+                    $day = 'Years';
+                } else {
+                    $day = 'Year';
+                }
             }
-        } elseif ($tenure_type == 2) {
-            if ($tenure > 1) {
-                $day = 'Months';
-            } else {
-                $day = 'Month';
-            }
-        } elseif ($tenure_type == 3) {
-            if ($tenure > 1) {
-                $day = 'Years';
-            } else {
-                $day = 'Year';
+        }
+
+        return $day;
+    }
+public static function daysOrMonthForSlider($tenure_type, $tenure)
+    {
+        $day = '';
+        if(is_numeric($tenure))
+        {
+            if ($tenure_type == 1) {
+                if ($tenure > 1) {
+                    $day = 'Days';
+                } else {
+                    $day = 'Day';
+                }
+            } elseif ($tenure_type == 2) {
+                if ($tenure > 1) {
+                    $day = 'MTHS';
+                } else {
+                    $day = 'MTH';
+                }
+            } elseif ($tenure_type == 3) {
+                if ($tenure > 1) {
+                    $day = 'Years';
+                } else {
+                    $day = 'Year';
+                }
             }
         }
         return $day;
     }
-
     public static function get_page_detail($slug = HOME_SLUG)
     {
         //dd($slug);
@@ -637,10 +648,40 @@ class Helper
                 'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
                 'currency.icon as currency_icon', 'currency.currency as currency_name')
             ->get();
-
+        $searchFilter=null;
+        if ($byOrderValue == 'minimum_placement_amount') {
+            $searchFilter = PLACEMENT;
+        } elseif ($byOrderValue == 'maximum_interest_rate') {
+           $searchFilter = INTEREST;
+        } elseif ($byOrderValue == 'promotion_period') {
+             $searchFilter = TENURE;
+            if($productType==ALL_IN_ONE_ACCOUNT)
+                {
+                    $searchFilter = CRITERIA;
+                }
+        }
+        $productUrl = null;
+        if($productType==FIX_DEPOSIT)
+        {
+            $productUrl=FIXED_DEPOSIT_MODE;
+        }
+        elseif($productType==SAVING_DEPOSIT){
+             $productUrl=SAVING_DEPOSIT_MODE;
+        }
+        elseif($productType==PRIVILEGE_DEPOSIT){
+             $productUrl=PRIVILEGE_DEPOSIT_MODE;
+        }
+        elseif($productType==FOREIGN_CURRENCY_DEPOSIT){
+             $productUrl=FOREIGN_CURRENCY_DEPOSIT_MODE;
+        }
+        elseif($productType==ALL_IN_ONE_ACCOUNT){
+             $productUrl=AIO_DEPOSIT_MODE;
+        }
         foreach ($products as $key => &$product) {
             $maxTenure = 0;
             $minTenure = 0;
+            $product->by_order_value = $searchFilter;
+            $product->product_url = $productUrl;
             if ($product->promotion_period == ONGOING) {
                 $product->tenure_category = ONGOING;
             } else {
@@ -656,7 +697,7 @@ class Helper
                     if (count($placementTenures)) {
                         $maxTenure = max($placementTenures);
                         $minTenure = min($placementTenures);
-                        if(count($placementTenures)>3)
+                        if(count($placementTenures)>4)
                             {
                                 $product->promotion_period = $minTenure.' - '.$maxTenure;
                             }
@@ -676,6 +717,19 @@ class Helper
             } else {
                 $product->tenure_value = $maxTenure;
             }
+             $todayDate = Carbon::today();
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $product->until_end_date)->endOfDay();
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = EXPIRED;
+                }
+            } else {
+                $product->remaining_days = null;
+            }
+
+
         }
 
         if ($byOrderValue == 'minimum_placement_amount') {
@@ -728,11 +782,16 @@ class Helper
         $i = 1;
         foreach($customer_reports as $customer_report) {
 
-        if($i!=1) { ?> <tr> <?php } ?>
+        if($i!=1) { ?> <tr>
+            <td><?php echo ucfirst($customer_report->first_name) . ' ' . ucfirst($customer_report->last_name).'<br/>'. $customer_report->email.'<br/>'. $customer_report->country_code . $customer_report->tel_phone; ?></td></td>
+            <td style='display: none'></td>
+            <td></td>
+            <?php } ?>
+
             <td><?php echo $customer_report->title; ?></td>
         <td><?php echo ucwords($customer_report->account_name); ?></td>
         <td><?php echo '$'.$customer_report->amount; ?></td>
-        <td><?php echo date('d-m-Y', strtotime($customer_report->end_date)); ?></td>
+        <td><?php if($customer_report->end_date) {echo date('d-m-Y', strtotime($customer_report->end_date));} ?></td>
         <td>
 
             <?php

@@ -18,18 +18,18 @@
             <div class="col-xs-12">
                 <div class="box box-info ">
                     <div class="box-header with-border">
-                        <a href="{{ route('customer-report-excel') }}" class="btn btn-default pull-right">Export Excel</a>
-                        <button type="button" class="btn btn-default print_btn  pull-right mr-10">Print</button>
+                       {{-- <a href="{{ route('customer-report-excel') }}" class="btn btn-default pull-right">Export Excel</a>--}}
                         <i class="fa fa-file-text" aria-hidden="true"></i>
 
                         <h3 class="box-title">{{CUSTOMER_MODULE_SINGLE . ' ' . REPORT_MODULE_SINGLE}}</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive">
-                        <table border="1" cellpadding="3" class="table table-bordered" id="table">
+                        <table class="table table-bordered" id="customer-report">
                             <thead>
                                 <tr>
                                     <th>User Details</th>
+                                    <th style="display: none">User Details</th>
                                     <th>Consent</th>
                                     <th>Bank Name</th>
                                     <th>Account Name</th>
@@ -45,14 +45,11 @@
                                         $crs = $customer_reports->where('users_id', $customer_reports_group->users_id);
                                     @endphp
                                 <tr>
-                                    <td rowspan="@if($crs->count()==0) {{ 1 }} @else {{ $crs->count() }} @endif">{{ ucfirst($customer_reports_group->first_name) . ' ' . ucfirst($customer_reports_group->last_name) }}<br/>{{ $customer_reports_group->email }}<br/>{{ $customer_reports_group->country_code . $customer_reports_group->tel_phone }}</td>
-                                    <td rowspan="@if($crs->count()==0) {{ 1 }} @else {{ $crs->count() }} @endif">@if($customer_reports_group->adviser==1) Yes @else No @endif</td>
+                                    <td>{{ ucfirst($customer_reports_group->first_name) . ' ' . ucfirst($customer_reports_group->last_name) }}<br/>{{ $customer_reports_group->email }}<br/>{{ $customer_reports_group->country_code . $customer_reports_group->tel_phone }}</td>
+                                    <td style="display: none">{{ ucfirst($customer_reports_group->first_name) . ' ' . ucfirst($customer_reports_group->last_name) }}<br/>{{ $customer_reports_group->email }}<br/>{{ $customer_reports_group->country_code . $customer_reports_group->tel_phone }}</td>
+                                    <td >@if($customer_reports_group->adviser==1) Yes @else No @endif</td>
                                     {{ Helper::getCustomerReportData($customer_reports_group->users_id) }}
                                     @endforeach
-                                @else
-                                <tr>
-                                    <td class="text-center" rows=8>No data found.</td>
-                                </tr>
                                 @endif
                             </tbody>
                         </table>
@@ -66,19 +63,5 @@
         </div>
         <!-- /.row -->
     </section>
-    <script type="text/javascript">
-        $(".print_btn").click(function() {
-            printData();
-        });
-
-        function printData()
-{
-   var divToPrint=document.getElementById("table");
-   newWin= window.open("");
-   newWin.document.write(divToPrint.outerHTML);
-   newWin.print();
-   newWin.close();
-}
-    </script>
     <!-- /.content -->
 @endsection

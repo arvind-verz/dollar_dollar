@@ -18,7 +18,7 @@ function printBlogCategories($parentCategories, $parent = 0, $id, $deep = 0) {//
             </ul>
         </li>
     @else
-<?php //print_r($id); ?>
+        <?php //print_r($id); ?>
         <li class="@if($id==$parentCategory['id']) current @endif"><a
                     href="{{ route('get-blog-by-category',['id'=>$parentCategory['id']]) }}">{{$parentCategory['title']}}</a>
         </li>
@@ -32,9 +32,13 @@ function printBlogCategories($parentCategories, $parent = 0, $id, $deep = 0) {//
     <div class="ps-sidebar">
         <h3>Blog</h3>
         {!! Form::open(['class' => 'form-horizontal','url' => 'blog-search', 'method' => 'GET', 'id' => 'blog_search']) !!}
-        <div class="mb-20">
+        <div class="mb-20 ">
             <input type="hidden" name="blog_id" value="{{ $id }}">
-            <input class="form-control" type="text" name="b_search" value="" placeholder="Search...">
+
+            <div class="top-search-wrapper">
+                <input class="form-control" type="text" name="b_search" value="@if(isset($blogSearch)) {{$blogSearch}} @endif" placeholder="Search...">
+                <button type="submit"></button>
+            </div>
         </div>
         {!! Form::close() !!}
         <ul class="ps-list--sidebar menu-sibar">
@@ -43,20 +47,21 @@ function printBlogCategories($parentCategories, $parent = 0, $id, $deep = 0) {//
 
             $parentCategories = Helper::getBlogMenus();
             //dd($parentCategories);
-            if(count($parentCategories)) {
-            printBlogCategories($parentCategories, BLOG_MENU_ID, $id);
+            if (count($parentCategories)) {
+                printBlogCategories($parentCategories, BLOG_MENU_ID, $id);
             }
             ?>
         </ul>
     </div>
     @if(count($ads))
-    <div class="ps-post__thumbnail ads pc-only"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
+        <div class="ps-post__thumbnail ads pc-only"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img
+                        src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
     @endif
 </div>
 <script type="text/javascript">
-    $(document).keypress(function(e) {
+    $(document).keypress(function (e) {
         var b_search = $("input[name='b_search']").val();
-        if(e.which == 13) {
+        if (e.which == 13) {
             $("form#blog_search").submit();
         }
     });

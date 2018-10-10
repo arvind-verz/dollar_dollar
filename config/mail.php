@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'admin@speedo.com.sg'),
-        'name' => env('MAIL_FROM_NAME', 'Speedo Marine (Pte) Ltd'),
+        'address' => env('MAIL_FROM_ADDRESS', 'admin@dollardollar.sg'),
+        'name' => env('MAIL_FROM_NAME', 'Dollar Dollar'),
     ],
 
     /*

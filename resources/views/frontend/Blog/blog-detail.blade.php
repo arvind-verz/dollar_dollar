@@ -36,65 +36,65 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="{{ route('index') }}"><i class="fa fa-home"></i> Home</a></li>
-                @if(isset($page->menu_id))
-                <?php
-                $breadcums = Helper::getBreadCumsCategoryByMenus($page->menu_id);
-                $breadCumsCount = count($breadcums) - 1;
-                ?>
-                @for($i=0; $i<=$breadCumsCount;$i++)
-                {{-- @php dd($breadcums[$i],$breadCumsCount); @endphp--}}
-                        <!--
-                    check if product division and breadcums division same
-                    when category only one product that time redirect direct to product page
-                    that time need to check for reducing double breadcum of category
-                    -->
-                @if($breadcums[$i]['id'] == $page->menu_id)
-                    <li class="active">{{$breadcums[$i]['title']}}</li>
-
-                @else
-                    <li>
-                        <a href="{{ route("slug",["slug"=>$breadcums[$i]['slug']]) }}"> {{$breadcums[$i]['title']}}</a>
-                    </li>
-                @endif
-                @endfor
-
-                @else
-                    <li class="active">{{$page->name}}</li>
-                @endif
+                <li><a href="{{ route('blog-list') }}"> Blog Main Page</a></li>
+                <li><a href="{{ route('get-blog-by-category',['id'=>$page->menu_id]) }}">{{$page->menu_title}}</a></li>
+                @include('frontend.includes.breadcrumb')
             </ol>
         </div>
     </div>
 
     {{--Page content start--}}
     <main class="ps-main">
-        <div class="container">            
-            
+        <div class="container">
+
             <div class="col-lg-8 col-md-12{{-- col-lg-push-5--}}">
                 <div class="ps-post__thumbnail sp-only"><img src="{{ asset($page->blog_image) }}" alt=""></div>
                 <div class="ps-post--detail">
                     <div class="ps-post__header">
-                        <h3>{{$page->name}}</h3><span class="ps-post__meta"><a href="{{ url('get-blog-by-category/' . $page->menu_id)}}"> {{$page->menu_title}}</a></span>
-                         <!-- Go to www.addthis.com/dashboard to customize your tools -->
-                <div class="addthis_inline_share_toolbox"></div>
+                        <h3>{{$page->name}}</h3><span class="ps-post__meta"><a
+                                    href="{{ url('get-blog-by-category/' . $page->menu_id)}}"> {{$page->menu_title}}</a></span>
+                        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                        <div class="addthis_inline_share_toolbox"></div>
                     </div>
                     <div class="ps-post__content ps-document">
                         {!!  $page->contents!!}
                     </div>
-                   <div class="ps-post__footer">
+                    <div class="ps-post__footer">
                         @if(count($tags))
-                        <p>
-                            <span>Tags:</span>
-                            @foreach($tags as $tag)                      
-                                <a href="{{'tags/'.$tag->title}}">{{$tag->title}}</a>
-                            @endforeach
-                        </p>
+                            <p>
+                                <span>Tags:</span>
+                                @foreach($tags as $tag)
+                                    <a href="{{'tags/'.$tag->title}}">{{$tag->title}}</a>
+                                @endforeach
+                            </p>
                         @endif
                     </div>
                 </div>
-                @if(count($ads))
-                <div class="pt-2">
-                <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->horizontal_banner_ad_image) }}" alt=""></a>
-                </div>
+                @if(count($ads) && ($page->disable_ads==0))
+                    @if(($ads[0]->display==1))
+                        @php
+                        $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                        $ad_start_date = strtotime($ads[0]->ad_start_date);
+                        $ad_end_date = strtotime($ads[0]->ad_end_date);
+                        @endphp
+
+                        @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->horizontal_paid_ad_image))
+                            <div class="pt-2">
+                                <a href="{{ isset($ads[0]->horizontal_paid_ad_link) ? asset($ads[0]->horizontal_paid_ad_link) : '#' }}"
+                                   target="_blank"><img src="{{ asset($ads[0]->horizontal_paid_ad_image) }}"
+                                                        alt=""></a>
+                            </div>
+                        @else
+
+                            @if(!empty($ads[0]->horizontal_banner_ad_image))
+                                <div class="pt-2">
+                                    <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}"
+                                       target="_blank"><img src="{{ asset($ads[0]->horizontal_banner_ad_image) }}"
+                                                            alt=""></a>
+                                </div>
+                            @endif
+                        @endif
+                    @endif
                 @endif
             </div>
             <div class="col-lg-4 col-md-12 {{--col-lg-pull-7--}}">
@@ -113,38 +113,39 @@
                             </div>
                         @endforeach
                     @endif
-                    
-                    @if(count($ads) && ($page->disable_ads==1))
-                    <div class="ps-post__thumbnail ads sp-only"><a href="{{ $ads[0]->ad_link }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt="" title="{{ $ads[0]->title }}"></a></div>
+
+                    @if(count($ads) && ($page->disable_ads==0))
+                        @if(($ads[0]->display==1))
+                            @php
+                            $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                            $ad_start_date = strtotime($ads[0]->ad_start_date);
+                            $ad_end_date = strtotime($ads[0]->ad_end_date);
+                            @endphp
+
+                            @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
+                                <div class="pt-2">
+                                    <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
+                                       target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
+                                </div>
+                            @else
+                                {{-- <div class="pt-2">
+                                     <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
+                                        target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                                 </div>--}}
+                            @endif
+                        @endif
                     @endif
                     <div class="ps-fanpage">
                         <div class="fb-page" data-href="https://www.facebook.com/dollardollar.sg/"
-                                 data-tabs="timeline" data-width="500" data-height="280" data-small-header="false"
-                                 data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                                <blockquote cite="https://www.facebook.com/dollardollar.sg/"
-                                            class="fb-xfbml-parse-ignore"><a
-                                            href="https://www.facebook.com/dollardollar.sg/">DollarDollar</a>
-                                </blockquote>
-                            </div>
+                             data-tabs="timeline" data-width="500" data-height="280" data-small-header="false"
+                             data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                            <blockquote cite="https://www.facebook.com/dollardollar.sg/"
+                                        class="fb-xfbml-parse-ignore"><a
+                                        href="https://www.facebook.com/dollardollar.sg/">DollarDollar</a>
+                            </blockquote>
+                        </div>
                     </div>
-                    @if(count($ads) && ($page->disable_ads==1))
-                    @php
-                        $current_time = strtotime(date('Y-m-d', strtotime('now'))); 
-                        $ad_start_date = strtotime($ads[0]->ad_start_date);
-                        $ad_end_date = strtotime($ads[0]->ad_end_date);
-                    @endphp
-                    
-                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                    <div class="pt-2">
-                        asdsa
-                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                    </div>
-                    @else
-                    <div class="pt-2">
-                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                    </div>
-                    @endif
-                    @endif
+
                 </div>
             </div>
         </div>

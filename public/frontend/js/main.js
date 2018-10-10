@@ -95,75 +95,6 @@ function resizeHeader() {
     }
 }
 
-function owlCarousel(element) {
-    if (element.length > 0) {
-        element.each(function () {
-            var el = $(this),
-                dataAuto = el.data('owl-auto'),
-                dataLoop = el.data('owl-loop'),
-                dataSpeed = el.data('owl-speed'),
-                dataGap = el.data('owl-gap'),
-                dataNav = el.data('owl-nav'),
-                dataDots = el.data('owl-dots'),
-                dataAnimateIn = (el.data('owl-animate-in')) ? el.data('owl-animate-in') : '',
-                dataAnimateOut = (el.data('owl-animate-out')) ? el.data('owl-animate-out') : '',
-                dataDefaultItem = el.data('owl-item'),
-                dataItemXS = el.data('owl-item-xs'),
-                dataItemSM = el.data('owl-item-sm'),
-                dataItemMD = el.data('owl-item-md'),
-                dataItemLG = el.data('owl-item-lg'),
-                dataNavLeft = (el.data('owl-nav-left')) ? el.data('owl-nav-left') : "<i class='fa fa-angle-left'></i>",
-                dataNavRight = (el.data('owl-nav-right')) ? el.data('owl-nav-right') : "<i class='fa fa-angle-right'></i>",
-                duration = el.data('owl-duration'),
-                animateStyle = el.data('owl-animated'),
-                smartspeed = el.data('owl-smartspeed'),
-                hoverpause = el.data('owl-hoverpause'),
-                datamouseDrag = (el.data('owl-mousedrag') == 'on') ? true : false;
-            if (el.children.length > 1) {
-                el.owlCarousel({
-                    animateIn: dataAnimateIn,
-                    animateOut: dataAnimateOut,
-                    margin: dataGap,
-                    autoplay: dataAuto,
-                    autoplayTimeout: dataSpeed,
-                    autoplayHoverPause: true,
-                    loop: dataLoop,
-                    nav: dataNav,
-                    mouseDrag: datamouseDrag,
-                    touchDrag: true,
-                    autoplaySpeed: duration,
-                    navSpeed: duration,
-                    dotsSpeed: duration,
-                    dragEndSpeed: duration,
-                    navText: [dataNavLeft, dataNavRight],
-                    dots: dataDots,
-                    items: dataDefaultItem,
-                    animateOut: animateStyle,
-                    smartSpeed: smartspeed,
-                    autoplayHoverPause: hoverpause,
-                    responsive: {
-                        0: {
-                            items: dataItemXS
-                        },
-                        480: {
-                            items: dataItemSM
-                        },
-                        768: {
-                            items: dataItemMD
-                        },
-                        992: {
-                            items: dataItemLG
-                        },
-                        1200: {
-                            items: dataDefaultItem
-                        }
-                    }
-                });
-            }
-        });
-    }
-}
-
 function bootstrapSelect() {
     $('select.ps-select').selectpicker();
 }
@@ -194,17 +125,18 @@ function moreInfo() {
         e.preventDefault();
         if (!$(this).hasClass('active')) {
             $(this).addClass('active');
-            $(this).html("Info Less <i class='fa fa-angle-up'></i>")
+            $(this).html("Data Less <i class='fa fa-angle-up'></i>")
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideDown();
             $(this).closest('.ps-product').find('.ps-table-wrap').slideDown();
         }
         else {
             $(this).removeClass('active');
-            $(this).html("More Info <i class='fa fa-angle-down'></i>")
+            $(this).html("More Data <i class='fa fa-angle-down'></i>")
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideUp();
             $(this).closest('.ps-product').find('.ps-table-wrap').slideUp();
         }
-
+        $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").find(".ps-product__table"));
+        $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").children(".ps-table-wrap"));
     });
 }
 function backToTop() {
@@ -244,11 +176,11 @@ function tabs() {
 
     });
 }
+
 $(document).ready(function () {
     backgroundImage();
     menuBtnToggle();
     subMenuToggle();
-    owlCarousel($('.owl-slider'));
     bootstrapSelect();
     dateTimePicker();
     productCollapse();
@@ -298,6 +230,12 @@ function addCommas(nStr) {
 $(".search_type").on("click", function () {
 
     $(".search_type").removeClass("active");
+    var filterValue = $(this).addClass("active").find("input[name='filter']").val();
+    if (filterValue == 'Interest') {
+        $(".sort-by").prop('selectedIndex', 2);
+    } else {
+        $(".sort-by").prop('selectedIndex', 1);
+    }
     $("input[name='filter']").prop("checked", false);
     $(this).addClass("active").find("input[name='filter']").prop("checked", true);
     document.getElementById('search-form').submit();
@@ -318,18 +256,17 @@ $(".content-detail").on("click", function () {
     var headingText = $(this).text();
     var formulaDetailId = $(this).data('formula');
 
-    if(headingText=="SHOW DETAILS")
-    {
+    if (headingText == "SHOW DETAILS") {
         $(".content-detail").html("SHOW DETAILS");
         $(this).html("LESS DETAILS");
         var detailId = $(this).data('detail-id');
-        var content = $('#'+detailId).html();
-        $('#formula-'+formulaDetailId+'-details').html(content);
-        $('#formula-'+formulaDetailId+'-details').css('display','block');
+        var content = $('#' + detailId).html();
+        $('#formula-' + formulaDetailId + '-details').html(content);
+        $('#formula-' + formulaDetailId + '-details').css('display', 'block');
 
-    }else{
+    } else {
         $(this).html("SHOW DETAILS");
-        $('#formula-'+formulaDetailId+'-details').css('display','none');
+        $('#formula-' + formulaDetailId + '-details').css('display', 'none');
     }
 
 });
@@ -360,7 +297,23 @@ $(window).on('load', function () {
 function clickSliderhome(id) {
     $(".ps-slider--home .owl-dot:nth-child(" + id + ")").click();
 }
+function checkOtherValidation(obj) {
 
+    var textareaLength = $(obj).val().length;
+    var target = $(obj).data('target');
+
+    if (textareaLength == 0) {
+        $('#'+target).prop('checked', false);
+    }
+    else {
+        $('#' + target).prop('checked', true);
+    }
+}
+$('#time-5').change(function () {
+    if (!$(this).is(":checked")) {
+        $('#other-value').val("");
+    }
+});
 $(document).ready(function () {
     $(".aboutpage").click(function () {
         var currentid = $(this).parent('.catListing li').attr('id');
@@ -368,7 +321,8 @@ $(document).ready(function () {
         $("#" + currentid).addClass('selected');
         //alert(currentid);
         $(".target-content").hide();
-        $('#' + $(this).attr('target')).show();
+        var target = $(this).attr('target');
+        setTimeout(function(){ $('#' + target ).show() }, 100);
         window.dispatchEvent(new Event('resize'));
     });
 });
@@ -391,20 +345,32 @@ $(window).on('load resize', function () {
 });
 
 $(document).ready(function () {
-    $(".ps-checkbox input[type=checkbox]:checked").parent().parent().addClass("active");
+    $(".ps-checkbox input[type=checkbox]:checked").parent().parent().parent().parent().addClass("active");
 
     $("body").on("click", ".combine-criteria-padding .ps-checkbox label", function () {
         setTimeout(function () {
             $(".combine-criteria-padding .ps-checkbox input[type=checkbox]:checked").each(function () {
-                $(this).parent().parent().addClass("active");
+                $(this).parent().parent().parent().parent().addClass("active");
             });
         }, 100);
     });
 });
 
 $(document).ready(function () {
-    $("body").on("click", ".menu--mobile > li.menu-item-has-children", function () {
-        $(this).children(".sub-menu").slideToggle();
+    // $("#totop span").html("");
+    $(".menu > li.menu-item-has-children").append("<span></span>");
+    $("body").on("click", ".menu--mobile > li.menu-item-has-children > span", function (e) {
+        e.preventDefault();
+        $(".menu--mobile > li > ul ").slideUp();
+        if( $(this).parent().hasClass("active") ){
+            $(this).parent().removeClass("active");
+            $(this).parent().children(".sub-menu").slideUp();
+        }
+        else{
+            $(".menu--mobile > li").removeClass("active");
+            $(this).parent().addClass("active");
+            $(this).parent().children(".sub-menu").slideDown();
+        }
     });
     $("body").on("click", ".ps-block--legend-table .ps-block__header", function () {
         $(this).next().slideToggle();
@@ -413,23 +379,23 @@ $(document).ready(function () {
         $(this).next().slideToggle();
     });
     $(".ps-block--legend-table .ps-block__header").append("<span></span>");
-    
+
     $(".ps-block--short-product.second.highlight.sp-only").parent().addClass("sp-only");
-    
+
     $(".ps-list--sidebar.menu-sibar .current").append("<div><span></span></div>");
-    $(".ps-list--sidebar.menu-sibar .current div").click(function(){
-        if($(this).parent().hasClass("active")){
+    $(".ps-list--sidebar.menu-sibar .current div").click(function () {
+        if ($(this).parent().hasClass("active")) {
             $(this).parent().removeClass("active");
         }
-        else{
+        else {
             $(this).parent().addClass("active");
         }
         $(this).parent().nextAll(".ps-list--sidebar.menu-sibar li").slideToggle();
     })
 
     /*$(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-block--product-info .ps-block__content .ps-block__more").click(function () {
-        var n = $(this).attr("href").replace("#", "");
-        $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content").css("display", "none");
-        $(".ps-criteria-detail__content#" + n).css("display", "block");
-    })*/
+     var n = $(this).attr("href").replace("#", "");
+     $(".ps-page--deposit .ps-product--2 .ps-criteria-detail .ps-criteria-detail__content").css("display", "none");
+     $(".ps-criteria-detail__content#" + n).css("display", "block");
+     })*/
 });

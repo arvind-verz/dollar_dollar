@@ -32,17 +32,19 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="investment" class="table ">
+                                        <table id="investment" class="table table-bordered">
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
                                                 <th>Full name</th>
                                                 <th>Email</th>
                                                 <th>Contact number</th>
-                                                <th>1. What type of life insurance are you looking for?</th>
-                                                <th>2. What is your gender?</th>
-                                                <th>3. What is your date of birth?</th>
-                                                <th>4. Are you a smoker?</th>
+                                                <th>1. What is current your financial goal?</th>
+                                                <th>Other </th>
+                                                <th>2. Do you have any experience in investment?</th>
+                                                <th>Experience detail</th>
+                                                <th>3. Which Risk Profile do you fall into?</th>
+                                                <th>4. What is your age?</th>
                                                 <th>5. When is the best time to reach you?</th>
                                                 <th>Other </th>
                                                 <th>Created on</th>
@@ -66,18 +68,26 @@
                                                             {{ $enquiry->country_code.' '.$enquiry->telephone }}
                                                         </td>
                                                         <td>
-                                                            @if(isset($enquiry->components))
-                                                                {{implode(', ',unserialize($enquiry->components))}}
+                                                            @if(isset($enquiry->goals))
+                                                                {{implode(', ',unserialize($enquiry->goals))}}
 
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            {{ $enquiry->gender }}
-                                                        </td><td>
-                                                            {{ date("Y-m-d", strtotime($enquiry->dob)) }}
-                                                        </td><td>
-                                                            {{ $enquiry->smoke }}
+                                                            {{ $enquiry->goal_other_value }}
                                                         </td>
+                                                        <td>
+                                                            {{$enquiry->experience}}
+                                                        </td><td>
+                                                            {{ $enquiry->experience_detail }}
+                                                        </td>
+                                                        <td>
+                                                            @if(isset($enquiry->risks))
+                                                                {{implode(', ',unserialize($enquiry->risks))}}
+
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $enquiry->age }}</td>
                                                         <td>
                                                             @if(isset($enquiry->times))
                                                                 {{implode(', ',unserialize($enquiry->times))}}

@@ -106,7 +106,7 @@ class EnquiryFrontController extends Controller
             'country_code' => 'required|max:255',
             'telephone' => 'required|min:8|max:255',
             'subject' => 'required|max:255',
-            'message' => 'required|max:255',
+            'message' => 'required|max:3500',
             'g-recaptcha-response' => 'required|captcha'
         ];
         $this->validate($request, $fields);
@@ -149,6 +149,11 @@ class EnquiryFrontController extends Controller
         if (isset($request->time)) {
             if (in_array("Other", $request->time)) {
                 $fields ['other_value'] = 'required';
+            }
+        }
+        if (isset($request->level)) {
+            if ($request->level==YES) {
+                $fields ['health_condition'] = 'required';
             }
         }
         $validator = Validator::make($request->all(), $fields);
@@ -263,13 +268,13 @@ class EnquiryFrontController extends Controller
 
     public function investmentEnquiry(Request $request)
     {
-        //dd($request->all());
+
         //check validation
         $fields = [
-            'components' => 'required',
-            'gender' => 'required|max:255',
-            'dob' => 'required|max:255',
-            'smoke' => 'required|max:255',
+            'goals' => 'required',
+            'experience' => 'required',
+            'risks' => 'required',
+            'age' => 'required',
             'time' => 'required',
             'full_name' => 'required|max:255',
             'email' => 'required|email|max:255',
@@ -277,12 +282,22 @@ class EnquiryFrontController extends Controller
             'telephone' => 'required|max:255',
 
         ];
-
+        if (isset($request->experience)) {
+            if ($request->experience==YES) {
+                $fields ['experience_detail'] = 'required';
+            }
+        }
         if (isset($request->time)) {
-            if (in_array("Other", $request->time)) {
+            if (in_array(TIME_OTHER, $request->time)) {
                 $fields ['other_value'] = 'required';
             }
         }
+        if (isset($request->goals)) {
+            if (in_array(GOAL_OTHER, $request->goals)) {
+                $fields ['goal_other_value'] = 'required';
+            }
+        }
+
         $validator = Validator::make($request->all(), $fields);
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
@@ -290,14 +305,19 @@ class EnquiryFrontController extends Controller
         $data = $request->all();
 
         $investmentEnquiry = new InvestmentEnquiry();
-        $components = [];
-        if (isset($request->components)) {
-            $components = $request->components;
+        $goals = [];
+        if (isset($request->goals)) {
+            $goals = $request->goals;
         }
-        $investmentEnquiry->components = serialize($components);
-        $investmentEnquiry->gender = $request->gender;
-        $investmentEnquiry->dob = date("Y-m-d", strtotime($request->dob));
-        $investmentEnquiry->smoke = $request->smoke;
+        $investmentEnquiry->goals = serialize($goals);
+        $investmentEnquiry->goal_other_value = isset($request->goal_other_value) ? $request->goal_other_value :null;
+        $investmentEnquiry->experience = $request->experience;
+        $investmentEnquiry->experience_detail = isset($request->experience_detail) ? $request->experience_detail :null;
+        $risks = [];
+        if (isset($request->risks)) {
+            $risks = $request->risks;
+        }
+        $investmentEnquiry->risks = serialize($risks);
         $times = [];
         if (isset($request->time)) {
             $times = $request->time;

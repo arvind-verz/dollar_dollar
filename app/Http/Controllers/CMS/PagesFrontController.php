@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\CMS;
 
+use App\AdsManagement;
 use App\Brand;
 use App\Currency;
 use App\DefaultSearch;
 use App\Http\Controllers\Controller;
+use App\Menu;
 use App\Page;
 use App\ProductManagement;
 use App\PromotionProducts;
 use App\systemSettingLegendTable;
 use App\ToolTip;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\AdsManagement;
+use Illuminate\Support\Facades\DB;
+use App\Tag;
 
 class PagesFrontController extends Controller
 {
@@ -309,7 +311,7 @@ class PagesFrontController extends Controller
 
     public function fixDepositMode($details)
     {
-        return $this->fixed($request = null);
+        return $this->fixed([]);
     }
 
     public function search_fixed_deposit(Request $request)
@@ -329,7 +331,7 @@ class PagesFrontController extends Controller
 //dd($ads_manage);
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -342,12 +344,22 @@ class PagesFrontController extends Controller
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
-            // ->where('promotion_products.formula_id', '=', 6)
+            //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
             ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
             ->get();
+        /*$nonFormulaProducts = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
+            ->whereNull('promotion_products.formula_id')
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->orderBy('promotion_products.created_at', 'DESC')
+            ->select('promotion_products.*', 'brands.*')
+            ->inRandomOrder()
+            ->get();*/
 
         $details = \Helper::get_page_detail(FIXED_DEPOSIT_MODE);
         $brands = $details['brands'];
@@ -362,7 +374,6 @@ class PagesFrontController extends Controller
         $filterProducts = [];
         $remainingProducts = [];
         //dd($products);
-
         if (!count($request)) {
 
             $searchFilter = [];
@@ -383,7 +394,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -407,7 +418,16 @@ class PagesFrontController extends Controller
             $product->ads = json_decode($product->ads_placement);
 
             $product->tenure = $tenures;
-            $product->remaining_days = $remainingDays; // remaining in days
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = EXPIRED;
+                }
+            } else {
+                $product->remaining_days = null;
+            }
             $status = false;
 
             if (in_array($product->promotion_formula_id, [FIX_DEPOSIT_F1])) {
@@ -506,7 +526,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -521,7 +541,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -536,7 +556,7 @@ class PagesFrontController extends Controller
                     $product->placement = $searchValue;
                     $remainingProducts[] = $product;
                 }
-            }elseif (empty($product->promotion_formula_id)) {
+            } elseif (empty($product->promotion_formula_id)) {
                 $maxTenure = 0;
                 $minTenure = 0;
                 if ($product->promotion_period == ONGOING) {
@@ -554,7 +574,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -569,13 +589,13 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
-                $remainingProducts[] = $product;
+                $filterProducts[] = $product;
             }
         }
         $remainingProducts = collect($remainingProducts);
@@ -728,19 +748,20 @@ class PagesFrontController extends Controller
 
     public function getBlogByCategories($id = NULL, Request $request)
     {
-        //dd($request->all());
+        //dd($request->all(),$id);
         if (isset($request->blog_id)) {
             $id = $request->blog_id;
         }
         $page = Page::where('pages.slug', BLOG_URL)
             ->where('delete_status', 0)->first();
         if (!$page) {
-            return redirect()->action('Blog\BlogController@index')->with('error', OPPS_ALERT);
+            return back()->with('error', OPPS_ALERT);
         }
         $systemSetting = \Helper::getSystemSetting();
         if (!$systemSetting) {
             return back()->with('error', OPPS_ALERT);
         }
+
 
 //get banners
         $banners = \Helper::getBanners(BLOG_URL);
@@ -750,18 +771,50 @@ class PagesFrontController extends Controller
             ->where('pages.is_blog', 1)
             ->select('pages.*', 'menus.title as menu_title')
             ->orderBy('pages.id', 'DESC');
+        $menu = null;
         if (!is_null($id)) {
             $query = $query->where('pages.menu_id', $id);
-        }
+            $menu = Menu::where('id', $id)->where('delete_status', 0)->first();
 
+        }
+        $blogSearch = null;
         if (isset($request->b_search)) {
+            $blogSearch = $request->b_search;
+            $tags = Tag::where('title', 'LIKE', '%' . $request->b_search . '%')->get();
+            $tagFound = [];
+            if ($tags->count()) {
+                $tags = $tags->pluck('id')->all();
+                $pagesTagNotNull = Page::whereNotNull('tags')->where('delete_status', 0)->get();
+                //dd($sel_query[0]->tags);
+                if ($pagesTagNotNull->count()) {
+                    foreach ($pagesTagNotNull as $page) {
+                        $pageTags = json_decode($page->tags);
+                        //print_r($tag_id);
+                        $commonTags=[];
+                        if (count($pageTags) && count($tags)) {
+                            $commonTags = array_intersect($pageTags,$tags);
+                            if(count($commonTags))
+                            {
+                                $tagFound[]= $page->id;
+                            }
+                        }
+                    }
+                }
+            }
+
             $query = $query->where('pages.name', 'LIKE', '%' . $request->b_search . '%')
-                ->orwhere('pages.meta_title', 'LIKE', '%' . $request->b_search . '%');
+                ->orwhere('menus.title', 'LIKE', '%' . $request->b_search . '%');
+            //dd($tagFound);
+            if(count($tagFound))
+            {
+                $query->orWhereIn('pages.id', [$tagFound]);
+            }
+
         }
         if (Auth::guest()) {
-            $details = $query->whereIn('after_login', [0, null])->paginate(5);
+            $details = $query->whereIn('after_login', [0, null])->paginate(8);
         } else {
-            $details = $query->paginate(5);
+            $details = $query->paginate(8);
         }
 
         $ads = AdsManagement::where('delete_status', 0)
@@ -771,7 +824,15 @@ class PagesFrontController extends Controller
             ->inRandomOrder()
             ->get();
 //dd($ads);
-        return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads'));
+        if (!$details->count()) {
+            if (isset($request->b_search)) {
+                \Session::flash('error', SEARCH_RESULT_ERROR);
+            }
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch', 'menu'));
+        } else {
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch', 'menu'));
+        }
+
     }
 
     public function search_tags($slug)
@@ -829,7 +890,7 @@ class PagesFrontController extends Controller
 
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -842,9 +903,7 @@ class PagesFrontController extends Controller
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', PRIVILEGE_DEPOSIT)
-            // ->where('promotion_products.formula_id', '=', 6)
-            //->where('promotion_products.promotion_start', '<=', $start_date)
-            //->where('promotion_products.promotion_end', '>=', $end_date)
+            //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
@@ -883,7 +942,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -904,7 +963,16 @@ class PagesFrontController extends Controller
             $tenureType = \Helper::days_or_month_or_year(2, $startDate->diffInMonths($endDate->copy()->addDay()));
             $product->ads = json_decode($product->ads_placement);
             $product->product_ranges = $productRanges;
-            $product->remaining_days = $tenure; // remaining in days
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = EXPIRED;
+                }
+            } else {
+                $product->remaining_days = null;
+            }
             $status = false;
             $product->max_tenure = 0;
 
@@ -916,7 +984,6 @@ class PagesFrontController extends Controller
                 $product->ads = json_decode($product->ads_placement);
 
                 $product->tenure = $tenures;
-                $product->remaining_days = $remainingDays; // remaining in days
                 $totalInterestPercent = 0;
                 $totalInterest = 0;
                 $ranges = [];
@@ -1018,7 +1085,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1033,7 +1100,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1091,7 +1158,13 @@ class PagesFrontController extends Controller
                             //$product->max_tenure = $tenure;
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
-                            $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            $tenure = 0;
+                            if ($product->promotion_period == ONGOING) {
+                                $tenure = 1;
+                                $tenureTotal = 1;
+                            } elseif ($untilEndDate > $todayDate) {
+                                $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            }
                         }
                         $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
@@ -1119,7 +1192,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1134,7 +1207,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1205,7 +1278,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1220,7 +1293,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1329,7 +1402,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1344,7 +1417,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1464,7 +1537,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1479,7 +1552,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1492,8 +1565,7 @@ class PagesFrontController extends Controller
                     $remainingProducts[] = $product;
                 }
 
-            }
-            elseif (empty($product->promotion_formula_id)) { 
+            } elseif (empty($product->promotion_formula_id)) {
                 $maxTenure = 0;
                 $minTenure = 0;
                 if ($product->promotion_period == ONGOING) {
@@ -1511,7 +1583,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1526,13 +1598,13 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
-                $remainingProducts[] = $product;
+                $filterProducts[] = $product;
             }
 
         }
@@ -1658,7 +1730,7 @@ class PagesFrontController extends Controller
 
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -1671,9 +1743,7 @@ class PagesFrontController extends Controller
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
-            //->where('promotion_products.formula_id', '=', 2)
-            //->where('promotion_products.promotion_start', '<=', $start_date)
-            //->where('promotion_products.promotion_end', '>=', $end_date)
+            //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
@@ -1714,7 +1784,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -1735,10 +1805,18 @@ class PagesFrontController extends Controller
             $tenureType = \Helper::days_or_month_or_year(2, $startDate->diffInMonths($endDate->copy()->addDay()));
             $product->ads = json_decode($product->ads_placement);
             $product->product_ranges = $productRanges;
-            $product->remaining_days = $tenure; // remaining in days
             $status = false;
             $product->max_tenure = 0;
-
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = EXPIRED;
+                }
+            } else {
+                $product->remaining_days = null;
+            }
             if (in_array($product->promotion_formula_id, [SAVING_DEPOSIT_F1, SAVING_DEPOSIT_F2])) {
                 $maxPlacements = [];
 
@@ -1782,7 +1860,15 @@ class PagesFrontController extends Controller
                             $product->tenure_highlight = true;
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
-                            $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            $tenure = 0;
+                            if ($product->promotion_period == ONGOING) {
+                                $tenure = 1;
+                                $tenureTotal = 1;
+                            } elseif ($untilEndDate > $todayDate) {
+                                $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            }
+
+
                         }
                         $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
@@ -1809,7 +1895,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1821,7 +1907,7 @@ class PagesFrontController extends Controller
                     }
                 }
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -1890,7 +1976,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -1902,7 +1988,7 @@ class PagesFrontController extends Controller
                     }
                 }
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2012,7 +2098,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2024,7 +2110,7 @@ class PagesFrontController extends Controller
                     }
                 }
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2144,7 +2230,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2159,7 +2245,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2172,8 +2258,7 @@ class PagesFrontController extends Controller
                     $remainingProducts[] = $product;
                 }
 
-            }
-            elseif (empty($product->promotion_formula_id)) {
+            } elseif (empty($product->promotion_formula_id)) {
                 $maxTenure = 0;
                 $minTenure = 0;
                 if ($product->promotion_period == ONGOING) {
@@ -2191,7 +2276,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2206,13 +2291,13 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
-                $remainingProducts[] = $product;
+                $filterProducts[] = $product;
             }
 
         }
@@ -2363,7 +2448,7 @@ class PagesFrontController extends Controller
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $currency = isset($request['currency']) ? $request['currency'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
 
         //dd($searchValue,$searchFilter);
@@ -2377,9 +2462,7 @@ class PagesFrontController extends Controller
             ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_types.id', '=', FOREIGN_CURRENCY_DEPOSIT)
-            // ->where('promotion_products.formula_id', '=', 6)
-            //->where('promotion_products.promotion_start', '<=', $start_date)
-            //->where('promotion_products.promotion_end', '>=', $end_date)
+            //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->orderBy('promotion_products.featured', 'DESC')
@@ -2426,7 +2509,7 @@ class PagesFrontController extends Controller
                 $placement = 0;
                 $searchValue = $defaultPlacement;
                 $searchFilter['search_value'] = $defaultPlacement;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -2447,11 +2530,20 @@ class PagesFrontController extends Controller
             $tenureType = \Helper::days_or_month_or_year(2, $startDate->diffInMonths($endDate->copy()->addDay()));
             $product->ads = json_decode($product->ads_placement);
             $product->product_ranges = $productRanges;
-            $product->remaining_days = $tenure; // remaining in days
             $status = false;
             $product->max_tenure = 0;
             $product->min_tenure = 0;
             $ranges = null;
+            if (!is_null($product->until_end_date)) {
+                $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                if ($untilEndDate > $todayDate) {
+                    $product->remaining_days = $todayDate->diffInDays($untilEndDate); // tenure in days
+                } else {
+                    $product->remaining_days = EXPIRED;
+                }
+            } else {
+                $product->remaining_days = null;
+            }
             if (in_array($product->promotion_formula_id, [FOREIGN_CURRENCY_DEPOSIT_F1])) {
                 $tenures = json_decode($product->tenure);
                 //including end day so 1 day add in end date
@@ -2460,7 +2552,6 @@ class PagesFrontController extends Controller
                 $product->ads = json_decode($product->ads_placement);
 
                 $product->tenure = $tenures;
-                $product->remaining_days = $remainingDays; // remaining in days
                 $totalInterestPercent = 0;
                 $totalInterest = 0;
                 $ranges = [];
@@ -2560,7 +2651,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2575,7 +2666,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2633,7 +2724,13 @@ class PagesFrontController extends Controller
                             // $product->max_tenure = $tenure;
                         } else {
                             $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
-                            $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            $tenure = 0;
+                            if ($product->promotion_period == ONGOING) {
+                                $tenure = 1;
+                                $tenureTotal = 1;
+                            } elseif ($untilEndDate > $todayDate) {
+                                $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
+                            }
                         }
                         $product->duration = $tenure;
 
@@ -2661,7 +2758,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2676,7 +2773,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2745,7 +2842,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2760,7 +2857,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -2868,7 +2965,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -2883,7 +2980,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -3003,7 +3100,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -3018,7 +3115,7 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
@@ -3050,7 +3147,7 @@ class PagesFrontController extends Controller
                         if (count($placementTenures)) {
                             $maxTenure = max($placementTenures);
                             $minTenure = min($placementTenures);
-                            if (count($placementTenures) > 3) {
+                            if (count($placementTenures) > 4) {
                                 $product->promotion_period = $minTenure . ' - ' . $maxTenure;
                             }
                         }
@@ -3065,13 +3162,13 @@ class PagesFrontController extends Controller
                 $product->max_tenure = $maxTenure;
                 $product->min_tenure = $minTenure;
                 if ($sortBy == MINIMUM) {
-                    $product->tenure_value = $minTenure;
+                    $product->tenure_value = $maxTenure;
                 } elseif ($product->promotion_period == ONGOING) {
                     $product->tenure_value = ONGOING;
                 } else {
                     $product->tenure_value = $maxTenure;
                 }
-                $remainingProducts[] = $product;
+                $filterProducts[] = $product;
             }
 
 
@@ -3197,7 +3294,7 @@ class PagesFrontController extends Controller
             ->get();
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
-        $filter = isset($request['filter']) ? $request['filter'] : PLACEMENT;
+        $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -3212,14 +3309,13 @@ class PagesFrontController extends Controller
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            //->where('promotion_products.formula_id', '=', 7)
+            //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_types.id', '=', ALL_IN_ONE_ACCOUNT)
-            //->where('promotion_products.promotion_start', '<=', $start_date)
-            //->where('promotion_products.promotion_end', '>=', $end_date)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id')
             ->get();
+
         $details = \Helper::get_page_detail(AIO_DEPOSIT_MODE);
         $brands = $details['brands'];
         if ($promotion_products->count() && $brands->count()) {
@@ -3265,7 +3361,7 @@ class PagesFrontController extends Controller
                 $searchFilter['spend'] = $defaultSpend;
                 $searchFilter['privilege'] = $defaultLoan;
                 $searchFilter['loan'] = $defaultPrivilege;
-                $searchFilter['filter'] = PLACEMENT;
+                $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
                 $placement = 0;
@@ -3725,7 +3821,7 @@ class PagesFrontController extends Controller
                     $remainingProducts[] = $product;
                 }
             } elseif (empty($product->promotion_formula_id)) {
-                $remainingProducts[] = $product;
+                $filterProducts[] = $product;
             }
 
         }
@@ -3998,85 +4094,93 @@ class PagesFrontController extends Controller
                             <th class="combine-criteria-padding">Giro</th>
                             <th class="combine-criteria-padding">SPEND</th>
                             <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           name="life_insurance" onchange="changeCriteria(this);"
-                                        <?php if ($product->life_insurance) {
-                                            echo "checked = checked";
-                                        } ?> value="true" id="life-insurance-<?php echo $product->product_id; ?>"/>
-                                    <label for="life-insurance-<?php echo $product->product_id; ?>">Life
-                                        Insurance</label>
+                                Loan
+                                <div class="row">
+                                    <div class="width-50">
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
+                                                <?php if ($product->housing_loan) {
+                                                    echo "checked = checked";
+                                                } ?>
+                                                   name="housing_loan"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   value="true" id="housing-loan-<?php echo $product->product_id; ?>">
+                                            <label
+                                                for="housing-loan-<?php echo $product->product_id; ?>">Housing</label>
+                                        </div>
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   name="education_loan" onchange="changeCriteria(this);"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   value="true" id='education-loan-<?php echo $product->product_id; ?>'
+                                                <?php if ($product->education_loan) {
+                                                    echo "checked = checked";
+                                                } ?>/>
+                                            <label
+                                                for="education-loan-<?php echo $product->product_id; ?>">Education</label>
+                                        </div>
+                                    </div>
+                                    <div class="width-50">
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
+                                                   name="hire_loan" value="true"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   id="hire-loan-<?php echo $product->product_id; ?>"
+                                                <?php if ($product->hire_loan) {
+                                                    echo "checked = checked";
+                                                } ?>/>
+                                            <label for="hire-loan-<?php echo $product->product_id; ?>">Hire
+                                                loan</label>
+                                        </div>
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   name="renovation_loan" onchange="changeCriteria(this);"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   value="true" id="renovation-loan-<?php echo $product->product_id; ?>"
+                                                <?php if ($product->renovation_loan) {
+                                                    echo "checked = checked";
+                                                } ?>/>
+                                            <label
+                                                for="renovation-loan-<?php echo $product->product_id; ?>">Renovation</label>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </th>
                             <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
-                                        <?php if ($product->housing_loan) {
-                                            echo "checked = checked";
-                                        } ?>
-                                           name="housing_loan"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           value="true" id="housing-loan-<?php echo $product->product_id; ?>">
-                                    <label for="housing-loan-<?php echo $product->product_id; ?>">Housing Loan</label>
+                                Wealth
+                                <div class="row">
+                                    <div class="width-50">
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   name="life_insurance" onchange="changeCriteria(this);"
+                                                <?php if ($product->life_insurance) {
+                                                    echo "checked = checked";
+                                                } ?> value="true"
+                                                   id="life-insurance-<?php echo $product->product_id; ?>"/>
+                                            <label
+                                                for="life-insurance-<?php echo $product->product_id; ?>">Insurance</label>
+                                        </div>
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
+                                                   name="unit_trust" value="true"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   id="unit-trust-<?php echo $product->product_id; ?>"
+                                                <?php if ($product->unit_trust) {
+                                                    echo "checked = checked";
+                                                } ?>/>
+                                            <label for="unit-trust-<?php echo $product->product_id; ?>">Unit</label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </th>
-                            <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           name="education_loan" onchange="changeCriteria(this);"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           value="true" id='education-loan-<?php echo $product->product_id; ?>'
-                                        <?php if ($product->education_loan) {
-                                            echo "checked = checked";
-                                        } ?>/>
-                                    <label for="education-loan-<?php echo $product->product_id; ?>">Education
-                                        Loan</label>
-                                </div>
-                            </th>
-                            <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
-                                           name="hire_loan" value="true"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           id="hire-loan-<?php echo $product->product_id; ?>"
-                                        <?php if ($product->hire_loan) {
-                                            echo "checked = checked";
-                                        } ?>/>
-                                    <label for="hire-loan-<?php echo $product->product_id; ?>">Hire Purchase
-                                        loan</label>
-                                </div>
-                            </th>
-                            <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           name="renovation_loan" onchange="changeCriteria(this);"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           value="true" id="renovation-loan-<?php echo $product->product_id; ?>"
-                                        <?php if ($product->renovation_loan) {
-                                            echo "checked = checked";
-                                        } ?>/>
-                                    <label for="renovation-loan-<?php echo $product->product_id; ?>">Renovation
-                                        loan</label>
-                                </div>
-                            </th>
-                            <th class="combine-criteria-padding">
-                                <div class="ps-checkbox">
-                                    <input class="form-control" type="checkbox" onchange="changeCriteria(this);"
-                                           name="unit_trust" value="true"
-                                           data-status="<?php echo $highlightStatus; ?>"
-                                           data-product-id="<?php echo $product->product_id; ?>"
-                                           id="unit-trust-<?php echo $product->product_id; ?>"
-                                        <?php if ($product->unit_trust) {
-                                            echo "checked = checked";
-                                        } ?>/>
-                                    <label for="unit-trust-<?php echo $product->product_id; ?>">Unit Trust</label>
-                                </div>
+
                             </th>
                         </tr>
                         </thead>
@@ -4087,7 +4191,7 @@ class PagesFrontController extends Controller
                                 <td class="text-center <?php if ($product->criteria_1 == true) {
                                     echo "highlight";
                                 } ?> "
-                                    colspan="3">1 Criteria Met
+                                    colspan="2">1 Criteria Met
                                     - <?php if ($range->bonus_interest_criteria1 <= 0) {
                                         echo "-";
                                     } else {
@@ -4097,7 +4201,7 @@ class PagesFrontController extends Controller
                                 <td class=" text-center  <?php if ($product->criteria_2 == true) {
                                     echo "highlight";
                                 } ?> "
-                                    colspan="3">2 Criteria
+                                    colspan="2">2 Criteria
                                     - <?php if ($range->bonus_interest_criteria2 <= 0) {
                                         echo "-";
                                     } else {
@@ -4108,7 +4212,7 @@ class PagesFrontController extends Controller
                                 <td class="text-center  <?php if ($product->criteria_3 == true) {
                                     echo "highlight";
                                 } ?>"
-                                    colspan="3">3 Criteria - <?php if ($range->bonus_interest_criteria3 <= 0) {
+                                    colspan="1">3 Criteria - <?php if ($range->bonus_interest_criteria3 <= 0) {
                                         echo " - ";
                                     } else {
                                         echo "$range->bonus_interest_criteria3" . '%';
@@ -4123,7 +4227,7 @@ class PagesFrontController extends Controller
                                 <td class=" text-center <?php if ($product->highlight == true) {
                                     echo 'highlight';
                                 } ?>"
-                                    colspan="9">
+                                    colspan="5">
 
                                     <?php if ($range->placement > $range->first_cap_amount) {
                                         echo "First ";

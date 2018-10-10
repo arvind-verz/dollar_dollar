@@ -70,15 +70,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('footer3', 'Footer 3',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('footer_3', 'Footer 3',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('offer_section', $systemSetting->footer3, ['class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::textarea('footer_3', $systemSetting->footer3, ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('footer4', 'Footer 4',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('footer_4', 'Footer 4',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('offer_section', $systemSetting->footer4, ['class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::textarea('footer_3', $systemSetting->footer4, ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 

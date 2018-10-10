@@ -11,17 +11,17 @@ use App\ProductName;
 use App\PromotionFormula;
 use App\PromotionProducts;
 use App\Rules\MaxRule;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\DefaultSearch;
 use App\ToolTip;
 use App\systemSettingLegendTable;
 use App\Currency;
 use App\ProductManagement;
 use Carbon\Carbon;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use Exception;
 
 class ProductsController extends Controller

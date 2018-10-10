@@ -19,6 +19,7 @@ use App\Brand;
 use Illuminate\Support\Facades\DB;
 use App\Mail\UpdateDetailNotify;
 use Illuminate\Support\Facades\Mail;
+use Exception;
 
 
 class UsersController extends Controller
@@ -127,7 +128,7 @@ class UsersController extends Controller
             try {
                 Mail::to($newUser->email)->send(new UpdateDetailNotify($data));
             } catch (Exception $exception) {
-                dd($exception);
+                //dd($exception);
             }
         }
         activity()

@@ -7,7 +7,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('ads.index', ['type'=>$type]) }}">{{ADS_MANAGEMENT}}</a></li>
+            <li><a href="{{ route('ads.index', ['type'=>$type]) }}">{{ucfirst($type)}}</a></li>
             <li class="active">{{ADS_MODULE_SINGLE.' '.ADD_ACTION}}</li>
         </ol>
     </section>
@@ -49,7 +49,7 @@
                                     <label>Blog Page</label>
                                     <select class="form-control" name="page_type">
                                         <option value="">Select</option>
-                                        <option value="blog">Blog</option>
+                                        {{--<option value="blog">Blog</option>--}}
                                         <option value="blog-inner">Blog Inner</option>
                                     </select>
                                 </div>
@@ -59,31 +59,41 @@
                                     <input type="text" name="title" class="form-control" placeholder="Enter title">
                                 </div>
                                 <div class="form-group">
-                                    <label>Ad Image</label>
+                                    <label>@if($type=='account'||$type=='blog')Vertical Ad Banner @else Ad Image @endif </label>
                                     <input type="file" name="ad_image" class="form-control">
                                 </div>                                
                                 <div class="form-group">
-                                    <label>Ad Link</label>
+                                    <label>@if($type=='account'||$type=='blog')Vertical Ad Banner Link @else Ad Link @endif</label>
                                     <input type="text" name="ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
                                 @if($type=='account' || $type=='blog')
                                 <div class="form-group">
-                                    <label>Horizontal Banner</label>
+                                    <label>@if($type=='account')Horizontal Ad Banner @else Horizontal Banner @endif</label>
                                     <input type="file" name="horizontal_banner_ad_image" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label>Horizontal Banner Link</label>
+                                    <label>@if($type=='account')Horizontal Ad Banner Link @else Horizontal Banner Link @endif</label>
                                     <input type="text" name="horizontal_banner_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
                                 @endif
                                 <div class="form-group">
-                                    <label>Paid Ad Image</label>
+                                    <label>@if($type=='account'||$type=='blog')Paid Vertical Ad  @else Paid Ad Image @endif</label>
                                     <input type="file" name="paid_ad_image" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label>Paid Ad Link</label>
+                                    <label>@if($type=='account'||$type=='blog')Paid Vertical Ad Link  @else Paid Ad Link @endif</label>
                                     <input type="text" name="paid_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
+                                @if($type=='account'||$type=='blog')
+                                <div class="form-group">
+                                    <label>Paid Horizontal Ad</label>
+                                    <input type="file" name="horizontal_paid_ad_image" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Paid Horizontal Ad Link</label>
+                                    <input type="text" name="horizontal_paid_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
+                                </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="">Ad Range Date</label>
                                     <input type="text" name="ad_range_date" class="form-control date_range" value="" autocomplete="off">
@@ -97,10 +107,16 @@
                                     </select>
                                 </div>
                             </div>
-                            <a href="{{ route('ads.index', ['type'=>$type]) }}" class="btn btn-warning pull-right ml-10"><i class="fa  fa-close"></i> Cancel
-                            </a>
-                            <button type="submit" class="btn btn-info pull-right"><i class="fa  fa-check"></i> Add
-                            </button>
+                            <div class="box-footer">
+                                <a href="{{ route('ads.index', ['type'=>$type]) }}"
+                                   class="btn btn-default"><i class="fa fa-close">
+                                    </i> Cancel</a>
+
+                                <button type="submit" class="btn btn-info pull-right"><i class="fa  fa-check"></i> Add
+                                </button>
+
+                            </div>
+
 
 
                         </div>

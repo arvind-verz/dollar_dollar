@@ -113,10 +113,10 @@
                         </div>
                         <div class="form-group">
                             <button type="submit" class="ps-btn">Sign Up</button>
-                            <a class="ps-btn ps-btn--blue p_facebook" href="{{ url('login/facebook') }}"><i class="fab fa-facebook-f pr-10"></i> Connect with Facebook</a>
+                            <a class="ps-btn ps-btn--blue p_facebook" href="{{ url('login/facebook') }}" style="color: #ffffff !important;"><i class="fab fa-facebook-f pr-10"></i> Connect with Facebook</a>
                         </div>
                         <div class="form-group">
-                            <p>By signing up I agree to DollarDollar.sg’s <a href="{{ url('terms-of-use') }}" target="_blank">Term of Use</a> and <a href="{{ url('privacy-policy') }}" target="_blank">Privacy Policy</a></p>
+                            <p>By signing up I agree to DollarDollar.sg’s <a href="{{ url('terms-of-use') }}" target="_blank" class="important-underline">Term of Use</a> and <a href="{{ url('privacy-policy') }}" target="_blank" class="important-underline">Privacy Policy</a></p>
                         </div>
                     </div>
                 </div>
