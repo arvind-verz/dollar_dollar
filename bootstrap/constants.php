@@ -193,6 +193,7 @@ define('ACCOUNTINFO', "account-information");
 define('PRODUCTMANAGEMENT', "product-management");
 define('FORGOT_PASSWORD', "forgot-password");
 define('FORGOT_PASSWORD_RESET', "forgot-password-reset");
+define('PRODUCT_MANAGEMENT_SLUG', "product-management");
 
 //display section contact or offer section
 define('CONTACT_US_SECTION', "Contact Us Now");
@@ -223,7 +224,7 @@ define('GENDER_FEMALE', "Female");
 define('GOAL_INCOME', "Building passive income");
 define('GOAL_FAMILY', "Starting a family");
 define('GOAL_RETIREMENT', "Retirement");
-define('GOAL_OTHER', "Other");
+define('GOAL_OTHER', "Others");
 define('RISK_CONSERVATIVE', "Conservative");
 define('RISK_MODERATE', "Moderately Conservative");
 define('RISK_BALANCED', "Balanced");

@@ -69,12 +69,14 @@
                                                         @if(CONTACT_US_SECTION_VALUE == $page->contact_or_offer) selected="selected" @endif>{{CONTACT_US_SECTION}}</option>
                                                 <option value="{{OFFER_SECTION_VALUE}}"
                                                         @if(OFFER_SECTION_VALUE == $page->contact_or_offer) selected="selected" @endif>{{OFFER_SECTION}}</option>
-                                                        <option value="{{FOOTER3_VALUE}}" @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER3}}</option>
-                                                <option value="{{FOOTER4_VALUE}}" @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER4}}</option>
+                                                <option value="{{FOOTER3_VALUE}}"
+                                                        @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER3}}</option>
+                                                <option value="{{FOOTER4_VALUE}}"
+                                                        @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER4}}</option>
                                             </select>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="meta">
@@ -190,6 +192,26 @@
                                             </select>
                                         </div>
                                     </div>
+                                    @if($page->slug==PRODUCT_MANAGEMENT_SLUG)
+                                        <?php $tooltips = \GuzzleHttp\json_decode($page->tooltip);
+                                        $tooltip = $tooltips[0];
+                                        ?>
+                                        <div class="form-group">
+                                            {{Form::label('reminder_tooltip', 'Reminder Tooltip',['class'=>'col-sm-2 control-label ',])}}
+                                            <div class="col-sm-10">
+                                                {{Form::text('reminder_tooltip', $tooltip->reminder_tooltip, ['class' => 'form-control ', ])}}
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            {{Form::label('interest_earn_tooltip', 'Interest Earn Tooltip',['class'=>'col-sm-2 control-label ',])}}
+
+                                            <div class="col-sm-10">
+                                                {{Form::text('interest_earn_tooltip', $tooltip->interest_earn_tooltip, ['class' => 'form-control', ])}}
+                                            </div>
+
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             <!-- /.tab-content -->

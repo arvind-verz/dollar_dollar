@@ -63,9 +63,16 @@
                                     <span class="ps-post__meta"><a
                                                 href="{{ url('get-blog-by-category/' . $detail->menu_id)}}">{{$detail->menu_title}}</a></span>
 
-                                    {!! $detail->short_description !!}<a class="ps-post__morelink ps-btn"
-                                                                                href="{{ url($detail->slug) }}">Read
-                                        More</a>
+                                    <?php
+                                        $string = strip_tags($detail->short_description);
+                                        if (strlen($string) > 300) {
+
+                                        $stringCut = substr($string, 0, 300);
+                                        $endPoint = strrpos($stringCut, ' ');
+                                        $string = $endPoint? substr($stringCut, 0, $endPoint):substr($stringCut, 0);
+                                        }
+                                    ?>
+                                    {{$string}}..<a class="ps-link " href="{{ url($detail->slug) }}">Read More</a>
                                 </div>
                             </div>
                         @endforeach

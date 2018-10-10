@@ -410,14 +410,14 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [0,1, 2, 3,4]
                             }
                         },
                         {
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [0,1, 2, 3,4]
                             }
 
                         },
@@ -425,15 +425,18 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
+                                columns: [0,1, 2, 3,4]
                             }
                         }
                     ],
                     "pageLength": 10,
                     'ordering': true,
-                    'order': [[0, 'asc']],
+                    'order': [
+                        [4, 'desc'],
+                        [3, 'desc']
+                    ],
                     "aoColumnDefs": [{
-                        "aTargets": [0],
+                        "aTargets": [5],
                         "bSortable": false,
 
                     }],
