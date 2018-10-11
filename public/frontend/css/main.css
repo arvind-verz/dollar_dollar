@@ -6629,7 +6629,7 @@ span.ps-post__meta a {
     }
 
     .ps-product--2, .ps-product {
-        padding: 20px 2px 0px;
+        padding: 20px 15px 0px;
     }
 }
 
@@ -6886,4 +6886,8 @@ span.ps-post__meta a {
 {
         color: #3db54a;
         text-decoration:none;
+}
+* {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+    line-height: 1 !important; /* Chrome- removes extra blank page at the end*/
 }
