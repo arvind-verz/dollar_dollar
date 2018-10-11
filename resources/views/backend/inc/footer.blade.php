@@ -444,7 +444,7 @@
                 });
         $('#customer-report').DataTable(
                 {
-                    dom: 'lBfrtip',
+                    dom: 'Bfrtip',
                     buttons: [
                         {
                             extend: 'print',
@@ -452,20 +452,14 @@
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6,7]
                             },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Profile ' + today;
+                            title: 'Customer management',
+                            customize: function ( win ) {
+                                $(win.document.body)
+                                        .css( 'font-size', '10pt' );
+
+                                $(win.document.body).find( 'table' )
+                                        .addClass( 'compact' )
+                                        .css( 'font-size', 'inherit' );
                             }
                         },
                         {
@@ -531,7 +525,7 @@
                         {
                             extend: 'print',
                             footer: true,
-                            title: 'Contact Enquiry',
+                            title: 'Contact enquiry',
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
@@ -604,7 +598,7 @@
 
         $('#life').DataTable(
                 {
-                    dom: 'lBfrtip',
+                    dom: 'Bfrtip',
                     buttons: [
                         {
                             extend: 'print',
@@ -612,20 +606,14 @@
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
                             },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Life ' + today;
+                            title: 'Life enquiry',
+                            customize: function ( win ) {
+                                $(win.document.body)
+                                        .css( 'font-size', '10pt' );
+
+                                $(win.document.body).find( 'table' )
+                                        .addClass( 'compact' )
+                                        .css( 'font-size', 'inherit' );
                             }
                         },
                         {
@@ -687,7 +675,7 @@
 
         $('#investment').DataTable(
                 {
-                    dom: 'lBfrtip',
+                    dom: 'Bfrtip',
                     buttons: [
                         {
                             extend: 'print',
@@ -695,20 +683,14 @@
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
                             },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Invest ' + today;
+                            title: 'Investment enquiry',
+                            customize: function ( win ) {
+                                $(win.document.body)
+                                        .css( 'font-size', '10pt' );
+
+                                $(win.document.body).find( 'table' )
+                                        .addClass( 'compact' )
+                                        .css( 'font-size', 'inherit' );
                             }
                         },
                         {
@@ -770,7 +752,7 @@
 
         $('#health').DataTable(
                 {
-                    dom: 'lBfrtip',
+                    dom: 'Bfrtip',
                     buttons: [
                         {
                             extend: 'print',
@@ -778,21 +760,16 @@
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6,7,8,9]
                             },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Health ' + today;
+                            title: 'Health enquiry',
+                            customize: function ( win ) {
+                                $(win.document.body)
+                                        .css( 'font-size', '10pt' );
+
+                                $(win.document.body).find( 'table' )
+                                        .addClass( 'compact' )
+                                        .css( 'font-size', 'inherit' );
                             }
+
                         },
                         {
                             extend: 'csv',

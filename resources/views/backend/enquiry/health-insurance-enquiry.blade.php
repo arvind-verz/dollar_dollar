@@ -36,12 +36,12 @@
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
-                                                <th>Full name</th>
+                                                <th>Full&nbsp;name&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Email</th>
-                                                <th>Contact number</th>
+                                                <th>Contact&nbsp;number</th>
                                                 <th>1. Type of coverage...</th>
                                                 <th>2. Existing health...</th>
-                                                <th>2.1 Health Conditions...</th>
+                                                <th>2.1<br>Health Conditions...</th>
                                                 <th>3. best time to reach...</th>
                                                 <th>Other</th>
                                                 <th>Created on</th>
@@ -56,7 +56,7 @@
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $enquiry->id }}">
                                                         </td>
                                                         <td>
-                                                            {{ $enquiry->full_name }}
+                                                            {!!   str_replace(' ', '&nbsp;', $enquiry->full_name) !!}
                                                         </td>
                                                         <td>
                                                             {{ $enquiry->email }}

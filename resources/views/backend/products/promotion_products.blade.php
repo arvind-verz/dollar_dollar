@@ -70,7 +70,8 @@
                                                 <th>Formula Name</th>
                                                 <th>Featured</th>
                                                 <th>Status</th>
-                                                <th>Created on</th>
+                                                <th>@if($productTypeId==ALL_IN_ONE_ACCOUNT)Created on @else
+                                                        Expiry @endif</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
                                             </tr>
@@ -100,10 +101,29 @@
                                                                 Inactive
                                                             @endif
                                                         </td>
-                                                        <td>@if ($product->created_at == null)
-                                                                {{$product->created_at}}
+                                                        <td>
+                                                            @if($productTypeId==ALL_IN_ONE_ACCOUNT)
+                                                                @if ($product->created_at == null)
+                                                                    {{$product->created_at}}
+                                                                @endif
+                                                                {!!  date("Y-m-d h:i A", strtotime($product->created_at))   !!}
+                                                            @else
+                                                                @if ($product->promotion_period == ONGOING)
+                                                                    {{ONGOING}}
+                                                                @else
+                                                                    <?php
+                                                                    $todayDate = \Carbon\Carbon::today();
+                                                                    $untilEndDate = null;
+                                                                    if (!is_null($product->until_end_date)) {
+                                                                        $untilEndDate = \Helper::convertToCarbonEndDate($product->until_end_date);
+                                                                    }
+                                                                    ?>
+
+                                                                    @if ($untilEndDate != null && $untilEndDate > $todayDate) {!!  date("Y-m-d h:i A", strtotime($product->until_end_date))   !!} @else {{EXPIRED}}  @endif
+                                                                @endif
                                                             @endif
-                                                            {!!  date("Y-m-d h:i A", strtotime($product->created_at))   !!}
+
+
                                                         </td>
                                                         <td>@if ($product->updated_at == null)
                                                                 {{$product->updated_at}}

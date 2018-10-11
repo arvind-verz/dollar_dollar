@@ -36,14 +36,14 @@
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
-                                                <th>Full name</th>
+                                                <th>Full&nbsp;name&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Email</th>
-                                                <th>Contact number</th>
-                                                <th>1. What type of life insurance are you looking for?</th>
+                                                <th>Contact&nbsp;number</th>
+                                                <th>1. What type of life...</th>
                                                 <th>2. What is your gender?</th>
                                                 <th>3. What is your date of birth?</th>
                                                 <th>4. Are you a smoker?</th>
-                                                <th>5. When is the best time to reach you?</th>
+                                                <th>5. When is the best time...</th>
                                                 <th>Other </th>
                                                 <th>Created on</th>
                                                 <th>Action</th>
@@ -57,7 +57,7 @@
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $enquiry->id }}">
                                                         </td>
                                                         <td>
-                                                            {{ $enquiry->full_name }}
+                                                            {!!   str_replace(' ', '&nbsp;', $enquiry->full_name) !!}
                                                         </td>
                                                         <td>
                                                             {{ $enquiry->email }}
