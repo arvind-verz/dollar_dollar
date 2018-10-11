@@ -109,12 +109,12 @@ function productCollapse() {
         e.preventDefault();
         if (!$(this).hasClass('active')) {
             $(this).addClass('active');
-            $(this).html("Show Less <i class='fa fa-angle-up'></i>")
+            $(this).html("Less Details <i class='fa fa-angle-up'></i>")
             $(this).closest('.ps-product').find('.ps-product__detail').slideDown();
         }
         else {
             $(this).removeClass('active');
-            $(this).html("More Detail <i class='fa fa-angle-down'></i>")
+            $(this).html("More Details <i class='fa fa-angle-down'></i>")
             $(this).closest('.ps-product').find('.ps-product__detail').slideUp();
         }
 
@@ -125,7 +125,7 @@ function moreInfo() {
         e.preventDefault();
         if (!$(this).hasClass('active')) {
             $(this).addClass('active');
-            $(this).html("Data Less <i class='fa fa-angle-up'></i>")
+            $(this).html("Less Data <i class='fa fa-angle-up'></i>")
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideDown();
             $(this).closest('.ps-product').find('.ps-table-wrap').slideDown();
         }

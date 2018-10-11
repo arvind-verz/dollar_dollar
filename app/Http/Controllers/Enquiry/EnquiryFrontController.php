@@ -343,9 +343,22 @@ class EnquiryFrontController extends Controller
         try {
             Mail::to(ADMIN_EMAIL)->send(new InvestmentEnquiryMail($data));
         } catch (Exception $exception) {
-            
+
             return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+    }
+    public  function testMail(Request $request)
+    {
+
+        try {
+            Mail::raw('Text', function ($message){
+                $message->to('nicckk.verz@gmail.com');
+            });
+            dd("Hi");
+        } catch (Exception $exception) {
+            dd($exception);
+        }
+
     }
 }

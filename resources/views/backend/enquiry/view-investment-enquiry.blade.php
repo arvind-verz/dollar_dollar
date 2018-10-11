@@ -66,7 +66,7 @@
                                         </tr>
                                     @endif
                                     <tr>
-                                        <th>2. Do you have any experience in investment?</th>
+                                        <th>2. Do you have any investment experience before?</th>
                                         <td>
                                             {{ $enquiry->experience }}
                                         </td>

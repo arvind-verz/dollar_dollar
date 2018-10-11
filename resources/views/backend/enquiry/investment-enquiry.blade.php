@@ -41,7 +41,7 @@
                                                 <th>Contact&nbsp;number</th>
                                                 <th>1. What is current your financial goal?</th>
                                                 <th>Other </th>
-                                                <th>2. Do you have any experience in investment?</th>
+                                                <th>2. Do you have any investment experience before?</th>
                                                 <th>Experience detail</th>
                                                 <th>3. Which Risk Profile do you fall into?</th>
                                                 <th>4. What is your age?</th>
