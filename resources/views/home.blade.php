@@ -138,33 +138,35 @@
         </div>
     @endif
     {{--Brand section end--}}
+    {{--Brand section end--}}
     <input name="deposit_type" type="hidden" value="Fixed Deposit">
     <div class="ps-home-fixed-deposit ps-tabs-root">
         <div class="ps-section__header">
             <div class="container">
                 <ul class="ps-tab-list">
                     <li class="current">
-                        <a href="#tab-1">
+                        <a href="javascriptvoid(0)" data-promotion-type="{{FIX_DEPOSIT}}" class="product-tab">
                             Fixed Deposit
                         </a>
                     </li>
                     <li>
-                        <a href="#tab-2">
+                        <a href="javascriptvoid(0)" data-promotion-type="{{SAVING_DEPOSIT}}" class="product-tab">
                             Saving Deposit
                         </a>
                     </li>
                     <li>
-                        <a href="#tab-3">
+                        <a href="javascriptvoid(0)" data-promotion-type="{{PRIVILEGE_DEPOSIT}}" class="product-tab">
                             Privilege Deposit
                         </a>
                     </li>
                     <li>
-                        <a href="#tab-5">
+                        <a href="javascriptvoid(0)" data-promotion-type="{{FOREIGN_CURRENCY_DEPOSIT}}"
+                           class="product-tab">
                             Foreign Currency
                         </a>
                     </li>
                     <li>
-                        <a href="#tab-4">
+                        <a href="javascriptvoid(0)" data-promotion-type="{{ALL_IN_ONE_ACCOUNT}}" class="product-tab">
                             All In One Account
                         </a>
                     </li>
@@ -204,22 +206,11 @@
                                 </div>
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-1">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = [];
-                                    ?>
-                                    @if($products->count())
-                                        @include('homePcProductsSlider')
-                                    @endif
+                                <div class="product-row-01 clearfix pc-only" id="pc-slider">
+
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                    @if($products->count())
-                                        @include('homeSpProductsSlider')
-                                    @endif
+
                                 </div>
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-2"
@@ -228,17 +219,17 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'minimum_placement_amount');
                                     $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
+                                    @if($products->count())
+                                        @include('homePcProductsSlider')
+                                    @endif
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'minimum_placement_amount');
                                     $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
+                                    @if($products->count())
+                                        @include('homeSpProductsSlider')
+                                    @endif
                                 </div>
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-3"
@@ -247,376 +238,21 @@
                                     <?php
                                     $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'promotion_period');
                                     $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ps-tab" id="tab-2">
-                        <div class="ps-block--desposit">
-                            <div class="ps-block__header">
-                                <h3>
-                                    <strong>
-                                        Saving Deposit
-                                    </strong>
-                                </h3>
-
-                                <div class="ps-block__actions">
-                                    <ul class="catListing clearfix">
-                                        <li class="selected" id="catList4">
-                                            <a class="aboutpage" id="showContent-4" target="showContent-container-4">
-                                                Interest
-                                            </a>
-                                        </li>
-                                        <li class="" id="catList5">
-                                            <a class="aboutpage" id="showContent-5" target="showContent-container-5">
-                                                Placement
-                                            </a>
-                                        </li>
-                                        <li class="" id="catList6">
-                                            <a class="aboutpage" id="showContent-6" target="showContent-container-6">
-                                                tenure
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-4">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-5"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-6"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(SAVING_DEPOSIT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ps-tab" id="tab-3">
-                        <div class="ps-block--desposit">
-                            <div class="ps-block__header">
-                                <h3>
-                                    <strong>
-                                        Privilege Deposit
-                                    </strong>
-                                </h3>
-
-                                <div class="ps-block__actions">
-                                    <ul class="catListing clearfix">
-                                        <li class="selected" id="catList7">
-                                            <a class="aboutpage" id="showContent-7" target="showContent-container-7">
-                                                Interest
-                                            </a>
-                                        </li>
-                                        <li class="" id="catList8">
-                                            <a class="aboutpage" id="showContent-8" target="showContent-container-8">
-                                                Placement
-                                            </a>
-                                        </li>
-                                        <li class="" id="catList9">
-                                            <a class="aboutpage" id="showContent-9" target="showContent-container-9">
-                                                tenure
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-7">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-8"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-9"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(PRIVILEGE_DEPOSIT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ps-tab" id="tab-4">
-                        <div class="ps-block--desposit">
-                            <div class="ps-block__header">
-                                <h3>
-                                    <strong>
-                                        All in One Deposit
-                                    </strong>
-                                </h3>
-
-                                <div class="ps-block__actions">
-                                    <ul class="catListing clearfix">
-                                        <li class="selected" id="catList10">
-                                            <a class="aboutpage" id="showContent-10" target="showContent-container-10">
-                                                Interest
-                                            </a>
-                                        </li>
-                                        <li class="" id="catList11">
-                                            <a class="aboutpage" id="showContent-11" target="showContent-container-11">
-                                                Placement
-                                            </a>
-                                        </li>
-                                        <li class="" id="catList12">
-                                            <a class="aboutpage" id="showContent-12" target="showContent-container-12">
-                                                Criteria
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-10">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-11">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
                                     @if($products->count())
                                         @include('homePcProductsSlider')
                                     @endif
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
                                     <?php
-                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT, 'minimum_placement_amount');
+                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'promotion_period');
                                     $i = 1;$featured = []; ?>
-
                                     @if($products->count())
                                         @include('homeSpProductsSlider')
                                     @endif
                                 </div>
                             </div>
-                            <div class="productGridContainer target-content" id="showContent-container-12"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(ALL_IN_ONE_ACCOUNT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="ps-tab" id="tab-5">
-                        <div class="ps-block--desposit">
-                            <div class="ps-block__header">
-                                <h3>
-                                    <strong>
-                                        Foreign Currency Deposit
-                                    </strong>
-                                </h3>
-
-                                <div class="ps-block__actions">
-                                    <ul class="catListing clearfix">
-                                        <li class="selected" id="catList13">
-                                            <a class="aboutpage" id="showContent-13" target="showContent-container-13">
-                                                Interest
-                                            </a>
-                                        </li>
-                                        <li class="" id="catList14">
-                                            <a class="aboutpage" id="showContent-14" target="showContent-container-14">
-                                                Placement
-                                            </a>
-                                        </li>
-                                        <li class="" id="catList15">
-                                            <a class="aboutpage" id="showContent-15" target="showContent-container-15">
-                                                tenure
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-13">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-14"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-15"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homePcProductsSlider')
-                                        @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FOREIGN_CURRENCY_DEPOSIT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                        @if($products->count())
-                                            @include('homeSpProductsSlider')
-                                        @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ps-section__footer view_all_types">
-                    <a href="fixed-deposit-mode">
-                        View all bank rates
-                    </a>
                 </div>
             </div>
         </div>
@@ -749,36 +385,32 @@
                     //owlCarousel($('.owl-slider'));
                     $(".ps-tab-list li").removeClass("current");
                     $(this).addClass("current");
-                    var id = $(this).find("a").attr("href");
-                    var title = $(this).find("a").html();
-                    if (title == 'Fixed Deposit') {
-                        $("div.view_all_types a").attr("href", "fixed-deposit-mode");
-                    }
-                    else if (title == 'Saving Deposit') {
-                        $("div.view_all_types a").attr("href", "saving-deposit-mode");
-                    }
-                    else if (title == 'Privilege Deposit') {
-                        $("div.view_all_types a").attr("href", "privilege-deposit-mode");
-                    }
-                    else if (title == 'All In One Account') {
-                        $("div.view_all_types a").attr("href", "all-in-one-deposit-mode");
-                    }
-                    else if (title == 'Foreign Currency') {
-                        $("div.view_all_types a").attr("href", "foreign-currency-deposit-mode");
-                    }
-                    var nextTarget = $("div" + id).find("ul.catListing li:first a");
-                    var targetId = nextTarget.attr("target");
+                    var promotionType = $(this).find("a").attr("data-promotion-type");
+                    var byOrderValue = "<?php echo MAXIMUM_INTEREST_RATE; ?>";
+                    getProductSliderDetails(promotionType, byOrderValue);
 
-                    var carousel = $("#" + targetId).find(".owl-slider");
-                    carousel.hide();
-                    nextTarget.click();
-                    setTimeout(function () {
-                        carousel.show()
-                    }, 100);
+
 
                 }
         );
-
+        function getProductSliderDetails(promotionType, byOrderValue) {
+            $.ajax({
+                method: "POST",
+                url: "{{url('/get-product-slider-details')}}",
+                data: {
+                    promotion_type: promotionType,
+                    by_order_value: byOrderValue
+                },
+                cache: false,
+                async: false,
+                success: function (data) {
+                    var target =  $("#pc-slider");
+                    target.html(data);
+                    var owl = target.find(".owl-slider");
+                    owl.owlCarousel(owl);
+                }
+            });
+        }
 
     </script>
     {{--Blog section end--}}

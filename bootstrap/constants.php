@@ -302,3 +302,12 @@ define('BLOG_NOT_FOUND', "");
 
 // single lines for product result
 define('BASE_EFFECTIVE_RATE', "Base on effective interest rate");
+
+//order by value
+define('MAXIMUM_INTEREST_RATE', "maximum_interest_rate");
+define('MINIMUM_PLACEMENT_AMOUNT', "minimum_placement_amount");
+define('PROMOTION_PERIOD', "promotion_period");
+
+//currency
+define('SGD', "SGD");
+
