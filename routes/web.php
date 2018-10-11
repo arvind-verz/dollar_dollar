@@ -87,6 +87,11 @@ Route::post('/combine-criteria-filter', 'CMS\PagesFrontController@combineCriteri
 Route::get('/tags/{slug}', 'CMS\PagesFrontController@search_tags');
 /* END TAGS FRONTEND */
 //Route::get('/test-mail', 'Enquiry\EnquiryFrontController@testMail');
+//get product slider details
+
+Route::post('/get-product-slider-details', 'CMS\PagesFrontController@getProductSliderDetails');
+
+
 
 /*End FrontEnd Routes*/
 Route::group(array('prefix' => 'admin'), function () {
