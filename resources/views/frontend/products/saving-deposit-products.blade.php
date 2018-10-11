@@ -716,8 +716,7 @@ class="fa fa-refresh"></i></a>
                                                         {!! $product->product_footer !!}
                                                     </div>
                                                     <div class="ps-product__footer"><a
-                                                                class="ps-product__more" href="#">More
-                                                            Detail<i
+                                                                class="ps-product__more" href="#">More Details<i
                                                                     class="fa fa-angle-down"></i></a><a
                                                                 class="ps-product__info sp-only"
                                                                 href="#">More data<i
@@ -1291,8 +1290,7 @@ class="fa fa-refresh"></i></a>
                                                             {!! $product->product_footer !!}
                                                         </div>
                                                         <div class="ps-product__footer"><a
-                                                                    class="ps-product__more" href="#">More
-                                                                Detail<i
+                                                                    class="ps-product__more" href="#">More Details<i
                                                                         class="fa fa-angle-down"></i></a><a
                                                                     class="ps-product__info sp-only"
                                                                     href="#">More data<i

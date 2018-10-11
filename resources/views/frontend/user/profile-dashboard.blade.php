@@ -38,7 +38,7 @@
                             <li><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        @if(count($ads))
+                        {{--@if(count($ads))
                             @if(($ads[0]->display==1))
                                 @php
                                 $current_time = strtotime(date('Y-m-d', strtotime('now')));
@@ -58,7 +58,7 @@
                                     </div>
                                 @endif
                             @endif
-                        @endif
+                        @endif--}}
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">

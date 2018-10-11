@@ -127,7 +127,7 @@
                                                     </span>
                 @endif
                 <div class="short-form mb-10 hide">
-                    <label>Please state the type of investment you have invested before (e.g Unit Trust, Bonds, etc…)</label>
+                    <label>Please state the type of investment you have invested before (e.g Unit Trust, Bonds, etc...)</label>
                     <input class="form-control" type="text" id="experience-detail" name="experience_detail"
                            placeholder=""
                            value="">

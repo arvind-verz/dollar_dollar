@@ -53,7 +53,7 @@
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $contactEnquiry->id }}">
                                                         </td>
                                                         <td>
-                                                            {{ $contactEnquiry->full_name }}
+                                                            {!!   str_replace(' ', '&nbsp;', $contactEnquiry->full_name) !!}
                                                         </td>
                                                         <td>
                                                             {{ $contactEnquiry->email }}
