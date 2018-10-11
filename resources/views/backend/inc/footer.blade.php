@@ -526,29 +526,23 @@
                 });
         $('#contact-table').DataTable(
                 {
-                    dom: 'lBfrtip',
+                    dom: 'Bfrtip',
                     buttons: [
                         {
                             extend: 'print',
                             footer: true,
+                            title: 'Contact Enquiry',
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Contact ' + today;
-                            }
+                            customize: function ( win ) {
+                                $(win.document.body)
+                                        .css( 'font-size', '10pt' );
+
+                                $(win.document.body).find( 'table' )
+                                        .addClass( 'compact' )
+                                        .css( 'font-size', 'inherit' );
+                            },
                         },
                         {
                             extend: 'csv',

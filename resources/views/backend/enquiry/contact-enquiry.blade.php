@@ -32,7 +32,7 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="contact-table" class="table table-bordered">
+                                        <table id="contact-table"  class="table table-bordered">
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
@@ -114,5 +114,10 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
-
+    <style type="text/css">
+        * {
+            -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+            line-height: 1 !important; /*Chrome- removes extra blank page at the bottom*/
+        }
+    </style>
 @endsection
