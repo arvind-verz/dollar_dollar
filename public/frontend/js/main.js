@@ -166,7 +166,7 @@ function backToTop() {
     })
 }
 
-function tabs() {
+/*function tabs() {
     $('.ps-tab-list > li > a').on('click', function (e) {
         e.preventDefault();
         var $this = $(this),
@@ -175,7 +175,7 @@ function tabs() {
         $this.closest('.ps-tabs-root').find($(target)).addClass('active');
 
     });
-}
+}*/
 
 $(document).ready(function () {
     backgroundImage();

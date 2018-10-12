@@ -729,7 +729,6 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
                 $product->remaining_days = null;
             }
 
-
         }
 
         if ($byOrderValue == 'minimum_placement_amount') {

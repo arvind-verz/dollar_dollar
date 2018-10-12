@@ -4515,6 +4515,7 @@ class PagesFrontController extends Controller
     public function getProductSliderDetails(Request $request)
     {
         $products = \Helper::getHomeProducts($request->promotion_type, $request->by_order_value);
+
         $i = 1;
         $featured = [];
         if ($products->count()) {
@@ -4529,8 +4530,9 @@ class PagesFrontController extends Controller
                                 <h4 class="slider-heading">
                                     <strong>
                                         <?php if ($product->by_order_value == INTEREST) { ?>
-                                            Up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
-                                    %</span>
+                                            Up to <span
+                                                class="highlight-slider"> <?php echo $product->maximum_interest_rate; ?>
+                                                %</span>
                                         <?php }
                                         if ($product->by_order_value == PLACEMENT) { ?>
                                             Min:   <span class="highlight-slider">

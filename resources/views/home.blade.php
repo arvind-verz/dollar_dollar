@@ -145,28 +145,28 @@
             <div class="container">
                 <ul class="ps-tab-list">
                     <li class="current">
-                        <a href="javascriptvoid(0)" data-promotion-type="{{FIX_DEPOSIT}}" class="product-tab">
+                        <a href="javascript:void(0);" data-promotion-type="{{FIX_DEPOSIT}}" class="product-tab">
                             Fixed Deposit
                         </a>
                     </li>
                     <li>
-                        <a href="javascriptvoid(0)" data-promotion-type="{{SAVING_DEPOSIT}}" class="product-tab">
+                        <a href="javascript:void(0);" data-promotion-type="{{SAVING_DEPOSIT}}" class="product-tab">
                             Saving Deposit
                         </a>
                     </li>
                     <li>
-                        <a href="javascriptvoid(0)" data-promotion-type="{{PRIVILEGE_DEPOSIT}}" class="product-tab">
+                        <a href="javascript:void(0);" data-promotion-type="{{PRIVILEGE_DEPOSIT}}" class="product-tab">
                             Privilege Deposit
                         </a>
                     </li>
                     <li>
-                        <a href="javascriptvoid(0)" data-promotion-type="{{FOREIGN_CURRENCY_DEPOSIT}}"
+                        <a href="javascript:void(0);" data-promotion-type="{{FOREIGN_CURRENCY_DEPOSIT}}"
                            class="product-tab">
                             Foreign Currency
                         </a>
                     </li>
                     <li>
-                        <a href="javascriptvoid(0)" data-promotion-type="{{ALL_IN_ONE_ACCOUNT}}" class="product-tab">
+                        <a href="javascript:void(0);" data-promotion-type="{{ALL_IN_ONE_ACCOUNT}}" class="product-tab">
                             All In One Account
                         </a>
                     </li>
@@ -207,48 +207,16 @@
                             </div>
                             <div class="productGridContainer target-content" id="showContent-container-1">
                                 <div class="product-row-01 clearfix pc-only" id="pc-slider">
-
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-2"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
                                     <?php
-                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
+                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'maximum_interest_rate');
+                                    $i = 1;$featured = [];
+                                    ?>
                                     @if($products->count())
                                         @include('homePcProductsSlider')
                                     @endif
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'minimum_placement_amount');
-                                    $i = 1;$featured = []; ?>
-                                    @if($products->count())
-                                        @include('homeSpProductsSlider')
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="productGridContainer target-content" id="showContent-container-3"
-                                 style="display:none;">
-                                <div class="product-row-01 clearfix pc-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                    @if($products->count())
-                                        @include('homePcProductsSlider')
-                                    @endif
-                                </div>
-                                <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'promotion_period');
-                                    $i = 1;$featured = []; ?>
-                                    @if($products->count())
-                                        @include('homeSpProductsSlider')
-                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -357,14 +325,7 @@
     </div>
     <script type="text/javascript">
         $("document").ready(function () {
-                    var owl = $('.owl-blog');
-                    owl.owlCarousel({
-                                loop: true,
-                                margin: 10,
-                                items: 1,
-                                lazyLoad: true
-                            }
-                    );
+
                     $('.ps-next').click(function () {
                                 owl.trigger('next.owl.carousel');
                             }
@@ -390,10 +351,11 @@
                     getProductSliderDetails(promotionType, byOrderValue);
 
 
-
                 }
         );
         function getProductSliderDetails(promotionType, byOrderValue) {
+
+
             $.ajax({
                 method: "POST",
                 url: "{{url('/get-product-slider-details')}}",
@@ -404,10 +366,11 @@
                 cache: false,
                 async: false,
                 success: function (data) {
-                    var target =  $("#pc-slider");
+                    var target = $("#pc-slider");
                     target.html(data);
-                    var owl = target.find(".owl-slider");
-                    owl.owlCarousel(owl);
+                    var owl1 = target.find(".owl-slider");
+                    owlCarousel(owl1);
+
                 }
             });
         }
