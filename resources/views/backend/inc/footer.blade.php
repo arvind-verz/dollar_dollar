@@ -13,11 +13,11 @@
         path_absolute: "{{ URL::to('/') }}/",
         selector: "textarea",
         content_css: [
-            '/dollar_dollar/public/frontend/css/plugin.css',
-            '/dollar_dollar/public/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
-            '/dollar_dollar/public/frontend/plugins/jquery-ui/jquery-ui.min.css',
-            '/dollar_dollar/public/frontend/css/main.css',
-            '/dollar_dollar/public/frontend/css/custom.css'
+            '/frontend/css/plugin.css',
+            '/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
+            '/frontend/plugins/jquery-ui/jquery-ui.min.css',
+            '/frontend/css/main.css',
+            '/frontend/css/custom.css'
         ],
         toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code",
         setup: function (ed) {
@@ -80,10 +80,10 @@
     // Load multiple scripts
     var scriptLoader = new tinymce.dom.ScriptLoader();
 
-    scriptLoader.add('/dollar_dollar/public/frontend/js/jquery.min.js');
-    scriptLoader.add('/dollar_dollar/public/frontend/js/plugin.js');
-    scriptLoader.add('/dollar_dollar/public/frontend/plugins/jquery-ui/jquery-ui.min.js');
-    scriptLoader.add('/dollar_dollar/public/frontend/js/main.js');
+    scriptLoader.add('/frontend/js/jquery.min.js');
+    scriptLoader.add('/frontend/js/plugin.js');
+    scriptLoader.add('/frontend/plugins/jquery-ui/jquery-ui.min.js');
+    scriptLoader.add('/frontend/js/main.js');
 
     tinymce.init({
         selector: "textarea.text-color-base ",  // change this value according to your HTML

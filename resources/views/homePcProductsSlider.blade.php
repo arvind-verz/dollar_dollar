@@ -18,14 +18,18 @@
                                         SGD @endif ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
                             @endif
                             @if($product->by_order_value==TENURE)
-                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                    <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                @elseif($product->tenure_value > 0)
-                                    <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                @elseif(is_numeric($product->promotion_period))
-                                    <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                @if($product->promotion_period==ONGOING)
+                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span>
                                 @else
-                                    <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                    @elseif($product->tenure_value > 0)
+                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                    @elseif(is_numeric($product->promotion_period))
+                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                    @else
+                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                    @endif
                                 @endif
                             @endif
                             @if($product->by_order_value==CRITERIA)
@@ -51,12 +55,16 @@
                             </p>
                         @else
                             <p class="@if($product->by_order_value==TENURE) highlight highlight-bg @endif">
-                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                    {{ $product->remaining_days }}  <span
-                                            class="slider-font">{{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}</span>
+                                @if($product->promotion_period==ONGOING)
+                                         {{ $product->promotion_period }}
                                 @else
-                                    {{$product->promotion_period}} @if($product->tenure_value > 0) <span
-                                            class="slider-font">{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}</span> @endif
+                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                        {{ $product->remaining_days }}  <span
+                                                class="slider-font">{{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}</span>
+                                    @else
+                                        {{$product->promotion_period}} @if($product->tenure_value > 0) <span
+                                                class="slider-font">{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}</span> @endif
+                                    @endif
                                 @endif
                             </p>
                         @endif
@@ -112,14 +120,18 @@ if ($featured_count == 1) {
                                     ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
                             @endif
                             @if($product->by_order_value==TENURE)
-                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                    <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
-                                @elseif($product->tenure_value > 0)
-                                    <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
-                                @elseif(is_numeric($product->promotion_period))
-                                    <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
-                                @else
+                                @if($product->promotion_period==ONGOING)
                                     <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                @else
+                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                        <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                    @elseif($product->tenure_value > 0)
+                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                    @elseif(is_numeric($product->promotion_period))
+                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                    @else
+                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                    @endif
                                 @endif
                             @endif
                             @if($product->by_order_value==CRITERIA)
@@ -146,12 +158,16 @@ if ($featured_count == 1) {
                             </p>
                         @else
                             <p class="@if($product->by_order_value==TENURE) highlight highlight-bg @endif">
-                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
-                                    {{ $product->remaining_days }}  <span
-                                            class="slider-font">{{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}</span>
+                                @if($product->promotion_period==ONGOING)
+                                         {{ $product->promotion_period }}
                                 @else
-                                    {{$product->promotion_period}} @if($product->tenure_value > 0) <span
-                                            class="slider-font">{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}</span> @endif
+                                    @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                        {{ $product->remaining_days }}  <span
+                                                class="slider-font">{{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}</span>
+                                    @else
+                                        {{$product->promotion_period}} @if($product->tenure_value > 0) <span
+                                                class="slider-font">{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}</span> @endif
+                                    @endif
                                 @endif
                             </p>
                         @endif

@@ -305,7 +305,7 @@
                                             {{Form::file('ad_horizontal_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                         <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
-                                            size should be 1140*160 for better display
+                                            size should be @if($productTypeId==ALL_IN_ONE_ACCOUNT)1140*160 @else 728*90 @endif for better display
                                         </div>
                                     </div>
                                     <div class="form-group">

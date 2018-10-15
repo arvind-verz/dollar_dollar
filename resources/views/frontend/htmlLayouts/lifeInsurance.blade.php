@@ -4,13 +4,13 @@
             <p>Life Insurance protects the well-being of your loved ones should any unfortunate life events occur.</p>
             <p>Find out more by getting quotes from major trusted Insurers, it is a free service to ensure your needs are fulfilled.</p>
         </div>
-        <img src="/uploads/images/block/life.png" alt="" /></div>
+        <img src="/dollar_dollar/public/uploads/images/block/life.png" alt="" /></div>
     <div class="ps-block--highlight text-center mb-35">
         <h4>Find The Right Life Insurance Policy Cater To Your Needs!</h4>
         <button class="ps-btn" type="button" data-toggle="modal" data-target="#myModalInsurance">Get Quotes</button></div>
     <div class="ps-insurgence">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 "><img class="mb-30" src="/uploads/images/pages/life.jpg" alt="" /></div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 "><img class="mb-30" src="/dollar_dollar/public/uploads/images/pages/life.jpg" alt="" /></div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 "><strong>Life is Unpredictable, Act Now</strong></div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 "><span style="font-size: 11pt; color: #808080;">A life insurance policy is designed to provide financial protection to you and your loved ones in the event that you are no longer around. It pays out an agreed amount known as sum assured when you are permanently disabled or critically ill or paid to your estate when you have passed on.</span>
                 <p><span style="font-size: 11pt; color: #808080;">The unexpected possibility of leaving your loved ones behind can be worrisome. Having covered, life insurance serves to alleviate the financial struggle that a family might face especially when the sole breadwinner is no longer around.</span></p>
@@ -75,7 +75,7 @@
             </tbody>
         </table>
         <p>&nbsp;</p>
-        <div class="enquiry-url" style="text-align: center;"><button class="ps-btn" type="button" data-toggle="modal" data-target="#myModalInsurance">Get Quotes</button></div>
+        <div class="enquiry-url" style="text-align: center;"><button class="ps-btn" type="button" data-toggle="modal" data-target="#myModalInsurance">Enquire now</button></div>
         <p style="text-align: center;">&nbsp;</p>
         <p style="text-align: center;"><span style="color: #ff0000;"><span style="color: #ff0000;">DISCLAIMER</span><strong>:&nbsp;</strong><span style="color: #999999;">In order to provide this service free to you, our business partner will pay us commission based on the products that you have purchased to cater to your needs. The service and products offered are never affected by the commission DollarDollar and our business partners received. Strict guidelines will be in place to ensure the product(s) you have purchased is of your needs and we will work closely to ensure your best interest come first.&nbsp;</span></span></p>
     </div>

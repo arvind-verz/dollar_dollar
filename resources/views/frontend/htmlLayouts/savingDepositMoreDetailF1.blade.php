@@ -1,13 +1,12 @@
-<p>Get up to 1.48% p.a.* interest (total interest rate). Illustration: 1.38% p.a. interest (Bonus Rate assuming Incremental Fresh Funds Balance of above S$100,000) + 0.10% p.a. interest (Prevailing Interest Rate for account balances above S$350,000).</p>
-<p>Bonus Rates are only applicable to Incremental Fresh Funds Balance of minimum S$15,000 and up to a maximum amount of S$1,000,000.</p>
+<p>Earn 1% P.A. on your entire account balance when you do not withdraw and deposit a mininum of S$500 monthly. Continue earning 0.8% P.A.&nbsp; if there is no withdrawal, for months with withdrawal you still receive 0.05% P.A&nbsp;</p>
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
         <h4 class="ps-product__heading">Criteria</h4>
         <ul class="ps-list--arrow-circle">
-            <li>Incremental* Fresh Fund# Balance of Min S$15k</li>
-            <li>UOB Uniplus or Passbook Saving account</li>
-            <li>Sign particpation form to be eligible for Free Gift</li>
-            <li>Earmark for entitlement to Free Gift</li>
+            <li>Initial deposit of S$1000</li>
+            <li>SIF Giro Saver Account (passbook)</li>
+            <li>Monthly Giro to credit this account</li>
+            <li>No over-the-counter deposit allow except initial deposit</li>
         </ul>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
             <div class="ps-product__actions">
