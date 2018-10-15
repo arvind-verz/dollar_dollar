@@ -4630,12 +4630,12 @@ class PagesFrontController extends Controller
 
             ?>
 
-            <div class="product-col-0{{ $featured_width }} dump-padding-left">
+            <div class="product-col-0<?php echo $featured_width ; ?> dump-padding-left">
                 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
                      data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                     data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                     data-owl-item-lg="{{ $featured_item }}"
-                     data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
+                     data-owl-gap="10" data-owl-item="<?php echo $featured_item ; ?>"
+                     data-owl-item-lg="<?php echo $featured_item ; ?>"
+                     data-owl-item-md="<?php echo $featured_item ; ?>" data-owl-item-sm="2"
                      data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
                      data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
                      data-owl-nav-right="<i class='fa fa-angle-right'></i>"

@@ -180,7 +180,7 @@
                         <div class="ps-block--desposit">
                             <div class="ps-block__header">
                                 <h3>
-                                    <strong>
+                                    <strong id="product-heading">
                                         Fixed Deposit
                                     </strong>
                                 </h3>
@@ -188,17 +188,22 @@
                                 <div class="ps-block__actions">
                                     <ul class="catListing clearfix">
                                         <li class="selected" id="catList1">
-                                            <a class="aboutpage" id="showContent-1" target="showContent-container-1">
+                                            <a class="aboutpage" id="showContent-1"
+                                               data-order-by="{{MAXIMUM_INTEREST_RATE}}"
+                                               target="showContent-container-1">
                                                 Interest
                                             </a>
                                         </li>
                                         <li class="" id="catList2">
-                                            <a class="aboutpage" id="showContent-2" target="showContent-container-2">
+                                            <a class="aboutpage" id="showContent-2"
+                                               data-order-by="{{MINIMUM_PLACEMENT_AMOUNT}}"
+                                               target="showContent-container-2">
                                                 Placement
                                             </a>
                                         </li>
                                         <li class="" id="catList3">
-                                            <a class="aboutpage" id="showContent-3" target="showContent-container-3">
+                                            <a class="aboutpage" id="showContent-3" data-order-by="{{PROMOTION_PERIOD}}"
+                                               target="showContent-container-3">
                                                 tenure
                                             </a>
                                         </li>
@@ -339,6 +344,10 @@
         $("a.aboutpage").on("click", function () {
                     $("a.aboutpage").parent().removeClass("selected");
                     $(this).parent().addClass("selected");
+                    var activeProduct = $('.ps-tab-list li').filter(".current");
+                    var promotionType = $(activeProduct).find("a").attr("data-promotion-type");
+                    var byOrderValue = $(this).attr("data-order-by");
+                    getProductSliderDetails(promotionType, byOrderValue);
                 }
         );
         $(".ps-tab-list li").on("click", function () {
@@ -348,11 +357,24 @@
                     $(this).addClass("current");
                     var promotionType = $(this).find("a").attr("data-promotion-type");
                     var byOrderValue = "<?php echo MAXIMUM_INTEREST_RATE; ?>";
+                    var productHeading;
+                    if (promotionType == '<?php echo FIX_DEPOSIT ;?>') {
+                        productHeading = '<?php echo FIX_DEPOSIT_TITLE ;?>';
+                    } else if (promotionType == '<?php echo SAVING_DEPOSIT ;?>') {
+                        productHeading = '<?php echo SAVING_DEPOSIT_TITLE ;?>';
+                    }
+                    else if (promotionType == '<?php echo FOREIGN_CURRENCY_DEPOSIT ;?>') {
+                        productHeading = '<?php echo FOREIGN_DEPOSIT_TITLE ;?>';
+                    } else if (promotionType == '<?php echo PRIVILEGE_DEPOSIT ;?>') {
+                        productHeading = '<?php echo PRIVILEGE_DEPOSIT_TITLE ;?>';
+                    } else if (promotionType == '<?php echo ALL_IN_ONE_ACCOUNT ;?>') {
+                        productHeading = '<?php echo ALL_IN_ONE_ACCOUNT_TITLE ;?>';
+                    }
+                    $('#product-heading').html(productHeading);
                     getProductSliderDetails(promotionType, byOrderValue);
-
-
                 }
         );
+
         function getProductSliderDetails(promotionType, byOrderValue) {
 
 
@@ -366,11 +388,40 @@
                 cache: false,
                 async: false,
                 success: function (data) {
+                    console.log(data);
                     var target = $("#pc-slider");
                     target.html(data);
-                    var owl1 = target.find(".owl-slider");
-                    owlCarousel(owl1);
+                    var $owl = target.find('.owl-carousel');
+                    $owl.trigger('destroy.owl.carousel');
+                    $owl.html($owl.find('.owl-stage-outer').html()).removeClass('owl-loaded');
 
+                    var t = $owl.data("owl-auto"), e = $owl.data("owl-loop"), o = $owl.data("owl-speed"), l = $owl.data("owl-gap"), d = $owl.data("owl-nav"), i = $owl.data("owl-dots"), n = $owl.data("owl-animate-in") ? $owl.data("owl-animate-in") : "", s = $owl.data("owl-animate-out") ? $owl.data("owl-animate-out") : "", m = $owl.data("owl-item"), w = $owl.data("owl-item-xs"), u = $owl.data("owl-item-sm"), r = $owl.data("owl-item-md"), p = $owl.data("owl-item-lg"), g = $owl.data("owl-nav-left") ? $owl.data("owl-nav-left") : "<i class='fa fa-angle-left'></i>", v = $owl.data("owl-nav-right") ? $owl.data("owl-nav-right") : "<i class='fa fa-angle-right'></i>", h = $owl.data("owl-duration"), f = $owl.data("owl-animated"), c = $owl.data("owl-smartspeed"), y = $owl.data("owl-hoverpause"), S = "on" == $owl.data("owl-mousedrag");
+                    $owl.owlCarousel({
+                        animateIn: n,
+                        animateOut: s,
+                        margin: l,
+                        autoplay: t,
+                        autoplayTimeout: o,
+                        autoplayHoverPause: !0,
+                        loop: e,
+                        nav: d,
+                        mouseDrag: S,
+                        touchDrag: !0,
+                        autoplaySpeed: h,
+                        navSpeed: h,
+                        dotsSpeed: h,
+                        dragEndSpeed: h,
+                        navText: [g, v],
+                        dots: i,
+                        items: m,
+                        animateOut: f,
+                        smartSpeed: c,
+                        lazyLoad: !0,
+                        beforeInit: true,
+                        afterInit: true,
+                        autoplayHoverPause: y,
+                        responsive: {0: {items: w}, 480: {items: u}, 768: {items: r}, 992: {items: p}, 1200: {items: m}}
+                    });
                 }
             });
         }
