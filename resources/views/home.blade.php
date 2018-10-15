@@ -9,7 +9,7 @@
     ?>
     {{--Banner section start--}}
     @if($banners->count()>1)
-        <div class="ps-home-banner">
+        <div class="ps-home-banner ">
             <div class="ps-slider--home owl-slider" data-owl-animated="fadeOut" data-owl-auto="true"
                  data-owl-dots="true" data-owl-duration="1000" data-owl-gap="0" data-owl-hoverpause="true"
                  data-owl-item="1" data-owl-item-lg="1" data-owl-item-md="1" data-owl-item-sm="1" data-owl-item-xs="1"
