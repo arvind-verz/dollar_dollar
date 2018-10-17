@@ -280,7 +280,10 @@
                                         <div class="col-sm-2">
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12"> Formula details unavailable</div>
+                                    <div class="form-group " id="formula-details-error-section">
+                                        <h3 class="col-sm-12 col-md-12 col-lg-12 text-danger"> Formula details
+                                            unavailable</h3>
+                                    </div>
                                     @include('backend.products.formulaDetail.fixDepositF1')
                                     @include('backend.products.formulaDetail.savingDepositF1')
                                     @include('backend.products.formulaDetail.savingDepositF3')
@@ -290,6 +293,7 @@
                                     @include('backend.products.formulaDetail.allInOneAccountF2')
                                     @include('backend.products.formulaDetail.allInOneAccountF3')
                                     @include('backend.products.formulaDetail.allInOneAccountF4')
+                                    @include('backend.products.formulaDetail.allInOneAccountF5')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -305,7 +309,7 @@
                                             {{Form::file('ad_horizontal_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                         <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
-                                            size should be @if($productTypeId==ALL_IN_ONE_ACCOUNT)1140*160 @else 728*90 @endif for better display
+                                            size should be @if($productTypeId==ALL_IN_ONE_ACCOUNT)1140*160 @else 1140*160 @endif for better display
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -503,6 +507,11 @@
                 $('#allInOneAccountF4').removeClass('display-none');
 
             }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>') {
+
+                $('#allInOneAccountF5').removeClass('display-none');
+
+            }
 
 
         });
@@ -516,6 +525,7 @@
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
+            $('#allInOneAccountF5').addClass('display-none');
             $('#until-end-section').addClass('display-none');
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
@@ -553,6 +563,7 @@
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
+            $('#allInOneAccountF5').addClass('display-none');
             $('#until-end-section').addClass('display-none');
 
             var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
@@ -631,6 +642,11 @@
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
 
                 $('#allInOneAccountF4').removeClass('display-none');
+
+            }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>') {
+
+                $('#allInOneAccountF5').removeClass('display-none');
 
             }
 
