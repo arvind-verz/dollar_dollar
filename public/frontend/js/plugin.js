@@ -1662,6 +1662,8 @@ function owlCarousel(a) {
             animateOut: f,
             smartSpeed: c,
             lazyLoad: !0,
+            beforeInit: false,
+            afterInit: false,
             autoplayHoverPause: y,
             responsive: {0: {items: w}, 480: {items: u}, 768: {items: r}, 992: {items: p}, 1200: {items: m}}
         })

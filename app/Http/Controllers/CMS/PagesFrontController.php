@@ -3904,6 +3904,140 @@ class PagesFrontController extends Controller
                 } elseif ($status == false) {
                     $remainingProducts[] = $product;
                 }
+            } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F5) {
+                $totalInterests = [];
+                $interestEarns = [];
+                $product->highlight = false;
+                $product->salary_highlight = false;
+                $product->payment_highlight = false;
+                $product->spend_1_highlight = false;
+                $product->spend_2_highlight = false;
+                $product->privilege_highlight = false;
+                $product->loan_highlight = false;
+                $product->other_highlight = false;
+
+                $criteriaMatchCount = 0;
+
+                foreach ($productRanges as $k => $productRange) {
+                    //dd($productRange);
+                    $allInterests = [
+                        $productRange->bonus_interest_spend_1,
+                        $productRange->bonus_interest_spend_2,
+                        $productRange->bonus_interest_salary,
+                        $productRange->bonus_interest_giro_payment,
+                        $productRange->bonus_interest_privilege,
+                        $productRange->bonus_interest_loan,
+                    ];
+                    if ($searchValue >= $productRange->min_range) {
+                        $placement = (int)$searchValue;
+                        $status = true;
+                    } elseif (empty($placement) && (count($productRanges) - 1) == ($k)) {
+                        $placement = $productRange->max_range;
+                    }
+
+
+                    $totalInterest = 0;
+                    $colSpan = 0;
+                    if (!empty($productRange->minimum_spend_2)) {
+                        $colSpan++;
+                    } elseif (!empty($productRange->minimum_spend_1)) {
+                        $colSpan++;
+                    }
+                    if (!empty($productRange->minimum_salary)) {
+                        $colSpan++;
+                    }
+                    if (!empty($productRange->minimum_giro_payment)) {
+                        $colSpan++;
+                    }
+                    if (!empty($productRange->minimum_privilege_pa)) {
+                        $colSpan++;
+                    }
+                    if (!empty($productRange->minimum_loan_pa)) {
+                        $colSpan++;
+                    }
+                    if (!empty($productRange->other_minimum_amount) && ($productRange->status_other == 1)) {
+                        $colSpan++;
+                    }
+                    $productRange->colspan = $colSpan;
+                    if ($status == true) {
+                        if (!empty($productRange->minimum_spend_2)) {
+                            if ($spend > 0 && $productRange->minimum_spend_2 <= $spend) {
+                                $product->spend_2_highlight = true;
+                                $totalInterest = $totalInterest + $productRange->bonus_interest_spend_2;
+                                $criteriaMatchCount++;
+                            }
+                        } elseif (!empty($productRange->minimum_spend_1)) {
+                            if ($spend > 0 && $productRange->minimum_spend_1 <= $spend) {
+                                $product->spend_1_highlight = true;
+                                $totalInterest = $totalInterest + $productRange->bonus_interest_spend_1;
+                                $criteriaMatchCount++;
+                            }
+                        }
+                        if (!empty($productRange->minimum_salary)) {
+                            if ($salary > 0 && $productRange->minimum_salary <= $salary) {
+                                $product->salary_highlight = true;
+                                $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
+                                $criteriaMatchCount++;
+                            }
+                        }
+                        if (!empty($productRange->minimum_giro_payment)) {
+                            if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
+                                $product->payment_highlight = true;
+                                $totalInterest = $totalInterest + $productRange->bonus_interest_giro_payment;
+                                $criteriaMatchCount++;
+                            }
+                        }
+
+                        if (!empty($productRange->minimum_privilege_pa)) {
+                            if ($privilege > 0 && $productRange->minimum_privilege_pa <= $privilege / 12) {
+                                $product->privilege_highlight = true;
+                                $totalInterest = $totalInterest + $productRange->bonus_interest_privilege;
+                                $criteriaMatchCount++;
+                            }
+                        }
+                        if (!empty($productRange->minimum_loan_pa)) {
+                            if ($loan > 0 && $productRange->minimum_loan_pa <= $loan) {
+                                $product->loan_highlight = true;
+                                $totalInterest = $totalInterest + $productRange->bonus_interest_loan;
+                                $criteriaMatchCount++;
+                            }
+                        }
+                        if (!empty($productRange->other_minimum_amount) && ($productRange->status_other == 1)) {
+                            if ($placement > 0 && $productRange->other_minimum_amount <= $placement) {
+                                $product->other_highlight = true;
+                                $totalInterest = $totalInterest + $productRange->other_interest;
+                                $criteriaMatchCount++;
+                            }
+                        }
+                    }
+                    if ($criteriaMatchCount == 0) {
+                        $status = false;
+                        $totalInterest = $productRange->bonus_interest_salary + $productRange->bonus_interest_giro_payment + $productRange->bonus_interest_spend_1 + $productRange->bonus_interest_spend_2 +
+                            $productRange->bonus_interest_privilege + $productRange->other_interest + $productRange->bonus_interest_loan;
+                        $criteriaMatchCount = 4;
+
+                    }
+
+                    $totalInterests[] = $totalInterest;
+                    if ($placement > 0 && ($placement > $productRange->first_cap_amount)) {
+                        $interestEarns[] = (($productRange->first_cap_amount * ($totalInterest / 100)) + (($productRange->bonus_interest_remaining_amount / 100) * ($placement - $productRange->first_cap_amount)));
+                    } else {
+                        $interestEarns[] = $placement * ($totalInterest / 100);
+                    }
+                    $productRange->placement = $placement;
+                }
+                $product->criteriaCount = $criteriaMatchCount;
+                $product->total_interest = array_sum($totalInterests);
+                $product->interest_earned = array_sum($interestEarns);
+                $product->placement = $placement;
+                $product->product_range = $productRanges;
+                if ($status == true) {
+                    $product->highlight = true;
+                    $filterProducts[] = $product;
+                } else {
+                    $remainingProducts[] = $product;
+                }
+
             } elseif (empty($product->promotion_formula_id)) {
                 $filterProducts[] = $product;
             }
@@ -4515,6 +4649,7 @@ class PagesFrontController extends Controller
     public function getProductSliderDetails(Request $request)
     {
         $products = \Helper::getHomeProducts($request->promotion_type, $request->by_order_value);
+
         $i = 1;
         $featured = [];
         if ($products->count()) {
@@ -4529,8 +4664,9 @@ class PagesFrontController extends Controller
                                 <h4 class="slider-heading">
                                     <strong>
                                         <?php if ($product->by_order_value == INTEREST) { ?>
-                                            Up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
-                                    %</span>
+                                            Up to <span
+                                                class="highlight-slider"> <?php echo $product->maximum_interest_rate; ?>
+                                                %</span>
                                         <?php }
                                         if ($product->by_order_value == PLACEMENT) { ?>
                                             Min:   <span class="highlight-slider">
@@ -4628,12 +4764,12 @@ class PagesFrontController extends Controller
 
             ?>
 
-            <div class="product-col-0{{ $featured_width }} dump-padding-left">
+            <div class="product-col-0<?php echo $featured_width; ?> dump-padding-left">
                 <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
                      data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
-                     data-owl-gap="10" data-owl-item="{{ $featured_item }}"
-                     data-owl-item-lg="{{ $featured_item }}"
-                     data-owl-item-md="{{ $featured_item }}" data-owl-item-sm="2"
+                     data-owl-gap="10" data-owl-item="<?php echo $featured_item; ?>"
+                     data-owl-item-lg="<?php echo $featured_item; ?>"
+                     data-owl-item-md="<?php echo $featured_item; ?>" data-owl-item-sm="2"
                      data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
                      data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
                      data-owl-nav-right="<i class='fa fa-angle-right'></i>"

@@ -6738,3 +6738,7 @@ ol.breadcrumb>li.active {
     z-index: 9999;
     background: url(../../../img/loader/Preloader_12.gif) center no-repeat #fff;
 }
+td img {
+    max-height: 150px;
+    overflow-y: -webkit-paged-x;
+}

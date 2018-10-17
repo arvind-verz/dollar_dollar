@@ -13,11 +13,11 @@
         path_absolute: "{{ URL::to('/') }}/",
         selector: "textarea",
         content_css: [
-            '/dollar_dollar/public/frontend/css/plugin.css',
-            '/dollar_dollar/public/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
-            '/dollar_dollar/public/frontend/plugins/jquery-ui/jquery-ui.min.css',
-            '/dollar_dollar/public/frontend/css/main.css',
-            '/dollar_dollar/public/frontend/css/custom.css'
+            '/frontend/css/plugin.css',
+            '/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
+            '/frontend/plugins/jquery-ui/jquery-ui.min.css',
+            '/frontend/css/main.css',
+            '/frontend/css/custom.css'
         ],
         toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code",
         setup: function (ed) {
@@ -80,10 +80,10 @@
     // Load multiple scripts
     var scriptLoader = new tinymce.dom.ScriptLoader();
 
-    scriptLoader.add('/dollar_dollar/public/frontend/js/jquery.min.js');
-    scriptLoader.add('/dollar_dollar/public/frontend/js/plugin.js');
-    scriptLoader.add('/dollar_dollar/public/frontend/plugins/jquery-ui/jquery-ui.min.js');
-    scriptLoader.add('/dollar_dollar/public/frontend/js/main.js');
+    scriptLoader.add('/frontend/js/jquery.min.js');
+    scriptLoader.add('/frontend/js/plugin.js');
+    scriptLoader.add('/frontend/plugins/jquery-ui/jquery-ui.min.js');
+    scriptLoader.add('/frontend/js/main.js');
 
     tinymce.init({
         selector: "textarea.text-color-base ",  // change this value according to your HTML
@@ -117,26 +117,26 @@
         });
     });
 
-    $(function() {
-       if($('.date_range').val()=='') {
-          $('.date_range').daterangepicker({
-            opens: 'left',
-            locale: {
-                format: 'YYYY/MM/DD'
-            }
-          }, function(start, end, label) {
+    $(function () {
+        if ($('.date_range').val() == '') {
+            $('.date_range').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'YYYY/MM/DD'
+                }
+            }, function (start, end, label) {
 
-            $('.date_range').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
-          });
-      }
-      else {
-        $('.date_range').daterangepicker({
-            opens: 'left',
-            locale: {
-                format: 'YYYY/MM/DD'
-            }
-          });
-      }
+                $('.date_range').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+            });
+        }
+        else {
+            $('.date_range').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'YYYY/MM/DD'
+                }
+            });
+        }
     });
 </script>
 
@@ -410,14 +410,14 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [0,1, 2, 3,4]
+                                columns: [0, 1, 2, 3, 4]
                             }
                         },
                         {
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [0,1, 2, 3,4]
+                                columns: [0, 1, 2, 3, 4]
                             }
 
                         },
@@ -425,7 +425,7 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [0,1, 2, 3,4]
+                                columns: [0, 1, 2, 3, 4]
                             }
                         }
                     ],
@@ -450,30 +450,30 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7]
+                                columns: [1, 2, 3, 4, 5, 6, 7]
                             },
                             title: 'Customer management',
-                            customize: function ( win ) {
+                            customize: function (win) {
                                 $(win.document.body)
-                                        .css( 'font-size', '10pt' );
+                                        .css('font-size', '10pt');
 
-                                $(win.document.body).find( 'table' )
-                                        .addClass( 'compact' )
-                                        .css( 'font-size', 'inherit' );
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
                             }
                         },
                         {
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7]
+                                columns: [1, 2, 3, 4, 5, 6, 7]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -489,14 +489,14 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7]
+                                columns: [1, 2, 3, 4, 5, 6, 7]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -529,13 +529,13 @@
                             exportOptions: {
                                 columns: [1, 2, 3, 4, 5, 6]
                             },
-                            customize: function ( win ) {
+                            customize: function (win) {
                                 $(win.document.body)
-                                        .css( 'font-size', '10pt' );
+                                        .css('font-size', '10pt');
 
-                                $(win.document.body).find( 'table' )
-                                        .addClass( 'compact' )
-                                        .css( 'font-size', 'inherit' );
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
                             },
                         },
                         {
@@ -549,7 +549,7 @@
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -572,7 +572,7 @@
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -588,7 +588,7 @@
                     'ordering': true,
                     'order': [[6, 'desc']],
                     "aoColumnDefs": [{
-                        "aTargets": [0,7],
+                        "aTargets": [0, 7],
                         "bSortable": false,
 
                     }],
@@ -604,30 +604,30 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                             },
                             title: 'Life enquiry',
-                            customize: function ( win ) {
+                            customize: function (win) {
                                 $(win.document.body)
-                                        .css( 'font-size', '10pt' );
+                                        .css('font-size', '10pt');
 
-                                $(win.document.body).find( 'table' )
-                                        .addClass( 'compact' )
-                                        .css( 'font-size', 'inherit' );
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
                             }
                         },
                         {
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -643,14 +643,14 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10]
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -666,7 +666,7 @@
                     'ordering': true,
                     'order': [[10, 'desc']],
                     "aoColumnDefs": [{
-                        "aTargets": [0,11],
+                        "aTargets": [0, 11],
                         "bSortable": false,
 
                     }],
@@ -681,30 +681,30 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                             },
                             title: 'Investment enquiry',
-                            customize: function ( win ) {
+                            customize: function (win) {
                                 $(win.document.body)
-                                        .css( 'font-size', '10pt' );
+                                        .css('font-size', '10pt');
 
-                                $(win.document.body).find( 'table' )
-                                        .addClass( 'compact' )
-                                        .css( 'font-size', 'inherit' );
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
                             }
                         },
                         {
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -720,14 +720,14 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -743,7 +743,7 @@
                     'ordering': true,
                     'order': [[12, 'desc']],
                     "aoColumnDefs": [{
-                        "aTargets": [0,13],
+                        "aTargets": [0, 13],
                         "bSortable": false,
 
                     }],
@@ -758,16 +758,16 @@
                             extend: 'print',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9]
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
                             },
                             title: 'Health enquiry',
-                            customize: function ( win ) {
+                            customize: function (win) {
                                 $(win.document.body)
-                                        .css( 'font-size', '10pt' );
+                                        .css('font-size', '10pt');
 
-                                $(win.document.body).find( 'table' )
-                                        .addClass( 'compact' )
-                                        .css( 'font-size', 'inherit' );
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
                             }
 
                         },
@@ -775,14 +775,14 @@
                             extend: 'csv',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9]
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -798,14 +798,14 @@
                             extend: 'excel',
                             footer: true,
                             exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6,7,8,9]
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
                             },
                             filename: function () {
                                 var today = new Date();
                                 var dd = today.getDate();
                                 var mm = today.getMonth() + 1; //January is 0!
                                 var yyyy = today.getFullYear();
-                                var yy= yyyy.toString().substring(2);
+                                var yy = yyyy.toString().substring(2);
                                 if (dd < 10) {
                                     dd = '0' + dd
                                 }
@@ -821,7 +821,7 @@
                     'ordering': true,
                     'order': [[9, 'desc']],
                     "aoColumnDefs": [{
-                        "aTargets": [0,10],
+                        "aTargets": [0, 10],
                         "bSortable": false,
 
                     }],
@@ -951,20 +951,20 @@
                         i++;
                     }
 
-                    if (!minPlacementAmount &&(formula != '')) {
+                    if (!minPlacementAmount) {
                         errors[i] = 'The minimum placement is required.';
                         i++;
                     }
-                    if (!maxInterestRate &&(formula != '')) {
+                    if (!maxInterestRate) {
                         errors[i] = 'The maximum interest rate is required.';
                         i++;
                     }
 
-                    if ((!promotionPeriod) && (ongoingStatus == 'false')&&(formula != '')&&(jQuery.inArray(formula, utilFormula) == -1)) {
-                            errors[i] = 'The promotion period is required.';
-                            i++;
+                    if ((!promotionPeriod) && (ongoingStatus == 'false') && (jQuery.inArray(formula, utilFormula) == -1)) {
+                        errors[i] = 'The promotion period is required.';
+                        i++;
                     }
-                    if ((!untilEndDate) && (jQuery.inArray(formula, utilFormula) !== -1)&& (ongoingStatus == 'false')) {
+                    if ((!untilEndDate) && (jQuery.inArray(formula, utilFormula) !== -1) && (ongoingStatus == 'false')) {
                         errors[i] = 'The until end date is required.';
                         i++;
                     }
@@ -1020,20 +1020,21 @@
 
                         });
                         /*if (tenureError == false) {
-                            $.ajax({
-                                method: "POST",
-                                url: "{{url('/admin/check-tenure')}}",
-                                data: {tenures: tenures},
-                                cache: false,
-                                async: false,
-                                success: function (data) {
-                                    if (data == 1) {
-                                        errors[i] = 'Please check tenure you input duplicate tenure';
-                                        i++;
-                                    }
-                                }
-                            });
-                        }*/
+                         $.ajax({
+                         method: "POST",
+                         url: "
+                        {{url('/admin/check-tenure')}}",
+                         data: {tenures: tenures},
+                         cache: false,
+                         async: false,
+                         success: function (data) {
+                         if (data == 1) {
+                         errors[i] = 'Please check tenure you input duplicate tenure';
+                         i++;
+                         }
+                         }
+                         });
+                         }*/
                         /*if (rangeError == false) {
                          $.ajax({
                          method: "POST",
@@ -1343,7 +1344,6 @@
                             return $.trim($(this).val());
                         }).get();
 
-
                         if (Number(minPlacement) > Number(minPlacementAmount) || Number(maxPlacement) > Number(minPlacementAmount)) {
 
                             errors[i] = 'All placement must be less than or equal maximum placement amount.';
@@ -1387,14 +1387,6 @@
                             errors[i] = 'The  bonus interest (Privilege) is required.';
                             i++;
                         }
-                        /*if (LoanMinAmount == '') {
-                         errors[i] = 'The minimum requirement amount (Loan) is required.';
-                         i++;
-                         }
-                         if (LoanBonusInterest == '') {
-                         errors[i] = 'The  bonus interest (Loan) is required.';
-                         i++;
-                         }*/
                         if (BonusAmount == '') {
                             errors[i] = 'The  first cap amount is required.';
                             i++;
@@ -1415,8 +1407,6 @@
                             errors[i] = 'The  first cap amount  is not greater than minimum placement.';
                             i++;
                         }
-
-
                     }
                     if (formula == 8) {
                         var allInOneAccountF2 = $('#allInOneAccountF2');
@@ -1799,6 +1789,158 @@
                                 return false;
                             }
                         });
+                    }
+                    if (formula == 23) {
+                        var allInOneAccountF5 = $('#allInOneAccountF5');
+                        var minPlacement = allInOneAccountF5.find('input[name="min_placement_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var maxPlacement = allInOneAccountF5.find('input[name="max_placement_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SpendMinAmount1 = allInOneAccountF5.find('input[name="minimum_spend_1_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SpendBonusInterest1 = allInOneAccountF5.find('input[name="bonus_interest_spend_1_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SpendMinAmount2 = allInOneAccountF5.find('input[name="minimum_spend_2_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SpendBonusInterest2 = allInOneAccountF5.find('input[name="bonus_interest_spend_2_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SalaryMinAmount = allInOneAccountF5.find('input[name="minimum_salary_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var SalaryBonusInterest = allInOneAccountF5.find('input[name="bonus_interest_salary_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var GiroMinAmount = allInOneAccountF5.find('input[name="minimum_giro_payment_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var GiroBonusInterest = allInOneAccountF5.find('input[name="bonus_interest_giro_payment_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var PrivilegeMinAmount = allInOneAccountF5.find('input[name="minimum_privilege_pa_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var PrivilegeBonusInterest = allInOneAccountF5.find('input[name="bonus_interest_privilege_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var LoanMinAmount = allInOneAccountF5.find('input[name="minimum_loan_pa_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var LoanBonusInterest = allInOneAccountF5.find('input[name="bonus_interest_loan_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var FirstCapAmount = allInOneAccountF5.find('input[name="first_cap_amount_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var RemainingBonusInterest = allInOneAccountF5.find('input[name="bonus_interest_remaining_amount_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var interestName1 = allInOneAccountF5.find('input[name="other_interest_name_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var minimumAmount1 = allInOneAccountF5.find('input[name="other_minimum_amount_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var interest1 = allInOneAccountF5.find('input[name="other_interest_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var status1 = allInOneAccountF5.find('input[name="status_other_aioa5"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+
+
+                        if (Number(minPlacement) > Number(minPlacementAmount) || Number(maxPlacement) > Number(minPlacementAmount)) {
+
+                            errors[i] = 'All placement must be less than or equal maximum placement amount.';
+                            i++;
+
+                        }
+                        if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
+                            errors[i] = 'Please check your placement range. ';
+                            i++;
+                        }
+                        if (SpendMinAmount1 != '') {
+                            if (SpendBonusInterest1 == '') {
+                                errors[i] = 'The  bonus interest (Spend 1) is required.';
+                                i++;
+                            }
+                        }
+                        if (SpendMinAmount2 != '') {
+                            if (SpendBonusInterest2 == '') {
+                                errors[i] = 'The  bonus interest (Spend 2) is required.';
+                                i++;
+                            }
+                        }
+                        if(SpendMinAmount1 != '' && SpendMinAmount2 != '')
+                        {
+                            if (SpendMinAmount1 == SpendMinAmount2) {
+                                errors[i] = 'You cannot input same amount for spend 1 and spend 2.';
+                                i++;
+                            }
+                            if (SpendMinAmount1 > SpendMinAmount2) {
+                                errors[i] = 'spend 2 amount must be grater than spend 2.';
+                                i++;
+                            }
+                        }
+                        if (SalaryMinAmount != '') {
+                            if (SalaryBonusInterest == '') {
+                                errors[i] = 'The  bonus interest (Salary) is required.';
+                                i++;
+                            }
+                        }
+
+                        if (GiroMinAmount != '') {
+                            if (GiroBonusInterest == '') {
+                                errors[i] = 'The  bonus interest (Giro) is required.';
+                                i++;
+                            }
+                        }
+
+                        if (PrivilegeMinAmount != '') {
+                            if (PrivilegeBonusInterest == '') {
+                                errors[i] = 'The  bonus interest (Privilege) is required.';
+                                i++;
+                            }
+                        }
+
+                        if (LoanMinAmount != '') {
+                            if (LoanBonusInterest == '') {
+                                errors[i] = 'The  bonus interest (Loan) is required.';
+                                i++;
+                            }
+                        }
+                        if (status1 == '1' && minimumAmount1 != '') {
+                            if (interestName1 == '') {
+                                errors[i] = 'The interest name is required.';
+                                i++;
+                            }
+                            if (interest1 == '') {
+                                errors[i] = 'The other interest is required.';
+                                i++;
+                            }
+
+                        }
+                        if (FirstCapAmount == '') {
+                            errors[i] = 'The  first cap amount is required.';
+                            i++;
+                        }
+                        if (RemainingBonusInterest == '') {
+                            errors[i] = 'The  bonus interest (Remaining) is required.';
+                            i++;
+                        }
+
+
+                        if (parseInt(minPlacement) > parseInt(FirstCapAmount)) {
+                            errors[i] = 'The  first cap amount  is not greater than minimum placement.';
+                            i++;
+                        }
+
+
                     }
                 }
                 if (errors.length) {
@@ -2184,6 +2326,26 @@
             applyButton = '<button type="button" data-status="true" id="" class="btn btn-block btn-success btn-social" onclick="changeApplyStatus(this)"><i class="fa fa-check"></i>Enable</button>';
         }
         $('#apply-status').html(applyButton);
+
+    }
+    function changeAIO5Status(obj) {
+        var applyButton;
+        var status = $(obj).data('status');
+        var id = $(obj).attr('id');
+        if (status == true) {
+            $("#"+id + "-input").val("0");
+            $(obj).data('status', false);
+            $(obj).removeClass('btn-success');
+            $(obj).addClass('btn-danger');
+            applyButton = '<i class="fa fa-times"></i>Disable';
+        } else {
+            $("#"+id + "-input").val("1");
+            $(obj).data('status', true);
+            $(obj).removeClass('btn-danger');
+            $(obj).addClass('btn-success');
+            applyButton = '<i class="fa fa-check"></i>Enable';
+        }
+        $(obj).html(applyButton);
 
     }
 

@@ -27,7 +27,7 @@ define('PROMOTION', 'Promotion');
 
 
 //set mail name
-define('ADMIN_EMAIL', 'nicckk3@gmail.com');
+define('ADMIN_EMAIL', 'enquiry@dollardollar.sg');
 define('ENQUIRY_EMAIL', '');
 
 //Activity log status
@@ -256,6 +256,7 @@ define('ALL_IN_ONE_ACCOUNT_F1', 7);
 define('ALL_IN_ONE_ACCOUNT_F2', 8);
 define('ALL_IN_ONE_ACCOUNT_F3', 9);
 define('ALL_IN_ONE_ACCOUNT_F4', 10);
+define('ALL_IN_ONE_ACCOUNT_F5', 23);
 define('PRIVILEGE_DEPOSIT_F1', 11);
 define('PRIVILEGE_DEPOSIT_F2', 12);
 define('PRIVILEGE_DEPOSIT_F3', 13);
@@ -310,4 +311,9 @@ define('PROMOTION_PERIOD', "promotion_period");
 
 //currency
 define('SGD', "SGD");
-
+//product name
+define('FIX_DEPOSIT_TITLE', "Fix Deposit");
+define('SAVING_DEPOSIT_TITLE', "Saving Deposit");
+define('FOREIGN_DEPOSIT_TITLE', "Foreign Deposit");
+define('PRIVILEGE_DEPOSIT_TITLE', "Privilege Deposit");
+define('ALL_IN_ONE_ACCOUNT_TITLE', "All in one Account");
