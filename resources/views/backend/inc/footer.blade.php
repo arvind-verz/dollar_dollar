@@ -895,12 +895,14 @@
                 var utilFormula = [
                     '<?php echo SAVING_DEPOSIT_F1; ?>',
                     '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
-                    '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
+                    '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>'
                 ];
 
                 var SDP6 = [
                     '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
                 ];
+                var AIOA = ['<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>' , '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>' , '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>'];
+
                 if (index == 1) {
                     var name = $.trim($('#name').val());
                     var bank = $.trim($('#bank').val());
@@ -950,8 +952,11 @@
                         errors[i] = 'The date is required.';
                         i++;
                     }
-
-                    if (!minPlacementAmount) {
+                    if(!minPlacementAmount && (jQuery.inArray(formula, AIOA) !== -1)){
+                        errors[i] = 'The maximum placement is required.';
+                        i++;
+                    }
+                    else if (!minPlacementAmount) {
                         errors[i] = 'The minimum placement is required.';
                         i++;
                     }
@@ -959,8 +964,11 @@
                         errors[i] = 'The maximum interest rate is required.';
                         i++;
                     }
-
-                    if ((!promotionPeriod) && (ongoingStatus == 'false') && (jQuery.inArray(formula, utilFormula) == -1)) {
+                    if ((!promotionPeriod) &&(jQuery.inArray(formula, AIOA) !== -1)) {
+                        errors[i] = 'The criteria is required.';
+                        i++;
+                    }
+                    else if ((!promotionPeriod) && (ongoingStatus == 'false') && (jQuery.inArray(formula, utilFormula) != -1)) {
                         errors[i] = 'The promotion period is required.';
                         i++;
                     }
