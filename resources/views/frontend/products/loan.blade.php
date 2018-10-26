@@ -62,27 +62,27 @@
                         <div class="ps-form__values">
                             <div class="form-group--label form-group--label1">
                                 <div class="form-group__content">
-                                    <label>Rate Type</label>
+                                    <label>Rate Type<a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i class="fa fa-exclamation-circle"></i></a></label>
                                     <select class="form-control">
                                         <option>ALL</option>
                                     </select>
-                                </div><a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i class="fa fa-exclamation-circle"></i></a>
+                                </div>
                             </div>
                             <div class="form-group--label form-group--label2">
                                 <div class="form-group__content">
-                                    <label>Tenor</label>
+                                    <label>Tenor<a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i class="fa fa-exclamation-circle"></i></a></label>
                                     <select class="form-control">
                                         <option>30</option>
                                     </select>
-                                </div><a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i class="fa fa-exclamation-circle"></i></a>
+                                </div>
                             </div>
                             <div class="form-group--label form-group--label3">
                                 <div class="form-group__content">
-                                    <label>Property Type</label>
+                                    <label>Property Type<a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i class="fa fa-exclamation-circle"></i></a></label>
                                     <select class="form-control">
                                         <option>HDB/Private</option>
                                     </select>
-                                </div><a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i class="fa fa-exclamation-circle"></i></a>
+                                </div>
                             </div>
                             <div class="form-group--label form-group--label3">
                                 <div class="form-group__content">
@@ -99,9 +99,9 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="ps-form__option">
-                                    <button class="ps-btn filter">Interest</button>
-                                    <button class="ps-btn filter">Placement</button>
-                                    <button class="ps-btn filter">Tenor</button>
+                                    <button class="ps-btn filter" disabled>Interest</button>
+                                    <button class="ps-btn filter" disabled>Loan amount</button>
+                                    <button class="ps-btn filter" disabled>Tenor</button>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">

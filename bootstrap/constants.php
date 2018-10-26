@@ -302,7 +302,7 @@ define('BLOG_NOT_FOUND', "");
 
 
 // single lines for product result
-define('BASE_EFFECTIVE_RATE', "Base on effective interest rate");
+define('BASE_EFFECTIVE_RATE', "Base on effective interest rate for 1 year");
 
 //order by value
 define('MAXIMUM_INTEREST_RATE', "maximum_interest_rate");

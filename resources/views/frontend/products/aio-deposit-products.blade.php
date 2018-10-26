@@ -71,68 +71,74 @@
                           action="{{ URL::route('aioa-deposit-mode.search') }}#logo-detail"
                           method="post">
 
-                        <h4>Fill in your need</h4>
+                        <h4>Fill in your needs</h4>
 
                         <div class="ps-form__values">
                             <div class="form-group--label">
                                 <div class="form-group__content">
-                                    <label>Salary</label>
+                                    <label>Salary
+                                    @if(isset($toolTips->salary))
+                                        <a class="ps-tooltip" href="javascript:void(0)"
+                                           data-tooltip="{{$toolTips->salary}}"><i
+                                                    class="fa fa-exclamation-circle"></i></a>
+                                    @endif
+                                    </label>
                                     <input class="form-control" type="text" placeholder="" name="salary" id="salary"
                                            value="{{ isset($searchFilter['salary']) ? $searchFilter['salary'] : '' }}">
                                 </div>
-                                @if(isset($toolTips->salary))
-                                    <a class="ps-tooltip" href="javascript:void(0)"
-                                       data-tooltip="{{$toolTips->salary}}"><i
-                                                class="fa fa-exclamation-circle"></i></a>
-                                @endif
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
-                                    <label>Payment</label>
+                                    <label>Payment
+                                    
+                                    @if(isset($toolTips->payment))
+                                        <a class="ps-tooltip" href="javascript:void(0)"
+                                           data-tooltip="{{$toolTips->payment}}"><i
+                                                    class="fa fa-exclamation-circle"></i></a>
+                                    @endif
+                                    
+                                    </label>
                                     <input class="form-control" type="text" placeholder="" name="giro" id="giro"
                                            value="{{ isset($searchFilter['giro']) ? $searchFilter['giro'] : '' }}">
-                                </div>
-                                @if(isset($toolTips->payment))
-                                    <a class="ps-tooltip" href="javascript:void(0)"
-                                       data-tooltip="{{$toolTips->payment}}"><i
-                                                class="fa fa-exclamation-circle"></i></a>
-                                @endif
+                                    </div>
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
-                                    <label>Spending</label>
+                                    <label>Spending
+                                    @if(isset($toolTips->spend))
+                                        <a class="ps-tooltip" href="javascript:void(0)" data-tooltip="{{$toolTips->spend}}"><i
+                                                    class="fa fa-exclamation-circle"></i></a>
+                                    @endif
+                                    </label>
                                     <input class="form-control" type="text" placeholder="" name="spend" id='spend'
                                            value="{{ isset($searchFilter['spend']) ? $searchFilter['spend'] : '' }}">
                                 </div>
-                                @if(isset($toolTips->spend))
-                                    <a class="ps-tooltip" href="javascript:void(0)" data-tooltip="{{$toolTips->spend}}"><i
-                                                class="fa fa-exclamation-circle"></i></a>
-                                @endif
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
-                                    <label>Privilege</label>
+                                    <label>Privilege
+                                    @if(isset($toolTips->privilege))
+                                        <a class="ps-tooltip" href="javascript:void(0)"
+                                           data-tooltip="{{$toolTips->privilege}}"><i
+                                                    class="fa fa-exclamation-circle"></i></a>
+                                    @endif
+                                    </label>
                                     <input class="form-control" type="text" placeholder="" name="privilege"
                                            id='privilege'
                                            value="{{ isset($searchFilter['privilege']) ? $searchFilter['privilege'] : '' }}">
                                 </div>
-                                @if(isset($toolTips->privilege))
-                                    <a class="ps-tooltip" href="javascript:void(0)"
-                                       data-tooltip="{{$toolTips->privilege}}"><i
-                                                class="fa fa-exclamation-circle"></i></a>
-                                @endif
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
-                                    <label>Loan</label>
+                                    <label>Loan
+                                    @if(isset($toolTips->loan))
+                                        <a class="ps-tooltip" href="javascript:void(0)"
+                                           data-tooltip="{{$toolTips->loan}}"><i
+                                                    class="fa fa-exclamation-circle"></i></a>
+                                    @endif</label>
                                     <input class="form-control" type="text" placeholder="" name="loan" id="loan"
                                            value="{{ isset($searchFilter['loan']) ? $searchFilter['loan'] : '' }}">
                                 </div>
-                                @if(isset($toolTips->loan))
-                                    <a class="ps-tooltip" href="javascript:void(0)"
-                                       data-tooltip="{{$toolTips->loan}}"><i
-                                                class="fa fa-exclamation-circle"></i></a>
-                                @endif
                             </div>
                         </div>
                         <div class="row">

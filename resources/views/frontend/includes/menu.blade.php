@@ -4,7 +4,7 @@
             <p>@if(AUTH::check())Hello, {{ AUTH::user()->first_name }} @endif Welcome to DollarDollar.SG</p>
             <ul class="header__actions">
                 @guest
-                <li><a href="{{ url(REGISTRATION) }}">Register</a></li>
+                <li><a href="{{ url(REGISTRATION) }}">Sign up</a></li>
                 <li><a href="{{ url(LOGIN_SLUG) }}">Login</a></li>
                 @else
                 <li><a href="{{ url(PROFILEDASHBOARD) }}"><i class="fa fa-user-circle"></i>My account</a></li>

@@ -1071,10 +1071,6 @@ button {
     color: #fff;
     font-size: 12px;
     z-index: 1000;
-    -webkit-transition: all 0.4s ease;
-    -moz-transition: all 0.4s ease;
-    -o-transition: all 0.4s ease;
-    transition: all 0.4s ease;
     visibility: hidden;
     opacity: 0;
 }
@@ -1125,6 +1121,8 @@ button {
 }
 
 .form-group--label .form-group__content > label {
+    position: relative;
+    display: flex;
     line-height: 40px;
     padding: 0 12px;
     background-color: #0d6ec9;
@@ -1157,6 +1155,9 @@ button {
 
 .form-group--label .ps-tooltip {
     color: #a2bac8;
+    margin-left: 5px;
+    line-height: 16px;
+    margin-top: 10px;
 }
 
 .form-group--label .ps-tooltip:hover {
@@ -1164,6 +1165,7 @@ button {
 }
 .form-group .ps-tooltip {
     color: #a2bac8;
+    z-index: 999;
 }
 .form-group .ps-tooltip .fa-exclamation-circle {
     font-size: 16px;
@@ -1254,6 +1256,9 @@ button {
 }
 
 @media (max-width: 767px) {
+    .ps-post--feature{
+        padding-bottom: 10px;
+    }
     .ps-post .ps-post__thumbnail {
         width: 200px;
     }
@@ -1761,7 +1766,9 @@ button {
 .ps-block--image {
     position: relative;
 }
-
+.ps-block--image  p{
+    margin-bottom: 0;
+}
 .ps-block--image::after {
     clear: both;
     content: "";
@@ -1790,9 +1797,9 @@ button {
 }
 
 @media (max-width: 991px) {
-    .ps-block--image {
+    /*.ps-block--image {
         margin-bottom: -10px;
-    }
+    }*/
 
     .ps-block--image > img {
         display: none;
@@ -2159,7 +2166,7 @@ button {
     margin-bottom: 15px;
     text-align: center;
     font-family: "Montserrat", sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 300;
 }
 
@@ -2241,6 +2248,7 @@ button {
 }
 
 .ps-block--product-info .ps-block__content {
+    min-height: 118px;
     padding: 20px;
     border: 1px solid #eaeaea;
     -webkit-border-radius: 5px;
@@ -2663,7 +2671,7 @@ button {
 }
 
 .ps-product .ps-product__panel {
-    margin-bottom: 40px;
+    margin-bottom: 00px;
     float: right;
     width: 280px;
 }
@@ -2691,6 +2699,10 @@ button {
     font-family: "Montserrat", sans-serif;
     color: #303030;
     border-bottom: 1px solid #e9e9e9;
+}
+
+.ps-product .ps-product__panel p:last-child{
+    border-bottom: none;
 }
 
 .ps-product .ps-product__panel p strong {
@@ -2755,12 +2767,12 @@ button {
 }
 
 .ps-product .ps-product__detail {
-    padding-top: 45px;
+    /*padding-top: 20px;*/
     border-top: 1px solid #f1f1f1;
 }
 
 .ps-product .ps-product__footer {
-    /* padding-top: 30px;*/
+     padding-top: 20px;
     text-align: center;
     
 }
@@ -2797,11 +2809,11 @@ button {
     }
 
     .ps-product .ps-product__detail {
-        margin-bottom: 20px;
+        /*margin-bottom: 20px;*/
     }
 
     .ps-product .ps-product__detail .ps-product__actions {
-        /*padding-top: 30px;*/
+        margin-top: 20px;
         text-align: left;
     }
 }
@@ -3009,7 +3021,10 @@ button {
 
 .ps-product--2 .ps-criteria-detail .ps-block--product-info {
     display: inline-block;
-    padding: 10px 15px 30px;
+    padding: 10px 7px 15px;
+}
+.ps-product--2 .ps-criteria-detail .ps-block--product-info:first-child {
+    padding-left: 15px;
 }
 
 .ps-product--2 .ps-criteria-detail .ps-block--product-info:first-child {
@@ -3335,7 +3350,7 @@ button {
 .ps-form--filter .ps-form__values .form-group--label {
     float: left;
     width: 20%;
-    padding: 0 15px;
+    padding: 0 0 0 15px;
 }
 
 .ps-form--filter .ps-form__values .form-group--label:last-child {
@@ -5421,7 +5436,6 @@ html .bg--parallax {
 .product-row-01 {
     position: relative;
     display: block;
-    margin: 0px -1px 0px -10px;
 }
 
 .product-col-01 {
@@ -5864,7 +5878,8 @@ span.ps-post__meta a {
 }
 
 #logo-detail .product-row-01 {
-    margin-top: 20px;
+    margin: 20px 0 0 0;
+    width: 100%;
 }
 
 .refresh {
@@ -6130,7 +6145,7 @@ span.ps-post__meta a {
 
 @media (max-width: 768px) {
     .pc-only {
-        /*display: none;*/
+        display: none;
     }
 
     .sp-only {
@@ -6193,7 +6208,7 @@ span.ps-post__meta a {
 }
 
 .form-group.recaptcha {
-    margin-top: 38px;
+    margin: 0 0 20px 0;
 }
 
 .ps-dashboard .ps-dashboard__content .owl-prev {
@@ -6309,12 +6324,22 @@ span.ps-post__meta a {
     -webkit-transform:rotateX(180deg); /* Safari and Chrome */
 }
 
-
+ .icon-sibar{
+     display: none;
+ }
 @media only screen and (min-width: 768px) {
 
     .owl-item.sp-only {
         position: absolute !important;
         display: none;
+    }
+    .icon-sibar{
+        padding: 20px 25px;
+        display: block;
+        font-size: 15px;
+        text-transform: uppercase;
+        line-height: 20px;
+        color: #303030;
     }
 }
 
@@ -6397,6 +6422,7 @@ span.ps-post__meta a {
     .ps-block--legend-table .ps-block__content p {
         width: 100%;
         margin-bottom: 5px;
+        margin-right: 0;
     }
 
     .ps-block--legend-table .ps-block__header {
@@ -6536,40 +6562,52 @@ span.ps-post__meta a {
         display: none;
     }
     
-    .ps-list--sidebar .current {
+    .ps-list--sidebar li:first-child {
         display: block !important;
+    }
+    .ps-list--sidebar li.current > a:before{
+        /*display: none;*/
+    }
+    .ps-list--sidebar li.current > a{
+        font-weight: normal;
+    }
+    .ps-list--sidebar li:first-child > a{
+        font-weight: 700;
+    }
+    .ps-list--sidebar li:first-child > a:before{
+        visibility: visible;
+        opacity: 1;
+        display: block;
     }
     
     .ps-list--sidebar{
         position: relative;
         
     }
-    .ps-list--sidebar .current div {
+    .ps-list--sidebar li > div {
         position: absolute;
-        width: 45px;
-        height: 40px;
-        right: 10px;
-        top: 10px;
-        background: #e4e4e4;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        width: 100%;
+        height: 61px;
+        right: 0;
+        top: 0;
         border-radius: 5px;
-        padding: 10px;
         cursor: pointer;
+        z-index: 10;
     }
 
-    .ps-list--sidebar .current span {
+    .ps-list--sidebar li > div span {
         display: block;
         width: 30px;
         height: 3px;
         background: #ccc;
         transition: 0.3s;
         z-index: 10;
-        position: relative;
+        position: absolute;
+        right: 20px;
+        top: 30px;
     }
 
-    .ps-list--sidebar .current span:before {
+    .ps-list--sidebar li > div  span:before {
         position: absolute;
         background: #ccc;
         right: 0;
@@ -6580,7 +6618,7 @@ span.ps-post__meta a {
         height: 100%;
     }
 
-    .ps-list--sidebar .current span:after {
+    .ps-list--sidebar li > div  span:after {
         position: absolute;
         background: #ccc;
         right: 0;
@@ -6591,20 +6629,20 @@ span.ps-post__meta a {
         transition: 0.3s;
     }
 
-    .ps-list--sidebar .current.active span {
+    .ps-list--sidebar li.active span {
         transition: 0.3s;
         transform: translateX(50%);
         background: transparent;
     }
 
-    .ps-list--sidebar .current.active span:before {
+    .ps-list--sidebar li.active span:before {
         transition: 0.3s;
         transform: rotate(45deg);
         top: 0;
         left: -10px;
     }
 
-    .ps-list--sidebar .current.active span:after {
+    .ps-list--sidebar li.active span:after {
         transform: rotate(-45deg);
         top: 0;
         right: 10px;
@@ -6625,9 +6663,22 @@ span.ps-post__meta a {
     .ps-sidebar {
         margin-bottom: 20px;
     }
-}
+    .ps-dashboard__content .ps-tooltip:before{
+        transform: translateX(-50%);
+        left: 50%;
+        right: initial;
+    }
+    .ps-block--highlight.text-center.mb-35{
+        margin: 25px 0 30px;
+    }
+    .ps-form--enquiry.ps-form--health-insurance .form-group.submit{
+        padding-top: 0;
+    }
 
 @media (max-width: 767px) {
+    .pt-2{
+        padding:0 0 30px 0;
+    }
     .ps-footer .ps-wiget--footer .ps-logo {
         margin: -30px auto 20px;
         display: block !important;
@@ -6674,6 +6725,23 @@ span.ps-post__meta a {
     }
     .header .ps-logo img{
         width: 220px;
+    }
+    .ps-thank h3{
+        font-size: 35px;
+    }
+    
+    .ps-thank h4 {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+    .ps-thank p{
+        text-align: left;
+        font-size: 14px;
+    }
+    .ps-thank .ps-btn{
+        width: 210px;
+        display: table;
+        margin: 0 auto 10px auto;
     }
 }
 
@@ -6771,6 +6839,7 @@ span.ps-post__meta a {
     .ps-heading.mb-35.pl-15 span {
         font-size: 30px;
     }
+    
 }
 
 @media (max-width: 400px) {
@@ -6867,6 +6936,10 @@ span.ps-post__meta a {
 }
 
 @media (max-width: 425px) {
+    .ps-product .ps-product__heading p span{
+        font-size: 12px !important;
+
+    }
     #search-form .owl-nav {
         display: none !important;
     }
@@ -6942,10 +7015,7 @@ span.ps-post__meta a {
         font-size: 9px;
         line-height: 1.9;
     }
-    .ps-product .ps-product__heading p span{
-        font-size: 12px !important;
-
-    }
+    
 }
     .ps-link
     {
@@ -6955,11 +7025,31 @@ span.ps-post__meta a {
         font-weight: 600;
         padding-left: 3px;
     }
+.ps-form__content .ps-btn--outline{
+    background-color: #fff;
+}
+.ps-block--image.mb-25{
+    margin-bottom: 0;
+}
+.modal-content .ps-btn--outline{
+    background-color: green;
+    color: #fff;
+}
+.modal-content .ps-btn:hover{
+    background-color: #ffdc8d !important;
+}
+.modal-content .ps-btn--outline:hover{
+    background-color: #51f251 !important;
+}
 
 
 .modal-dialog{
     max-width: 350px;
     text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    margin: 0;
 }
 .modal-dialog p{
     margin: 0 auto 30px;
@@ -6967,7 +7057,7 @@ span.ps-post__meta a {
 }
 .modal-dialog .ps-btn{
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 h4.modal-title{
     font-size: 30px;
@@ -6984,3 +7074,29 @@ h4.modal-title{
 .ps-product .ps-product__poster img{
     max-height:100%;
 }
+
+
+
+.ps-form--register .form-group > label{
+    margin-top: 5px;
+}
+.ps-loan .form-group--label .form-group__content input, .ps-loan .form-group--label .form-group__content select{
+    border: 1px solid #0d6ec9;
+    border-radius: 0 3px 3px 0;
+}
+.ps-table.ps-table--product-managerment.dataTable.no-footer{
+    padding-top: 20px;
+}
+@media (min-width: 1200px) {
+    .ps-loan .form-group--label .form-group__content{
+        margin-bottom: 20px;
+    }
+}
+
+/*.ps-product__table .ps-table--product{*/
+/*    width: auto;*/
+/*    min-width: auto;*/
+/*}*/
+/*.ps-product__table .ps-table--product th{*/
+/*    min-width: 150px;*/
+/*}*/

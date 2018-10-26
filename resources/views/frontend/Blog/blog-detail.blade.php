@@ -128,10 +128,10 @@
                                        target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
                                 </div>
                             @else
-                                {{-- <div class="pt-2">
+                                <div class="pt-2">
                                      <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
                                         target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                                 </div>--}}
+                                 </div>
                             @endif
                         @endif
                     @endif

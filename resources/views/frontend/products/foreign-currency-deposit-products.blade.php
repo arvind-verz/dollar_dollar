@@ -218,7 +218,7 @@ class="fa fa-refresh"></i></a>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="p-{{ $j }}">
-                        <div class="ps-product__header"><img class="pc-only" src="{{ asset($product->brand_logo) }}"
+                        <div class="ps-product__header"><img class="" src="{{ asset($product->brand_logo) }}"
                                                              alt="">
 
                             <?php
@@ -226,7 +226,7 @@ class="fa fa-refresh"></i></a>
                             $todayEndDate = \Helper::endOfDayAfter();
                             ?>
                             <div class="ps-product__promo left">
-                                <p style="text-align: left !important;">
+                                <p class="pc-only" style="text-align: left !important;">
                                     <span class="highlight"> Promo: </span>
                                     @if($product->promotion_end == null)
                                         {{ONGOING}}
@@ -237,12 +237,16 @@ class="fa fa-refresh"></i></a>
                                     @endif
                                 </p>
 
-                                <p>
+                                <p class="sp-only">
                                     <span class="highlight">Currency: </span>
-                                    {{$product->currency_name}} ({{$product->currency_code}})
+                                    {{$product->currency_code}}
+                                </p>
+                                <p class="pc-only">
+                                    <span class="highlight">Currency: </span>
+                                    {{$product->currency_name}} {{$product->currency_code}}
                                 </p>
                             </div>
-                            <img class="sp-only" src="{{ asset($product->brand_logo) }}" alt="">
+                            <!--<img class="sp-only" src="{{ asset($product->brand_logo) }}" alt="">-->
                         </div>
                         <div class="ps-product__content">
                             <h4 class="ps-product__heading">{!! $product->bank_sub_title !!}</h4>
@@ -421,11 +425,11 @@ class="fa fa-refresh"></i></a>
                                                         {{$product->currency_code}}
                                                         ${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
                                                     <br>
-                                                        <span>
-                                                        Total interest rate @if(($product->total_interest)<=0)
-                                                                - @else {{ $product->total_interest }}% P.A.
-                                                                @if($product->promotion_period!=ONGOING)for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif @endif
-                                                        </span>
+                                                       <span>
+                                                Total interest rate @if(($product->total_interest)<=0)
+                                                        - @else {{ $product->total_interest }}%
+                                                        @if($product->promotion_period!=ONGOING) P.A. for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @else for 1 year @endif @endif
+                                                </span>
 
                                                 </h2>
                                             </div>
@@ -964,8 +968,8 @@ class="fa fa-refresh"></i></a>
                             $todayStartDate = \Helper::startOfDayBefore();
                             $todayEndDate = \Helper::endOfDayAfter();
                             ?>
-                            <div class="ps-product__promo left">
-                                <p style="text-align: left !important;">
+                             <div class="ps-product__promo left">
+                                <p class="pc-only" style="text-align: left !important;">
                                     <span class="highlight"> Promo: </span>
                                     @if($product->promotion_end == null)
                                         {{ONGOING}}
@@ -976,8 +980,11 @@ class="fa fa-refresh"></i></a>
                                     @endif
                                 </p>
 
-
-                                <p>
+                                <p class="sp-only">
+                                    <span class="highlight">Currency: </span>
+                                    {{$product->currency_code}}
+                                </p>
+                                <p class="pc-only">
                                     <span class="highlight">Currency: </span>
                                     {{$product->currency_name}} {{$product->currency_code}}
                                 </p>
