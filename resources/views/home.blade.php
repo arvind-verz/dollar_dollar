@@ -220,8 +220,14 @@
                                         @include('homePcProductsSlider')
                                     @endif
                                 </div>
-                                <div class="product-row-01 clearfix sp-only">
-
+                                <div class="product-row-01 clearfix sp-only" id='sp-slider'>
+                                    <?php
+                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'maximum_interest_rate');
+                                    $i = 1;$featured = [];
+                                    ?>
+                                    @if($products->count())
+                                        @include('homeSpProductsSlider')
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -329,6 +335,26 @@
         </div>
     </div>
     <script type="text/javascript">
+        var isMobile = {
+            Android: function () {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function () {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function () {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function () {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function () {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function () {
+                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+            }
+        }
         $("document").ready(function () {
 
                     $('.ps-next').click(function () {
@@ -352,44 +378,56 @@
         );
         $(".ps-tab-list li").on("click", function () {
 
-                    //owlCarousel($('.owl-slider'));
-                    $(".ps-tab-list li").removeClass("current");
-                    $(this).addClass("current");
-                    var promotionType = $(this).find("a").attr("data-promotion-type");
-                    var byOrderValue = "<?php echo MAXIMUM_INTEREST_RATE; ?>";
-                    var productHeading;
-                    if (promotionType == '<?php echo FIX_DEPOSIT ;?>') {
-                        productHeading = '<?php echo FIX_DEPOSIT_TITLE ;?>';
-                    } else if (promotionType == '<?php echo SAVING_DEPOSIT ;?>') {
-                        productHeading = '<?php echo SAVING_DEPOSIT_TITLE ;?>';
-                    }
-                    else if (promotionType == '<?php echo FOREIGN_CURRENCY_DEPOSIT ;?>') {
-                        productHeading = '<?php echo FOREIGN_DEPOSIT_TITLE ;?>';
-                    } else if (promotionType == '<?php echo PRIVILEGE_DEPOSIT ;?>') {
-                        productHeading = '<?php echo PRIVILEGE_DEPOSIT_TITLE ;?>';
-                    } else if (promotionType == '<?php echo ALL_IN_ONE_ACCOUNT ;?>') {
-                        productHeading = '<?php echo ALL_IN_ONE_ACCOUNT_TITLE ;?>';
-                    }
-                    $('#product-heading').html(productHeading);
-                    getProductSliderDetails(promotionType, byOrderValue);
-                }
-        );
+            //owlCarousel($('.owl-slider'));
+            $(".ps-tab-list li").removeClass("current");
+            $(this).addClass("current");
+            $("a.aboutpage").parent().removeClass("selected");
+            $("#showContent-1").parent().addClass("selected");
+            var promotionType = $(this).find("a").attr("data-promotion-type");
+            var byOrderValue = "<?php echo MAXIMUM_INTEREST_RATE; ?>";
+            var productHeading;
+            if (promotionType == '<?php echo FIX_DEPOSIT ;?>') {
+                productHeading = '<?php echo FIX_DEPOSIT_TITLE ;?>';
+            } else if (promotionType == '<?php echo SAVING_DEPOSIT ;?>') {
+                productHeading = '<?php echo SAVING_DEPOSIT_TITLE ;?>';
+            }
+            else if (promotionType == '<?php echo FOREIGN_CURRENCY_DEPOSIT ;?>') {
+                productHeading = '<?php echo FOREIGN_DEPOSIT_TITLE ;?>';
+            } else if (promotionType == '<?php echo PRIVILEGE_DEPOSIT ;?>') {
+                productHeading = '<?php echo PRIVILEGE_DEPOSIT_TITLE ;?>';
+            } else if (promotionType == '<?php echo ALL_IN_ONE_ACCOUNT ;?>') {
+                productHeading = '<?php echo ALL_IN_ONE_ACCOUNT_TITLE ;?>';
+            }
+            $('#product-heading').html(productHeading);
+            getProductSliderDetails(promotionType, byOrderValue);
+        });
 
         function getProductSliderDetails(promotionType, byOrderValue) {
 
+            var target = $("#pc-slider");
+            var targetId = "pc-slider";
 
+            var resizeTimer;
+            if (isMobile.any()) {
+                if (screen.width < 768) {
+                    target = $("#sp-slider");
+                    targetId = "sp-slider";
+                } else {
+                    target = $("#pc-slider");
+                    targetId = "pc-slider";
+                }
+            }
             $.ajax({
                 method: "POST",
                 url: "{{url('/get-product-slider-details')}}",
                 data: {
                     promotion_type: promotionType,
-                    by_order_value: byOrderValue
+                    by_order_value: byOrderValue,
+                    target: targetId
                 },
                 cache: false,
                 async: false,
                 success: function (data) {
-                    console.log(data);
-                    var target = $("#pc-slider");
                     target.html(data);
                     var $owl = target.find('.owl-carousel');
                     $owl.trigger('destroy.owl.carousel');
