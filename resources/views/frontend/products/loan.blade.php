@@ -2,7 +2,7 @@
 @section('title', $page->title)
 @section('content')
     <?php
-            //dd($page);
+    //dd($page);
     $search_filter = isset($search_filter) ? $search_filter : "";
     $slug = CONTACT_SLUG;
     //get banners
@@ -49,38 +49,55 @@
         <div class="container">
             <div class="ps-block--image">
                 <div class="ps-block__content">
-                    <h3 class="ps-heading"><span> <i class="fa fa-area-chart"></i> Home </span> Loan</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/><br/>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="">LEARN MORE<i class="fa fa-angle-right"></i></a></p>
+                    <h3 class="ps-heading"><span> <i class="fa fa-home"></i> Home </span> Loan</h3>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. <br/><br/>Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        <a href="">LEARN MORE<i class="fa fa-angle-right"></i></a></p>
                 </div>
-                <div class="ps-block__content right" ><img src="{{asset('/uploads/uploads/images/loan.jpg')}}" alt=""></div>
+                <div class="ps-block__content right"><img src="{{asset('/uploads/uploads/images/loan.jpg')}}" alt="">
+                </div>
             </div>
 
             <div class="ps-block--deposit-filter mb-60">
                 <div class="ps-block__content">
                     <form class="ps-form--filter" action="do_action" method="post">
-                        <h4>Fill in your need</h4>
+                        <h4>Fill in your needs</h4>
+
                         <div class="ps-form__values">
                             <div class="form-group--label form-group--label1">
                                 <div class="form-group__content">
-                                    <label>Rate Type<a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i class="fa fa-exclamation-circle"></i></a></label>
+                                    <label>Rate Type<a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
+                                                    class="fa fa-exclamation-circle"></i></a></label>
                                     <select class="form-control">
-                                        <option>ALL</option>
+                                        <option>Both</option>
+                                        <option>Fixed’</option>
+                                        <option>Floating’</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group--label form-group--label2">
                                 <div class="form-group__content">
-                                    <label>Tenor<a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i class="fa fa-exclamation-circle"></i></a></label>
+                                    <label>Tenure<a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i
+                                                    class="fa fa-exclamation-circle"></i></a></label>
                                     <select class="form-control">
-                                        <option>30</option>
+                                        @for($i=10;$i<=35;$i++)
+                                            <option>{{$i}}</option>
+                                        @endfor
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group--label form-group--label3">
                                 <div class="form-group__content">
-                                    <label>Property Type<a class="ps-tooltip" href="#" data-tooltip="Enter tooltip here"><i class="fa fa-exclamation-circle"></i></a></label>
+                                    <label>Property Type<a class="ps-tooltip" href="#"
+                                                           data-tooltip="Enter tooltip here"><i
+                                                    class="fa fa-exclamation-circle"></i></a></label>
                                     <select class="form-control">
                                         <option>HDB/Private</option>
+                                        <option>Commercial Individual</option>
                                     </select>
                                 </div>
                             </div>
@@ -89,11 +106,14 @@
                                     <label>Completion</label>
                                     <select class="form-control">
                                         <option>Completed</option>
+                                        <option>BUC</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <a class="btn refresh form-control " href="http://verz1.com/dollar_dollar/public/all-in-one-deposit-mode/#logo-detail"> <i class="fa fa-refresh"></i></a>
+                                <a class="btn refresh form-control "
+                                   href="http://verz1.com/dollar_dollar/public/all-in-one-deposit-mode/#logo-detail"> <i
+                                            class="fa fa-refresh"></i></a>
                             </div>
                         </div>
                         <div class="row">
@@ -101,7 +121,7 @@
                                 <div class="ps-form__option">
                                     <button class="ps-btn filter" disabled>Interest</button>
                                     <button class="ps-btn filter" disabled>Loan amount</button>
-                                    <button class="ps-btn filter" disabled>Tenor</button>
+                                    <button class="ps-btn filter" disabled>Lock in</button>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
@@ -130,13 +150,17 @@
                 <div class="product-col-01">
                     <div class="ps-slider--feature-product saving">
                         <div class="ps-block--short-product second highlight" data-mh="product">
-                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/DBS_1535354543.png" alt="">
+                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/DBS_1535354543.png"
+                                 alt="">
                             <h4>
                                 <strong>Up to <span class="highlight-slider"> 3.5%</span></strong>
                             </h4>
+
                             <div class="ps-block__info">
                                 <p class="  highlight highlight-bg "><strong>rate: </strong>3.5%</p>
+
                                 <p class=""><strong>Min:</strong> SGD $50K</p>
+
                                 <p class="">5 Criteria</p>
                             </div>
                             <a class="ps-btn" href="#1">More data</a>
@@ -146,14 +170,18 @@
                 <div class="product-col-01">
                     <div class="ps-slider--feature-product saving">
                         <div class="ps-block--short-product second highlight" data-mh="product">
-                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/ocbc_1533044523.png" alt="">
+                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/ocbc_1533044523.png"
+                                 alt="">
                             <h4>
                                 <strong>Up to <span class="highlight-slider"> 3%</span></strong>
                             </h4>
+
                             <div class="ps-block__info">
                                 <p class="  highlight highlight-bg "><strong>rate: </strong>3%</p>
+
                                 <p class=""><strong>Min:</strong>SGD $100K
                                 </p>
+
                                 <p class="">1 Criteria</p>
                             </div>
                             <a class="ps-btn" href="#2">More data</a>
@@ -161,51 +189,68 @@
                     </div>
                 </div>
                 <div class="product-col-03">
-                    <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="false" data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="3" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;" data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
+                    <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true"
+                         data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true"
+                         data-owl-dots="false" data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1"
+                         data-owl-item-md="3" data-owl-item-lg="3" data-owl-duration="1000" data-owl-mousedrag="on"
+                         data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
+                         data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                         <div class="ps-block--short-product second" data-mh="product" style="">
-                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/uob_1532959156.png" alt="">
+                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/uob_1532959156.png"
+                                 alt="">
                             <h4>
                                 <strong>Up to <span class="highlight-slider"> 2.44 %</span></strong>
                             </h4>
+
                             <div class="ps-block__info">
                                 <p class="  highlight highlight-bg ">
                                     <strong>rate: </strong>2.44%
                                 </p>
+
                                 <p class=" ">
                                     <strong>Min:</strong> SGD $75K
                                 </p>
+
                                 <p class="">2 Criteria</p>
                             </div>
                             <a class="ps-btn" href="#5">More data</a>
                         </div>
                         <div class="ps-block--short-product second" data-mh="product" style="">
-                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/maybank_1533044551.png" alt="">
+                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/maybank_1533044551.png"
+                                 alt="">
                             <h4>
                                 <strong>Up to <span class="highlight-slider"> 2.44 %</span></strong>
                             </h4>
+
                             <div class="ps-block__info">
                                 <p class="  highlight highlight-bg ">
                                     <strong>rate: </strong>2.44%
                                 </p>
+
                                 <p class=" ">
                                     <strong>Min:</strong> SGD $75K
                                 </p>
+
                                 <p class="">2 Criteria</p>
                             </div>
                             <a class="ps-btn" href="#5">More data</a>
                         </div>
                         <div class="ps-block--short-product second" data-mh="product" style="">
-                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/ocbc_1533044523.png" alt="">
+                            <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/ocbc_1533044523.png"
+                                 alt="">
                             <h4>
                                 <strong>Up to <span class="highlight-slider"> 2.44 %</span></strong>
                             </h4>
+
                             <div class="ps-block__info">
                                 <p class="  highlight highlight-bg ">
                                     <strong>rate: </strong>2.44%
                                 </p>
+
                                 <p class=" ">
                                     <strong>Min:</strong> SGD $75K
                                 </p>
+
                                 <p class="">2 Criteria</p>
                             </div>
                             <a class="ps-btn" href="#5">More data</a>
@@ -216,6 +261,7 @@
             <div class="ps-product featured-1">
                 <div class="ps-product__header">
                     <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/uob_1532959156.png" alt="">
+
                     <div class="ps-product__promo left">
                         <label class="ps-btn--checkbox">
                             <input type="checkbox" id="checkbox-1" class="checkbox"><span></span>Shortlist this Loan
@@ -257,10 +303,15 @@
                     </table>
                     <div class="ps-loan-right">
                         <h4>For 600k loan with 30 years Loan Tenure</h4>
+
                         <p>Rate Type : <strong>Floating (Sibor)</strong></p>
+
                         <p>Interest Rate : <strong>2.3% (3 Years)</strong></p>
+
                         <p>Lock In : <strong>2 Years</strong></p>
+
                         <p>Monthly Installments : <strong>$500 (3 Years Avg.)</strong></p>
+
                         <p>Property Type : <strong>Private/HDB (Completed)</strong></p>
                     </div>
                 </div>
@@ -277,7 +328,8 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <div class="ps-product__actions"><a class="ps-btn ps-btn--outline" href="#">Main Page</a><a class="ps-btn ps-btn--outline" href="#">T&amp;C</a></div>
+                            <div class="ps-product__actions"><a class="ps-btn ps-btn--outline" href="#">Main Page</a><a
+                                        class="ps-btn ps-btn--outline" href="#">T&amp;C</a></div>
                         </div>
                     </div>
                 </div>
@@ -289,6 +341,7 @@
             <div class="ps-product featured-1">
                 <div class="ps-product__header">
                     <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/ocbc_1533044523.png" alt="">
+
                     <div class="ps-product__promo left">
                         <label class="ps-btn--checkbox">
                             <input type="checkbox" id="checkbox-2" class="checkbox"><span></span>Shortlist this Loan
@@ -330,10 +383,15 @@
                     </table>
                     <div class="ps-loan-right">
                         <h4>For 600k loan with 30 years Loan Tenure</h4>
+
                         <p>Rate Type : <strong>Floating (Sibor)</strong></p>
+
                         <p>Interest Rate : <strong>2.3% (3 Years)</strong></p>
+
                         <p>Lock In : <strong>2 Years</strong></p>
+
                         <p>Monthly Installments : <strong>$500 (3 Years Avg.)</strong></p>
+
                         <p>Property Type : <strong>Private/HDB (Completed)</strong></p>
                     </div>
                 </div>
@@ -350,7 +408,8 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <div class="ps-product__actions"><a class="ps-btn ps-btn--outline" href="#">Main Page</a><a class="ps-btn ps-btn--outline" href="#">T&amp;C</a></div>
+                            <div class="ps-product__actions"><a class="ps-btn ps-btn--outline" href="#">Main Page</a><a
+                                        class="ps-btn ps-btn--outline" href="#">T&amp;C</a></div>
                         </div>
                     </div>
                 </div>
