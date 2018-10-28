@@ -154,13 +154,13 @@
                     @if (!is_null(old('time'))) {{ in_array(TIME_OTHER,old('time'))? "CHECKED" : "" }} @endif/>
                     <label for="time-5">{{TIME_OTHER}}</label>
                 </div>
-                <div class="short-form mb-10">
+                <div class="short-form mb-10 hide">
                     <input class="form-control" type="text" id="other-value" name="other_value" data-target="time-5"
                            onkeyup="checkOtherValidation(this)" placeholder="Please Specify"
                            value="{{old('other_value')}}">
                 </div>
                 @if ($errors->has('other_value'))
-                    <span class="text-danger">
+                    <span class="text-danger" id="other-value-error">
                                                     <strong>{{ $errors->first('other_value') }}</strong>
                                                     </span>
                 @endif
@@ -257,6 +257,9 @@
             if ($("#level-1").is(":checked")) {
                     $("input[name='health_condition']").parent("div").removeClass("hide");
             }
+            if ($("#time-5").is(":checked")) {
+                $("#other-value").parent("div").removeClass("hide");
+            }
         });
         function inputs_checked() {
             $(" input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
@@ -269,6 +272,16 @@
             else {
                 $("input[name='health_condition']").parent("div").addClass("hide");
                 $('#health-condition').html("");
+            }
+        });
+        $("#time-5").on("change", function () {
+            if ($(this).is(":checked")) {
+                $("#other-value").parent("div").removeClass("hide");
+            }
+            else {
+                $("#other-value").parent("div").addClass("hide");
+                $('#other-value-error').html("");
+                $('#other-value').val("");
             }
         });
     </script>
