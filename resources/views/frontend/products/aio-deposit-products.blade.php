@@ -45,7 +45,7 @@
     </div>
 
     {{--Page content start--}}
-    <div class="ps-page--deposit">
+    <div class="ps-page--deposit all-in">
 
         <?php
 
@@ -64,7 +64,7 @@
                 $string);
         ?>
         {!! $output !!}
-        <div class="container" id="logo-detail">
+        <div class="container all-in" id="logo-detail">
             <div class="ps-block--deposit-filter ">
                 <div class="ps-block__content">
                     <form id="search-form" class="ps-form--filter"

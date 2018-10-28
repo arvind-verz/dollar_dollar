@@ -221,13 +221,7 @@
                                     @endif
                                 </div>
                                 <div class="product-row-01 clearfix sp-only">
-                                    <?php
-                                    $products = \Helper::getHomeProducts(FIX_DEPOSIT, 'maximum_interest_rate');
-                                    $i = 1;$featured = [];
-                                    ?>
-                                    @if($products->count())
-                                        @include('homeSpProductsSlider')
-                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -383,35 +377,19 @@
 
         function getProductSliderDetails(promotionType, byOrderValue) {
 
-            var target = $("#pc-slider");
-            var targetId = "pc-slider";
-
-            var resizeTimer;
-            $(window).resize(function (e) {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(function () {
-                    if ($(window).width() <= 800) {
-                        target = $("#sp-slider");
-                        targetId = "sp-slider";
-                    } else {
-                        target = $("#pc-slider");
-                        targetId = "pc-slider";
-                    }
-                }, 250);
-            });
 
             $.ajax({
                 method: "POST",
                 url: "{{url('/get-product-slider-details')}}",
                 data: {
                     promotion_type: promotionType,
-                    by_order_value: byOrderValue,
-                    target: targetId
+                    by_order_value: byOrderValue
                 },
                 cache: false,
                 async: false,
                 success: function (data) {
-
+                    console.log(data);
+                    var target = $("#pc-slider");
                     target.html(data);
                     var $owl = target.find('.owl-carousel');
                     $owl.trigger('destroy.owl.carousel');

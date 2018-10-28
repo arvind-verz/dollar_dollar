@@ -6743,6 +6743,9 @@ span.ps-post__meta a {
         display: table;
         margin: 0 auto 10px auto;
     }
+    .all-in .ps-product--2 .ps-product__detail{
+        margin-bottom: 0;
+    }
 }
 
 @media only screen and (max-width: 570px) {
