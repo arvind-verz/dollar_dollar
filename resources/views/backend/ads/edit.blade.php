@@ -103,6 +103,7 @@
                                            placeholder="Enter Ad link (example: https://www.google.com)"
                                            value="{{ $ads->ad_link }}">
                                 </div>
+                                @if($type=='account' || $type=='blog')
                                     <div class="form-group horizonal_banner">
                                         <label>@if($type=='account' ||$type=='blog')Horizontal Ad Banner @else
                                                 Horizontal Banner @endif</label>
@@ -130,6 +131,7 @@
                                                placeholder="Enter Ad link (example: https://www.google.com)"
                                                value="{{ $ads->horizontal_banner_ad_link }}">
                                     </div>
+                                @endif
                                 <div class="form-group">
                                     <label>@if($type=='account' ||$type=='blog')Paid Vertical Ad  @else Paid Ad
                                         Image @endif</label>
