@@ -172,9 +172,8 @@
                                 <!--        </div>-->
                                 <!--    </div>-->
                                 <!--</div>-->
-                                @php $product_reminder =
-                                json_decode($product_management->product_reminder);if(!$product_reminder)
-                                {$product_reminder=[];} @endphp
+                                <?php $product_reminder = json_decode($product_management->product_reminder); dd($product_reminder); if(!$product_reminder)
+                                {$product_reminder=[];} ?>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                     <div class="form-group">
                                         <label>Reminder</label>
@@ -196,11 +195,11 @@
                                         <!--            @if(in_array('2 Week', $product_reminder)) selected @endif>2 Week-->
                                         <!--    </option>-->
                                         <!--</select>-->
-                                        <div class="reminder">
-                                            <label><input type="checkbox"><span>1 Day</span></label>
-                                            <label><input type="checkbox"><span>1 Week</span></label>
-                                            <label><input type="checkbox"><span>2 Week</span></label>
-                                        </div>
+                                            <div class="reminder">
+                                                <label><input type="checkbox" name="reminder1" value="1 Day" @if($product_reminder['reminder1']=='1 Day')checked @endif ><span>1 Day</span></label>
+                                                <label><input type="checkbox" name="reminder2" value="1 Week" @if($product_reminder['reminder2']=='1 Week')checked @endif><span>1 Week</span></label>
+                                                <label><input type="checkbox" name="reminder3" value="2 Week" @if($product_reminder['reminder3']=='2 Week')checked @endif><span>2 Week</span></label>
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">

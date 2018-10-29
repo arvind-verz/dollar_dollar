@@ -183,9 +183,9 @@
                                             <!--    <option value="2 Week">2 Week</option>-->
                                             <!--</select>-->
                                             <div class="reminder">
-                                                <label><input type="checkbox"><span>1 Day</span></label>
-                                                <label><input type="checkbox"><span>1 Week</span></label>
-                                                <label><input type="checkbox"><span>2 Week</span></label>
+                                                <label><input type="checkbox" name="reminder1" value="1 Day"><span>1 Day</span></label>
+                                                <label><input type="checkbox" name="reminder2" value="1 Week"><span>1 Week</span></label>
+                                                <label><input type="checkbox" name="reminder3" value="2 Week"><span>2 Week</span></label>
                                             </div>
                                         </div>
                                     </div>
