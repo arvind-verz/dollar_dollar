@@ -11,7 +11,9 @@
             <li class="active">{{BLOG_MODULE}}</li>
         </ol>
     </section>
-
+    <?php if(!isset($filterCategory)){
+        $filterCategory = 'all';
+    } ?>
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -24,7 +26,7 @@
                         <h3 class="box-title">{{BLOG_MODULE_SINGLE.'s'}}</h3>
 
                         
-                        <a href="{{ route("blog.create") }}" class="">
+                        <a href="{{ route("blog-add",['category'=>$filterCategory]) }}" class="">
                             @if($CheckLayoutPermission[0]->create==1)
 
                                 <button type="submit" class="btn btn-info pull-right"><i
@@ -33,9 +35,7 @@
                             @endif
 
                         </a>
-                        <?php if(!isset($filterCategory)){
-                            $filterCategory = 'all';
-                        } ?>
+
                         <select name="filter_category" class="form-control" style="width: 10em;float: right;margin-right: 10px;">
                             <option value="">-- Select --</option>
                             <option value="all" @if(isset($filterCategory) && ($filterCategory=="all")) selected @endif>All</option>

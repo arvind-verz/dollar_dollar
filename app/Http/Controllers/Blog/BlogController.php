@@ -42,7 +42,7 @@ class BlogController extends Controller
             ->select('pages.*', 'menus.title as menu_title')
             ->orderBy('pages.name', 'ASC')->get();
 
-        
+
         return view("backend.blog.index", compact("pages", "CheckLayoutPermission", "menus"));
     }
 
@@ -51,24 +51,32 @@ class BlogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($category = "all")
     {
-        $blogMenu = Menu::where('delete_status', 0)
-            ->where('is_blog', 1)
-            ->first();
-        if ($blogMenu) {
-            $menus = Menu::where('delete_status', 0)
-                ->where('parent', $blogMenu->id)
-                ->get();
+        $filterCategory = $category;
+        if ($category == "all") {
+            $blogMenu = Menu::where('delete_status', 0)
+                ->where('is_blog', 1)
+                ->first();
+            if ($blogMenu) {
+                $menus = Menu::where('delete_status', 0)
+                    ->where('parent', $blogMenu->id)
+                    ->get();
+            } else {
+                $menus = collect([]);
+            }
         } else {
-            $menus = collect([]);
+            $menus = Menu::where('delete_status', 0)
+                ->where('id', $category)
+                ->get();
         }
+
 
         $tags = Tag::where('status', 1)
             ->where('delete_status', 0)
             ->get();
 
-        return view("backend.blog.create", compact("menus", "tags"));
+        return view("backend.blog.create", compact("menus", "tags", "filterCategory"));
     }
 
     /**
@@ -79,12 +87,13 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        $filterCategory = $request->filter_category ? $request->filter_category : "all";
         $fields = [
             'name' => 'required',
             'contents' => 'required',
             'title' => 'required',
         ];
+        //dd($request->all());
 
         if (Page::where('slug', '=', str_slug($request->slug))
             ->where('delete_status', 0)->exists()
@@ -93,8 +102,7 @@ class BlogController extends Controller
         } else {
             $fields['slug'] = 'required';
         }
-        if($request->menu_id=="null")
-        {
+        if ($request->menu_id === "null") {
             $fields['category'] = 'required';
         }
         $validator = Validator::make($request->all(), $fields);
@@ -185,8 +193,7 @@ class BlogController extends Controller
                 'new' => null])
             ->log(CREATE);
 
-
-        return redirect()->action('Blog\BlogController@index')->with('success', $page->name . ' ' . ADDED_ALERT);
+        return redirect(route('filter-category', ['id' => $filterCategory]))->with('success', $page->name . ' ' . ADDED_ALERT);
 
     }
 
@@ -201,14 +208,10 @@ class BlogController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function edit($id, Request $request)
     {
+        $filterCategory = $request->filter_category ? $request->filter_category : "all";
         $page = Page::find($id);
 
         if (!$page) {
@@ -236,7 +239,7 @@ class BlogController extends Controller
             ->where('delete_status', 0)
             ->get();
 
-        return view("backend.blog.edit", compact("menus", "page", "tags"));
+        return view("backend.blog.edit", compact("menus", "page", "tags", "filterCategory"));
     }
 
     /**
@@ -248,6 +251,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $filterCategory = $request->filter_category ? $request->filter_category : "all";
         $page = Page::find($id);
         if (!$page) {
             return redirect()->action('Blog\BlogController@index')->with('error', OPPS_ALERT);
@@ -263,8 +267,7 @@ class BlogController extends Controller
             $validatorFields ['contents'] = 'required';
 
         }
-        if($request->menu_id=="null")
-        {
+        if ($request->menu_id == "null") {
             $validatorFields['category'] = 'required';
         }
         $this->validate($request, $validatorFields);
@@ -369,19 +372,14 @@ class BlogController extends Controller
                 'new' => $newPage
             ])
             ->log(UPDATE);
+        return redirect(route('filter-category', ['id' => $filterCategory]))->with('success', $page->name . ' ' . UPDATED_ALERT);
 
-        return redirect()->action('Blog\BlogController@index')->with('success', $page->name . ' ' . UPDATED_ALERT);
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+        $filterCategory = $request->filter_category ? $request->filter_category : "all";
         $page = Page::where('id', $id)->first();
         if (!$page) {
             return redirect()->action('Blog\BlogController@index')->with('error', OPPS_ALERT);
@@ -399,18 +397,20 @@ class BlogController extends Controller
                     'new' => null
                 ])
                 ->log(DELETE);
-            return redirect(route('blog.index'))->with('success', $page->name . ' ' . DELETED_ALERT);
+            return redirect(route('filter-category', ['id' => $filterCategory]))->with('success', $page->name . ' ' . DELETED_ALERT);
+
         }
     }
 
-    public function filter($id) {
+    public function filter($id)
+    {
 
         $filterCategory = $id;
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PAGE_MODULE_ID);
         $blogMenu = Menu::where('delete_status', 0)
             ->where('is_blog', 1)
             ->first();
-            //dd($blogMenu);
+        //dd($blogMenu);
         if ($blogMenu) {
             $menus = Menu::where('delete_status', 0)
                 ->where('parent', $blogMenu->id)
@@ -418,23 +418,27 @@ class BlogController extends Controller
         } else {
             $menus = collect([]);
         }
-        if($id=='all') {
-        $pages = Page::leftJoin('menus', 'pages.menu_id', '=', 'menus.id')
-            ->where('pages.delete_status', 0)
-            ->where('pages.is_blog', 1) 
-            ->select('pages.*', 'menus.title as menu_title')
-            ->orderBy('pages.name', 'ASC')->get();
-        }
-        else {
-            $pages = Page::leftJoin('menus', 'pages.menu_id', '=', 'menus.id')
-            ->where('pages.delete_status', 0)
-            ->where('pages.is_blog', 1)            
-            ->where('menu_id', $id)
-            ->select('pages.*', 'menus.title as menu_title')
-            ->orderBy('pages.name', 'ASC')->get();
-        }
+        $pages = $this->getBlog($id);
+        return view("backend.blog.index", compact("pages", "CheckLayoutPermission", "menus", "filterCategory"));
+    }
 
-        
-        return view("backend.blog.index", compact("pages", "CheckLayoutPermission", "menus","filterCategory"));
+    public function getBlog($id)
+    {
+
+        if ($id == 'all') {
+            $pages = Page::leftJoin('menus', 'pages.menu_id', '=', 'menus.id')
+                ->where('pages.delete_status', 0)
+                ->where('pages.is_blog', 1)
+                ->select('pages.*', 'menus.title as menu_title')
+                ->orderBy('pages.name', 'ASC')->get();
+        } else {
+            $pages = Page::leftJoin('menus', 'pages.menu_id', '=', 'menus.id')
+                ->where('pages.delete_status', 0)
+                ->where('pages.is_blog', 1)
+                ->where('menu_id', $id)
+                ->select('pages.*', 'menus.title as menu_title')
+                ->orderBy('pages.name', 'ASC')->get();
+        }
+        return $pages;
     }
 }

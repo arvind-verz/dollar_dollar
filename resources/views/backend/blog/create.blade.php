@@ -37,6 +37,7 @@
                                 <div class="tab-pane active" id="page">
 
                                     <div class="form-group">
+                                        <input type="hidden" name="filter_category" value="{{$filterCategory}}"/>
                                         {{Form::label('name', 'Name',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => ''])}}
