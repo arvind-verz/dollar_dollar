@@ -226,7 +226,7 @@ class="fa fa-refresh"></i></a>
                             $todayEndDate = \Helper::endOfDayAfter();
                             ?>
                             <div class="ps-product__promo left">
-                                <p class="pc-only" style="text-align: left !important;">
+                                <p class="" style="text-align: left !important;">
                                     <span class="highlight"> Promo: </span>
                                     @if($product->promotion_end == null)
                                         {{ONGOING}}
@@ -970,7 +970,7 @@ class="fa fa-refresh"></i></a>
                             $todayEndDate = \Helper::endOfDayAfter();
                             ?>
                              <div class="ps-product__promo left">
-                                <p class="pc-only" style="text-align: left !important;">
+                                <p class="" style="text-align: left !important;">
                                     <span class="highlight"> Promo: </span>
                                     @if($product->promotion_end == null)
                                         {{ONGOING}}

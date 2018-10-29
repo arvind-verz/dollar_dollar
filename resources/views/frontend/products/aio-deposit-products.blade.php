@@ -857,7 +857,7 @@
                                                             ${{ Helper::inThousand($range->min_range) }} Or
                                                             Above
                                                         @else
-                                                            ${{ Helper::inThousand($range->min_range) }} TO
+                                                            ${{ Helper::inThousand($range->min_range) }} TO <
                                                             ${{ Helper::inThousand($range->max_range+1) }} @endif</td>
                                                     <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
                                                         @if($range->bonus_interest_criteria_a<=0)
@@ -1824,7 +1824,7 @@
                                                                     Or Above
                                                                 @else
                                                                     ${{ Helper::inThousand($range->min_range) }}
-                                                                    TO
+                                                                    TO <
                                                                     ${{ Helper::inThousand($range->max_range+1) }} @endif</td>
                                                             <td class="text-center @if($range->criteria_a_highlight==true ) highlight @endif">
                                                                 @if($range->bonus_interest_criteria_a<=0)

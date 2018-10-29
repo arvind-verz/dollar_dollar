@@ -591,7 +591,14 @@
                     "aTargets": [0, 7],
                     "bSortable": false,
 
-                }],
+                },
+                    { width: 50, targets: 0 },
+                    { width: 100, targets: 1 },
+                    { width: 100, targets: 2 },
+                    { width: 100, targets: 3 },
+                    { width: 100, targets: 4 },
+                    { width: 400, targets: 5}
+                ]
 
             });
 
