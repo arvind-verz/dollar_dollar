@@ -574,7 +574,11 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
             $amount = $amount / 1000000;
             $intVal = intval(number_format((float)$amount, 2, '.', ''));
             if (($amount - $intVal) > 0.009) {
+                if(($amount - $intVal) > 0.09){
+                $amount = number_format((float)$amount, 1, '.', '').'M';
+                }else{
                 $amount = number_format((float)$amount, 2, '.', '').'M';
+                }
             }else{
                 $amount = $intVal.'M';
             }
@@ -584,7 +588,11 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
             $amount = $amount / 1000;
             $intVal = intval($amount);
             if (($amount - $intVal) > 0.009) {
+                if(($amount - $intVal) > 0.09){
+                $amount = number_format((float)$amount, 1, '.', '').'K';
+                }else{
                 $amount = number_format((float)$amount, 2, '.', '').'K';
+                }
             }else{
                 $amount = $intVal.'K';
             }
@@ -603,7 +611,11 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
     {
         $intVal = intval(number_format((float)$amount, 2, '.', ''));
         if (($amount - $intVal) > 0.009) {
+                if(($amount - $intVal) > 0.09){
+                $amount = number_format((float)$amount, 1);
+                }else{
                 $amount = number_format((float)$amount, 2);
+                }
             }else{
                 $amount = $intVal;
             }

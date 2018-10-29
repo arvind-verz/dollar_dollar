@@ -191,6 +191,7 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Blog module start*/
     Route::get('/blog/destroy/{id}', 'Blog\BlogController@destroy')->name('blog-destroy');
     Route::resource('/blog', 'Blog\BlogController');
+    Route::get('/blog-create/{category}', 'Blog\BlogController@create')->name('blog-add');
     Route::get('/filter-category/{id}', 'Blog\BlogController@filter')->name('filter-category');
     /*Blog module end*/
 

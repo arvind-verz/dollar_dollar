@@ -247,16 +247,17 @@ class="fa fa-refresh"></i></a>
                                         ?>
                                         <div class="ps-product__table">
                                             <div class="ps-table-wrap">
-                                                <table class="ps-table ps-table--product">
+                                                <table class="ps-table fixed-table ps-table--product">
                                                     <thead>
                                                     <tr>
-                                                        <th>Type</th>
-                                                        <th>Placement</th>
+                                                        <th style="width:75px;">Type</th>
+                                                        <th style="width:140px;">Placement</th>
                                                         @foreach($tenures as  $tenure)
                                                             <?php
                                                             $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                             ?>
-                                                            <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
+                                                                <th class="center"
+                                                                    style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure . ' ' . $monthSuffix }}</th>
                                                         @endforeach
                                                     </tr>
                                                     </thead>
@@ -393,10 +394,10 @@ class="fa fa-refresh"></i></a>
                                                         ${{ Helper::inRoundTwoDecimal($product->total_interest_earn) }} @endif
                                                     <br>
                                                     <span>
-                                                    Total interest rate @if(($product->total_interest)<=0)
-                                                            - @else {{ $product->total_interest }}% P.A.
-                                                            @if($product->promotion_period!=ONGOING)for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif @endif
-                                                    </span>
+                                                Total interest rate @if(($product->total_interest)<=0)
+                                                        - @else {{ $product->total_interest }}%
+                                                        @if($product->promotion_period!=ONGOING) P.A. for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @else for 1 year @endif @endif
+                                                </span>
                                                 </h2>
                                             </div>
                                             <div class="clearfix"></div>
@@ -959,16 +960,17 @@ class="fa fa-refresh"></i></a>
                                         ?>
                                         <div class="ps-product__table">
                                             <div class="ps-table-wrap">
-                                                <table class="ps-table ps-table--product">
+                                                <table class="ps-table fixed-table ps-table--product">
                                                     <thead>
                                                     <tr>
-                                                        <th>Type</th>
-                                                        <th>Placement</th>
+                                                        <th style="width:75px;">Type</th>
+                                                        <th style="width:140px;">Placement</th>
                                                         @foreach($tenures as  $tenure)
                                                             <?php
                                                             $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                             ?>
-                                                            <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
+                                                                <th class="center"
+                                                                    style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure . ' ' . $monthSuffix }}</th>
                                                         @endforeach
                                                     </tr>
                                                     </thead>

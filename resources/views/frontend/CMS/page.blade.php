@@ -103,12 +103,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Login</h4>
+        <h4 class="modal-title">Login to DollarDollar</h4>
       </div>
       <div class="modal-body">
         <div class="row">
             <div class="col-lg-12">
-                <p>You have to Login/Register to submit a Quote</p>
+                <p>You have to Login/Register to enquire now!</p>
             </div>
             <div class="col-lg-12">
                 <a class="ps-btn" href="{{ url($redirect_url) }}">Login</a>
@@ -117,6 +117,7 @@
                 <a class="ps-btn ps-btn--outline" href="@if(!empty($redirect_url)) {{ url('registration_page', ['redirect_url' => $redirect_url]) }} @else {{ url('registration') }} @endif">Signup</a>
             </div>
         </div>
+        <img src="https://www.dollardollar.sg/frontend/images/logo_1535015224_7664b296e0e085eaa5e4852c2e8b11ba_1539598995.jpg" alt="">
       </div>
     </div>
 

@@ -18,7 +18,6 @@
                         </div>
                         <div class="ps-block--product-info">
                             <h5>B (Giro or Salary)</h5>
-
                             <div class="ps-block__content">
                                 <p>Giro – 3 bill payment via Giro</p>
                                 <a class="ps-block__more content-detail" data-formula="2"
@@ -41,6 +40,7 @@
         </div>
 
         <div id="formula-2-salary" class="ps-criteria-detail__content">
+            <h5>B (Giro or Salary)</h5>
             <ul class="ps-list--arrow-circle">
                 <li>Salary Tab Section
                 </li>
@@ -51,6 +51,7 @@
             </ul>
         </div>
         <div id="formula-2-giro" class="ps-criteria-detail__content">
+            <h5>B (Giro or Salary)</h5>
             <ul class="ps-list--arrow-circle">
                 <li>Payment Tab Section.
                 </li>
@@ -61,6 +62,7 @@
             </ul>
         </div>
         <div id="formula-2-spend" class="ps-criteria-detail__content">
+            <h5>A (Spend)</h5>
             <ul class="ps-list--arrow-circle">
                 <li>Spend Tab Section.
                 </li>

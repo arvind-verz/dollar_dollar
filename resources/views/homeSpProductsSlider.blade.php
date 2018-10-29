@@ -101,7 +101,7 @@ if ($featured_count == 1) {
                 </div>
             @endif
             @if ( $product->featured==0)
-                <div class="ps-block--short-product">
+                <div class="ps-block--short-product second">
                     <img alt="" src="<?php echo asset($product->brand_logo); ?>">
                     <h4 class="slider-heading">
                         <strong>

@@ -117,6 +117,7 @@ function productCollapse() {
             $(this).html("More Details <i class='fa fa-angle-down'></i>")
             $(this).closest('.ps-product').find('.ps-product__detail').slideUp();
         }
+    });
         if (isMobile.any()) {
             // if (screen.width < 768) {
             $('.ps-product__more').on('click', function (e) {
@@ -125,10 +126,10 @@ function productCollapse() {
                 $(this).next().removeClass('active');
                 $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideUp();
                 $(this).closest('.ps-product').find('.ps-table-wrap').slideUp();
+                $(this).parents(".ps-product__content").find(".ps-table.ps-table--product").after($(this).parents(".ps-product__content").find(".ps-product__detail > .ps-criteria-detail > p"));
             })
             // }
         }
-    });
     
 }
 function moreInfo() {
@@ -146,6 +147,9 @@ function moreInfo() {
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideUp();
             $(this).closest('.ps-product').find('.ps-table-wrap').slideUp();
         }
+        $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").find(".ps-product__table"));
+        $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").children(".ps-table-wrap"));
+    });
         if (isMobile.any()) {
             // if (screen.width < 768) {
             $('.ps-product__info').on('click', function (e) {
@@ -153,12 +157,10 @@ function moreInfo() {
                 $(this).prev().html("More Details <i class='fa fa-angle-down'></i>");
                 $(this).prev().removeClass('active');
                 $(this).closest('.ps-product').find('.ps-product__detail').slideUp();
+                $(this).parents(".ps-product__content").find(".ps-table.ps-table--product").after($(this).parents(".ps-product__content").find(".ps-product__detail > .ps-criteria-detail > p"));
             })
             // }
         }
-        $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").find(".ps-product__table"));
-        $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").children(".ps-table-wrap"));
-    });
 }
 function backToTop() {
     var scrollPos = 0;
@@ -167,7 +169,7 @@ function backToTop() {
         var scrollCur = $(window).scrollTop();
         if (scrollCur > scrollPos) {
             // scroll down
-            if (scrollCur > 500) {
+            if (scrollCur > 00) {
                 element.parent().addClass('active');
             } else {
                 element.parent().removeClass('active');
@@ -331,7 +333,6 @@ $(window).on('load resize', function () {
 $(window).on('load', function () {
     var i = $(".ps-page--deposit .ps-slider--feature-product>.ps-block--short-product").length;
     $(".ps-page--deposit .ps-slider--feature-product>.owl-slider").css("width", 100 - (i * 20) + "%");
-    
    
 });
 
@@ -422,9 +423,10 @@ $(document).ready(function () {
     $(".ps-block--legend-table .ps-block__header").append("<span></span>");
 
     $(".ps-block--short-product.second.highlight.sp-only").parent().addClass("sp-only");
-
-    $(".ps-list--sidebar .current").append("<div><span></span></div>");
-    $(".ps-list--sidebar .current div").click(function () {
+    
+    
+    $(".ps-list--sidebar li:first-child").append("<div><span></span></div>");
+    $(".ps-list--sidebar li > div").click(function () {
         if ($(this).parent().hasClass("active")) {
             $(this).parent().removeClass("active");
             $(this).parent().parent().children(".ps-list--sidebar li").slideUp();
@@ -434,6 +436,18 @@ $(document).ready(function () {
             $(this).parent().parent().children(".ps-list--sidebar li").slideDown();
         }
     })
+    
+    setTimeout(function(){ 
+        var n = $(".ps-form--filter .owl-slider .owl-item.active").length;
+        console.log(n);
+        if( n <= 10){
+            console.log(n);
+            $(".ps-form--filter .owl-slider .owl-controls").hide();
+        }
+        
+    }, 3000);
+    
+    
     
     
 

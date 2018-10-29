@@ -245,16 +245,17 @@ class="fa fa-refresh"></i></a>
                             @if(!empty($product->promotion_formula_id))
                                 <div class="ps-product__table">
                                     <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product">
+                                        <table class="ps-table fixed-table ps-table--product">
                                             <thead>
                                             <tr>
-                                                <th>Type</th>
-                                                <th>Placement</th>
+                                                <th style="width:75px;">Type</th>
+                                                <th style="width:140px;">Placement</th>
                                                 @foreach($tenures as  $tenure)
                                                     <?php
                                                     $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                     ?>
-                                                    <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
+                                                    <th class="center"
+                                                        style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure . ' ' . $monthSuffix }}</th>
                                                 @endforeach
                                             </tr>
                                             </thead>
@@ -471,16 +472,17 @@ class="fa fa-refresh"></i></a>
                                 @if(!empty($product->promotion_formula_id))
                                     <div class="ps-product__table">
                                         <div class="ps-table-wrap">
-                                            <table class="ps-table ps-table--product">
+                                            <table class="ps-table fixed-table ps-table--product">
                                                 <thead>
                                                 <tr>
-                                                    <th>Type</th>
-                                                    <th>Placement</th>
+                                                    <th style="width:75px;">Type</th>
+                                                    <th style="width:140px;">Placement</th>
                                                     @foreach($tenures as  $tenure)
                                                         <?php
                                                         $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                         ?>
-                                                        <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
+                                                        <th class="center"
+                                                            style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure . ' ' . $monthSuffix }}</th>
                                                     @endforeach
                                                 </tr>
                                                 </thead>
