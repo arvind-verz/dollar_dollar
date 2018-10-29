@@ -405,6 +405,7 @@ class BlogController extends Controller
 
     public function filter($id) {
 
+        $filterCategory = $id;
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PAGE_MODULE_ID);
         $blogMenu = Menu::where('delete_status', 0)
             ->where('is_blog', 1)
@@ -434,6 +435,6 @@ class BlogController extends Controller
         }
 
         
-        return view("backend.blog.index", compact("pages", "CheckLayoutPermission", "menus"));
+        return view("backend.blog.index", compact("pages", "CheckLayoutPermission", "menus","filterCategory"));
     }
 }

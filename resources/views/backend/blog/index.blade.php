@@ -33,12 +33,15 @@
                             @endif
 
                         </a>
+                        <?php if(!isset($filterCategory)){
+                            $filterCategory = 'all';
+                        } ?>
                         <select name="filter_category" class="form-control" style="width: 10em;float: right;margin-right: 10px;">
                             <option value="">-- Select --</option>
-                            <option value="all">All</option>
+                            <option value="all" @if(isset($filterCategory) && ($filterCategory=="all")) selected @endif>All</option>
                             @if($menus->count())
                                 @foreach($menus as $singleMenu)
-                                    <option value="{{ $singleMenu->id }}">{{ $singleMenu->title }}</option>
+                                    <option value="{{ $singleMenu->id }}" @if(isset($filterCategory) && ($filterCategory==$singleMenu->id)) selected @endif>{{ $singleMenu->title }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -92,7 +95,7 @@
                                                         <td class="text-center">
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Page"
-                                                                   href="{{ route("blog.edit",["id"=>$page->id]) }}">
+                                                                   href="{{ route("blog.edit",["id"=>$page->id,'filter_category'=>$filterCategory]) }}">
                                                                     <i class="fa fa-edit"></i> Edit
                                                                 </a>
                                                             @endif
@@ -101,7 +104,7 @@
                                                                 <a class="btn btn-app delete @if(($page->is_index == 1 || $page->is_dynamic == 1)) disabled @endif"
                                                                    title="Delete Page"
                                                                    onclick="return confirm('Are you sure to delete this?')"
-                                                                   href="{{ route("blog-destroy",["id"=>$page->id]) }}">
+                                                                   href="{{ route("blog-destroy",["id"=>$page->id,'filter_category'=>$filterCategory]) }}">
                                                                     <i class="fa fa-trash"></i> Delete
                                                                 </a>
                                                             @endif

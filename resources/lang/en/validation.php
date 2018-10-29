@@ -103,6 +103,51 @@ return [
         'password' => [
             'confirmed' => 'The password confirmation does not match.',
         ],
+        'coverage' => [
+            'required' => 'This field is required.',
+        ],
+        'level' => [
+            'required' => 'This field is required.',
+        ],
+        'time' => [
+            'required' => 'This field is required.',
+        ],
+        'components' => [
+            'required' => 'This field is required.',
+        ],
+        'gender' => [
+            'required' => 'This field is required.',
+        ],
+        'dob' => [
+            'required' => 'This field is required.',
+        ],
+        'smoke' => [
+            'required' => 'This field is required.',
+        ],
+        'goals' => [
+            'required' => 'This field is required.',
+        ],
+        'experience' => [
+            'required' => 'This field is required.',
+        ],
+        'risks' => [
+            'required' => 'This field is required.',
+        ],
+        'age' => [
+            'required' => 'This field is required.',
+        ],
+        'other_value' => [
+            'required' => 'This field is required.',
+        ],
+        'health_condition' => [
+            'required' => 'This field is required.',
+        ],
+        'experience_detail' => [
+            'required' => 'This field is required.',
+        ],
+        'goal_other_value' => [
+            'required' => 'This field is required.',
+        ],
     ],
 
     /*

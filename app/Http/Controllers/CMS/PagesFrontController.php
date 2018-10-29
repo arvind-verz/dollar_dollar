@@ -4922,19 +4922,19 @@ class PagesFrontController extends Controller
                          data-owl-nav-right="<i class='fa fa-angle-right'></i>"
                          data-owl-speed="5000">
                         <?php foreach ($products as $product) {
-                             ?>
+                            ?>
 
-                                <div class='ps-block--short-product second  <?php if ($product->featured == 1)  echo"highlight"; ?> '>
-                                    <img alt="" src="<?php echo asset($product->brand_logo); ?>">
-                                    <h4 class="slider-heading">
-                                        <strong>
-                                            <?php if ($product->by_order_value == INTEREST) { ?>
-                                                Up to <span
-                                                    class="highlight-slider"> <?php echo $product->maximum_interest_rate; ?>
-                                                    %</span>
-                                            <?php } ?>
-                                            <?php if ($product->by_order_value == PLACEMENT) { ?>
-                                                Min:   <span class="highlight-slider">
+                            <div class='ps-block--short-product second  <?php if ($product->featured == 1)  echo"highlight"; ?> '>
+                                <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                <h4 class="slider-heading">
+                                    <strong>
+                                        <?php if ($product->by_order_value == INTEREST) { ?>
+                                            Up to <span
+                                                class="highlight-slider"> <?php echo $product->maximum_interest_rate; ?>
+                                                %</span>
+                                        <?php } ?>
+                                        <?php if ($product->by_order_value == PLACEMENT) { ?>
+                                            Min:   <span class="highlight-slider">
                                                                 <?php if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
                                                                     echo $product->currency_code;
                                                                 } else {
@@ -4942,85 +4942,85 @@ class PagesFrontController extends Controller
                                                                 }
                                                                 echo '$' . \Helper::inThousand($product->minimum_placement_amount); ?>
                                     </span>
-                                            <?php }
-                                            if ($product->by_order_value == TENURE) {
-                                                if ($product->promotion_period == ONGOING) {
-                                                    echo '<span class="highlight-slider"> ' . $product->promotion_period . '</span>';
-                                                } else {
-                                                    if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) { ?>
-                                                        <span
-                                                            class="highlight-slider"> <?php echo $product->remaining_days; ?> </span>
-                                                        <?php echo \Helper::daysOrMonthForSlider(1, $product->remaining_days);
-                                                    } elseif ($product->tenure_value > 0) { ?>
-                                                        <span
-                                                            class="highlight-slider"> <?php echo $product->promotion_period; ?> </span> <?php echo \Helper::daysOrMonthForSlider(2,
-                                                            $product->tenure_value);
-                                                    } elseif (is_numeric($product->promotion_period)) { ?>
-                                                        <span
-                                                            class="highlight-slider"> <?php echo $product->promotion_period; ?> </span>
-                                                        <?php echo \Helper::daysOrMonthForSlider(2, $product->promotion_period);
-                                                    } else { ?>
-                                                        <span
-                                                            class="highlight-slider"> <?php echo $product->promotion_period; ?> </span>
-                                                    <?php }
+                                        <?php }
+                                        if ($product->by_order_value == TENURE) {
+                                            if ($product->promotion_period == ONGOING) {
+                                                echo '<span class="highlight-slider"> ' . $product->promotion_period . '</span>';
+                                            } else {
+                                                if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) { ?>
+                                                    <span
+                                                        class="highlight-slider"> <?php echo $product->remaining_days; ?> </span>
+                                                    <?php echo \Helper::daysOrMonthForSlider(1, $product->remaining_days);
+                                                } elseif ($product->tenure_value > 0) { ?>
+                                                    <span
+                                                        class="highlight-slider"> <?php echo $product->promotion_period; ?> </span> <?php echo \Helper::daysOrMonthForSlider(2,
+                                                        $product->tenure_value);
+                                                } elseif (is_numeric($product->promotion_period)) { ?>
+                                                    <span
+                                                        class="highlight-slider"> <?php echo $product->promotion_period; ?> </span>
+                                                    <?php echo \Helper::daysOrMonthForSlider(2, $product->promotion_period);
+                                                } else { ?>
+                                                    <span
+                                                        class="highlight-slider"> <?php echo $product->promotion_period; ?> </span>
+                                                <?php }
 
-                                                }
                                             }
-                                            if ($product->by_order_value == CRITERIA) { ?>
-                                                Up to  <span
-                                                    class="highlight-slider"> <?php echo $product->promotion_period; ?>
-                                                    Criteria </span>
-                                            <?php } ?>
-                                        </strong>
-                                    </h4>
+                                        }
+                                        if ($product->by_order_value == CRITERIA) { ?>
+                                            Up to  <span
+                                                class="highlight-slider"> <?php echo $product->promotion_period; ?>
+                                                Criteria </span>
+                                        <?php } ?>
+                                    </strong>
+                                </h4>
 
-                                    <div class="ps-block__info">
-                                        <p class=" <?php if ($product->by_order_value == INTEREST) echo 'highlight highlight-bg'; ?>">
+                                <div class="ps-block__info">
+                                    <p class=" <?php if ($product->by_order_value == INTEREST) echo 'highlight highlight-bg'; ?>">
                              <span class="slider-font">
                                 Rate: </span><?php echo $product->maximum_interest_rate; ?>%</p>
 
-                                        <p class=" <?php if ($product->by_order_value == PLACEMENT) echo 'highlight highlight-bg'; ?>">
-                                            <span class="slider-font">Min:</span> <?php if ($product->promotion_type_id
-                                                == FOREIGN_CURRENCY_DEPOSIT
-                                            ) {
-                                                echo $product->currency_code;
-                                            } else {
-                                                echo SGD;
-                                            }
-                                            echo '$' . \Helper::inThousand($product->minimum_placement_amount); ?>
+                                    <p class=" <?php if ($product->by_order_value == PLACEMENT) echo 'highlight highlight-bg'; ?>">
+                                        <span class="slider-font">Min:</span> <?php if ($product->promotion_type_id
+                                            == FOREIGN_CURRENCY_DEPOSIT
+                                        ) {
+                                            echo $product->currency_code;
+                                        } else {
+                                            echo SGD;
+                                        }
+                                        echo '$' . \Helper::inThousand($product->minimum_placement_amount); ?>
+                                    </p>
+
+                                    <?php if ($product->product_url == AIO_DEPOSIT_MODE) { ?>
+                                        <p class="<?php if ($product->by_order_value == CRITERIA) echo 'highlight highlight-bg'; ?>">
+                                            <?php echo $product->promotion_period . ' ' . CRITERIA; ?>
                                         </p>
-
-                                        <?php if ($product->product_url == AIO_DEPOSIT_MODE) { ?>
-                                            <p class="<?php if ($product->by_order_value == CRITERIA) echo 'highlight highlight-bg'; ?>">
-                                                <?php echo $product->promotion_period . ' ' . CRITERIA; ?>
-                                            </p>
-                                        <?php } else { ?>
-                                            <p class="<?php if ($product->by_order_value == TENURE) echo 'highlight highlight-bg'; ?>">
-                                                <?php if ($product->promotion_period == ONGOING) {
-                                                    echo $product->promotion_period;
-                                                } else { ?>
-                                                    <?php if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
-                                                        echo $product->remaining_days; ?>
+                                    <?php } else { ?>
+                                        <p class="<?php if ($product->by_order_value == TENURE) echo 'highlight highlight-bg'; ?>">
+                                            <?php if ($product->promotion_period == ONGOING) {
+                                                echo $product->promotion_period;
+                                            } else { ?>
+                                                <?php if (in_array($product->formula_id, [SAVING_DEPOSIT_F1, FOREIGN_CURRENCY_DEPOSIT_F2, PRIVILEGE_DEPOSIT_F1])) {
+                                                    echo $product->remaining_days; ?>
+                                                    <span
+                                                        class="slider-font"> <?php echo \Helper::daysOrMonthForSlider(1, $product->remaining_days); ?> </span>
+                                                <?php } else { ?>
+                                                    <?php echo $product->promotion_period;
+                                                    if ($product->tenure_value > 0) { ?>
                                                         <span
-                                                            class="slider-font"> <?php echo \Helper::daysOrMonthForSlider(1, $product->remaining_days); ?> </span>
-                                                    <?php } else { ?>
-                                                        <?php echo $product->promotion_period;
-                                                        if ($product->tenure_value > 0) { ?>
-                                                            <span
-                                                                class="slider-font"> <?php echo \Helper::daysOrMonthForSlider(2, $product->tenure_value); ?> </span>
-                                                        <?php }
-                                                    }
-                                                } ?>
+                                                            class="slider-font"> <?php echo \Helper::daysOrMonthForSlider(2, $product->tenure_value); ?> </span>
+                                                    <?php }
+                                                }
+                                            } ?>
 
-                                            </p>
-                                        <?php } ?>
-                                    </div>
-                                    <a class="ps-btn"
-                                       href="<?php echo url($product->product_url); ?>">
-                                        More info
-                                    </a>
-
+                                        </p>
+                                    <?php } ?>
                                 </div>
+                                <a class="ps-btn"
+                                   href="<?php echo url($product->product_url); ?>">
+                                    More info
+                                </a>
+
+                            </div>
                             <?php
                         } ?>
                     </div>
