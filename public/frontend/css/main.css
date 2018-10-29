@@ -310,6 +310,11 @@ iframe {
     width: 100%;
 }
 
+
+.header__top, .ps-home-banner, .ps-home--links, .ps-home-search{
+    max-width: 1200px;
+    margin: auto;
+}
 .ps-heading {
     font-family: "Montserrat", sans-serif;
     font-size: 40px;
@@ -2246,6 +2251,7 @@ button {
 
 .ps-block__content.active {
     border: 2px solid #FDB515 !important;
+    background-color: #f3f8fb;
 }
 
 .ps-block--product-info h5 {
@@ -2656,7 +2662,10 @@ button {
 
 .ps-product .ps-product__promo {
     max-width: 300px;
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .ps-product .ps-product__promo p {
@@ -2774,7 +2783,7 @@ button {
 }
 
 .ps-product .ps-product__header {
-    /* margin-bottom: 20px; */
+        position: relative;
 }
 
 .ps-product .ps-product__detail {
@@ -6472,6 +6481,9 @@ span.ps-post__meta a {
     .ps-product--2 .ps-product__panel {
         display: contents;
     }
+    .all-in .ps-form__values .form-group--label:last-child{
+        padding-right: 0;
+    }
 }
 
 @media only screen and (max-width: 800px) {
@@ -6710,6 +6722,15 @@ span.ps-post__meta a {
 
     .ps-form--enquiry.ps-form--health-insurance .form-group.submit {
         padding-top: 0;
+    }
+    .all-in .ps-tooltip:before{
+        right: initial;
+    }
+    .all-in .ps-form__values{
+        padding-right: 20px;
+    }
+    .ps-product__detail .ps-criteria-detail{
+        display: block;
     }
 }
 
@@ -7080,10 +7101,9 @@ span.ps-post__meta a {
     }
 
     .ps-product .ps-product__header .ps-product__promo p {
-        font-size: 9px;
+        font-size: 12px;
         line-height: 1.9;
     }
-
 }
 
 .ps-link {
@@ -7174,6 +7194,35 @@ h4.modal-title {
 .fixed-table{
     width:auto !important;
     min-width: 380px !important;
+}
+
+
+.reminder{
+    display: flex;
+}
+.reminder label{
+    width: calc(33% - 15px);
+    margin-right: 30px;
+}
+.reminder label span{
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+    border: 2px solid #9BBB59;
+    padding: 10px 0;
+    
+}
+.reminder label:last-child{
+    margin-right: 0;
+}
+.reminder input{
+    display: none;
+}
+.reminder input:checked ~ span{
+    background-color: #9BBB59;
+    color: #fff;
+    border-color: #71893F;
 }
 /*.ps-product__table .ps-table--product{*/
 /*    width: auto;*/

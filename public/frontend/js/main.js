@@ -126,6 +126,7 @@ function productCollapse() {
                 $(this).next().removeClass('active');
                 $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideUp();
                 $(this).closest('.ps-product').find('.ps-table-wrap').slideUp();
+                $(this).parents(".ps-product__content").find(".ps-table.ps-table--product").after($(this).parents(".ps-product__content").find(".ps-product__detail > .ps-criteria-detail > p"));
             })
             // }
         }
@@ -156,6 +157,7 @@ function moreInfo() {
                 $(this).prev().html("More Details <i class='fa fa-angle-down'></i>");
                 $(this).prev().removeClass('active');
                 $(this).closest('.ps-product').find('.ps-product__detail').slideUp();
+                $(this).parents(".ps-product__content").find(".ps-table.ps-table--product").after($(this).parents(".ps-product__content").find(".ps-product__detail > .ps-criteria-detail > p"));
             })
             // }
         }

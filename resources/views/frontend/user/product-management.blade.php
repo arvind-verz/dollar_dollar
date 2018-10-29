@@ -118,23 +118,23 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <div class="form-group">
-                                            <label>Amount <sup>*</sup></label>
-                                            <input class="form-control prefix_dollar" required="required" name="amount"
-                                                   type="text" placeholder="Enter Amount" value="{{ old('amount') }}">
-                                            <!-- <span class="suffix_k">K</span> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                                <div class="form-group">
+                                                    <label>Amount<sup>*</sup></label>
+                                                    <input class="form-control prefix_dollar" required="required" name="amount"
+                                                           type="text" placeholder="Enter Amount" value="{{ old('amount') }}">
+                                                    <!-- <span class="suffix_k">K</span> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Tenure</label>
                                                     <input type="text" class="form-control " name="tenure"
                                                            value="{{ old('tenure') }}">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <div class="form-group">
                                                     <select class="form-control mt-30" name="tenure_calender">
                                                         <option value="D" selected>Days</option>
@@ -145,7 +145,27 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                                    <!--<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">-->
+                                    <!--    <div class="row">-->
+                                    <!--        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">-->
+                                    <!--            <div class="form-group">-->
+                                    <!--                <label>Tenure</label>-->
+                                    <!--                <input type="text" class="form-control " name="tenure"-->
+                                    <!--                       value="{{ old('tenure') }}">-->
+                                    <!--            </div>-->
+                                    <!--        </div>-->
+                                    <!--        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">-->
+                                    <!--            <div class="form-group">-->
+                                    <!--                <select class="form-control mt-30" name="tenure_calender">-->
+                                    <!--                    <option value="D" selected>Days</option>-->
+                                    <!--                    <option value="M">Months</option>-->
+                                    <!--                    <option value="Y">Years</option>-->
+                                    <!--                </select>-->
+                                    <!--            </div>-->
+                                    <!--        </div>-->
+                                    <!--    </div>-->
+                                    <!--</div>-->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Reminder
                                             </label>
@@ -154,14 +174,19 @@
                                                    data-tooltip="{{$toolTip->reminder_tooltip}}"><i
                                                             class="fa fa-exclamation-circle"></i></a>
                                             @endif
-                                            <select class="form-control select2-multiple " id="reminder"
-                                                    disabled="disabled"
-                                                    name="reminder[]" multiple="multiple"
-                                                    style="width: 100%;height:45px;">
-                                                <option value="1 Day">1 Day</option>
-                                                <option value="1 Week">1 Week</option>
-                                                <option value="2 Week">2 Week</option>
-                                            </select>
+                                            <!--<select class="form-control select2-multiple " id="reminder"-->
+                                            <!--        disabled="disabled"-->
+                                            <!--        name="reminder[]" multiple="multiple"-->
+                                            <!--        style="width: 100%;height:45px;">-->
+                                            <!--    <option value="1 Day">1 Day</option>-->
+                                            <!--    <option value="1 Week">1 Week</option>-->
+                                            <!--    <option value="2 Week">2 Week</option>-->
+                                            <!--</select>-->
+                                            <div class="reminder">
+                                                <label><input type="checkbox"><span>1 Day</span></label>
+                                                <label><input type="checkbox"><span>1 Week</span></label>
+                                                <label><input type="checkbox"><span>2 Week</span></label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
