@@ -63,8 +63,8 @@
                                         <label>Blog Page</label>
                                         <select class="form-control" name="page_type">
                                             <option value="">Select</option>
-                                            {{--<option value="blog" @if($ads->page_type=='blog') selected @endif>Blog
-                                            </option>--}}
+                                            <option value="blog" @if($ads->page_type=='blog') selected @endif>Blog
+                                            </option>
                                             <option value="blog-inner"
                                                     @if($ads->page_type=='blog-inner') selected @endif>Blog Inner
                                             </option>

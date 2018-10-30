@@ -140,41 +140,40 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">-->
-                                <!--    <div class="form-group">-->
-                                <!--        <label>Amount a<sup>*</sup></label>-->
-                                <!--        <input class="form-control" required="required" name="amount" type="text"-->
-                                <!--               placeholder="Enter Amount" value="{{ $product_management->amount }}">-->
-                                        <!-- <span class="suffix_k">K</span> -->
-                                <!--    </div>-->
-                                <!--</div>-->
-                                <!--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">-->
-                                <!--    <div class="input-group form-group">-->
-                                <!--        <label>Tenure</label>-->
-                                <!--        <input type="text" class="form-control " name="tenure"-->
-                                <!--               value="{{ $product_management->tenure }}">-->
+                                {{--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="form-group">
+                                        <label>Amount a<sup>*</sup></label>
+                                        <input class="form-control" required="required" name="amount" type="text"
+                                               placeholder="Enter Amount" value="{{ $product_management->amount }}">
+                                         <span class="suffix_k">K</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <div class="input-group form-group">
+                                        <label>Tenure</label>
+                                        <input type="text" class="form-control " name="tenure"
+                                               value="--}}{{--{{ $product_management->tenure }}--}}{{--">
 
-                                <!--        <div class="input-group-btn" style="width: 50%;">-->
-                                <!--            <select class="form-control mt-30" name="tenure_calender">-->
-                                <!--                <option value="D"-->
-                                <!--                        @if($product_management->tenure_calender=='D') selected @endif>-->
-                                <!--                    Days-->
-                                <!--                </option>-->
-                                <!--                <option value="M"-->
-                                <!--                        @if($product_management->tenure_calender=='M') selected @endif>-->
-                                <!--                    Months-->
-                                <!--                </option>-->
-                                <!--                <option value="Y"-->
-                                <!--                        @if($product_management->tenure_calender=='Y') selected @endif>-->
-                                <!--                    Years-->
-                                <!--                </option>-->
-                                <!--            </select>-->
-                                <!--        </div>-->
-                                <!--    </div>-->
-                                <!--</div>-->
-                                @php $product_reminder =
-                                json_decode($product_management->product_reminder);if(!$product_reminder)
-                                {$product_reminder=[];} @endphp
+                                        <div class="input-group-btn" style="width: 50%;">
+                                            <select class="form-control mt-30" name="tenure_calender">
+                                                <option value="D"
+                                                        @if($product_management->tenure_calender=='D') selected @endif>
+                                                    Days
+                                                </option>
+                                                <option value="M"
+                                                        @if($product_management->tenure_calender=='M') selected @endif>
+                                                    Months
+                                                </option>
+                                                <option value="Y"
+                                                        @if($product_management->tenure_calender=='Y') selected @endif>
+                                                    Years
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>--}}
+                                <?php $productReminder = json_decode($product_management->product_reminder);
+                                 ?>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                     <div class="form-group">
                                         <label>Reminder</label>
@@ -183,24 +182,24 @@
                                                data-tooltip="{{$toolTip->reminder_tooltip}}"><i
                                                         class="fa fa-exclamation-circle"></i></a>
                                         @endif
-                                        <!--<select  class="form-control select2-multiple " id="reminder" disabled="disabled"-->
-                                        <!--         name="reminder[]" multiple="multiple"-->
-                                        <!--         style="width: 100%;height:45px;">-->
-                                        <!--    <option value="1 Day"-->
-                                        <!--            @if(in_array('1 Day', $product_reminder)) selected @endif>1 Day-->
-                                        <!--    </option>-->
-                                        <!--    <option value="1 Week"-->
-                                        <!--            @if(in_array('1 Week', $product_reminder)) selected @endif>1 Week-->
-                                        <!--    </option>-->
-                                        <!--    <option value="2 Week"-->
-                                        <!--            @if(in_array('2 Week', $product_reminder)) selected @endif>2 Week-->
-                                        <!--    </option>-->
-                                        <!--</select>-->
-                                        <div class="reminder">
-                                            <label><input type="checkbox"><span>1 Day</span></label>
-                                            <label><input type="checkbox"><span>1 Week</span></label>
-                                            <label><input type="checkbox"><span>2 Week</span></label>
-                                        </div>
+                                        {{--<select  class="form-control select2-multiple " id="reminder" disabled="disabled"
+                                                 name="reminder[]" multiple="multiple"
+                                                 style="width: 100%;height:45px;">
+                                            <option value="1 Day"
+                                                    @if(in_array('1 Day', $productReminder)) selected @endif>1 Day
+                                            </option>
+                                            <option value="1 Week"
+                                                    @if(in_array('1 Week', $productReminder)) selected @endif>1 Week
+                                            </option>
+                                            <option value="2 Week"
+                                                    @if(in_array('2 Week', $productReminder)) selected @endif>2 Week
+                                            </option>
+                                        </select>--}}
+                                            <div class="reminder">
+                                                <label><input type="checkbox" name="reminder1" value="1 Day" @if($productReminder->reminder1=='1 Day')checked @endif ><span>1 Day</span></label>
+                                                <label><input type="checkbox" name="reminder2" value="1 Week" @if($productReminder->reminder2=='1 Week')checked @endif><span>1 Week</span></label>
+                                                <label><input type="checkbox" name="reminder3" value="2 Week" @if($productReminder->reminder3=='2 Week')checked @endif><span>2 Week</span></label>
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
@@ -285,13 +284,14 @@
         $("input[name='end_date']").on("change", function () {
             var valueLenght = $(this).val().length;
             if (valueLenght == 0) {
-                $("#reminder").attr("disabled", true);
+                $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+                $(".reminder").find('input[type=checkbox]').prop("disabled", true);
                 $("input[name='dod_reminder']").prop('checked', false);
                 $("input[name='dod_reminder']").attr("disabled", true);
                 $(".select2").select2("val", " ");
             }
             else {
-                $("#reminder").attr("disabled", false);
+                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
                 $("input[name='dod_reminder']").attr("disabled", false);
             }
         });
@@ -308,16 +308,18 @@
 
         $("input[name='dod_reminder']").on("change", function () {
             if ($(this).is(":checked") !== false) {
-                $("select[name='reminder[]']").prop("disabled", true);
+                $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+                $(".reminder").find('input[type=checkbox]').prop("disabled", true);
                 $(".select2").select2("val", " ");
             }
             else {
-                $("select[name='reminder[]']").prop("disabled", false);
+                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
             }
         });
 
         if ($("input[name='dod_reminder']").is(":checked") !== false) {
-            $("select[name='reminder[]']").prop("disabled", true);
+            $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+            $(".reminder").find('input[type=checkbox]').prop("disabled", true);
             $(".select2").select2("val", " ");
         }
 
@@ -341,10 +343,11 @@
         $(document).ready(function () {
             $('.select2').select2();
             if ($("input[name='end_date']").val().length != 0) {
-                $("#reminder").attr("disabled", false);
+                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
                 $("input[name='dod_reminder']").attr("disabled", false);
             } else {
-                $("#reminder").attr("disabled", true);
+                $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+                $(".reminder").find('input[type=checkbox]').prop("disabled", true);
                 $("input[name='dod_reminder']").attr("disabled", true);
             }
 

@@ -42,6 +42,7 @@ class ProductManagementController extends Controller
      */
     public function store(Request $request)
     {
+
         $validate = Validator::make($request->all(), [
             'bank_id' => 'required',
             'amount' => 'required|numeric',
@@ -61,7 +62,14 @@ class ProductManagementController extends Controller
             $product_management->amount = $request->amount;
             $product_management->tenure = $request->tenure;
             $product_management->tenure_calender = $request->tenure_calender;
-            $product_management->product_reminder = json_encode($request->reminder);
+            $reminder1 = $request->reminder1 ? $request->reminder1 :null ;
+            $reminder2 = $request->reminder2 ? $request->reminder2 :null;
+            $reminder3 = $request->reminder3 ? $request->reminder3 : null;
+            $reminder = [];
+            $reminder['reminder1'] =$reminder1;
+            $reminder['reminder2'] =$reminder2;
+            $reminder['reminder3'] =$reminder3;
+            $product_management->product_reminder = json_encode($reminder);
             if ($request->start_date) {
                 $product_management->start_date = \Helper::startOfDayBefore($request->start_date);
             } else {
@@ -146,7 +154,14 @@ class ProductManagementController extends Controller
             $product_management->amount = $request->amount;
             $product_management->tenure = $request->tenure;
             $product_management->tenure_calender = $request->tenure_calender;
-            $product_management->product_reminder = json_encode($request->reminder);
+            $reminder1 = $request->reminder1 ? $request->reminder1 :null ;
+            $reminder2 = $request->reminder2 ? $request->reminder2 :null;
+            $reminder3 = $request->reminder3 ? $request->reminder3 : null;
+            $reminder = [];
+            $reminder['reminder1'] =$reminder1;
+            $reminder['reminder2'] =$reminder2;
+            $reminder['reminder3'] =$reminder3;
+            $product_management->product_reminder = json_encode($reminder);
             $product_management->dod_reminder = isset($request->dod_reminder) ? $request->dod_reminder : 0;
             if ($request->start_date) {
                 $product_management->start_date = \Helper::startOfDayBefore($request->start_date);

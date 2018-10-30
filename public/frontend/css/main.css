@@ -311,7 +311,7 @@ iframe {
 }
 
 
-.header__top, .ps-home-banner, .ps-home--links, .ps-home-search{
+.ps-home-fixed-deposit, .ps-home-banner, .ps-home--links, .ps-home-search{
     max-width: 1200px;
     margin: auto;
 }
@@ -3902,9 +3902,9 @@ button {
     }
 }
 
-.ps-home-fixed-deposit {
+/*.ps-home-fixed-deposit {
     background-color: #eef3f3;
-}
+}*/
 
 .ps-home-fixed-deposit .ps-tab-list li a {
     padding: 25px 35px;
@@ -3933,7 +3933,7 @@ button {
 }
 
 .ps-home-fixed-deposit .ps-section__header {
-    background-color: #f6f6f6;
+    /*background-color: #f6f6f6;*/
 }
 
 .ps-home-fixed-deposit .ps-section__content {
