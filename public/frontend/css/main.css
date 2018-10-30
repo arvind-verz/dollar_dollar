@@ -3708,6 +3708,9 @@ button {
     margin-bottom: 40px;
 }
 
+.ps-dashboard .ps-dashboard__content .col-lg-12.col-md-12.col-sm-12.col-xs-12:last-child{
+    margin: 5px 0;
+}
 .ps-dashboard__header h3 {
     padding-bottom: 25px;
     font-family: "Montserrat", sans-serif;
@@ -6612,17 +6615,12 @@ span.ps-post__meta a {
     }
 
     .ps-list--sidebar li.current > a {
-        font-weight: normal;
+        font-weight: bold;
     }
 
     .ps-list--sidebar li:first-child > a {
         font-weight: 700;
-    }
-
-    .ps-list--sidebar li:first-child > a:before {
-        visibility: visible;
-        opacity: 1;
-        display: block;
+        background: #d7d7d7;
     }
 
     .ps-list--sidebar {
@@ -6645,7 +6643,7 @@ span.ps-post__meta a {
         display: block;
         width: 30px;
         height: 3px;
-        background: #ccc;
+        background: #000;
         transition: 0.3s;
         z-index: 10;
         position: absolute;
@@ -6655,7 +6653,7 @@ span.ps-post__meta a {
 
     .ps-list--sidebar li > div span:before {
         position: absolute;
-        background: #ccc;
+        background: #000;
         right: 0;
         top: 10px;
         content: '';
@@ -6666,7 +6664,7 @@ span.ps-post__meta a {
 
     .ps-list--sidebar li > div span:after {
         position: absolute;
-        background: #ccc;
+        background: #000;
         right: 0;
         bottom: 10px;
         content: '';
