@@ -515,7 +515,16 @@
                     "aTargets": [],
                     "bSortable": false,
 
-                }],
+                },
+                    { width: 300, targets: 0 },
+                    { width: 300, targets: 1 },
+                    { width: 100, targets: 2 },
+                    { width: 100, targets: 3 },
+                    { width: 150, targets: 4 },
+                    { width: 100, targets: 5 },
+                    { width: 100, targets: 6 },
+                    { width: 100, targets: 7}
+                ],
 
             });
         $('#contact-table').DataTable(

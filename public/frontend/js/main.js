@@ -425,6 +425,8 @@ $(document).ready(function () {
     $(".ps-block--short-product.second.highlight.sp-only").parent().addClass("sp-only");
     
     
+    
+    $(".ps-list--sidebar li:first-child").before($(".ps-list--sidebar li.current").clone($(".ps-list--sidebar li:first-child")));
     $(".ps-list--sidebar li:first-child").append("<div><span></span></div>");
     $(".ps-list--sidebar li > div").click(function () {
         if ($(this).parent().hasClass("active")) {

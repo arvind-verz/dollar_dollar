@@ -28,8 +28,8 @@
                         <table class="table table-bordered" id="customer-report">
                             <thead>
                                 <tr>
-                                    <th>User&nbsp;Details&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
-                                    <th style="display: none">User&nbsp;Details&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
+                                    <th>User Details</th>
+                                    <th style="display: none">User Details</th>
                                     <th>Consent</th>
                                     <th>Bank Name</th>
                                     <th>Account Name</th>
@@ -46,7 +46,7 @@
                                     @endphp
                                 <tr>
                                     <td>{{ ucfirst($customer_reports_group->first_name) . ' ' . ucfirst($customer_reports_group->last_name) }}<br/>{{ $customer_reports_group->email }}<br/>{{ $customer_reports_group->country_code . $customer_reports_group->tel_phone }}</td>
-                                    <td style="display: none">{{ ucfirst($customer_reports_group->first_name) . '&nbsp;&nbsp;' . ucfirst($customer_reports_group->last_name) }}&nbsp;&nbsp;{{ $customer_reports_group->email }}&nbsp;&nbsp;{{ $customer_reports_group->country_code . $customer_reports_group->tel_phone }}</td>
+                                    <td style="display: none">{{ ucfirst($customer_reports_group->first_name) . ' ' . ucfirst($customer_reports_group->last_name). ' | ' }}  {{ $customer_reports_group->email. ' | ' }}  {{ $customer_reports_group->country_code . $customer_reports_group->tel_phone }}</td>
                                     <td >@if($customer_reports_group->adviser==1) Yes @else No @endif</td>
                                     {{ Helper::getCustomerReportData($customer_reports_group->users_id) }}
                                     @endforeach
