@@ -439,9 +439,7 @@ $(document).ready(function () {
     
     setTimeout(function(){ 
         var n = $(".ps-form--filter .owl-slider .owl-item.active").length;
-        console.log(n);
         if( n <= 10){
-            console.log(n);
             $(".ps-form--filter .owl-slider .owl-controls").hide();
         }
         
