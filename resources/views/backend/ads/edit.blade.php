@@ -4,7 +4,7 @@
     <section class="content-header">
         <h1>
             {{strtoupper( ADS_MANAGEMENT )}}
-            <small>{{ADS_MODULE_SINGLE.' '.ADD_ACTION}}</small>
+            <small>{{ADS_MODULE_SINGLE.' '.EDIT_ACTION}}</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
@@ -169,7 +169,7 @@
                                             <div class="col-sm-2">
                                                 <div class="attachment-block clearfix">
                                                     <a href="javascript:void(0)" class="text-danger" title="close"
-                                                       onclick="removeImage(this, '{{ $ads->id }}', 'paid');"><i
+                                                       onclick="removeImage(this, '{{ $ads->id }}', 'horizontal_paid');"><i
                                                                 class="fas fa-times fa-lg"></i></a>
                                                     <img class="attachment-img" src="{!! asset($ads->horizontal_paid_ad_image) !!}"
                                                          alt="Banner Image">
@@ -217,7 +217,6 @@
                     <!-- /.box-body -->
                 </div>
                 <!-- /.box -->
-
             </div>
             <!-- /.col -->
         </div>
@@ -226,6 +225,8 @@
     <!-- /.content -->
     <script>
         function removeImage(ref, id, place) {
+            var errorSection = document.getElementById("js-errors");
+            errorSection.innerHTML = '';
             $.ajax({
                 method: "POST",
                 url: "{{ route('remove-image') }}",
@@ -234,6 +235,11 @@
                 success: function (data) {
                     if (data.trim() == 'success') {
                         $(ref).parents(".col-sm-2").remove();
+                    }else if (data.trim() == 'error')
+                    {
+                        $("#error-div").removeClass('display-none');
+                            errorSection.innerHTML =  '<p>At least one ad image is compulsory</p>';
+                        return false;
                     }
                 }
             });

@@ -165,6 +165,7 @@ define('CREDENTIALS_ALERT', " These credentials do not match our records.");
 define('SELECT_ALERT', " has been not selected.");
 define('MAX_HOME_BANNER_ALERT', " You can upload only 5 banners for ");
 define('MAX_BANNER_ALERT', " You can upload only 1 banner for ");
+define('EMPTY_AD_IMAGE_ALERT', "At least upload one ad image.");
 
 //Constant for Slug
 define('PRODUCTS_SLUG', "product");
