@@ -6550,6 +6550,9 @@ span.ps-post__meta a {
     .ps-table {
         display: table !important;
     }
+    .ps-list--sidebar li:first-child{
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 768px) {

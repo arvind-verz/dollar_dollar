@@ -173,7 +173,7 @@
                 </ul>
             </div>
         </div>
-        <div class="ps-section__content bg--cover" data-background="img/bg/home-bg.jpg">
+        <div class="ps-section__content bg--cover" data-background="<!--img/bg/home-bg.jpg-->">
             <div class="container">
                 <div class="ps-tabs">
                     <div class="ps-tab active" id="tab-1">

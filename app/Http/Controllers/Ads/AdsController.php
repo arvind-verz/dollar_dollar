@@ -60,23 +60,39 @@ class AdsController extends Controller
         //dd($request->all());
         $validatorFields = [
             'title' => 'required',
-            'ad_image' => 'required|image|nullable|max:1999',
-            'ad_link' => 'required',
-            'page' => 'required'
+            'ad_image' => 'image|nullable|max:1999',
+            'horizontal_banner_ad_image' => 'image|nullable|max:1999',
+            'paid_ad_image' => 'image|nullable|max:1999',
+            'horizontal_paid_ad_image' => 'image|nullable|max:1999'
         ];
-
+        $adImageCount = 0;
+        if ($request->hasFile('ad_image')) {
+            $adImageCount++;
+        }
+        if ($request->hasFile('paid_ad_image')) {
+            $adImageCount++;
+        }
+        if ($request->page == "account" || $request->page == "blog") {
+            if ($request->hasFile('horizontal_banner_ad_image')) {
+                $adImageCount++;
+            }
+            if ($request->hasFile('horizontal_paid_ad_image')) {
+                $adImageCount++;
+            }
+        }
         $validator = Validator::make($request->all(), $validatorFields);
+        if ($adImageCount == 0) {
+            $validator->getMessageBag()->add('ad_image', EMPTY_AD_IMAGE_ALERT);
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
         if (!is_dir('uploads')) {
             mkdir('uploads');
         }
-
         if (!is_dir('uploads/ads')) {
             mkdir('uploads/ads');
         }
-
         $destinationPath = 'uploads/ads'; // upload path
         $ad_image = $horizontal_banner_ad_image = $paid_ad_image = $horizontal_paid_ad_image = '';
         if ($request->hasFile('ad_image')) {
@@ -218,11 +234,38 @@ class AdsController extends Controller
         $validatorFields = [
             'title' => 'required',
             'ad_image' => 'image|nullable|max:1999',
-            'ad_link' => 'required',
-            'page' => 'required'
+            'horizontal_banner_ad_image' => 'image|nullable|max:1999',
+            'paid_ad_image' => 'image|nullable|max:1999',
+            'horizontal_paid_ad_image' => 'image|nullable|max:1999'
         ];
 
+        $adImageCount = 0;
+        if ($request->hasFile('ad_image')) {
+            $adImageCount++;
+        } elseif (!is_null($ads->ad_image)) {
+            $adImageCount++;
+        }
+        if ($request->hasFile('paid_ad_image')) {
+            $adImageCount++;
+        } elseif (!is_null($ads->paid_ad_image)) {
+            $adImageCount++;
+        }
+        if ($request->page == "account" || $request->page == "blog") {
+            if ($request->hasFile('horizontal_banner_ad_image')) {
+                $adImageCount++;
+            } elseif (!is_null($ads->horizontal_banner_ad_image)) {
+                $adImageCount++;
+            }
+            if ($request->hasFile('horizontal_paid_ad_image')) {
+                $adImageCount++;
+            } elseif (!is_null($ads->horizontal_paid_ad_image)) {
+                $adImageCount++;
+            }
+        }
         $validator = Validator::make($request->all(), $validatorFields);
+        if ($adImageCount == 0) {
+            $validator->getMessageBag()->add('ad_image', EMPTY_AD_IMAGE_ALERT);
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
@@ -236,7 +279,7 @@ class AdsController extends Controller
 
 
         $destinationPath = 'uploads/ads'; // upload path
-        $ad_image = $horizontal_banner_ad_image = $paid_ad_image = $horizontal_paid_ad_image='';
+        $ad_image = $horizontal_banner_ad_image = $paid_ad_image = $horizontal_paid_ad_image = '';
         if ($request->hasFile('ad_image')) {
 
             // Get filename with the extension

@@ -984,7 +984,7 @@
                         errors[i] = 'The criteria is required.';
                         i++;
                     }
-                    else if ((!promotionPeriod) && (ongoingStatus == 'false') && (jQuery.inArray(formula, utilFormula) != -1)) {
+                    else if ((!promotionPeriod) && (ongoingStatus == 'false') && (jQuery.inArray(formula, utilFormula) === -1)) {
                         errors[i] = 'The promotion period is required.';
                         i++;
                     }
