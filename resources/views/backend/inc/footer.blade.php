@@ -1907,7 +1907,7 @@
                                 i++;
                             }
                             if (SpendMinAmount1 > SpendMinAmount2) {
-                                errors[i] = 'spend 2 amount must be grater than spend 2.';
+                                errors[i] = 'spend 2 amount must be grater than spend 1.';
                                 i++;
                             }
                         }

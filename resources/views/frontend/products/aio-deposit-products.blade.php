@@ -77,11 +77,11 @@
                             <div class="form-group--label">
                                 <div class="form-group__content">
                                     <label>Salary
-                                    @if(isset($toolTips->salary))
-                                        <a class="ps-tooltip" href="javascript:void(0)"
-                                           data-tooltip="{{$toolTips->salary}}"><i
-                                                    class="fa fa-exclamation-circle"></i></a>
-                                    @endif
+                                        @if(isset($toolTips->salary))
+                                            <a class="ps-tooltip" href="javascript:void(0)"
+                                               data-tooltip="{{$toolTips->salary}}"><i
+                                                        class="fa fa-exclamation-circle"></i></a>
+                                        @endif
                                     </label>
                                     <input class="form-control" type="text" placeholder="" name="salary" id="salary"
                                            value="{{ isset($searchFilter['salary']) ? $searchFilter['salary'] : '' }}">
@@ -90,25 +90,26 @@
                             <div class="form-group--label">
                                 <div class="form-group__content">
                                     <label>Payment
-                                    
-                                    @if(isset($toolTips->payment))
-                                        <a class="ps-tooltip" href="javascript:void(0)"
-                                           data-tooltip="{{$toolTips->payment}}"><i
-                                                    class="fa fa-exclamation-circle"></i></a>
-                                    @endif
-                                    
+
+                                        @if(isset($toolTips->payment))
+                                            <a class="ps-tooltip" href="javascript:void(0)"
+                                               data-tooltip="{{$toolTips->payment}}"><i
+                                                        class="fa fa-exclamation-circle"></i></a>
+                                        @endif
+
                                     </label>
                                     <input class="form-control" type="text" placeholder="" name="giro" id="giro"
                                            value="{{ isset($searchFilter['giro']) ? $searchFilter['giro'] : '' }}">
-                                    </div>
+                                </div>
                             </div>
                             <div class="form-group--label">
                                 <div class="form-group__content">
                                     <label>Spending
-                                    @if(isset($toolTips->spend))
-                                        <a class="ps-tooltip" href="javascript:void(0)" data-tooltip="{{$toolTips->spend}}"><i
-                                                    class="fa fa-exclamation-circle"></i></a>
-                                    @endif
+                                        @if(isset($toolTips->spend))
+                                            <a class="ps-tooltip" href="javascript:void(0)"
+                                               data-tooltip="{{$toolTips->spend}}"><i
+                                                        class="fa fa-exclamation-circle"></i></a>
+                                        @endif
                                     </label>
                                     <input class="form-control" type="text" placeholder="" name="spend" id='spend'
                                            value="{{ isset($searchFilter['spend']) ? $searchFilter['spend'] : '' }}">
@@ -117,11 +118,11 @@
                             <div class="form-group--label">
                                 <div class="form-group__content">
                                     <label>Privilege
-                                    @if(isset($toolTips->privilege))
-                                        <a class="ps-tooltip" href="javascript:void(0)"
-                                           data-tooltip="{{$toolTips->privilege}}"><i
-                                                    class="fa fa-exclamation-circle"></i></a>
-                                    @endif
+                                        @if(isset($toolTips->privilege))
+                                            <a class="ps-tooltip" href="javascript:void(0)"
+                                               data-tooltip="{{$toolTips->privilege}}"><i
+                                                        class="fa fa-exclamation-circle"></i></a>
+                                        @endif
                                     </label>
                                     <input class="form-control" type="text" placeholder="" name="privilege"
                                            id='privilege'
@@ -131,11 +132,11 @@
                             <div class="form-group--label">
                                 <div class="form-group__content">
                                     <label>Loan
-                                    @if(isset($toolTips->loan))
-                                        <a class="ps-tooltip" href="javascript:void(0)"
-                                           data-tooltip="{{$toolTips->loan}}"><i
-                                                    class="fa fa-exclamation-circle"></i></a>
-                                    @endif</label>
+                                        @if(isset($toolTips->loan))
+                                            <a class="ps-tooltip" href="javascript:void(0)"
+                                               data-tooltip="{{$toolTips->loan}}"><i
+                                                        class="fa fa-exclamation-circle"></i></a>
+                                        @endif</label>
                                     <input class="form-control" type="text" placeholder="" name="loan" id="loan"
                                            value="{{ isset($searchFilter['loan']) ? $searchFilter['loan'] : '' }}">
                                 </div>
@@ -966,94 +967,148 @@
                                     @endif
                                     <?php $firstRange = $productRanges[0]; ?>
                                     <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product ps-table--product-3">
-                                            <thead>
-                                            <tr>
-                                                <th>CRITERIA</th>
-                                                @if(!empty($firstRange->minimum_spend_1)|| !empty($firstRange->minimum_spend_2))
-                                                    <th>SPEND</th>@endif
-                                                @if(!empty($firstRange->minimum_salary))
-                                                    <th>SALARY</th>@endif
-                                                @if(!empty($firstRange->minimum_giro_payment))
-                                                    <th>PAYMENT</th>@endif
-                                                @if(!empty($firstRange->minimum_privilege_pa))
-                                                    <th>PRIVILEGE</th>@endif
-                                                @if(!empty($firstRange->minimum_loan_pa))
-                                                    <th>LOAN</th>@endif
-                                                @if(!empty($firstRange->other_minimum_amount)&& ($firstRange->status_other == 1))
-                                                    <th>{{$firstRange->other_interest_name}}</th>@endif
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($productRanges as $range)
+                                        <form id="form-{{$product->product_id}}"
+                                              class="ps-form--filter" method="post">
+                                            <table class="ps-table ps-table--product ps-table--product-3">
+                                                <thead>
                                                 <tr>
-                                                    <td class="text-left">Bonus Interest PA</td>
+                                                    <th>CRITERIA</th>
                                                     @if(!empty($firstRange->minimum_spend_1)|| !empty($firstRange->minimum_spend_2))
-                                                        <td class="text-center @if($product->spend_2_highlight==true || $product->spend_1_highlight==true ) highlight @endif">
-                                                            @if($product->spend_2_highlight==true)
-                                                                @if($range->bonus_interest_spend_2<=0)
-                                                                    - @else {{ $range->bonus_interest_spend_2 }}
-                                                                % @endif
-                                                            @else
-                                                                @if($range->bonus_interest_spend_1<=0)
-                                                                    - @else {{ $range->bonus_interest_spend_1 }}
-                                                                % @endif
-                                                            @endif
-
-                                                        </td>
-                                                    @endif
+                                                        <th>SPEND</th>@endif
                                                     @if(!empty($firstRange->minimum_salary))
-                                                        <td class="text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
-                                                                - @else {{ $range->bonus_interest_salary }} % @endif
-
-                                                        </td>@endif
+                                                        <th>SALARY</th>@endif
                                                     @if(!empty($firstRange->minimum_giro_payment))
-                                                        <td class="text-center @if($product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
-                                                                - @else {{ $range->bonus_interest_giro_payment }}
-                                                                % @endif
-
-                                                        </td>@endif
+                                                        <th>PAYMENT</th>@endif
                                                     @if(!empty($firstRange->minimum_privilege_pa))
-                                                        <td class="text-center @if($product->privilege_highlight==true ) highlight @endif">
-                                                            Up to @if($range->bonus_interest_privilege<=0)
-                                                                - @else  {{ $range->bonus_interest_privilege }}% @endif
-                                                        </td>@endif
+                                                        <th>PRIVILEGE</th>@endif
                                                     @if(!empty($firstRange->minimum_loan_pa))
-                                                        <td class="text-left @if($product->loan_highlight==true ) highlight @endif">@if($range->bonus_interest_loan<=0)
-                                                                - @else  {{ $range->bonus_interest_loan }}% @endif
-                                                        </td>@endif
-                                                    @if(!empty($firstRange->other_minimum_amount)&& ($firstRange->status_other == 1))
-                                                        <td class="text-left @if($product->other_highlight==true ) highlight @endif">@if($range->other_interest<=0)
-                                                                - @else  {{ $range->other_interest }}% @endif
-                                                        </td>@endif
+                                                        <th>LOAN</th>@endif
+                                                    @if(!empty($firstRange->other_minimum_amount1)&& ($firstRange->status_other1 == 1))
+                                                        <th class="combine-criteria-padding">
+                                                            <div class="">
+                                                                <div class="width-50">
+                                                                    <div class="ps-checkbox">
+                                                                        <input class="form-control" type="checkbox"
+                                                                               onchange="changeIndividualCriteria(this);"
+                                                                               name="other_interest1"
+                                                                               data-product-id="{{$product->product_id}}"
+                                                                               value="true"
+                                                                               id="other-interest1-{{$product->product_id}}">
+                                                                        <label for="other-interest1-{{$product->product_id}}">{{$firstRange->other_interest1_name}}</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                    @endif
+                                                    @if(!empty($firstRange->other_minimum_amount2)&& ($firstRange->status_other2 == 1))
+                                                        <th class="combine-criteria-padding">
+                                                            <div class="">
+                                                                <div class="width-50">
+                                                                    <div class="ps-checkbox">
+                                                                        <input class="form-control" type="checkbox"
+                                                                               onchange="changeIndividualCriteria(this);"
+                                                                               name="other_interest2" value="true"
+                                                                               data-product-id="{{$product->product_id}}"
+                                                                               id="other-interest2-{{$product->product_id}}">
+                                                                        <label for="other-interest2-{{$product->product_id}}">{{$firstRange->other_interest2_name}}
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                    @endif
                                                 </tr>
-                                                <tr>
-                                                    <td colspan="1" class="text-left">Total Bonus Interest Earned for
-                                                        ${{Helper::inThousand($range->placement)}}</td>
-                                                    <td class="text-center @if($product->highlight==true ) highlight @endif"
-                                                        colspan="{{$range->colspan}}">
-                                                        @if($range->placement > $range->first_cap_amount)
-                                                            First
-                                                            ${{ Helper::inThousand($range->first_cap_amount) }} -
-                                                            ${{ Helper::inRoundTwoDecimal(($range->first_cap_amount*($product->total_interest/100))) }}
-                                                            (
-                                                            {{ $product->total_interest }}%), remaining
-                                                            ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
-                                                            -
-                                                            ${{ Helper::inRoundTwoDecimal((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
-                                                            ({{ $range->bonus_interest_remaining_amount }}%) <br/> Total
-                                                            =
-                                                            ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
-                                                        @else
-                                                            Total =
-                                                            ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
-                                                            ({{$product->total_interest}}%)
+                                                </thead>
+                                                <tbody>
+                                                @foreach($productRanges as $range)
+                                                    <tr>
+                                                        <td class="text-left">Bonus Interest PA</td>
+                                                        @if(!empty($firstRange->minimum_spend_1)|| !empty($firstRange->minimum_spend_2))
+                                                            <td class=" pt-0 pb-0 pl-0 pr-0 text-center @if($product->spend_2_highlight==true || $product->spend_1_highlight==true ) highlight @endif">
+                                                                <table cellspacing="0" cellpadding="0">
+                                                                    <tr>
+                                                                        <td class="td-unique text-center @if($product->spend_1_highlight==true ) highlight @endif">
+                                                                            @if($range->bonus_interest_spend_2<=0)
+                                                                                - @else {{ $range->bonus_interest_spend_2 }}
+                                                                            % @endif</td>
+                                                                        <td class="td-unique text-center @if($product->spend_2_highlight==true ) highlight @endif">
+                                                                            @if($range->bonus_interest_spend_1<=0)
+                                                                                - @else {{ $range->bonus_interest_spend_1 }}
+                                                                            % @endif</td>
+                                                                    </tr>
+                                                                </table>
+
+
+                                                            </td>
                                                         @endif
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
+                                                        @if(!empty($firstRange->minimum_salary))
+                                                            <td class=" text-center
+                                                                        @if($product->salary_highlight==true ) highlight @endif
+                                                                    "> @if($range->bonus_interest_salary<=0)
+                                                                    - @else {{ $range->bonus_interest_salary }}
+                                                                    % @endif
+
+                                                            </td>@endif
+                                                        @if(!empty($firstRange->minimum_giro_payment))
+                                                            <td class="text-center @if($product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
+                                                                    - @else {{ $range->bonus_interest_giro_payment }}
+                                                                    % @endif
+
+                                                            </td>@endif
+                                                        @if(!empty($firstRange->minimum_privilege_pa))
+                                                            <td class="text-center @if($product->privilege_highlight==true ) highlight @endif">
+                                                                Up
+                                                                to @if($range->bonus_interest_privilege<=0)
+                                                                    - @else  {{ $range->bonus_interest_privilege }}
+                                                                    % @endif
+                                                            </td>@endif
+                                                        @if(!empty($firstRange->minimum_loan_pa))
+                                                            <td class="text-left @if($product->loan_highlight==true ) highlight @endif">@if($range->bonus_interest_loan<=0)
+                                                                    - @else  {{ $range->bonus_interest_loan }}
+                                                                    % @endif
+                                                            </td>@endif
+                                                        @if(!empty($firstRange->other_minimum_amount1)&& ($firstRange->status_other1 == 1))
+                                                            <td class="text-left @if($product->other_highlight1==true ) highlight @endif">@if($range->other_interest1<=0)
+                                                                    - @else  {{ $range->other_interest1 }}
+                                                                    % @endif
+                                                            </td>@endif
+                                                        @if(!empty($firstRange->other_minimum_amount2)&& ($firstRange->status_other2 == 1))
+                                                            <td class="text-left @if($product->other_highlight2==true ) highlight @endif">@if($range->other_interest2<=0)
+                                                                    - @else  {{ $range->other_interest2 }}
+                                                                    % @endif
+                                                            </td>@endif
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="1" class="text-left">Total Bonus
+                                                            Interest Earned for
+                                                            ${{Helper::inThousand($range->placement)}}</td>
+                                                        <td class="text-center @if($product->highlight==true ) highlight @endif"
+                                                            colspan="{{$range->colspan}}">
+                                                            @if($range->placement > $range->first_cap_amount)
+                                                                First
+                                                                ${{ Helper::inThousand($range->first_cap_amount) }}
+                                                                -
+                                                                ${{ Helper::inRoundTwoDecimal(($range->first_cap_amount*($product->total_interest/100))) }}
+                                                                (
+                                                                {{ $product->total_interest }}%), remaining
+                                                                ${{ Helper::inThousand(($range->placement-$range->first_cap_amount)) }}
+                                                                -
+                                                                ${{ Helper::inRoundTwoDecimal((($range->bonus_interest_remaining_amount/100)*($range->placement-$range->first_cap_amount))) }}
+                                                                ({{ $range->bonus_interest_remaining_amount }}
+                                                                %) <br/> Total
+                                                                =
+                                                                ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
+                                                            @else
+                                                                Total =
+                                                                ${{ Helper::inRoundTwoDecimal($product->interest_earned) }}
+                                                                ({{$product->total_interest}}%)
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </form>
                                     </div>
                                     <?php
                                     $range = $productRanges[0];
@@ -1927,82 +1982,131 @@
                                             @endif
                                             <?php $firstRange = $productRanges[0]; ?>
                                             <div class="ps-table-wrap">
-                                                <table class="ps-table ps-table--product ps-table--product-3">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>CRITERIA</th>
-                                                        @if(!empty($firstRange->minimum_spend_1)|| !empty($firstRange->minimum_spend_2))
-                                                            <th>SPEND</th>@endif
-                                                        @if(!empty($firstRange->minimum_salary))
-                                                            <th>SALARY</th>@endif
-                                                        @if(!empty($firstRange->minimum_giro_payment))
-                                                            <th>PAYMENT</th>@endif
-                                                        @if(!empty($firstRange->minimum_privilege_pa))
-                                                            <th>PRIVILEGE</th>@endif
-                                                        @if(!empty($firstRange->minimum_loan_pa))
-                                                            <th>LOAN</th>@endif
-                                                        @if(!empty($firstRange->other_minimum_amount)&& ($firstRange->status_other == 1))
-                                                            <th>{{$firstRange->other_interest_name}}</th>@endif
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($productRanges as $range)
+                                                <form id="form-{{$product->product_id}}"
+                                                      class="ps-form--filter" method="post">
+                                                    <table class="ps-table ps-table--product ps-table--product-3">
+                                                        <thead>
                                                         <tr>
-                                                            <td class="text-left">Bonus Interest PA</td>
+                                                            <th>CRITERIA</th>
                                                             @if(!empty($firstRange->minimum_spend_1)|| !empty($firstRange->minimum_spend_2))
-                                                                <td class="text-center @if($product->spend_2_highlight==true || $product->spend_1_highlight==true ) highlight @endif">
-                                                                    @if($product->spend_2_highlight==true)
-                                                                        @if($range->bonus_interest_spend_2<=0)
-                                                                            - @else {{ $range->bonus_interest_spend_2 }}
-                                                                        % @endif
-                                                                    @else
-                                                                        @if($range->bonus_interest_spend_1<=0)
-                                                                            - @else {{ $range->bonus_interest_spend_1 }}
-                                                                        % @endif
-                                                                    @endif
+                                                                <th>SPEND</th>@endif
+                                                            @if(!empty($firstRange->minimum_salary))
+                                                                <th>SALARY</th>@endif
+                                                            @if(!empty($firstRange->minimum_giro_payment))
+                                                                <th>PAYMENT</th>@endif
+                                                            @if(!empty($firstRange->minimum_privilege_pa))
+                                                                <th>PRIVILEGE</th>@endif
+                                                            @if(!empty($firstRange->minimum_loan_pa))
+                                                                <th>LOAN</th>@endif
+                                                            @if(!empty($firstRange->other_minimum_amount1)&& ($firstRange->status_other1 == 1))
+                                                                <th class="combine-criteria-padding">
+                                                                    <div class="">
+                                                                        <div class="width-50">
+                                                                            <div class="ps-checkbox">
+                                                                                <input class="form-control"
+                                                                                       type="checkbox"
+                                                                                       onchange="changeIndividualCriteria(this);"
+                                                                                       name="other_interest1"
+                                                                                       data-product-id="{{$product->product_id}}"
+                                                                                       value="true"
+                                                                                       id="other-interest1-{{$product->product_id}}">
+                                                                                <label for="other-interest1-{{$product->product_id}}">{{$firstRange->other_interest1_name}}</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </th>
+                                                            @endif
+                                                            @if(!empty($firstRange->other_minimum_amount2)&& ($firstRange->status_other2 == 1))
+                                                                <th class="combine-criteria-padding">
+                                                                    <div class="">
+                                                                        <div class="width-50">
+                                                                            <div class="ps-checkbox">
+                                                                                <input class="form-control"
+                                                                                       type="checkbox"
+                                                                                       onchange="changeIndividualCriteria(this);"
+                                                                                       name="other_interest2"
+                                                                                       value="true"
+                                                                                       data-product-id="{{$product->product_id}}"
+                                                                                       id="other-interest2-{{$product->product_id}}">
+                                                                                <label for="other-interest2-{{$product->product_id}}">{{$firstRange->other_interest2_name}}
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </th>
+                                                            @endif
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($productRanges as $range)
+                                                            <tr>
+                                                                <td class="text-left">Bonus Interest PA</td>
+                                                                @if(!empty($firstRange->minimum_spend_1)|| !empty($firstRange->minimum_spend_2))
+                                                                    <td class=" pt-0 pb-0 pl-0 pr-0 text-center @if($product->spend_2_highlight==true || $product->spend_1_highlight==true ) highlight @endif">
+                                                                        <table cellspacing="0" cellpadding="0">
+                                                                            <tr>
+                                                                                <td class="td-unique text-center @if($product->spend_1_highlight==true ) highlight @endif">
+                                                                                    @if($range->bonus_interest_spend_2<=0)
+                                                                                        - @else {{ $range->bonus_interest_spend_2 }}
+                                                                                    % @endif</td>
+                                                                                <td class="td-unique text-center @if($product->spend_2_highlight==true ) highlight @endif">
+                                                                                    @if($range->bonus_interest_spend_1<=0)
+                                                                                        - @else {{ $range->bonus_interest_spend_1 }}
+                                                                                    % @endif</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                @endif
+                                                                @if(!empty($firstRange->minimum_salary))
+                                                                    <td class="text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
+                                                                            - @else {{ $range->bonus_interest_salary }}
+                                                                            % @endif
+
+                                                                    </td>@endif
+                                                                @if(!empty($firstRange->minimum_giro_payment))
+                                                                    <td class="text-center @if($product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
+                                                                            - @else {{ $range->bonus_interest_giro_payment }}
+                                                                            % @endif
+
+                                                                    </td>@endif
+                                                                @if(!empty($firstRange->minimum_privilege_pa))
+                                                                    <td class="text-center @if($product->privilege_highlight==true ) highlight @endif">
+                                                                        Up to @if($range->bonus_interest_privilege<=0)
+                                                                            - @else  {{ $range->bonus_interest_privilege }}
+                                                                            % @endif
+                                                                    </td>@endif
+                                                                @if(!empty($firstRange->minimum_loan_pa))
+                                                                    <td class="text-left @if($product->loan_highlight==true ) highlight @endif">@if($range->bonus_interest_loan<=0)
+                                                                            - @else  {{ $range->bonus_interest_loan }}
+                                                                            % @endif
+                                                                    </td>@endif
+                                                                @if(!empty($firstRange->other_minimum_amount1)&& ($firstRange->status_other1 == 1))
+                                                                    <td class="text-left @if($product->other_highlight1==true ) highlight @endif">@if($range->other_interest1<=0)
+                                                                            - @else  {{ $range->other_interest1 }}
+                                                                            % @endif
+                                                                    </td>@endif
+                                                                @if(!empty($firstRange->other_minimum_amount2)&& ($firstRange->status_other2 == 1))
+                                                                    <td class="text-left @if($product->other_highlight2==true ) highlight @endif">@if($range->other_interest2<=0)
+                                                                            - @else  {{ $range->other_interest2 }}
+                                                                            % @endif
+                                                                    </td>@endif
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="1">Total Bonus Interest Earned for
+                                                                    ${{Helper::inThousand($range->placement)}}</td>
+                                                                <td class="text-center @if($product->highlight==true ) highlight @endif"
+                                                                    colspan="{{$range->colspan}}">
+
+                                                                    <span class="nill"> {{ NILL }}</span><br/>
+
+                                                                    <p>{{NOT_ELIGIBLE}}</p>
 
                                                                 </td>
-                                                            @endif
-                                                            @if(!empty($firstRange->minimum_salary))
-                                                                <td class="text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
-                                                                        - @else {{ $range->bonus_interest_salary }} % @endif
-
-                                                                </td>@endif
-                                                            @if(!empty($firstRange->minimum_giro_payment))
-                                                                <td class="text-center @if($product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
-                                                                        - @else {{ $range->bonus_interest_giro_payment }}
-                                                                        % @endif
-
-                                                                </td>@endif
-                                                            @if(!empty($firstRange->minimum_privilege_pa))
-                                                                <td class="text-center @if($product->privilege_highlight==true ) highlight @endif">
-                                                                    Up to @if($range->bonus_interest_privilege<=0)
-                                                                        - @else  {{ $range->bonus_interest_privilege }}% @endif
-                                                                </td>@endif
-                                                            @if(!empty($firstRange->minimum_loan_pa))
-                                                                <td class="text-left @if($product->loan_highlight==true ) highlight @endif">@if($range->bonus_interest_loan<=0)
-                                                                        - @else  {{ $range->bonus_interest_loan }}% @endif
-                                                                </td>@endif
-                                                            @if(!empty($firstRange->other_minimum_amount)&& ($firstRange->status_other == 1))
-                                                                <td class="text-left @if($product->other_highlight==true ) highlight @endif">@if($range->other_interest<=0)
-                                                                        - @else  {{ $range->other_interest }}% @endif
-                                                                </td>@endif
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="1">Total Bonus Interest Earned for
-                                                                ${{Helper::inThousand($range->placement)}}</td>
-                                                            <td class="text-center @if($product->highlight==true ) highlight @endif"
-                                                                colspan="{{$range->colspan}}">
-
-                                                                <span class="nill"> {{ NILL }}</span><br/>
-
-                                                                <p>{{NOT_ELIGIBLE}}</p>
-
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </form>
                                             </div>
                                             <?php
                                             $range = $productRanges[0];
@@ -2178,7 +2282,6 @@
             var product_id = $(id).data('product-id');
             var status = $(id).data('status');
             var data = $('#search-form').serialize();
-//console.log(data);
             var checkBoxForm = $('#form-' + product_id).serialize();
             if (checkBoxForm.length == 0) {
                 alert(" At least one criteria always required!");
@@ -2188,6 +2291,32 @@
             $.ajax({
                 method: "POST",
                 url: "{{url('/combine-criteria-filter')}}",
+                data: {
+                    search_detail: data,
+                    product_id: product_id,
+                    check_box_detail: checkBoxForm,
+                    status: status
+                },
+                cache: false,
+                async: false,
+                success: function (data) {
+                    $('#' + product_id).html(data);
+                }
+            });
+        }
+        function changeIndividualCriteria(id) {
+            var product_id = $(id).data('product-id');
+            var status = $(id).data('status');
+            var data = $('#search-form').serialize();
+            var checkBoxForm = $('#form-' + product_id).serialize();
+            if (checkBoxForm.length == 0) {
+                alert(" At least one criteria always required!");
+                $(id).prop("checked", true);
+                return false;
+            }
+            $.ajax({
+                method: "POST",
+                url: "{{url('/general-individual-criteria-filter')}}",
                 data: {
                     search_detail: data,
                     product_id: product_id,
