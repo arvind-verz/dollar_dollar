@@ -3434,6 +3434,9 @@ button {
     .menu > li:last-child:before {
         display:none;
     }
+    .ps-home-blog .ps-section__left {
+        min-height: 600px;
+    }
 }
 
 @media (max-width:991px) {
@@ -7245,6 +7248,9 @@ h4.modal-title {
 @media (min-width:1200px) {
     .ps-loan .form-group--label .form-group__content {
         margin-bottom:20px;
+    }
+    .ps-home-blog .ps-section__left {
+        min-height: 554px;
     }
 }
 .fixed-table{
