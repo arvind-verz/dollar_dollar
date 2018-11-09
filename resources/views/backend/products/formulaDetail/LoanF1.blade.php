@@ -185,23 +185,32 @@
             <div class="form-group">
                 <label for="title" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8 ">
-                    <div class="input-group date ">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-danger">Placement
-                            </button>
-                        </div>
-                        <input type="text" class="form-control pull-right only_numeric"
-                               name="max_placement_sdp4[0]"
-                               value="{{ old('max_placement') ? old('max_placement') :''  }}">
+
+                    <div class="col-md-6 ">
+                        <label for="">Tenure</label>
+                        <input type="text" class="form-control tenure-0 only_numeric" id=""
+                               data-formula-detail-id="0"
+                               name="tenure[0][]"
+                               placeholder="" onchange="changeTenureValue(this)">
+
                     </div>
+                    <div class="col-md-6 ">
+                        <label for="">Bonus Interest</label>
+                        <input type="text" class="form-control only_numeric" id=""
+                               name="bonus_interest[0][]"
+                               placeholder="">
+
+                    </div>
+
                 </div>
                 <div class="col-sm-2" id="add-saving-placement-range-f4-button">
                     <button type="button"
-                            class="btn btn-info pull-left mr-15 add-saving-placement-range-f4-button"
+                            class="btn btn-info pull-left mr-15 mt-25 add-saving-placement-range-f4-button"
                             data-range-id="0" onClick="addMorePlacementRange(this);"><i
                                 class="fa fa-plus"></i>
                     </button>
                 </div>
+
             </div>
             <div class="form-group ">
                 <label for="title" class="col-sm-2 control-label"></label>
