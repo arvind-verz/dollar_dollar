@@ -33,6 +33,7 @@ class ProductsController extends Controller
 
     public function promotion_products($productTypeId = FIX_DEPOSIT)
     {
+
         $defaultSearch = DefaultSearch::where('promotion_id', $productTypeId)->first();
         $products = \Helper::getProducts($productTypeId);
         $productType = $this->productType($productTypeId);
@@ -51,8 +52,14 @@ class ProductsController extends Controller
         $productType = $this->productType($productTypeId);
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
-        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
-    }
+        if($productTypeId==LOAN)
+        {
+            return view('backend.products.loan_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
+        }else{
+            return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
+
+        }
+       }
 
     public function promotion_products_get_formula(Request $request)
     {
@@ -1663,7 +1670,9 @@ class ProductsController extends Controller
     public
     function productType($productTypeId)
     {
-        if ($productTypeId == SAVING_DEPOSIT) {
+        if ($productTypeId == LOAN) {
+            $productType = LOAN_MODULE;
+        } elseif ($productTypeId == SAVING_DEPOSIT) {
             $productType = SAVING_DEPOSIT_MODULE;
         } elseif ($productTypeId == ALL_IN_ONE_ACCOUNT) {
             $productType = ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE;

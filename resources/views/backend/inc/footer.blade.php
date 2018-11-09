@@ -217,56 +217,6 @@
     $(document).ready(function () {
         var bulk_arr = [];
         var bulk_arr1 = [];
-
-        /*$("input[name='bluk_remove[]']").on("click", function() {
-         var value = $(this).val();
-
-         $(this).each(function() {
-         if($(this).is(":checked")) {
-         bulk_arr1.push(value);
-         $("div.bulk_status").removeClass("hide");
-         }
-         else {
-         bulk_arr1.pop(value);
-         }
-         });
-
-         if(bulk_arr1.length<1) {
-         $("div.bulk_status").addClass("hide");
-         $("div.bulk_status").find(".badge").text('');
-         }
-         else {
-         $("div.bulk_status").removeClass("hide");
-         $("div.bulk_status").find(".badge").text(bulk_arr1.length);
-         }
-         //alert(bulk_arr);
-         });
-
-         $("input[name='all_bulk_update']").on("click", function() {
-         bulk_arr1 = [];
-
-         if($(this).is(":checked")) {
-         $("input[name='bluk_remove[]']").each(function() {
-
-         var value = $(this).val();
-         $(this).prop("checked", true);
-         bulk_arr1.push(value);
-         $("div.bulk_status").removeClass("hide");
-         });
-         $("div.bulk_status").find(".badge").text(bulk_arr1.length);
-         }
-         else {
-         $("input[name='bluk_remove[]']").prop("checked", false);
-         $("input[name='bluk_remove[]']").each(function() {
-         var value = $(this).val();
-         $(this).prop("checked", false);
-         bulk_arr1.pop(value);
-         $("div.bulk_status").addClass("hide");
-         });
-         $("div.bulk_status").find(".badge").text('');
-         }
-         });*/
-
         $("select[name='select_type']").on("change", function () {
             var select_type = $(this).val();
             var type = $("input[name='bulk_update_type']").val();
@@ -285,7 +235,6 @@
                 }
             }
         });
-
         $("input[name='bluk_remove[]']").on("click", function () {
             var value = $(this).val();
 
@@ -919,7 +868,7 @@
                 ];
                 var AIOA = ['<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>' , '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>' , '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>'];
 
-                if (index == 1) {
+                if (index == 1) { return true;
                     var name = $.trim($('#name').val());
                     var bank = $.trim($('#bank').val());
                     var ongoingStatus = $.trim($('#ongoing-status-1').data('status'));

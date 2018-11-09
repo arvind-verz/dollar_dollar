@@ -5809,6 +5809,7 @@ span.ps-post__meta a {
     .totop .profile {
         display:none;
     }
+    
 }
 
 .ps-main .ps-dashboard .ps-block__content p {
@@ -6036,6 +6037,18 @@ span.ps-post__meta a {
 .menu--mobile > li .sub-menu {
     visibility:initial;
     opacity:1;
+}
+
+
+.ps-slider--feature-product .owl-nav{
+    width: 1200px !important;
+    right: 0;
+}
+
+@media (max-width:1199px) {
+    .ps-slider--feature-product .owl-nav{
+        display: none;
+    }
 }
 
 @media (max-width:990px) {

@@ -51,11 +51,12 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>FIX_DEPOSIT]) }}"><i class="fa fa-credit-card"></i> Fixed Deposit</a></li>
-                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>SAVING_DEPOSIT]) }}"><i class="fa fa-cloud"></i> Saving Deposit</a></li>
-                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>ALL_IN_ONE_ACCOUNT]) }}"><i class="fa fa-sign-language "></i> All in One Account Deposit</a></li>
-                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>PRIVILEGE_DEPOSIT]) }}"><i class="fa fa-bolt"></i> Privilege Deposit</a></li>
-                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>FOREIGN_CURRENCY_DEPOSIT]) }}"><i class="fa fa-dollar-sign"></i> Foreign Currency Deposit</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>FIX_DEPOSIT]) }}"><i class="fa fa-credit-card"></i>{{FIX_DEPOSIT_TITLE}}</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>SAVING_DEPOSIT]) }}"><i class="fa fa-cloud"></i>{{SAVING_DEPOSIT_TITLE}}</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>ALL_IN_ONE_ACCOUNT]) }}"><i class="fa fa-sign-language "></i>{{ALL_IN_ONE_ACCOUNT_TITLE}}</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>PRIVILEGE_DEPOSIT]) }}"><i class="fa fa-bolt"></i>{{PRIVILEGE_DEPOSIT_TITLE}}</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>FOREIGN_CURRENCY_DEPOSIT]) }}"><i class="fa fa-dollar-sign"></i>{{FOREIGN_DEPOSIT_TITLE}}</a></li>
+                            <li class=" "><a href="{{ route('promotion-products',["productTypeId"=>LOAN]) }}"><i class="fa fa-home"></i>{{LOAN_TITLE}}</a></li>
                         </ul>
                     </li>
                     @elseif($menu->label == BANNER_MODULE)

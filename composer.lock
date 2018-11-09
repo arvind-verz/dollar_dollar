@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2360f856bd723e2dfa707e2a94b37117",
+    "content-hash": "ae0fac200daf4bdcb6d870e2b72b2613",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -345,6 +345,51 @@
                 "spout"
             ],
             "time": "2018-08-31T21:21:07+00:00"
+        },
+        {
+            "name": "dfridrich/mortage",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dfridrich/mortage-calculator.git",
+                "reference": "e7775f2fd96e832678062230aee5ba51e8df7a22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dfridrich/mortage-calculator/zipball/e7775f2fd96e832678062230aee5ba51e8df7a22",
+                "reference": "e7775f2fd96e832678062230aee5ba51e8df7a22",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6|^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Defr\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dennis Fridrich",
+                    "email": "fridrich.dennis@gmail.com"
+                }
+            ],
+            "description": "Calculate mortage easily in PHP.",
+            "homepage": "https://github.com/dfridrich/mortage-calculator",
+            "keywords": [
+                "financial",
+                "mortage",
+                "php"
+            ],
+            "time": "2016-08-01T16:05:45+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

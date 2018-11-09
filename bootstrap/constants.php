@@ -78,6 +78,7 @@ define('SAVING_DEPOSIT_MODULE', "Saving Deposit");
 define('ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE', "All in One Account Deposit");
 define('PRIVILEGE_DEPOSIT_MODULE', "Privilege Deposit");
 define('FOREIGN_CURRENCY_DEPOSIT_MODULE', "Foreign Currency Deposit");
+define('LOAN_MODULE', "Loan");
 
 define('ADS_MANAGEMENT', "Ads Management");
 
@@ -270,6 +271,7 @@ define('FOREIGN_CURRENCY_DEPOSIT_F4', 19);
 define('FOREIGN_CURRENCY_DEPOSIT_F5', 20);
 define('FOREIGN_CURRENCY_DEPOSIT_F6', 21);
 define('PRIVILEGE_DEPOSIT_F6', 22);
+define('LOAN_F1', 24);
 
 //search value
 define('PLACEMENT', "Placement");
@@ -318,3 +320,9 @@ define('SAVING_DEPOSIT_TITLE', "Saving Deposit");
 define('FOREIGN_DEPOSIT_TITLE', "Foreign Deposit");
 define('PRIVILEGE_DEPOSIT_TITLE', "Privilege Deposit");
 define('ALL_IN_ONE_ACCOUNT_TITLE', "All in one Account");
+define('LOAN_TITLE', "Loan");
+//drop down constants
+define('FIX_RATE', "Fix");
+define('FLOATING_RATE', "Floating");
+define('FIX_RATE_TYPE', "Fix");
+define('SIBOR_RATE_TYPE', "SIBOR");
