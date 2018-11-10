@@ -38,27 +38,7 @@
                             <li><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        {{--@if(count($ads))
-                            @if(($ads[0]->display==1))
-                                @php
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads[0]->ad_end_date);
-                                @endphp
-
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                                    </div>
-                                @else
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                                    </div>
-                                @endif
-                            @endif
-                        @endif--}}
+                        {{--@include('frontend.includes.vertical-ads')--}}
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -215,55 +195,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if(count($ads))
-                                @if(($ads[0]->display==1))
-                                    @php
-                                    $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                    $ad_start_date = strtotime($ads[0]->ad_start_date);
-                                    $ad_end_date = strtotime($ads[0]->ad_end_date);
-                                    @endphp
-
-                                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->horizontal_paid_ad_image))
-                                        <div class="pt-2">
-                                            <a href="{{ isset($ads[0]->horizontal_paid_ad_link) ? asset($ads[0]->horizontal_paid_ad_link) : '#' }}"
-                                               target="_blank"><img src="{{ asset($ads[0]->horizontal_paid_ad_image) }}"
-                                                                    alt=""></a>
-                                        </div>
-                                    @else
-                                        <div class="pt-2">
-                                            <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}"
-                                               target="_blank"><img
-                                                        src="{{ asset($ads[0]->horizontal_banner_ad_image) }}"
-                                                        alt=""/></a>
-                                        </div>
-                                        @endif
-                                        @endif
-                                        @endif
-
-                                                <!-- <div class="ps-block--box no-border">
-                                <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><a href="#">View all</a>
-                                </div>
-                                <div class="ps-block__content">
-                                    <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product-managerment" id="datatable1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Bank</th>
-                                                    <th>Account
-                                                        <br> Name</th>
-                                                    <th>Amount</th>
-                                                    <th>Tenure
-                                                        <br> (M= months,
-                                                        <br> D = Days)</th>
-                                                    <th>Start Date</th>
-                                                    <th>End Date</th>
-                                                    <th>Interest Earned</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                            @include('frontend.includes.horizontal-ads')
                                                         @if(count($user_products))
                                         @foreach($user_products as $value)
                                         @php

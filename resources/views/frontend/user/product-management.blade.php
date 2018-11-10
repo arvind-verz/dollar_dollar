@@ -39,27 +39,7 @@
                             <li><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        {{-- @if(count($ads))
-                             @if(($ads[0]->display==1))
-                                 @php
-                                 $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                 $ad_start_date = strtotime($ads[0]->ad_start_date);
-                                 $ad_end_date = strtotime($ads[0]->ad_end_date);
-                                 @endphp
-
-                                 @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                                     <div class="pt-2">
-                                         <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
-                                            target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                                     </div>
-                                 @else
-                                     <div class="pt-2">
-                                         <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
-                                            target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                                     </div>
-                                 @endif
-                             @endif
-                         @endif--}}
+                        {{--@include('frontend.includes.vertical-ads')--}}
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -331,31 +311,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if(count($ads))
-                                    @if(($ads[0]->display==1))
-                                        @php
-                                        $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                        $ad_start_date = strtotime($ads[0]->ad_start_date);
-                                        $ad_end_date = strtotime($ads[0]->ad_end_date);
-                                        @endphp
-
-                                        @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->horizontal_paid_ad_image))
-                                            <div class="pt-2">
-                                                <a href="{{ isset($ads[0]->horizontal_paid_ad_link) ? asset($ads[0]->horizontal_paid_ad_link) : '#' }}"
-                                                   target="_blank"><img
-                                                            src="{{ asset($ads[0]->horizontal_paid_ad_image) }}"
-                                                            alt=""></a>
-                                            </div>
-                                        @else
-                                            <div class="pt-2">
-                                                <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}"
-                                                   target="_blank"><img
-                                                            src="{{ asset($ads[0]->horizontal_banner_ad_image) }}"
-                                                            alt=""/></a>
-                                            </div>
-                                        @endif
-                                    @endif
-                                @endif
+                                @include('frontend.includes.horizontal-ads')
                             </div>
                     </div>
                 </div>

@@ -211,22 +211,28 @@ class PagesFrontController extends Controller
                 } elseif ($slug == REGISTRATION) {
                     return view('frontend.CMS.registration', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == PROFILEDASHBOARD) {
-                    $ads = AdsManagement::where('delete_status', 0)
+                    $adsCollection = AdsManagement::where('delete_status', 0)
                         ->where('display', 1)
                         ->where('page', 'account')
                         ->inRandomOrder()
                         ->get();
+                    if($adsCollection->count()){
+                        $ads = \Helper::manageAds($adsCollection);
+                    }
                     if (AUTH::check()) {
                         return view('frontend.user.profile-dashboard', compact("brands", "page", "systemSetting", "banners", "user_products", "user_products_ending", "ads", 'products'));
                     } else {
                         return redirect('/login');
                     }
                 } elseif ($slug == ACCOUNTINFO) {
-                    $ads = AdsManagement::where('delete_status', 0)
+                    $adsCollection = AdsManagement::where('delete_status', 0)
                         ->where('display', 1)
                         ->where('page', 'account')
                         ->inRandomOrder()
                         ->get();
+                    if($adsCollection->count()){
+                        $ads = \Helper::manageAds($adsCollection);
+                    }
                     if (AUTH::check()) {
                         return view('frontend.user.account-information', compact("brands", "page", "systemSetting", "banners", 'ads'));
                     } else {
@@ -234,11 +240,14 @@ class PagesFrontController extends Controller
                     }
 
                 } elseif ($slug == PRODUCTMANAGEMENT) {
-                    $ads = AdsManagement::where('delete_status', 0)
+                    $adsCollection = AdsManagement::where('delete_status', 0)
                         ->where('display', 1)
                         ->where('page', 'account')
                         ->inRandomOrder()
                         ->get();
+                    if($adsCollection->count()){
+                        $ads = \Helper::manageAds($adsCollection);
+                    }
                     if (AUTH::check()) {
                         return view('frontend.user.product-management', compact("brands", "page", "systemSetting", "banners", "user_products", 'ads'));
                     } else {
@@ -341,15 +350,15 @@ class PagesFrontController extends Controller
                 } else {
                     $details = $query->get();
                 }
-
-                $ads = AdsManagement::where('delete_status', 0)
+                $adsCollection = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
                     ->where('page', 'blog')
                     ->where('page_type', 'blog-inner')
                     ->inRandomOrder()
                     ->get();
-                //clear
-//unserialize tags
+                if($adsCollection->count()){
+                    $ads = \Helper::manageAds($adsCollection);
+                }
                 $tags = [];
                 if ($page->tags != null) {
                     $page->tags = json_decode($page->tags);
@@ -368,7 +377,11 @@ class PagesFrontController extends Controller
                         $relatedBlog[] = $detail;
                     }
                 }
-                $relatedBlog = array_random($relatedBlog, 3);
+                if(count($relatedBlog)>3)
+                {
+                    $relatedBlog = array_random($relatedBlog, 3);
+                }
+
                 return view("frontend.Blog.blog-detail", compact("page", "systemSetting", "banners", "relatedBlog", 'tags', 'ads'));
             } else {
                 return view("frontend.CMS.page", compact("page", "systemSetting", "banners", 'slug'));
@@ -401,13 +414,15 @@ class PagesFrontController extends Controller
     public function fixed($request)
     {
 
-        $ads_manage = AdsManagement::where('delete_status', 0)
+        $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
             ->where('page_type', FIXED_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
-//dd($ads_manage);
+        if($adsCollection->count()){
+            $ads_manage = \Helper::manageAds($adsCollection);
+        }
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
@@ -901,13 +916,15 @@ class PagesFrontController extends Controller
             $details = $query->paginate(10);
         }
 
-        $ads = AdsManagement::where('delete_status', 0)
-            ->where('display', 1)
+        $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('page', 'blog')
             ->where('page_type', 'blog')
+            ->where('display', 1)
             ->inRandomOrder()
             ->get();
-//dd($ads);
+        if($adsCollection->count()){
+            $ads = \Helper::manageAds($adsCollection);
+        }
         if (!$details->count()) {
             if (isset($request->b_search)) {
                 \Session::flash('error', SEARCH_RESULT_ERROR);
@@ -962,12 +979,15 @@ class PagesFrontController extends Controller
 
     public function privilege($request)
     {
-        $ads_manage = AdsManagement::where('delete_status', 0)
+        $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
             ->where('page_type', PRIVILEGE_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
+        if($adsCollection->count()){
+            $ads_manage = \Helper::manageAds($adsCollection);
+        }
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
 
@@ -1802,12 +1822,15 @@ class PagesFrontController extends Controller
 
     public function saving($request)
     {
-        $ads_manage = AdsManagement::where('delete_status', 0)
+        $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
             ->where('page_type', SAVING_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
+        if($adsCollection->count()){
+            $ads_manage = \Helper::manageAds($adsCollection);
+        }
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
 
@@ -2519,12 +2542,15 @@ class PagesFrontController extends Controller
 
     public function foreign_currency($request)
     {
-        $ads_manage = AdsManagement::where('delete_status', 0)
+        $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
             ->where('page_type', FOREIGN_CURRENCY_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
+        if($adsCollection->count()){
+            $ads_manage = \Helper::manageAds($adsCollection);
+        }
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
 
@@ -3370,12 +3396,15 @@ class PagesFrontController extends Controller
     public
     function aio($request)
     {
-        $ads_manage = AdsManagement::where('delete_status', 0)
+        $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
             ->where('page_type', AIO_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
+        if($adsCollection->count()){
+            $ads_manage = \Helper::manageAds($adsCollection);
+        }
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : INTEREST;

@@ -80,7 +80,7 @@
                                     <label>@if($type=='account' ||$type=='blog')Vertical Ad Banner @else Ad
                                         Image @endif </label>
                                     <input type="file" name="ad_image" class="form-control">
-                                    <p class="text-muted"><strong>Note:</strong> <!--Image
+                                    <p class="text-muted">{{--<strong>Note:</strong>--}} <!--Image
                                         size should be @if($type=='account'||$type=='blog')360*640 @else 360*640 @endif for better display-->
                                     </p>
                                     @if(isset($ads->ad_image) && ($ads->ad_image != ''))
@@ -108,7 +108,7 @@
                                         <label>@if($type=='account' ||$type=='blog')Horizontal Ad Banner @else
                                                 Horizontal Banner @endif</label>
                                         <input type="file" name="horizontal_banner_ad_image" class="form-control">
-                                        <p class="text-muted"><strong>Note:</strong> <!--Image
+                                        <p class="text-muted">{{--<strong>Note:</strong>--}} <!--Image
                                             size should be @if($type=='account'||$type=='blog')970*250 @else 970*250 @endif for better display-->
                                         </p>
                                         @if(isset($ads->horizontal_banner_ad_image) && ($ads->horizontal_banner_ad_image != ''))
@@ -136,7 +136,7 @@
                                     <label>@if($type=='account' ||$type=='blog')Paid Vertical Ad  @else Paid Ad
                                         Image @endif</label>
                                     <input type="file" name="paid_ad_image" class="form-control">
-                                    <p class="text-muted"><strong>Note:</strong> <!--Image
+                                    <p class="text-muted">{{--<strong>Note:</strong>--}} <!--Image
                                         size should be @if($type=='account'||$type=='blog')360*640 @else 360*640 @endif for better display-->
                                     </p>
                                     @if(isset($ads->paid_ad_image) && ($ads->paid_ad_image != ''))
@@ -162,7 +162,7 @@
                                     <div class="form-group">
                                         <label>Paid Horizontal Ad</label>
                                         <input type="file" name="horizontal_paid_ad_image" class="form-control">
-                                        <p class="text-muted"><strong>Note:</strong> <!--Image
+                                        <p class="text-muted">{{--<strong>Note:</strong>--}} <!--Image
                                             size should be @if($type=='account'||$type=='blog')970*250 @else 970*250 @endif for better display-->
                                         </p>
                                         @if(isset($ads->horizontal_paid_ad_image) && ($ads->horizontal_paid_ad_image != ''))

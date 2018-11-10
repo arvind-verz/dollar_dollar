@@ -822,4 +822,37 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
 
     }
 
+    public static function manageAds($adsCollection)
+    {
+        $ads = $adsCollection->first();
+            if(empty($ads->ad_image)){
+                $ads1 = $adsCollection->where('ad_image','!=',null)->first();
+                if($ads1){
+                $ads->ad_image = $ads1->ad_image;
+                $ads->ad_link = $ads1->ad_link;
+                }
+            }
+            if(empty($ads->paid_ad_image)){
+                $ads3 = $adsCollection->where('paid_ad_image','!=',null)->first();
+                if($ads3){
+                $ads->paid_ad_image = $ads3->paid_ad_image;
+                $ads->paid_ad_link = $ads3->paid_ad_link;}
+            }
+            if($ads->page != 'product') {
+            if(empty($ads->horizontal_banner_ad_image)){
+                $ads2 = $adsCollection->where('horizontal_banner_ad_image','!=',null)->first();
+                if($ads2){
+                $ads->horizontal_banner_ad_image = $ads2->horizontal_banner_ad_image;
+                $ads->horizontal_banner_ad_link = $ads2->horizontal_banner_ad_link;}
+            }
+            if(empty($ads->horizontal_paid_ad_image)){
+                $ads4 = $adsCollection->where('horizontal_paid_ad_image','!=',null)->first();
+                if($ads4){
+                $ads->horizonstal_paid_ad_image = $ads4->horizontal_paid_ad_image;
+                $ads->horizontal_paid_ad_link = $ads4->horizontal_paid_ad_link;}
+            }
+            }
+            return $ads;
+    }
+
 }
