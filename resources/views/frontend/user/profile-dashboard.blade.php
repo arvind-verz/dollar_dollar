@@ -196,40 +196,6 @@
                                 </div>
                             </div>
                             @include('frontend.includes.horizontal-ads')
-                                                        @if(count($user_products))
-                                        @foreach($user_products as $value)
-                                        @php
-                                                $curr_date = date("Y-m-d", strtotime('now'));
-                                                $start_date = date("Y-m-d", strtotime($value->start_date));
-                                                $end_date = date("Y-m-d", strtotime($value->end_date));
-                                            @endphp
-                                        @if(strtotime('now')>=strtotime('-2 week', strtotime($value->end_date)))
-                                                <tr>
-                                                    <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
-                                                        <td>{{ $value->account_name }}</td>
-                                                        <td>{{ $value->amount }}</td>
-                                                        <td>{{ $value->tenure }}</td>
-                                                        <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
-                                                        <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
-                                                        <td>{{ isset($value->interest_earned) ? $value->interest_earned.'%' : '-' }}</td>
-                                                        <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
-                                                        <td>
-                                                            <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
-                                                            <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
-                                        @endforeach
-                                        @else
-                                                <tr>
-                                                    <td class="text-center" colspan="9">No data found.</td>
-                                                </tr>
-                                                @endif
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div> -->
                         </div>
                     </div>
                 </div>
