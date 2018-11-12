@@ -322,16 +322,7 @@
                                         <h3 class="col-sm-12 col-md-12 col-lg-12 text-danger"> Formula details
                                             unavailable</h3>
                                     </div>
-                                    @include('backend.products.formulaDetail.fixDepositF1')
-                                    @include('backend.products.formulaDetail.savingDepositF1')
-                                    @include('backend.products.formulaDetail.savingDepositF3')
-                                    @include('backend.products.formulaDetail.savingDepositF4')
-                                    @include('backend.products.formulaDetail.savingDepositF5')
-                                    @include('backend.products.formulaDetail.allInOneAccountF1')
-                                    @include('backend.products.formulaDetail.allInOneAccountF2')
-                                    @include('backend.products.formulaDetail.allInOneAccountF3')
-                                    @include('backend.products.formulaDetail.allInOneAccountF4')
-                                    @include('backend.products.formulaDetail.allInOneAccountF5')
+                                    @include('backend.products.formulaDetail.LoanF1')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -486,13 +477,13 @@
     </section>
 
     <!-- /.content -->
+    <!-- /.content -->
     <script type="text/javascript">
 
         $(document).ready(function () {
             var promotion_type = $("#product-type").val();
             var formula = $("#hidden-formula").val();
             //var product_id = $("#product-id").val();
-            //alert(product_name_id);
             if ((promotion_type.length != 0) && (formula.length != 0)) {
                 //alert(formula);
                 $.ajax({
@@ -504,118 +495,20 @@
                         $("select[name='formula']").html(data);
                     }
                 });
-
             }
-            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
-                $('#apply-link').removeClass('display-none');
-                $('#placement-amount-content').html("Maximum Placement Amount");
-            } else {
-                $('#apply-link').addClass('display-none');
-                $('#placement-amount-content').html("Minimum Placement Amount");
-
-            }
-
-            if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
-                $('#currencyDiv').removeClass('display-none');
-            } else {
-                $('#currencyDiv').addClass('display-none');
-            }
-
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
-            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
-            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
-            var SDP1 = [
-                '<?php echo SAVING_DEPOSIT_F1; ?>', '<?php echo SAVING_DEPOSIT_F2; ?>',
-                '<?php echo PRIVILEGE_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F2; ?>',
-                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
-            ];
-            var SDP6 = [
-                '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
-            ];
-            var SDP4 = [
-                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo PRIVILEGE_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
-            ];
-            var utilFormula = [
-                '<?php echo SAVING_DEPOSIT_F1; ?>',
-                '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
-                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
-            ];
-            /*if (jQuery.inArray(formula, utilFormula) !== -1) {
-
-             $('#until-end-section').removeClass('display-none');
-
-
-             }*/
-
+            var LOAN = ['<?php echo LOAN_F1; ?>'];
             if (formula == 0) {
                 $('#formula-details-error-section').removeClass('display-none');
             } else {
                 $('#formula-details-error-section').addClass('display-none');
             }
-            if (jQuery.inArray(formula, FDP1) !== -1) {
-                $('#fixDepositF1').removeClass('display-none');
-            }
-            if (jQuery.inArray(formula, SDP3) !== -1) {
-                //alert("Hello");
-                $('#savingDepositF3').removeClass('display-none');
+            if (jQuery.inArray(formula, LOAN) !== -1) {
 
-            }
-            if (jQuery.inArray(formula, SDP6) !== -1) {
-                //alert("Hello");
-                $('#savingDepositF4').removeClass('display-none');
-
-            }
-            if (jQuery.inArray(formula, SDP5) !== -1) {
-                //alert("Hello");
-                $('#savingDepositF5').removeClass('display-none');
-
-            }
-            if (jQuery.inArray(formula, SDP1) !== -1) {
-                $('#savingDepositF1').removeClass('display-none');
-                if (jQuery.inArray(formula, SDP4) !== -1) {
-                    $('#savingDepositF2Tenure').removeClass('display-none');
-                } else {
-                    $('#savingDepositF2Tenure').addClass('display-none');
-                }
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
-
-                $('#allInOneAccountF1').removeClass('display-none');
-
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
-
-                $('#allInOneAccountF2').removeClass('display-none');
-
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
-
-                $('#allInOneAccountF3').removeClass('display-none');
-
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
-
-                $('#allInOneAccountF4').removeClass('display-none');
-
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>') {
-
-                $('#allInOneAccountF5').removeClass('display-none');
-
+                $('#loanF1').removeClass('display-none');
             }
         });
         $("select[name='product_type']").on("change", function () {
-            $('#fixDepositF1').addClass('display-none');
-            $('#savingDepositF1').addClass('display-none');
-            $('#savingDepositF3').addClass('display-none');
-            $('#savingDepositF4').addClass('display-none');
-            $('#savingDepositF5').addClass('display-none');
-            $('#allInOneAccountF1').addClass('display-none');
-            $('#allInOneAccountF2').addClass('display-none');
-            $('#allInOneAccountF3').addClass('display-none');
-            $('#allInOneAccountF4').addClass('display-none');
-            $('#allInOneAccountF5').addClass('display-none');
-            $('#until-end-section').addClass('display-none');
+            $('#loanF1').addClass('display-none');
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
             //alert(formula);
@@ -625,106 +518,21 @@
                 data: {promotion_type: promotion_type, formula: formula},
                 cache: false,
                 success: function (data) {
-                    <?php $product->product_range = [] ?>
                     $("select[name='formula']").html(data);
                 }
             });
-
         });
         $("select[name='formula']").on("change", function () {
             var formula = $(this).val();
-            $('#fixDepositF1').addClass('display-none');
-            $('#savingDepositF1').addClass('display-none');
-            $('#savingDepositF3').addClass('display-none');
-            $('#savingDepositF4').addClass('display-none');
-            $('#savingDepositF5').addClass('display-none');
-            $('#allInOneAccountF1').addClass('display-none');
-            $('#allInOneAccountF2').addClass('display-none');
-            $('#allInOneAccountF3').addClass('display-none');
-            $('#allInOneAccountF4').addClass('display-none');
-            $('#allInOneAccountF5').addClass('display-none');
-            $('#until-end-section').addClass('display-none');
-            var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
-            var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
-            var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
-            var SDP1 = [
-                '<?php echo SAVING_DEPOSIT_F1; ?>', '<?php echo SAVING_DEPOSIT_F2; ?>',
-                '<?php echo PRIVILEGE_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F2; ?>',
-                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
-            ];
-            var SDP6 = [
-                '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
-            ];
-            var SDP4 = [
-                '<?php echo SAVING_DEPOSIT_F2; ?>', '<?php echo PRIVILEGE_DEPOSIT_F2; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F3; ?>'
-            ];
-            var utilFormula = [
-                '<?php echo SAVING_DEPOSIT_F1; ?>',
-                '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
-                '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
-            ];
+            $('#loanF1').addClass('display-none');
+            var LOAN = ['<?php echo LOAN_F1; ?>'];
             if (formula == 0) {
                 $('#formula-details-error-section').removeClass('display-none');
             } else {
                 $('#formula-details-error-section').addClass('display-none');
             }
-            if (jQuery.inArray(formula, utilFormula) !== -1) {
-
-                $('#until-end-section').removeClass('display-none');
-
-
-            }
-            if (jQuery.inArray(formula, FDP1) !== -1) {
-                $('#fixDepositF1').removeClass('display-none');
-
-            }
-            if (jQuery.inArray(formula, SDP3) !== -1) {
-                addCounter();
-                $('#savingDepositF3').removeClass('display-none');
-            }
-            if (jQuery.inArray(formula, SDP6) !== -1) {
-                //alert("Hello");
-                $('#savingDepositF4').removeClass('display-none');
-
-            }
-            if (jQuery.inArray(formula, SDP5) !== -1) {
-                //alert("Hello");
-                $('#savingDepositF5').removeClass('display-none');
-
-            }
-            if (jQuery.inArray(formula, SDP1) !== -1) {
-                $('#savingDepositF1').removeClass('display-none');
-                if (jQuery.inArray(formula, SDP4) !== -1) {
-                    $('#savingDepositF2Tenure').removeClass('display-none');
-                } else {
-                    $('#savingDepositF2Tenure').addClass('display-none');
-                }
-
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
-
-                $('#allInOneAccountF1').removeClass('display-none');
-
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
-
-                $('#allInOneAccountF2').removeClass('display-none');
-
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
-
-                $('#allInOneAccountF3').removeClass('display-none');
-
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
-
-                $('#allInOneAccountF4').removeClass('display-none');
-
-            }
-            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>') {
-
-                $('#allInOneAccountF5').removeClass('display-none');
-
+            if (jQuery.inArray(formula, LOAN) !== -1) {
+                $('#loanF1').removeClass('display-none');
             }
         });
         $("select[name='product_type']").on("change", function () {
@@ -740,19 +548,7 @@
                     $("select[name='formula']").html(data);
                 }
             });
-            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
-                $('#apply-link').removeClass('display-none');
-            } else {
-                $('#apply-link').addClass('display-none');
-            }
-            if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
-                $('#currencyDiv').removeClass('display-none');
-            } else {
-                $('#currencyDiv').addClass('display-none');
-            }
-
         });
-
         function removeImage(ref, id, ad_type) {
             $.ajax({
                 method: "POST",

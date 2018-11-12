@@ -52,14 +52,13 @@ class ProductsController extends Controller
         $productType = $this->productType($productTypeId);
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
-        if($productTypeId==LOAN)
-        {
+        if ($productTypeId == LOAN) {
             return view('backend.products.loan_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
-        }else{
+        } else {
             return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
 
         }
-       }
+    }
 
     public function promotion_products_get_formula(Request $request)
     {
@@ -369,6 +368,24 @@ class ProductsController extends Controller
                 $ranges[] = $range;
                 $ranges = json_encode($ranges);
             }
+            if (in_array($product->formula_id, [LOAN_F1])) {
+                $bonusInterest = $request->bonus_interest_f1;
+                foreach ($request->tenure_f1 as $k => $v) {
+                    $range = [];
+                    $range['tenure'] = (int)$v;
+                    $range['bonus_interest'] = (float)$bonusInterest[$k];
+                    $range['min_range'] = (int)$request->min_placement_f1;
+                    $range['max_range'] = (int)$request->max_placement_f1;
+                    $range['rate_type'] = $request->rate_type_f1;
+                    $range['property_type'] = $request->property_type_f1;
+                    $range['completion_status'] = (int)$request->completion_status_f1;
+                    $range['board_rate'] = (float)$request->board_rate_f1;
+                    $range['floating_rate_type'] = (float)$request->floating_rate_type_f1;
+                    $ranges[] = $range;
+                }
+                $ranges = json_encode($ranges);
+
+            }
         }
         function intVal($x)
         {
@@ -451,7 +468,11 @@ class ProductsController extends Controller
         $banks = Brand::where('delete_status', 0)->where('display', 1)->orderBy('title', 'asc')->get();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
-        return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+        if ($request->product_type_id == LOAN) {
+            return view('backend.products.loan_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+        } else {
+            return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+        }
     }
 
     public function promotion_products_update(Request $request, $id)
@@ -745,6 +766,24 @@ class ProductsController extends Controller
                 $range['bonus_interest_remaining_amount'] = $request->bonus_interest_remaining_amount_aioa5 ? (float)$request->bonus_interest_remaining_amount_aioa5 : null;
                 $ranges[] = $range;
                 $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [LOAN_F1])) {
+                $bonusInterest = $request->bonus_interest_f1;
+                foreach ($request->tenure_f1 as $k => $v) {
+                    $range = [];
+                    $range['tenure'] = (int)$v;
+                    $range['bonus_interest'] = (float)$bonusInterest[$k];
+                    $range['min_range'] = (int)$request->min_placement_f1;
+                    $range['max_range'] = (int)$request->max_placement_f1;
+                    $range['rate_type'] = $request->rate_type_f1;
+                    $range['property_type'] = $request->property_type_f1;
+                    $range['completion_status'] = (int)$request->completion_status_f1;
+                    $range['board_rate'] = (float)$request->board_rate_f1;
+                    $range['floating_rate_type'] = (float)$request->floating_rate_type_f1;
+                    $ranges[] = $range;
+                }
+                $ranges = json_encode($ranges);
+
             }
         }
         function intVal($x)
@@ -1566,6 +1605,39 @@ class ProductsController extends Controller
                         </div>
                     </div>
                     <div class="col-sm-2">&emsp;</div>
+                </div>
+            </div>
+            <?php
+        } elseif (in_array($request->formula, [LOAN_F1])) {
+            ?>
+            <div id="home_loan_range_f1_<?php echo $request->range_id; ?>">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-8 ">
+
+                        <div class="col-md-6 ">
+                            <label for="">Tenure</label>
+                            <input type="text" class="form-control tenure-0 only_numeric" id=""
+                                   name="tenure_f1[<?php echo $request->range_id; ?>]"
+                                   placeholder="">
+                        </div>
+                        <div class="col-md-6 ">
+                            <label for="">Bonus Interest</label>
+                            <input type="text" class="form-control only_numeric" id=""
+                                   name="bonus_interest_f1[<?php echo $request->range_id; ?>]"
+                                   placeholder="">
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2" id="add-home-loan-placement-range-f1-button">
+                        <button type="button"
+                                class="btn btn-danger pull-left  mr-15 mt-25  remove-placement-range-button "
+                                data-range-id="<?php echo $request->range_id; ?>"
+                                onClick="removePlacementRange(this);">
+                            <i class="fa fa-minus"> </i>
+                        </button>
+                    </div>
                 </div>
             </div>
             <?php

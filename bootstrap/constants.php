@@ -326,3 +326,11 @@ define('FIX_RATE', "Fix");
 define('FLOATING_RATE', "Floating");
 define('FIX_RATE_TYPE', "Fix");
 define('SIBOR_RATE_TYPE', "SIBOR");
+
+//Property type
+define('HDB_PROPERTY', "HDB");
+define('PRIVATE_PROPERTY', "Private");
+
+//Completion status
+define('COMPLETE', "Complete");
+define('BUC', "BUC");

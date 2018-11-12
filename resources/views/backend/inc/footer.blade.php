@@ -849,6 +849,7 @@
                 var errors = new Array();
                 var i = 0;
 
+                var LOAN = ['<?php echo LOAN_F1; ?>'];
                 var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
                 var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
                 var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
@@ -868,7 +869,7 @@
                 ];
                 var AIOA = ['<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>' , '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>' , '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>'];
 
-                if (index == 1) { return true;
+                if (index == 1) {
                     var name = $.trim($('#name').val());
                     var bank = $.trim($('#bank').val());
                     var ongoingStatus = $.trim($('#ongoing-status-1').data('status'));
@@ -992,44 +993,6 @@
                             }
 
                         });
-                        /*if (tenureError == false) {
-                         $.ajax({
-                         method: "POST",
-                         url: "
-                         {{url('/admin/check-tenure')}}",
-                         data: {tenures: tenures},
-                         cache: false,
-                         async: false,
-                         success: function (data) {
-                         if (data == 1) {
-                         errors[i] = 'Please check tenure you input duplicate tenure';
-                         i++;
-                         }
-                         }
-                         });
-                         }*/
-                        /*if (rangeError == false) {
-                         $.ajax({
-                         method: "POST",
-                         url: "
-                         {{url('/admin/check-range')}}",
-                         data: {max_placement: maxPlacements, min_placement: minPlacements},
-                         cache: false,
-                         async: false,
-                         success: function (data) {
-                         //
-                         if (data == 1) {
-                         errors[i] = 'Please check your placement range ';
-                         i++;
-                         }
-                         if (data == 2) {
-                         errors[i] = 'Max Placement must be greater than Min Placement';
-                         i++;
-                         }
-                         }
-                         });
-                         }*/
-
                         $.each(minPlacements, function (k, v) {
 
                             if (Number(v) < Number(minPlacementAmount)) {
@@ -1173,8 +1136,6 @@
                             }
 
                         });
-
-
                     }
                     if (jQuery.inArray(formula, SDP3) !== -1) {
                         var minPlacement = $('#savingDepositF3').find('input[name="min_placement_sdp3"]').map(function () {
@@ -1209,7 +1170,6 @@
                             i++;
 
                         }
-
 
                     }
                     if (jQuery.inArray(formula, SDP5) !== -1) {
@@ -1449,39 +1409,6 @@
                             minPlacements[k] = Number(min);
                             min = Number(v) + Number(1);
                         });
-
-                        /*if (rangeError == false) {
-                         $.ajax({
-                         method: "POST",
-                         url: "
-                         {{url('/admin/check-range')}}",
-                         data: {max_placement: maxPlacements, min_placement: minPlacements},
-                         cache: false,
-                         async: false,
-                         success: function (data) {
-
-                         if (data == 1) {
-                         errors[i] = 'Please check your placement range ';
-                         i++;
-                         }
-                         if (data == 2) {
-                         errors[i] = 'Max Placement must be greater than Min Placement';
-                         i++;
-                         }
-                         }
-                         });
-                         }
-
-                         $.each(minPlacements, function (k, v) {
-
-                         if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
-                         errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
-                         i++;
-
-                         return false;
-                         }
-                         });*/
-
                     }
                     if (formula == 9) {
                         var allInOneAccountF3 = $('#allInOneAccountF3');
@@ -1912,8 +1839,82 @@
                             errors[i] = 'The  first cap amount  is not greater than minimum placement.';
                             i++;
                         }
+                    }
+                    if (jQuery.inArray(formula, LOAN) !== -1) {
+                        var minPlacement = $('#loanF1').find('input[name="min_placement_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var maxPlacement = $('#loanF1').find('input[name="max_placement_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var rateType = $('#loanF1').find('select[name="rate_type_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var propertyType = $('#loanF1').find('select[name="property_type_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var completionStatus = $('#loanF1').find('select[name="completion_status_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var floatingRateType = $('#loanF1').find('select[name="floating_rate_type_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var boardRate = $('#loanF1').find('input[name="board_rate_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var tenures = $('#loanF1').find('input[name^="tenure_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var bonusInterests = $('#loanF1').find('input[name^="bonus_interest_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
+                        var rangeError = false;
+                        if (minPlacement == '') {
+                            errors[i] = 'The  min placement is required.';
+                            i++;
+                        }
+                        if (maxPlacement == '') {
+                            errors[i] = 'The  max placement is required.';
+                            i++;
+                        }
+                        if (rateType == '') {
+                            errors[i] = 'The  rate type is required.';
+                            i++;
+                        }
+                        if (propertyType == '') {
+                            errors[i] = 'The  property type is required.';
+                            i++;
+                        }
+                        if (completionStatus == '') {
+                            errors[i] = 'The  completion status is required.';
+                            i++;
+                        }
+                        if (floatingRateType == '') {
+                            errors[i] = 'The  board rate type is required.';
+                            i++;
+                        }
+                        if (boardRate == '') {
+                            errors[i] = 'The  board rate is required.';
+                            i++;
+                        }
+                        $.each(tenures, function (k, v) {
+                            if (tenures[k] == '') {
+                                errors[i] = 'The tenure is required.';
+                                i++;
 
+                                return false;
+                            }
 
+                        });
+                        $.each(bonusInterests, function (k, v) {
+                            if (bonusInterests[k] == '') {
+                                errors[i] = 'The bonus interest is required.';
+                                i++;
+
+                                return false;
+                            }
+
+                        });
                     }
                 }
                 if (errors.length) {
@@ -1961,6 +1962,7 @@
         var range_id = $(id).data('range-id');
         range_id++;
         var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
+        var LOAN = ['<?php echo LOAN_F1; ?>'];
         var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
         var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
         var SDP1 = [
@@ -2007,6 +2009,17 @@
                 $('#saving-placement-range-f1').append(data);
                 var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 saving-placement-range-f1-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
                 $('#add-saving-placement-range-f1-button').html(addMoreRangeButton);
+            });
+        }
+        if (jQuery.inArray(formula, LOAN) !== -1) {
+            jQuery.ajax({
+                type: "POST",
+                url: "{{url('/admin/add-more-placement-range')}}",
+                data: {detail: data, range_id: range_id, formula: formula}
+            }).done(function (data) {
+                $('#home-loan-range-f1').append(data);
+                var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 mt-25 add-home-loan-range-f1-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
+                $('#add-home-loan-placement-range-f1-button').html(addMoreRangeButton);
             });
         }
 
@@ -2084,7 +2097,11 @@
         var SDP6 = [
             '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
         ];
-
+        var LOAN = [
+            '<?php echo LOAN_F1; ?>'];
+        if (jQuery.inArray(formula, LOAN) !== -1) {
+            $("#home_loan_range_f1_" + range_id).remove();
+        }
         if (jQuery.inArray(formula, SDP6) !== -1) {
             $("#saving_placement_range_f4_" + range_id).remove();
         }
