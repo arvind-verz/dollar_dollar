@@ -104,10 +104,13 @@
 
                                 <div class="col-md-6 ">
                                     <label for="">Tenure</label>
-                                    <input type="text" class="form-control tenure-0 only_numeric" id=""
-                                           data-formula-detail-id="0"
-                                           name="tenure_f1[{{$key}}]" value="{{$value->tenure}}"
-                                           placeholder="">
+
+                                    <select class="form-control tenure-0" name="tenure_f1[{{$key}}]">
+                                        @for($i=1;$i<=6;$i++)
+                                            <option name="{{$i}}"
+                                                    @if(isset($value->tenure) && $value->tenure==$i) selected @endif>{{$i}}</option>
+                                        @endfor
+                                    </select>
                                 </div>
                                 <div class="col-md-6 ">
                                     <label for="">Bonus Interest</label>
@@ -136,6 +139,26 @@
                         </div>
                     </div>
             @endforeach
+                <div id="home-loan-range-f1"></div>
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-8 ">
+                        <div class="col-md-6 ">
+                            <label for="">Tenure</label>
+                            <input type="text" class="form-control" id=""
+                                   name="there_after"  readonly value="There After"
+                                   placeholder="">
+                        </div>
+                        <div class="col-md-6 ">
+                            <label for="">Bonus Interest</label>
+                            <input type="text" class="form-control only_numeric" id=""
+                                   name="there_after_interest" value="{{$ProductRanges[0]->there_after_interest}}"
+                                   placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
         @endif
     @else
 
@@ -240,10 +263,11 @@
 
                     <div class="col-md-6 ">
                         <label for="">Tenure</label>
-                        <input type="text" class="form-control tenure-0 only_numeric" id=""
-                               data-formula-detail-id="0"
-                               name="tenure_f1[0]"
-                               placeholder="">
+                        <select class="form-control tenure-0" name="tenure_f1[0]">
+                            @for($i=1;$i<=6;$i++)
+                                <option name="{{$i}}">{{$i}}</option>
+                            @endfor
+                        </select>
                     </div>
                     <div class="col-md-6 ">
                         <label for="">Bonus Interest</label>
@@ -262,7 +286,27 @@
                 </div>
             </div>
         </div>
-    @endif
         <div id="home-loan-range-f1"></div>
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label"></label>
+            <div class="col-sm-8 ">
+                <div class="col-md-6 ">
+                    <label for="">Tenure</label>
+                    <input type="text" class="form-control" id=""
+                           name="there_after" readonly value="There After"
+                           placeholder="">
+                </div>
+                <div class="col-md-6 ">
+                    <label for="">Bonus Interest</label>
+                    <input type="text" class="form-control only_numeric" id=""
+                           name="there_after_interest" value=""
+                           placeholder="">
+                </div>
+            </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+    @endif
+
 </div>
 

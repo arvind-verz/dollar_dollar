@@ -369,6 +369,7 @@ class ProductsController extends Controller
                 $ranges = json_encode($ranges);
             }
             if (in_array($product->formula_id, [LOAN_F1])) {
+
                 $bonusInterest = $request->bonus_interest_f1;
                 foreach ($request->tenure_f1 as $k => $v) {
                     $range = [];
@@ -381,10 +382,11 @@ class ProductsController extends Controller
                     $range['completion_status'] = (int)$request->completion_status_f1;
                     $range['board_rate'] = (float)$request->board_rate_f1;
                     $range['floating_rate_type'] = (float)$request->floating_rate_type_f1;
+                    $range['there_after_interest'] = (float)$request->there_after_interest;
                     $ranges[] = $range;
+
                 }
                 $ranges = json_encode($ranges);
-
             }
         }
         function intVal($x)
@@ -780,6 +782,7 @@ class ProductsController extends Controller
                     $range['completion_status'] = (int)$request->completion_status_f1;
                     $range['board_rate'] = (float)$request->board_rate_f1;
                     $range['floating_rate_type'] = (float)$request->floating_rate_type_f1;
+                    $range['there_after_interest'] = (float)$request->there_after_interest;
                     $ranges[] = $range;
                 }
                 $ranges = json_encode($ranges);
@@ -1618,13 +1621,15 @@ class ProductsController extends Controller
 
                         <div class="col-md-6 ">
                             <label for="">Tenure</label>
-                            <input type="text" class="form-control tenure-0 only_numeric" id=""
-                                   name="tenure_f1[<?php echo $request->range_id; ?>]"
-                                   placeholder="">
+                            <select class="form-control tenure-0" name="tenure_f1[<?php echo $request->range_id; ?>]">
+                                <?php for($i=1;$i<=6;$i++) { ?>
+                                <option name="tenure_f1[<?php echo $request->range_id; ?>]" ><?php echo $i; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
-                        <div class="col-md-6 ">
+                        <div class="col-md-6">
                             <label for="">Bonus Interest</label>
-                            <input type="text" class="form-control only_numeric" id=""
+                            <input type="text" class="form-control only_numeric" id="" value=""
                                    name="bonus_interest_f1[<?php echo $request->range_id; ?>]"
                                    placeholder="">
                         </div>
@@ -1780,6 +1785,13 @@ class ProductsController extends Controller
             $validate['privilege'] = 'required';
             $validate['loan'] = 'required';
         }
+        if ($request->promotion_id == LOAN) {
+            $validate['rate_type'] = 'required';
+            $validate['tenure'] = 'required';
+            $validate['property_type'] = 'required';
+            $validate['completion'] = 'required';
+
+        }
 
         $validator = Validator::make($request->all(), $validate);
         if ($validator->getMessageBag()->count()) {
@@ -1800,6 +1812,12 @@ class ProductsController extends Controller
             $defaultSearch->spend = $request->spend;
             $defaultSearch->privilege = $request->privilege;
             $defaultSearch->loan = $request->loan;
+        }
+        if ($request->promotion_id == LOAN) {
+            $defaultSearch->rate_type = $request->rate_type;
+            $defaultSearch->tenure = $request->tenure;
+            $defaultSearch->property_type = $request->property_type;
+            $defaultSearch->completion = $request->completion;
         }
         $defaultSearch->save();
 
@@ -1829,6 +1847,13 @@ class ProductsController extends Controller
             $validate['privilege'] = 'required';
             $validate['loan'] = 'required';
         }
+        if ($request->promotion_id == LOAN) {
+            $validate['rate_type'] = 'required';
+            $validate['tenure'] = 'required';
+            $validate['property_type'] = 'required';
+           /* $validate['completion'] = 'required';*/
+
+        }
 
         $validator = Validator::make($request->all(), $validate);
         if ($validator->getMessageBag()->count()) {
@@ -1848,6 +1873,12 @@ class ProductsController extends Controller
             $toolTips->spend = $request->spend;
             $toolTips->privilege = $request->privilege;
             $toolTips->loan = $request->loan;
+        }
+        if ($request->promotion_id == LOAN) {
+            $toolTips->rate_type = $request->rate_type;
+            $toolTips->tenure = $request->tenure;
+            $toolTips->property_type = $request->property_type;
+            //$toolTips->completion = $request->completion;
         }
         $toolTips->save();
 

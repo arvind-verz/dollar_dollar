@@ -244,7 +244,7 @@
                                         <h3 class="col-sm-12 col-md-12 col-lg-12 text-danger"> Formula details
                                             unavailable</h3>
                                     </div>
-                                    @include('backend.products.formulaDetail.loanF1')
+                                    @include('backend.products.formulaDetail.LoanF1')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">

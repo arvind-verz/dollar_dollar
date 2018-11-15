@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Defr;
 
 class PagesFrontController extends Controller
 {
@@ -216,7 +217,7 @@ class PagesFrontController extends Controller
                         ->where('page', 'account')
                         ->inRandomOrder()
                         ->get();
-                    if($adsCollection->count()){
+                    if ($adsCollection->count()) {
                         $ads = \Helper::manageAds($adsCollection);
                     }
                     if (AUTH::check()) {
@@ -230,7 +231,7 @@ class PagesFrontController extends Controller
                         ->where('page', 'account')
                         ->inRandomOrder()
                         ->get();
-                    if($adsCollection->count()){
+                    if ($adsCollection->count()) {
                         $ads = \Helper::manageAds($adsCollection);
                     }
                     if (AUTH::check()) {
@@ -245,7 +246,7 @@ class PagesFrontController extends Controller
                         ->where('page', 'account')
                         ->inRandomOrder()
                         ->get();
-                    if($adsCollection->count()){
+                    if ($adsCollection->count()) {
                         $ads = \Helper::manageAds($adsCollection);
                     }
                     if (AUTH::check()) {
@@ -356,7 +357,7 @@ class PagesFrontController extends Controller
                     ->where('page_type', 'blog-inner')
                     ->inRandomOrder()
                     ->get();
-                if($adsCollection->count()){
+                if ($adsCollection->count()) {
                     $ads = \Helper::manageAds($adsCollection);
                 }
                 $tags = [];
@@ -377,8 +378,7 @@ class PagesFrontController extends Controller
                         $relatedBlog[] = $detail;
                     }
                 }
-                if(count($relatedBlog)>3)
-                {
+                if (count($relatedBlog) > 3) {
                     $relatedBlog = array_random($relatedBlog, 3);
                 }
 
@@ -420,7 +420,7 @@ class PagesFrontController extends Controller
             ->where('page_type', FIXED_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
-        if($adsCollection->count()){
+        if ($adsCollection->count()) {
             $ads_manage = \Helper::manageAds($adsCollection);
         }
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
@@ -922,7 +922,7 @@ class PagesFrontController extends Controller
             ->where('display', 1)
             ->inRandomOrder()
             ->get();
-        if($adsCollection->count()){
+        if ($adsCollection->count()) {
             $ads = \Helper::manageAds($adsCollection);
         }
         if (!$details->count()) {
@@ -985,7 +985,7 @@ class PagesFrontController extends Controller
             ->where('page_type', PRIVILEGE_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
-        if($adsCollection->count()){
+        if ($adsCollection->count()) {
             $ads_manage = \Helper::manageAds($adsCollection);
         }
         $start_date = \Helper::startOfDayBefore();
@@ -1828,7 +1828,7 @@ class PagesFrontController extends Controller
             ->where('page_type', SAVING_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
-        if($adsCollection->count()){
+        if ($adsCollection->count()) {
             $ads_manage = \Helper::manageAds($adsCollection);
         }
         $start_date = \Helper::startOfDayBefore();
@@ -2548,7 +2548,7 @@ class PagesFrontController extends Controller
             ->where('page_type', FOREIGN_CURRENCY_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
-        if($adsCollection->count()){
+        if ($adsCollection->count()) {
             $ads_manage = \Helper::manageAds($adsCollection);
         }
         $start_date = \Helper::startOfDayBefore();
@@ -3402,7 +3402,7 @@ class PagesFrontController extends Controller
             ->where('page_type', AIO_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
-        if($adsCollection->count()){
+        if ($adsCollection->count()) {
             $ads_manage = \Helper::manageAds($adsCollection);
         }
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
@@ -4148,7 +4148,7 @@ class PagesFrontController extends Controller
             ->inRandomOrder()
             ->get();
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
-        $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
+        $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MINIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
 
         $start_date = \Helper::startOfDayBefore();
@@ -4156,9 +4156,7 @@ class PagesFrontController extends Controller
 
 
         DB::connection()->enableQueryLog();
-        $legendtable = systemSettingLegendTable::where('page_type', '=', LOAN)
-            ->where('delete_status', 0)
-            ->get();
+
         $toolTips = ToolTip::where('promotion_id', LOAN)->first();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
@@ -4188,35 +4186,33 @@ class PagesFrontController extends Controller
                 $defaultSearch = DefaultSearch::where('promotion_id', LOAN)->first();
                 if ($defaultSearch) {
                     $defaultPlacement = $defaultSearch->placement;
-                    $defaultSalary = $defaultSearch->salary;
-                    $defaultGiro = $defaultSearch->payment;
-                    $defaultSpend = $defaultSearch->spend;
-                    $defaultLoan = $defaultSearch->loan;
-                    $defaultPrivilege = $defaultSearch->privilege;
+                    $defaultRateType = $defaultSearch->rate_type;
+                    $defaultTenure = $defaultSearch->tenure;
+                    $defaultPropertyType = $defaultSearch->property_type;
+                    $defaultCompletion = $defaultSearch->completion;
+
 
                 } else {
                     $defaultPlacement = 0;
-                    $defaultSalary = 0;
-                    $defaultGiro = 0;
-                    $defaultSpend = 0;
-                    $defaultLoan = 0;
-                    $defaultPrivilege = 0;
+                    $defaultRateType = BOTH_VALUE;
+                    $defaultTenure = 35;
+                    $defaultPropertyType = ALL;
+                    $defaultCompletion = ALL;
+
 
                 }
                 if (!count($request)) {
                     $placement = 0;
                     $searchValue = $defaultPlacement;
-                    $salary = $defaultSalary;
-                    $giro = $defaultGiro;
-                    $spend = $defaultSpend;
-                    $loan = $defaultLoan;
-                    $privilege = $defaultPrivilege;
+                    $rateType = $defaultRateType;
+                    $tenure = $defaultTenure;
+                    $propertyType = $defaultPropertyType;
+                    $completion = $defaultCompletion;
                     $searchFilter['search_value'] = $defaultPlacement;
-                    $searchFilter['salary'] = $defaultSalary;
-                    $searchFilter['giro'] = $defaultGiro;
-                    $searchFilter['spend'] = $defaultSpend;
-                    $searchFilter['privilege'] = $defaultLoan;
-                    $searchFilter['loan'] = $defaultPrivilege;
+                    $searchFilter['rate_type'] = $defaultRateType;
+                    $searchFilter['tenure'] = $defaultTenure;
+                    $searchFilter['property_type'] = $defaultPropertyType;
+                    $searchFilter['completion'] = $defaultCompletion;
                     $searchFilter['filter'] = INTEREST;
                     $searchFilter['sort_by'] = MAXIMUM;
                 } else {
@@ -4227,28 +4223,58 @@ class PagesFrontController extends Controller
                         $searchValue = $defaultPlacement;
                     }
                     $searchFilter['search_value'] = $searchValue;
-                    $salary = $searchFilter['salary'] = isset($searchFilter['salary']) ? (int)$searchFilter['salary'] : 0;
-                    $giro = $searchFilter['giro'] = isset($searchFilter['giro']) ? (int)$searchFilter['giro'] : 0;
-                    $spend = $searchFilter['spend'] = isset($searchFilter['spend']) ? (int)$searchFilter['spend'] : 0;
-                    $loan = $searchFilter['loan'] = isset($searchFilter['loan']) ? (int)$searchFilter['loan'] : 0;
-                    $privilege = $searchFilter['privilege'] = isset($searchFilter['privilege']) ? (int)$searchFilter['privilege'] : 0;
+                    $rateType = $searchFilter['rate_type'] = isset($searchFilter['rate_type']) ? $searchFilter['rate_type'] : null;
+                    $tenure = $searchFilter['tenure'] = isset($searchFilter['tenure']) ? (int)$searchFilter['tenure'] : null;
+                    $propertyType = $searchFilter['property_type'] = isset($searchFilter['property_type']) ? $searchFilter['property_type'] : null;
+                    $completion = $searchFilter['completion'] = isset($searchFilter['completion']) ? $searchFilter['completion'] : null;
                     $searchFilter['filter'] = $searchFilter['filter'] ? $searchFilter['filter'] : PLACEMENT;
 
                 }
-                $status = false;
+                $status = true;
                 $productRanges = json_decode($product->product_range);
                 //dd($searchFilter);
-                if ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F1) {
+                if ($product->promotion_formula_id == LOAN_F1) {
+
+                    $totalInterests = [];
+                    $interestEarns = [];
+                    $product->highlight = false;
+                    $product->tenure_highlight = false;
+
+                    $firstProductRange = $productRanges[0];
+                    if ($rateType != BOTH_VALUE && ($rateType != $firstProductRange->rate_type)) {
+                        $status = false;
+                    }
+                    if ($completion != ALL && ($completion != $firstProductRange->completion_status)) {
+                        $status = false;
+                    }
+                    if ($propertyType != ALL && ($propertyType != $firstProductRange->property_type)) {
+                        $status = false;
+                    }
+                    if (($searchValue < $firstProductRange->min_range) || ($searchValue > $firstProductRange->max_range)) {
+                        $status = false;
+                    }
+                    //dd($productRanges);
+                    foreach ($productRanges as $k => $productRange) {
+                        $interest = $productRange->bonus_interest + $productRange->board_rate;
+                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                        $result = $mortage->calculate();
+                        $productRange->monthly_payment = $result->monthlyPayment;
+                    }
+                    $product->product_range = $productRanges;
+                    if ($status == true) {
+                        $product->highlight = true;
+                        $filterProducts[] = $product;
+                    } else {
+                        $remainingProducts[] = $product;
+                    }
 
                 } elseif (empty($product->promotion_formula_id)) {
                     $filterProducts[] = $product;
                 }
-
             }
         }
         $products = collect($filterProducts);
         $remainingProducts = collect($remainingProducts);
-        //dd($sortBy,$filter);
         if ($products->count()) {
             if ($sortBy == MINIMUM) {
                 if ($filter == PLACEMENT) {
@@ -4291,7 +4317,7 @@ class PagesFrontController extends Controller
         }
 
         //dd($products);
-        return view('frontend.products.loan', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage", "toolTips"));
+        return view('frontend.products.loan', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "ads_manage", "toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)
@@ -5238,7 +5264,7 @@ class PagesFrontController extends Controller
 
                         <p><?php echo NOT_ELIGIBLE; ?></p>
                     </div>
-                <?php
+                    <?php
                 }
             }
         }

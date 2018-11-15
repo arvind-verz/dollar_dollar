@@ -1,23 +1,15 @@
 <!-- Scripts -->
 <script>
-    /*tinymce.init({
-     selector: "textarea.plain-text-area ",  // change this value according to your HTML
-     plugins: "textcolor colorpicker ",
-     content_css : "mycontent.css",
-     toolbar: "forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify| fontsizeselect",
-     fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
-     height: "100"
-     });*/
 
     var editor_config = {
         path_absolute: "{{ URL::to('/') }}/",
         selector: "textarea",
         content_css: [
-            '/frontend/css/plugin.css',
-            '/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
-            '/frontend/plugins/jquery-ui/jquery-ui.min.css',
-            '/frontend/css/main.css',
-            '/frontend/css/custom.css'
+            APP_URL+'/frontend/css/plugin.css',
+            APP_URL+'/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
+            APP_URL+'/frontend/plugins/jquery-ui/jquery-ui.min.css',
+            APP_URL+'/frontend/css/main.css',
+            APP_URL+'/frontend/css/custom.css'
         ],
         toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code",
         setup: function (ed) {
@@ -80,10 +72,10 @@
     // Load multiple scripts
     var scriptLoader = new tinymce.dom.ScriptLoader();
 
-    scriptLoader.add('/frontend/js/jquery.min.js');
-    scriptLoader.add('/frontend/js/plugin.js');
-    scriptLoader.add('/frontend/plugins/jquery-ui/jquery-ui.min.js');
-    scriptLoader.add('/frontend/js/main.js');
+    scriptLoader.add(APP_URL+'/frontend/js/jquery.min.js');
+    scriptLoader.add(APP_URL+'/frontend/js/plugin.js');
+    scriptLoader.add(APP_URL+'/frontend/plugins/jquery-ui/jquery-ui.min.js');
+    scriptLoader.add(APP_URL+'/frontend/js/main.js');
 
     tinymce.init({
         selector: "textarea.text-color-base ",  // change this value according to your HTML
@@ -1991,7 +1983,6 @@
                 url: "{{url('/admin/add-more-placement-range')}}",
                 data: {detail: data, range_id: range_id, formula: formula, product_type: productType}
             }).done(function (data) {
-                console.log(data);
                 $('#new-placement-range').append(data);
                 var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-placement-range-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
                 $('#add-placement-range-button').html(addMoreRangeButton);

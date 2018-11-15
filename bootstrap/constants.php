@@ -322,15 +322,18 @@ define('PRIVILEGE_DEPOSIT_TITLE', "Privilege Deposit");
 define('ALL_IN_ONE_ACCOUNT_TITLE', "All in one Account");
 define('LOAN_TITLE', "Loan");
 //drop down constants
+define('BOTH_VALUE', "Both");
 define('FIX_RATE', "Fix");
 define('FLOATING_RATE', "Floating");
 define('FIX_RATE_TYPE', "Fix");
-define('SIBOR_RATE_TYPE', "SIBOR");
+define('SIBOR_RATE_TYPE', "Sibor");
 
 //Property type
-define('HDB_PROPERTY', "HDB");
-define('PRIVATE_PROPERTY', "Private");
+define('HDB_PROPERTY', "HDB/Private");
+define('PRIVATE_PROPERTY', "Commercial Individual");
 
 //Completion status
 define('COMPLETE', "Complete");
 define('BUC', "BUC");
+define('ALL', "ALL");
+
