@@ -22,7 +22,7 @@
                         <i class="fa fa-book"></i>
 
                         <h3 class="box-title">{{$productType}}</h3>
-                        @if($productTypeId==ALL_IN_ONE_ACCOUNT)
+                        @if($productTypeId==ALL_IN_ONE_ACCOUNT || $productTypeId==LOAN)
                             <a href="{{ route('tool-tip',['productTypeId'=>$productTypeId]) }}"
                                class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
                                 @if($toolTips)Edit Tool Tips @else  Add Tool Tips @endif

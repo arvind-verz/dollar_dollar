@@ -54,7 +54,7 @@
 
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Spend 1)</label>
+                                    <label for="">Bonus Interest (Spend 2)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="bonus_interest_spend_1_aioa5"
                                            value="{{ $value->bonus_interest_spend_1  }}"
@@ -77,7 +77,7 @@
 
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Spend 1)</label>
+                                    <label for="">Bonus Interest (Spend 2)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="bonus_interest_spend_2_aioa5"
                                            value="{{ $value->bonus_interest_spend_2  }}"
@@ -184,30 +184,30 @@
                         <div class="col-sm-8 ">
                             <div class="form-row">
                                 <div class="col-md-3 mb-3">
-                                    <label for=""> Other Interest name</label>
+                                    <label for="">Other Criteria 1</label>
                                     <input type="text" class="form-control " id=""
-                                           name="other_interest_name_aioa5"
-                                           value="{{ $value->other_interest_name  }}"
+                                           name="other_interest1_name_aioa5"
+                                           value="{{ $value->other_interest1_name  }}"
                                            placeholder="">
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="">Minimum Requirement Amount </label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="other_minimum_amount_aioa5"
-                                           value="{{ $value->other_minimum_amount  }}"
+                                           name="other_minimum_amount1_aioa5"
+                                           value="{{ $value->other_minimum_amount1  }}"
                                            placeholder="">
 
                                 </div>
                                 <div class="col-md-2 mb-3">
                                     <label for="">Interest</label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="other_interest_aioa5"
-                                           value="{{ $value->other_interest  }}"
+                                           name="other_interest1_aioa5"
+                                           value="{{ $value->other_interest1  }}"
                                            placeholder="">
                                 </div>
                                 <div class="col-md-3 mb-3">
-                                    @if($value->status_other==1)
-                                            <input type="hidden" id="aioa-5-1-status-input" name="status_other_aioa5"
+                                    @if($value->status_other1==1)
+                                            <input type="hidden" id="aioa-5-1-status-input" name="status_other1_aioa5"
                                                    value="1"/>
                                             <label for="">Status</label>
                                             <button type="button" data-status="true" id="aioa-5-1-status"
@@ -216,13 +216,64 @@
                                             </button>
 
                                     @else
-                                            <input type="hidden" id="aioa-5-1-status-input" name="status_other_aioa5"
+                                            <input type="hidden" id="aioa-5-1-status-input" name="status_other1_aioa5"
                                                    value="0"/>
                                             <label for="">Status</label>
                                             <button type="button" data-status="false" id="aioa-5-1-status"
                                                     class="btn btn-block btn-danger btn-social"
                                                     onclick="changeAIO5Status(this)"><i class="fa fa-times"></i> Disable
                                             </button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">&emsp;</div>
+                    </div>
+                    <div class="form-group " id="aio-5-1">
+                        <label for="title" class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-8 ">
+                            <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                    <label for="">Other Criteria 2</label>
+                                    <input type="text" class="form-control " id=""
+                                           name="other_interest2_name_aioa5"
+                                           value="{{ $value->other_interest2_name  }}"
+                                           placeholder="">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Minimum Requirement Amount </label>
+                                    <input type="text" class="form-control only_numeric" id=""
+                                           name="other_minimum_amount2_aioa5"
+                                           value="{{ $value->other_minimum_amount2  }}"
+                                           placeholder="">
+
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    <label for="">Interest</label>
+                                    <input type="text" class="form-control only_numeric" id=""
+                                           name="other_interest2_aioa5"
+                                           value="{{ $value->other_interest2  }}"
+                                           placeholder="">
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    @if($value->status_other2==1)
+                                        <input type="hidden" id="aioa-5-2-status-input" name="status_other2_aioa5"
+                                               value="1"/>
+                                        <label for="">Status</label>
+                                        <button type="button" data-status="true" id="aioa-5-2-status"
+                                                class="btn btn-block btn-success btn-social"
+                                                onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
+                                        </button>
+
+                                    @else
+                                        <input type="hidden" id="aioa-5-2-status-input" name="status_other2_aioa5"
+                                               value="0"/>
+                                        <label for="">Status</label>
+                                        <button type="button" data-status="false" id="aioa-5-2-status"
+                                                class="btn btn-block btn-danger btn-social"
+                                                onclick="changeAIO5Status(this)"><i class="fa fa-times"></i> Disable
+                                        </button>
                                     @endif
                                 </div>
                             </div>
@@ -437,28 +488,64 @@
                 <div class="col-sm-8 ">
                     <div class="form-row">
                         <div class="col-md-3 mb-3">
-                            <label for=""> Other Interest name</label>
+                            <label for=""> Other Criteria 1</label>
                             <input type="text" class="form-control " id=""
-                                   name="other_interest_name_aioa5"
+                                   name="other_interest1_name_aioa5"
                                    placeholder="">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="">Minimum Requirement Amount </label>
                             <input type="text" class="form-control only_numeric" id=""
-                                   name="other_minimum_amount_aioa5"
+                                   name="other_minimum_amount1_aioa5"
                                    placeholder="">
 
                         </div>
                         <div class="col-md-2 mb-3">
                             <label for="">Interest</label>
                             <input type="text" class="form-control only_numeric" id=""
-                                   name="other_interest_aioa5"
+                                   name="other_interest1_aioa5"
                                    placeholder="">
                         </div>
                         <div class="col-md-3 mb-3">
-                            <input type="hidden" id="aioa-5-1-status-input" name="status_other_aioa5" value="1"/>
+                            <input type="hidden" id="aioa-5-1-status-input" name="status_other1_aioa5" value="1"/>
                             <label for="">Status</label>
                             <button type="button" data-status="true" id="aioa-5-1-status"
+                                    class="btn btn-block btn-success btn-social"
+                                    onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">&emsp;</div>
+            </div>
+            <div class="form-group " id="aio-5-1">
+                <label for="title" class="col-sm-2 control-label"></label>
+
+                <div class="col-sm-8 ">
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for=""> Other Criteria 2</label>
+                            <input type="text" class="form-control " id=""
+                                   name="other_interest2_name_aioa5"
+                                   placeholder="">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="">Minimum Requirement Amount </label>
+                            <input type="text" class="form-control only_numeric" id=""
+                                   name="other_minimum_amount2_aioa5"
+                                   placeholder="">
+
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label for="">Interest</label>
+                            <input type="text" class="form-control only_numeric" id=""
+                                   name="other_interest2_aioa5"
+                                   placeholder="">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input type="hidden" id="aioa-5-2-status-input" name="status_other2_aioa5" value="1"/>
+                            <label for="">Status</label>
+                            <button type="button" data-status="true" id="aioa-5-2-status"
                                     class="btn btn-block btn-success btn-social"
                                     onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
                             </button>

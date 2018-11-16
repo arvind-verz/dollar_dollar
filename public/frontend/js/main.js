@@ -440,10 +440,13 @@ $(document).ready(function () {
     })
     
     setTimeout(function(){ 
-        var n = $(".ps-form--filter .owl-slider .owl-item.active").length;
-        if( n <= 10){
-            $(".ps-form--filter .owl-slider .owl-controls").hide();
-        }
+        $(".owl-slider").each(function () {
+            var cf1 = $(this).attr('data-owl-item');
+            var cf2 = $(this).find(".owl-item").length;
+            if (cf2 <= cf1) {
+                $(this).find(".owl-nav").hide();
+            }
+        });
         
     }, 3000);
     

@@ -74,7 +74,7 @@ if (!$systemSetting) {
     </style>
 
 </head>
-<body>
+<body style="@if(isset($page) && $page->slug==HOME_SLUG) background-color: #f3f8fb !important; @endif">
 {{--<div class="se-pre-con"></div>--}}
 <div id="fb-root"></div>
 <script>(function (d, s, id) {

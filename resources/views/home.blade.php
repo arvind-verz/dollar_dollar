@@ -173,7 +173,7 @@
                 </ul>
             </div>
         </div>
-        <div class="ps-section__content bg--cover" data-background="<!--img/bg/home-bg.jpg-->">
+        <div class="ps-section__content bg--cover" data-background="img/bg/home-bg.jpg">
             <div class="container">
                 <div class="ps-tabs">
                     <div class="ps-tab active" id="tab-1">
@@ -233,6 +233,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="ps-section__footer" ><a href="{{url(FIXED_DEPOSIT_MODE)}}" id="view-all-rate">View all bank rates</a></div>
             </div>
         </div>
     </div>
@@ -383,22 +384,29 @@
             $(this).addClass("current");
             $("a.aboutpage").parent().removeClass("selected");
             $("#showContent-1").parent().addClass("selected");
+            var viewAllLink = $("#view-all-rate");
             var promotionType = $(this).find("a").attr("data-promotion-type");
             var byOrderValue = "<?php echo MAXIMUM_INTEREST_RATE; ?>";
-            var productHeading;
+            var productHeading, viewAllUrl;
             if (promotionType == '<?php echo FIX_DEPOSIT ;?>') {
                 productHeading = '<?php echo FIX_DEPOSIT_TITLE ;?>';
+                 viewAllUrl = '<?php echo url(FIXED_DEPOSIT_MODE) ;?>';
             } else if (promotionType == '<?php echo SAVING_DEPOSIT ;?>') {
                 productHeading = '<?php echo SAVING_DEPOSIT_TITLE ;?>';
+                 viewAllUrl = '<?php echo url(SAVING_DEPOSIT_MODE) ;?>';
             }
             else if (promotionType == '<?php echo FOREIGN_CURRENCY_DEPOSIT ;?>') {
                 productHeading = '<?php echo FOREIGN_DEPOSIT_TITLE ;?>';
+                 viewAllUrl = '<?php echo url(FOREIGN_CURRENCY_DEPOSIT_MODE) ;?>';
             } else if (promotionType == '<?php echo PRIVILEGE_DEPOSIT ;?>') {
                 productHeading = '<?php echo PRIVILEGE_DEPOSIT_TITLE ;?>';
+                 viewAllUrl = '<?php echo url(PRIVILEGE_DEPOSIT_MODE) ;?>';
             } else if (promotionType == '<?php echo ALL_IN_ONE_ACCOUNT ;?>') {
                 productHeading = '<?php echo ALL_IN_ONE_ACCOUNT_TITLE ;?>';
+                viewAllUrl = '<?php echo url(AIO_DEPOSIT_MODE) ;?>';
             }
             $('#product-heading').html(productHeading);
+            viewAllLink.attr('href',viewAllUrl);
             getProductSliderDetails(promotionType, byOrderValue);
         });
 
