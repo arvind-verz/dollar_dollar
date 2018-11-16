@@ -73,6 +73,8 @@ Route::post('/post-contact-enquiry', 'Enquiry\EnquiryFrontController@postContact
 Route::post('/post-health-enquiry', 'Enquiry\EnquiryFrontController@postHealthEnquiry')->name('post-health-enquiry');
 Route::post('/post-life-enquiry', 'Enquiry\EnquiryFrontController@postLifeEnquiry')->name('post-life-enquiry');
 Route::post('/investment-enquiry', 'Enquiry\EnquiryFrontController@investmentEnquiry')->name('investment-enquiry');
+Route::post('/loan-enquiry', 'Enquiry\EnquiryFrontController@loanEnquiry')->name('loan-enquiry');
+Route::post('/post-loan-enquiry', 'Enquiry\EnquiryFrontController@postLoanEnquiry')->name('post-loan-enquiry');
 
 /*Blog module end*/
 Route::get('/blog-list', 'CMS\PagesFrontController@getBlogByCategories')->name('blog-list');

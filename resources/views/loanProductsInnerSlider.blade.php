@@ -28,11 +28,10 @@
                                 <span class="slider-font">
                                  Rate: </span>{{ $product->maximum_interest_rate }}%</p>
                             <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                <span class="slider-font">{{ $product->lock_in }}</span> YRS
+                                <span class="slider-font">Lock in:</span> {{ $product->lock_in }} YRS
                             </p>
                             <p class="@if($searchFilter['filter']==INSTALLMENT) highlight highlight-bg @endif">
-                                <span class="slider-font">Lock in:</span>
-                                ${{ round($product->monthly_installment) }}/MTHS
+                                <span class="slider-font">${{ round($product->monthly_installment) }}</span>/MTHS
                             </p>
                         </div>
                         <a class="ps-btn" href="#p-{{$product->id}}">More info</a>
@@ -90,11 +89,10 @@
                                 <span class="slider-font">
                                  Rate: </span>{{ $product->maximum_interest_rate }}%</p>
                             <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
-                                <span class="slider-font">{{ $product->lock_in }}</span> YRS
+                                <span class="slider-font">Lock in:</span> {{ $product->lock_in }} YRS
                             </p>
                             <p class="@if($searchFilter['filter']==INSTALLMENT) highlight highlight-bg @endif">
-                                <span class="slider-font">Lock in:</span>
-                                ${{ round($product->monthly_installment) }}/MTHS
+                                <span class="slider-font">${{ round($product->monthly_installment) }}</span>/MTHS
                             </p>
                         </div>
                         <a class="ps-btn" href="#p-{{$product->id}}">More info</a>

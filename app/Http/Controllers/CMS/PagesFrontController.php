@@ -4166,7 +4166,7 @@ class PagesFrontController extends Controller
             ->where('promotion_types.id', '=', LOAN)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
-            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id')
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id','promotion_products.id as product_id')
             ->get();
 
         $details = \Helper::get_page_detail(LOAN_MODE);

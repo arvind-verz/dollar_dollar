@@ -11,12 +11,16 @@ use App\Mail\ContactEnquiryMail;
 use App\Mail\HealthEnquiryMail;
 use App\Mail\LifeEnquiryMail;
 use App\Mail\InvestmentEnquiryMail;
+use App\Mail\LoanEnquiry as LoanEnquiryMail;
 use App\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Http\Request;
 use Mail;
 use Validator;
+use App\Page;
+use App\LoanEnquiry;
+use App\PromotionProducts;
 
 class EnquiryFrontController extends Controller
 {
@@ -152,7 +156,7 @@ class EnquiryFrontController extends Controller
             }
         }
         if (isset($request->level)) {
-            if ($request->level==YES) {
+            if ($request->level == YES) {
                 $fields ['health_condition'] = 'required';
             }
         }
@@ -180,7 +184,7 @@ class EnquiryFrontController extends Controller
 
         $healthInsuranceEnquiry->save();
 
-        if(Auth::user()->email==$request->email) {
+        if (Auth::user()->email == $request->email) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -248,7 +252,7 @@ class EnquiryFrontController extends Controller
 
         $lifeInsuranceEnquiry->save();
 
-        if(Auth::user()->email==$request->email) {
+        if (Auth::user()->email == $request->email) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -260,7 +264,7 @@ class EnquiryFrontController extends Controller
         try {
             Mail::to(ADMIN_EMAIL)->send(new LifeEnquiryMail($data));
         } catch (Exception $exception) {
-            
+
             return redirect(url(LIFE_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
@@ -283,7 +287,7 @@ class EnquiryFrontController extends Controller
 
         ];
         if (isset($request->experience)) {
-            if ($request->experience==YES) {
+            if ($request->experience == YES) {
                 $fields ['experience_detail'] = 'required';
             }
         }
@@ -310,9 +314,9 @@ class EnquiryFrontController extends Controller
             $goals = $request->goals;
         }
         $investmentEnquiry->goals = serialize($goals);
-        $investmentEnquiry->goal_other_value = isset($request->goal_other_value) ? $request->goal_other_value :null;
+        $investmentEnquiry->goal_other_value = isset($request->goal_other_value) ? $request->goal_other_value : null;
         $investmentEnquiry->experience = $request->experience;
-        $investmentEnquiry->experience_detail = isset($request->experience_detail) ? $request->experience_detail :null;
+        $investmentEnquiry->experience_detail = isset($request->experience_detail) ? $request->experience_detail : null;
         $risks = [];
         if (isset($request->risks)) {
             $risks = $request->risks;
@@ -331,7 +335,7 @@ class EnquiryFrontController extends Controller
 
         $investmentEnquiry->save();
 
-        if(Auth::user()->email==$request->email) {
+        if (Auth::user()->email == $request->email) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -348,11 +352,97 @@ class EnquiryFrontController extends Controller
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
     }
-    public  function testMail(Request $request)
+
+    public function loanEnquiry(Request $request)
+    {
+        $searchFilter = $request->all();
+        //dd($searchFilter);
+        $page = Page::where('pages.slug', LOAN_ENQUIRY)
+            ->where('delete_status', 0)->first();
+        if (!$page) {
+            return redirect()->action('Blog\BlogController@index')->with('error', OPPS_ALERT);
+        }
+        $systemSetting = \Helper::getSystemSetting();
+        if (!$systemSetting) {
+            return back()->with('error', OPPS_ALERT);
+        }
+
+        $banners = \Helper::getBanners(LOAN_ENQUIRY);
+        return view("frontend.CMS.loan-enquiry", compact("productIds", "page", "banners", 'systemSetting', 'searchFilter'));
+
+    }
+
+    public function postLoanEnquiry(Request $request)
+    {
+
+        //check validation
+        $fields = [
+            'full_name' => 'required',
+            'email' => 'required',
+            'telephone' => 'required',
+            'rate_type_search' => 'required',
+            'property_type_search' => 'required',
+            'loan_amount' => 'required|max:255',
+            'loan_type' => 'required|max:255',
+            'country_code' => 'required|max:255',
+
+        ];
+
+        $validator = Validator::make($request->all(), $fields);
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
+        $data = $request->all();
+
+        $loanEnquiry = new LoanEnquiry();
+        $productIds = [];
+        if (!empty($request->product_ids)) {
+            $productIds = explode(",", $request->product_ids);
+        }
+        $productNames = [];
+        if (count($productIds)) {
+            $products = PromotionProducts::whereIn('id',$productIds)->where('delete_status', 0)->where('status', 1)->get();
+            if ($products->count()) {
+                $productNames = $products->pluck('product_name')->all();
+            }
+        }
+        $data['product_names'] = $productNames;
+        $loanEnquiry->product_ids = serialize($productIds);
+        $loanEnquiry->rate_type = isset($request->rate_type_search) ? $request->rate_type_search : null;
+        $loanEnquiry->property_type = isset($request->property_type_search) ? $request->property_type_search : null;
+        $loanEnquiry->loan_amount = isset($request->loan_amount) ? $request->loan_amount : null;
+        $loanEnquiry->loan_type = isset($request->loan_type) ? $request->loan_type : null;
+
+        $loanEnquiry->full_name = $request->full_name;
+        $loanEnquiry->email = $request->email;
+        $loanEnquiry->country_code = $request->country_code;
+        $loanEnquiry->telephone = $request->telephone;
+        $loanEnquiry->save();
+        if(Auth::check()) {
+            if (Auth::user()->email == $request->email) {
+                $user = User::find(Auth::user()->id);
+
+                $user->country_code = $request->country_code;
+                $user->tel_phone = $request->telephone;
+
+                $user->save();
+            }
+        }
+
+        try {
+            Mail::to(ADMIN_EMAIL)->send(new LoanEnquiryMail($data));
+        } catch (Exception $exception) {
+            dd($exception);
+            return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+        }
+        return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+    }
+
+    public function testMail(Request $request)
     {
 
         try {
-            Mail::raw('Text', function ($message){
+            Mail::raw('Text', function ($message) {
                 $message->to('nicckk.verz@gmail.com');
             });
             dd("Hi");

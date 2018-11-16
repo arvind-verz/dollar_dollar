@@ -214,14 +214,14 @@
                     $productRanges = $product->product_range;
                     $ads = json_decode($product->ads_placement);
                     ?>
-                    <div class="ps-product @if($product->featured==1)featured-1 @endif"  id="p-{{ $product->id }}">
+                    <div class="ps-product @if($product->featured==1)featured-1 @endif"  id="p-{{ $product->product_id }}">
                         <div class="ps-product__header">
                             <img src="{{ asset($product->brand_logo) }}"
                                  alt="">
 
                             <div class="ps-product__promo left">
-                                <label class="ps-btn--checkbox">
-                                    <input type="checkbox" id="checkbox-1" name="short_list_ids[]" value="{{$product->id}}" class="checkbox"><span></span>Shortlist this
+                                <label class="ps-btn--checkbox ">
+                                    <input type="checkbox" id="" name="short_list_ids[]" value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist this
                                     Loan
                                 </label>
                             </div>
@@ -309,14 +309,14 @@
                     $productRanges = $product->product_range;
                     $ads = json_decode($product->ads_placement);
                     ?>
-                    <div class="ps-product " id="r-{{ $product->id }}">
+                    <div class="ps-product " id="r-{{ $product->product_id }}">
                         <div class="ps-product__header">
                             <img src="{{ asset($product->brand_logo) }}"
                                  alt="">
 
                             <div class="ps-product__promo left">
-                                <label class="ps-btn--checkbox">
-                                    <input type="checkbox" id="checkbox-1" name="short_list_ids[]" value="{{$product->id}}" class="checkbox"><span></span>Shortlist this
+                                <label class="ps-btn--checkbox ">
+                                    <input type="checkbox" id="" name="short_list_ids[]" value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist this
                                     Loan
                                 </label>
                             </div>
@@ -398,8 +398,17 @@
         @endif
         {{--contact us or what we offer section end--}}
         <div class="ps-loan-popup">
+            {!! Form::open(['url' => ['loan-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            <input type="hidden" name="rate_type_search" value=""/>
+            <input type="hidden" name="tenure_search" value=""/>
+            <input type="hidden" name="property_type_search" value=""/>
+            <input type="hidden" name="completion_search" value=""/>
+            <input type="hidden" name="product_ids" value=""/>
+            <input type="hidden" name="loan_amount" value=""/>
             <p>Speak with a mortgage specialist to know more about the loan you have shortlisted!</p>
-            <a href="{{url('loan-enquiry')}}">ENQUIRE NOW</a>
+            <button type="submit" class="ps-btn" id="loan-enquiry">ENQUIRE NOW</button>
+            {!! Form::close() !!}
+
         </div>
     </div>
 

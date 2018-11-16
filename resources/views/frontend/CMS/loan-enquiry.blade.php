@@ -44,71 +44,142 @@
     </div>
 
     {{--Page content start--}}
-        <div class="container">
-            @if(session('error'))
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-danger m-b-0">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                            {!! session('error') !!}
-                        </div>
+    <div class="container">
+        @if(session('error'))
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-danger m-b-0">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        {!! session('error') !!}
                     </div>
-                </div>
-            @endif
-        </div>
-        <!-- my code -->
-
-        <div class="ps-page--deposit ps-loan">
-            <div class="container">
-                <div class="ps-block--image">
-                    <div class="ps-block__content">
-                        <h3 class="ps-heading"><span> <i class="fa fa-area-chart"></i> Home </span> Loan</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br/><br/>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="">LEARN MORE<i class="fa fa-angle-right"></i></a></p>
-                    </div>
-                    <div class="ps-block__content right" ><img src="{{asset('/uploads/uploads/images/loan.jpg')}}" alt=""></div>
-                </div>
-                <div class="ps-loan-from">
-                    <label>FULL NAME<input class="full-name" type="text"></label>
-                    <label>EMAIL<input class="email" type="text"></label>
-                    <label class="ps-loan-mobile">MOBILE<span><input type="text" value="+65"><input type="text"></span></label>
-                    <label>Property Type<select><option>Property Type</option></select></label>
-                    <label>Loan Amnount<input type="text"></label>
-                    <label>Loan Type<select><option>Loan Type</option></select></label>
-                    <button>SUBMIT</button>
                 </div>
             </div>
+        @endif
+    </div>
+    <!-- my code -->
+
+    <div class="ps-page--deposit ps-loan">
+        <div class="container">
+            <?php
+            //$pageName = strtok($page->name, " ");;
+            $pageName = explode(' ', trim($page->name));
+            $pageHeading = $pageName[0];
+            // $a =  array_shift($arr);
+            unset($pageName[0]);
+            ?>
+            {{--Page content start--}}
+            @if($page->slug!=THANK_SLUG)
+                <h3 class="ps-heading mb-20">
+                    <span>@if(!empty($page->icon))<i
+                                class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                </h3>
+
+                {!!  $page->contents !!}
+            @else
+                {!!  $page->contents !!}
+            @endif
+            {!! Form::open(['url' => ['post-loan-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            <div class="ps-loan-from">
+                <input type="hidden" name="product_ids"
+                       value=" @if(isset($searchFilter['product_ids'])) {{$searchFilter['product_ids']}} @endif">
+                <label>FULL NAME
+                    <input class="full-name" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
+                                       value="@if (Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@else {{old('full_name')}} @endif"
+                                       name="full_name" type="text">
+
+                </label>
+                @if ($errors->has('full_name'))
+                    <span class="text-danger" id="">
+                                                    <strong>{{ $errors->first('full_name') }}</strong>
+                                                    </span>
+                @endif
+                <label>EMAIL<input class="email" name="email" type="text" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
+                                   value="@if (Auth::user()){{Auth::user()->email}}@else {{old('email')}} @endif"></label>
+                @if ($errors->has('email'))
+                    <span class="text-danger" id="other-value-error">
+                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                    </span>
+                @endif
+                <label class="ps-loan-mobile">MOBILE<span><input type="text" name="country_code" value="+65"><input name="telephone" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
+                                                                                 value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif"
+                                                                                 type="text"></span></label>
+                @if ($errors->has('telephone'))
+                    <span class="text-danger" id="">
+                                                    <strong>{{ $errors->first('telephone') }}</strong>
+                                                    </span>
+                @endif
+                <label>Rate Type <select class="form-control" name="rate_type_search" >
+                        <option value="{{BOTH_VALUE}}"
+                                @if(isset($searchFilter['rate_type_search']) && $searchFilter['rate_type_search']==BOTH_VALUE) selected @endif>{{BOTH_VALUE}}</option>
+                        <option value="{{FIX_RATE}}"
+                                @if(isset($searchFilter['rate_type_search']) && $searchFilter['rate_type_search']==FIX_RATE) selected @endif>{{FIX_RATE}}</option>
+                        <option value="{{FLOATING_RATE}}"
+                                @if(isset($searchFilter['rate_type_search']) && $searchFilter['rate_type_search']==FLOATING_RATE) selected @endif>{{FLOATING_RATE}}</option>
+                    </select></label>
+                @if ($errors->has('rate_type_search'))
+                    <span class="text-danger" id="">
+                                                    <strong>{{ $errors->first('rate_type_search') }}</strong>
+                                                    </span>
+                @endif
+                <label>Property Type
+                    <select class="form-control" name="property_type_search">
+                        <option value="{{ALL}}"
+                                @if(isset($searchFilter['property_type_search']) && $searchFilter['property_type_search']==ALL) selected @endif>{{ALL}}</option>
+                        <option value="{{HDB_PROPERTY}}"
+                                @if(isset($searchFilter['property_type_search']) && $searchFilter['property_type_search']==HDB_PROPERTY) selected @endif>{{HDB_PROPERTY}}</option>
+                        <option value="{{PRIVATE_PROPERTY}}"
+                                @if(isset($searchFilter['property_type_search']) && $searchFilter['property_type_search']==PRIVATE_PROPERTY) selected @endif>{{PRIVATE_PROPERTY}}</option>
+                    </select>
+                </label>
+                @if ($errors->has('property_type_search'))
+                    <span class="text-danger" id="">
+                                                    <strong>{{ $errors->first('property_type_search') }}</strong>
+                                                    </span>
+                @endif
+                <label>Loan Amount<input name="loan_amount" value="@if(isset($searchFilter['loan_amount'])) {{$searchFilter['loan_amount']}} @else old('loan_amount') @endif" type="text"></label>
+                @if ($errors->has('loan_amount'))
+                    <span class="text-danger" id="">
+                                                    <strong>{{ $errors->first('loan_amount') }}</strong>
+                                                    </span>
+                @endif
+                <label>Loan Type
+                    <select name="loan_type">
+                        <option>Loan Type</option>
+                        <option value="new">New</option>
+                        <option value="refinance">Refinance</option>
+                    </select>
+                </label>
+                @if ($errors->has('loan_type'))
+                    <span class="text-danger" id="">
+                                                    <strong>{{ $errors->first('loan_type') }}</strong>
+                                                    </span>
+                @endif
+                <button type="submit">SUBMIT</button>
+            </div>
+            {!! Form::close() !!}
         </div>
-        <!-- end my code -->
+    </div>
+
+    <!-- end my code -->
     {{--Page content end--}}
     {{--contact us or what we offer section start--}}
     @if(isset($page->contact_or_offer) && isset($systemSetting->{$page->contact_or_offer}))
         {!! $systemSetting->{$page->contact_or_offer} !!}
     @endif
     {{--contact us or what we offer section end--}}
-<script type="text/javascript">
-    $(document).ready(function() {
-        inputs_checked();
-        /*var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
-        inputs.prop("disabled", true);
-        $("input[name='components[]'], input[name='gender'], input[name='smoke'], input[name='time[]']").on("change", function() {
-            inputs_checked();
-        });*/
+    <script type="text/javascript">
 
-        function inputs_checked() {
-            $(" input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
-        } 
-    });
 
-    $(document).ready(function () {
-        //Date picker
-        $('#datepicker').datepicker({
-            autoclose: true,
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-100:+0",
-            dateFormat: "yy-mm-dd"
+        $(document).ready(function () {
+            //Date picker
+            $('#datepicker').datepicker({
+                autoclose: true,
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+0",
+                dateFormat: "yy-mm-dd"
+            });
         });
-    });
-</script>
+    </script>
 @endsection
