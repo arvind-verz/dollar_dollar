@@ -137,7 +137,7 @@
                                                     <strong>{{ $errors->first('property_type_search') }}</strong>
                                                     </span>
                 @endif
-                <label>Loan Amount<input name="loan_amount" value="@if(isset($searchFilter['loan_amount'])) {{$searchFilter['loan_amount']}} @else old('loan_amount') @endif" type="text"></label>
+                <label>Loan Amount<input name="loan_amount" value="@if(isset($searchFilter['loan_amount'])) {{$searchFilter['loan_amount']}} @else {{old('loan_amount')}} @endif" type="text"></label>
                 @if ($errors->has('loan_amount'))
                     <span class="text-danger" id="">
                                                     <strong>{{ $errors->first('loan_amount') }}</strong>
@@ -145,9 +145,9 @@
                 @endif
                 <label>Loan Type
                     <select name="loan_type">
-                        <option>Loan Type</option>
-                        <option value="new">New</option>
-                        <option value="refinance">Refinance</option>
+                        <option value="">Loan Type</option>
+                        <option value="New">New</option>
+                        <option value="Refinance">Refinance</option>
                     </select>
                 </label>
                 @if ($errors->has('loan_type'))

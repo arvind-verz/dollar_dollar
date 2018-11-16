@@ -8,7 +8,7 @@
         <tr>
             <td>Fullname</td>
             <td>:</td>
-            <td>{{$data['full_name']}}</td>
+            <td>{{ucfirst($data['full_name'])}}</td>
         </tr>
     @endif
     @if($data['email'])
@@ -53,7 +53,7 @@
         <tr>
             <td>Loan type</td>
             <td>:</td>
-            <td>{{$data['loan_type']}}</td>
+            <td>{{ucfirst($data['loan_type'])}}</td>
         </tr>
     @endif
 
