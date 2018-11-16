@@ -2,7 +2,7 @@
     @if(isset($product) && (in_array($product->formula_id,[LOAN_F1])))
         @if(count($product->product_range))
             <?php $ProductRanges = $product->product_range ?>
-            <div class="form-group">
+            {{--<div class="form-group">
                 <label for="title" class="col-sm-2 control-label">Formula Detail</label>
 
                 <div class="col-sm-4">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="col-sm-2" id="add-home-loan-range-f1-button">
                 </div>
-            </div>
+            </div>--}}
             <div class="form-group">
                 <label for="title" class="col-sm-2 control-label">Rate type</label>
 
@@ -80,8 +80,8 @@
                                 <label for="">Board rate type</label>
                                 <select class="form-control" name="floating_rate_type_f1" id="">
                                     <option value="">None</option>
-                                    <option value="{{FIX_RATE_TYPE}}" @if($ProductRanges[0]->floating_rate_type==COMPLETE) selected="selected" @endif>{{FIX_RATE_TYPE}}</option>
-                                    <option value="{{SIBOR_RATE_TYPE}}" @if($ProductRanges[0]->floating_rate_type==COMPLETE) selected="selected" @endif>{{SIBOR_RATE_TYPE}}</option>
+                                    <option value="{{FIX_RATE_TYPE}}" @if($ProductRanges[0]->floating_rate_type==FIX_RATE_TYPE) selected="selected" @endif>{{FIX_RATE_TYPE}}</option>
+                                    <option value="{{SIBOR_RATE_TYPE}}" @if($ProductRanges[0]->floating_rate_type==SIBOR_RATE_TYPE) selected="selected" @endif>{{SIBOR_RATE_TYPE}}</option>
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -163,7 +163,7 @@
     @else
 
 
-        <div class="form-group">
+        {{--<div class="form-group">
             <label for="title" class="col-sm-2 control-label">Formula Detail</label>
 
             <div class="col-sm-4">
@@ -192,7 +192,7 @@
             </div>
             <div class="col-sm-2" id="add-home-loan-range-f1-button">
             </div>
-        </div>
+        </div>--}}
         <div class="form-group">
             <label for="title" class="col-sm-2 control-label">Rate type</label>
 

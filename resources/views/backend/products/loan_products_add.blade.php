@@ -102,29 +102,22 @@
                                             <input type="hidden" id="hidden-formula" value="{{ old('formula') }}">
                                         </div>
                                     </div>
-                                    <div class="form-group" >
-                                        {{Form::label('minimum_placement_amount', 'Minimum Placement Amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+                                    {{--<div class="form-group" >
+                                        {{Form::label('monthly_installment', 'Monthly Installment',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('minimum_placement_amount', old('minimum_placement_amount'), ['id'=>'minimum-placement-amount','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                            {{Form::text('monthly_installment', old('monthly_installment'), ['id'=>'monthly-installment','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        {{Form::label('maximum_interest_rate', 'Maximum Interest Rate',['class'=>'col-sm-2 control-label'])}}
+                                    </div>--}}
+                                    {{--<div class="form-group">
+                                        {{Form::label('maximum_interest_rate', 'Interest Rate',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('maximum_interest_rate', old('maximum_interest_rate'), ['id'=>'maximum-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
-                                    </div>
+                                    </div>--}}
                                         <div class="form-group">
-                                            {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
-                                            <div class="col-sm-8">
-                                                {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => ''])}}
-                                            </div>
-                                            <div class="col-sm-2 " id="ongoing-1">
-                                                <button type="button" data-status="false" id="ongoing-status-1"
-                                                        class="btn btn-block btn-danger btn-social"
-                                                        onclick="changeOnGoingStatus1(this)"><i class="fa fa-times"></i>
-                                                    Ongoing
-                                                </button>
+                                            {{Form::label('lock_in', 'Lock In',['class'=>'col-sm-2 control-label'])}}
+                                            <div class="col-sm-10">
+                                                {{Form::text('lock_in', old('lock_in'), ['id'=>'lock-in','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                             </div>
                                         </div>
 

@@ -4133,7 +4133,7 @@ class PagesFrontController extends Controller
     }
 
     public
-    function search_loan(Request $request)
+    function searchLoan(Request $request)
     {
         return $this->loan($request->all());
     }
@@ -4191,15 +4191,12 @@ class PagesFrontController extends Controller
                     $defaultPropertyType = $defaultSearch->property_type;
                     $defaultCompletion = $defaultSearch->completion;
 
-
                 } else {
                     $defaultPlacement = 0;
                     $defaultRateType = BOTH_VALUE;
                     $defaultTenure = 35;
                     $defaultPropertyType = ALL;
                     $defaultCompletion = ALL;
-
-
                 }
                 if (!count($request)) {
                     $placement = 0;
@@ -4238,7 +4235,6 @@ class PagesFrontController extends Controller
                     $totalInterests = [];
                     $interestEarns = [];
                     $product->highlight = false;
-                    $product->tenure_highlight = false;
 
                     $firstProductRange = $productRanges[0];
                     if ($rateType != BOTH_VALUE && ($rateType != $firstProductRange->rate_type)) {
@@ -4250,19 +4246,45 @@ class PagesFrontController extends Controller
                     if ($propertyType != ALL && ($propertyType != $firstProductRange->property_type)) {
                         $status = false;
                     }
-                    if (($searchValue < $firstProductRange->min_range) || ($searchValue > $firstProductRange->max_range)) {
+                    /*if (($searchValue < $firstProductRange->min_range) || ($searchValue > $firstProductRange->max_range)) {
                         $status = false;
-                    }
-                    //dd($productRanges);
+                    }*/
+                    $productRangeCount = count($productRanges);
+                    $totalInterest = 0;
+                    $totalMonthlyInstallment = 0;
+                    $totalTenure = 0;
                     foreach ($productRanges as $k => $productRange) {
+                        $productRange->tenure_highlight = false;
                         $interest = $productRange->bonus_interest + $productRange->board_rate;
                         $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
                         $result = $mortage->calculate();
                         $productRange->monthly_payment = $result->monthlyPayment;
+                        if($tenure>($totalTenure))
+                        {
+                            $totalInterest += $interest;
+                            $totalTenure++;
+                            $totalMonthlyInstallment += $productRange->monthly_payment;
+                            $productRange->tenure_highlight = true;
+                        }
                     }
+                    $interest = $firstProductRange->there_after_interest + $firstProductRange->board_rate;
+                    $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                    $result = $mortage->calculate();
+                    $product->there_after_installment = $result->monthlyPayment;
+                    $product->placement = $searchValue;
+                    $product->tenure = $tenure;
+
+                    if ($tenure > $productRangeCount) {
+                        //$totalInterest += ($tenure - $productRangeCount) * $interest;
+                       // $totalMonthlyInstallment += ($tenure - $productRangeCount) * $result->monthlyPayment;
+                        $product->highlight = true;;
+
+                    }
+                    $product->avg_interest = $totalInterest / $totalTenure;
+                    $product->monthly_installment = $totalMonthlyInstallment / $totalTenure;
+                    $product->avg_tenure =$totalTenure;
                     $product->product_range = $productRanges;
                     if ($status == true) {
-                        $product->highlight = true;
                         $filterProducts[] = $product;
                     } else {
                         $remainingProducts[] = $product;
@@ -4277,40 +4299,40 @@ class PagesFrontController extends Controller
         $remainingProducts = collect($remainingProducts);
         if ($products->count()) {
             if ($sortBy == MINIMUM) {
-                if ($filter == PLACEMENT) {
-                    $products = $products->sortBy('minimum_placement_amount')->values();
+                if ($filter == INSTALLMENT) {
+                    $products = $products->sortBy('monthly_installment')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortBy('maximum_interest_rate')->values();
-                } elseif ($filter == CRITERIA) {
-                    $products = $products->sortBy('promotion_period')->values();
+                    $products = $products->sortBy('avg_interest')->values();
+                } elseif ($filter == TENURE) {
+                    $products = $products->sortBy('lock_in')->values();
                 }
             } else {
-                if ($filter == PLACEMENT) {
-                    $products = $products->sortByDesc('minimum_placement_amount')->values();
+                if ($filter == INSTALLMENT) {
+                    $products = $products->sortByDesc('monthly_installment')->values();
                 } elseif ($filter == INTEREST) {
-                    $products = $products->sortByDesc('maximum_interest_rate')->values();
-                } elseif ($filter == CRITERIA) {
-                    $products = $products->sortByDesc('promotion_period')->values();
+                    $products = $products->sortByDesc('avg_interest')->values();
+                } elseif ($filter == TENURE) {
+                    $products = $products->sortByDesc('lock_in')->values();
                 }
             }
             $products = $products->sortByDesc('featured')->values();
         }
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
-                if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortBy('minimum_placement_amount')->values();
+                if ($filter == INSTALLMENT) {
+                    $remainingProducts = $remainingProducts->sortBy('monthly_installment')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortBy('maximum_interest_rate')->values();
-                } elseif ($filter == CRITERIA) {
-                    $remainingProducts = $remainingProducts->sortBy('promotion_period')->values();
+                    $remainingProducts = $remainingProducts->sortBy('avg_interest')->values();
+                } elseif ($filter == TENURE) {
+                    $remainingProducts = $remainingProducts->sortBy('lock_in')->values();
                 }
             } else {
-                if ($filter == PLACEMENT) {
-                    $remainingProducts = $remainingProducts->sortByDesc('minimum_placement_amount')->values();
+                if ($filter == INSTALLMENT) {
+                    $remainingProducts = $remainingProducts->sortByDesc('monthly_installment')->values();
                 } elseif ($filter == INTEREST) {
-                    $remainingProducts = $remainingProducts->sortByDesc('maximum_interest_rate')->values();
-                } elseif ($filter == CRITERIA) {
-                    $remainingProducts = $remainingProducts->sortByDesc('promotion_period')->values();
+                    $remainingProducts = $remainingProducts->sortByDesc('avg_interest')->values();
+                } elseif ($filter == TENURE) {
+                    $remainingProducts = $remainingProducts->sortByDesc('lock_in')->values();
                 }
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();

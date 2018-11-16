@@ -67,7 +67,7 @@
             <div class="ps-block--deposit-filter mb-60">
                 <div class="ps-block__content">
                     <form id="search-form" class="ps-form--filter"
-                          action="{{ URL::route('aioa-deposit-mode.search') }}#logo-detail"
+                          action="{{ URL::route('loan.search') }}#logo-detail"
                           method="post">
                         <h4>Fill in your needs</h4>
 
@@ -101,7 +101,8 @@
                                     </label>
                                     <select class="form-control" name="tenure">
                                         @for($i=1;$i<=35;$i++)
-                                            <option value="{{$i}}" @if(isset($searchFilter['tenure']) && $searchFilter['tenure']==$i) selected @endif>{{$i}}</option>
+                                            <option value="{{$i}}"
+                                                    @if(isset($searchFilter['tenure']) && $searchFilter['tenure']==$i) selected @endif>{{$i}}</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -115,9 +116,12 @@
                                         @endif
                                     </label>
                                     <select class="form-control" name="property_type">
-                                        <option value="{{ALL}}" @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==ALL) selected @endif>{{ALL}}</option>
-                                        <option value="{{HDB_PROPERTY}}" @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==HDB_PROPERTY) selected @endif>{{HDB_PROPERTY}}</option>
-                                        <option value="{{PRIVATE_PROPERTY}}" @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==PRIVATE_PROPERTY) selected @endif>{{PRIVATE_PROPERTY}}</option>
+                                        <option value="{{ALL}}"
+                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==ALL) selected @endif>{{ALL}}</option>
+                                        <option value="{{HDB_PROPERTY}}"
+                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==HDB_PROPERTY) selected @endif>{{HDB_PROPERTY}}</option>
+                                        <option value="{{PRIVATE_PROPERTY}}"
+                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==PRIVATE_PROPERTY) selected @endif>{{PRIVATE_PROPERTY}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -125,9 +129,12 @@
                                 <div class="form-group__content">
                                     <label>Completion</label>
                                     <select class="form-control" name="completion">
-                                        <option value="{{ALL}}" @if(isset($searchFilter['completion']) && $searchFilter['completion']==ALL) selected @endif>{{ALL}}</option>
-                                        <option value="{{COMPLETE}}" @if(isset($searchFilter['completion']) && $searchFilter['completion']==COMPLETE) selected @endif>{{COMPLETE}}</option>
-                                        <option value="{{BUC}}" @if(isset($searchFilter['completion']) && $searchFilter['completion']==BUC) selected @endif>{{BUC}}</option>
+                                        <option value="{{ALL}}"
+                                                @if(isset($searchFilter['completion']) && $searchFilter['completion']==ALL) selected @endif>{{ALL}}</option>
+                                        <option value="{{COMPLETE}}"
+                                                @if(isset($searchFilter['completion']) && $searchFilter['completion']==COMPLETE) selected @endif>{{COMPLETE}}</option>
+                                        <option value="{{BUC}}"
+                                                @if(isset($searchFilter['completion']) && $searchFilter['completion']==BUC) selected @endif>{{BUC}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -147,18 +154,20 @@
                                                @if(isset($searchFilter['filter']) && $searchFilter['filter']=='Interest') checked @endif>{{INTEREST}}
                                     </button>
                                     <button type="button"
-                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']==PLACEMENT) active @elseif(empty($searchFilter)) active @endif">
-                                        <input type="radio" name="filter" value="{{PLACEMENT}}"
-                                               style="opacity: 0;position: absolute;"
-                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']==PLACEMENT) checked
-                                               @elseif(empty($searchFilter)) checked @endif>Loan amount
-                                    </button>
-                                    <button type="button"
                                             class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) active @endif">
                                         <input type="radio" name="filter" value="{{TENURE}}"
                                                style="opacity: 0;position: absolute;"
-                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) checked @endif>Lock in
+                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) checked @endif>Lock
+                                        in
                                     </button>
+                                    <button type="button"
+                                            class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']==INSTALLMENT) active @elseif(empty($searchFilter)) active @endif">
+                                        <input type="radio" name="filter" value="{{INSTALLMENT}}"
+                                               style="opacity: 0;position: absolute;"
+                                               @if(isset($searchFilter['filter']) && $searchFilter['filter']==INSTALLMENT) checked
+                                               @elseif(empty($searchFilter)) checked @endif>{{INSTALLMENT}}
+                                    </button>
+
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
@@ -197,89 +206,191 @@
                 </div>
             </div>
             @if(count($products))
-                @include('productsInnerSlider')
+                @include('loanProductsInnerSlider')
             @endif
-            <div class="ps-product featured-1">
-                <div class="ps-product__header">
-                    <img src="http://verz1.com/dollar_dollar/public/uploads/brands/logos/uob_1532959156.png" alt="">
+            @if(count($products))
+                @foreach($products as $product)
+                    <?php
+                    $productRanges = $product->product_range;
+                    $ads = json_decode($product->ads_placement);
+                    ?>
+                    <div class="ps-product @if($product->featured==1)featured-1 @endif"  id="p-{{ $product->id }}">
+                        <div class="ps-product__header">
+                            <img src="{{ asset($product->brand_logo) }}"
+                                 alt="">
 
-                    <div class="ps-product__promo left">
-                        <label class="ps-btn--checkbox">
-                            <input type="checkbox" id="checkbox-1" class="checkbox"><span></span>Shortlist this Loan
-                        </label>
-                    </div>
-                </div>
-                <div class="ps-loan__text1">BOC Fixed Deposit Rate (FHR) Housing Loan</div>
-                <div class="ps-loan-content ps-loan-content1">
-                    <table class="ps-table ps-table--product">
-                        <thead>
-                        <tr>
-                            <th>YEARS</th>
-                            <th>INTEREST RATE (PA)</th>
-                            <th>Monthly Installment</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="highlight">YEAR 1</td>
-                            <td>1.5% (1mth Sibor + 1.5%)</td>
-                            <td class="highlight">$700 / mth</td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">YEAR 2</td>
-                            <td>1.5% (1mth Sibor + 1.5%)</td>
-                            <td class="highlight">$700 / mth</td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">YEAR 3</td>
-                            <td>1.5% (1mth Sibor + 1.5%)</td>
-                            <td class="highlight">$700 / mth</td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">THEREAFTER</td>
-                            <td>2.3% (1mth Sibor + 2.3%)</td>
-                            <td class="highlight">$500 / mth</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="ps-loan-right">
-                        <h4>For 600k loan with 30 years Loan Tenure</h4>
-
-                        <p>Rate Type : <strong>Floating (Sibor)</strong></p>
-
-                        <p>Interest Rate : <strong>2.3% (3 Years)</strong></p>
-
-                        <p>Lock In : <strong>2 Years</strong></p>
-
-                        <p>Monthly Installments : <strong>$500 (3 Years Avg.)</strong></p>
-
-                        <p>Property Type : <strong>Private/HDB (Completed)</strong></p>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="ps-product__detail">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <h4 class="ps-product__heading">Keypoints</h4>
-                            <ul class="ps-list--arrow-circle">
-                                <li>Receive interest upfront</li>
-                                <li>Deposit into main account</li>
-                            </ul>
+                            <div class="ps-product__promo left">
+                                <label class="ps-btn--checkbox">
+                                    <input type="checkbox" id="checkbox-1" name="short_list_ids[]" value="{{$product->id}}" class="checkbox"><span></span>Shortlist this
+                                    Loan
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <div class="ps-product__actions"><a class="ps-btn ps-btn--outline" href="#">Main Page</a><a
-                                        class="ps-btn ps-btn--outline" href="#">T&amp;C</a></div>
+                        <div class="ps-loan__text1">{!! $product->bank_sub_title !!}</div>
+                        <div class="ps-loan-content ps-loan-content1">
+                            <table class="ps-table ps-table--product">
+                                <thead>
+                                <tr>
+                                    <th>YEARS</th>
+                                    <th>INTEREST RATE (PA)</th>
+                                    <th>Monthly Installment</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($productRanges as $key=> $productRange)
+                                    <tr>
+                                        <td class=" @if($productRange->tenure_highlight==true) highlight @endif">
+                                            YEAR {{$key+1}}</td>
+                                        <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
+                                            (1mth {{$productRange->floating_rate_type}}
+                                            + {{$productRange->bonus_interest}}%)
+                                        </td>
+                                        <td class=" @if($productRange->tenure_highlight==true) highlight @endif ">
+                                            ${{round($productRange->monthly_payment)}} / mth
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                <tr>
+
+                                    <td class=" @if($product->highlight==true) highlight @endif ">THEREAFTER</td>
+                                    <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}%
+                                        (1mth {{$productRanges[0]->floating_rate_type}}
+                                        + {{$productRanges[0]->there_after_interest}}%)
+                                    </td>
+                                    <td class=" @if($product->highlight==true) highlight @endif ">
+                                        ${{round($product->there_after_installment)}} / mth
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="ps-loan-right">
+                                <h4>For ${{ Helper::inThousand($product->placement) }} loan with {{$product->tenure}}
+                                    years Loan Tenure</h4>
+
+                                <p>Rate Type : <strong>{{$productRanges[0]->rate_type}}
+                                        ({{$productRanges[0]->floating_rate_type}})</strong></p>
+
+                                <p>Interest Rate : <strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
+                                        Years)</strong></p>
+
+                                <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
+
+                                <p>Monthly Installments :
+                                    <strong>${{ Helper::inThousand($product->monthly_installment) }}
+                                        ({{$product->avg_tenure}} Years Avg.)</strong></p>
+
+                                <p>Property Type : <strong>{{$productRanges[0]->property_type}}
+                                        ({{$productRanges[0]->completion_status}})</strong></p>
+                            </div>
                         </div>
+                        <div class="clearfix"></div>
+                        <div class="ps-product__detail">
+                            {!! $product->product_footer !!}
+                        </div>
+                        <div class="ps-product__footer"><a class="ps-product__more" href="#">More Details<i
+                                        class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
+                                                                            href="#">More data<i
+                                        class="fa fa-angle-down"></i></a></div>
+                    </div>
+                @endforeach
+            @else
+                <div class="ps-block--legend-table">
+                    <div class="ps-block__header">
+                    </div>
+                    <div class="ps-block__content text-center">
+                        <p>{{CRITERIA_ERROR}}</p>
                     </div>
                 </div>
-                <div class="ps-product__footer">
-                    <a class="ps-product__more" href="#">More Details <i class="fa fa-angle-down"></i></a>
-                    <!-- <a class="ps-product__info sp-only" href="#">More data<i class="fa fa-angle-down"></i></a> -->
-                </div>
-            </div>
+
+            @endif
+            @if(count($remainingProducts))
+                @foreach($remainingProducts as $product)
+                    <?php
+                    $productRanges = $product->product_range;
+                    $ads = json_decode($product->ads_placement);
+                    ?>
+                    <div class="ps-product " id="r-{{ $product->id }}">
+                        <div class="ps-product__header">
+                            <img src="{{ asset($product->brand_logo) }}"
+                                 alt="">
+
+                            <div class="ps-product__promo left">
+                                <label class="ps-btn--checkbox">
+                                    <input type="checkbox" id="checkbox-1" name="short_list_ids[]" value="{{$product->id}}" class="checkbox"><span></span>Shortlist this
+                                    Loan
+                                </label>
+                            </div>
+                        </div>
+                        <div class="ps-loan__text1">{!! $product->bank_sub_title !!}</div>
+                        <div class="ps-loan-content ps-loan-content1">
+                            <table class="ps-table ps-table--product">
+                                <thead>
+                                <tr>
+                                    <th>YEARS</th>
+                                    <th>INTEREST RATE (PA)</th>
+                                    <th>Monthly Installment</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($productRanges as $key=> $productRange)
+                                    <tr>
+                                        <td class=" ">
+                                            YEAR {{$key+1}}</td>
+                                        <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
+                                            (1mth {{$productRange->floating_rate_type}}
+                                            + {{$productRange->bonus_interest}}%)
+                                        </td>
+                                        <td class=" ">
+                                            ${{round($productRange->monthly_payment)}} / mth
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                <tr>
+
+                                    <td class="">THEREAFTER</td>
+                                    <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}%
+                                        (1mth {{$productRanges[0]->floating_rate_type}}
+                                        + {{$productRanges[0]->there_after_interest}}%)
+                                    </td>
+                                    <td class="">
+                                        ${{round($product->there_after_installment)}} / mth
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="ps-loan-right">
+                                <h4>For ${{ Helper::inThousand($product->placement) }} loan with {{$product->tenure}}
+                                    years Loan Tenure</h4>
+
+                                <p>Rate Type : <strong>{{$productRanges[0]->rate_type}}
+                                        ({{$productRanges[0]->floating_rate_type}})</strong></p>
+
+                                <p>Interest Rate : <strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
+                                        Years)</strong></p>
+
+                                <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
+
+                                <p>Monthly Installments :
+                                    <strong>${{ Helper::inThousand($product->monthly_installment) }}
+                                        ({{$product->avg_tenure}} Years Avg.)</strong></p>
+
+                                <p>Property Type : <strong>{{$productRanges[0]->property_type}}
+                                        ({{$productRanges[0]->completion_status}})</strong></p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="ps-product__detail">
+                            {!! $product->product_footer !!}
+                        </div>
+                        <div class="ps-product__footer"><a class="ps-product__more" href="#">More Details<i
+                                        class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
+                                                                            href="#">More data<i
+                                        class="fa fa-angle-down"></i></a></div>
+                    </div>
+                @endforeach
+            @endif
         </div>
+
         {{--Page content end--}}
         {{--contact us or what we offer section start--}}
         @if(isset($page->contact_or_offer) && isset($systemSetting->{$page->contact_or_offer}))
@@ -290,6 +401,7 @@
             <p>Speak with a mortgage specialist to know more about the loan you have shortlisted!</p>
             <a href="{{url('loan-enquiry')}}">ENQUIRE NOW</a>
         </div>
+    </div>
 
 
 @endsection

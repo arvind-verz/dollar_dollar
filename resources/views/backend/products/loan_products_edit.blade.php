@@ -125,53 +125,28 @@
                                             <input type="hidden" id="hidden-formula" value="{{ $product->formula_id }}">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        {{Form::label('minimum_placement_amount', 'Minimum Placement Amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+                                    {{--<div class="form-group">
+                                        {{Form::label('monthly_installment', 'Monthly Installment',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('minimum_placement_amount', $product->minimum_placement_amount, ['id'=>'minimum-placement-amount','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                            {{Form::text('monthly_installment', $product->monthly_installment, ['id'=>'monthly-installment','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        {{Form::label('maximum_interest_rate', 'Maximum Interest Rate',['class'=>'col-sm-2 control-label'])}}
+                                    </div>--}}
+                                    {{--<div class="form-group">
+                                        {{Form::label('maximum_interest_rate', 'Interest Rate',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('maximum_interest_rate',  $product->maximum_interest_rate, ['id'=>'maximum-interest-rate','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
-                                    </div>
+                                    </div>--}}
                                     <div class="form-group">
-
                                         <label for="promotion_period"
-                                               class="col-sm-2 control-label">@if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT)
-                                                Criteria @else Placement Period @endif</label>
+                                               class="col-sm-2 control-label">Lock In</label>
 
-                                        <div class="@if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT) col-sm-10 @else col-sm-8  @endif">
+                                        <div class="col-sm-10">
                                             <input type="text"
-                                                   class="form-control @if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT) only_numeric @endif"
-                                                   name="promotion_period" id="promotion-period"
-                                                   onchange="addCounter(this);"
-                                                   value="{{$product->promotion_period}}"
-                                                    {{--@if(($product->promotion_start==null) && ($product->promotion_end==null)) readonly="readonly" @endif--}}>
+                                                   class="form-control only_numeric "
+                                                   name="lock_in" id="lock-in"
+                                                   value="{{$product->lock_in}}"/>
                                         </div>
-                                        @if($product->promotion_type_id!=ALL_IN_ONE_ACCOUNT)
-                                            <div class="col-sm-2 " id="ongoing-1">
-
-                                                @if($product->promotion_period==ONGOING)
-                                                    <button type="button" data-status="true" id="ongoing-status-1"
-                                                            class="btn btn-block btn-success btn-social"
-                                                            onclick="changeOnGoingStatus1(this)"><i
-                                                                class="fa fa-check"></i>
-                                                        Ongoing
-                                                    </button>
-                                                @else
-                                                    <button type="button" data-status="false" id="ongoing-status-1"
-                                                            class="btn btn-block btn-danger btn-social"
-                                                            onclick="changeOnGoingStatus1(this)"><i
-                                                                class="fa fa-times"></i>
-                                                        Ongoing
-                                                    </button>
-                                                @endif
-                                            </div>
-                                        @endif
-
                                     </div>
 
 

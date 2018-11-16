@@ -80,7 +80,6 @@ class ProductsController extends Controller
     public function promotion_products_add_db(Request $request)
     {
 
-        //dd($request->all());
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
         $destinationPath = 'uploads/products'; // upload path
@@ -157,14 +156,21 @@ class ProductsController extends Controller
         $product->apply_link_status = $request->apply_link_status;
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
-        $product->promotion_period = $request->promotion_period;
         if (isset($request->until_end_date)) {
             $product->until_end_date = $request->until_end_date;
         } else {
             $product->until_end_date = null;
         }
-        $product->maximum_interest_rate = $request->maximum_interest_rate;
-        $product->minimum_placement_amount = $request->minimum_placement_amount;
+
+        if($request->product_type==LOAN)
+        {
+           // $product->monthly_installment = $request->monthly_installment;
+            $product->lock_in = $request->lock_in;
+        }else{
+            $product->maximum_interest_rate = $request->maximum_interest_rate;
+            $product->promotion_period = $request->promotion_period;
+            $product->minimum_placement_amount = $request->minimum_placement_amount;
+        }
         $ranges = null;
 
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
@@ -369,24 +375,21 @@ class ProductsController extends Controller
                 $ranges = json_encode($ranges);
             }
             if (in_array($product->formula_id, [LOAN_F1])) {
-
                 $bonusInterest = $request->bonus_interest_f1;
                 foreach ($request->tenure_f1 as $k => $v) {
                     $range = [];
                     $range['tenure'] = (int)$v;
                     $range['bonus_interest'] = (float)$bonusInterest[$k];
-                    $range['min_range'] = (int)$request->min_placement_f1;
-                    $range['max_range'] = (int)$request->max_placement_f1;
                     $range['rate_type'] = $request->rate_type_f1;
                     $range['property_type'] = $request->property_type_f1;
-                    $range['completion_status'] = (int)$request->completion_status_f1;
+                    $range['completion_status'] = $request->completion_status_f1;
                     $range['board_rate'] = (float)$request->board_rate_f1;
-                    $range['floating_rate_type'] = (float)$request->floating_rate_type_f1;
+                    $range['floating_rate_type'] = $request->floating_rate_type_f1;
                     $range['there_after_interest'] = (float)$request->there_after_interest;
                     $ranges[] = $range;
-
                 }
                 $ranges = json_encode($ranges);
+
             }
         }
         function intVal($x)
@@ -482,7 +485,6 @@ class ProductsController extends Controller
         $product = \Helper::getProduct($id);
         $ads = $product->ads_placement;
 
-
         if (!$product) {
             return redirect()->route('promotion-products', ['productTypeId' => $request->product_type])->with('error', OPPS_ALERT);
         }
@@ -563,14 +565,21 @@ class ProductsController extends Controller
         $product->apply_link_status = $request->apply_link_status;
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
-        $product->promotion_period = $request->promotion_period;
         if (isset($request->until_end_date)) {
             $product->until_end_date = $request->until_end_date;
         } else {
             $product->until_end_date = null;
         }
-        $product->maximum_interest_rate = $request->maximum_interest_rate;
-        $product->minimum_placement_amount = $request->minimum_placement_amount;
+
+        if($request->product_type==LOAN)
+        {
+            //$product->monthly_installment = $request->monthly_installment;
+            $product->lock_in = $request->lock_in;
+           }else{
+            $product->maximum_interest_rate = $request->maximum_interest_rate;
+            $product->promotion_period = $request->promotion_period;
+            $product->minimum_placement_amount = $request->minimum_placement_amount;
+        }
         $ranges = null;
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
             $product->currency = $request->currency;
@@ -775,13 +784,11 @@ class ProductsController extends Controller
                     $range = [];
                     $range['tenure'] = (int)$v;
                     $range['bonus_interest'] = (float)$bonusInterest[$k];
-                    $range['min_range'] = (int)$request->min_placement_f1;
-                    $range['max_range'] = (int)$request->max_placement_f1;
                     $range['rate_type'] = $request->rate_type_f1;
                     $range['property_type'] = $request->property_type_f1;
-                    $range['completion_status'] = (int)$request->completion_status_f1;
+                    $range['completion_status'] = $request->completion_status_f1;
                     $range['board_rate'] = (float)$request->board_rate_f1;
-                    $range['floating_rate_type'] = (float)$request->floating_rate_type_f1;
+                    $range['floating_rate_type'] = $request->floating_rate_type_f1;
                     $range['there_after_interest'] = (float)$request->there_after_interest;
                     $ranges[] = $range;
                 }

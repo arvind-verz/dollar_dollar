@@ -310,6 +310,8 @@ Route::post('/privilege-deposit-mode/search/', 'CMS\PagesFrontController@search_
 Route::post('/foreign-currency-deposit-mode/search/', 'CMS\PagesFrontController@search_foreign_currency_deposit')->name('foreign-currency-deposit-mode.search');
 Route::post('/aioa-deposit-mode/search/', 'CMS\PagesFrontController@search_aioa_deposit')->name('aioa-deposit-mode.search');
 Route::get('/aioa-deposit-mode/search/', 'CMS\PagesFrontController@aioDepositMode');
+Route::post('/loan/search/', 'CMS\PagesFrontController@searchLoan')->name('loan.search');
+Route::get('/loan/search/', 'CMS\PagesFrontController@loanMode');
 
 Route::post('/product-search', 'CMS\PagesFrontController@product_search_homepage')->name('product-search');
 Route::post('/deposit-type', 'HomeController@depositType')->name('deposit-type');
