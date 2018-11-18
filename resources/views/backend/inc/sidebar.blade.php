@@ -40,7 +40,8 @@
                             <li><a href="{{ route('health-insurance-enquiry.index') }}"><i class="fa fa-plus"></i> Health Insurance Enquiry</a></li>
                             <li><a href="{{ route('life-insurance-enquiry.index') }}"><i class="fa fa-heart"></i> Life Insurance Enquiry</a></li>
                             <li><a href="{{ route('investment-enquiry.index') }}"><i class="fas fa-money-bill-alt"></i> Investment Enquiry</a></li>
-                            </ul>
+                            <li><a href="{{ route('loan-enquiry.index') }}"><i class="fas fa-home"></i> Loan Enquiry</a></li>
+                        </ul>
                     </li>
                     @elseif($menu->label == PRODUCT_MODULE)
                     <li class="treeview ">

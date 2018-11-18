@@ -389,6 +389,10 @@ class EnquiryFrontController extends Controller
         ];
 
         $validator = Validator::make($request->all(), $fields);
+        if (telephone) {
+            $validator->getMessageBag()->add('data', 'Data' . ' ' . ALREADY_TAKEN_ALERT);
+            //return redirect()->action('Products\ProductsController@promotion_formula')->with($error);
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }

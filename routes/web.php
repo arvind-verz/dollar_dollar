@@ -215,6 +215,8 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/investment-enquiry/destroy/{id}', 'Enquiry\InvestmentEnquiryController@destroy')->name('investment-enquiry-destroy');
     Route::resource('/investment-enquiry', 'Enquiry\InvestmentEnquiryController');
 
+    Route::get('/loan-enquiry/destroy/{id}', 'Enquiry\LoanEnquiryController@destroy')->name('loan-enquiry-destroy');
+    Route::resource('/loan-enquiry', 'Enquiry\LoanEnquiryController');
 
     /*Blog module end*/
 
