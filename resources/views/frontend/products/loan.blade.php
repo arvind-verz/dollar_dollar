@@ -64,7 +64,7 @@
                     $string);
             ?>
             {!! $output !!}
-            <div class="ps-block--deposit-filter mb-60">
+            <div class="ps-block--deposit-filter mb-20">
                 <div class="ps-block__content">
                     <form id="search-form" class="ps-form--filter"
                           action="{{ URL::route('loan.search') }}#logo-detail"
@@ -280,6 +280,9 @@
 
                                 <p>Property Type : <strong>{{$productRanges[0]->property_type}}
                                         ({{$productRanges[0]->completion_status}})</strong></p>
+                                <p>Monthly Installments :
+                                    <strong>${{ Helper::inThousand($product->monthly_installment) }}
+
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -374,6 +377,8 @@
 
                                 <p>Property Type : <strong>{{$productRanges[0]->property_type}}
                                         ({{$productRanges[0]->completion_status}})</strong></p>
+                                <p>Monthly Installments :
+                                    <strong>${{ Helper::inThousand($product->monthly_installment) }}
                             </div>
                         </div>
                         <div class="clearfix"></div>

@@ -18,9 +18,9 @@
 }
 
 .ps-loan .product-row-01 {
-    padding: 10px 10px 30px;
+    /*padding: 10px 10px 30px;*/
     background: #fff;
-    margin-bottom: 65px;
+    margin-bottom: 20px;
 }
 
 .ps-btn--checkbox {
@@ -165,7 +165,7 @@
 }
 
 .ps-loan .ps-product {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
 
 .ps-loan-popup {
