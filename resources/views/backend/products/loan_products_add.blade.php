@@ -102,12 +102,12 @@
                                             <input type="hidden" id="hidden-formula" value="{{ old('formula') }}">
                                         </div>
                                     </div>
-                                    {{--<div class="form-group" >
-                                        {{Form::label('monthly_installment', 'Monthly Installment',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+                                    <div class="form-group" >
+                                        {{Form::label('minimum_loan_amount', 'Minimum loan amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('monthly_installment', old('monthly_installment'), ['id'=>'monthly-installment','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                            {{Form::text('minimum_loan_amount', old('minimum_loan_amount'), ['id'=>'minimum-loan-amount','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
-                                    </div>--}}
+                                    </div>
                                     {{--<div class="form-group">
                                         {{Form::label('maximum_interest_rate', 'Interest Rate',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">

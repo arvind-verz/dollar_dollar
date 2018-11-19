@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\LoanEnquiry;
+use App\PromotionProducts;
 
 class LoanEnquiryController extends Controller
 {
@@ -25,7 +26,27 @@ class LoanEnquiryController extends Controller
 
         $loanEnquiries = LoanEnquiry::where('delete_status', 0)
             ->get();
-        //dd($products);
+        if($loanEnquiries->count())
+        {
+            foreach($loanEnquiries as &$loanEnquiry)
+            {
+                $productIds = [];
+
+                if (!empty($loanEnquiry->product_ids)) {
+                    $productIds = unserialize($loanEnquiry->product_ids);
+                }
+                $productNames = [];
+                if (count($productIds)) {
+                    $products = PromotionProducts::whereIn('id',$productIds)->where('delete_status', 0)->where('status', 1)->get();
+                    if ($products->count()) {
+                        $productNames = $products->pluck('product_name')->all();
+                    }
+                }
+
+                $loanEnquiry->product_names = $productNames;
+            }
+
+        }
         return view("backend.enquiry.loan-enquiry", compact("loanEnquiries", "CheckLayoutPermission"));
     }
 
@@ -64,6 +85,20 @@ class LoanEnquiryController extends Controller
         }
 
         if ($enquiry) {
+            $productIds = [];
+
+            if (!empty($enquiry->product_ids)) {
+                $productIds = unserialize($enquiry->product_ids);
+            }
+            $productNames = [];
+            if (count($productIds)) {
+                $products = PromotionProducts::whereIn('id',$productIds)->where('delete_status', 0)->where('status', 1)->get();
+                if ($products->count()) {
+                    $productNames = $products->pluck('product_name')->all();
+                }
+            }
+
+            $enquiry->product_names = $productNames;
 
             return view("backend.enquiry.view-loan-enquiry", compact("enquiry"));
         } else {

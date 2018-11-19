@@ -49,6 +49,14 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>Products</th>
+                                        <td>
+                                            @if(count($enquiry->product_names))
+                                                {{implode(', ',$enquiry->product_names) }}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>Rate type</th>
                                         <td>
                                             {{ $enquiry->rate_type }}

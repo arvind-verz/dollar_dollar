@@ -39,6 +39,7 @@
                                                 <th>Full&nbsp;name&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Email&emsp;&emsp;&emsp;</th>
                                                 <th>Contact&nbsp;number&emsp;&emsp;&emsp;</th>
+                                                <th>Products&nbsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Rate type&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Property type&emsp;&emsp;</th>
                                                 <th>Loan amount&emsp;&emsp;</th>
@@ -50,6 +51,9 @@
                                             <tbody>
                                             @if($loanEnquiries->count())
                                                 @foreach($loanEnquiries as $loanEnquiry)
+                                                    <?php
+
+                                                    ?>
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $loanEnquiry->id }}">
@@ -62,6 +66,11 @@
                                                         </td>
                                                         <td>
                                                             {{ $loanEnquiry->country_code.' '.$loanEnquiry->telephone }}
+                                                        </td>
+                                                        <td>
+                                                            @if(count($loanEnquiry->product_names))
+                                                            {{implode(', ',$loanEnquiry->product_names) }}
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             {{ $loanEnquiry->rate_type }}

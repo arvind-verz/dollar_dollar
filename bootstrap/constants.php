@@ -280,6 +280,7 @@ define('INTEREST', "Interest");
 define('TENURE', "Tenure");
 define('CRITERIA', "Criteria");
 define('INSTALLMENT', "Installment");
+define('MINIMUM_LOAN_AMOUNT', "Minimum loan");
 
 //Row Heading for Saving Deposit Formula 5
 define('CUMMULATED_MONTHLY_SAVINGS_AMOUNT', "CUMMULATED MONTHLY SAVINGS AMOUNT");

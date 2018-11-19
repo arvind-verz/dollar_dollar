@@ -4300,7 +4300,7 @@ class PagesFrontController extends Controller
         if ($products->count()) {
             if ($sortBy == MINIMUM) {
                 if ($filter == INSTALLMENT) {
-                    $products = $products->sortBy('monthly_installment')->values();
+                    $products = $products->sortBy('minimum_loan_amount')->values();
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('avg_interest')->values();
                 } elseif ($filter == TENURE) {
@@ -4308,7 +4308,7 @@ class PagesFrontController extends Controller
                 }
             } else {
                 if ($filter == INSTALLMENT) {
-                    $products = $products->sortByDesc('monthly_installment')->values();
+                    $products = $products->sortByDesc('minimum_loan_amount')->values();
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortByDesc('avg_interest')->values();
                 } elseif ($filter == TENURE) {
@@ -4320,7 +4320,7 @@ class PagesFrontController extends Controller
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
                 if ($filter == INSTALLMENT) {
-                    $remainingProducts = $remainingProducts->sortBy('monthly_installment')->values();
+                    $remainingProducts = $remainingProducts->sortBy('minimum_loan_amount')->values();
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('avg_interest')->values();
                 } elseif ($filter == TENURE) {
@@ -4328,7 +4328,7 @@ class PagesFrontController extends Controller
                 }
             } else {
                 if ($filter == INSTALLMENT) {
-                    $remainingProducts = $remainingProducts->sortByDesc('monthly_installment')->values();
+                    $remainingProducts = $remainingProducts->sortByDesc('minimum_loan_amount')->values();
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortByDesc('avg_interest')->values();
                 } elseif ($filter == TENURE) {

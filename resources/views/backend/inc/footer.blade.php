@@ -867,7 +867,7 @@
                     var ongoingStatus = $.trim($('#ongoing-status-1').data('status'));
                     var productType = $.trim($('#product-type').val());
                     var currency = $.trim($('#currency').val());
-                    var monthlyInstallment = $.trim($('#monthly-installment').val());
+                    var minimumLoanAmount = $.trim($('#minimum-loan-amount').val());
                     var maxInterestRate = $.trim($('#maximum-interest-rate').val());
                     var lockIn = $.trim($('#lock-in').val());
                     var promotionPeriod = $.trim($('#promotion-period').val());
@@ -922,10 +922,10 @@
                             errors[i] = 'The lock in is required.';
                             i++;
                         }
-                        /*if (!monthlyInstallment) {
-                            errors[i] = 'The monthly installment is required.';
+                        if (!minimumLoanAmount) {
+                            errors[i] = 'The minumum loan amount is required.';
                             i++;
-                        }*/
+                        }
                     } else {
                         if (!minPlacementAmount && (jQuery.inArray(formula, AIOA) !== -1)) {
                             errors[i] = 'The maximum placement is required.';

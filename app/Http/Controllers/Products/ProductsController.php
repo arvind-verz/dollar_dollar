@@ -164,7 +164,7 @@ class ProductsController extends Controller
 
         if($request->product_type==LOAN)
         {
-           // $product->monthly_installment = $request->monthly_installment;
+            $product->minimum_loan_amount = $request->minimum_loan_amount;
             $product->lock_in = $request->lock_in;
         }else{
             $product->maximum_interest_rate = $request->maximum_interest_rate;
@@ -573,7 +573,7 @@ class ProductsController extends Controller
 
         if($request->product_type==LOAN)
         {
-            //$product->monthly_installment = $request->monthly_installment;
+            $product->minimum_loan_amount = $request->minimum_loan_amount;
             $product->lock_in = $request->lock_in;
            }else{
             $product->maximum_interest_rate = $request->maximum_interest_rate;

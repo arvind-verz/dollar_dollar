@@ -18,7 +18,7 @@
                                         Lock in: <span class="highlight-slider">{{$product->lock_in}}</span> YRS
                                     @endif
                                     @if($searchFilter['filter']==INSTALLMENT)
-                                        <span class="highlight-slider"> ${{ round($product->monthly_installment) }}</span>/MTHS
+                                        Min: <span class="highlight-slider"> SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</span>
                                     @endif
                                 </strong>
                             </h4>
@@ -31,7 +31,7 @@
                                 <span class="slider-font">Lock in:</span> {{ $product->lock_in }} YRS
                             </p>
                             <p class="@if($searchFilter['filter']==INSTALLMENT) highlight highlight-bg @endif">
-                                <span class="slider-font">${{ round($product->monthly_installment) }}</span>/MTHS
+                                <span class="slider-font"> Min: </span> SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}
                             </p>
                         </div>
                         <a class="ps-btn" href="#p-{{$product->id}}">More info</a>
@@ -78,12 +78,11 @@
                                         Lock in: <span class="highlight-slider">{{$product->lock_in}}</span> YRS
                                     @endif
                                     @if($searchFilter['filter']==INSTALLMENT)
-                                        <span class="highlight-slider"> ${{ round($product->monthly_installment) }}</span>/MTHS
+                                        Min: <span class="highlight-slider"> SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</span>
                                     @endif
                                 </strong>
                             </h4>
                         @endif
-
                         <div class="ps-block__info">
                             <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
                                 <span class="slider-font">
@@ -92,7 +91,7 @@
                                 <span class="slider-font">Lock in:</span> {{ $product->lock_in }} YRS
                             </p>
                             <p class="@if($searchFilter['filter']==INSTALLMENT) highlight highlight-bg @endif">
-                                <span class="slider-font">${{ round($product->monthly_installment) }}</span>/MTHS
+                                <span class="slider-font"> Min: </span> SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}
                             </p>
                         </div>
                         <a class="ps-btn" href="#p-{{$product->id}}">More info</a>

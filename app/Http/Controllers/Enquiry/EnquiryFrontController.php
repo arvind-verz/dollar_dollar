@@ -378,8 +378,7 @@ class EnquiryFrontController extends Controller
         //check validation
         $fields = [
             'full_name' => 'required',
-            'email' => 'required',
-            'telephone' => 'required',
+            'email' => 'required|email',
             'rate_type_search' => 'required',
             'property_type_search' => 'required',
             'loan_amount' => 'required|max:255',
@@ -389,9 +388,8 @@ class EnquiryFrontController extends Controller
         ];
 
         $validator = Validator::make($request->all(), $fields);
-        if (telephone) {
-            $validator->getMessageBag()->add('data', 'Data' . ' ' . ALREADY_TAKEN_ALERT);
-            //return redirect()->action('Products\ProductsController@promotion_formula')->with($error);
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'The mobile number is required');
         }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());

@@ -165,7 +165,7 @@
                                         <input type="radio" name="filter" value="{{INSTALLMENT}}"
                                                style="opacity: 0;position: absolute;"
                                                @if(isset($searchFilter['filter']) && $searchFilter['filter']==INSTALLMENT) checked
-                                               @elseif(empty($searchFilter)) checked @endif>{{INSTALLMENT}}
+                                               @elseif(empty($searchFilter)) checked @endif>{{MINIMUM_LOAN_AMOUNT}}
                                     </button>
 
                                 </div>
@@ -275,9 +275,8 @@
 
                                 <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
 
-                                <p>Monthly Installments :
-                                    <strong>${{ Helper::inThousand($product->monthly_installment) }}
-                                        ({{$product->avg_tenure}} Years Avg.)</strong></p>
+                                <p>Minimum loan amount :
+                                    <strong>SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</strong></p>
 
                                 <p>Property Type : <strong>{{$productRanges[0]->property_type}}
                                         ({{$productRanges[0]->completion_status}})</strong></p>
@@ -370,9 +369,8 @@
 
                                 <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
 
-                                <p>Monthly Installments :
-                                    <strong>${{ Helper::inThousand($product->monthly_installment) }}
-                                        ({{$product->avg_tenure}} Years Avg.)</strong></p>
+                                <p>Minimum loan amount :
+                                    <strong>SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</strong></p>
 
                                 <p>Property Type : <strong>{{$productRanges[0]->property_type}}
                                         ({{$productRanges[0]->completion_status}})</strong></p>
