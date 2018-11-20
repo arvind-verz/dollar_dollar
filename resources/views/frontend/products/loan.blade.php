@@ -208,84 +208,151 @@
             @if(count($products))
                 @include('loanProductsInnerSlider')
             @endif
+            <?php
+            $adspopup = json_decode($page->ads_placement);
+            $j = 1;
+            ?>
             @if(count($products))
                 @foreach($products as $product)
                     <?php
                     $productRanges = $product->product_range;
                     $ads = json_decode($product->ads_placement);
                     ?>
-                    <div class="ps-product @if($product->featured==1)featured-1 @endif"  id="p-{{ $product->product_id }}">
+                    @if($page->slug==LOAN_MODE && isset($ads[3]->ad_horizontal_image_popup_top))
+
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : 'javascript:void(0)' }}"
+                               target="_blank"><img
+                                        src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
+                                        alt=""></a>
+                        </div>
+                    @endif
+                    <div class="ps-product @if($product->featured==1)featured-1 @endif"
+                         id="p-{{ $product->product_id }}">
                         <div class="ps-product__header">
                             <img src="{{ asset($product->brand_logo) }}"
                                  alt="">
 
                             <div class="ps-product__promo left">
                                 <label class="ps-btn--checkbox ">
-                                    <input type="checkbox" id="" name="short_list_ids[]" value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist this
+                                    <input type="checkbox" id="" name="short_list_ids[]"
+                                           value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist
+                                    this
                                     Loan
                                 </label>
                             </div>
                         </div>
                         <div class="ps-loan__text1">{!! $product->bank_sub_title !!}</div>
                         <div class="ps-loan-content ps-loan-content1">
-                            <table class="ps-table ps-table--product">
-                                <thead>
-                                <tr>
-                                    <th>YEARS</th>
-                                    <th>INTEREST RATE (PA)</th>
-                                    <th>Monthly Installment</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($productRanges as $key=> $productRange)
+                            @if(!empty($product->ads_placement))
+                                @php
+                                $ads = json_decode($product->ads_placement);
+                                if(!empty($ads[0]->ad_image_horizontal)) {
+                                @endphp
+                                <div class="ps-product__poster"><a
+                                            href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                            target="_blank"><img
+                                                src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                                alt=""></a></div>
+                                @php } @endphp
+                            @endif
+                            @if($product->formula_id==LOAN_F1)
+                                <table class="ps-table ps-table--product">
+                                    <thead>
                                     <tr>
-                                        <td class=" @if($productRange->tenure_highlight==true) highlight @endif">
-                                            YEAR {{$key+1}}</td>
-                                        <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
-                                            (1mth {{$productRange->floating_rate_type}}
-                                            + {{$productRange->bonus_interest}}%)
+                                        <th>YEARS</th>
+                                        <th>INTEREST RATE (PA)</th>
+                                        <th>Monthly Installment</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($productRanges as $key=> $productRange)
+                                        <tr>
+                                            <td class=" @if($productRange->tenure_highlight==true) highlight @endif">
+                                                YEAR {{$key+1}}</td>
+                                            <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
+                                                (1mth {{$productRange->floating_rate_type}}
+                                                + {{$productRange->bonus_interest}}%)
+                                            </td>
+                                            <td class=" @if($productRange->tenure_highlight==true) highlight @endif ">
+                                                ${{round($productRange->monthly_payment)}} / mth
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    <tr>
+
+                                        <td class=" @if($product->highlight==true) highlight @endif ">THEREAFTER</td>
+                                        <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}
+                                            %
+                                            (1mth {{$productRanges[0]->floating_rate_type}}
+                                            + {{$productRanges[0]->there_after_interest}}%)
                                         </td>
-                                        <td class=" @if($productRange->tenure_highlight==true) highlight @endif ">
-                                            ${{round($productRange->monthly_payment)}} / mth
+                                        <td class=" @if($product->highlight==true) highlight @endif ">
+                                            ${{round($product->there_after_installment)}} / mth
                                         </td>
                                     </tr>
-                                @endforeach
-                                <tr>
+                                    </tbody>
+                                </table>
+                                @if(isset($ads[1]))
+                                    <?php
+                                    if(!empty($ads[1]->ad_image_vertical)) {
+                                    ?>
+                                    <div class="ps-product__poster">
+                                        <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
+                                           target="_blank"><img
+                                                    src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
+                                                    alt=""></a>
+                                    </div>
+                                    <?php } ?>
+                                @endif
+                                <div class="ps-loan-right">
+                                    <h4>For ${{ Helper::inThousand($product->placement) }} loan
+                                        with {{$product->tenure}}
+                                        years Loan Tenure</h4>
 
-                                    <td class=" @if($product->highlight==true) highlight @endif ">THEREAFTER</td>
-                                    <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}%
-                                        (1mth {{$productRanges[0]->floating_rate_type}}
-                                        + {{$productRanges[0]->there_after_interest}}%)
-                                    </td>
-                                    <td class=" @if($product->highlight==true) highlight @endif ">
-                                        ${{round($product->there_after_installment)}} / mth
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="ps-loan-right">
-                                <h4>For ${{ Helper::inThousand($product->placement) }} loan with {{$product->tenure}}
-                                    years Loan Tenure</h4>
+                                    <p>Rate Type : <strong>{{$productRanges[0]->rate_type}}
+                                            ({{$productRanges[0]->floating_rate_type}})</strong></p>
 
-                                <p>Rate Type : <strong>{{$productRanges[0]->rate_type}}
-                                        ({{$productRanges[0]->floating_rate_type}})</strong></p>
+                                    <p>Interest Rate : <strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
+                                            Years)</strong></p>
 
-                                <p>Interest Rate : <strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
-                                        Years)</strong></p>
+                                    <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
 
-                                <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
+                                    <p>Minimum loan amount :
+                                        <strong>SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</strong>
+                                    </p>
 
-                                <p>Minimum loan amount :
-                                    <strong>SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</strong></p>
+                                    <p>Property Type : <strong>{{$productRanges[0]->property_type}}
+                                            ({{$productRanges[0]->completion_status}})</strong></p>
 
-                                <p>Property Type : <strong>{{$productRanges[0]->property_type}}
-                                        ({{$productRanges[0]->completion_status}})</strong></p>
-                                <p>Monthly Installments :
-                                    <strong>${{ Helper::inThousand($product->monthly_installment) }}
+                                    <p>Monthly Installments :
+                                        <strong>${{ Helper::inThousand($product->monthly_installment) }}
 
-                            </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="clearfix"></div>
+                        @if(!empty($product->ads_placement))
+                            @php
+                            $ads = json_decode($product->ads_placement);
+                            if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                            @endphp
+                            <div class="ps-poster-popup">
+                                <div class="close-popup">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </div>
+
+                                <a target="_blank"
+                                   href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                            src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                            alt="" target="_blank"></a>
+
+                            </div>
+                            @php } @endphp
+                        @endif
                         <div class="ps-product__detail">
                             {!! $product->product_footer !!}
                         </div>
@@ -294,6 +361,18 @@
                                                                             href="#">More data<i
                                         class="fa fa-angle-down"></i></a></div>
                     </div>
+                    @if(count($products)>=2)
+
+                        @if(!empty($ads_manage) && $ads_manage->page_type==LOAN_MODE && $j==2)
+                            @include('frontend.includes.product-ads')
+                        @endif
+                    @elseif(empty($remainingProducts->count()) && $j==$products->count())
+
+                        @if(!empty($ads_manage) && $ads_manage->page_type==LOAN_MODE)
+                            @include('frontend.includes.product-ads')
+                        @endif
+                    @endif
+                    @php $j++; @endphp
                 @endforeach
             @else
                 <div class="ps-block--legend-table">
@@ -311,6 +390,18 @@
                     $productRanges = $product->product_range;
                     $ads = json_decode($product->ads_placement);
                     ?>
+                    @if($page->slug==LOAN_MODE && isset($ads[3]->ad_horizontal_image_popup_top))
+
+                        <div class="ps-poster-popup">
+                            <div class="close-popup">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : 'javascript:void(0)' }}"
+                               target="_blank"><img
+                                        src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
+                                        alt=""></a>
+                        </div>
+                    @endif
                     <div class="ps-product " id="r-{{ $product->product_id }}">
                         <div class="ps-product__header">
                             <img src="{{ asset($product->brand_logo) }}"
@@ -318,70 +409,120 @@
 
                             <div class="ps-product__promo left">
                                 <label class="ps-btn--checkbox ">
-                                    <input type="checkbox" id="" name="short_list_ids[]" value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist this
+                                    <input type="checkbox" id="" name="short_list_ids[]"
+                                           value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist
+                                    this
                                     Loan
                                 </label>
                             </div>
                         </div>
                         <div class="ps-loan__text1">{!! $product->bank_sub_title !!}</div>
+                        @if(!empty($product->ads_placement))
+                            @php
+                            $ads = json_decode($product->ads_placement);
+                            if(!empty($ads[0]->ad_image_horizontal)) {
+                            @endphp
+                            <div class="ps-product__poster"><a
+                                        href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
+                                        target="_blank"><img
+                                            src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
+                                            alt=""></a></div>
+                            @php } @endphp
+                        @endif
                         <div class="ps-loan-content ps-loan-content1">
-                            <table class="ps-table ps-table--product">
-                                <thead>
-                                <tr>
-                                    <th>YEARS</th>
-                                    <th>INTEREST RATE (PA)</th>
-                                    <th>Monthly Installment</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($productRanges as $key=> $productRange)
+                            @if($product->formula_id==LOAN_F1)
+                                <table class="ps-table ps-table--product">
+                                    <thead>
                                     <tr>
-                                        <td class=" ">
-                                            YEAR {{$key+1}}</td>
-                                        <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
-                                            (1mth {{$productRange->floating_rate_type}}
-                                            + {{$productRange->bonus_interest}}%)
+                                        <th>YEARS</th>
+                                        <th>INTEREST RATE (PA)</th>
+                                        <th>Monthly Installment</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($productRanges as $key=> $productRange)
+                                        <tr>
+                                            <td class=" ">
+                                                YEAR {{$key+1}}</td>
+                                            <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
+                                                (1mth {{$productRange->floating_rate_type}}
+                                                + {{$productRange->bonus_interest}}%)
+                                            </td>
+                                            <td class=" ">
+                                                ${{round($productRange->monthly_payment)}} / mth
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    <tr>
+
+                                        <td class="">THEREAFTER</td>
+                                        <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}
+                                            %
+                                            (1mth {{$productRanges[0]->floating_rate_type}}
+                                            + {{$productRanges[0]->there_after_interest}}%)
                                         </td>
-                                        <td class=" ">
-                                            ${{round($productRange->monthly_payment)}} / mth
+                                        <td class="">
+                                            ${{round($product->there_after_installment)}} / mth
                                         </td>
                                     </tr>
-                                @endforeach
-                                <tr>
+                                    </tbody>
+                                </table>
+                                @if(isset($ads[1]))
+                                    <?php
+                                    if(!empty($ads[1]->ad_image_vertical)) {
+                                    ?>
+                                    <div class="ps-product__poster">
+                                        <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
+                                           target="_blank"><img
+                                                    src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
+                                                    alt=""></a>
+                                    </div>
+                                    <?php } ?>
+                                @endif
+                                <div class="ps-loan-right">
+                                    <h4>For ${{ Helper::inThousand($product->placement) }} loan
+                                        with {{$product->tenure}}
+                                        years Loan Tenure</h4>
 
-                                    <td class="">THEREAFTER</td>
-                                    <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}%
-                                        (1mth {{$productRanges[0]->floating_rate_type}}
-                                        + {{$productRanges[0]->there_after_interest}}%)
-                                    </td>
-                                    <td class="">
-                                        ${{round($product->there_after_installment)}} / mth
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div class="ps-loan-right">
-                                <h4>For ${{ Helper::inThousand($product->placement) }} loan with {{$product->tenure}}
-                                    years Loan Tenure</h4>
+                                    <p>Rate Type : <strong>{{$productRanges[0]->rate_type}}
+                                            ({{$productRanges[0]->floating_rate_type}})</strong></p>
 
-                                <p>Rate Type : <strong>{{$productRanges[0]->rate_type}}
-                                        ({{$productRanges[0]->floating_rate_type}})</strong></p>
+                                    <p>Interest Rate : <strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
+                                            Years)</strong></p>
 
-                                <p>Interest Rate : <strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
-                                        Years)</strong></p>
+                                    <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
 
-                                <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
+                                    <p>Minimum loan amount :
+                                        <strong>SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</strong>
+                                    </p>
 
-                                <p>Minimum loan amount :
-                                    <strong>SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</strong></p>
+                                    <p>Property Type : <strong>{{$productRanges[0]->property_type}}
+                                            ({{$productRanges[0]->completion_status}})</strong></p>
 
-                                <p>Property Type : <strong>{{$productRanges[0]->property_type}}
-                                        ({{$productRanges[0]->completion_status}})</strong></p>
-                                <p>Monthly Installments :
-                                    <strong>${{ Helper::inThousand($product->monthly_installment) }}
-                            </div>
+                                    <p>Monthly Installments :
+                                        <strong>${{ Helper::inThousand($product->monthly_installment) }}
+                                </div>
+                            @endif
                         </div>
                         <div class="clearfix"></div>
+                        @if(!empty($product->ads_placement))
+                            @php
+                            $ads = json_decode($product->ads_placement);
+                            if(!empty($ads[2]->ad_horizontal_image_popup)) {
+                            @endphp
+                            <div class="ps-poster-popup">
+                                <div class="close-popup">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </div>
+
+                                <a target="_blank"
+                                   href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                            src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
+                                            alt="" target="_blank"></a>
+
+                            </div>
+                            @php } @endphp
+                        @endif
                         <div class="ps-product__detail">
                             {!! $product->product_footer !!}
                         </div>
@@ -390,6 +531,18 @@
                                                                             href="#">More data<i
                                         class="fa fa-angle-down"></i></a></div>
                     </div>
+                    @if($products->count()<2 && $remainingProducts->count()>=2)
+
+                        @if(!empty($ads_manage) && $ads_manage->page_type==LOAN_MODE && $j==2)
+                            @include('frontend.includes.product-ads')
+                        @endif
+                    @elseif(empty($products->count()) && $j==$remainingProducts->count())
+
+                        @if(!empty($ads_manage) && $ads_manage->page_type==LOAN_MODE)
+                            @include('frontend.includes.product-ads')
+                        @endif
+                    @endif
+                    @php $j++; @endphp
                 @endforeach
             @endif
         </div>
@@ -408,6 +561,7 @@
             <input type="hidden" name="completion_search" value=""/>
             <input type="hidden" name="product_ids" value=""/>
             <input type="hidden" name="loan_amount" value=""/>
+
             <p>Speak with a mortgage specialist to know more about the loan you have shortlisted!</p>
             <button type="submit" class="ps-btn" id="loan-enquiry">ENQUIRE NOW</button>
             {!! Form::close() !!}

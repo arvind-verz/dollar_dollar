@@ -4141,12 +4141,15 @@ class PagesFrontController extends Controller
     public
     function loan($request)
     {
-        $ads_manage = AdsManagement::where('delete_status', 0)
+        $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
-            ->where('page_type', LOAN_MODE)
+            ->where('page_type', AIO_DEPOSIT_MODE)
             ->inRandomOrder()
             ->get();
+        if ($adsCollection->count()) {
+            $ads_manage = \Helper::manageAds($adsCollection);
+        }
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MINIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
