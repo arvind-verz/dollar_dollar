@@ -260,7 +260,7 @@
                                 @php } @endphp
                             @endif
                             @if($product->formula_id==LOAN_F1)
-                                <div class="ps-product__table">
+                                <div class="ps-product__table loan_table">
                                     <div class="ps-table-wrap">
                                         <table class="ps-table ps-table--product">
                                             <thead>
@@ -307,7 +307,7 @@
                                     ?>
                                     <div class="ps-product__poster">
                                         <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
-                                           target="_blank"><img
+                                           target="_blank"><img class="img-center"
                                                     src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                     alt=""></a>
                                     </div>
@@ -436,7 +436,7 @@
                         @endif
                         <div class="ps-loan-content ps-loan-content1">
                             @if($product->formula_id==LOAN_F1)
-                                <div class="ps-product__table">
+                                <div class="ps-product__table loan_table">
                                     <div class="ps-table-wrap">
                                         <table class="ps-table ps-table--product">
                                             <thead>
@@ -482,7 +482,7 @@
                                     ?>
                                     <div class="ps-product__poster">
                                         <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
-                                           target="_blank"><img
+                                           target="_blank"><img class="img-center"
                                                     src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                     alt=""></a>
                                     </div>
