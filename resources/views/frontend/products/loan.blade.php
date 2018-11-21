@@ -199,6 +199,13 @@
                                         </select>
                                         <span></span>
                                     </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 refresh-button ">
+                                        <div class="form-group ">
+                                            <a class="btn refresh form-control " style="width: 73px;"
+                                               href="{{url(AIO_DEPOSIT_MODE)}}/#logo-detail"> <i
+                                                        class="fa fa-refresh"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

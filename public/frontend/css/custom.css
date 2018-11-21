@@ -351,7 +351,9 @@
 .email {
     background: url(../img/img02.jpg) no-repeat 10px 15px;
 }
-
+.refresh-button{
+    display: none;
+}
 @media only screen and (max-width: 1279px) {
     .ps-loan .ps-form__values .form-group--label {
         width: 49%;
@@ -421,5 +423,14 @@
     .ps-loan .refresh {
         width: 70px;
         margin-left: 10px;
+    }
+    .refresh-button{
+        display: block;
+    }
+    .ps-loan .btn.refresh.form-control {
+        width: 17% !important;
+        position: absolute;
+        top: -90px;
+        right: 5px;
     }
 }
