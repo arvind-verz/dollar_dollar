@@ -260,42 +260,47 @@
                                 @php } @endphp
                             @endif
                             @if($product->formula_id==LOAN_F1)
-                                <table class="ps-table ps-table--product">
-                                    <thead>
-                                    <tr>
-                                        <th>YEARS</th>
-                                        <th>INTEREST RATE (PA)</th>
-                                        <th>Monthly Installment</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($productRanges as $key=> $productRange)
-                                        <tr>
-                                            <td class=" @if($productRange->tenure_highlight==true) highlight @endif">
-                                                YEAR {{$key+1}}</td>
-                                            <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
-                                                (1mth {{$productRange->floating_rate_type}}
-                                                + {{$productRange->bonus_interest}}%)
-                                            </td>
-                                            <td class=" @if($productRange->tenure_highlight==true) highlight @endif ">
-                                                ${{round($productRange->monthly_payment)}} / mth
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    <tr>
+                                <div class="ps-product__table">
+                                    <div class="ps-table-wrap">
+                                        <table class="ps-table ps-table--product">
+                                            <thead>
+                                            <tr>
+                                                <th>YEARS</th>
+                                                <th>INTEREST RATE (PA)</th>
+                                                <th>Monthly Installment</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($productRanges as $key=> $productRange)
+                                                <tr>
+                                                    <td class=" @if($productRange->tenure_highlight==true) highlight @endif">
+                                                        YEAR {{$key+1}}</td>
+                                                    <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
+                                                        (1mth {{$productRange->floating_rate_type}}
+                                                        + {{$productRange->bonus_interest}}%)
+                                                    </td>
+                                                    <td class=" @if($productRange->tenure_highlight==true) highlight @endif ">
+                                                        ${{round($productRange->monthly_payment)}} / mth
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            <tr>
 
-                                        <td class=" @if($product->highlight==true) highlight @endif ">THEREAFTER</td>
-                                        <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}
-                                            %
-                                            (1mth {{$productRanges[0]->floating_rate_type}}
-                                            + {{$productRanges[0]->there_after_interest}}%)
-                                        </td>
-                                        <td class=" @if($product->highlight==true) highlight @endif ">
-                                            ${{round($product->there_after_installment)}} / mth
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                                <td class=" @if($product->highlight==true) highlight @endif ">THEREAFTER
+                                                </td>
+                                                <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}
+                                                    %
+                                                    (1mth {{$productRanges[0]->floating_rate_type}}
+                                                    + {{$productRanges[0]->there_after_interest}}%)
+                                                </td>
+                                                <td class=" @if($product->highlight==true) highlight @endif ">
+                                                    ${{round($product->there_after_installment)}} / mth
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                                 @if(isset($ads[1]))
                                     <?php
                                     if(!empty($ads[1]->ad_image_vertical)) {
@@ -431,42 +436,46 @@
                         @endif
                         <div class="ps-loan-content ps-loan-content1">
                             @if($product->formula_id==LOAN_F1)
-                                <table class="ps-table ps-table--product">
-                                    <thead>
-                                    <tr>
-                                        <th>YEARS</th>
-                                        <th>INTEREST RATE (PA)</th>
-                                        <th>Monthly Installment</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($productRanges as $key=> $productRange)
-                                        <tr>
-                                            <td class=" ">
-                                                YEAR {{$key+1}}</td>
-                                            <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
-                                                (1mth {{$productRange->floating_rate_type}}
-                                                + {{$productRange->bonus_interest}}%)
-                                            </td>
-                                            <td class=" ">
-                                                ${{round($productRange->monthly_payment)}} / mth
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    <tr>
+                                <div class="ps-product__table">
+                                    <div class="ps-table-wrap">
+                                        <table class="ps-table ps-table--product">
+                                            <thead>
+                                            <tr>
+                                                <th>YEARS</th>
+                                                <th>INTEREST RATE (PA)</th>
+                                                <th>Monthly Installment</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($productRanges as $key=> $productRange)
+                                                <tr>
+                                                    <td class=" ">
+                                                        YEAR {{$key+1}}</td>
+                                                    <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
+                                                        (1mth {{$productRange->floating_rate_type}}
+                                                        + {{$productRange->bonus_interest}}%)
+                                                    </td>
+                                                    <td class=" ">
+                                                        ${{round($productRange->monthly_payment)}} / mth
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            <tr>
 
-                                        <td class="">THEREAFTER</td>
-                                        <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}
-                                            %
-                                            (1mth {{$productRanges[0]->floating_rate_type}}
-                                            + {{$productRanges[0]->there_after_interest}}%)
-                                        </td>
-                                        <td class="">
-                                            ${{round($product->there_after_installment)}} / mth
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                                <td class="">THEREAFTER</td>
+                                                <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}
+                                                    %
+                                                    (1mth {{$productRanges[0]->floating_rate_type}}
+                                                    + {{$productRanges[0]->there_after_interest}}%)
+                                                </td>
+                                                <td class="">
+                                                    ${{round($product->there_after_installment)}} / mth
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                                 @if(isset($ads[1]))
                                     <?php
                                     if(!empty($ads[1]->ad_image_vertical)) {

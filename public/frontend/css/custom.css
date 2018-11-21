@@ -95,7 +95,7 @@
 }
 
 .ps-loan-right {
-    float: left;
+    float: right;
     border: 2px solid #fd6c15;
     border-radius: 4px;
     padding-bottom: 15px;
@@ -362,6 +362,12 @@
 
     .ps-form--filter .ps-form__values .form-group--label3 {
         width: calc(50% - 35px);
+    }
+    .ps-loan-content1 .ps-loan-right {
+        width: 100%;
+    }
+    .ps-loan-content1 .ps-table {
+        margin-bottom: 20px;
     }
 }
 
