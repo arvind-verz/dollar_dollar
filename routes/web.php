@@ -277,6 +277,7 @@ Route::group(array('prefix' => 'admin'), function () {
 
 
     Route::post('/promotion-products/get-formula', 'Products\ProductsController@promotion_products_get_formula')->name('promotion-products-get-formula');
+    Route::post('/promotion-products/change-rate-type', 'Products\ProductsController@changeRateType')->name('change-rate-type');
 
     Route::put('/promotion-products/{id}/update', 'Products\ProductsController@promotion_products_update')->name('promotion-products-update');
     Route::get('/bank-products', 'Products\ProductsController@promotion_products')->name('bank-products');

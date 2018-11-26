@@ -458,9 +458,8 @@
         $(document).ready(function () {
             var promotion_type = $("#product-type").val();
             var formula = $("#hidden-formula").val();
-            //var product_id = $("#product-id").val();
-            if ((promotion_type.length != 0) && (formula.length != 0)) {
-                //alert(formula);
+            if ((promotion_type.length != 0)) {
+
                 $.ajax({
                     method: "POST",
                     url: "{{url('/admin/promotion-products/get-formula')}}",
@@ -481,6 +480,18 @@
 
                 $('#loanF1').removeClass('display-none');
             }
+            $(document).on('change', '#rate-type', function() {
+                var rate_type = $(this).val();
+                $.ajax({
+                    method: "POST",
+                    url: "{{url('/admin/promotion-products/change-rate-type')}}",
+                    data: {rate_type: rate_type},
+                    cache: false,
+                    success: function (data) {
+                        $("#rate-type-content").html(data);
+                    }
+                });
+            });
         });
         $("select[name='product_type']").on("change", function () {
             $('#loanF1').addClass('display-none');
@@ -510,20 +521,7 @@
                 $('#loanF1').removeClass('display-none');
             }
         });
-        $("select[name='product_type']").on("change", function () {
-            var promotion_type = $(this).val();
-            var formula = $("#formula").val();
-            //alert(formula);
-            $.ajax({
-                method: "POST",
-                url: "{{url('/admin/promotion-products/get-formula')}}",
-                data: {promotion_type: promotion_type, formula: formula},
-                cache: false,
-                success: function (data) {
-                    $("select[name='formula']").html(data);
-                }
-            });
-        });
+
         function removeImage(ref, id, ad_type) {
             $.ajax({
                 method: "POST",

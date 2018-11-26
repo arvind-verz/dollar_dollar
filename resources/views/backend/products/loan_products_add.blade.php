@@ -368,6 +368,19 @@
 
                 $('#loanF1').removeClass('display-none');
             }
+
+            $(document).on('change', '#rate-type', function() {
+                var rate_type = $(this).val();
+                $.ajax({
+                    method: "POST",
+                    url: "{{url('/admin/promotion-products/change-rate-type')}}",
+                    data: {rate_type: rate_type},
+                    cache: false,
+                    success: function (data) {
+                        $("#rate-type-content").html(data);
+                    }
+                });
+            });
         });
         $("select[name='product_type']").on("change", function () {
             $('#loanF1').addClass('display-none');

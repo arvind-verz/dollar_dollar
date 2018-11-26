@@ -913,11 +913,11 @@
                         i++;
                     }
 
-                    if ((jQuery.inArray(formula, LOAN) !== -1) && (productType == '<?php echo LOAN ;?>')) {
+                    if ((jQuery.inArray(formula, LOAN) !== -1) || (productType == '<?php echo LOAN ;?>')) {
                         /*if (!maxInterestRate) {
-                            errors[i] = 'The interest rate is required.';
-                            i++;
-                        }*/
+                         errors[i] = 'The interest rate is required.';
+                         i++;
+                         }*/
                         if (!lockIn) {
                             errors[i] = 'The lock in is required.';
                             i++;
@@ -1849,8 +1849,7 @@
                             i++;
                         }
                     }
-                    if ((jQuery.inArray(formula, LOAN) !== -1) || (productType == '<?php echo LOAN ;?>'))
-                        {
+                    if ((jQuery.inArray(formula, LOAN) !== -1) || (productType == '<?php echo LOAN ;?>')) {
                         var rateType = $('#loanF1').find('select[name="rate_type_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -1860,19 +1859,21 @@
                         var completionStatus = $('#loanF1').find('select[name="completion_status_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var floatingRateType = $('#loanF1').find('select[name="floating_rate_type_f1"]').map(function () {
+                        var thereAfterBonus = $('#loanF1').find('input[name="there_after_bonus_interest"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var boardRate = $('#loanF1').find('input[name="board_rate_f1"]').map(function () {
+                        var thereAfterOther = $('#loanF1').find('input[name="there_after_rate_interest_other"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var tenures = $('#loanF1').find('input[name^="tenure_f1"]').map(function () {
+                        var tenures = $('#loanF1').find('select[name^="tenure_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var bonusInterests = $('#loanF1').find('input[name^="bonus_interest_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var rangeError = false;
+                        var otherInterest = $('#loanF1').find('input[name^="rate_interest_other_f1"]').map(function () {
+                            return $.trim($(this).val());
+                        }).get();
                         if (rateType == '') {
                             errors[i] = 'The  rate type is required.';
                             i++;
@@ -1885,32 +1886,27 @@
                             errors[i] = 'The  completion status is required.';
                             i++;
                         }
-                        if (floatingRateType == '') {
-                            errors[i] = 'The  board rate type is required.';
-                            i++;
-                        }
-                        if (boardRate == '') {
-                            errors[i] = 'The  board rate is required.';
-                            i++;
-                        }
                         $.each(tenures, function (k, v) {
                             if (tenures[k] == '') {
-                                errors[i] = 'The tenure is required.';
+                                errors[i] = 'The year is required.';
                                 i++;
 
                                 return false;
                             }
 
                         });
-                        $.each(bonusInterests, function (k, v) {
-                            if (bonusInterests[k] == '') {
-                                errors[i] = 'The bonus interest is required.';
+                        $.each(tenures, function (k, v) {
+                            if (bonusInterests[k] == '' && otherInterest[k] == '') {
+                                errors[i] = 'Minimum one interest is required.';
                                 i++;
 
                                 return false;
                             }
-
                         });
+                        if (thereAfterBonus == '' && thereAfterOther == '') {
+                            errors[i] = 'Minimum one there after interest is required.';
+                            i++;
+                        }
                     }
                 }
                 if (errors.length) {

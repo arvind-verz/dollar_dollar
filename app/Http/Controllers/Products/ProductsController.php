@@ -375,21 +375,31 @@ class ProductsController extends Controller
                 $ranges = json_encode($ranges);
             }
             if (in_array($product->formula_id, [LOAN_F1])) {
-                $bonusInterest = $request->bonus_interest_f1;
+                $floatingRateTypes = $request->floating_rate_type_f1;
+                $bonusInterests = $request->bonus_interest_f1;
+                $rateNameOthers = $request->rate_name_other_f1;
+                $rateInterestOthers = $request->rate_interest_other_f1;
+
                 foreach ($request->tenure_f1 as $k => $v) {
                     $range = [];
                     $range['tenure'] = (int)$v;
-                    $range['bonus_interest'] = (float)$bonusInterest[$k];
+                    $range['floating_rate_type'] = $floatingRateTypes[$k];
+                    $range['bonus_interest'] = (float)$bonusInterests[$k];
+                    $range['rate_name_other'] = $rateNameOthers[$k];
+                    $range['rate_interest_other'] = (float)$rateInterestOthers[$k];
+
+
                     $range['rate_type'] = $request->rate_type_f1;
                     $range['property_type'] = $request->property_type_f1;
                     $range['completion_status'] = $request->completion_status_f1;
-                    $range['board_rate'] = (float)$request->board_rate_f1;
-                    $range['floating_rate_type'] = $request->floating_rate_type_f1;
-                    $range['there_after_interest'] = (float)$request->there_after_interest;
+
+                    $range['there_after_rate_type'] = $request->there_after_rate_type;
+                    $range['there_after_bonus_interest'] = (float)$request->there_after_bonus_interest;
+                    $range['there_after_rate_name_other'] = $request->there_after_rate_name_other;
+                    $range['there_after_rate_interest_other'] = (float)$request->there_after_rate_interest_other;
                     $ranges[] = $range;
                 }
                 $ranges = json_encode($ranges);
-
             }
         }
         function intVal($x)
@@ -779,21 +789,31 @@ class ProductsController extends Controller
                 $ranges = json_encode($ranges);
             }
             if (in_array($product->formula_id, [LOAN_F1])) {
-                $bonusInterest = $request->bonus_interest_f1;
+                $floatingRateTypes = $request->floating_rate_type_f1;
+                $bonusInterests = $request->bonus_interest_f1;
+                $rateNameOthers = $request->rate_name_other_f1;
+                $rateInterestOthers = $request->rate_interest_other_f1;
+
                 foreach ($request->tenure_f1 as $k => $v) {
                     $range = [];
                     $range['tenure'] = (int)$v;
-                    $range['bonus_interest'] = (float)$bonusInterest[$k];
+                    $range['floating_rate_type'] = $floatingRateTypes[$k];
+                    $range['bonus_interest'] = (float)$bonusInterests[$k];
+                    $range['rate_name_other'] = $rateNameOthers[$k];
+                    $range['rate_interest_other'] = (float)$rateInterestOthers[$k];
+
+
                     $range['rate_type'] = $request->rate_type_f1;
                     $range['property_type'] = $request->property_type_f1;
                     $range['completion_status'] = $request->completion_status_f1;
-                    $range['board_rate'] = (float)$request->board_rate_f1;
-                    $range['floating_rate_type'] = $request->floating_rate_type_f1;
-                    $range['there_after_interest'] = (float)$request->there_after_interest;
+
+                    $range['there_after_rate_type'] = $request->there_after_rate_type;
+                    $range['there_after_bonus_interest'] = (float)$request->there_after_bonus_interest;
+                    $range['there_after_rate_name_other'] = $request->there_after_rate_name_other;
+                    $range['there_after_rate_interest_other'] = (float)$request->there_after_rate_interest_other;
                     $ranges[] = $range;
                 }
                 $ranges = json_encode($ranges);
-
             }
         }
         function intVal($x)
@@ -1626,20 +1646,40 @@ class ProductsController extends Controller
 
                     <div class="col-sm-8 ">
 
-                        <div class="col-md-6 ">
-                            <label for="">Tenure</label>
+                        <div class="col-md-3 ">
+                            <label for="">Year</label>
                             <select class="form-control tenure-0" name="tenure_f1[<?php echo $request->range_id; ?>]">
                                 <?php for($i=1;$i<=6;$i++) { ?>
                                 <option name="tenure_f1[<?php echo $request->range_id; ?>]" ><?php echo $i; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-2">
+                            <label for="">Rate type</label>
+                            <select class="form-control" name="floating_rate_type_f1[<?php echo $request->range_id; ?>]" id="">
+                                <option value="<?php echo FIX_RATE_TYPE;?>" ><?php echo FIX_RATE_TYPE;?></option>
+                                <option value="<?php echo SIBOR_RATE_TYPE;?>" ><?php echo SIBOR_RATE_TYPE;?></option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
                             <label for="">Bonus Interest</label>
                             <input type="text" class="form-control only_numeric" id="" value=""
                                    name="bonus_interest_f1[<?php echo $request->range_id; ?>]"
                                    placeholder="">
                         </div>
+                        <div class="col-md-3">
+                            <label for="">Rate name (other)</label>
+                            <input type="text" class="form-control" id=""
+                                   name="rate_name_other_f1[<?php echo $request->range_id; ?>]" value=""
+                                   placeholder="">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="">Rate interest (other)</label>
+                            <input type="text" class="form-control only_numeric" id="" value=""
+                                   name="rate_interest_other_f1[<?php echo $request->range_id; ?>]"
+                                   placeholder="">
+                        </div>
+
 
                     </div>
                     <div class="col-sm-2" id="add-home-loan-placement-range-f1-button">
@@ -1909,6 +1949,43 @@ class ProductsController extends Controller
                     return "Error";
                 }
             }
+        }
+
+    }
+    public  function  changeRateType(Request $request)
+    {
+        if ($request->rate_type == FLOATING_RATE) {
+            ?>
+            <label for="title" class="col-sm-2 control-label">Rate type</label>
+
+            <div class="col-sm-4">
+                <select class="form-control" name="rate_type_f1" id="rate-type">
+                    <option value="<?php echo FIXED_RATE; ?>" ><?php echo FIXED_RATE; ?></option>
+                    <option value="<?php echo FLOATING_RATE; ?>" selected="selected"><?php echo FLOATING_RATE; ?></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id=""
+                       name="rate_type_name" value=""
+                       placeholder="Rate name">
+            </div>
+            <div class="col-sm-2">
+            </div>
+                <?php
+
+        } else { ?>
+            <label for="title" class="col-sm-2 control-label">Rate type</label>
+
+            <div class="col-sm-8">
+                <select class="form-control" name="rate_type_f1" id="rate-type">
+                    <option value="<?php echo FIXED_RATE; ?>" selected="selected"><?php echo FIXED_RATE; ?></option>
+                    <option value="<?php echo FLOATING_RATE; ?>"><?php echo FLOATING_RATE; ?></option>
+                </select>
+            </div>
+            <input type="hidden" class="form-control" id="" name="rate_type_name" value="" placeholder="">
+            <div class="col-sm-2">
+            </div>
+            <?php
         }
 
     }
