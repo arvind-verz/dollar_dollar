@@ -72,7 +72,8 @@ if (!$systemSetting) {
             border: 1px solid #000;
         }
     </style>
-
+    <script src="{{ asset('frontend/js/ls.unveilhooks.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/lazysizes.min.js') }}"></script>
 </head>
 <body style="@if(isset($page) && $page->slug==HOME_SLUG) background-color: #f3f8fb !important; @endif">
 {{--<div class="se-pre-con"></div>--}}

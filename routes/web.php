@@ -13,17 +13,16 @@
 /*FrontEnd Routes*/
 
 Route::get('/clear', function () {
-    //dd("Hello");
-    $exitCode1 = Artisan::call('cache:clear');
+    
     $exitCode2 = Artisan::call('config:clear');
-    $exitCode3 = Artisan::call('view:clear');
-
-    return '<h1>All cleared</h1>';
+    $exitCode1 = Artisan::call('route:clear');
+    //$exitCode3 = Artisan::call('view:clear');
+    return '<h1>CLEAR All </h1>';
 });
 
 /*Home Module*/
 Route::get('/home', 'HomeController@index')->name('index');
-Route::get('/welcome', 'HomeController@index')->name('index');
+Route::get('/welcome', 'HomeController@index')->name('welcome');
 Route::get('/', 'HomeController@index')->name('/');
 /*End Home Module*/
 
