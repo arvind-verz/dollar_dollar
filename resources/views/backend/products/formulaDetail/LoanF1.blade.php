@@ -12,7 +12,7 @@
                         <option value="{{FLOATING_RATE}}" @if($ProductRanges[0]->rate_type==FLOATING_RATE) selected="selected" @endif>{{FLOATING_RATE}}</option>
                     </select>
                 </div>
-                <input type="hidden" class="form-control" id="" name="rate_type_name" value="" placeholder="">
+                <input type="hidden" class="form-control" id="" name="rate_type_name_f1" value="" placeholder="">
                 <div class="col-sm-2">
                 </div>
             </div>
@@ -158,7 +158,7 @@
                     <option value="{{FLOATING_RATE}}">{{FLOATING_RATE}}</option>
                 </select>
             </div>
-            <input type="hidden" class="form-control" id="" name="rate_type_name" value="" placeholder="">
+            <input type="hidden" class="form-control" id="" name="rate_type_name_f1" value="" placeholder="">
             <div class="col-sm-2">
             </div>
         </div>

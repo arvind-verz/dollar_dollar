@@ -390,6 +390,7 @@ class ProductsController extends Controller
 
 
                     $range['rate_type'] = $request->rate_type_f1;
+                    $range['rate_type_name'] = $request->rate_type_name_f1;
                     $range['property_type'] = $request->property_type_f1;
                     $range['completion_status'] = $request->completion_status_f1;
 
@@ -804,6 +805,7 @@ class ProductsController extends Controller
 
 
                     $range['rate_type'] = $request->rate_type_f1;
+                    $range['rate_type_name'] = $request->rate_type_name_f1;
                     $range['property_type'] = $request->property_type_f1;
                     $range['completion_status'] = $request->completion_status_f1;
 
@@ -1966,7 +1968,7 @@ class ProductsController extends Controller
             </div>
             <div class="col-md-4">
                 <input type="text" class="form-control" id=""
-                       name="rate_type_name" value=""
+                       name="rate_type_name_f1" value=""
                        placeholder="Rate name">
             </div>
             <div class="col-sm-2">
@@ -1982,7 +1984,7 @@ class ProductsController extends Controller
                     <option value="<?php echo FLOATING_RATE; ?>"><?php echo FLOATING_RATE; ?></option>
                 </select>
             </div>
-            <input type="hidden" class="form-control" id="" name="rate_type_name" value="" placeholder="">
+            <input type="hidden" class="form-control" id="" name="rate_type_name_f1" value="" placeholder="">
             <div class="col-sm-2">
             </div>
             <?php

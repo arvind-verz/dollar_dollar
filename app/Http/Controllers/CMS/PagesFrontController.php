@@ -4247,6 +4247,7 @@ class PagesFrontController extends Controller
                         $status = false;
                     }
                     if ($propertyType != ALL && ($propertyType != $firstProductRange->property_type)) {
+
                         $status = false;
                     }
                     /*if (($searchValue < $firstProductRange->min_range) || ($searchValue > $firstProductRange->max_range)) {
@@ -4258,7 +4259,7 @@ class PagesFrontController extends Controller
                     $totalTenure = 0;
                     foreach ($productRanges as $k => $productRange) {
                         $productRange->tenure_highlight = false;
-                        $interest = $productRange->bonus_interest + $productRange->board_rate;
+                        $interest = $productRange->bonus_interest + $productRange->rate_interest_other;
                         $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
                         $result = $mortage->calculate();
                         $productRange->monthly_payment = $result->monthlyPayment;
@@ -4270,7 +4271,7 @@ class PagesFrontController extends Controller
                             $productRange->tenure_highlight = true;
                         }
                     }
-                    $interest = $firstProductRange->there_after_interest + $firstProductRange->board_rate;
+                    $interest = $firstProductRange->there_after_interest + $firstProductRange->there_after_rate_interest_other;
                     $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
                     $result = $mortage->calculate();
                     $product->there_after_installment = $result->monthlyPayment;

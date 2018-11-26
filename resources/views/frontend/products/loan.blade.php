@@ -116,12 +116,15 @@
                                         @endif
                                     </label>
                                     <select class="form-control" name="property_type">
-                                        <option value="{{ALL}}"
-                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==ALL) selected @endif>{{ALL}}</option>
-                                        <option value="{{HDB_PROPERTY}}"
-                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==HDB_PROPERTY) selected @endif>{{HDB_PROPERTY}}</option>
+                                        {{--<option value="{{ALL}}"
+                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==ALL) selected @endif>{{ALL}}</option>--}}
                                         <option value="{{PRIVATE_PROPERTY}}"
                                                 @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==PRIVATE_PROPERTY) selected @endif>{{PRIVATE_PROPERTY}}</option>
+                                        <option value="{{HDB_PROPERTY}}"
+                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==HDB_PROPERTY) selected @endif>{{HDB_PROPERTY}}</option>
+                                        <option value="{{COMMERCIAL_PROPERTY}}"
+                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==COMMERCIAL_PROPERTY) selected @endif>{{COMMERCIAL_INDIVIDUAL_PROPERTY}}</option>
+
                                     </select>
                                 </div>
                             </div>
@@ -129,8 +132,6 @@
                                 <div class="form-group__content">
                                     <label>Completion</label>
                                     <select class="form-control" name="completion">
-                                        <option value="{{ALL}}"
-                                                @if(isset($searchFilter['completion']) && $searchFilter['completion']==ALL) selected @endif>{{ALL}}</option>
                                         <option value="{{COMPLETE}}"
                                                 @if(isset($searchFilter['completion']) && $searchFilter['completion']==COMPLETE) selected @endif>{{COMPLETE}}</option>
                                         <option value="{{BUC}}"
@@ -138,7 +139,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group ">
+                            <div class="form-group">
                                 <a class="btn refresh form-control "
                                    href="{{url(LOAN_MODE)}}/#logo-detail"> <i
                                             class="fa fa-refresh"></i></a>

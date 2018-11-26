@@ -335,6 +335,7 @@ define('SIBOR_RATE_TYPE', "Sibor");
 //Property type
 define('HDB_PROPERTY', "HDB");
 define('PRIVATE_PROPERTY', "Private");
+define('COMMERCIAL_INDIVIDUAL_PROPERTY', "Commercial/Individual");
 define('HDB_PRIVATE_PROPERTY', "HDB/Private");
 define('COMMERCIAL_PROPERTY', "Commercial Individual");
 
