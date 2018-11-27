@@ -118,10 +118,10 @@
                                     <select class="form-control" name="property_type">
                                         {{--<option value="{{ALL}}"
                                                 @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==ALL) selected @endif>{{ALL}}</option>--}}
-                                        <option value="{{PRIVATE_PROPERTY}}"
-                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==PRIVATE_PROPERTY) selected @endif>{{PRIVATE_PROPERTY}}</option>
                                         <option value="{{HDB_PROPERTY}}"
                                                 @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==HDB_PROPERTY) selected @endif>{{HDB_PROPERTY}}</option>
+                                        <option value="{{PRIVATE_PROPERTY}}"
+                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==PRIVATE_PROPERTY) selected @endif>{{PRIVATE_PROPERTY}}</option>
                                         <option value="{{COMMERCIAL_PROPERTY}}"
                                                 @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==COMMERCIAL_PROPERTY) selected @endif>{{COMMERCIAL_INDIVIDUAL_PROPERTY}}</option>
 
@@ -185,20 +185,21 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 ps-loan-select">
-                                        <select class="form-control sort-by" name="sort_by">
-                                            <option value="" disabled="disabled" selected="selected">Sort by
-                                            </option>
-                                            <option value="1"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
-                                                Ascending
-                                            </option>
-                                            <option value="2"
-                                                    @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
-                                                Descending
-                                            </option>
-                                        </select>
-                                        <span></span>
+                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 ">
+                                        <div class="form-group  ">
+                                            <select class="form-control sort-by" name="sort_by">
+                                                <option value="" disabled="disabled" selected="selected">Sort by
+                                                </option>
+                                                <option value="1"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
+                                                    Ascending
+                                                </option>
+                                                <option value="2"
+                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
+                                                    Descending
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 refresh-button ">
                                         <div class="form-group ">

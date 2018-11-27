@@ -32,7 +32,7 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="loan-table"  class="table table-bordered">
+                                        <table id="loan-enquiry"  class="table table-bordered">
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>

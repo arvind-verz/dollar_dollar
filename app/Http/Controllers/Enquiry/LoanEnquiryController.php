@@ -90,6 +90,7 @@ class LoanEnquiryController extends Controller
             if (!empty($enquiry->product_ids)) {
                 $productIds = unserialize($enquiry->product_ids);
             }
+
             $productNames = [];
             if (count($productIds)) {
                 $products = PromotionProducts::whereIn('id',$productIds)->where('delete_status', 0)->where('status', 1)->get();

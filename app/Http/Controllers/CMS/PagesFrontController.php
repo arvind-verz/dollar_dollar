@@ -4234,7 +4234,7 @@ class PagesFrontController extends Controller
                 $status = true;
                 $productRanges = json_decode($product->product_range);
                 if ($product->promotion_formula_id == LOAN_F1) {
-
+                    $tenure= (int)$tenure;
                     $totalInterests = [];
                     $interestEarns = [];
                     $product->highlight = false;
@@ -4276,16 +4276,18 @@ class PagesFrontController extends Controller
                         $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
                         $result = $mortage->calculate();
                         $productRange->monthly_payment = $result->monthlyPayment;
-                        if ($tenure > ($totalTenure)) {
-                            if ($k <= 2) {
+                        if ($tenure > $totalTenure) {
+                            if ($j <= 2) {
                                 $totalInterest += $interest;
                                 $totalTenure++;
                                 $totalMonthlyInstallment += $productRange->monthly_payment;
                             }
                             $productRange->tenure_highlight = true;
                         }
-                        $j = $k;
+
+                        $j++;
                     }
+
                     while ($j <= 2)
                     {
                         $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
@@ -4295,7 +4297,7 @@ class PagesFrontController extends Controller
                         $totalInterest += $interest;
                         $totalTenure++;
                         $totalMonthlyInstallment += $monthlyThereAfterPayment;
-
+                        $j++;
                     }
                     $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
                     $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
@@ -4326,6 +4328,7 @@ class PagesFrontController extends Controller
             }
         }
         $products = collect($filterProducts);
+
         $remainingProducts = collect($remainingProducts);
         if ($products->count()) {
             if ($sortBy == MINIMUM) {

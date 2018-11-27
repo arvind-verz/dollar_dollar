@@ -784,6 +784,83 @@
                     }],
 
                 });
+        $('#loan-enquiry').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            },
+                            title: 'Loan enquiry',
+                            customize: function (win) {
+                                $(win.document.body)
+                                        .css('font-size', '10pt');
+
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                            }
+
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Loan ' + today;
+                            }
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Loan ' + today;
+                            }
+                        }
+                    ],
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[9, 'desc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [0, 10],
+                        "bSortable": false,
+
+                    }],
+
+                });
         $('#products').DataTable(
                 {
                     "pageLength": 100,

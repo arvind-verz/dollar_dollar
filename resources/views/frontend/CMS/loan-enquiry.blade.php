@@ -82,7 +82,7 @@
             {!! Form::open(['url' => ['post-loan-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
             <div class="ps-loan-from">
                 <input type="hidden" name="product_ids"
-                       value=" @if(isset($searchFilter['product_ids'])) {{$searchFilter['product_ids']}} @endif">
+                       value=" @if(isset($searchFilter['product_ids'])) {{$searchFilter['product_ids']}} @else {{old('product_ids')}} @endif ">
                 <label>FULL NAME
                     <input class="full-name" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
                                        value="@if (Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@else {{old('full_name')}} @endif"
