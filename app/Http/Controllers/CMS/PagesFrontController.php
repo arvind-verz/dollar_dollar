@@ -4169,7 +4169,7 @@ class PagesFrontController extends Controller
             ->where('promotion_types.id', '=', LOAN)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
-            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id','promotion_products.id as product_id')
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id', 'promotion_products.id as product_id')
             ->get();
 
         $details = \Helper::get_page_detail(LOAN_MODE);
@@ -4186,6 +4186,7 @@ class PagesFrontController extends Controller
         $remainingProducts = [];
         if ($promotion_products->count()) {
             foreach ($promotion_products as $key => $product) {
+
                 $defaultSearch = DefaultSearch::where('promotion_id', LOAN)->first();
                 if ($defaultSearch) {
                     $defaultPlacement = $defaultSearch->placement;
@@ -4198,8 +4199,8 @@ class PagesFrontController extends Controller
                     $defaultPlacement = 0;
                     $defaultRateType = BOTH_VALUE;
                     $defaultTenure = 35;
-                    $defaultPropertyType = ALL;
-                    $defaultCompletion = ALL;
+                    $defaultPropertyType = HDB_PROPERTY;
+                    $defaultCompletion = COMPLETE;
                 }
                 if (!count($request)) {
                     $placement = 0;
@@ -4232,7 +4233,6 @@ class PagesFrontController extends Controller
                 }
                 $status = true;
                 $productRanges = json_decode($product->product_range);
-                //dd($searchFilter);
                 if ($product->promotion_formula_id == LOAN_F1) {
 
                     $totalInterests = [];
@@ -4246,8 +4246,20 @@ class PagesFrontController extends Controller
                     if ($completion != ALL && ($completion != $firstProductRange->completion_status)) {
                         $status = false;
                     }
-                    if ($propertyType != ALL && ($propertyType != $firstProductRange->property_type)) {
 
+                    $hdbProperty = [HDB_PROPERTY, HDB_PRIVATE_PROPERTY];
+                    $privateProperty = [PRIVATE_PROPERTY, HDB_PRIVATE_PROPERTY];
+                    $commonProperty = [];
+                    if (in_array($propertyType, [HDB_PROPERTY, PRIVATE_PROPERTY])) {
+                        if ($propertyType == HDB_PROPERTY) {
+                            $commonProperty = $hdbProperty;
+                        } elseif ($propertyType == PRIVATE_PROPERTY) {
+                            $commonProperty = $privateProperty;
+                        }
+                        if (!in_array($firstProductRange->property_type, $commonProperty)) {
+                            $status = false;
+                        }
+                    } elseif ($propertyType != COMMERCIAL_PROPERTY) {
                         $status = false;
                     }
                     /*if (($searchValue < $firstProductRange->min_range) || ($searchValue > $firstProductRange->max_range)) {
@@ -4257,21 +4269,35 @@ class PagesFrontController extends Controller
                     $totalInterest = 0;
                     $totalMonthlyInstallment = 0;
                     $totalTenure = 0;
+                    $j = 0;
                     foreach ($productRanges as $k => $productRange) {
                         $productRange->tenure_highlight = false;
                         $interest = $productRange->bonus_interest + $productRange->rate_interest_other;
                         $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
                         $result = $mortage->calculate();
                         $productRange->monthly_payment = $result->monthlyPayment;
-                        if($tenure>($totalTenure))
-                        {
-                            $totalInterest += $interest;
-                            $totalTenure++;
-                            $totalMonthlyInstallment += $productRange->monthly_payment;
+                        if ($tenure > ($totalTenure)) {
+                            if ($k <= 2) {
+                                $totalInterest += $interest;
+                                $totalTenure++;
+                                $totalMonthlyInstallment += $productRange->monthly_payment;
+                            }
                             $productRange->tenure_highlight = true;
                         }
+                        $j = $k;
                     }
-                    $interest = $firstProductRange->there_after_interest + $firstProductRange->there_after_rate_interest_other;
+                    while ($j <= 2)
+                    {
+                        $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
+                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                        $result = $mortage->calculate();
+                        $monthlyThereAfterPayment = $result->monthlyPayment;
+                        $totalInterest += $interest;
+                        $totalTenure++;
+                        $totalMonthlyInstallment += $monthlyThereAfterPayment;
+
+                    }
+                    $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
                     $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
                     $result = $mortage->calculate();
                     $product->there_after_installment = $result->monthlyPayment;
@@ -4280,13 +4306,13 @@ class PagesFrontController extends Controller
 
                     if ($tenure > $productRangeCount) {
                         //$totalInterest += ($tenure - $productRangeCount) * $interest;
-                       // $totalMonthlyInstallment += ($tenure - $productRangeCount) * $result->monthlyPayment;
+                        // $totalMonthlyInstallment += ($tenure - $productRangeCount) * $result->monthlyPayment;
                         $product->highlight = true;;
 
                     }
-                    $product->avg_interest = $totalInterest / $totalTenure;
+                    $product->avg_interest = round(($totalInterest / $totalTenure), 2);
                     $product->monthly_installment = $totalMonthlyInstallment / $totalTenure;
-                    $product->avg_tenure =$totalTenure;
+                    $product->avg_tenure = $totalTenure;
                     $product->product_range = $productRanges;
                     if ($status == true) {
                         $filterProducts[] = $product;

@@ -84,8 +84,8 @@
                                     <select class="form-control" name="rate_type">
                                         <option value="{{BOTH_VALUE}}"
                                                 @if(isset($searchFilter['rate_type']) && $searchFilter['rate_type']==BOTH_VALUE) selected @endif>{{BOTH_VALUE}}</option>
-                                        <option value="{{FIX_RATE}}"
-                                                @if(isset($searchFilter['rate_type']) && $searchFilter['rate_type']==FIX_RATE) selected @endif>{{FIX_RATE}}</option>
+                                        <option value="{{FIXED_RATE}}"
+                                                @if(isset($searchFilter['rate_type']) && $searchFilter['rate_type']==FIXED_RATE) selected @endif>{{FIXED_RATE}}</option>
                                         <option value="{{FLOATING_RATE}}"
                                                 @if(isset($searchFilter['rate_type']) && $searchFilter['rate_type']==FLOATING_RATE) selected @endif>{{FLOATING_RATE}}</option>
                                     </select>
@@ -283,9 +283,20 @@
                                                 <tr>
                                                     <td class=" @if($productRange->tenure_highlight==true) highlight @endif">
                                                         YEAR {{$key+1}}</td>
-                                                    <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
-                                                        (1mth {{$productRange->floating_rate_type}}
-                                                        + {{$productRange->bonus_interest}}%)
+                                                    <td>{{$productRange->bonus_interest+$productRange->rate_interest_other}}
+                                                        %
+                                                        (1mth
+                                                        @if($productRange->bonus_interest>0)
+                                                            @if($productRange->floating_rate_type){{$productRange->floating_rate_type}}@endif
+                                                        @endif
+                                                        @if(($productRange->bonus_interest>0) && ($productRange->rate_interest_other>0))
+                                                            + @endif
+                                                        @if($productRange->rate_interest_other>0)
+                                                            {{$productRange->rate_interest_other}}%
+                                                            @if($productRange->rate_type_name)
+                                                                ({{$productRange->rate_type_name}}) @endif
+                                                        @endif
+                                                        {{''}})
                                                     </td>
                                                     <td class=" @if($productRange->tenure_highlight==true) highlight @endif ">
                                                         ${{round($productRange->monthly_payment)}} / mth
@@ -296,10 +307,22 @@
 
                                                 <td class=" @if($product->highlight==true) highlight @endif ">THEREAFTER
                                                 </td>
-                                                <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}
+                                                <td>{{($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other)}}
                                                     %
-                                                    (1mth {{$productRanges[0]->floating_rate_type}}
-                                                    + {{$productRanges[0]->there_after_interest}}%)
+                                                    (1mth {{$productRanges[0]->there_after_rate_type}}
+                                                    + {{$productRanges[0]->there_after_bonus_interest}}%)
+                                                    (1mth
+                                                    @if($productRanges[0]->there_after_bonus_interest>0)
+                                                        @if($productRanges[0]->there_after_rate_type){{$productRanges[0]->there_after_rate_type}}@endif
+                                                    @endif
+                                                    @if(($productRanges[0]->there_after_bonus_interest>0) && ($productRanges[0]->there_after_rate_interest_other>0))
+                                                        + @endif
+                                                    @if($productRanges[0]->there_after_rate_interest_other>0)
+                                                        {{$productRanges[0]->there_after_rate_interest_other}}%
+                                                        @if($productRanges[0]->there_after_rate_name_other)
+                                                            ({{$productRanges[0]->there_after_rate_name_other}}) @endif
+                                                    @endif
+                                                    {{''}})
                                                 </td>
                                                 <td class=" @if($product->highlight==true) highlight @endif ">
                                                     ${{round($product->there_after_installment)}} / mth
@@ -316,8 +339,8 @@
                                     <div class="ps-product__poster">
                                         <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
                                            target="_blank"><img class="img-center"
-                                                    src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
-                                                    alt=""></a>
+                                                                src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
+                                                                alt=""></a>
                                     </div>
                                     <?php } ?>
                                 @endif
@@ -326,24 +349,30 @@
                                         with {{$product->tenure}}
                                         years Loan Tenure</h4>
 
-                                    <p>Rate Type : <strong>{{$productRanges[0]->rate_type}}
-                                            ({{$productRanges[0]->floating_rate_type}})</strong></p>
+                                    <div class="row">
+                                        <div class="width-50">
+                                            <p>Rate Type : <br/><strong>{{$productRanges[0]->rate_type}}
+                                                    @if($productRanges[0]->rate_type_name)({{$productRanges[0]->rate_type_name}}) @endif</strong></p>
 
-                                    <p>Interest Rate : <strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
-                                            Years)</strong></p>
+                                            <p>Lock In : <br/><strong>{{$product->lock_in}} Years</strong></p>
 
-                                    <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
+                                            <p>Property : <br/><strong>{{$productRanges[0]->property_type}}</strong></p>
+                                        </div>
+                                        <div class="width-50">
+                                            <p>Rate : <br/><strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
+                                                    yrs avg)</strong></p>
 
-                                    <p>Minimum loan amount :
-                                        <strong>SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</strong>
-                                    </p>
+                                            <p>Mthly Instalment :<br/>
+                                                <strong>${{ Helper::inThousand($product->monthly_installment) }}
+                                            </p>
 
-                                    <p>Property Type : <strong>{{$productRanges[0]->property_type}}
-                                            ({{$productRanges[0]->completion_status}})</strong></p>
-
-                                    <p>Monthly Installments :
-                                        <strong>${{ Helper::inThousand($product->monthly_installment) }}
-
+                                            <p>Minimum Loan :
+                                                <br/>
+                                                <strong>${{ Helper::inThousand($product->minimum_loan_amount) }}
+                                                    ({{$product->avg_tenure}}
+                                                    yrs avg)</strong>
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
                         </div>
@@ -459,24 +488,48 @@
                                                 <tr>
                                                     <td class=" ">
                                                         YEAR {{$key+1}}</td>
-                                                    <td>{{$productRange->bonus_interest+$productRange->board_rate}}%
-                                                        (1mth {{$productRange->floating_rate_type}}
-                                                        + {{$productRange->bonus_interest}}%)
+                                                    <td>{{$productRange->bonus_interest+$productRange->rate_interest_other}}
+                                                        %
+                                                        (1mth
+                                                        @if($productRange->bonus_interest>0)
+                                                            @if($productRange->floating_rate_type){{$productRange->floating_rate_type}}@endif
+                                                        @endif
+                                                        @if(($productRange->bonus_interest>0) && ($productRange->rate_interest_other>0))
+                                                            + @endif
+                                                        @if($productRange->rate_interest_other>0)
+                                                            {{$productRange->rate_interest_other}}%
+                                                            @if($productRange->rate_type_name)
+                                                                ({{$productRange->rate_type_name}}) @endif
+                                                        @endif
+                                                        {{''}})
                                                     </td>
-                                                    <td class=" ">
+                                                    <td class="">
                                                         ${{round($productRange->monthly_payment)}} / mth
                                                     </td>
                                                 </tr>
                                             @endforeach
                                             <tr>
 
-                                                <td class="">THEREAFTER</td>
-                                                <td>{{($productRanges[0]->there_after_interest + $productRanges[0]->board_rate)}}
-                                                    %
-                                                    (1mth {{$productRanges[0]->floating_rate_type}}
-                                                    + {{$productRanges[0]->there_after_interest}}%)
+                                                <td class="  ">THEREAFTER
                                                 </td>
-                                                <td class="">
+                                                <td>{{($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other)}}
+                                                    %
+                                                    (1mth {{$productRanges[0]->there_after_rate_type}}
+                                                    + {{$productRanges[0]->there_after_bonus_interest}}%)
+                                                    (1mth
+                                                    @if($productRanges[0]->there_after_bonus_interest>0)
+                                                        @if($productRanges[0]->there_after_rate_type){{$productRanges[0]->there_after_rate_type}}@endif
+                                                    @endif
+                                                    @if(($productRanges[0]->there_after_bonus_interest>0) && ($productRanges[0]->there_after_rate_interest_other>0))
+                                                        + @endif
+                                                    @if($productRanges[0]->there_after_rate_interest_other>0)
+                                                        {{$productRanges[0]->there_after_rate_interest_other}}%
+                                                        @if($productRanges[0]->there_after_rate_name_other)
+                                                            ({{$productRanges[0]->there_after_rate_name_other}}) @endif
+                                                    @endif
+                                                    {{''}})
+                                                </td>
+                                                <td class=" ">
                                                     ${{round($product->there_after_installment)}} / mth
                                                 </td>
                                             </tr>
@@ -491,8 +544,8 @@
                                     <div class="ps-product__poster">
                                         <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
                                            target="_blank"><img class="img-center"
-                                                    src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
-                                                    alt=""></a>
+                                                                src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
+                                                                alt=""></a>
                                     </div>
                                     <?php } ?>
                                 @endif
@@ -501,23 +554,30 @@
                                         with {{$product->tenure}}
                                         years Loan Tenure</h4>
 
-                                    <p>Rate Type : <strong>{{$productRanges[0]->rate_type}}
-                                            ({{$productRanges[0]->floating_rate_type}})</strong></p>
+                                    <div class="row">
+                                        <div class="width-50">
+                                            <p>Rate Type : <br/><strong>{{$productRanges[0]->rate_type}}
+                                                    @if($productRanges[0]->rate_type_name)({{$productRanges[0]->rate_type_name}}) @endif</strong></p>
 
-                                    <p>Interest Rate : <strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
-                                            Years)</strong></p>
+                                            <p>Lock In : <br/><strong>{{$product->lock_in}} Years</strong></p>
 
-                                    <p>Lock In : <strong>{{$product->lock_in}} Years</strong></p>
+                                            <p>Property : <br/><strong>{{$productRanges[0]->property_type}}</strong></p>
+                                        </div>
+                                        <div class="width-50">
+                                            <p>Rate : <br/><strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
+                                                    yrs avg)</strong></p>
 
-                                    <p>Minimum loan amount :
-                                        <strong>SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}</strong>
-                                    </p>
+                                            <p>Mthly Instalment :<br/>
+                                                <strong>${{ Helper::inThousand($product->monthly_installment) }}
+                                            </p>
 
-                                    <p>Property Type : <strong>{{$productRanges[0]->property_type}}
-                                            ({{$productRanges[0]->completion_status}})</strong></p>
-
-                                    <p>Monthly Installments :
-                                        <strong>${{ Helper::inThousand($product->monthly_installment) }}
+                                            <p>Minimum Loan :
+                                                <br/>
+                                                <strong>${{ Helper::inThousand($product->minimum_loan_amount) }}
+                                                    ({{$product->avg_tenure}}
+                                                    yrs avg)</strong>
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
                         </div>

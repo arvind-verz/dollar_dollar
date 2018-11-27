@@ -1,20 +1,39 @@
 <div class="display-none" id="loanF1">
     @if(isset($product) && (in_array($product->formula_id,[LOAN_F1])))
         @if(count($product->product_range))
-            <?php $ProductRanges = $product->product_range ?>
+            <?php $ProductRanges = $product->product_range; ?>
 
             <div class="form-group" id="rate-type-content">
-                <label for="title" class="col-sm-2 control-label">Rate type</label>
+                @if($ProductRanges[0]->rate_type==FLOATING_RATE)
+                    <label for="title" class="col-sm-2 control-label">Rate type</label>
 
-                <div class="col-sm-8">
-                    <select class="form-control" name="rate_type_f1" id="rate-type">
-                        <option value="{{FIXED_RATE}}" @if($ProductRanges[0]->rate_type==FIXED_RATE) selected="selected" @endif>{{FIXED_RATE}}</option>
-                        <option value="{{FLOATING_RATE}}" @if($ProductRanges[0]->rate_type==FLOATING_RATE) selected="selected" @endif>{{FLOATING_RATE}}</option>
-                    </select>
-                </div>
-                <input type="hidden" class="form-control" id="" name="rate_type_name_f1" value="" placeholder="">
-                <div class="col-sm-2">
-                </div>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="rate_type_f1" id="rate-type">
+                            <option value="{{FIXED_RATE}}" >{{FIXED_RATE}}</option>
+                            <option value="{{FLOATING_RATE}}" selected="selected">{{FLOATING_RATE}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id=""
+                               name="rate_type_name_f1" value="{{$ProductRanges[0]->rate_type_name}}"
+                               placeholder="Rate name">
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                @elseif($ProductRanges[0]->rate_type==FIXED_RATE)
+                    <label for="title" class="col-sm-2 control-label">Rate type</label>
+
+                    <div class="col-sm-8">
+                        <select class="form-control" name="rate_type_f1" id="rate-type">
+                            <option value="{{FIXED_RATE}}">{{FIXED_RATE}}</option>
+                            <option value="{{FLOATING_RATE}}" selected="selected" >{{FLOATING_RATE}}</option>
+                        </select>
+                    </div>
+                    <input type="hidden" class="form-control" id="" name="rate_type_name_f1" value="" placeholder="">
+                    <div class="col-sm-2">
+                    </div>
+                @endif
+
             </div>
             <div class="form-group">
                 <label for="property_type" class="col-sm-2 control-label">Property type</label>

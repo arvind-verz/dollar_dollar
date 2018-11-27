@@ -26,7 +26,7 @@
                         <div class="ps-block__info">
                             <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
                                 <span class="slider-font">
-                                 Rate: </span>{{ $product->maximum_interest_rate }}%</p>
+                                 Rate: </span>{{ $product->avg_interest }}%</p>
                             <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
                                 <span class="slider-font">Lock in:</span> {{ $product->lock_in }} YRS
                             </p>
@@ -86,7 +86,7 @@
                         <div class="ps-block__info">
                             <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
                                 <span class="slider-font">
-                                 Rate: </span>{{ $product->maximum_interest_rate }}%</p>
+                                 Rate: </span>{{ $product->avg_interest }}%</p>
                             <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
                                 <span class="slider-font">Lock in:</span> {{ $product->lock_in }} YRS
                             </p>
