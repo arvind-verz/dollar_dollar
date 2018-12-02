@@ -1991,4 +1991,40 @@ class ProductsController extends Controller
         }
 
     }
+    public function pathUpdateInTechAndLong()
+    {
+
+        $products = PromotionProducts::all();
+
+        if ($products->count()) {
+            $i = 0;
+            foreach ($products as $product) {
+                $update = false;
+                $oldProduct = $product;
+                //  str_replace(' ', '%20', $your_string);
+                if (strpos($product->product_footer, 'class="ps-btn ps-btn--black"') !== false) {
+                    $product->product_footer = str_replace('class="ps-btn ps-btn--black"', 'class="ps-btn ps-btn--black" target="_blank"', $product->product_footer);
+                    $update = true;
+
+                }
+                if (strpos($product->product_footer, 'class="ps-btn ps-btn--outline"') !== false) {
+                    $product->product_footer = str_replace('class="ps-btn ps-btn--outline"', 'class="ps-btn ps-btn--outline" target="_blank"', $product->product_footer);
+                    $update = true;
+
+                }
+                /*if (strpos($product->long_description, '/speedo/public') !== false) {
+                    $product->long_description = str_replace('/speedo/public', '', $product->long_description);
+                    $update = true;
+                }*/
+
+                if ($update == true) {
+                    $product->save();
+                    $i++;
+                }
+
+            }
+            dd($i);
+        }
+
+    }
 }

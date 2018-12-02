@@ -164,9 +164,10 @@
 }
 .ps-product .loan_table {
     width: 100%;
+    overflow-y: scroll;
 }
 .ps-loan-popup {
-    padding: 40px 0;
+    padding: 40px 15px;
     text-align: center;
     background: #3db54a;
     color: #fff;
@@ -177,7 +178,10 @@
     width: 100%;
     z-index: 999;
 }
-
+.ps-loan .width-50{
+    display: inline-block;
+    float: left;
+}
 .ps-loan-popup p {
     margin-bottom: 30px;
     color: #fff;
@@ -430,7 +434,106 @@
     .ps-loan .btn.refresh.form-control {
         width: 17% !important;
         position: absolute;
-        top: -90px;
+        top: -95px;
         right: 5px;
+    }
+}
+
+.h-title{
+	margin: 50px 0 30px;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.h-table table{
+	margin-bottom: 50px;
+	width: 100%;
+}
+.h-table1{
+	width: 100%;
+}
+.h-table td{
+	vertical-align: top;
+}
+.h-table3 td{
+	background-color: #0d6ec9;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+	text-transform: uppercase;
+	padding: 15px;
+	border: none;
+	text-align: center;
+}
+.h-table p{
+	color: #fff;
+	font-size: 16px;
+}
+.h-table a{
+	font-size: 20px;
+}
+
+
+/*fix 30/11/2018*/
+
+
+.ps-product .ps-product__content p{
+    display: none;
+}
+@media (max-width: 990px){
+    .ps-block--image > img{
+        display: block;
+        float: none;
+        max-width: 100%; 
+        margin-top: 0;
+    }
+}
+@media (max-width: 990px){
+    .ps-block--desposit .product-col-01, .ps-page--deposit .product-col-01{
+        width: 20%;
+    }
+    .ps-block--desposit .product-col-03, .ps-page--deposit .product-col-03{
+        width: 60%;
+    }
+}
+@media (max-width: 989px){
+    .totop a:hover, .totop div:hover {
+        background-color: #2f383b;
+    }
+}
+@media (max-width: 768px){
+    .ps-product .ps-product__content p.active{
+        display: block;
+    }
+    .ps-slider--home.owl-carousel .bg--cover{
+        height:270px;
+    }
+    .ps-home--links .ps-block--home-link{
+        padding: 10px 0;
+        height: auto;
+    }
+    .ps-fanpage{
+        overflow: hidden;
+    }
+    .ps-product .loan_table{
+        margin: 20px 0  0;
+            display: inline-block;
+    }
+    .ps-product .loan_table .ps-table-wrap, .ps-product .loan_table .ps-table{
+        margin: 0;
+    }
+    .ps-loan-content.ps-loan-content1{
+        padding-bottom: 0;
+    }
+    .ps-loan #loan-enquiry{
+        width: initial !important;
+    }
+    .ps-dashboard .ps-block--box.info{
+        margin-bottom: 10px;
+    }
+}
+@media (max-width: 450px){
+    .ps-btn--checkbox{
+        padding: 10px 5px;
     }
 }

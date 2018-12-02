@@ -1,8 +1,23 @@
 <?php
 namespace App\Helpers\Helper;
 
-use App\Banner;use App\BlogCategory;use App\Brand;use App\Category;use App\Homepage;use App\Menu;use App\Page;use App\Pricelist;use App\Product;use App\ProductManagement;use App\PromotionFormula;use App\PromotionProducts;use App\PromotionTypes;use App\SystemSetting;use App\Tag;use Auth;use Carbon\Carbon;use Illuminate\Support\Facades\DB;use Illuminate\Support\Facades\Response;
-
+use App\Banner;
+use App\BlogCategory;
+use App\Brand;
+use App\Menu;
+use App\Page;
+use App\ProductManagement;
+use App\PromotionFormula;
+use App\PromotionProducts;
+use App\PromotionTypes;
+use App\SystemSetting;
+use App\Tag;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Defr;
+use App\DefaultSearch;
 class Helper
 {
     //get all categories
@@ -774,7 +789,156 @@ public static function daysOrMonthForSlider($tenure_type, $tenure)
         $products = $products->sortByDesc('featured')->values();
         return $products;
     }
+public static function getLoanProducts($productType, $byOrderValue)
+    {
+        $filter = $byOrderValue ? $byOrderValue : INTEREST;
+        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
+            //->whereNotNull('promotion_products.formula_id')
+            ->where('promotion_types.id', '=', $productType)
+            ->where('promotion_products.delete_status', '=', 0)
+            ->where('promotion_products.status', '=', 1)
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id', 'promotion_products.id as product_id')
+            ->get();
+            $filterProducts=[];
+        if ($promotion_products->count()) {
+            foreach ($promotion_products as $key => $product) {
 
+                $defaultSearch = DefaultSearch::where('promotion_id', LOAN)->first();
+                if ($defaultSearch) {
+                    $defaultPlacement = $defaultSearch->placement;
+                    $defaultRateType = $defaultSearch->rate_type;
+                    $defaultTenure = $defaultSearch->tenure;
+                    $defaultPropertyType = $defaultSearch->property_type;
+                    $defaultCompletion = $defaultSearch->completion;
+
+                } else {
+                    $defaultPlacement = 0;
+                    $defaultRateType = BOTH_VALUE;
+                    $defaultTenure = 35;
+                    $defaultPropertyType = HDB_PROPERTY;
+                    $defaultCompletion = COMPLETE;
+                }
+                    $placement = 0;
+                    $searchValue = $defaultPlacement;
+                    $rateType = $defaultRateType;
+                    $tenure = $defaultTenure;
+                    $propertyType = $defaultPropertyType;
+                    $completion = $defaultCompletion;
+                    $searchFilter['search_value'] = $defaultPlacement;
+                    $searchFilter['rate_type'] = $defaultRateType;
+                    $searchFilter['tenure'] = $defaultTenure;
+                    $searchFilter['property_type'] = $defaultPropertyType;
+                    $searchFilter['completion'] = $defaultCompletion;
+                    $searchFilter['filter'] = INTEREST;
+                    $searchFilter['sort_by'] = MAXIMUM;
+
+                $status = true;
+                $productRanges = json_decode($product->product_range);
+                if ($product->promotion_formula_id == LOAN_F1) {
+                    $tenure= (int)$tenure;
+                    $totalInterests = [];
+                    $interestEarns = [];
+                    $product->highlight = false;
+
+                    $firstProductRange = $productRanges[0];
+                    if ($rateType != BOTH_VALUE && ($rateType != $firstProductRange->rate_type)) {
+                        $status = false;
+                    }
+                    if ($completion != ALL && ($completion != $firstProductRange->completion_status)) {
+                        $status = false;
+                    }
+
+                    $hdbProperty = [HDB_PROPERTY, HDB_PRIVATE_PROPERTY];
+                    $privateProperty = [PRIVATE_PROPERTY, HDB_PRIVATE_PROPERTY];
+                    $commonProperty = [];
+                    if (in_array($propertyType, [HDB_PROPERTY, PRIVATE_PROPERTY])) {
+                        if ($propertyType == HDB_PROPERTY) {
+                            $commonProperty = $hdbProperty;
+                        } elseif ($propertyType == PRIVATE_PROPERTY) {
+                            $commonProperty = $privateProperty;
+                        }
+                        if (!in_array($firstProductRange->property_type, $commonProperty)) {
+                            $status = false;
+                        }
+                    } elseif ($propertyType != COMMERCIAL_PROPERTY) {
+                        $status = false;
+                    }
+                    $productRangeCount = count($productRanges);
+                    $totalInterest = 0;
+                    $totalMonthlyInstallment = 0;
+                    $totalTenure = 0;
+                    $j = 0;
+                    foreach ($productRanges as $k => $productRange) {
+                        $productRange->tenure_highlight = false;
+                        $interest = $productRange->bonus_interest + $productRange->rate_interest_other;
+                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                        $result = $mortage->calculate();
+                        $productRange->monthly_payment = $result->monthlyPayment;
+                        if ($tenure > $totalTenure) {
+                            if ($j <= 2) {
+                                $totalInterest += $interest;
+                                $totalTenure++;
+                                $totalMonthlyInstallment += $productRange->monthly_payment;
+                            }
+                            $productRange->tenure_highlight = true;
+                        }
+
+                        $j++;
+                    }
+
+                    while ($j <= 2)
+                    {
+                        $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
+                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                        $result = $mortage->calculate();
+                        $monthlyThereAfterPayment = $result->monthlyPayment;
+                        $totalInterest += $interest;
+                        $totalTenure++;
+                        $totalMonthlyInstallment += $monthlyThereAfterPayment;
+                        $j++;
+                    }
+                    $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
+                    $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                    $result = $mortage->calculate();
+                    $product->there_after_installment = $result->monthlyPayment;
+                    $product->placement = $searchValue;
+                    $product->tenure = $tenure;
+
+                    if ($tenure > $productRangeCount) {
+                        //$totalInterest += ($tenure - $productRangeCount) * $interest;
+                        // $totalMonthlyInstallment += ($tenure - $productRangeCount) * $result->monthlyPayment;
+                        $product->highlight = true;;
+
+                    }
+                    $product->avg_interest = round(($totalInterest / $totalTenure), 2);
+                    $product->monthly_installment = $totalMonthlyInstallment / $totalTenure;
+                    $product->avg_tenure = $totalTenure;
+                    $product->product_range = $productRanges;
+                    $product->by_order_value = $filter;
+                    $product->product_url = LOAN_MODE;
+
+
+                        $filterProducts[] = $product;
+
+                }
+            }
+        }
+        $products = collect($filterProducts);
+
+       if ($products->count()) {
+                if ($filter == INSTALLMENT) {
+                    $products = $products->sortBy('minimum_loan_amount')->values();
+                } elseif ($filter == INTEREST) {
+                    $products = $products->sortBy('avg_interest')->values();
+                } elseif ($filter == TENURE) {
+                    $products = $products->sortBy('lock_in')->values();
+                }
+            }
+        $products = $products->sortByDesc('featured')->values();
+        return $products;
+    }
 
     public static function getCustomerReportData($id)
     {

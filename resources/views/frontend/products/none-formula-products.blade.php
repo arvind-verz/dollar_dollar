@@ -36,7 +36,7 @@
                         @elseif($product->promotion_end < $todayStartDate)
                             {{EXPIRED}}
                         @elseif($product->promotion_end > $todayStartDate)
-                            {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
+                            {{UNTIL}} {{ date('d/m/y', strtotime($product->promotion_end)) }}
                         @endif
                     </p>
 

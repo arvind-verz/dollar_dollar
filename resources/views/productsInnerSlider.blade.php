@@ -80,7 +80,7 @@
     @endforeach
     @php $i = 1;$featured_item = 5-count($featured);
     $featured_count = count($featured);
-    $featured_width = 12;
+    $featured_width = 0;
     if($featured_count==1) {
     $featured_width = 2;
     }

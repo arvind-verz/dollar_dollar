@@ -364,7 +364,8 @@
                                                     yrs avg)</strong></p>
 
                                             <p>Mthly Instalment :<br/>
-                                                <strong>${{ Helper::inThousand($product->monthly_installment) }}
+                                               <strong>${{ Helper::inThousand($product->monthly_installment) }} ({{$product->avg_tenure}}
+                                                    yrs avg)</strong>
                                             </p>
 
                                             <p>Minimum Loan :
@@ -569,14 +570,14 @@
                                                     yrs avg)</strong></p>
 
                                             <p>Mthly Instalment :<br/>
-                                                <strong>${{ Helper::inThousand($product->monthly_installment) }}
+                                                <strong>${{ Helper::inThousand($product->monthly_installment) }} ({{$product->avg_tenure}}
+                                                    yrs avg)</strong>
                                             </p>
 
                                             <p>Minimum Loan :
                                                 <br/>
                                                 <strong>${{ Helper::inThousand($product->minimum_loan_amount) }}
-                                                    ({{$product->avg_tenure}}
-                                                    yrs avg)</strong>
+                                                    </strong>
                                         </div>
                                     </div>
                                 </div>

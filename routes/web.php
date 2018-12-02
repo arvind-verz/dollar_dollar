@@ -92,7 +92,7 @@ Route::get('/tags/{slug}', 'CMS\PagesFrontController@search_tags');
 //get product slider details
 
 Route::post('/get-product-slider-details', 'CMS\PagesFrontController@getProductSliderDetails');
-
+Route::post('/get-loan-product-slider-details', 'CMS\PagesFrontController@getLoanProductSliderDetails');
 
 
 /*End FrontEnd Routes*/
@@ -225,7 +225,7 @@ Route::group(array('prefix' => 'admin'), function () {
 
     /*Tag module end*/
 
-    Route::get('/temp', 'Products\ProductsController@temp')->name('temp');
+    Route::get('/temp-update', 'Products\ProductsController@pathUpdateInTechAndLong')->name('temp-update');
 
     /* PROMOTION PRODUCTS */
     Route::get('/promotion-products/{productTypeId}', 'Products\ProductsController@promotion_products')->name('promotion-products');

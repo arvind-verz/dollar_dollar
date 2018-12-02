@@ -222,7 +222,7 @@ class="fa fa-refresh"></i></a>
                                     @elseif($product->promotion_end < $todayStartDate)
                                         {{EXPIRED}}
                                     @elseif($product->promotion_end > $todayStartDate)
-                                        {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
+                                        {{UNTIL}} {{ date('d/m/y', strtotime($product->promotion_end)) }}
                                     @endif
                                 </p>
 
@@ -409,7 +409,7 @@ class="fa fa-refresh"></i></a>
                                         @elseif($product->promotion_end < $todayStartDate)
                                             {{EXPIRED}}
                                         @elseif($product->promotion_end > $todayStartDate)
-                                            {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
+                                            {{UNTIL}} {{ date('d/m/y', strtotime($product->promotion_end)) }}
                                         @endif
                                     </p>
                                 </div>
