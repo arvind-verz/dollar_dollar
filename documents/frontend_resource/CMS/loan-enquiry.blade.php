@@ -101,12 +101,9 @@
                                                     <strong>{{ $errors->first('email') }}</strong>
                                                     </span>
                 @endif
-                <label class="">MOBILE
-                    <div class="row"><div class="col-md-3 col-lg-3 col-sm-3 col-xs-12"><input type="text" name="country_code" value="+65"></div>
-                        <div class="col-md-9 col-lg-9 col-sm-9 col-xs-12"><input name="telephone" class="" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
-                            value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif" type="text"></div></div>
-
-                </label>
+                <label class="ps-loan-mobile">MOBILE<span><input type="text" name="country_code" value="+65"><input name="telephone" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
+                                                                                 value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif"
+                                                                                 type="text"></span></label>
                 @if ($errors->has('telephone'))
                     <span class="text-danger" id="">
                                                     <strong>{{ $errors->first('telephone') }}</strong>

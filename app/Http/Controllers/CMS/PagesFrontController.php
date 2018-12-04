@@ -1974,8 +1974,6 @@ class PagesFrontController extends Controller
                             } elseif ($untilEndDate > $todayDate) {
                                 $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                             }
-
-
                         }
                         $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
@@ -5778,7 +5776,7 @@ class PagesFrontController extends Controller
 
                                         <p class="<?php if ($product->by_order_value == INSTALLMENT) echo 'highlight highlight-bg'; ?>">
                                                     <span
-                                                        class="slider-font"> Min: SGD $<?php echo Helper::inThousand($product->minimum_loan_amount); ?> </span>
+                                                        class="slider-font"> Min: SGD $<?php echo \Helper::inThousand($product->minimum_loan_amount); ?> </span>
                                         </p>
                                     </div>
                                     <a class="ps-btn"

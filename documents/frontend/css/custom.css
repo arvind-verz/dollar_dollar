@@ -1,7 +1,10 @@
 .ps-loan .ps-block__content p {
-    font-size: 17px;
-    line-height: 1.8em;
     color: #303030;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 30px;
+    font-family: inherit;
+    letter-spacing: -1px
 }
 
 .ps-loan .ps-block__content p a {
@@ -247,12 +250,12 @@
     margin-right: 30px;
 }
 
-.ps-form--filter .ps-form__values .form-group--label2, .ps-form--filter .ps-form__values .form-group--label1 {
-    width: 21%;
+.ps-form--filter .ps-form__values .form-group--label2 {
+    width: 15%;
 }
 
 .ps-form--filter .ps-form__values .form-group--label3 {
-    width: 26%;
+    width: 29.5%;
 }
 
 .ps-loan .form-group--label .form-group__content > label {
@@ -265,7 +268,6 @@
 
 .ps-loan .refresh {
     width: 50px;
-    margin-left: 5px;
 }
 
 .ps-loan-select span {
@@ -474,15 +476,8 @@
 
 /*fix 30/11/2018*/
 
-.ps-dashboard .ps-block--short-product.second .ps-btn:hover{
-    color: #fff;
-}
 
-
-.ps-loan .ps-form--filter .filter{
-    min-width: auto;
-}
-.ps-product .ps-product__content > p{
+.ps-product .ps-product__content p{
     display: none;
 }
 @media (max-width: 990px){

@@ -67,12 +67,15 @@ class AccountInformationController extends Controller
      */
     public function edit($id, $location=NULL)
     {
-        $ads = AdsManagement::where('delete_status', 0)
+        $adsCollection = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
                     ->where('page', 'account')
                     ->inRandomOrder()
                     ->limit(1)
                     ->get();
+        if ($adsCollection->count()) {
+            $ads = \Helper::manageAds($adsCollection);
+        }
         $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
         ->get();
         //dd($user_products);

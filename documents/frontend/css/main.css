@@ -810,7 +810,6 @@ button {
     color:#737373;
     font-weight:400;
     cursor:pointer;
-    font-size: 15px;
 }
 
 .ps-checkbox label:before {
@@ -1445,6 +1444,10 @@ button {
 .ps-post--home .ps-post__content p {
     line-height:1.8em;
     font-size:15px;
+}
+.ps-post--home .ps-post__content  {
+    max-height: 160px;
+    overflow: hidden;
 }
 
 @media (max-width:767px) {
@@ -2179,7 +2182,8 @@ button {
 
 .ps-block--short-product img {
     margin-bottom:15px;
-    min-height:60px;
+    min-height:70px;
+    max-height: 70px;
 }
 
 .ps-block--short-product h4 {
@@ -2200,7 +2204,7 @@ button {
     margin-bottom:0;
     padding:15px 0;
     font-family:"Montserrat", sans-serif;
-    font-size:14px;
+    font-size:12px;
     line-height:15px;
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
@@ -2794,7 +2798,7 @@ button {
 }
 
 .ps-product .ps-product__detail {
-    padding-top:20px;
+    /*padding-top:20px;*/
     border-top:1px solid #f1f1f1;
 }
 
@@ -3376,7 +3380,7 @@ button {
 
 .ps-form--filter .ps-form__values {
     margin:0 -15px;
-    margin-bottom:10px;
+    margin-bottom:20px;
 }
 
 .ps-form--filter .ps-form__values::after {
@@ -3826,7 +3830,7 @@ button {
 
 .ps-home-blog {
     position:relative;
-    padding:50px 0;
+    padding:10px 0;
 }
 
 /*.ps-home-blog .container {
@@ -6406,9 +6410,6 @@ span.ps-post__meta a {
     border-radius:3px 3px 0 0;
 }
 
-    .ps-dashboard .dataTables_paginate.paging_simple_numbers{
-        padding-bottom: 30px;
-    }
 .ps-product--2 .ps-product__info i {
     margin-left:5px;
 }
@@ -6424,6 +6425,7 @@ span.ps-post__meta a {
 }
 
 @media only screen and (min-width:768px) {
+
     .owl-item.sp-only {
         position:absolute !important;
         display:none;
@@ -7249,7 +7251,7 @@ h4.modal-title {
 }
 
 .ps-form--register .form-group > label {
-    margin: 15px 0 5px;
+    margin-top:5px;
 }
 
 .ps-loan .form-group--label .form-group__content input, .ps-loan .form-group--label .form-group__content select {
@@ -7258,12 +7260,12 @@ h4.modal-title {
 }
 
 .ps-table.ps-table--product-managerment.dataTable.no-footer {
-    /*padding-top:20px;*/
+    padding-top:20px;
 }
 
 @media (min-width:1200px) {
     .ps-loan .form-group--label .form-group__content {
-        margin-bottom:10px;
+        margin-bottom:20px;
     }
     .ps-home-blog .ps-section__left {
         min-height: 554px;
@@ -7312,23 +7314,3 @@ h4.modal-title {
 .td-unique {
     padding: 10px 5px 10px 15px;
 }
-
-.ps-dashboard .ps-slider--feature-product .owl-nav{
-    width: 100% !important;
-}
-.ps-product .ps-poster-popup{
-    padding-top: 30px;
-}
-.ps-main .ps-btn:hover{
-    background-color: #ffd77e;
-}
-@media only screen and (min-width:990px) {
-    .ps-home-blog .col-lg-6{
-        max-height: 554px;
-        overflow: hidden;
-    }
-    .ps-page--deposit .ps-product .ps-product__footer{
-        padding-top: 40px;
-    }
-}
-
