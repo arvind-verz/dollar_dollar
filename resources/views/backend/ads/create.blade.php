@@ -36,11 +36,11 @@
                                     <label>Product Page</label>
                                     <select class="form-control" name="page_type">
                                         <option value="">Select</option>
-                                        <option value="fixed-deposit-mode">Fixed Deposit</option>
-                                        <option value="saving-deposit-mode">Saving Deposit</option>
-                                        <option value="privilege-deposit-mode">Privilege Deposit</option>
-                                        <option value="foreign-currency-deposit-mode">Foreign Currency Deposit</option>
-                                        <option value="all-in-one-deposit-mode">All in One Deposit</option>
+                                        <option value="{{FIXED_DEPOSIT_MODE}}" @if(old('page_type')==FIXED_DEPOSIT_MODE) selected="selected" @endif>Fixed Deposit</option>
+                                        <option value="{{SAVING_DEPOSIT_MODE}}" @if(old('page_type')==SAVING_DEPOSIT_MODE) selected="selected" @endif>Saving Deposit</option>
+                                        <option value="{{PRIVILEGE_DEPOSIT_MODE}}" @if(old('page_type')==PRIVILEGE_DEPOSIT_MODE) selected="selected" @endif>Privilege Deposit</option>
+                                        <option value="{{FOREIGN_CURRENCY_DEPOSIT_MODE}}" @if(old('page_type')==FOREIGN_CURRENCY_DEPOSIT_MODE) selected="selected" @endif>Foreign Currency Deposit</option>
+                                        <option value="{{AIO_DEPOSIT_MODE}}" @if(old('page_type')==AIO_DEPOSIT_MODE) selected="selected" @endif>All in One Deposit</option>
                                     </select>
                                 </div>
                                 @endif
@@ -49,37 +49,37 @@
                                     <label>Blog Page</label>
                                     <select class="form-control" name="page_type">
                                         <option value="">Select</option>
-                                        <option value="blog">Blog</option>
-                                        <option value="blog-inner">Blog Inner</option>
+                                        <option value="blog" @if(old('page_type')=='blog') selected="selected" @endif>Blog</option>
+                                        <option value="blog-inner" @if(old('page_type')=='blog-inner') selected="selected" @endif>Blog Inner</option>
                                     </select>
                                 </div>
                                 @endif
                                 <div class="form-group">
                                     <label>Title</label>
-                                    <input type="text" name="title" class="form-control" placeholder="Enter title">
+                                    <input type="text" name="title" value="{{old('title')}}" class="form-control" placeholder="Enter title">
                                 </div>
                                 <div class="form-group">
                                     <label>@if($type=='account'||$type=='blog')Vertical Ad Banner @else Ad Image @endif </label>
-                                    <input type="file" name="ad_image" class="form-control">
+                                    <input type="file" name="ad_image" value="{{old('')}}" class="form-control">
                                     <p class="text-muted">{{--<strong>Note:</strong>--}} <!--Image
                                         size should be @if($type=='account'||$type=='blog') 360*640 @else 360*640 @endif for better display-->
                                     </p>
                                 </div>                                
                                 <div class="form-group">
                                     <label>@if($type=='account'||$type=='blog')Vertical Ad Banner Link @else Ad Link @endif</label>
-                                    <input type="text" name="ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
+                                    <input type="text" name="ad_link" value="{{old('ad_link')}}" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
                                 @if($type=='account' || $type=='blog')
                                 <div class="form-group">
                                     <label>@if($type=='account')Horizontal Ad Banner @else Horizontal Banner @endif</label>
-                                    <input type="file" name="horizontal_banner_ad_image" class="form-control">
+                                    <input type="file" name="horizontal_banner_ad_image" class="form-control" >
                                     <p class="text-muted">{{--<strong>Note:</strong>--}} <!--Image
                                         size should be @if($type=='account'||$type=='blog')970*250 @else 970*250 @endif for better display-->
                                     </p>
                                 </div>
                                 <div class="form-group">
                                     <label>@if($type=='account')Horizontal Ad Banner Link @else Horizontal Banner Link @endif</label>
-                                    <input type="text" name="horizontal_banner_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
+                                    <input type="text" name="horizontal_banner_ad_link" value="{{old('horizontal_banner_ad_link')}}" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
                                 @endif
                                 <div class="form-group">
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>@if($type=='account'||$type=='blog')Paid Vertical Ad Link  @else Paid Ad Link @endif</label>
-                                    <input type="text" name="paid_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
+                                    <input type="text" name="paid_ad_link" value="{{old('paid_ad_link')}}" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
                                 @if($type=='account'||$type=='blog')
                                 <div class="form-group">
@@ -103,19 +103,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Paid Horizontal Ad Link</label>
-                                    <input type="text" name="horizontal_paid_ad_link" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
+                                    <input type="text" name="horizontal_paid_ad_link" value="{{old('horizontal_paid_ad_link')}}" class="form-control" placeholder="Enter Ad link (example: https://www.google.com)">
                                 </div>
                                 @endif
                                 <div class="form-group">
                                     <label for="">Ad Range Date</label>
-                                    <input type="text" name="ad_range_date" class="form-control date_range" value="" autocomplete="off">
+                                    <input type="text" name="ad_range_date" value="{{old('ad_range_date')}}" class="form-control date_range"  autocomplete="off">
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Display?</label>
                                     <select class="form-control" name="display">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="1" @if(old('display')=='1') selected="selected" @endif>Yes</option>
+                                        <option value="0"  @if(old('display')=='0') selected="selected" @endif>No</option>
                                     </select>
                                 </div>
                             </div>

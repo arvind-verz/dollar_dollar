@@ -7,7 +7,7 @@
 .ps-loan .ps-block__content p a {
     font-weight: bold;
     font-size: 13px;
-    color: #3db54a;
+    coltable1or: #3db54a;
 }
 
 .ps-loan .ps-block__content p a .fa {
@@ -121,7 +121,7 @@
 
 
 .ps-loan-right p {
-    padding: 0 30px;
+    padding: 0 10px;
     color: #303030;
 }
 
@@ -161,10 +161,9 @@
 }
 .ps-product .loan_table {
     width: 100%;
-    overflow-y: scroll;
 }
 .ps-loan-popup {
-    padding: 40px 15px;
+    padding: 15px;
     text-align: center;
     background: #3db54a;
     color: #fff;
@@ -178,6 +177,11 @@
 .ps-loan .width-50{
     display: inline-block;
     float: left;
+    width: auto;
+}
+.ps-loan-right > .row{
+    display: flex;
+    justify-content: space-between;
 }
 .ps-loan-popup p {
     margin-bottom: 30px;
@@ -252,9 +256,11 @@
 }
 
 .ps-form--filter .ps-form__values .form-group--label3 {
-    width: 26%;
+    width: 30%;
 }
-
+.ps-form--filter .ps-form__values .form-group--label4 {
+    width: 22%;
+}
 .ps-loan .form-group--label .form-group__content > label {
     white-space: nowrap
 }
@@ -299,15 +305,22 @@
 
 .ps-loan-from label {
     width: 100%;
+    margin-top: 5px;
 }
+
 
 .ps-loan-from label span {
     display: block;
 }
 
+.h-table3 td{
+    margin: 0 10px 10px 0;
+    display: inline-block;
+}
+
 .ps-loan-from input, .ps-loan-from select {
     width: 100%;
-    margin: 5px 0 10px;
+    margin: 5px 0 0;
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 14px;
@@ -356,12 +369,17 @@
 .refresh-button{
     display: none;
 }
+
+
+.product-col-01.home-featured .ps-block--short-product{
+    min-height: 393px;
+}
 @media only screen and (max-width: 1279px) {
     .ps-loan .ps-form__values .form-group--label {
         width: 49%;
     }
 
-    .ps-form--filter .ps-form__values .form-group--label3 {
+    .ps-form--filter .ps-form__values .form-group--label3, .ps-form--filter .ps-form__values .form-group--label4 {
         width: calc(50% - 35px);
     }
     .ps-loan-content1 .ps-loan-right {
@@ -415,6 +433,42 @@
         position: inherit;
         transform: inherit;
     }
+    .ps-loan-popup{
+        padding: 10px 15px;
+    }
+    .ps-loan-popup p{
+        margin-bottom: 20px;
+        font-size: 16px;
+        line-height: 18px;
+    }
+    .ps-post{
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    .ps-post__thumbnail.ads{
+        padding: 0 0 20px;
+    }
+    .ps-dashboard .ps-block--box.info{
+        padding: 30px 0 15px 0;
+    }
+    .ps-dashboard .ps-dashboard__content>.ps-block--box.info{
+         padding: 30px 15px 15px;
+    }
+    .ps-main .ps-dashboard .ps-block__content p{
+        font-size: 15px;
+        line-height: 1.6em;
+    }
+    .ps-dashboard .ps-block--image > img{
+        display: none;
+    }
+    .ps-dashboard .ps-block--image .ps-block__content{
+        width: 100%;
+        max-width: 100% !important; 
+    }
+    .ps-dashboard__content .form-control.mt-30{
+        margin-top: 10px;
+    }
+    
 }
 
 @media only screen and (max-width: 600px) {
@@ -434,6 +488,12 @@
         position: absolute;
         top: -95px;
         right: 5px;
+    }
+    .ps-dashboard .ps-block--box.info.no-border h5{
+        text-align: center;
+        display: block;
+        
+        width: 100%;
     }
 }
 
@@ -463,8 +523,11 @@
 	border: none;
 	text-align: center;
 }
+.h-table1 td, .h-table2 td{
+	background-color: #fff;
+	color: #000;
+}
 .h-table p{
-	color: #fff;
 	font-size: 16px;
 }
 .h-table a{
@@ -478,13 +541,36 @@
     color: #fff;
 }
 
+.ps-dashboard .ps-block--image{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
 
+.ps-dashboard .ps-block--image .ps-block__content{
+    max-width: 60%;
+}
+.ps-dashboard .ps-block--image > img{
+    max-width:30%;
+}
 .ps-loan .ps-form--filter .filter{
     min-width: auto;
 }
 .ps-product .ps-product__content > p{
     display: none;
 }
+.orther-hide{
+    margin: 34px 0 5px !important;
+}
+.ps-dashboard .ps-heading.mb-35{
+    margin-bottom: 25px;
+}
+.ps-form--health-insurance.ps-form--enquiry .short-form{
+    padding-top: 0;
+}
+
+
 @media (max-width: 990px){
     .ps-block--image > img{
         display: block;
@@ -536,9 +622,95 @@
     .ps-dashboard .ps-block--box.info{
         margin-bottom: 10px;
     }
-}
-@media (max-width: 450px){
+    .ps-product .ps-table {
+        min-width: 800px;
+    }
+    .ps-table tbody tr td {
+        max-width: 210px;
+    }
+    .loan_table{
+        overflow-x: scroll;
+    }
     .ps-btn--checkbox{
         padding: 10px 5px;
+        font-size: 12px;
     }
 }
+
+
+
+/*fix 12/7/2018*/
+
+    .c-profile .ps-dashboard .ps-post__thumbnail{
+        display: none;
+    }
+@media (max-width: 768px){
+    .c-profile .ps-sidebar .ps-post__thumbnail{
+        display: none;
+    }
+    .c-profile .ps-dashboard .ps-post__thumbnail{
+        display: block;
+    }
+    .ps-product__table{
+        margin-top: 20px;
+    }
+}
+
+
+.ps-page--deposit.ps-loan{
+    padding-bottom: 0;
+}
+@media (min-width: 768px){
+    .ps-product__table > p{
+        display: none;
+    }
+}
+@media (max-width: 600px){
+    .form-group--label{
+        margin-bottom: 5px !important;
+    }
+    .ps-form__values{
+        margin-bottom: 0 !important;
+    }
+    .ps-block--image .ps-block__content p{
+        font-size: 15px;
+            line-height: 1.6em;
+
+    }
+}
+#datatable_length label, #datatable_filter label{
+    margin-bottom: 0;
+}
+.ps-product .ps-product__header img{
+    max-height: 70px;
+}
+
+
+@media (max-width: 490px){
+    .ps-dashboard .c-list.ps-slider--feature-product .owl-item{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

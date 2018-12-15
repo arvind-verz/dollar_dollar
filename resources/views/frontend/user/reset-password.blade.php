@@ -20,7 +20,7 @@ $banners = $details['banners'];
 
     {{--Page content start--}}
     @include('frontend.includes.messages')
-    @if(count($errors) > 0)
+   <!-- @if(count($errors) > 0)
         <div class="col-md-12">
             <div class="box-body">
                 <div class="alert alert-danger alert-dismissible">
@@ -35,7 +35,7 @@ $banners = $details['banners'];
                 </div>
             </div>
         </div>
-    @endif
+    @endif-->
     @if(session('status'))
         <div class="col-md-12">
             <div class="box-body">
@@ -70,18 +70,42 @@ $banners = $details['banners'];
                                     <p><strong> Email Address : </strong><input type="text" class="form-control"
                                                                               name="email"
                                                                               placeholder=""
-                                                                              value="{{ old('email') }}"></p>
+                                                                              value="{{ old('email') }}">
+                                                                               @if ($errors->has('email'))
+                                        <span class="text-danger">
+                                            <strong>
+                                                {{ $errors->first('email') }}
+                                            </strong>
+                                        </span>
+                                        @endif
+                                                                              </p>
 
                                     <p><strong> New Password: </strong><input type="password" class="form-control"
                                                                               name="password"
                                                                               placeholder=""
-                                                                              value="{{ old('password') }}"></p>
+                                                                              value="{{ old('password') }}">
+                                                                               @if ($errors->has('password'))
+                                        <span class="text-danger">
+                                            <strong>
+                                                {{ $errors->first('password') }}
+                                            </strong>
+                                        </span>
+                                        @endif
+                                                                              </p>
 
                                     <p><strong> Confirm Password: </strong><input type="password"
-                                                                                  class="form-control only_numeric"
+                                                                                  class="form-control"
                                                                                   name="confirm_password"
                                                                                   placeholder=""
-                                                                                  value=""></p>
+                                                                                  value="">
+                                                                                  @if ($errors->has('confirm_password'))
+                                        <span class="text-danger">
+                                            <strong>
+                                                {{ $errors->first('confirm_password') }}
+                                            </strong>
+                                        </span>
+                                        @endif
+                                                                                  </p>
                                     <button type="submit" class="btn btn-success">Change my password</button>
                                     {!! Form::close() !!}
                                 </div>

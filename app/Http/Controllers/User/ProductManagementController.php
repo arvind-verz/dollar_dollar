@@ -57,6 +57,10 @@ class ProductManagementController extends Controller
             $product_management = new ProductManagement();
             $product_management->user_id = Auth::user()->id;
             $product_management->bank_id = $request->bank_id;
+            $product_management->other_bank = null;
+            if($request->bank_id == 0 ){
+                 $product_management->other_bank = $request->bank_id_other;
+            }
             $product_management->other_bank = $request->bank_id_other;
             $product_management->account_name = $request->account_name;
             $product_management->amount = $request->amount;
@@ -106,12 +110,16 @@ class ProductManagementController extends Controller
     public function edit($id)
     {
         //dd(Route::current());
-        $ads = AdsManagement::where('delete_status', 0)
+        $ads = collect([]);
+        $adsCollection = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
                     ->where('page', 'account')
                     ->inRandomOrder()
                     ->limit(1)
                     ->get();
+        if ($adsCollection->count()) {
+        $ads = \Helper::manageAds($adsCollection);
+                }
         $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
             ->where('pages.slug', 'product-management')
             ->where('pages.delete_status', 0)
@@ -149,7 +157,10 @@ class ProductManagementController extends Controller
                 ->withInput();
         } else {
             $product_management->bank_id = $request->bank_id;
-            $product_management->other_bank = $request->bank_id_other;
+            $product_management->other_bank = null;
+            if($request->bank_id == 0 ){
+                 $product_management->other_bank = $request->bank_id_other;
+            }
             $product_management->account_name = $request->account_name;
             $product_management->amount = $request->amount;
             $product_management->tenure = $request->tenure;

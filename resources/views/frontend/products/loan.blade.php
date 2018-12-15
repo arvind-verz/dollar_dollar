@@ -64,12 +64,12 @@
                     $string);
             ?>
             {!! $output !!}
-            <div class="ps-block--deposit-filter mb-20">
+            <div class="ps-block--deposit-filter ">
                 <div class="ps-block__content">
                     <form id="search-form" class="ps-form--filter"
                           action="{{ URL::route('loan.search') }}#logo-detail"
                           method="post">
-                        <h4>Fill in your needs</h4>
+                        <h4>fill in your property loan details</h4>
 
                         <div class="ps-form__values">
                             <div class="form-group--label form-group--label1">
@@ -93,7 +93,7 @@
                             </div>
                             <div class="form-group--label form-group--label2">
                                 <div class="form-group__content">
-                                    <label>Tenure @if(isset($toolTips->tenure))
+                                    <label>Tenure (Yrs) @if(isset($toolTips->tenure))
                                             <a class="ps-tooltip" href="javascript:void(0)"
                                                data-tooltip="{{$toolTips->tenure}}"><i
                                                         class="fa fa-exclamation-circle"></i></a>
@@ -123,14 +123,18 @@
                                         <option value="{{PRIVATE_PROPERTY}}"
                                                 @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==PRIVATE_PROPERTY) selected @endif>{{PRIVATE_PROPERTY}}</option>
                                         <option value="{{COMMERCIAL_PROPERTY}}"
-                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==COMMERCIAL_PROPERTY) selected @endif>{{COMMERCIAL_INDIVIDUAL_PROPERTY}}</option>
+                                                @if(isset($searchFilter['property_type']) && $searchFilter['property_type']==COMMERCIAL_PROPERTY) selected @endif>Commercial Individual</option>
 
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group--label form-group--label3">
+                            <div class="form-group--label form-group--label4">
                                 <div class="form-group__content">
-                                    <label>Completion</label>
+                                    <label>Completion @if(isset($toolTips->property_type))
+                                            <a class="ps-tooltip" href="javascript:void(0)"
+                                               data-tooltip="{{$toolTips->property_type}}"><i
+                                                        class="fa fa-exclamation-circle"></i></a>
+                                        @endif</label>
                                     <select class="form-control" name="completion">
                                         <option value="{{COMPLETE}}"
                                                 @if(isset($searchFilter['completion']) && $searchFilter['completion']==COMPLETE) selected @endif>{{COMPLETE}}</option>
@@ -185,7 +189,7 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 ">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group  ">
                                             <select class="form-control sort-by" name="sort_by">
                                                 <option value="" disabled="disabled" selected="selected">Sort by
@@ -281,12 +285,13 @@
                                             </thead>
                                             <tbody>
                                             @foreach($productRanges as $key=> $productRange)
+                                        
                                                 <tr>
                                                     <td class=" @if($productRange->tenure_highlight==true) highlight @endif">
                                                         YEAR {{$key+1}}</td>
                                                     <td>{{$productRange->bonus_interest+$productRange->rate_interest_other}}
                                                         %
-                                                        (1mth
+                                                        (
                                                         @if($productRange->bonus_interest>0)
                                                             @if($productRange->floating_rate_type){{$productRange->floating_rate_type}}@endif
                                                         @endif
@@ -294,8 +299,9 @@
                                                             + @endif
                                                         @if($productRange->rate_interest_other>0)
                                                             {{$productRange->rate_interest_other}}%
-                                                            @if($productRange->rate_type_name)
-                                                                ({{$productRange->rate_type_name}}) @endif
+                                                             @if($productRange->rate_name_other)
+                                                                ({{$productRange->rate_name_other}}) 
+                                                                @endif
                                                         @endif
                                                         {{''}})
                                                     </td>
@@ -310,9 +316,9 @@
                                                 </td>
                                                 <td>{{($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other)}}
                                                     %
-                                                    (1mth {{$productRanges[0]->there_after_rate_type}}
+                                                    ( {{$productRanges[0]->there_after_rate_type}}
                                                     + {{$productRanges[0]->there_after_bonus_interest}}%)
-                                                    (1mth
+                                                    (
                                                     @if($productRanges[0]->there_after_bonus_interest>0)
                                                         @if($productRanges[0]->there_after_rate_type){{$productRanges[0]->there_after_rate_type}}@endif
                                                     @endif
@@ -364,7 +370,7 @@
                                                     yrs avg)</strong></p>
 
                                             <p>Mthly Instalment :<br/>
-                                               <strong>${{ Helper::inThousand($product->monthly_installment) }} ({{$product->avg_tenure}}
+                                               <strong>${{ Helper::inRoundTwoDecimal($product->monthly_installment) }} ({{$product->avg_tenure}}
                                                     yrs avg)</strong>
                                             </p>
 
@@ -454,9 +460,7 @@
                             <div class="ps-product__promo left">
                                 <label class="ps-btn--checkbox ">
                                     <input type="checkbox" id="" name="short_list_ids[]"
-                                           value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist
-                                    this
-                                    Loan
+                                           value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist this
                                 </label>
                             </div>
                         </div>
@@ -487,12 +491,13 @@
                                             </thead>
                                             <tbody>
                                             @foreach($productRanges as $key=> $productRange)
+                                            
                                                 <tr>
                                                     <td class=" ">
                                                         YEAR {{$key+1}}</td>
                                                     <td>{{$productRange->bonus_interest+$productRange->rate_interest_other}}
                                                         %
-                                                        (1mth
+                                                        (
                                                         @if($productRange->bonus_interest>0)
                                                             @if($productRange->floating_rate_type){{$productRange->floating_rate_type}}@endif
                                                         @endif
@@ -500,8 +505,9 @@
                                                             + @endif
                                                         @if($productRange->rate_interest_other>0)
                                                             {{$productRange->rate_interest_other}}%
-                                                            @if($productRange->rate_type_name)
-                                                                ({{$productRange->rate_type_name}}) @endif
+                                                            @if($productRange->rate_name_other)
+                                                                ({{$productRange->rate_name_other}}) 
+                                                                @endif
                                                         @endif
                                                         {{''}})
                                                     </td>
@@ -516,9 +522,9 @@
                                                 </td>
                                                 <td>{{($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other)}}
                                                     %
-                                                    (1mth {{$productRanges[0]->there_after_rate_type}}
+                                                    ( {{$productRanges[0]->there_after_rate_type}}
                                                     + {{$productRanges[0]->there_after_bonus_interest}}%)
-                                                    (1mth
+                                                    (
                                                     @if($productRanges[0]->there_after_bonus_interest>0)
                                                         @if($productRanges[0]->there_after_rate_type){{$productRanges[0]->there_after_rate_type}}@endif
                                                     @endif
@@ -570,7 +576,7 @@
                                                     yrs avg)</strong></p>
 
                                             <p>Mthly Instalment :<br/>
-                                                <strong>${{ Helper::inThousand($product->monthly_installment) }} ({{$product->avg_tenure}}
+                                                <strong>${{ Helper::inRoundTwoDecimal($product->monthly_installment) }} ({{$product->avg_tenure}}
                                                     yrs avg)</strong>
                                             </p>
 

@@ -105,15 +105,29 @@ class EnquiryFrontController extends Controller
     {
         //check validation
         $fields = [
-            'full_name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'country_code' => 'required|max:255',
-            'telephone' => 'required|min:8|max:255',
+            
             'subject' => 'required|max:255',
             'message' => 'required|max:3500',
             'g-recaptcha-response' => 'required|captcha'
         ];
-        $this->validate($request, $fields);
+        $validator = Validator::make($request->all(), $fields);
+         if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }elseif(\Helper::isValidEmail($request->email) == false){
+            $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
+        }
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
+        }
+         if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
         $data = $request->all();
 
         $contactEnquiry = new ContactEnquiry();
@@ -143,10 +157,7 @@ class EnquiryFrontController extends Controller
             'coverage' => 'required|max:255',
             'level' => 'required|max:255',
             'time' => 'required|max:255',
-            'full_name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'country_code' => 'required|max:255',
-            'telephone' => 'required|min:8|max:255',
+        
 
         ];
 
@@ -161,6 +172,20 @@ class EnquiryFrontController extends Controller
             }
         }
         $validator = Validator::make($request->all(), $fields);
+         if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }elseif(\Helper::isValidEmail($request->email) == false){
+            $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
+        }
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
@@ -184,7 +209,7 @@ class EnquiryFrontController extends Controller
 
         $healthInsuranceEnquiry->save();
 
-        if (Auth::user()->email == $request->email) {
+        if (Auth::check()) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -196,7 +221,7 @@ class EnquiryFrontController extends Controller
         try {
             Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
         } catch (Exception $exception) {
-            //dd($exception);
+            dd($exception);
             return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
@@ -212,10 +237,7 @@ class EnquiryFrontController extends Controller
             'dob' => 'required|max:255',
             'smoke' => 'required|max:255',
             'time' => 'required',
-            'full_name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'country_code' => 'required|max:255',
-            'telephone' => 'required|max:255',
+            
 
         ];
 
@@ -225,6 +247,20 @@ class EnquiryFrontController extends Controller
             }
         }
         $validator = Validator::make($request->all(), $fields);
+         if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }elseif(\Helper::isValidEmail($request->email) == false){
+            $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
+        }
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
@@ -252,7 +288,7 @@ class EnquiryFrontController extends Controller
 
         $lifeInsuranceEnquiry->save();
 
-        if (Auth::user()->email == $request->email) {
+       if (Auth::check()) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -279,12 +315,7 @@ class EnquiryFrontController extends Controller
             'experience' => 'required',
             'risks' => 'required',
             'age' => 'required',
-            'time' => 'required',
-            'full_name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'country_code' => 'required|max:255',
-            'telephone' => 'required|max:255',
-
+            'time' => 'required'
         ];
         if (isset($request->experience)) {
             if ($request->experience == YES) {
@@ -303,6 +334,21 @@ class EnquiryFrontController extends Controller
         }
 
         $validator = Validator::make($request->all(), $fields);
+        
+        if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }elseif(\Helper::isValidEmail($request->email) == false){
+            $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
+        }
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
@@ -330,12 +376,13 @@ class EnquiryFrontController extends Controller
         $investmentEnquiry->other_value = $request->other_value;
         $investmentEnquiry->full_name = $request->full_name;
         $investmentEnquiry->email = $request->email;
+        $investmentEnquiry->age = $request->age;
         $investmentEnquiry->country_code = $request->country_code;
         $investmentEnquiry->telephone = $request->telephone;
 
         $investmentEnquiry->save();
 
-        if (Auth::user()->email == $request->email) {
+        if (Auth::check()) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -376,20 +423,32 @@ class EnquiryFrontController extends Controller
     {
 
         //check validation
-        $fields = [
-            'full_name' => 'required',
-            'email' => 'required|email',
-            'rate_type_search' => 'required',
-            'property_type_search' => 'required',
-            'loan_amount' => 'required|max:255',
-            'loan_type' => 'required|max:255',
-            'country_code' => 'required|max:255',
-
-        ];
+        $fields = ['g-recaptcha-response' => 'required|captcha'];
 
         $validator = Validator::make($request->all(), $fields);
+        if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }
         if (!$request->telephone) {
-            $validator->getMessageBag()->add('telephone', 'The mobile number is required');
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->rate_type_search) {
+            $validator->getMessageBag()->add('rate_type_search', 'This field is required.');
+        }
+        if (!$request->property_type_search) {
+            $validator->getMessageBag()->add('property_type_search', 'This field is required.');
+        }
+        if (!$request->loan_amount) {
+            $validator->getMessageBag()->add('loan_amount', 'This field is required.');
+        }
+        if (!$request->loan_type) {
+            $validator->getMessageBag()->add('loan_type', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
         }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());

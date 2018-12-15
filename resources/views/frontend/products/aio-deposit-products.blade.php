@@ -597,7 +597,7 @@
                                                     <tr>
                                                         <th class="combine-criteria-padding">CRITERIA</th>
                                                         <th class="combine-criteria-padding">SALARY</th>
-                                                        <th class="combine-criteria-padding">Giro</th>
+                                                        <th class="combine-criteria-padding">PAYMENT</th>
                                                         <th class="combine-criteria-padding">SPEND</th>
                                                         <th class="combine-criteria-padding">
                                                             Loan
@@ -687,20 +687,20 @@
                                                             <td colspan="1" class="text-left">Bonus Interest PA</td>
                                                             <td class="text-center @if($product->criteria_1==true ) highlight @endif"
                                                                 colspan="2">1 Criteria Met
-                                                                - @if($range->bonus_interest_criteria1<=0)
-                                                                    - @else  {{ $range->bonus_interest_criteria1 }}
+                                                                 @if($range->bonus_interest_criteria1<=0)
+                                                                    - @else - {{ $range->bonus_interest_criteria1 }}
                                                                     % @endif
                                                             </td>
                                                             <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
                                                                 colspan="2">2 Criteria
-                                                                - @if($range->bonus_interest_criteria2<=0)
-                                                                    - @else  {{ $range->bonus_interest_criteria2 }}
+                                                                 @if($range->bonus_interest_criteria2<=0)
+                                                                    - @else - {{ $range->bonus_interest_criteria2 }}
                                                                     % @endif
                                                             </td>
                                                             <td class="text-center @if($product->criteria_3==true ) highlight @endif"
                                                                 colspan="1">3
                                                                 Criteria @if($range->bonus_interest_criteria3<=0)
-                                                                    - @else  {{ $range->bonus_interest_criteria3 }}
+                                                                    - @else - {{ $range->bonus_interest_criteria3 }}
                                                                     % @endif
                                                             </td>
                                                         </tr>
@@ -1033,11 +1033,11 @@
                                                                 <td class=" pt-0 pb-0 pl-0 pr-0 text-center @if($product->spend_2_highlight==true || $product->spend_1_highlight==true ) highlight @endif">
                                                                     <table cellspacing="0" cellpadding="0">
                                                                         <tr>
-                                                                            <td class="td-unique text-center @if($product->spend_1_highlight==true ) highlight @endif">
+                                                                            <td class=" text-center @if($product->spend_1_highlight==true ) highlight @endif">
                                                                                 @if($range->bonus_interest_spend_1<=0)
                                                                                     - @else {{ $range->bonus_interest_spend_1 }}
                                                                                 % @endif</td>
-                                                                            <td class="td-unique text-center @if($product->spend_2_highlight==true ) highlight @endif">
+                                                                            <td class=" text-center @if($product->spend_2_highlight==true ) highlight @endif">
                                                                                 @if($range->bonus_interest_spend_2<=0)
                                                                                     - @else {{ $range->bonus_interest_spend_2 }}
                                                                                 % @endif</td>
@@ -1069,17 +1069,17 @@
                                                                         % @endif
                                                                 </td>@endif
                                                             @if(!empty($firstRange->minimum_loan_pa))
-                                                                <td class="text-left @if($product->loan_highlight==true ) highlight @endif">@if($range->bonus_interest_loan<=0)
+                                                                <td class="text-center @if($product->loan_highlight==true ) highlight @endif">@if($range->bonus_interest_loan<=0)
                                                                         - @else  {{ $range->bonus_interest_loan }}
                                                                         % @endif
                                                                 </td>@endif
                                                             @if(!empty($firstRange->other_minimum_amount1)&& ($firstRange->status_other1 == 1))
-                                                                <td class="text-left @if($product->other_highlight1==true ) highlight @endif">@if($range->other_interest1<=0)
+                                                                <td class="text-center @if($product->other_highlight1==true ) highlight @endif">@if($range->other_interest1<=0)
                                                                         - @else  {{ $range->other_interest1 }}
                                                                         % @endif
                                                                 </td>@endif
                                                             @if(!empty($firstRange->other_minimum_amount2)&& ($firstRange->status_other2 == 1))
-                                                                <td class="text-left @if($product->other_highlight2==true ) highlight @endif">@if($range->other_interest2<=0)
+                                                                <td class="text-center @if($product->other_highlight2==true ) highlight @endif">@if($range->other_interest2<=0)
                                                                         - @else  {{ $range->other_interest2 }}
                                                                         % @endif
                                                                 </td>@endif
@@ -1617,7 +1617,7 @@
                                                                 SALARY
                                                             </th>
                                                             <th class="combine-criteria-padding">
-                                                                Giro
+                                                                PAYMENT
                                                             </th>
                                                             <th class="combine-criteria-padding">
                                                                 SPEND
@@ -1710,20 +1710,20 @@
                                                                 <td>Bonus Interest PA</td>
                                                                 <td class="text-center @if($product->criteria_1==true ) highlight @endif"
                                                                     colspan="2">1 Criteria Met
-                                                                    - @if($range->bonus_interest_criteria1<=0)
-                                                                        - @else  {{ $range->bonus_interest_criteria1 }}
+                                                                     @if($range->bonus_interest_criteria1<=0)
+                                                                        - @else - {{ $range->bonus_interest_criteria1 }}
                                                                         % @endif
                                                                 </td>
                                                                 <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
                                                                     colspan="2">2 Criteria
-                                                                    - @if($range->bonus_interest_criteria2<=0)
-                                                                        - @else  {{ $range->bonus_interest_criteria2 }}
+                                                                     @if($range->bonus_interest_criteria2<=0)
+                                                                        - @else - {{ $range->bonus_interest_criteria2 }}
                                                                         % @endif
                                                                 </td>
                                                                 <td class="text-center @if($product->criteria_3==true ) highlight @endif"
                                                                     colspan="1">3
-                                                                    Criteria @if($range->bonus_interest_criteria3<=0)
-                                                                        - @else  {{ $range->bonus_interest_criteria3 }}
+                                                                    Criteria  @if($range->bonus_interest_criteria3<=0)
+                                                                        - @else - {{ $range->bonus_interest_criteria3 }}
                                                                         % @endif
                                                                 </td>
                                                             </tr>
@@ -2017,11 +2017,11 @@
                                                                         <td class=" pt-0 pb-0 pl-0 pr-0 text-center @if($product->spend_2_highlight==true || $product->spend_1_highlight==true ) highlight @endif">
                                                                             <table cellspacing="0" cellpadding="0">
                                                                                 <tr>
-                                                                                    <td class="td-unique text-center @if($product->spend_1_highlight==true ) highlight @endif">
+                                                                                    <td class=" text-center  td-unique text-center @if($product->spend_1_highlight==true ) highlight @endif">
                                                                                         @if($range->bonus_interest_spend_1<=0)
                                                                                             - @else {{ $range->bonus_interest_spend_1 }}
                                                                                         % @endif</td>
-                                                                                    <td class="td-unique text-center @if($product->spend_2_highlight==true ) highlight @endif">
+                                                                                    <td class=" text-center  td-unique text-center @if($product->spend_2_highlight==true ) highlight @endif">
                                                                                         @if($range->bonus_interest_spend_2<=0)
                                                                                             - @else {{ $range->bonus_interest_spend_2 }}
                                                                                         % @endif</td>
@@ -2030,19 +2030,19 @@
                                                                         </td>
                                                                     @endif
                                                                     @if(!empty($firstRange->minimum_salary))
-                                                                        <td class="text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
+                                                                        <td class=" text-center  text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
                                                                                 - @else {{ $range->bonus_interest_salary }}
                                                                                 % @endif
 
                                                                         </td>@endif
                                                                     @if(!empty($firstRange->minimum_giro_payment))
-                                                                        <td class="text-center @if($product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
+                                                                        <td class=" text-center  text-center @if($product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
                                                                                 - @else {{ $range->bonus_interest_giro_payment }}
                                                                                 % @endif
 
                                                                         </td>@endif
                                                                     @if(!empty($firstRange->minimum_privilege_pa))
-                                                                        <td class="text-center @if($product->privilege_highlight==true ) highlight @endif">
+                                                                        <td class=" text-center  text-center @if($product->privilege_highlight==true ) highlight @endif">
                                                                             Up
                                                                             to @if($range->bonus_interest_privilege<=0)
                                                                                 - @else  {{ $range->bonus_interest_privilege }}
@@ -2054,12 +2054,12 @@
                                                                                 % @endif
                                                                         </td>@endif
                                                                     @if(!empty($firstRange->other_minimum_amount1)&& ($firstRange->status_other1 == 1))
-                                                                        <td class="text-left @if($product->other_highlight1==true ) highlight @endif">@if($range->other_interest1<=0)
+                                                                        <td class= text-center  "text-left @if($product->other_highlight1==true ) highlight @endif">@if($range->other_interest1<=0)
                                                                                 - @else  {{ $range->other_interest1 }}
                                                                                 % @endif
                                                                         </td>@endif
                                                                     @if(!empty($firstRange->other_minimum_amount2)&& ($firstRange->status_other2 == 1))
-                                                                        <td class="text-left @if($product->other_highlight2==true ) highlight @endif">@if($range->other_interest2<=0)
+                                                                        <td class=" text-center  text-left @if($product->other_highlight2==true ) highlight @endif">@if($range->other_interest2<=0)
                                                                                 - @else  {{ $range->other_interest2 }}
                                                                                 % @endif
                                                                         </td>@endif

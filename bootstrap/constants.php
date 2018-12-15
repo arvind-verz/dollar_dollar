@@ -27,7 +27,8 @@ define('PROMOTION', 'Promotion');
 
 
 //set mail name
-define('ADMIN_EMAIL', 'enquiry@dollardollar.sg');
+//define('ADMIN_EMAIL', 'enquiry@dollardollar.sg');
+define('ADMIN_EMAIL', 'nicckk.verz@gmail.com');
 define('ENQUIRY_EMAIL', '');
 
 //Activity log status
@@ -150,9 +151,10 @@ define('TAG_MODULE_ID', 36);
 define('PRODUCT_PAGE_ID', 20);
 define('CATEGORY_PAGE_ID', 26);
 define('PROMOTION_PAGE_ID', 21);
-
+define('HOME_PAGE_ID', 18);
 //Blog menu id
 define('BLOG_MENU_ID', 21);
+define('WEALTH_MENU_ID', 22);
 define('PRODUCT_ID', 37);
 
 //Alert messages
@@ -165,7 +167,7 @@ define('ALREADY_TAKEN_ALERT', " has already been taken.");
 define('OPPS_ALERT', " Oops! Something went wrong!");
 define('CREDENTIALS_ALERT', " These credentials do not match our records.");
 define('SELECT_ALERT', " has been not selected.");
-define('MAX_HOME_BANNER_ALERT', " You can upload only 5 banners for ");
+define('MAX_HOME_BANNER_ALERT', " You can upload only 4 banners for ");
 define('MAX_BANNER_ALERT', " You can upload only 1 banner for ");
 define('EMPTY_AD_IMAGE_ALERT', "At least upload one ad image.");
 

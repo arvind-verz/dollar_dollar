@@ -944,7 +944,7 @@ public static function getLoanProducts($productType, $byOrderValue)
     {
         DB::connection()->enableQueryLog();
         $customer_reports = ProductManagement::join('users', 'product_managements.user_id', '=', 'users.id')
-            ->join('brands', 'product_managements.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'product_managements.bank_id', '=', 'brands.id')
             ->where('users.id', $id)
             ->get();
             //dd(DB::getQueryLog());
@@ -964,7 +964,7 @@ public static function getLoanProducts($productType, $byOrderValue)
             <td></td>
             <?php } ?>
 
-            <td><?php echo $customer_report->title; ?></td>
+            <td><?php if(!$customer_report->title){ echo $customer_report->other_bank;} else{echo $customer_report->title;}  ?></td>
         <td><?php echo ucwords($customer_report->account_name); ?></td>
         <td><?php echo '$'.$customer_report->amount; ?></td>
         <td><?php if($customer_report->end_date) {echo date('d-m-Y', strtotime($customer_report->end_date));} ?></td>
@@ -1017,6 +1017,10 @@ public static function getLoanProducts($productType, $byOrderValue)
             }
             }
             return $ads;
+    }
+    
+    public static function isValidEmail($email){ 
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
     }
 
 }

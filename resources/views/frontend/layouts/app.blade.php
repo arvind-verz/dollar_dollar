@@ -100,16 +100,7 @@ if (!$systemSetting) {
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $(".only_numeric").numeric();
-        // NUMERIC DIGITS WITH + SPECIAL ONLY
-        $("input[name='country_code'], input[name='telephone']").on('keydown', function (e) {
-            if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode != 8 && e.keyCode != 37 && e.keyCode != 39 && e.keyCode != 9 && e.keyCode != 187) {
-                e.preventDefault();
-            }
-        });
-    });
-
+    
     $(document).ready(function () {
         //Date picker
         $('.datepicker').datepicker({

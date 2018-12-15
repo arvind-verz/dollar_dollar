@@ -174,6 +174,7 @@ class PagesFrontController extends Controller
             }
             $redirect_url = "profile-dashboard";
             $slug = $page->slug;
+            
 //get banners
             $banners = \Helper::getBanners($slug);
 
@@ -185,27 +186,19 @@ class PagesFrontController extends Controller
                 if ($slug == CONTACT_SLUG) {
                     return view('frontend.CMS.contact', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == HEALTH_INSURANCE_ENQUIRY) {
+                    
                     $redirect_url = HEALTH_INSURANCE_ENQUIRY;
-                    if (Auth::check()) {
-                        return view('frontend.CMS.health-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
-                    } else {
-                        return view('auth.login', compact("redirect_url"));
-                    }
+                     return view('frontend.CMS.health-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+                   
                 } elseif ($slug == LIFE_INSURANCE_ENQUIRY) {
                     $redirect_url = LIFE_INSURANCE_ENQUIRY;
-                    if (Auth::check()) {
-                        return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
-                    } else {
-                        return view('auth.login', compact("redirect_url"));
-                    }
+                    return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+                    
                 } elseif ($slug == INVESTMENT_ENQUIRY) {
 
                     $redirect_url = INVESTMENT_ENQUIRY;
-                    if (Auth::check()) {
-                        return view('frontend.CMS.investment-enquiry', compact("brands", "page", "systemSetting", "banners"));
-                    } else {
-                        return view('auth.login', compact("redirect_url"));
-                    }
+                    return view('frontend.CMS.investment-enquiry', compact("brands", "page", "systemSetting", "banners"));
+                
                 } elseif ($slug == LOAN_ENQUIRY) {
                     return view('frontend.CMS.loan-enquiry', compact("brands", "page", "systemSetting", "banners"));
 
@@ -467,6 +460,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         //dd($products);
         if (!count($request)) {
 
@@ -744,6 +738,7 @@ class PagesFrontController extends Controller
                 }
             }
             $products = $products->sortByDesc('featured')->values();
+            $sliderProducts = $products->where('promotion_formula_id','!=',null)->values();
         }
         if ($remainingProducts->count()) {
 
@@ -794,7 +789,7 @@ class PagesFrontController extends Controller
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", 'ads_manage'));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products","sliderProducts", "searchFilter", "legendtable", "remainingProducts", 'ads_manage'));
 
     }
 
@@ -1026,6 +1021,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         //dd($products);
         if (!count($request)) {
 
@@ -1762,6 +1758,7 @@ class PagesFrontController extends Controller
                 }
             }
             $products = $products->sortByDesc('featured')->values();
+            $sliderProducts = $products->where('promotion_formula_id','!=',null)->values();
         }
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
@@ -1811,7 +1808,7 @@ class PagesFrontController extends Controller
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-        return view('frontend.products.privilege-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts"));
+        return view('frontend.products.privilege-deposit-products', compact("brands", "page", "systemSetting","sliderProducts", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts"));
 
     }
 
@@ -1869,6 +1866,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         //dd($products);
 
         if (!count($request)) {
@@ -2456,6 +2454,7 @@ class PagesFrontController extends Controller
                 }
             }
             $products = $products->sortByDesc('featured')->values();
+            $sliderProducts = $products->where('promotion_formula_id','!=',null)->values();
         }
         if ($remainingProducts->count()) {
 
@@ -2506,7 +2505,7 @@ class PagesFrontController extends Controller
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", "ads_manage"));
+        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products","sliderProducts", "searchFilter", "legendtable", "remainingProducts", "ads_manage"));
     }
 
     public function product_search_homepage(Request $request)
@@ -2594,6 +2593,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         //dd($products);
         if (!count($request)) {
 
@@ -3331,6 +3331,7 @@ class PagesFrontController extends Controller
                 }
             }
             $products = $products->sortByDesc('featured')->values();
+            $sliderProducts = $products->where('promotion_formula_id','!=',null)->values();
         }
         if ($remainingProducts->count()) {
 
@@ -3381,7 +3382,7 @@ class PagesFrontController extends Controller
             }
             $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
         }
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts", "currencies"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter","sliderProducts", "legendtable", "ads_manage", "remainingProducts", "currencies"));
 
     }
 
@@ -3439,6 +3440,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         foreach ($promotion_products as $key => $product) {
             $defaultSearch = DefaultSearch::where('promotion_id', ALL_IN_ONE_ACCOUNT)->first();
             if ($defaultSearch) {
@@ -4104,6 +4106,7 @@ class PagesFrontController extends Controller
                 }
             }
             $products = $products->sortByDesc('featured')->values();
+            $sliderProducts = $products->where('promotion_formula_id','!=',null)->values();
         }
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
@@ -4127,7 +4130,7 @@ class PagesFrontController extends Controller
         }
 
         //dd($products);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage", "toolTips"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts","sliderProducts", "searchFilter", "legendtable", "ads_manage", "toolTips"));
     }
 
     public
@@ -4182,6 +4185,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         if ($promotion_products->count()) {
             foreach ($promotion_products as $key => $product) {
 
@@ -4346,6 +4350,7 @@ class PagesFrontController extends Controller
                 }
             }
             $products = $products->sortByDesc('featured')->values();
+            $sliderProducts = $products->where('promotion_formula_id','!=',null)->values();
         }
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
@@ -4369,7 +4374,7 @@ class PagesFrontController extends Controller
         }
 
         //dd($products);
-        return view('frontend.products.loan', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "ads_manage", "toolTips"));
+        return view('frontend.products.loan', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts","sliderProducts", "searchFilter", "ads_manage", "toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)
@@ -5137,7 +5142,7 @@ class PagesFrontController extends Controller
                                         } ?> ">
                                             <table cellspacing="0" cellpadding="0">
                                                 <tr>
-                                                    <td class="td-unique text-center <?php if ($product->spend_1_highlight == true) {
+                                                    <td class=" text-center <?php if ($product->spend_1_highlight == true) {
                                                         echo "highlight";
                                                     } ?> ">
                                                         <?php if ($range->bonus_interest_spend_1 <= 0) {
@@ -5147,7 +5152,7 @@ class PagesFrontController extends Controller
                                                         } ?>
 
                                                     </td>
-                                                    <td class="td-unique text-center <?php if ($product->spend_2_highlight == true) {
+                                                    <td class=" text-center <?php if ($product->spend_2_highlight == true) {
                                                         echo "highlight";
                                                     } ?>">
                                                         <?php if ($range->bonus_interest_spend_2 <= 0) {
@@ -5199,7 +5204,7 @@ class PagesFrontController extends Controller
                                         </td>
                                     <?php }
                                     if (!empty($firstRange->minimum_loan_pa)) { ?>
-                                        <td class=" text-left  <?php if ($product->loan_highlight == true) {
+                                        <td class=" text-center  <?php if ($product->loan_highlight == true) {
                                             echo "highlight";
                                         } ?> ">
                                             <?php if ($range->bonus_interest_loan <= 0) {
@@ -5211,7 +5216,7 @@ class PagesFrontController extends Controller
                                         </td>
                                     <?php }
                                     if (!empty($firstRange->other_minimum_amount1) && ($firstRange->status_other1 == 1)) { ?>
-                                        <td class=" text-left  <?php if ($product->other_highlight1 == true) {
+                                        <td class=" text-center  <?php if ($product->other_highlight1 == true) {
                                             echo "highlight";
                                         } ?> ">
                                             <?php if ($range->other_interest1 <= 0) {
@@ -5223,7 +5228,7 @@ class PagesFrontController extends Controller
                                         </td>
                                     <?php }
                                     if (!empty($firstRange->other_minimum_amount2) && ($firstRange->status_other2 == 1)) { ?>
-                                        <td class=" text-left  <?php if ($product->other_highlight2 == true) {
+                                        <td class=" text-center  <?php if ($product->other_highlight2 == true) {
                                             echo "highlight";
                                         } ?> ">
                                             <?php if ($range->other_interest2 <= 0) {
@@ -5595,13 +5600,13 @@ class PagesFrontController extends Controller
                 $featured_item = 5 - count($featured);
                 $featured_count = count($featured);
                 $featured_width = 0;
-                if ($featured_count == 1) {
+                /*if ($featured_count == 1) {
                     $featured_width = 2;
                 } elseif ($featured_count == 2) {
                     $featured_width = 3;
                 } elseif ($featured_count == 3) {
                     $featured_width = 4;
-                }
+                }*/
                 ?>
                 <div class="product-col-0<?php echo $featured_width; ?> dump-padding-left">
                     <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
@@ -5751,7 +5756,7 @@ class PagesFrontController extends Controller
                                             if ($product->by_order_value == TENURE) {
                                                 ?>
                                                 Lock in: <span
-                                                    class="highlight-slider"> <?php echo $product->lock_in; ?> </span>
+                                                    class="highlight-slider"> <?php echo $product->lock_in; ?> YRS </span>
                                             <?php }
                                             if ($product->by_order_value == INSTALLMENT) { ?>
                                                 Min:  <span
@@ -5831,7 +5836,7 @@ class PagesFrontController extends Controller
                                             if ($product->by_order_value == TENURE) {
                                                 ?>
                                                 Lock in: <span
-                                                    class="highlight-slider"> <?php echo $product->lock_in; ?> </span>
+                                                    class="highlight-slider"> <?php echo $product->lock_in; ?> YRS </span>
                                             <?php }
                                             if ($product->by_order_value == INSTALLMENT) { ?>
                                                 Min:  <span
@@ -5882,13 +5887,13 @@ class PagesFrontController extends Controller
                 $featured_item = 5 - count($featured);
                 $featured_count = count($featured);
                 $featured_width = 0;
-                if ($featured_count == 1) {
+                /*if ($featured_count == 1) {
                     $featured_width = 2;
                 } elseif ($featured_count == 2) {
                     $featured_width = 3;
                 } elseif ($featured_count == 3) {
                     $featured_width = 4;
-                }
+                }*/
                 ?>
                 <div class="product-col-0<?php echo $featured_width; ?> dump-padding-left">
                     <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
@@ -5916,7 +5921,7 @@ class PagesFrontController extends Controller
                                         if ($product->by_order_value == TENURE) {
                                             ?>
                                             Lock in: <span
-                                                class="highlight-slider"> <?php echo $product->lock_in; ?> </span>
+                                                class="highlight-slider"> <?php echo $product->lock_in; ?> YRS </span>
                                         <?php }
                                         if ($product->by_order_value == INSTALLMENT) { ?>
                                             Min:  <span

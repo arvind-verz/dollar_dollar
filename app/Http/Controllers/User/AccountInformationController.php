@@ -67,11 +67,11 @@ class AccountInformationController extends Controller
      */
     public function edit($id, $location=NULL)
     {
+        $ads =[];
         $adsCollection = AdsManagement::where('delete_status', 0)
                     ->where('display', 1)
                     ->where('page', 'account')
                     ->inRandomOrder()
-                    ->limit(1)
                     ->get();
         if ($adsCollection->count()) {
             $ads = \Helper::manageAds($adsCollection);

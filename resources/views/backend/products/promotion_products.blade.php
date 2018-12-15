@@ -119,7 +119,7 @@
                                                                     }
                                                                     ?>
 
-                                                                    @if ($untilEndDate != null && $untilEndDate > $todayDate) {!!  date("Y-m-d h:i A", strtotime($product->until_end_date))   !!} @else {{EXPIRED}}  @endif
+                                                                    @if ($untilEndDate != null && $untilEndDate > $todayDate) {!!  date("Y-m-d", strtotime($product->until_end_date))   !!} @else {{EXPIRED}}  @endif
                                                                 @endif
                                                             @endif
 

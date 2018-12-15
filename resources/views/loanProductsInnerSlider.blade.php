@@ -1,6 +1,6 @@
 <div class="product-row-01 clearfix slider-class">
     @php $i = 1;$featured = []; @endphp
-    @foreach($products as $product)
+    @foreach($sliderProducts as $product)
         @if($product->featured==1)
             @php $featured[] = $i; @endphp
             <div class="product-col-01">
@@ -63,7 +63,7 @@
              data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
              data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
             @php $i = 1; @endphp
-            @foreach($products as $product)
+            @foreach($sliderProducts as $product)
                 @if($product->featured==0)
                     <div class="ps-block--short-product second" data-mh="product"><img
                                 src="{{ asset($product->brand_logo) }}" alt="">

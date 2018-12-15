@@ -26,14 +26,14 @@ Route::get('/welcome', 'HomeController@index')->name('welcome');
 Route::get('/', 'HomeController@index')->name('/');
 /*End Home Module*/
 
-Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social-login');
 Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 /*User Module*/
 Auth::routes();
 Route::get('registration_page/{redirect_url}', 'Auth\RegisterController@registration_page');
-
+Route::get('login_page/{redirect_url}', 'Auth\LoginController@logInPage');
 /*Forgot Password route*/
     Route::post('/forgot-password', 'User\UserFrontController@postForgotPassword')->name('forgot-password');
     Route::get('/password-reset/{token}', 'User\UserFrontController@postForgotPasswordReset')->name('password-reset');

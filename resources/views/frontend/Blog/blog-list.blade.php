@@ -55,9 +55,12 @@
                         @foreach($details as $detail)
                             <?php //dd($detail); ?>
                             <div class="ps-post">
-                                <div class="ps-post__thumbnail"><a class="ps-post__overlay"
-                                                                   href="{{ url($detail->slug) }}"></a><img
-                                            src="{{ asset($detail->blog_image) }}" alt=""></div>
+                                <div class="ps-post__thumbnail">
+                                     @if($detail->blog_image)
+                                    <a class="ps-post__overlay" href="{{ url($detail->slug) }}"></a>
+                                                                  <img src="{{ asset($detail->blog_image) }}" alt="">
+                                                                   @endif
+                                                                   </div>
                                 <div class="ps-post__content"><a class="ps-post__title"
                                                                  href="{{ url($detail->slug) }}">{{$detail->name}}</a>
                                     <span class="ps-post__meta"><a
@@ -66,7 +69,6 @@
                                     <?php
                                         $string = strip_tags($detail->short_description);
                                         if (strlen($string) > 300) {
-
                                         $stringCut = substr($string, 0, 300);
                                         $endPoint = strrpos($stringCut, ' ');
                                         $string = $endPoint? substr($stringCut, 0, $endPoint):substr($stringCut, 0);

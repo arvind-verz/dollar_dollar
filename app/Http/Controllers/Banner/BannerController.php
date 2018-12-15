@@ -86,6 +86,7 @@ class BannerController extends Controller
      */
     public function store(Request $request, $type)
     {
+        
         //
         $validatorFields = [
             'title' => 'required',
@@ -98,6 +99,8 @@ class BannerController extends Controller
         ];
 
         $validator = Validator::make($request->all(), $validatorFields);
+        
+        
         if ($request->category == "null") {
             $category = null;
         } else {
@@ -110,17 +113,17 @@ class BannerController extends Controller
             $pages = Page::where('delete_status', 0)->get();
             if ($pages->count()) {
                 $page = $pages->where('id', $request->page)->where('delete_status', 0)->first();
-                $homePage = $pages->where('is_index', 1)->where('delete_status', 0)->first();
-
+            
                 $banners = Banner::where('delete_status', 0)->get();
                 if ($banners->count()) {
                     $existBanner = $banners->where('page_id', $request->page)->where('delete_status', 0)->first();
                     $countBanner = $banners->where('page_id', $request->page)->where('delete_status', 0)
                         ->count();
+                        
                     if ($existBanner) {
-                        if (($request->page == $homePage->id) && ($countBanner >= 5)) {
+                        if (($request->page == HOME_PAGE_ID) && ($countBanner >=4)) {
                             $validator->getMessageBag()->add('page', MAX_HOME_BANNER_ALERT . ' ' . $page->name);
-                        } elseif (($request->page != $homePage->id) && ($countBanner >= 1)) {
+                        } elseif (($request->page != HOME_PAGE_ID) && ($countBanner >= 1)) {
                             $validator->getMessageBag()->add('page', MAX_BANNER_ALERT . ' ' . $page->name);
                         }
                     }
@@ -182,7 +185,7 @@ class BannerController extends Controller
         $banner->target = $request->target;
         $banner->banner_content_color = $request->banner_content_color;
         $banner->banner_content = $request->banner_content;
-        $banner->view_order = $request->view_order;
+       // $banner->view_order = $request->view_order;
         $banner->banner_link = ($request->banner_link ? $request->banner_link : '');
         $banner->banner_image = $destinationPath . "/" . $banner_image;
         $banner->fixed_banner = $destinationPath . "/" . $fixed_banner;
@@ -294,7 +297,7 @@ class BannerController extends Controller
             $pages = Page::where('delete_status', 0)->get();
             if ($pages->count()) {
                 $page = $pages->where('id', $request->page)->where('delete_status', 0)->first();
-                $homePage = $pages->where('is_index', 1)->where('delete_status', 0)->first();
+               
 
                 $banners = Banner::where('delete_status', 0)->whereNotIn('id', [$id])->get();
                 if ($banners->count()) {
@@ -302,9 +305,9 @@ class BannerController extends Controller
                     $countBanner = $banners->where('page_id', $request->page)->where('delete_status', 0)
                         ->count();
                     if ($existBanner) {
-                        if (($request->page == $homePage->id) && ($countBanner >= 5)) {
+                        if (($request->page == HOME_PAGE_ID) && ($countBanner >= 4)) {
                             $validator->getMessageBag()->add('page', MAX_HOME_BANNER_ALERT . ' ' . $page->name);
-                        } elseif (($request->page != $homePage->id) && ($countBanner >= 1)) {
+                        } elseif (($request->page != HOME_PAGE_ID) && ($countBanner >= 1)) {
                             $validator->getMessageBag()->add('page', MAX_BANNER_ALERT . ' ' . $page->name);
                         }
                     }
@@ -375,7 +378,7 @@ class BannerController extends Controller
         $banner->target = $request->target;
         $banner->banner_content = $request->banner_content;
         $banner->banner_content_color = $request->banner_content_color;
-        $banner->view_order = $request->view_order;
+        //$banner->view_order = $request->view_order;
         $banner->banner_link = ($request->banner_link ? $request->banner_link : '');
         $banner->fixed_banner_link = ($request->fixed_banner_link ? $request->fixed_banner_link : '');
         $banner->banner_start_date = $request->banner_start_date;

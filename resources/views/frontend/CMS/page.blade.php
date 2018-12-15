@@ -110,12 +110,16 @@
             <div class="col-lg-12">
                 <p>You have to Login/Register to enquire now!</p>
             </div>
-            <div class="col-lg-12">
-                <a class="ps-btn" href="{{ url($redirect_url) }}">Login</a>
+             <div class="col-lg-12">
+                <a class="ps-btn" href="@if(!empty($redirect_url)) {{ url('login_page', ['redirect_url' => $redirect_url]) }} @else {{ url('login_page') }} @endif">Login</a>
             </div>
             <div class="col-lg-12">
                 <a class="ps-btn ps-btn--outline" href="@if(!empty($redirect_url)) {{ url('registration_page', ['redirect_url' => $redirect_url]) }} @else {{ url('registration') }} @endif">Signup</a>
             </div>
+            <div class="col-lg-12">
+                <a class="standard-link" href="@if(!empty($redirect_url)) {{ url($redirect_url) }} @else # @endif">Else click here to continue</a>
+            </div>
+            <div class="clearfix"></div>
         </div>
         <img src="https://www.dollardollar.sg/frontend/images/logo_1535015224_7664b296e0e085eaa5e4852c2e8b11ba_1539598995.jpg" alt="">
       </div>

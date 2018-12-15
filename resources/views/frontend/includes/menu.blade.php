@@ -1,7 +1,8 @@
 <header class="header">
     <div class="header__top">
         <div class="container">
-            <p>@if(AUTH::check())Hello, {{ AUTH::user()->first_name }} @endif Welcome to DollarDollar.SG</p>
+            <!--<p>@if(AUTH::check())Hello, {{ AUTH::user()->first_name }} @endif Welcome to DollarDollar.SG</p>
+            -->
             <ul class="header__actions">
                 @guest
                 <li><a href="{{ url(REGISTRATION) }}">Sign up</a></li>
@@ -15,14 +16,14 @@
     </div>
     <nav class="navigation">
         <?php
-        function printTerms($menus, $slug, $parent = 0, $deep = 0) { ?>
+        function printTerms($menus, $slug,$mainMenuId, $parent = 0, $deep = 0) { ?>
         @if(count($menus[$parent]) > 0)
 
             <?php foreach($menus[$parent] as $key => $menu) {  ?>
 
             @if (isset($menus[$menu['id']]) && (count($menus[$menu['id']]) > 0) )
 
-                <li class="menu-item-has-children"><a
+                <li class="menu-item-has-children @if($mainMenuId==$menu['id'] || ($menu['slug'] == $slug && $mainMenuId==BLOG_MENU_ID)) current-menu-item  @endif {{$mainMenuId}} "><a
                             href="@if($menu['slug'] != null) {{route('slug',[$menu['slug']]) }} @else javascript:void(0) @endif"><i class="{{ $menu['icon'] }}"></i>{{$menu['title']}}</a>
 
                     @if($menu['slug'] == BLOG_URL)
@@ -36,7 +37,7 @@
                     @else
                         <ul class="sub-menu">
                             <?php
-                            printTerms($menus, $menu['slug'], $menu['id'], ($deep + 1));
+                            printTerms($menus, $slug,$mainMenuId, $menu['id'], ($deep + 1));
                             ?>
                         </ul>
                     @endif
@@ -44,19 +45,16 @@
 
                 </li>
             @elseif($menu['slug'] != null)
-                <li class="@if($menu['slug']== $slug) current-menu-item @endif"><a
+                <li class="@if($menu['slug']== $slug) active-menu @endif"><a
                             href="{{route('slug',[$menu['slug']]) }}"><i class="{{ $menu['icon'] }}"></i>{{$menu['title']}}</a>
-
                     @if($menu['slug'] == BLOG_URL)
                         <ul class="sub-menu">
                             <?php
-
                             $slug = BLOG_URL;
                             $menus = \Helper::getBlogMenus($slug);
                             if (count($menus)) {
-                                printTerms($menus, BLOG_URL);
+                                printTerms($menus, BLOG_URL,$mainMenuId);
                             }
-
                             ?>
                         </ul>
                     @endif
@@ -108,9 +106,31 @@
             <ul class="menu">
                 <?php
                 $id = 0;
-                $menus = Helper::getMenus($id);
-                //dd($menus);
-                printTerms($menus, $page->slug); ?>
+                $menus = \Helper::getMenus($id);
+                $mainMenuId = null;
+                $parentMenu = null;
+                    if($page->slug == BLOG_URL){
+                        $mainMenuId = BLOG_MENU_ID;
+                    }else{
+                        $parentMenu = \App\Menu::where('id',$page->menu_id)->first();
+                    }
+                    if($parentMenu){
+                        $mainMenuId = $parentMenu->main;
+                     }
+                     $slug = $page->slug;
+                if($page->slug=='health-insurance-enquiry') {
+                    $slug = 'health-insurance';
+                    $mainMenuId = WEALTH_MENU_ID;
+                }
+                elseif($page->slug=='life-insurance-enquiry') {
+                    $slug = 'life-insurance';
+                    $mainMenuId = WEALTH_MENU_ID;
+                }
+                elseif($page->slug=='investment-enquiry') {
+                    $slug = 'investment';
+                    $mainMenuId = WEALTH_MENU_ID;
+                }
+                printTerms($menus,$slug,$mainMenuId); ?>
             </ul>
         </div>
     </nav>

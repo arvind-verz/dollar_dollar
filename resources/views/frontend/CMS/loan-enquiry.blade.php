@@ -85,8 +85,8 @@
                        value=" @if(isset($searchFilter['product_ids'])) {{$searchFilter['product_ids']}} @else {{old('product_ids')}} @endif">
                 <label>FULL NAME
                     <input class="full-name" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
-                                       value="@if (Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@else {{old('full_name')}} @endif"
-                                       name="full_name" type="text">
+                    value="@if (Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@else {{old('full_name')}} @endif"
+                           name="full_name" type="text">
 
                 </label>
                 @if ($errors->has('full_name'))
@@ -94,7 +94,8 @@
                                                     <strong>{{ $errors->first('full_name') }}</strong>
                                                     </span>
                 @endif
-                <label>EMAIL<input class="email" name="email" type="text" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
+                <label>EMAIL<input class="email" name="email" type="text"
+                                   @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
                                    value="@if (Auth::user()){{Auth::user()->email}}@else {{old('email')}} @endif"></label>
                 @if ($errors->has('email'))
                     <span class="text-danger" id="other-value-error">
@@ -102,17 +103,29 @@
                                                     </span>
                 @endif
                 <label class="">MOBILE
-                    <div class="row"><div class="col-md-3 col-lg-3 col-sm-3 col-xs-12"><input type="text" name="country_code" value="+65"></div>
-                        <div class="col-md-9 col-lg-9 col-sm-9 col-xs-12"><input name="telephone" class="" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
-                            value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif" type="text"></div></div>
-
-                </label>
-                @if ($errors->has('telephone'))
-                    <span class="text-danger" id="">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-4"><input type="text" name="country_code"
+                                                                                 value="+65"> @if ($errors->has('country_code'))
+                                <span class="text-danger mt-5" id="">
+                                                    <strong>{{ $errors->first('country_code') }}</strong>
+                                                    </span>
+                            @endif</div>
+                        <div class="col-md-9 col-lg-9 col-sm-9 col-xs-8"><input name="telephone" class=""
+                                                                                 @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly"
+                                                                                 @endif
+                                                                                 value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif"
+                                                                                 type="text">
+                            @if ($errors->has('telephone'))
+                                <span class="text-danger mt-5" id="">
                                                     <strong>{{ $errors->first('telephone') }}</strong>
                                                     </span>
-                @endif
-                <label>Rate Type <select class="form-control" name="rate_type_search" >
+                            @endif
+                        </div>
+                    </div>
+
+                </label>
+
+                <label>Rate Type <select class="form-control" name="rate_type_search">
                         <option value="{{BOTH_VALUE}}"
                                 @if(isset($searchFilter['rate_type_search']) && $searchFilter['rate_type_search']==BOTH_VALUE) selected @endif>{{BOTH_VALUE}}</option>
                         <option value="{{FIX_RATE}}"
@@ -140,7 +153,9 @@
                                                     <strong>{{ $errors->first('property_type_search') }}</strong>
                                                     </span>
                 @endif
-                <label>Loan Amount<input name="loan_amount" value="@if(isset($searchFilter['loan_amount'])) {{$searchFilter['loan_amount']}} @else {{old('loan_amount')}} @endif" type="text"></label>
+                <label>Loan Amount<input name="loan_amount"
+                                         value="@if(isset($searchFilter['loan_amount'])) {{$searchFilter['loan_amount']}} @else {{old('loan_amount')}} @endif"
+                                         type="text"></label>
                 @if ($errors->has('loan_amount'))
                     <span class="text-danger" id="">
                                                     <strong>{{ $errors->first('loan_amount') }}</strong>
@@ -152,12 +167,36 @@
                         <option value="New">New</option>
                         <option value="Refinance">Refinance</option>
                     </select>
-                </label>
-                @if ($errors->has('loan_type'))
+                    @if ($errors->has('loan_type'))
                     <span class="text-danger" id="">
                                                     <strong>{{ $errors->first('loan_type') }}</strong>
                                                     </span>
                 @endif
+                    
+                </label>
+                <div class="ps-form__content mt-5 mb-5">
+                <div class=" recaptcha">
+                    {!! app('captcha')->display($attributes = [],
+$lang = []) !!}
+                    <span class="captcha-err">
+                    </span>
+                    @if ($errors->has('g-recaptcha-response'))
+                    <span class="text-danger">
+                        <strong>
+                            {{ $errors->first('g-recaptcha-response') }}
+                        </strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
+                @if(\Illuminate\Support\Facades\Auth::check())
+                        <label>
+                        <div class="form-icon">
+                            <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}" class="standard-link">Edit
+                                Info</a>
+                        </div>
+                        </label>
+                    @endif
                 <button type="submit">SUBMIT</button>
             </div>
             {!! Form::close() !!}

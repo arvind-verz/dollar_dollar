@@ -23,13 +23,13 @@ class ReportController extends Controller
     public function customer_report()
     {
         $customer_reports = ProductManagement::join('users', 'product_managements.user_id', '=', 'users.id')
-            ->join('brands', 'product_managements.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'product_managements.bank_id', '=', 'brands.id')
             ->select('users.id as users_id', 'users.*', 'brands.*', 'product_managements.*')
             ->get();
 
         DB::connection()->enableQueryLog();
         $customer_reports_groups = ProductManagement::join('users', 'product_managements.user_id', '=', 'users.id')
-            ->join('brands', 'product_managements.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'product_managements.bank_id', '=', 'brands.id')
             ->groupBy('users.id')
             ->select('users.id as users_id', 'users.subscribe as users_subscribe', 'users.*', 'brands.*', 'product_managements.*')
             ->get();

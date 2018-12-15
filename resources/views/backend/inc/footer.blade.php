@@ -332,7 +332,7 @@
                 {
                     "pageLength": 100,
                     'ordering': true,
-                    'order': [[0, 'asc'], [3, 'asc']],
+                    'order': [[6, 'desc'], [5, 'desc']],
                     "columnDefs": []
                 });
         $('#brands').DataTable(

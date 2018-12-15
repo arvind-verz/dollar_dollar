@@ -47,7 +47,7 @@
                                                 <th>Page</th>
                                                 <th>Target</th>
                                                 <th>Image</th>
-                                                <th>View Order</th>
+                                                <!--<th>View Order</th>-->
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
@@ -77,9 +77,9 @@
                                                             </div>
 
                                                         </td>
-                                                        <td>
+                                                        <!--<td>
                                                             {!! $banner->view_order   !!}
-                                                        </td>
+                                                        </td>-->
                                                         <td>
                                                             @if ($banner->created_at == null)
                                                                 {{$banner->created_at}}

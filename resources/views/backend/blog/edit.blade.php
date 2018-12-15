@@ -7,7 +7,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('blog.index') }}">{{BLOG_MODULE}}</a></li>
+            <li><a href="{{ route('filter-category', ['id' => $filterCategory]) }}">{{BLOG_MODULE}}</a></li>
             <li class="active">{{BLOG_MODULE_SINGLE.' '.EDIT_ACTION}}</li>
         </ol>
     </section>
@@ -245,7 +245,7 @@
                         <!-- nav-tabs-custom -->
                         {{Form::hidden('_method','PUT')}}
                         <div class="box-footer">
-                            <a href="{{ route('blog.index') }}"
+                            <a href="{{ route('filter-category', ['id' => $filterCategory]) }}"
                                class="btn btn-default"><i class="fa fa-close">
                                 </i> Cancel</a>
 
