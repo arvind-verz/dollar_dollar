@@ -75,7 +75,10 @@
                                                 @endif
                                                 <th>Featured</th>
                                                 <th>Status</th>
-                                                <th>@if($productTypeId==ALL_IN_ONE_ACCOUNT)Created on @else
+                                                <th>@if($productTypeId==ALL_IN_ONE_ACCOUNT)Created on
+                                                    @elseif($productTypeId==LOAN)
+                                                        Completion Status
+                                                    @else
                                                         Expiry @endif</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
@@ -87,9 +90,11 @@
                                                 @foreach($products as $product)
                                                     <?php
                                                     $productRange = null;
-                                                    $range = \GuzzleHttp\json_decode($product->product_range);
-                                                    if (count($range)) {
-                                                        $productRange = $range[0];
+                                                    if ($product->product_range) {
+                                                        $range = \GuzzleHttp\json_decode($product->product_range);
+                                                        if (count($range)) {
+                                                            $productRange = $range[0];
+                                                        }
                                                     }
                                                     ?>
                                                     <tr>
@@ -124,6 +129,10 @@
                                                                     {{$product->created_at}}
                                                                 @endif
                                                                 {!!  date("Y-m-d h:i A", strtotime($product->created_at))   !!}
+                                                            @elseif($productTypeId==LOAN)
+                                                                @if ($productRange)
+                                                                    {{$productRange->completion_status}}
+                                                                @endif
                                                             @else
                                                                 @if ($product->promotion_period == ONGOING)
                                                                     {{ONGOING}}
