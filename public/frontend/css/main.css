@@ -690,11 +690,16 @@ iframe {
 .ps-btn--action.warning {
     background-color:#fdb515;
 }
-
-.ps-btn--action.success {
-    background-color:#3db54a;
+.ps-btn--action.warning:hover {
+    background-color:#ffcf63 !important;
 }
 
+.ps-btn--action.success {
+    background-color:green;
+}
+.ps-btn--action.success:hover {
+    background-color:#3db54a !important;
+}
 .ps-btn--action:hover {
     background-color:#000;
 }

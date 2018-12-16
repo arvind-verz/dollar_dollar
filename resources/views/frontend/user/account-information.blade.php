@@ -39,7 +39,7 @@
                             <li class="current"><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                       @include('frontend.includes.vertical-ads-profile')
+                        @include('frontend.includes.vertical-ads-profile')
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -48,7 +48,8 @@
                             <h3>Profile Information</h3>
                         </div>
                         <div class="ps-dashboard__content">
-                            <p>Hello, <strong>  {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</strong></p>
+                            <p>Hello, <strong>  {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</strong>
+                            </p>
 
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
@@ -63,12 +64,22 @@
                                     </p>
 
                                     <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
-                                    <p><strong> Newsletter: </strong><a href="#">@if(AUTH::user()->email_notification==1) Yes @else No @endif</a></p>
-                                    <p><strong> Consent to marketing information: </strong><a href="#">@if(AUTH::user()->adviser==1) Yes @else No @endif</a></p>
-                                    <a
-                                            class="ps-link"
-                                            href="{{ route('user.resetpassword', ['id'    =>  AUTH::user()->id]) }}">Change
-                                        password</a>
+
+                                    <p><strong> Newsletter: </strong><a
+                                                href="#">@if(AUTH::user()->email_notification==1) Yes @else
+                                                No @endif</a></p>
+
+                                    <p><strong> Consent to marketing information: </strong><a
+                                                href="#">@if(AUTH::user()->adviser==1) Yes @else No @endif</a></p>
+
+                                    <p><a
+                                                class="ps-link"
+                                                href="{{ route('user.resetpassword', ['id'    =>  AUTH::user()->id]) }}">Change
+                                            password</a></p>
+
+                                    <p><a class="ps-link" data-toggle="modal" data-target="#myModalUser"> Deactivate /
+                                            Delete account </a>
+                                    </p>
                                 </div>
                             </div>
                             @include('frontend.includes.horizontal-ads')
@@ -84,5 +95,44 @@
         {!! $systemSetting->{$page->contact_or_offer} !!}
     @endif
     {{--contact us or what we offer section end--}}
+    <div id="myModalUser" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure?</h4>
+                </div>
+                {!! Form::open(['route' => ['account-information-delete', AUTH::user()->id], 'method'   => 'POST']) !!}
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="ps-block__content">
+                            <div class="">
+                                    <input type="radio" class="" name="type" value="delete"> Delete
+                                    <input type="radio" class="" name="type" value="deactivate" checked="checked"> Deactivate
+
+                            </div>
+                            <div class="" style="padding: 20px 50px;">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <button type="submit" class="ps-btn " style="padding: 15px 0;">Submit</button>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <button type="" data-dismiss="modal" style="padding: 15px 0;" class="ps-btn ps-btn--outline">Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <img src="https://www.dollardollar.sg/frontend/images/logo_1535015224_7664b296e0e085eaa5e4852c2e8b11ba_1539598995.jpg"
+                         alt="">
+                </div>
+                {!! Form::close() !!}
+            </div>
+
+        </div>
+    </div>
 @endsection

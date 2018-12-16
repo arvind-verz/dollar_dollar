@@ -92,6 +92,7 @@ define('BRAND_MODULE_SINGLE', "Brand");
 define('USER_MODULE_SINGLE', "User");
 define('REPORT_MODULE_SINGLE', "Report");
 define('CUSTOMER_MODULE_SINGLE', "Customer");
+define('CUSTOMER_DELETION_MODULE_SINGLE', "Customer Deletion ");
 define('ORDER_MODULE_SINGLE', "Order");
 define('HOMEPAGE_MODULE_SINGLE', "Homepage");
 define('ACTIVITY_LOG_MODULE_SINGLE', "Activity Log");

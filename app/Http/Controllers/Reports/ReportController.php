@@ -7,6 +7,7 @@ use App\ProductManagement;
 use Exporter;
 use Excel;
 use DB;
+use App\User;
 use App\Exports\CustomersReportExport;
 
 class ReportController extends Controller
@@ -15,6 +16,7 @@ class ReportController extends Controller
     {
         $this->middleware('auth:admin');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,9 +38,21 @@ class ReportController extends Controller
         //dd(DB::getQueryLog());
 //dd($customer_reports);
         return view('backend.reports.customer-report.index', [
-            'customer_reports'  =>  $customer_reports,
+            'customer_reports' => $customer_reports,
             'customer_reports_groups' => $customer_reports_groups,
         ]);
+    }
+
+    public function customerDeleteDeactivationReport()
+    {
+        //$CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, CUSTOMER_MODULE_ID);
+
+        //get all users
+
+        $users = User::where('delete_status', 1)->orWhere('status',0)
+            ->get();
+        //dd($products);
+        return view("backend.reports.customer-report.delete-deactivation", compact("users", "CheckLayoutPermission"));
     }
 
     public function product_report()
@@ -50,7 +64,8 @@ class ReportController extends Controller
         ]);
     }
 
-    public function customer_report_excel() {
-        return Excel::download(new CustomersReportExport, 'profile '.date("Ymd").'.xlsx');
+    public function customer_report_excel()
+    {
+        return Excel::download(new CustomersReportExport, 'profile ' . date("Ymd") . '.xlsx');
     }
 }

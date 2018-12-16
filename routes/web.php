@@ -284,6 +284,7 @@ Route::group(array('prefix' => 'admin'), function () {
 
     /* REPORTS */
     Route::get('/customer-report', 'Reports\ReportController@customer_report')->name('customer-report');
+    Route::get('/customer-deletion-report', 'Reports\ReportController@customerDeleteDeactivationReport')->name('customer-deletion-report');
     Route::get('/customer-report-excel', 'Reports\ReportController@customer_report_excel')->name('customer-report-excel');
     Route::get('/product-report', 'Reports\ReportController@product_report')->name('product-report');
     Route::get('/reminder-email', 'Products\ProductsController@reminder')->name('reminder-email');
@@ -306,6 +307,7 @@ Route::get('product-management/delete/{id}', 'User\ProductManagementController@d
 /* ACCOUNT INFORMATION */
 Route::get('/account-information/edit/{id}/{location}', 'User\AccountInformationController@edit')->name('account-information.edit');
 Route::post('/account-information/update/{id}', 'User\AccountInformationController@update')->name('account-information.update');
+Route::post('/account-information-delete/{id}', 'User\AccountInformationController@deleteDeactivate')->name('account-information-delete');
 
 Route::post('/fixed-deposit-mode/search/', 'CMS\PagesFrontController@search_fixed_deposit')->name('fixed-deposit-mode.search');
 Route::post('/saving-deposit-mode/search/', 'CMS\PagesFrontController@search_saving_deposit')->name('saving-deposit-mode.search');

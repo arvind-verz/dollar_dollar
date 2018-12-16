@@ -311,6 +311,7 @@
                 {
                     "pageLength": 100,
                     'ordering': true,
+                    'order': [[8, 'desc'],[7, 'desc']],
                     "aoColumnDefs": [{
                         "aTargets": [0, 1],
                         "bSortable": false,
@@ -465,6 +466,89 @@
                         {width: 100, targets: 5},
                         {width: 100, targets: 6},
                         {width: 100, targets: 7}
+                    ],
+
+                });
+        $('#customer-deletion-report').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5]
+                            },
+                            title: 'Customer Deletion',
+                            customize: function (win) {
+                                $(win.document.body)
+                                        .css('font-size', '10pt');
+
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Customer deletion ' + today;
+                            }
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Customer deletion ' + today;
+                            }
+                        }
+                    ],
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[5, 'desc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [],
+                        "bSortable": false,
+
+                    },
+                        {width: 300, targets: 0},
+                        {width: 300, targets: 1},
+                        {width: 100, targets: 2},
+                        {width: 100, targets: 3},
+                        {width: 150, targets: 4},
+                        {width: 100, targets: 5}
                     ],
 
                 });

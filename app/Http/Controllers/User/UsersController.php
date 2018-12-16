@@ -118,6 +118,7 @@ class UsersController extends Controller
         $user->email_notification = isset($request->email_notification) ? $request->email_notification : 0;
         $user->adviser = isset($request->adviser) ? $request->adviser : 0;
         $user->updated_at_admin = Carbon::now()->toDateTimeString();
+        $user->updated_by = "Admin";
         $user->save();
 
         $newUser = User::find($id);
@@ -449,9 +450,12 @@ class UsersController extends Controller
             foreach ($ids as $id) {
                 if ($type == 'bulk_customer_remove') {
                     $users = User::find($id);
+                    $users->updated_at_admin = Carbon::now()->toDateTimeString();
+                    $users->updated_by = "Admin";
                     $users->delete_status = 1;
                 } elseif ($type == 'bulk_user_remove') {
                     $users = Admin::find($id);
+                    $users->updated_at = Carbon::now()->toDateTimeString();
                     $users->delete_status = 1;
                 } elseif ($type == 'bulk_user_status_update') {
                     $users = User::find($id);
@@ -460,6 +464,9 @@ class UsersController extends Controller
                     } else {
                         $users->status = 0;
                     }
+                    $users->updated_at_admin = Carbon::now()->toDateTimeString();
+                    $users->updated_by = "Admin";
+
                 } elseif ($type == 'bulk_product_remove') {
                     $users = PromotionProducts::find($id);
                     $users->delete_status = 1;
