@@ -66,8 +66,13 @@
                                                 </th>
                                                 <th>Product Name</th>
                                                 <th>Bank Name</th>
-                                                <th>Product Type</th>
-                                                <th>Formula Name</th>
+                                                @if($productTypeId==LOAN)
+                                                    <th>Rate Type</th>
+                                                    <th>Property Type</th>
+                                                @else
+                                                    <th>Product Type</th>
+                                                    <th>Formula Name</th>
+                                                @endif
                                                 <th>Featured</th>
                                                 <th>Status</th>
                                                 <th>@if($productTypeId==ALL_IN_ONE_ACCOUNT)Created on @else
@@ -80,6 +85,13 @@
                                             <?php $i = 1; ?>
                                             @if($products->count())
                                                 @foreach($products as $product)
+                                                    <?php
+                                                    $productRange = null;
+                                                    $range = \GuzzleHttp\json_decode($product->product_range);
+                                                    if (count($range)) {
+                                                        $productRange = $range[0];
+                                                    }
+                                                    ?>
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]"
@@ -87,8 +99,13 @@
                                                         </td>
                                                         <td>{{ $product->product_name }}</td>
                                                         <td>{{ $product->bank_name }}</td>
-                                                        <td>{{ $product->promotion_type }}</td>
-                                                        <td>{{ $product->promotion_formula }}</td>
+                                                        @if($productTypeId==LOAN)
+                                                            <td>@if($productRange) {{$productRange->rate_type}} @endif</td>
+                                                            <td>@if($productRange) {{$productRange->property_type}} @endif</td>
+                                                        @else
+                                                            <td>{{ $product->promotion_type }}</td>
+                                                            <td>{{ $product->promotion_formula }}</td>
+                                                        @endif
                                                         <td>@if ($product->featured == 1)
                                                                 Yes
                                                             @else

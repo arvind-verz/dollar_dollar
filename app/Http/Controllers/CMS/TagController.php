@@ -64,6 +64,7 @@ class TagController extends Controller
             $tagsName=implode(",", $tags->pluck('title')->toArray());
             //dd($tagsName);
             $validator->getMessageBag()->add('tags', $tagsName.''.ADDED_ERROR_ALERT);
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
