@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Tag;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class TagController extends Controller
 {
@@ -53,11 +54,20 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'tag' => 'required|unique:tags,title',
-            'status' => 'required'
-        ]);
+        $fields = [
+            'status' => 'required',
+        ];
+        $validator = Validator::make($request->all(), $fields);
         $tag_array = explode(",", $request->tag);
+        $tags = Tag::where('delete_status',0)->whereIn('title',$tag_array)->get();
+        if ($tags->count()) {
+            $tagsName=implode(",", $tags->pluck('title')->toArray());
+            //dd($tagsName);
+            $validator->getMessageBag()->add('tags', $tagsName.''.ADDED_ERROR_ALERT);
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
+
 
         foreach ($tag_array as $key => $value) {
 
@@ -106,10 +116,12 @@ class TagController extends Controller
         if ($this->edit_permission(@Auth::user()->role_type_id, TAG_MODULE_ID) == 0) {
             return redirect()->back()->with('error', OPPS_ALERT);
         }
+
         $tag = Tag::find($id);
         if (!$tag) {
             return redirect()->action('CMS\TagController@index')->with('error', OPPS_ALERT);
         }
+
         return view("backend.cms.tag.edit", compact("tag"));
     }
 

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use App\Mail\UpdateDetailNotify;
 use Illuminate\Support\Facades\Mail;
 use Exception;
+use App\Tag;
 
 
 class UsersController extends Controller
@@ -440,10 +441,10 @@ class UsersController extends Controller
     public function bulkRemove(Request $request)
     {
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, CUSTOMER_MODULE_ID);
-        $ids = isset($request->id) ? $request->id : '';
+        $ids = isset($request->id) ? $request->id : [];
         $type = isset($request->type) ? $request->type : '';
         $select_type = isset($request->select_type) ? $request->select_type : '';
-        //return $type;
+        //return $ids;
         if (count($ids)) {
             foreach ($ids as $id) {
                 if ($type == 'bulk_customer_remove') {
@@ -498,6 +499,16 @@ class UsersController extends Controller
                 } elseif ($type == 'bulk_life_insurance_remove') {
                     $users = LifeInsuranceEnquiry::find($id);
                     $users->delete_status = 1;
+                }elseif ($type == 'bulk_tag_remove') {
+                    $users = Tag::find($id);
+                    $users->delete_status = 1;
+                }elseif ($type == 'bulk_tag_status_update') {
+                    $users = Tag::find($id);
+                    if ($select_type == 'active') {
+                        $users->status = 1;
+                    } else {
+                        $users->status = 0;
+                    }
                 }
                 //return $users;
 

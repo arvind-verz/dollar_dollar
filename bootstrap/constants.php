@@ -161,6 +161,7 @@ define('PRODUCT_ID', 37);
 define('IMPORTED_ALERT', " has been successfully imported.");
 define('EXPORT_ALERT', " has been successfully exported.");
 define('ADDED_ALERT', " has been successfully added.");
+define('ADDED_ERROR_ALERT', " has been already added.");
 define('UPDATED_ALERT', " has been successfully updated.");
 define('DELETED_ALERT', " has been successfully deleted.");
 define('ALREADY_TAKEN_ALERT', " has already been taken.");

@@ -52,7 +52,19 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
+                        <a class="btn btn-app delete bulk_remove hide" title="Delete Tags"><i class="fa fa-trash"></i>
+                            <span class="badge"></span>Delete</a>
 
+                        <div class="form-group col-md-2 bulk_status hide">
+                            <span class="badge"></span>
+                            <select class="form-control" name="select_type">
+                                <option value="">-- Select --</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="bulk_remove_type" value="bulk_tag_remove">
+                        <input type="hidden" name="bulk_update_type" value="bulk_tag_status_update">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>
@@ -61,6 +73,9 @@
                                         <table id="tags" class="table">
                                             <thead>
                                             <tr>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort">
+                                                    Delete/Update
+                                                </th>
                                                 <th>Title</th>
                                                 <th>Status</th>
                                                 <th>Created on</th>
@@ -72,6 +87,11 @@
                                             @if($tags->count())
                                                 @foreach($tags as $tag)
                                                     <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="bluk_remove[]"
+                                                                   value="{{ $tag->id }}">
+                                                        </td>
+
                                                         <td>
                                                             {{ $tag->title }}
                                                         </td>
