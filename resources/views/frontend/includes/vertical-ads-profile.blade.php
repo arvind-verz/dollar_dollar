@@ -1,3 +1,4 @@
+
 @if(!empty($ads) && ($page->disable_ads==0))
         <?php
         $current_time = strtotime(date('Y-m-d', strtotime('now')));

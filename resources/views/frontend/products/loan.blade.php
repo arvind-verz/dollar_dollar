@@ -48,22 +48,22 @@
     <div class="ps-page--deposit ps-loan">
         <div class="container">
             <?php
-
+            //$pageName = strtok($page->name, " ");;
             $pageName = explode(' ', trim($page->name));
-            $details = [];
-            $details['first_heading'] = $pageName[0];
+            $pageHeading = $pageName[0];
             // $a =  array_shift($arr);
             unset($pageName[0]);
-            $details['second_heading'] = implode(' ', $pageName);
-            $string = $page->contents;
-            $output = preg_replace_callback('~\{{(.*?)\}}~',
-                    function ($key) use ($details) {
-                        $variable[$key[1]] = $details[$key[1]];
-                        return $variable[$key[1]];
-                    },
-                    $string);
             ?>
-            {!! $output !!}
+            {{--Page content start--}}
+            @if($page->slug!=THANK_SLUG)
+                        <h3 class="ps-heading mb-20">
+                            <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                        </h3>
+
+                        {!!  $page->contents !!}
+            @else
+                {!!  $page->contents !!}
+            @endif
             <div class="ps-block--deposit-filter ">
                 <div class="ps-block__content">
                     <form id="search-form" class="ps-form--filter"
@@ -246,8 +246,7 @@
                     <div class="ps-product @if($product->featured==1)featured-1 @endif"
                          id="p-{{ $product->product_id }}">
                         <div class="ps-product__header">
-                            <img src="{{ asset($product->brand_logo) }}"
-                                 alt="">
+                           <div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                             <div class="ps-product__promo left">
                                 <label class="ps-btn--checkbox ">
@@ -454,8 +453,7 @@
                     @endif
                     <div class="ps-product " id="r-{{ $product->product_id }}">
                         <div class="ps-product__header">
-                            <img src="{{ asset($product->brand_logo) }}"
-                                 alt="">
+                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                             <div class="ps-product__promo left">
                                 <label class="ps-btn--checkbox ">

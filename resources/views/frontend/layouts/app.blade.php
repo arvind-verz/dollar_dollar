@@ -26,7 +26,8 @@ if (!$systemSetting) {
     <link href="{{ asset('frontend/css/custom.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
-
+    <script src="{{ asset('frontend/js/ls.unveilhooks.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/lazysizes.min.js') }}"></script>
     <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!--WARNING: Respond.js doesn't work if you view the page via file://-->
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -72,8 +73,7 @@ if (!$systemSetting) {
             border: 1px solid #000;
         }
     </style>
-    <script src="{{ asset('frontend/js/ls.unveilhooks.min.js') }}"></script>
-    <script src="{{ asset('frontend/js/lazysizes.min.js') }}"></script>
+    
 </head>
 <body style="@if(isset($page) && $page->slug==HOME_SLUG) background-color: #f3f8fb !important; @endif">
 {{--<div class="se-pre-con"></div>--}}

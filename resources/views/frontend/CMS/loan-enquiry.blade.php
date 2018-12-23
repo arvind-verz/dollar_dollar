@@ -70,12 +70,11 @@
             ?>
             {{--Page content start--}}
             @if($page->slug!=THANK_SLUG)
-                <h3 class="ps-heading mb-20">
-                    <span>@if(!empty($page->icon))<i
-                                class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
-                </h3>
+                        <h3 class="ps-heading mb-20">
+                            <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                        </h3>
 
-                {!!  $page->contents !!}
+                        {!!  $page->contents !!}
             @else
                 {!!  $page->contents !!}
             @endif

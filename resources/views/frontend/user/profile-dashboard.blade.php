@@ -79,8 +79,8 @@
                                              data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
                                              data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                                             @foreach($products as $product)
-                                                <div class="ps-block--short-product second"><img
-                                                            src="{{ asset($product->brand_logo) }}" alt="">
+                                                <div class="ps-block--short-product second"><div class="slider-img"><img
+                                                            src="{{ asset($product->brand_logo) }}" alt=""></div>
                                                     <h4><strong>up to   <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
                                                                 %</span></strong>
                                                     </h4>

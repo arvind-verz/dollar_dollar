@@ -209,7 +209,7 @@ class="fa fa-refresh"></i></a>
                     <div class="ps-product @if($product->featured==1) featured-1 @endif"
                          id="p-{{ $j }}">
 
-                        <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
+                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
                             $todayEndDate = \Helper::endOfDayAfter();
@@ -396,7 +396,7 @@ class="fa fa-refresh"></i></a>
                         <div class="ps-product @if($product->featured==1) featured-1 @endif"
                              id="r-{{ $j }}">
 
-                            <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
+                            <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
                                 <?php
                                 $todayStartDate = \Helper::startOfDayBefore();
                                 $todayEndDate = \Helper::endOfDayAfter();

@@ -42,20 +42,13 @@
 
                            target="_blank">
 
-                            <div class="ps-banner bg--cover" data-background="/{{$banner->banner_image}}">
-
-                                <img data-sizes="auto" src="{{asset($banner->banner_image )}}">
-
-
-
-                                <div class="ps-banner__content">
-
-                                    {!! $banner->banner_content !!}
-
+                            <div class="slider-content">
+                                <div class="wrapper-circle">
+                                    <img data-sizes="auto" src="{{asset($banner->banner_image )}}"/>
                                 </div>
-
-                                </img>
-
+                                <div class="ps-banner__content">
+                                    {!! $banner->banner_content !!}
+                                </div>
                             </div>
 
                         </a>
@@ -66,12 +59,13 @@
 
                            target="_blank">
 
-                            <div class="ps-banner bg--cover" data-background="/{{$banner->fixed_banner}}">
-
-                                <img data-sizes="auto" src="{{asset($banner->fixed_banner )}}"  >
-
-                                </img>
-
+                            <div class="slider-content">
+                                <div class="wrapper-circle">
+                                    <img data-sizes="auto" src="{{asset($banner->banner_image )}}"/>
+                                </div>
+                                <div class="ps-banner__content">
+                                    {!! $banner->banner_content !!}
+                                </div>
                             </div>
 
                         </a>
@@ -348,7 +342,7 @@
 
         </div>
 
-        <div class="ps-section__content bg--cover" data-background="img/bg/home-bg.jpg">
+        <div class="ps-section__content bg--cover" style="background:#ffffff;">
 
             <div class="container">
 
@@ -473,7 +467,7 @@
             </div>
 
         </div>
-        <div class="ps-section__content bg--cover mt-10" data-background="img/bg/home-bg.jpg">
+        <div class="ps-section__content bg--cover mt-10" style="background:#ffffff;">
 
             <div class="container">
 
@@ -603,7 +597,7 @@
 
             <div class="row">
 
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12  home-blog">
 
                     <div class="ps-section__left">
 
@@ -649,7 +643,7 @@
 
                         <div class="owl-slider owl-blog" data-owl-auto="true" data-owl-dots="false"
 
-                             data-owl-duration="1000" data-owl-gap="0" data-owl-item="1" data-owl-item-lg="1"
+                             data-owl-duration="1000" data-owl-gap="10" data-owl-item="1" data-owl-item-lg="1"
 
                              data-owl-item-md="1" data-owl-item-sm="1" data-owl-item-xs="1" data-owl-loop="true"
 
@@ -726,7 +720,7 @@
 
                 </div>
 
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 home-fb">
 
                     <div class="ps-section__right">
 
@@ -977,7 +971,7 @@
 
             if (isMobile.any()) {
 
-                if (screen.width < 768) {
+                if (screen.width <= 768) {
                     if(promotionType == '<?php echo LOAN ;?>'){
                          target = $("#loan-sp-slider");
                          targetId = "loan-sp-slider";
@@ -1036,7 +1030,7 @@
 
 
 
-                    var t = $owl.data("owl-auto"), e = $owl.data("owl-loop"), o = $owl.data("owl-speed"), l = $owl.data("owl-gap"), d = $owl.data("owl-nav"), i = $owl.data("owl-dots"), n = $owl.data("owl-animate-in") ? $owl.data("owl-animate-in") : "", s = $owl.data("owl-animate-out") ? $owl.data("owl-animate-out") : "", m = $owl.data("owl-item"), w = $owl.data("owl-item-xs"), u = $owl.data("owl-item-sm"), r = $owl.data("owl-item-md"), p = $owl.data("owl-item-lg"), g = $owl.data("owl-nav-left") ? $owl.data("owl-nav-left") : "<i class='fa fa-angle-left'></i>", v = $owl.data("owl-nav-right") ? $owl.data("owl-nav-right") : "<i class='fa fa-angle-right'></i>", h = $owl.data("owl-duration"), f = $owl.data("owl-animated"), c = $owl.data("owl-smartspeed"), y = $owl.data("owl-hoverpause"), S = "on" == $owl.data("owl-mousedrag");
+                    var  t = $owl.data("owl-auto"), e = $owl.data("owl-loop"), o = $owl.data("owl-speed"), l = $owl.data("owl-gap"), d = $owl.data("owl-nav"), i = $owl.data("owl-dots"), n = $owl.data("owl-animate-in") ? $owl.data("owl-animate-in") : "", s = $owl.data("owl-animate-out") ? $owl.data("owl-animate-out") : "", m = $owl.data("owl-item"), w = $owl.data("owl-item-xs"), u = $owl.data("owl-item-sm"), r = $owl.data("owl-item-md"), p = $owl.data("owl-item-lg"), g = $owl.data("owl-nav-left") ? $owl.data("owl-nav-left") : "<i class='fa fa-angle-left'></i>", v = $owl.data("owl-nav-right") ? $owl.data("owl-nav-right") : "<i class='fa fa-angle-right'></i>", h = $owl.data("owl-duration"), f = $owl.data("owl-animated"), c = $owl.data("owl-smartspeed"), y = $owl.data("owl-hoverpause"), S = "on" == $owl.data("owl-mousedrag");
 
                     $owl.owlCarousel({
 
@@ -1057,7 +1051,7 @@
                         nav: d,
 
                         mouseDrag: S,
-
+                        
                         touchDrag: !0,
 
                         autoplaySpeed: h,

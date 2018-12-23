@@ -225,10 +225,16 @@
                     <div class="ps-block__content">
                         @foreach($legendtable as $legend)
                             @if($legend->page_type=='Fixed Deposit')
-                                <p><img src="{{ asset($legend->icon) }}" alt="">{{ $legend->title }}</p>
+                                <p>
+                                    <!--<img src="{{ asset($legend->icon) }}" alt="">-->
+                                    <span class="legend-icon">AA</span>
+                                    {{ $legend->title }}
+                                </p>
                             @endif
                             @if($legend->page_type==ALL_IN_ONE_ACCOUNT)
-                                <p><img src="{{ asset($legend->icon) }}" alt=""> = {{ $legend->title }}</p>
+                                <p>
+                                    <span class="legend-icon">AA</span><!--<img src="{{ asset($legend->icon) }}" alt="">--> = {{ $legend->title }}
+                                </p>
                             @endif
                         @endforeach
                     </div>
@@ -264,8 +270,7 @@
                         @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
-                                <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}"
-                                                                     alt="">
+                                <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                            href="{{$product->apply_link}}">Apply
@@ -416,8 +421,7 @@
                         @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
-                                <div class="ps-product__header"><img
-                                            src="{{ asset($product->brand_logo) }}" alt="">
+                                <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                            href="{{$product->apply_link}}">Apply
@@ -557,9 +561,7 @@
                         @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
-                                <div class="ps-product__header"><img
-                                            src="{{ asset($product->brand_logo) }}"
-                                            alt="">
+                                <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
@@ -804,9 +806,7 @@
 
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
-                                <div class="ps-product__header"><img
-                                            src="{{ asset($product->brand_logo) }}"
-                                            alt="">
+                                <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
@@ -942,8 +942,7 @@
                         @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F5)
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
-                                <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}"
-                                                                     alt="">
+                                <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                            href="{{$product->apply_link}}">Apply
@@ -1179,9 +1178,7 @@
                         @elseif(empty($product->formula_id))
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="r-{{ $j }}">
-                                <div class="ps-product__header"><img
-                                            src="{{ asset($product->brand_logo) }}"
-                                            alt="">
+                                <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a
@@ -1284,10 +1281,7 @@
                                 @if($product->formula_id==ALL_IN_ONE_ACCOUNT_F1)
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
-                                        <div class="ps-product__header"><img
-                                                    src="{{ asset($product->brand_logo) }}"
-                                                    alt="">
-
+                                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
                                                             class="ps-btn ps-btn--red"
@@ -1425,8 +1419,7 @@
                                 @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F2)
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
-                                        <div class="ps-product__header"><img
-                                                    src="{{ asset($product->brand_logo) }}" alt="">
+                                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -1570,9 +1563,7 @@
                                 @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F3)
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
-                                        <div class="ps-product__header"><img
-                                                    src="{{ asset($product->brand_logo) }}"
-                                                    alt="">
+                                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -1792,9 +1783,7 @@
 
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
-                                        <div class="ps-product__header"><img
-                                                    src="{{ asset($product->brand_logo) }}"
-                                                    alt="">
+                                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -1923,9 +1912,7 @@
                                 @elseif($product->formula_id==ALL_IN_ONE_ACCOUNT_F5)
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
-                                        <div class="ps-product__header"><img
-                                                    src="{{ asset($product->brand_logo) }}"
-                                                    alt="">
+                                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -2128,9 +2115,7 @@
                                 @elseif(empty($product->formula_id))
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
-                                        <div class="ps-product__header"><img
-                                                    src="{{ asset($product->brand_logo) }}"
-                                                    alt="">
+                                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a

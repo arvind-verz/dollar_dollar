@@ -1016,6 +1016,7 @@ public static function getLoanProducts($productType, $byOrderValue)
                 $ads->horizontal_paid_ad_link = $ads4->horizontal_paid_ad_link;}
             }
             }
+            //dd($ads);
             return $ads;
     }
     
