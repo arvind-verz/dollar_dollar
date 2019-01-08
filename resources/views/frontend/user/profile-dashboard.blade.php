@@ -30,7 +30,7 @@
     @endif
     <main class="ps-main">
         <div class="container">
-            <div class="row">
+            <div class="row c-profile">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                     <div class="ps-sidebar">
                         <ul class="ps-list--sidebar">
@@ -38,27 +38,7 @@
                             <li><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        @if(count($ads))
-                            @if(($ads[0]->display==1))
-                                @php
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads[0]->ad_end_date);
-                                @endphp
-
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                                    </div>
-                                @else
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                                    </div>
-                                @endif
-                            @endif
-                        @endif
+                        @include('frontend.includes.vertical-ads-profile')
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -67,7 +47,7 @@
                             <h3>My Profile Dashboard</h3>
                         </div>
                         <div class="ps-dashboard__content">
-                            <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
+                            <p>Hello, <strong>  {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</strong></p>
 
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
@@ -76,9 +56,11 @@
                                 <div class="ps-block__content">
                                     <h5>Contact Information</h5>
 
-                                    <p><strong> Name: </strong> {{ AUTH::user()->first_name }}</p>
+                                    <p><strong>  Name: </strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</p>
 
                                     <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
+                                    <p><strong> Newsletter: </strong><a href="#">@if(AUTH::user()->email_notification==1) Yes @else No @endif</a></p>
+                                    <p><strong> Consent to marketing information: </strong><a href="#">@if(AUTH::user()->adviser==1) Yes @else No @endif</a></p>
                                 </div>
                             </div>
                             @if(count($products))
@@ -91,27 +73,42 @@
                                         <div class="c-list ps-slider--feature-product saving nav-outside owl-slider"
                                              data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
                                              data-owl-gap="0" data-owl-nav="true" data-owl-dots="false"
-                                             data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1"
+                                             data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="2"
                                              data-owl-item-md="2" data-owl-item-lg="3" data-owl-duration="1000"
                                              data-owl-mousedrag="on"
                                              data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
                                              data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                                             @foreach($products as $product)
-                                                <div class="ps-block--short-product second"><img
-                                                            src="{{ asset($product->brand_logo) }}" alt="">
-                                                    <h4>up to <strong> {{ $product->maximum_interest_rate }}%</strong>
+                                                <div class="ps-block--short-product second"><div class="slider-img"><img
+                                                            src="{{ asset($product->brand_logo) }}" alt=""></div>
+                                                    <h4><strong>up to   <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
+                                                                %</span></strong>
                                                     </h4>
 
                                                     <div class="ps-block__info">
-                                                        <p><strong> rate: </strong>{{ $product->maximum_interest_rate }}
+                                                        <p><span class="slider-font">Rate: </span>{{ $product->maximum_interest_rate }}
                                                             %</p>
 
-                                                        <p><strong>Min:</strong> SGD
+                                                        <p><span class="slider-font">Min:</span> SGD
                                                             ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                         </p>
 
-                                                        <p class="highlight">{{ $product->promotion_period }}
-                                                            {{\Helper::days_or_month_or_year(2,  $product->promotion_period)}}</p>
+                                                        <p class="highlight highlight-bg ">
+                                                            @if($product->promotion_period==ONGOING)
+                                                                 {{ $product->promotion_period }}
+                                                            @elseif($product->promotion_type_id!=ALL_IN_ONE_ACCOUNT)
+                                                                @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                                    {{ $product->remaining_days }}  <span
+                                                                            class="slider-font">{{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}</span>
+                                                                @else
+                                                                    {{$product->promotion_period}} @if($product->tenure_value > 0)
+                                                                        <span
+                                                                                class="slider-font">{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}</span> @endif
+                                                                @endif
+                                                            @else
+                                                                {{ $product->promotion_period }} Criteria
+                                                            @endif
+                                                        </p>
                                                     </div>
                                                     <a class="ps-btn"
                                                        href="@if($product->promotion_type_id==1) fixed-deposit-mode @elseif($product->promotion_type_id==2) saving-deposit-mode @elseif($product->promotion_type_id==3) all-in-one-deposit-mode @elseif($product->promotion_type_id==4) privilege-deposit-mode @elseif($product->promotion_type_id==5) foreign-currency-deposit-mode @endif">More
@@ -200,89 +197,8 @@
                                     </div>
                                 </div>
                             </div>
-                            @if(count($ads))
-                                @if(($ads[0]->display==1))
-                                    @php
-                                    $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                    $ad_start_date = strtotime($ads[0]->ad_start_date);
-                                    $ad_end_date = strtotime($ads[0]->ad_end_date);
-                                    @endphp
-
-                                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->horizontal_paid_ad_image))
-                                        <div class="pt-2">
-                                            <a href="{{ isset($ads[0]->horizontal_paid_ad_link) ? asset($ads[0]->horizontal_paid_ad_link) : '#' }}"
-                                               target="_blank"><img src="{{ asset($ads[0]->horizontal_paid_ad_image) }}"
-                                                                    alt=""></a>
-                                        </div>
-                                    @else
-                                        <div class="pt-2">
-                                            <a href="{{ isset($ads[0]->horizontal_banner_ad_link) ? asset($ads[0]->horizontal_banner_ad_link) : '#' }}"
-                                               target="_blank"><img
-                                                        src="{{ asset($ads[0]->horizontal_banner_ad_image) }}"
-                                                        alt=""/></a>
-                                        </div>
-                                        @endif
-                                        @endif
-                                        @endif
-
-                                                <!-- <div class="ps-block--box no-border">
-                                <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><a href="#">View all</a>
-                                </div>
-                                <div class="ps-block__content">
-                                    <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product-managerment" id="datatable1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Bank</th>
-                                                    <th>Account
-                                                        <br> Name</th>
-                                                    <th>Amount</th>
-                                                    <th>Tenure
-                                                        <br> (M= months,
-                                                        <br> D = Days)</th>
-                                                    <th>Start Date</th>
-                                                    <th>End Date</th>
-                                                    <th>Interest Earned</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                        @if(count($user_products))
-                                        @foreach($user_products as $value)
-                                        @php
-                                                $curr_date = date("Y-m-d", strtotime('now'));
-                                                $start_date = date("Y-m-d", strtotime($value->start_date));
-                                                $end_date = date("Y-m-d", strtotime($value->end_date));
-                                            @endphp
-                                        @if(strtotime('now')>=strtotime('-2 week', strtotime($value->end_date)))
-                                                <tr>
-                                                    <td><img src="{{ asset($value->brand_logo) }}" width="50"> {{ $value->title }}</td>
-                                                        <td>{{ $value->account_name }}</td>
-                                                        <td>{{ $value->amount }}</td>
-                                                        <td>{{ $value->tenure }}</td>
-                                                        <td>{{ date("d-m-Y", strtotime($value->start_date)) }}</td>
-                                                        <td>{{ date("d-m-Y", strtotime($value->end_date)) }}</td>
-                                                        <td>{{ isset($value->interest_earned) ? $value->interest_earned.'%' : '-' }}</td>
-                                                        <td>@if($curr_date<=$end_date && $curr_date>=$start_date) Ongoing @else Expired @endif</td>
-                                                        <td>
-                                                            <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action warning">Edit</button></a>
-                                                            <a onclick="return confirm('Are you sure to delete?')" href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}"><button type="button" class="ps-btn--action success">Delete</button></a>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
-                                        @endforeach
-                                        @else
-                                                <tr>
-                                                    <td class="text-center" colspan="9">No data found.</td>
-                                                </tr>
-                                                @endif
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div> -->
+                            @include('frontend.includes.vertical-ads-profile')
+                            @include('frontend.includes.horizontal-ads')
                         </div>
                     </div>
                 </div>

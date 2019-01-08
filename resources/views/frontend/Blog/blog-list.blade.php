@@ -55,42 +55,34 @@
                         @foreach($details as $detail)
                             <?php //dd($detail); ?>
                             <div class="ps-post">
-                                <div class="ps-post__thumbnail"><a class="ps-post__overlay"
-                                                                   href="{{ url($detail->slug) }}"></a><img
-                                            src="{{ asset($detail->blog_image) }}" alt=""></div>
+                                <div class="ps-post__thumbnail">
+                                     @if($detail->blog_image)
+                                    <a class="ps-post__overlay" href="{{ url($detail->slug) }}"></a>
+                                                                  <img src="{{ asset($detail->blog_image) }}" alt="">
+                                                                   @endif
+                                                                   </div>
                                 <div class="ps-post__content"><a class="ps-post__title"
                                                                  href="{{ url($detail->slug) }}">{{$detail->name}}</a>
                                     <span class="ps-post__meta"><a
                                                 href="{{ url('get-blog-by-category/' . $detail->menu_id)}}">{{$detail->menu_title}}</a></span>
 
-                                    {!! $detail->short_description !!}<a class="ps-post__morelink ps-btn"
-                                                                                href="{{ url($detail->slug) }}">Read
-                                        More</a>
+                                    <?php
+                                        $string = strip_tags($detail->short_description);
+                                        if (strlen($string) > 300) {
+                                        $stringCut = substr($string, 0, 300);
+                                        $endPoint = strrpos($stringCut, ' ');
+                                        $string = $endPoint? substr($stringCut, 0, $endPoint):substr($stringCut, 0);
+                                        }
+                                    ?>
+                                    {{$string}}..<a class="ps-link " href="{{ url($detail->slug) }}">Read More</a>
                                 </div>
                             </div>
                         @endforeach
                     @endif
                     {{ $details->links() }}
-
-                    {{--
-                    @if(count($ads))
-                    @php
-                    $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                    $ad_start_date = strtotime($ads[0]->ad_start_date);
-                    $ad_end_date = strtotime($ads[0]->ad_end_date);
-                    @endphp
-
-                    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                    <div class="pt-2">
-                    <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                    </div>
-                    @else
-                    <div class="pt-2">
-                    <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                    </div>
-                    @endif
-                    @endif
-                    --}}
+                        @include('frontend.includes.vertical-ads-sp-only')
+                        <div class="mb-20"></div>
+                        @include('frontend.includes.horizontal-ads')
                 </div>
             </div>
         </div>

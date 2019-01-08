@@ -25,7 +25,23 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
 }
+@media print {
+* {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+     /* Chrome- removes extra blank page at the end*/
+}
 
+    html, body { height: auto; }
+    table {
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1 !important;
+        border: 1px solid black;
+     }
+    table:last-child {
+        page-break-after: auto;
+    }
+}
 /* Layout */
 .wrapper {
     height: 100%;
@@ -6721,4 +6737,8 @@ ol.breadcrumb>li.active {
     height: 100%;
     z-index: 9999;
     background: url(../../../img/loader/Preloader_12.gif) center no-repeat #fff;
+}
+td img {
+    max-height: 150px;
+    overflow-y: -webkit-paged-x;
 }

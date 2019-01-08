@@ -4,48 +4,64 @@
 
 @component('mail::table')
 <table>
-    @if(count($data['components']))
+    @if(count($data['goals']))
         <tr>
-            <td>1. What type of life insurance are you looking for?</td>
+            <td>1. What is current your financial goal?</td>
             <td>:</td>
-            <td>{{implode(', ',$data['components']) }}</td>
+            <td>{{implode(', ',$data['goals']) }}</td>
         </tr>
     @endif
 
-    @if($data['gender'])
+    @if(isset($data['goal_other_value']))
         <tr>
-            <td>2. What is your gender?</td>
+            <td>1.1 Other</td>
             <td>:</td>
-            <td>{{$data['gender']}}</td>
+            <td>{{$data['goal_other_value']}}</td>
+        </tr>
+    @endif
+    @if($data['experience'])
+        <tr>
+            <td>2. Do you have any investment experience before?</td>
+            <td>:</td>
+            <td>{{$data['experience']}}</td>
+        </tr>
+    @endif
+    @if(isset($data['experience_detail']))
+        <tr>
+            <td>2.1 Experience detail</td>
+            <td>:</td>
+            <td>{{$data['experience_detail']}}</td>
         </tr>
     @endif
 
-    @if($data['dob'])
+    @if($data['risks'])
         <tr>
-            <td>3. What is your date of birth?</td>
+            <td>3. Which Risk Profile do you fall into?</td>
             <td>:</td>
-            <td>{{$data['dob']}}</td>
+            <td>{{implode(', ',$data['risks']) }}</td>
+        </tr>
+    @endif
+    @if(isset($data['age']))
+        <tr>
+            <td>4. What is your age?</td>
+            <td>:</td>
+            <td>{{$data['age']}}</td>
         </tr>
     @endif
 
-    @if($data['smoke'])
-        <tr>
-            <td>4. Are you a smoker?</td>
-            <td>:</td>
-            <td>{{$data['smoke']}}</td>
-        </tr>
-    @endif
-    
     @if(count($data['time']))
         <tr>
-            <td>5. One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</td>
+            <td>5. One of representative from DollarDollar's partner will go through the different quotes from different
+                insurers that is most suitable to your needs. I consent that this assigned representative can contact me
+                via the various communication (Voice Call, SMS and Email)
+            </td>
             <td>:</td>
             <td>{{implode(', ',$data['time']) }}</td>
         </tr>
     @endif
     @if($data['other_value'])
         <tr>
-            <td>Other Value</td>
+            <td>5.1 Other Value</td>
             <td>:</td>
             <td>{{$data['other_value']}}</td>
         </tr>

@@ -26,10 +26,20 @@ if (!$systemSetting) {
     <link href="{{ asset('frontend/css/custom.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
-
+    <script src="{{ asset('frontend/js/ls.unveilhooks.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/lazysizes.min.js') }}"></script>
     <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!--WARNING: Respond.js doesn't work if you view the page via file://-->
-
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127066821-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-127066821-1');
+    </script>-->
+    <!--<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/d0c9d1a35fc9a0bd73890de51/5fb5604a48423d0ba92bb0c8a.js");</script>-->
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -63,9 +73,9 @@ if (!$systemSetting) {
             border: 1px solid #000;
         }
     </style>
-
+    
 </head>
-<body>
+<body style="@if(isset($page) && $page->slug==HOME_SLUG) background-color: #f3f8fb !important; @endif">
 {{--<div class="se-pre-con"></div>--}}
 <div id="fb-root"></div>
 <script>(function (d, s, id) {
@@ -90,16 +100,7 @@ if (!$systemSetting) {
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $(".only_numeric").numeric();
-        // NUMERIC DIGITS WITH + SPECIAL ONLY
-        $("input[name='country_code'], input[name='telephone']").on('keydown', function (e) {
-            if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode != 8 && e.keyCode != 37 && e.keyCode != 39 && e.keyCode != 9 && e.keyCode != 187) {
-                e.preventDefault();
-            }
-        });
-    });
-
+    
     $(document).ready(function () {
         //Date picker
         $('.datepicker').datepicker({
@@ -127,6 +128,5 @@ if (!$systemSetting) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5afe3db1c821ae18"></script>
-
 </body>
 </html>

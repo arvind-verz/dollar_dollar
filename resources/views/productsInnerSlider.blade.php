@@ -1,12 +1,12 @@
 <div class="product-row-01 clearfix slider-class">
     @php $i = 1;$featured = []; @endphp
-    @foreach($products as $product)
+    @foreach($sliderProducts as $product)
         @if($product->featured==1)
             @php $featured[] = $i; @endphp
             <div class="product-col-01">
                 <div class="ps-slider--feature-product saving">
-                    <div class="ps-block--short-product second highlight" data-mh="product"><img
-                                src="{{ asset($product->brand_logo) }}" alt="">
+                    <div class="ps-block--short-product second highlight" data-mh="product">
+                        <div class="slider-img"><img  src="{{ asset($product->brand_logo) }}" alt=""></div>
                         @if(isset($searchFilter['filter']))
                             <h4>
                                 <strong>
@@ -58,7 +58,7 @@
                             @else
                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
                                     @if($product->promotion_period==ONGOING)
-                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                         {{ $product->promotion_period }}
                                     @else
                                         @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                             {{ $product->remaining_days }}  <span
@@ -71,16 +71,25 @@
                                 </p>
                             @endif
                         </div>
-                        <a class="ps-btn" href="#p-{{ $i }}">More data</a>
+                        <a class="ps-btn" href="#p-{{ $i }}">More info</a>
                     </div>
                 </div>
             </div>
             @php $i++; @endphp
         @endif
     @endforeach
-    @php $i = 1;$featured_item = 5-count($featured);
+    @php $i = 1;
+    $featured_item = 5-count($featured);
+    $featured_item_md = 3-count($featured);
+    if(count($featured_item)>5){
+    $featured_item = 0;
+    $featured_item_md = 0 ;
+    }elseif(count($featured_item)>3){
+    $featured_item_md = 0 ;
+    }
+    
     $featured_count = count($featured);
-    $featured_width = 12;
+    $featured_width = 0;
     if($featured_count==1) {
     $featured_width = 2;
     }
@@ -95,15 +104,15 @@
         <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true"
              data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true"
              data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
-             data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}"
+             data-owl-item-sm="1" data-owl-item-md="{{$featured_item_md}}"
              data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on"
              data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
              data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
             @php $i = 1; @endphp
-            @foreach($products as $product)
+            @foreach($sliderProducts as $product)
                 @if($product->featured==0)
-                    <div class="ps-block--short-product second" data-mh="product"><img
-                                src="{{ asset($product->brand_logo) }}" alt="">
+                    <div class="ps-block--short-product second" data-mh="product">
+                        <div class="slider-img"><img  src="{{ asset($product->brand_logo) }}" alt=""></div>
                         @if(isset($searchFilter['filter']))
                             <h4>
                                 <strong>
@@ -156,7 +165,7 @@
                             @else
                                 <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
                                     @if($product->promotion_period==ONGOING)
-                                        <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                        {{ $product->promotion_period }}
                                     @else
                                         @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
                                             {{ $product->remaining_days }}  <span
@@ -169,7 +178,7 @@
                                 </p>
                             @endif
                         </div>
-                        <a class="ps-btn" href="#p-{{ (count($featured)+$i) }}">More data</a>
+                        <a class="ps-btn" href="#p-{{ (count($featured)+$i) }}">More info</a>
                     </div>
                     @php $i++; @endphp
                 @endif

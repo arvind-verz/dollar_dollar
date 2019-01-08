@@ -39,27 +39,7 @@
                             <li><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        @if(count($ads))
-                            @if(($ads[0]->display==1))
-                                @php
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads[0]->ad_end_date);
-                                @endphp
-
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                                    </div>
-                                @else
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                                    </div>
-                                @endif
-                            @endif
-                        @endif
+                        @include('frontend.includes.vertical-ads-profile')
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -68,6 +48,11 @@
                         //$pageName = strtok($page->name, " ");;
                         $pageName = explode(' ', trim($page->name));
                         $pageHeading = $pageName[0];
+                        $tooltips = \GuzzleHttp\json_decode($page->tooltip);
+                        $toolTip = null;
+                        if (count($tooltips)) {
+                            $toolTip = $tooltips[0];
+                        }
                         // $a =  array_shift($arr);
                         unset($pageName[0]);
                         ?>
@@ -101,9 +86,12 @@
                                                 @endforeach
                                                 <option value="0">Other</option>
                                             </select>
-                                            <input type="text" class="form-control hide" name="bank_id_other" value=""
-                                                   placeholder="Enter Bank or Financial Institution name">
+                                            
                                         </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                        <input type="text" class="form-control hide orther-hide" name="bank_id_other" value=""
+                                                   placeholder="Enter Bank or Financial Institution name">
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
@@ -113,23 +101,25 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <div class="form-group">
-                                            <label>Amount <sup>*</sup></label>
-                                            <input class="form-control prefix_dollar" required="required" name="amount"
-                                                   type="text" placeholder="Enter Amount" value="{{ old('amount') }}">
-                                            <!-- <span class="suffix_k">K</span> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                                <div class="form-group">
+                                                    <label>Amount<sup>*</sup></label>
+                                                    <input class="form-control prefix_dollar" required="required"
+                                                           name="amount"
+                                                           type="text" placeholder="Enter Amount"
+                                                           value="{{ old('amount') }}">
+                                                    <!-- <span class="suffix_k">K</span> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Tenure</label>
                                                     <input type="text" class="form-control " name="tenure"
                                                            value="{{ old('tenure') }}">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <div class="form-group">
                                                     <select class="form-control mt-30" name="tenure_calender">
                                                         <option value="D" selected>Days</option>
@@ -138,18 +128,50 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            </div>
                                         </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                                    </div>
+                                    <!--<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">-->
+                                    <!--    <div class="row">-->
+                                    <!--        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">-->
+                                    <!--            <div class="form-group">-->
+                                    <!--                <label>Tenure</label>-->
+                                    <!--                <input type="text" class="form-control " name="tenure"-->
+                                    <!--                       value="{{ old('tenure') }}">-->
+                                    <!--            </div>-->
+                                    <!--        </div>-->
+                                    <!--        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">-->
+                                    <!--            <div class="form-group">-->
+                                    <!--                <select class="form-control mt-30" name="tenure_calender">-->
+                                    <!--                    <option value="D" selected>Days</option>-->
+                                    <!--                    <option value="M">Months</option>-->
+                                    <!--                    <option value="Y">Years</option>-->
+                                    <!--                </select>-->
+                                    <!--            </div>-->
+                                    <!--        </div>-->
+                                    <!--    </div>-->
+                                    <!--</div>-->
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
-                                            <label>Reminder</label>
-                                            <select  class="form-control select2-multiple " id="reminder" disabled="disabled"
-                                                    name="reminder[]" multiple="multiple"
-                                                    style="width: 100%;height:45px;">
-                                                <option value="1 Day">1 Day</option>
-                                                <option value="1 Week">1 Week</option>
-                                                <option value="2 Week">2 Week</option>
-                                            </select>
+                                            <label>Reminder
+                                            </label>
+                                            @if(isset($toolTip->reminder_tooltip))
+                                                <a class="ps-tooltip" href="javascript:void(0)"
+                                                   data-tooltip="{{$toolTip->reminder_tooltip}}"><i
+                                                            class="fa fa-exclamation-circle"></i></a>
+                                                @endif
+                                                        <!--<select class="form-control select2-multiple " id="reminder"-->
+                                                <!--        disabled="disabled"-->
+                                                <!--        name="reminder[]" multiple="multiple"-->
+                                                <!--        style="width: 100%;height:45px;">-->
+                                                <!--    <option value="1 Day">1 Day</option>-->
+                                                <!--    <option value="1 Week">1 Week</option>-->
+                                                <!--    <option value="2 Week">2 Week</option>-->
+                                                <!--</select>-->
+                                                <div class="reminder">
+                                                    <label><input type="checkbox" name="reminder1" value="1 Day"><span>1 Day</span></label>
+                                                    <label><input type="checkbox" name="reminder2" value="1 Week"><span>1 Week</span></label>
+                                                    <label><input type="checkbox" name="reminder3" value="2 Week"><span>2 Week</span></label>
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
@@ -175,7 +197,13 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
-                                            <label>Interested earned</label>
+                                            <label>Interested earned
+                                            </label>
+                                            @if(isset($toolTip->interest_earn_tooltip))
+                                                <a class="ps-tooltip" href="javascript:void(0)"
+                                                   data-tooltip="{{$toolTip->interest_earn_tooltip}}"><i
+                                                            class="fa fa-exclamation-circle"></i></a>
+                                            @endif
                                             <input class="form-control" name="interest_earned" type="text"
                                                    placeholder="Enter Interest Rate &/OR in dollar amount"
                                                    value="{{ old('interest_earned') }}">
@@ -185,8 +213,9 @@
                                         <div class="row">
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                                 <div class="form-group submit">
-                                                    <label>Do not Send Reminders</label>
-                                                    <input type="checkbox" class="form-control" disabled="disabled" name="dod_reminder"
+                                                    <label style="margin: 5px 0 5px;">Do not Send Reminders</label>
+                                                    <input type="checkbox" class="form-control" disabled="disabled"
+                                                           name="dod_reminder"
                                                            @if(old('dod_reminder')==1) checked @endif>
 
 
@@ -206,83 +235,86 @@
                                     </div>
                                 </div>
                                 {{ Form::close() }}
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                        <div class="ps-table-wrap">
-                                            <table class="ps-table ps-table--product-managerment" id="datatable">
-                                                <thead>
-                                                <tr>
-                                                    <th>Bank</th>
-                                                    <th>Account
-                                                        <br> Name
-                                                    </th>
-                                                    <th>Amount</th>
-                                                    <th>Tenure
-                                                        <br> (M= months,
-                                                        <br> D = Days)
-                                                        <br> Y = Years)
-                                                    </th>
-                                                    <th>Start Date</th>
-                                                    <th>End Date</th>
-                                                    <th>Interest Earned</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @if(count($user_products))
-                                                    @foreach($user_products as $value)
-                                                        @php
-                                                        $curr_date = date("Y-m-d", strtotime('now'));
-                                                        $start_date = date("Y-m-d", strtotime($value->start_date));
-                                                        $end_date = date("Y-m-d", strtotime($value->end_date));
-                                                        @endphp
-                                                        <tr>
-                                                            <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
-                                                                @if(!empty($value->brand_logo))
-                                                                    <span style="opacity: 0;position: absolute;"> {{ $value->title }} </span>
-                                                                    <img src="{{ asset($value->brand_logo) }}">
-                                                                @elseif($value->other_bank)
-                                                                    {{ $value->other_bank }}
-                                                                @else
-                                                                    -
-                                                                @endif
-                                                            </td>
-                                                            <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
-                                                            <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
-                                                            <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>
-                                                            <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
-                                                            <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
-                                                            <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
-                                                            <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date)))
-                                                                    Ongoing @else Expired @endif</td>
-                                                            <td>
-                                                                <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}">
-                                                                    <button type="button"
-                                                                            class="ps-btn--action warning">
-                                                                        Edit
-                                                                    </button>
-                                                                </a>
-                                                                <a onclick="return confirm('Are you sure to delete?')"
-                                                                   href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}">
-                                                                    <button type="button"
-                                                                            class="ps-btn--action success">
-                                                                        Delete
-                                                                    </button>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @else
+                                @if(count($user_products))
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                            <div class="ps-table-wrap">
+                                                <table class="ps-table ps-table--product-managerment" id="datatable">
+                                                    <thead>
                                                     <tr>
-                                                        <td class="text-center" colspan="9">No data found.</td>
+                                                        <th>Bank</th>
+                                                        <th>Account
+                                                            <br> Name
+                                                        </th>
+                                                        <th>Amount</th>
+                                                        <th>Tenure
+                                                            <br> (M= months,
+                                                            <br> D = Days)
+                                                            <br> Y = Years)
+                                                        </th>
+                                                        <th>Start Date</th>
+                                                        <th>End Date</th>
+                                                        <th>Interest Earned</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
                                                     </tr>
-                                                @endif
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                    @if(count($user_products))
+                                                        @foreach($user_products as $value)
+                                                            @php
+                                                            $curr_date = date("Y-m-d", strtotime('now'));
+                                                            $start_date = date("Y-m-d", strtotime($value->start_date));
+                                                            $end_date = date("Y-m-d", strtotime($value->end_date));
+                                                            @endphp
+                                                            <tr>
+                                                                <td @if(!empty($value->brand_logo)) style="padding: 0;" @endif>
+                                                                    @if(!empty($value->brand_logo))
+                                                                        <span style="opacity: 0;position: absolute;"> {{ $value->title }} </span>
+                                                                        <img src="{{ asset($value->brand_logo) }}">
+                                                                    @elseif($value->other_bank)
+                                                                        {{ $value->other_bank }}
+                                                                    @else
+                                                                        -
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ !empty($value->account_name) ? $value->account_name : '-' }}</td>
+                                                                <td>{{ !empty($value->amount) ? '$'.$value->amount : '-' }}</td>
+                                                                <td>{{ !empty($value->tenure) ? $value->tenure . ' ' . $value->tenure_calender : '-' }}</td>
+                                                                <td>{{ !empty($value->start_date) ? date("d-m-Y", strtotime($value->start_date)) : '-' }}</td>
+                                                                <td>{{ !empty($value->end_date) ? date("d-m-Y", strtotime($value->end_date)) : '-' }}</td>
+                                                                <td>{{ isset($value->interest_earned) ? $value->interest_earned : '-' }}</td>
+                                                                <td>@if(($curr_date<=$end_date && $curr_date>=$start_date) || (empty($value->end_date)))
+                                                                        Ongoing @else Expired @endif</td>
+                                                                <td>
+                                                                    <a href="{{ route('product-management.edit', ['id'  =>  $value->product_id]) }}">
+                                                                        <button type="button"
+                                                                                class="ps-btn--action warning">
+                                                                            Edit
+                                                                        </button>
+                                                                    </a>
+                                                                    <a onclick="return confirm('Are you sure to delete?')"
+                                                                       href="{{ route('product-management.delete', ['id'  =>  $value->product_id]) }}">
+                                                                        <button type="button"
+                                                                                class="ps-btn--action success">
+                                                                            Delete
+                                                                        </button>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td class="text-center" colspan="9">No data found.</td>
+                                                        </tr>
+                                                    @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
+                                @include('frontend.includes.horizontal-ads')
                             </div>
                     </div>
                 </div>
@@ -292,8 +324,12 @@
     <script type="text/javascript">
         $(document).ready(function () {
             if ($("input[name='end_date']").val().length != 0) {
-                $("#reminder").attr("disabled", false);
+                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
                 $("input[name='dod_reminder']").attr("disabled", false);
+            } else {
+                $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+                $(".reminder").find('input[type=checkbox]').prop("disabled", true);
+                $("input[name='dod_reminder']").attr("disabled", true);
             }
 
             $('#datatable').DataTable({
@@ -309,13 +345,14 @@
         $("input[name='end_date']").on("change", function () {
             var valueLenght = $(this).val().length;
             if (valueLenght == 0) {
-                $("#reminder").attr("disabled", true);
+                $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+                $(".reminder").find('input[type=checkbox]').prop("disabled", true);
                 $("input[name='dod_reminder']").prop('checked', false);
                 $("input[name='dod_reminder']").attr("disabled", true);
                 $(".select2").select2("val", " ");
             }
             else {
-                $("#reminder").attr("disabled", false);
+                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
                 $("input[name='dod_reminder']").attr("disabled", false);
             }
         });
@@ -333,14 +370,19 @@
 
         $("input[name='dod_reminder']").on("change", function () {
             if ($(this).is(":checked") !== false) {
-                $("select[name='reminder[]']").prop("disabled", true);
+                $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+                $(".reminder").find('input[type=checkbox]').prop("disabled", true);
                 $(".select2").select2("val", " ");
             }
             else {
-                $("select[name='reminder[]']").prop("disabled", false);
+                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
             }
         });
-
+        if ($("input[name='dod_reminder']").is(":checked") !== false) {
+            $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+            $(".reminder").find('input[type=checkbox]').prop("disabled", true);
+            $(".select2").select2("val", " ");
+        }
         /*dod_onoff();
          $("input[name='start_date'], input[name='end_date']").on("change", function () {
          dod_onoff();

@@ -32,14 +32,14 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="contact-table" class="table table-bordered">
+                                        <table id="contact-table"  class="table table-bordered">
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
-                                                <th>Full name</th>
-                                                <th>Email</th>
-                                                <th>Contact number</th>
-                                                <th>Subject</th>
+                                                <th>Full&nbsp;name&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
+                                                <th>Email&emsp;&emsp;&emsp;</th>
+                                                <th>Contact&nbsp;number&emsp;&emsp;&emsp;</th>
+                                                <th>Subject&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Message&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Created on</th>
                                                 <th>Action</th>
@@ -53,7 +53,7 @@
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $contactEnquiry->id }}">
                                                         </td>
                                                         <td>
-                                                            {{ $contactEnquiry->full_name }}
+                                                            {!!   str_replace(' ', '&nbsp;', $contactEnquiry->full_name) !!}
                                                         </td>
                                                         <td>
                                                             {{ $contactEnquiry->email }}
@@ -114,5 +114,10 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
-
+    <style type="text/css">
+        * {
+            -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+            line-height: 1 !important; /*Chrome- removes extra blank page at the bottom*/
+        }
+    </style>
 @endsection

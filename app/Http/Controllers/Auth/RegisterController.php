@@ -94,6 +94,7 @@ class RegisterController extends Controller
             'tel_phone' => $data['tel_phone'],
             'company' => $data['company'],
             'subscribe' => $data['subscribe'],
+            
         ]);
     }
 
@@ -105,7 +106,9 @@ class RegisterController extends Controller
             'first_name'        =>  'required',
             'last_name'         =>  'required',
             'contact'           =>  'required|numeric',
-            'password'          =>  'required|min:8|confirmed',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required|same:password',
+             'g-recaptcha-response' => 'required|captcha'
 
             //'slug' => 'required'
         ];

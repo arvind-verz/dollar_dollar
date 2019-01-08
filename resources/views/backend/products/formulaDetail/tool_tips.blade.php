@@ -65,6 +65,33 @@
                                     </div>
                                 </div>
                             @endif
+                            @if($productTypeId == LOAN)
+                                <div class="form-group">
+                                    <input type="hidden" name="promotion_id" value="{{$productTypeId}}"/>
+                                    {{Form::label('rate_type', 'Rate Type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        {{Form::text('rate_type', $toolTips->rate_type, ['class' => 'form-control ', 'placeholder' => ''])}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('tenure', 'Tenure',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        {{Form::text('tenure',$toolTips->tenure, ['class' => 'form-control ', 'placeholder' => ''])}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('property_type', 'Property Type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        {{Form::text('property_type', $toolTips->property_type, ['class' => 'form-control ', 'placeholder' => ''])}}
+                                    </div>
+                                </div>
+                               {{-- <div class="form-group">
+                                    {{Form::label('completion', 'Rate type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        {{Form::text('completion', $toolTips->completion, ['class' => 'form-control ', 'placeholder' => ''])}}
+                                    </div>
+                                </div>--}}
+                            @endif
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
@@ -77,7 +104,7 @@
 
                         </div>
                         {{Form::hidden('_method','PUT')}}
-                        <!-- /.box-footer -->
+                                <!-- /.box-footer -->
                         {!! Form::close() !!}
                     </div>
                     <!-- /.box-body -->
@@ -119,6 +146,33 @@
                                         {{Form::text('loan', old('loan'), ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
+                            @endif
+                            @if($productTypeId == LOAN)
+                                <div class="form-group">
+                                    <input type="hidden" name="promotion_id" value="{{$productTypeId}}"/>
+                                    {{Form::label('rate_type', 'Rate Type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        {{Form::text('rate_type','', ['class' => 'form-control ', 'placeholder' => ''])}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('tenure', 'Tenure',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        {{Form::text('tenure','', ['class' => 'form-control ', 'placeholder' => ''])}}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('property_type', 'Property Type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        {{Form::text('property_type', '', ['class' => 'form-control ', 'placeholder' => ''])}}
+                                    </div>
+                                </div>
+                                {{--<div class="form-group">
+                                    {{Form::label('completion', 'Rate type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        {{Form::text('completion', '', ['class' => 'form-control ', 'placeholder' => ''])}}
+                                    </div>
+                                </div>--}}
                             @endif
                         </div>
                         <!-- /.box-body -->

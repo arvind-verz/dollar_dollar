@@ -71,6 +71,57 @@
                                     </div>
                                 </div>
                             @endif
+                            @if($productTypeId == LOAN)
+                                <div class="form-group">
+                                    {{Form::label('rate_type', 'Rate Type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="rate_type">
+                                            <option value="{{BOTH_VALUE}}"
+                                                    @if(isset($defaultSearch->rate_type) && $defaultSearch->rate_type==BOTH_VALUE) selected @endif>{{BOTH_VALUE}}</option>
+                                            <option value="{{FIXED_RATE}}"
+                                                    @if(isset($defaultSearch->rate_type) && $defaultSearch->rate_type==FIXED_RATE) selected @endif>{{FIXED_RATE}}</option>
+                                            <option value="{{FLOATING_RATE}}"
+                                                    @if(isset($defaultSearch->rate_type) && $defaultSearch->rate_type==FLOATING_RATE) selected @endif>{{FLOATING_RATE}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('tenure', 'Tenure',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="tenure">
+                                            @for($i=1;$i<=35;$i++)
+                                                <option name="{{$i}}"
+                                                        @if(isset($defaultSearch->tenure) && $defaultSearch->tenure==$i) selected @endif>{{$i}}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('property_type', 'Property Type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="property_type">
+
+                                            <option value="{{HDB_PROPERTY}}"
+                                                    @if(isset($defaultSearch->property_type) && $defaultSearch->property_type==HDB_PROPERTY) selected @endif>{{HDB_PROPERTY}}</option>
+                                            <option value="{{PRIVATE_PROPERTY}}"
+                                                    @if(isset($defaultSearch->property_type) && $defaultSearch->property_type==PRIVATE_PROPERTY) selected @endif>{{PRIVATE_PROPERTY}}</option>
+                                            <option value="{{COMMERCIAL_PROPERTY}}"
+                                                    @if(isset($defaultSearch->property_type) && $defaultSearch->property_type==COMMERCIAL_PROPERTY) selected @endif>{{COMMERCIAL_INDIVIDUAL_PROPERTY}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('completion', 'Rate type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="completion">
+                                            <option value="{{COMPLETE}}"
+                                                    @if(isset($defaultSearch->completion) && $defaultSearch->completion==COMPLETE) selected @endif>{{COMPLETE}}</option>
+                                            <option value="{{BUC}}"
+                                                    @if(isset($defaultSearch->completion) && $defaultSearch->completion==BUC) selected @endif>{{BUC}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
@@ -83,7 +134,7 @@
 
                         </div>
                         {{Form::hidden('_method','PUT')}}
-                        <!-- /.box-footer -->
+                                <!-- /.box-footer -->
                         {!! Form::close() !!}
                     </div>
                     <!-- /.box-body -->
@@ -129,6 +180,47 @@
                                     {{Form::label('loan', 'Loan',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
                                         {{Form::text('loan', old('loan'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                    </div>
+                                </div>
+                            @endif
+                            @if($productTypeId == LOAN)
+                                <div class="form-group">
+                                    {{Form::label('rate_type', 'Rate Type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="rate_type">
+                                            <option value="{{BOTH_VALUE}}">{{BOTH_VALUE}}</option>
+                                            <option value="{{FIXED_RATE}}">{{FIXED_RATE}}</option>
+                                            <option value="{{FLOATING_RATE}}">{{FLOATING_RATE}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('tenure', 'Tenure',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="tenure">
+                                            @for($i=1;$i<=35;$i++)
+                                                <option value="{{$i}}">{{$i}}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('property_type', 'Property Type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="property_type">
+                                            <option value="{{HDB_PROPERTY}}">{{HDB_PROPERTY}}</option>
+                                            <option value="{{PRIVATE_PROPERTY}}">{{PRIVATE_PROPERTY}}</option>
+                                            <option value="{{COMMERCIAL_PROPERTY}}">{{COMMERCIAL_INDIVIDUAL_PROPERTY}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{Form::label('completion', 'Rate type',['class'=>'col-sm-2 control-label'])}}
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="completion">
+                                            <option value="{{COMPLETE}}">{{COMPLETE}}</option>
+                                            <option value="{{BUC}}">{{BUC}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             @endif

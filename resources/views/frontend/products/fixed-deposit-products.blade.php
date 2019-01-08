@@ -209,7 +209,7 @@ class="fa fa-refresh"></i></a>
                     <div class="ps-product @if($product->featured==1) featured-1 @endif"
                          id="p-{{ $j }}">
 
-                        <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
+                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
                             $todayEndDate = \Helper::endOfDayAfter();
@@ -222,7 +222,7 @@ class="fa fa-refresh"></i></a>
                                     @elseif($product->promotion_end < $todayStartDate)
                                         {{EXPIRED}}
                                     @elseif($product->promotion_end > $todayStartDate)
-                                        {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
+                                        {{UNTIL}} {{ date('d/m/y', strtotime($product->promotion_end)) }}
                                     @endif
                                 </p>
 
@@ -245,16 +245,17 @@ class="fa fa-refresh"></i></a>
                             @if(!empty($product->promotion_formula_id))
                                 <div class="ps-product__table">
                                     <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product">
+                                        <table class="ps-table fixed-table ps-table--product">
                                             <thead>
                                             <tr>
-                                                <th>Type</th>
-                                                <th>Placement</th>
+                                                <th style="width:75px;">Type</th>
+                                                <th style="width:140px;">Placement</th>
                                                 @foreach($tenures as  $tenure)
                                                     <?php
                                                     $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                     ?>
-                                                    <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
+                                                    <th class="center"
+                                                        style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure . ' ' . $monthSuffix }}</th>
                                                 @endforeach
                                             </tr>
                                             </thead>
@@ -341,62 +342,20 @@ class="fa fa-refresh"></i></a>
                             <div class="ps-product__detail">
                                 {!! $product->product_footer !!}
                             </div>
-                            <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
+                            <div class="ps-product__footer"><a class="ps-product__more" href="#">More Details<i
                                             class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
                                                                                 href="#">More data<i
                                             class="fa fa-angle-down"></i></a></div>
                         </div>
                     </div>
                     @if(count($products)>=2)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==2)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                @php
-
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                @endphp
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                alt=""></a>
-                                @else
-                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                alt=""></a>
-                                @endif
-                            </div>
-                        @endif
+                        @if(!empty($ads_manage)  && $ads_manage->page_type==FIXED_DEPOSIT_MODE && $j==2)
+                                @include('frontend.includes.product-ads')
+                            @endif
                     @elseif(empty($remainingProducts->count()) && $j==$products->count())
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                @php
-
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                @endphp
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                alt=""></a>
-                                @else
-                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                alt=""></a>
-                                @endif
-                            </div>
-                        @endif
+                        @if(!empty($ads_manage)  && $ads_manage->page_type==FIXED_DEPOSIT_MODE)
+                                @include('frontend.includes.product-ads')
+                            @endif
                     @endif
                     <?php $j++; ?>
                 @endforeach
@@ -437,7 +396,7 @@ class="fa fa-refresh"></i></a>
                         <div class="ps-product @if($product->featured==1) featured-1 @endif"
                              id="r-{{ $j }}">
 
-                            <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
+                            <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
                                 <?php
                                 $todayStartDate = \Helper::startOfDayBefore();
                                 $todayEndDate = \Helper::endOfDayAfter();
@@ -450,7 +409,7 @@ class="fa fa-refresh"></i></a>
                                         @elseif($product->promotion_end < $todayStartDate)
                                             {{EXPIRED}}
                                         @elseif($product->promotion_end > $todayStartDate)
-                                            {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
+                                            {{UNTIL}} {{ date('d/m/y', strtotime($product->promotion_end)) }}
                                         @endif
                                     </p>
                                 </div>
@@ -471,16 +430,17 @@ class="fa fa-refresh"></i></a>
                                 @if(!empty($product->promotion_formula_id))
                                     <div class="ps-product__table">
                                         <div class="ps-table-wrap">
-                                            <table class="ps-table ps-table--product">
+                                            <table class="ps-table fixed-table ps-table--product">
                                                 <thead>
                                                 <tr>
-                                                    <th>Type</th>
-                                                    <th>Placement</th>
+                                                    <th style="width:75px;">Type</th>
+                                                    <th style="width:140px;">Placement</th>
                                                     @foreach($tenures as  $tenure)
                                                         <?php
                                                         $monthSuffix = \Helper::days_or_month_or_year(2, $tenure);
                                                         ?>
-                                                        <th class="center">{{ $tenure . ' ' . $monthSuffix }}</th>
+                                                        <th class="center"
+                                                            style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure . ' ' . $monthSuffix }}</th>
                                                     @endforeach
                                                 </tr>
                                                 </thead>
@@ -560,7 +520,7 @@ class="fa fa-refresh"></i></a>
                                 <div class="ps-product__detail">
                                     {!! $product->product_footer !!}
                                 </div>
-                                <div class="ps-product__footer"><a class="ps-product__more" href="#">More Detail<i
+                                <div class="ps-product__footer"><a class="ps-product__more" href="#">More Details<i
                                                 class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
                                                                                     href="#">More data<i
                                                 class="fa fa-angle-down"></i></a></div>
@@ -568,55 +528,13 @@ class="fa fa-refresh"></i></a>
                         </div>
                     @endif
                     @if($products->count()<2 && $remainingProducts->count()>=2)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE && $j==2)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                @php
-
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                @endphp
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                alt=""></a>
-                                @else
-                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                alt=""></a>
-                                @endif
-                            </div>
-                        @endif
+                        @if(!empty($ads_manage)  && $ads_manage->page_type==FIXED_DEPOSIT_MODE && $j==2)
+                                @include('frontend.includes.product-ads')
+                            @endif
                     @elseif(empty($products->count()) && $j==$remainingProducts->count())
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==FIXED_DEPOSIT_MODE)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                @php
-
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                @endphp
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                alt=""></a>
-                                @else
-                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                alt=""></a>
-                                @endif
-                            </div>
-                        @endif
+                        @if(!empty($ads_manage)  && $ads_manage->page_type==FIXED_DEPOSIT_MODE)
+                                @include('frontend.includes.product-ads')
+                            @endif
                     @endif
                     @php $j++; @endphp
                 @endforeach

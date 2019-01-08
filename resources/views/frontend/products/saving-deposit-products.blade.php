@@ -207,7 +207,7 @@ class="fa fa-refresh"></i></a>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="p-{{ $j }}">
-                        <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
+                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
@@ -221,7 +221,7 @@ class="fa fa-refresh"></i></a>
                                     @elseif($product->promotion_end < $todayStartDate)
                                         {{EXPIRED}}
                                     @elseif($product->promotion_end > $todayStartDate)
-                                        {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
+                                        {{UNTIL}} {{ date('d/m/y', strtotime($product->promotion_end)) }}
                                     @endif
                                 </p>
                                 
@@ -294,8 +294,8 @@ class="fa fa-refresh"></i></a>
                                                 <br>
                                                 <span>
                                                 Total interest rate @if(($product->total_interest)<=0)
-                                                        - @else {{ $product->total_interest }}% P.A.
-                                                        @if($product->promotion_period!=ONGOING)for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @endif @endif
+                                                        - @else {{ $product->total_interest }}%
+                                                        @if($product->promotion_period!=ONGOING) P.A. for {{$product->duration}} {{\Helper::days_or_month_or_year(1, $product->duration)}} @else for 1 year @endif @endif
                                                 </span>
                                             </h2>
                                         </div>
@@ -716,8 +716,7 @@ class="fa fa-refresh"></i></a>
                                                         {!! $product->product_footer !!}
                                                     </div>
                                                     <div class="ps-product__footer"><a
-                                                                class="ps-product__more" href="#">More
-                                                            Detail<i
+                                                                class="ps-product__more" href="#">More Details<i
                                                                     class="fa fa-angle-down"></i></a><a
                                                                 class="ps-product__info sp-only"
                                                                 href="#">More data<i
@@ -726,54 +725,12 @@ class="fa fa-refresh"></i></a>
                         </div>
                     </div>
                     @if(count($products)>=2)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==2)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                @php
-
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                @endphp
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                alt=""></a>
-                                @else
-                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                alt=""></a>
-                                @endif
-                            </div>
-                        @endif
+                        @if(!empty($ads_manage)  && $ads_manage->page_type==SAVING_DEPOSIT_MODE && $j==2)
+                                @include('frontend.includes.product-ads')
+                            @endif
                     @elseif(empty($remainingProducts->count()) && $j==$products->count())
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                @php
-
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                @endphp
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                alt=""></a>
-                                @else
-                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                alt=""></a>
-                                @endif
-                            </div>
+                        @if(!empty($ads_manage)  && $ads_manage->page_type==SAVING_DEPOSIT_MODE)
+                                @include('frontend.includes.product-ads')
                         @endif
                     @endif
                     @php $j++; @endphp
@@ -808,7 +765,7 @@ class="fa fa-refresh"></i></a>
                     @endif
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="r-{{ $j }}">
-                        <div class="ps-product__header"><img src="{{ asset($product->brand_logo) }}" alt="">
+                        <div class="ps-product__header"><div class="slider-img"><img data-sizes="auto" class="lazyload" alt="" data-src="{{ asset($product->brand_logo) }}"></div>
 
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
@@ -822,7 +779,7 @@ class="fa fa-refresh"></i></a>
                                     @elseif($product->promotion_end < $todayStartDate)
                                         {{EXPIRED}}
                                     @elseif($product->promotion_end > $todayStartDate)
-                                        {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
+                                        {{UNTIL}} {{ date('d/m/y', strtotime($product->promotion_end)) }}
                                     @endif
                                 </p>
                             </div>
@@ -1222,7 +1179,7 @@ class="fa fa-refresh"></i></a>
                                                                                         <span>
                                                                                         Total interest rate {{ $product->total_interest }}% P.A.
                                                                                         </span>--}}
-                                                                                        {{--<span>Based the Effective interest Rate</span>--}}
+                                                                                        {{--<span>Based the effective interest rate</span>--}}
 
                                                                                     </td>
                                                                                 @endif
@@ -1291,8 +1248,7 @@ class="fa fa-refresh"></i></a>
                                                             {!! $product->product_footer !!}
                                                         </div>
                                                         <div class="ps-product__footer"><a
-                                                                    class="ps-product__more" href="#">More
-                                                                Detail<i
+                                                                    class="ps-product__more" href="#">More Details<i
                                                                         class="fa fa-angle-down"></i></a><a
                                                                     class="ps-product__info sp-only"
                                                                     href="#">More data<i
@@ -1301,54 +1257,12 @@ class="fa fa-refresh"></i></a>
                         </div>
                     </div>
                     @if($products->count()<2 && $remainingProducts->count()>=2)
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE && $j==2)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                @php
-
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                @endphp
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                alt=""></a>
-                                @else
-                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                alt=""></a>
-                                @endif
-                            </div>
+                        @if(!empty($ads_manage)  && $ads_manage->page_type==SAVING_DEPOSIT_MODE && $j==2)
+                                @include('frontend.includes.product-ads')
                         @endif
                     @elseif(empty($products->count()) && $j==$remainingProducts->count())
-                        @if(count($ads_manage) && $ads_manage[0]->page_type==SAVING_DEPOSIT_MODE)
-                            <div class="ps-poster-popup">
-                                <!-- <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                </div> -->
-                                @php
-
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads_manage[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads_manage[0]->ad_end_date);
-                                @endphp
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage[0]->paid_ad_image))
-                                    <a href="{{ isset($ads_manage[0]->paid_ad_link) ? $ads_manage[0]->paid_ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->paid_ad_image) ? asset($ads_manage[0]->paid_ad_image) : '' }}"
-                                                alt=""></a>
-                                @else
-                                    <a href="{{ isset($ads_manage[0]->ad_link) ? $ads_manage[0]->ad_link : 'javascript:void(0)' }}"
-                                       target="_blank"><img
-                                                src="{{ isset($ads_manage[0]->ad_image) ? asset($ads_manage[0]->ad_image) : '' }}"
-                                                alt=""></a>
-                                @endif
-                            </div>
+                        @if(!empty($ads_manage)  && $ads_manage->page_type==SAVING_DEPOSIT_MODE)
+                                @include('frontend.includes.product-ads')
                         @endif
                     @endif
                     @php $j++; @endphp

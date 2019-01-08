@@ -36,12 +36,12 @@
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
-                                                <th>Full name</th>
+                                                <th>Full&nbsp;name&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Email</th>
-                                                <th>Contact number</th>
+                                                <th>Contact&nbsp;number</th>
                                                 <th>1. What is current your financial goal?</th>
                                                 <th>Other </th>
-                                                <th>2. Do you have any experience in investment?</th>
+                                                <th>2. Do you have any investment experience before?</th>
                                                 <th>Experience detail</th>
                                                 <th>3. Which Risk Profile do you fall into?</th>
                                                 <th>4. What is your age?</th>
@@ -59,7 +59,7 @@
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $enquiry->id }}">
                                                         </td>
                                                         <td>
-                                                            {{ $enquiry->full_name }}
+                                                            {!!   str_replace(' ', '&nbsp;', $enquiry->full_name) !!}
                                                         </td>
                                                         <td>
                                                             {{ $enquiry->email }}

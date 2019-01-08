@@ -39,27 +39,7 @@
                             <li class="current"><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        @if(count($ads))
-                            @if(($ads[0]->display==1))
-                                @php
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads[0]->ad_end_date);
-                                @endphp
-
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                                    </div>
-                                @else
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                                    </div>
-                                @endif
-                            @endif
-                        @endif
+                        @include('frontend.includes.vertical-ads-profile')
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -68,7 +48,7 @@
                             <h3>Profile Information</h3>
                         </div>
                         <div class="ps-dashboard__content">
-                            <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
+                            <p>Hello, <strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</strong></p>
 
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">

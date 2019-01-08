@@ -39,7 +39,7 @@ class LoginController extends Controller
      * @var string
      */
 
-    protected $redirectTo = '/';
+    protected $redirectTo = 'home';
 
     /**
      * Create a new controller instance.
@@ -114,13 +114,15 @@ class LoginController extends Controller
     {
         $user_products = ProductManagement::join('brands', 'product_managements.bank_id', '=', 'brands.id')
             ->get();
-        //dd($user_products);
-        $ads = AdsManagement::where('delete_status', 0)
-            ->where('display', 1)
-            ->where('page', 'account')
-            ->inRandomOrder()
-            ->limit(1)
-            ->get();
+        $ads =[];
+        $adsCollection = AdsManagement::where('delete_status', 0)
+                    ->where('display', 1)
+                    ->where('page', 'account')
+                    ->inRandomOrder()
+                    ->get();
+        if ($adsCollection->count()) {
+            $ads = \Helper::manageAds($adsCollection);
+        }
 
         DB::enableQueryLog();
         $page = Page::LeftJoin('menus', 'menus.id', '=', 'pages.menu_id')
@@ -171,9 +173,12 @@ class LoginController extends Controller
         return redirect('account-information')->with('success', 'Password ' . UPDATED_ALERT);
     }
 
-    public function redirectToProvider($provider)
+    public function redirectToProvider($provider,Request $request)
     {
-
+        if(isset($request->redirect_url)){
+             session(['redirect_url' => $request->redirect_url]);
+        }
+    
         return Socialite::driver($provider)->redirect();
     }
 
@@ -182,12 +187,20 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback($provider,Request $request)
     {
+        if(session('redirect_url')){
+            $this->redirectTo= session('redirect_url');
+        }
+        
+        $request->session()->forget('redirect_url');
+        if (!$request->has('code') || $request->has('denied')) {
+            return redirect(url($this->redirectTo));
+        }
         $user     = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
-        return redirect('/');
+        return redirect(url($this->redirectTo));
     }
 
     public function findOrCreateUser($user, $provider)
@@ -210,4 +223,8 @@ class LoginController extends Controller
             'adviser'            => 1,
         ]);
     }
+    public function logInPage($redirect_url=NULL) {
+
+            return view('auth.login', compact("redirect_url"));
+        }
 }

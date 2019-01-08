@@ -46,7 +46,7 @@
                                     @endphp
                                 <tr>
                                     <td>{{ ucfirst($customer_reports_group->first_name) . ' ' . ucfirst($customer_reports_group->last_name) }}<br/>{{ $customer_reports_group->email }}<br/>{{ $customer_reports_group->country_code . $customer_reports_group->tel_phone }}</td>
-                                    <td style="display: none">{{ ucfirst($customer_reports_group->first_name) . ' ' . ucfirst($customer_reports_group->last_name) }}<br/>{{ $customer_reports_group->email }}<br/>{{ $customer_reports_group->country_code . $customer_reports_group->tel_phone }}</td>
+                                    <td style="display: none">{{ ucfirst($customer_reports_group->first_name) . ' ' . ucfirst($customer_reports_group->last_name). ' | ' }}  {{ $customer_reports_group->email. ' | ' }}  {{ $customer_reports_group->country_code . $customer_reports_group->tel_phone }}</td>
                                     <td >@if($customer_reports_group->adviser==1) Yes @else No @endif</td>
                                     {{ Helper::getCustomerReportData($customer_reports_group->users_id) }}
                                     @endforeach

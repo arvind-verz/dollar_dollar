@@ -331,6 +331,7 @@
                                     @include('backend.products.formulaDetail.allInOneAccountF2')
                                     @include('backend.products.formulaDetail.allInOneAccountF3')
                                     @include('backend.products.formulaDetail.allInOneAccountF4')
+                                    @include('backend.products.formulaDetail.allInOneAccountF5')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -360,7 +361,7 @@
                                             </div>
                                         @endif
                                         <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
-                                            size should be 1140*160 for better display
+                                            size should be @if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT)1140*160 @else 1140*160 @endif for better display
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -597,7 +598,11 @@
                 $('#allInOneAccountF4').removeClass('display-none');
 
             }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>') {
 
+                $('#allInOneAccountF5').removeClass('display-none');
+
+            }
         });
         $("select[name='product_type']").on("change", function () {
             $('#fixDepositF1').addClass('display-none');
@@ -609,6 +614,7 @@
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
+            $('#allInOneAccountF5').addClass('display-none');
             $('#until-end-section').addClass('display-none');
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
@@ -636,6 +642,7 @@
             $('#allInOneAccountF2').addClass('display-none');
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
+            $('#allInOneAccountF5').addClass('display-none');
             $('#until-end-section').addClass('display-none');
             var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
@@ -714,7 +721,11 @@
                 $('#allInOneAccountF4').removeClass('display-none');
 
             }
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>') {
 
+                $('#allInOneAccountF5').removeClass('display-none');
+
+            }
         });
         $("select[name='product_type']").on("change", function () {
             var promotion_type = $(this).val();

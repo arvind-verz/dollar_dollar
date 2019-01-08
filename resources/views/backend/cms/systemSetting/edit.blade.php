@@ -78,7 +78,7 @@
                                     <div class="form-group">
                                         {{Form::label('footer_4', 'Footer 4',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('footer_3', $systemSetting->footer4, ['class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::textarea('footer_4', $systemSetting->footer4, ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 

@@ -7,7 +7,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('blog.index') }}">{{BLOG_MODULE}}</a></li>
+            <li><a href="{{ route('filter-category', ['id' => $filterCategory]) }}">{{BLOG_MODULE}}</a></li>
             <li class="active">{{BLOG_MODULE_SINGLE.' '.ADD_ACTION}}</li>
         </ol>
     </section>
@@ -37,6 +37,7 @@
                                 <div class="tab-pane active" id="page">
 
                                     <div class="form-group">
+                                        <input type="hidden" name="filter_category" value="{{$filterCategory}}"/>
                                         {{Form::label('name', 'Name',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => ''])}}
@@ -205,7 +206,7 @@
                         </div>
                         <!-- nav-tabs-custom -->
                         <div class="box-footer">
-                            <a href="{{ route('blog.index') }}"
+                            <a href="{{ route('filter-category', ['id' => $filterCategory]) }}"
                                class="btn btn-default"><i class="fa fa-close">
                                 </i> Cancel</a>
 

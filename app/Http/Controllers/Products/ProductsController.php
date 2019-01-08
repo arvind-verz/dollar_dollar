@@ -33,6 +33,7 @@ class ProductsController extends Controller
 
     public function promotion_products($productTypeId = FIX_DEPOSIT)
     {
+
         $defaultSearch = DefaultSearch::where('promotion_id', $productTypeId)->first();
         $products = \Helper::getProducts($productTypeId);
         $productType = $this->productType($productTypeId);
@@ -51,7 +52,12 @@ class ProductsController extends Controller
         $productType = $this->productType($productTypeId);
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
-        return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
+        if ($productTypeId == LOAN) {
+            return view('backend.products.loan_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
+        } else {
+            return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
+
+        }
     }
 
     public function promotion_products_get_formula(Request $request)
@@ -74,7 +80,6 @@ class ProductsController extends Controller
     public function promotion_products_add_db(Request $request)
     {
 
-        //dd($request->all());
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
 
         $destinationPath = 'uploads/products'; // upload path
@@ -151,14 +156,21 @@ class ProductsController extends Controller
         $product->apply_link_status = $request->apply_link_status;
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
-        $product->promotion_period = $request->promotion_period;
         if (isset($request->until_end_date)) {
             $product->until_end_date = $request->until_end_date;
         } else {
             $product->until_end_date = null;
         }
-        $product->maximum_interest_rate = $request->maximum_interest_rate;
-        $product->minimum_placement_amount = $request->minimum_placement_amount;
+
+        if($request->product_type==LOAN)
+        {
+            $product->minimum_loan_amount = $request->minimum_loan_amount;
+            $product->lock_in = $request->lock_in;
+        }else{
+            $product->maximum_interest_rate = $request->maximum_interest_rate;
+            $product->promotion_period = $request->promotion_period;
+            $product->minimum_placement_amount = $request->minimum_placement_amount;
+        }
         $ranges = null;
 
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
@@ -326,6 +338,66 @@ class ProductsController extends Controller
                     $range['max_range'] = (int)$max[$k];
                     $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
                     $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+                    $ranges[] = $range;
+                }
+                $ranges = json_encode($ranges);
+            }
+
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F5])) {
+                $range['min_range'] = (int)$request->min_placement_aioa5;
+                $range['max_range'] = (int)$request->max_placement_aioa5;
+                $range['minimum_spend_1'] = $request->minimum_spend_1_aioa5 ? (int)$request->minimum_spend_1_aioa5 : null;
+                $range['bonus_interest_spend_1'] = $request->bonus_interest_spend_1_aioa5 ? (float)$request->bonus_interest_spend_1_aioa5 : null;
+                $range['minimum_spend_2'] = $request->minimum_spend_2_aioa5 ? (int)$request->minimum_spend_2_aioa5 : null;
+                $range['bonus_interest_spend_2'] = $request->bonus_interest_spend_2_aioa5 ? (float)$request->bonus_interest_spend_2_aioa5 : null;
+                $range['minimum_salary'] = $request->minimum_salary_aioa5 ? (int)$request->minimum_salary_aioa5 : null;
+                $range['bonus_interest_salary'] = $request->bonus_interest_salary_aioa5 ? (float)$request->bonus_interest_salary_aioa5 : null;
+                $range['minimum_giro_payment'] = $request->minimum_giro_payment_aioa5 ? (int)$request->minimum_giro_payment_aioa5 : null;
+                $range['bonus_interest_giro_payment'] = $request->bonus_interest_giro_payment_aioa5 ? (float)$request->bonus_interest_giro_payment_aioa5 : null;
+                $range['minimum_privilege_pa'] = $request->minimum_privilege_pa_aioa5 ? (int)$request->minimum_privilege_pa_aioa5 : null;
+                $range['bonus_interest_privilege'] = $request->bonus_interest_privilege_aioa5 ? (float)$request->bonus_interest_privilege_aioa5 : null;
+                $range['minimum_loan_pa'] = $request->minimum_loan_pa_aioa5 ? (int)$request->minimum_loan_pa_aioa5 : null;
+                $range['bonus_interest_loan'] = $request->bonus_interest_loan_aioa5 ? (float)$request->bonus_interest_loan_aioa5 : null;
+
+                $range['other_interest1_name'] = $request->other_interest_name1_aioa5 ? $request->other_interest_name1_aioa5 : null;
+                $range['other_minimum_amount1'] = $request->other_minimum_amount1_aioa5 ? (int)$request->other_minimum_amount1_aioa5 : null;
+                $range['other_interest1'] = $request->other_interest1_aioa5 ? (float)$request->other_interest1_aioa5 : null;
+                $range['status_other1'] = $request->status_other1_aioa5 ? (int)$request->status_other1_aioa5 : 0;
+
+                $range['other_interest2_name'] = $request->other_interest2_name_aioa5 ? $request->other_interest2_name_aioa5 : null;
+                $range['other_minimum_amount2'] = $request->other_minimum_amount2_aioa5 ? (int)$request->other_minimum_amount2_aioa5 : null;
+                $range['other_interest2'] = $request->other_interest2_aioa5 ? (float)$request->other_interest2_aioa5 : null;
+                $range['status_other2'] = $request->status_other2_aioa5 ? (int)$request->status_other2_aioa5 : 0;
+
+                $range['first_cap_amount'] = $request->first_cap_amount_aioa5 ? (int)$request->first_cap_amount_aioa5 : null;
+                $range['bonus_interest_remaining_amount'] = $request->bonus_interest_remaining_amount_aioa5 ? (float)$request->bonus_interest_remaining_amount_aioa5 : null;
+                $ranges[] = $range;
+                $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [LOAN_F1])) {
+                $floatingRateTypes = $request->floating_rate_type_f1;
+                $bonusInterests = $request->bonus_interest_f1;
+                $rateNameOthers = $request->rate_name_other_f1;
+                $rateInterestOthers = $request->rate_interest_other_f1;
+
+                foreach ($request->tenure_f1 as $k => $v) {
+                    $range = [];
+                    $range['tenure'] = (int)$v;
+                    $range['floating_rate_type'] = $floatingRateTypes[$k];
+                    $range['bonus_interest'] = (float)$bonusInterests[$k];
+                    $range['rate_name_other'] = $rateNameOthers[$k];
+                    $range['rate_interest_other'] = (float)$rateInterestOthers[$k];
+
+
+                    $range['rate_type'] = $request->rate_type_f1;
+                    $range['rate_type_name'] = $request->rate_type_name_f1;
+                    $range['property_type'] = $request->property_type_f1;
+                    $range['completion_status'] = $request->completion_status_f1;
+
+                    $range['there_after_rate_type'] = $request->there_after_rate_type;
+                    $range['there_after_bonus_interest'] = (float)$request->there_after_bonus_interest;
+                    $range['there_after_rate_name_other'] = $request->there_after_rate_name_other;
+                    $range['there_after_rate_interest_other'] = (float)$request->there_after_rate_interest_other;
                     $ranges[] = $range;
                 }
                 $ranges = json_encode($ranges);
@@ -412,14 +484,17 @@ class ProductsController extends Controller
         $banks = Brand::where('delete_status', 0)->where('display', 1)->orderBy('title', 'asc')->get();
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
-        return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+        if ($request->product_type_id == LOAN) {
+            return view('backend.products.loan_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+        } else {
+            return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+        }
     }
 
     public function promotion_products_update(Request $request, $id)
     {
         $product = \Helper::getProduct($id);
         $ads = $product->ads_placement;
-
 
         if (!$product) {
             return redirect()->route('promotion-products', ['productTypeId' => $request->product_type])->with('error', OPPS_ALERT);
@@ -501,14 +576,21 @@ class ProductsController extends Controller
         $product->apply_link_status = $request->apply_link_status;
         $product->promotion_type_id = $request->product_type;
         $product->formula_id = $request->formula;
-        $product->promotion_period = $request->promotion_period;
         if (isset($request->until_end_date)) {
             $product->until_end_date = $request->until_end_date;
         } else {
             $product->until_end_date = null;
         }
-        $product->maximum_interest_rate = $request->maximum_interest_rate;
-        $product->minimum_placement_amount = $request->minimum_placement_amount;
+
+        if($request->product_type==LOAN)
+        {
+            $product->minimum_loan_amount = $request->minimum_loan_amount;
+            $product->lock_in = $request->lock_in;
+           }else{
+            $product->maximum_interest_rate = $request->maximum_interest_rate;
+            $product->promotion_period = $request->promotion_period;
+            $product->minimum_placement_amount = $request->minimum_placement_amount;
+        }
         $ranges = null;
         if ($product->promotion_type_id == FOREIGN_CURRENCY_DEPOSIT) {
             $product->currency = $request->currency;
@@ -675,6 +757,62 @@ class ProductsController extends Controller
                     $range['max_range'] = (int)$max[$k];
                     $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
                     $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
+                    $ranges[] = $range;
+                }
+                $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F5])) {
+                $range['min_range'] = (int)$request->min_placement_aioa5;
+                $range['max_range'] = (int)$request->max_placement_aioa5;
+                $range['minimum_spend_1'] = $request->minimum_spend_1_aioa5 ? (int)$request->minimum_spend_1_aioa5 : null;
+                $range['bonus_interest_spend_1'] = $request->bonus_interest_spend_1_aioa5 ? (float)$request->bonus_interest_spend_1_aioa5 : null;
+                $range['minimum_spend_2'] = $request->minimum_spend_2_aioa5 ? (int)$request->minimum_spend_2_aioa5 : null;
+                $range['bonus_interest_spend_2'] = $request->bonus_interest_spend_2_aioa5 ? (float)$request->bonus_interest_spend_2_aioa5 : null;
+                $range['minimum_salary'] = $request->minimum_salary_aioa5 ? (int)$request->minimum_salary_aioa5 : null;
+                $range['bonus_interest_salary'] = $request->bonus_interest_salary_aioa5 ? (float)$request->bonus_interest_salary_aioa5 : null;
+                $range['minimum_giro_payment'] = $request->minimum_giro_payment_aioa5 ? (int)$request->minimum_giro_payment_aioa5 : null;
+                $range['bonus_interest_giro_payment'] = $request->bonus_interest_giro_payment_aioa5 ? (float)$request->bonus_interest_giro_payment_aioa5 : null;
+                $range['minimum_privilege_pa'] = $request->minimum_privilege_pa_aioa5 ? (int)$request->minimum_privilege_pa_aioa5 : null;
+                $range['bonus_interest_privilege'] = $request->bonus_interest_privilege_aioa5 ? (float)$request->bonus_interest_privilege_aioa5 : null;
+                $range['minimum_loan_pa'] = $request->minimum_loan_pa_aioa5 ? (int)$request->minimum_loan_pa_aioa5 : null;
+                $range['bonus_interest_loan'] = $request->bonus_interest_loan_aioa5 ? (float)$request->bonus_interest_loan_aioa5 : null;
+                $range['other_interest1_name'] = $request->other_interest1_name_aioa5 ? $request->other_interest1_name_aioa5 : null;
+                $range['other_minimum_amount1'] = $request->other_minimum_amount1_aioa5 ? (int)$request->other_minimum_amount1_aioa5 : null;
+                $range['other_interest1'] = $request->other_interest1_aioa5 ? (float)$request->other_interest1_aioa5 : null;
+                $range['status_other1'] = $request->status_other1_aioa5 ? (int)$request->status_other1_aioa5 : 0;
+                $range['other_interest2_name'] = $request->other_interest2_name_aioa5 ? $request->other_interest2_name_aioa5 : null;
+                $range['other_minimum_amount2'] = $request->other_minimum_amount2_aioa5 ? (int)$request->other_minimum_amount2_aioa5 : null;
+                $range['other_interest2'] = $request->other_interest2_aioa5 ? (float)$request->other_interest2_aioa5 : null;
+                $range['status_other2'] = $request->status_other2_aioa5 ? (int)$request->status_other2_aioa5 : 0;
+                $range['first_cap_amount'] = $request->first_cap_amount_aioa5 ? (int)$request->first_cap_amount_aioa5 : null;
+                $range['bonus_interest_remaining_amount'] = $request->bonus_interest_remaining_amount_aioa5 ? (float)$request->bonus_interest_remaining_amount_aioa5 : null;
+                $ranges[] = $range;
+                $ranges = json_encode($ranges);
+            }
+            if (in_array($product->formula_id, [LOAN_F1])) {
+                $floatingRateTypes = $request->floating_rate_type_f1;
+                $bonusInterests = $request->bonus_interest_f1;
+                $rateNameOthers = $request->rate_name_other_f1;
+                $rateInterestOthers = $request->rate_interest_other_f1;
+
+                foreach ($request->tenure_f1 as $k => $v) {
+                    $range = [];
+                    $range['tenure'] = (int)$v;
+                    $range['floating_rate_type'] = $floatingRateTypes[$k];
+                    $range['bonus_interest'] = (float)$bonusInterests[$k];
+                    $range['rate_name_other'] = $rateNameOthers[$k];
+                    $range['rate_interest_other'] = (float)$rateInterestOthers[$k];
+
+
+                    $range['rate_type'] = $request->rate_type_f1;
+                    $range['rate_type_name'] = $request->rate_type_name_f1;
+                    $range['property_type'] = $request->property_type_f1;
+                    $range['completion_status'] = $request->completion_status_f1;
+
+                    $range['there_after_rate_type'] = $request->there_after_rate_type;
+                    $range['there_after_bonus_interest'] = (float)$request->there_after_bonus_interest;
+                    $range['there_after_rate_name_other'] = $request->there_after_rate_name_other;
+                    $range['there_after_rate_interest_other'] = (float)$request->there_after_rate_interest_other;
                     $ranges[] = $range;
                 }
                 $ranges = json_encode($ranges);
@@ -1502,6 +1640,61 @@ class ProductsController extends Controller
                 </div>
             </div>
             <?php
+        } elseif (in_array($request->formula, [LOAN_F1])) {
+            ?>
+            <div id="home_loan_range_f1_<?php echo $request->range_id; ?>">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-8 ">
+
+                        <div class="col-md-3 ">
+                            <label for="">Year</label>
+                            <select class="form-control tenure-0" name="tenure_f1[<?php echo $request->range_id; ?>]">
+                                <?php for($i=1;$i<=6;$i++) { ?>
+                                <option name="tenure_f1[<?php echo $request->range_id; ?>]" ><?php echo $i; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="">Rate type</label>
+                            <select class="form-control" name="floating_rate_type_f1[<?php echo $request->range_id; ?>]" id="">
+                                <option value="<?php echo FIX_RATE_TYPE;?>" ><?php echo FIX_RATE_TYPE;?></option>
+                                <option value="<?php echo SIBOR_RATE_TYPE;?>" ><?php echo SIBOR_RATE_TYPE;?></option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="">Bonus Interest</label>
+                            <input type="text" class="form-control only_numeric" id="" value=""
+                                   name="bonus_interest_f1[<?php echo $request->range_id; ?>]"
+                                   placeholder="">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Rate name (other)</label>
+                            <input type="text" class="form-control" id=""
+                                   name="rate_name_other_f1[<?php echo $request->range_id; ?>]" value=""
+                                   placeholder="">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="">Rate interest (other)</label>
+                            <input type="text" class="form-control only_numeric" id="" value=""
+                                   name="rate_interest_other_f1[<?php echo $request->range_id; ?>]"
+                                   placeholder="">
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-2" id="add-home-loan-placement-range-f1-button">
+                        <button type="button"
+                                class="btn btn-danger pull-left  mr-15 mt-25  remove-placement-range-button "
+                                data-range-id="<?php echo $request->range_id; ?>"
+                                onClick="removePlacementRange(this);">
+                            <i class="fa fa-minus"> </i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <?php
         }
     }
 
@@ -1603,7 +1796,9 @@ class ProductsController extends Controller
     public
     function productType($productTypeId)
     {
-        if ($productTypeId == SAVING_DEPOSIT) {
+        if ($productTypeId == LOAN) {
+            $productType = LOAN_MODULE;
+        } elseif ($productTypeId == SAVING_DEPOSIT) {
             $productType = SAVING_DEPOSIT_MODULE;
         } elseif ($productTypeId == ALL_IN_ONE_ACCOUNT) {
             $productType = ALL_IN_ONE_ACCOUNT_DEPOSIT_MODULE;
@@ -1639,6 +1834,13 @@ class ProductsController extends Controller
             $validate['privilege'] = 'required';
             $validate['loan'] = 'required';
         }
+        if ($request->promotion_id == LOAN) {
+            $validate['rate_type'] = 'required';
+            $validate['tenure'] = 'required';
+            $validate['property_type'] = 'required';
+            $validate['completion'] = 'required';
+
+        }
 
         $validator = Validator::make($request->all(), $validate);
         if ($validator->getMessageBag()->count()) {
@@ -1659,6 +1861,12 @@ class ProductsController extends Controller
             $defaultSearch->spend = $request->spend;
             $defaultSearch->privilege = $request->privilege;
             $defaultSearch->loan = $request->loan;
+        }
+        if ($request->promotion_id == LOAN) {
+            $defaultSearch->rate_type = $request->rate_type;
+            $defaultSearch->tenure = $request->tenure;
+            $defaultSearch->property_type = $request->property_type;
+            $defaultSearch->completion = $request->completion;
         }
         $defaultSearch->save();
 
@@ -1688,6 +1896,13 @@ class ProductsController extends Controller
             $validate['privilege'] = 'required';
             $validate['loan'] = 'required';
         }
+        if ($request->promotion_id == LOAN) {
+            $validate['rate_type'] = 'required';
+            $validate['tenure'] = 'required';
+            $validate['property_type'] = 'required';
+           /* $validate['completion'] = 'required';*/
+
+        }
 
         $validator = Validator::make($request->all(), $validate);
         if ($validator->getMessageBag()->count()) {
@@ -1707,6 +1922,12 @@ class ProductsController extends Controller
             $toolTips->spend = $request->spend;
             $toolTips->privilege = $request->privilege;
             $toolTips->loan = $request->loan;
+        }
+        if ($request->promotion_id == LOAN) {
+            $toolTips->rate_type = $request->rate_type;
+            $toolTips->tenure = $request->tenure;
+            $toolTips->property_type = $request->property_type;
+            //$toolTips->completion = $request->completion;
         }
         $toolTips->save();
 
@@ -1730,6 +1951,79 @@ class ProductsController extends Controller
                     return "Error";
                 }
             }
+        }
+
+    }
+    public  function  changeRateType(Request $request)
+    {
+        if ($request->rate_type == FLOATING_RATE) {
+            ?>
+            <label for="title" class="col-sm-2 control-label">Rate type</label>
+
+            <div class="col-sm-4">
+                <select class="form-control" name="rate_type_f1" id="rate-type">
+                    <option value="<?php echo FIXED_RATE; ?>" ><?php echo FIXED_RATE; ?></option>
+                    <option value="<?php echo FLOATING_RATE; ?>" selected="selected"><?php echo FLOATING_RATE; ?></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id=""
+                       name="rate_type_name_f1" value=""
+                       placeholder="Rate name">
+            </div>
+            <div class="col-sm-2">
+            </div>
+                <?php
+
+        } else { ?>
+            <label for="title" class="col-sm-2 control-label">Rate type</label>
+
+            <div class="col-sm-8">
+                <select class="form-control" name="rate_type_f1" id="rate-type">
+                    <option value="<?php echo FIXED_RATE; ?>" selected="selected"><?php echo FIXED_RATE; ?></option>
+                    <option value="<?php echo FLOATING_RATE; ?>"><?php echo FLOATING_RATE; ?></option>
+                </select>
+            </div>
+            <input type="hidden" class="form-control" id="" name="rate_type_name_f1" value="" placeholder="">
+            <div class="col-sm-2">
+            </div>
+            <?php
+        }
+
+    }
+    public function pathUpdateInTechAndLong()
+    {
+
+        $products = PromotionProducts::all();
+
+        if ($products->count()) {
+            $i = 0;
+            foreach ($products as $product) {
+                $update = false;
+                $oldProduct = $product;
+                //  str_replace(' ', '%20', $your_string);
+                if (strpos($product->product_footer, 'class="ps-btn ps-btn--black"') !== false) {
+                    $product->product_footer = str_replace('class="ps-btn ps-btn--black"', 'class="ps-btn ps-btn--black" target="_blank"', $product->product_footer);
+                    $update = true;
+
+                }
+                if (strpos($product->product_footer, 'class="ps-btn ps-btn--outline"') !== false) {
+                    $product->product_footer = str_replace('class="ps-btn ps-btn--outline"', 'class="ps-btn ps-btn--outline" target="_blank"', $product->product_footer);
+                    $update = true;
+
+                }
+                /*if (strpos($product->long_description, '/speedo/public') !== false) {
+                    $product->long_description = str_replace('/speedo/public', '', $product->long_description);
+                    $update = true;
+                }*/
+
+                if ($update == true) {
+                    $product->save();
+                    $i++;
+                }
+
+            }
+            dd($i);
         }
 
     }

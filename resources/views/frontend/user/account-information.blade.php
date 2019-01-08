@@ -29,6 +29,7 @@
             </div>
         </div>
     @endif
+    
     <main class="ps-main">
         <div class="container">
             <div class="row">
@@ -39,27 +40,7 @@
                             <li class="current"><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        @if(count($ads))
-                            @if(($ads[0]->display==1))
-                                @php
-                                $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                                $ad_start_date = strtotime($ads[0]->ad_start_date);
-                                $ad_end_date = strtotime($ads[0]->ad_end_date);
-                                @endphp
-
-                                @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads[0]->paid_ad_image))
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->paid_ad_link) ? asset($ads[0]->paid_ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->paid_ad_image) }}" alt=""></a>
-                                    </div>
-                                @else
-                                    <div class="pt-2">
-                                        <a href="{{ isset($ads[0]->ad_link) ? asset($ads[0]->ad_link) : '#' }}"
-                                           target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
-                                    </div>
-                                @endif
-                            @endif
-                        @endif
+                        @include('frontend.includes.vertical-ads-profile')
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -68,7 +49,8 @@
                             <h3>Profile Information</h3>
                         </div>
                         <div class="ps-dashboard__content">
-                            <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
+                            <p>Hello, <strong>  {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</strong>
+                            </p>
 
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
@@ -82,171 +64,26 @@
                                             Name: </strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}
                                     </p>
 
-                                    <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p><a
-                                            class="ps-link"
-                                            href="{{ route('user.resetpassword', ['id'    =>  AUTH::user()->id]) }}">Change
-                                        password</a>
+                                    <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
+
+                                    <p><strong> Newsletter: </strong><a
+                                                href="#">@if(AUTH::user()->email_notification==1) Yes @else
+                                                No @endif</a></p>
+
+                                    <p><strong> Consent to marketing information: </strong><a
+                                                href="#">@if(AUTH::user()->adviser==1) Yes @else No @endif</a></p>
+
+                                    <p><a
+                                                class="ps-link"
+                                                href="{{ route('user.resetpassword', ['id'    =>  AUTH::user()->id]) }}">Change
+                                            password</a></p>
+
+                                    <p><a class="ps-link" data-toggle="modal" data-target="#myModalUser"> Deactivate /
+                                            Delete account </a>
+                                    </p>
                                 </div>
                             </div>
-                            <!-- <div class="ps-block--box recommended-product">
-                                <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">recommended products</h5><a href="#">View all</a>
-                                </div>
-                                <div class="ps-block__content">
-                                    <div class="ps-block--short-product second"><img src="img/logo/1.png" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-                                            <p class="highlight">12 Months</p>
-                                        </div><a class="ps-btn" href="#">More info</a>
-                                    </div>
-                                    <div class="ps-block--short-product second"><img src="img/logo/1.png" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-                                            <p class="highlight">12 Months</p>
-                                        </div><a class="ps-btn" href="#">More info</a>
-                                    </div>
-                                    <div class="ps-block--short-product second"><img src="img/logo/1.png" alt="">
-                                        <h4>up to <strong> 1.3%</strong></h4>
-                                        <div class="ps-block__info">
-                                            <p><strong> rate: </strong>1.3%</p>
-                                            <p><strong>Min:</strong> SGD $20,000</p>
-                                            <p class="highlight">12 Months</p>
-                                        </div><a class="ps-btn" href="#">More info</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ps-block--box no-border">
-                                <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">Recently Added Products</h5><a href="#">View all</a>
-                                </div>
-                                <div class="ps-block__content">
-                                    <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product-managerment">
-                                            <thead>
-                                                <tr>
-                                                    <th>Product</th>
-                                                    <th>Amount</th>
-                                                    <th>tenure (Months)</th>
-                                                    <th>Start Date</th>
-                                                    <th>End Date</th>
-                                                    <th>Interested Earned</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>DBS</td>
-                                                    <td>$6,000</td>
-                                                    <td>24</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xxx.xx</td>
-                                                    <td>InActive</td>
-                                                    <td>
-                                                        <button class="ps-btn--action warning">Edit</button>
-                                                        <button class="ps-btn--action success">Delete</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>OCBC</td>
-                                                    <td>$1,500</td>
-                                                    <td>12</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xxx.xx</td>
-                                                    <td>Active</td>
-                                                    <td>
-                                                        <button class="ps-btn--action warning">Edit</button>
-                                                        <button class="ps-btn--action success">Delete</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>UOB</td>
-                                                    <td>$3,000</td>
-                                                    <td>36</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xxx.xx</td>
-                                                    <td>Active</td>
-                                                    <td>
-                                                        <button class="ps-btn--action warning">Edit</button>
-                                                        <button class="ps-btn--action success">Delete</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ps-block--box no-border">
-                                <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">Promotion Ending Products</h5><a href="#">View all</a>
-                                </div>
-                                <div class="ps-block__content">
-                                    <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product-managerment">
-                                            <thead>
-                                                <tr>
-                                                    <th>Product</th>
-                                                    <th>Amount</th>
-                                                    <th>tenure (Months)</th>
-                                                    <th>Start Date</th>
-                                                    <th>End Date</th>
-                                                    <th>Interested Earned</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>DBS</td>
-                                                    <td>$6,000</td>
-                                                    <td>24</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xxx.xx</td>
-                                                    <td>InActive</td>
-                                                    <td>
-                                                        <button class="ps-btn--action warning">Edit</button>
-                                                        <button class="ps-btn--action success">Delete</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>OCBC</td>
-                                                    <td>$1,500</td>
-                                                    <td>12</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xxx.xx</td>
-                                                    <td>Active</td>
-                                                    <td>
-                                                        <button class="ps-btn--action warning">Edit</button>
-                                                        <button class="ps-btn--action success">Delete</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>UOB</td>
-                                                    <td>$3,000</td>
-                                                    <td>36</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xx-xx-xxxx</td>
-                                                    <td>xxx.xx</td>
-                                                    <td>Active</td>
-                                                    <td>
-                                                        <button class="ps-btn--action warning">Edit</button>
-                                                        <button class="ps-btn--action success">Delete</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div> -->
+                            @include('frontend.includes.horizontal-ads')
                         </div>
                     </div>
                 </div>
@@ -259,5 +96,44 @@
         {!! $systemSetting->{$page->contact_or_offer} !!}
     @endif
     {{--contact us or what we offer section end--}}
+    <div id="myModalUser" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Are you sure?</h4>
+                </div>
+                {!! Form::open(['route' => ['account-information-delete', AUTH::user()->id], 'method'   => 'POST']) !!}
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="ps-block__content">
+                            <div class="">
+                                    <input type="radio" class="" name="type" value="delete"> Delete
+                                    <input type="radio" class="" name="type" value="deactivate" checked="checked"> Deactivate
+
+                            </div>
+                            <div class="" style="padding: 20px 50px;">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <button type="submit" class="ps-btn " style="padding: 15px 0;">Submit</button>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <button type="" data-dismiss="modal" style="padding: 15px 0;" class="ps-btn ps-btn--outline">Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <img src="https://www.dollardollar.sg/frontend/images/logo_1535015224_7664b296e0e085eaa5e4852c2e8b11ba_1539598995.jpg"
+                         alt="">
+                </div>
+                {!! Form::close() !!}
+            </div>
+
+        </div>
+    </div>
 @endsection

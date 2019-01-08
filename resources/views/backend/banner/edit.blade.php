@@ -156,12 +156,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 {{Form::label('view_order', 'View Order',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
                                     {{Form::text('view_order', ($banner->view_order ? $banner->view_order :0), ['class' => 'form-control', 'placeholder' => ''])}}
                                 </div>
-                            </div>
+                            </div>-->
 
                             
 
@@ -169,7 +169,7 @@
                         <!-- /.box-body -->
                         <div class="box-footer">
                             {{Form::hidden('_method','PUT')}}
-                            <a href="{{route("brand.index", ["type"=>$type])}}"
+                            <a href="{{ route('banner.index', ['type'=>$type]) }}"
                                class="btn btn-default"><i class="fa fa-close">
                                 </i> Cancel</a>
 

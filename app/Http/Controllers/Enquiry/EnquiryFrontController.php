@@ -11,12 +11,16 @@ use App\Mail\ContactEnquiryMail;
 use App\Mail\HealthEnquiryMail;
 use App\Mail\LifeEnquiryMail;
 use App\Mail\InvestmentEnquiryMail;
+use App\Mail\LoanEnquiry as LoanEnquiryMail;
 use App\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Http\Request;
 use Mail;
 use Validator;
+use App\Page;
+use App\LoanEnquiry;
+use App\PromotionProducts;
 
 class EnquiryFrontController extends Controller
 {
@@ -101,15 +105,29 @@ class EnquiryFrontController extends Controller
     {
         //check validation
         $fields = [
-            'full_name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'country_code' => 'required|max:255',
-            'telephone' => 'required|min:8|max:255',
+            
             'subject' => 'required|max:255',
             'message' => 'required|max:3500',
             'g-recaptcha-response' => 'required|captcha'
         ];
-        $this->validate($request, $fields);
+        $validator = Validator::make($request->all(), $fields);
+         if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }elseif(\Helper::isValidEmail($request->email) == false){
+            $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
+        }
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
+        }
+         if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
         $data = $request->all();
 
         $contactEnquiry = new ContactEnquiry();
@@ -139,10 +157,7 @@ class EnquiryFrontController extends Controller
             'coverage' => 'required|max:255',
             'level' => 'required|max:255',
             'time' => 'required|max:255',
-            'full_name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'country_code' => 'required|max:255',
-            'telephone' => 'required|min:8|max:255',
+        
 
         ];
 
@@ -152,11 +167,25 @@ class EnquiryFrontController extends Controller
             }
         }
         if (isset($request->level)) {
-            if ($request->level==YES) {
+            if ($request->level == YES) {
                 $fields ['health_condition'] = 'required';
             }
         }
         $validator = Validator::make($request->all(), $fields);
+         if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }elseif(\Helper::isValidEmail($request->email) == false){
+            $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
+        }
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
@@ -180,7 +209,7 @@ class EnquiryFrontController extends Controller
 
         $healthInsuranceEnquiry->save();
 
-        if(Auth::user()->email==$request->email) {
+        if (Auth::check()) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -192,7 +221,7 @@ class EnquiryFrontController extends Controller
         try {
             Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
         } catch (Exception $exception) {
-            //dd($exception);
+            dd($exception);
             return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
@@ -208,10 +237,7 @@ class EnquiryFrontController extends Controller
             'dob' => 'required|max:255',
             'smoke' => 'required|max:255',
             'time' => 'required',
-            'full_name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'country_code' => 'required|max:255',
-            'telephone' => 'required|max:255',
+            
 
         ];
 
@@ -221,6 +247,20 @@ class EnquiryFrontController extends Controller
             }
         }
         $validator = Validator::make($request->all(), $fields);
+         if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }elseif(\Helper::isValidEmail($request->email) == false){
+            $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
+        }
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
@@ -248,7 +288,7 @@ class EnquiryFrontController extends Controller
 
         $lifeInsuranceEnquiry->save();
 
-        if(Auth::user()->email==$request->email) {
+       if (Auth::check()) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -260,7 +300,7 @@ class EnquiryFrontController extends Controller
         try {
             Mail::to(ADMIN_EMAIL)->send(new LifeEnquiryMail($data));
         } catch (Exception $exception) {
-            
+
             return redirect(url(LIFE_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
@@ -275,15 +315,10 @@ class EnquiryFrontController extends Controller
             'experience' => 'required',
             'risks' => 'required',
             'age' => 'required',
-            'time' => 'required',
-            'full_name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'country_code' => 'required|max:255',
-            'telephone' => 'required|max:255',
-
+            'time' => 'required'
         ];
         if (isset($request->experience)) {
-            if ($request->experience==YES) {
+            if ($request->experience == YES) {
                 $fields ['experience_detail'] = 'required';
             }
         }
@@ -299,6 +334,21 @@ class EnquiryFrontController extends Controller
         }
 
         $validator = Validator::make($request->all(), $fields);
+        
+        if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }elseif(\Helper::isValidEmail($request->email) == false){
+            $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
+        }
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
+        }
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
@@ -310,9 +360,9 @@ class EnquiryFrontController extends Controller
             $goals = $request->goals;
         }
         $investmentEnquiry->goals = serialize($goals);
-        $investmentEnquiry->goal_other_value = isset($request->goal_other_value) ? $request->goal_other_value :null;
+        $investmentEnquiry->goal_other_value = isset($request->goal_other_value) ? $request->goal_other_value : null;
         $investmentEnquiry->experience = $request->experience;
-        $investmentEnquiry->experience_detail = isset($request->experience_detail) ? $request->experience_detail :null;
+        $investmentEnquiry->experience_detail = isset($request->experience_detail) ? $request->experience_detail : null;
         $risks = [];
         if (isset($request->risks)) {
             $risks = $request->risks;
@@ -326,12 +376,13 @@ class EnquiryFrontController extends Controller
         $investmentEnquiry->other_value = $request->other_value;
         $investmentEnquiry->full_name = $request->full_name;
         $investmentEnquiry->email = $request->email;
+        $investmentEnquiry->age = $request->age;
         $investmentEnquiry->country_code = $request->country_code;
         $investmentEnquiry->telephone = $request->telephone;
 
         $investmentEnquiry->save();
 
-        if(Auth::user()->email==$request->email) {
+        if (Auth::check()) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -343,9 +394,122 @@ class EnquiryFrontController extends Controller
         try {
             Mail::to(ADMIN_EMAIL)->send(new InvestmentEnquiryMail($data));
         } catch (Exception $exception) {
-            
+
             return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+    }
+
+    public function loanEnquiry(Request $request)
+    {
+        $searchFilter = $request->all();
+        //dd($searchFilter);
+        $page = Page::where('pages.slug', LOAN_ENQUIRY)
+            ->where('delete_status', 0)->first();
+        if (!$page) {
+            return redirect()->action('Blog\BlogController@index')->with('error', OPPS_ALERT);
+        }
+        $systemSetting = \Helper::getSystemSetting();
+        if (!$systemSetting) {
+            return back()->with('error', OPPS_ALERT);
+        }
+
+        $banners = \Helper::getBanners(LOAN_ENQUIRY);
+        return view("frontend.CMS.loan-enquiry", compact("productIds", "page", "banners", 'systemSetting', 'searchFilter'));
+
+    }
+
+    public function postLoanEnquiry(Request $request)
+    {
+
+        //check validation
+        $fields = ['g-recaptcha-response' => 'required|captcha'];
+
+        $validator = Validator::make($request->all(), $fields);
+        if (!$request->full_name) {
+            $validator->getMessageBag()->add('full_name', 'This field is required.');
+        }
+        if (!$request->email) {
+            $validator->getMessageBag()->add('email', 'This field is required.');
+        }
+        if (!$request->telephone) {
+            $validator->getMessageBag()->add('telephone', 'This field is required.');
+        }
+        if (!$request->rate_type_search) {
+            $validator->getMessageBag()->add('rate_type_search', 'This field is required.');
+        }
+        if (!$request->property_type_search) {
+            $validator->getMessageBag()->add('property_type_search', 'This field is required.');
+        }
+        if (!$request->loan_amount) {
+            $validator->getMessageBag()->add('loan_amount', 'This field is required.');
+        }
+        if (!$request->loan_type) {
+            $validator->getMessageBag()->add('loan_type', 'This field is required.');
+        }
+        if (!$request->country_code) {
+            $validator->getMessageBag()->add('country_code', 'This field is required.');
+        }
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        }
+        $data = $request->all();
+
+        $loanEnquiry = new LoanEnquiry();
+        $productIds = [];
+        if (!empty($request->product_ids)) {
+            $productIds = explode(",", $request->product_ids);
+        }
+        $productNames = [];
+        if (count($productIds)) {
+            $products = PromotionProducts::whereIn('id',$productIds)->where('delete_status', 0)->where('status', 1)->get();
+            if ($products->count()) {
+                $productNames = $products->pluck('product_name')->all();
+            }
+        }
+        $data['product_names'] = $productNames;
+        $loanEnquiry->product_ids = serialize($productIds);
+        $loanEnquiry->rate_type = isset($request->rate_type_search) ? $request->rate_type_search : null;
+        $loanEnquiry->property_type = isset($request->property_type_search) ? $request->property_type_search : null;
+        $loanEnquiry->loan_amount = isset($request->loan_amount) ? $request->loan_amount : null;
+        $loanEnquiry->loan_type = isset($request->loan_type) ? $request->loan_type : null;
+
+        $loanEnquiry->full_name = $request->full_name;
+        $loanEnquiry->email = $request->email;
+        $loanEnquiry->country_code = $request->country_code;
+        $loanEnquiry->telephone = $request->telephone;
+        $loanEnquiry->save();
+        if(Auth::check()) {
+            if (Auth::user()->email == $request->email) {
+                $user = User::find(Auth::user()->id);
+
+                $user->country_code = $request->country_code;
+                $user->tel_phone = $request->telephone;
+
+                $user->save();
+            }
+        }
+
+        try {
+            Mail::to(ADMIN_EMAIL)->send(new LoanEnquiryMail($data));
+        } catch (Exception $exception) {
+            dd($exception);
+            return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+        }
+        return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+    }
+
+    public function testMail(Request $request)
+    {
+
+        try {
+            Mail::raw('Text', function ($message) {
+                $message->to('nicckk.verz@gmail.com');
+            });
+            dd("Hi");
+        } catch (Exception $exception) {
+            dd($exception);
+        }
+
     }
 }
