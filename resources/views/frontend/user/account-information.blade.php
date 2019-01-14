@@ -29,6 +29,7 @@
             </div>
         </div>
     @endif
+    
     <main class="ps-main">
         <div class="container">
             <div class="row">
@@ -63,14 +64,12 @@
                                             Name: </strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}
                                     </p>
 
-                                    <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
+                                    <p><strong> Email: </strong>{{ AUTH::user()->email }}</p>
+                                    <p><strong>  Contact Number: </strong> {{ AUTH::user()->country_code . ' ' . AUTH::user()->tel_phone }}</p>
+                                    <p><strong> Newsletter: </strong>@if(AUTH::user()->email_notification==1) Yes @else
+                                                No @endif</p>
 
-                                    <p><strong> Newsletter: </strong><a
-                                                href="#">@if(AUTH::user()->email_notification==1) Yes @else
-                                                No @endif</a></p>
-
-                                    <p><strong> Consent to marketing information: </strong><a
-                                                href="#">@if(AUTH::user()->adviser==1) Yes @else No @endif</a></p>
+                                    <p><strong> Consent to marketing information: </strong>@if(AUTH::user()->adviser==1) Yes @else No @endif</p>
 
                                     <p><a
                                                 class="ps-link"
@@ -82,6 +81,7 @@
                                     </p>
                                 </div>
                             </div>
+                            @include('frontend.includes.vertical-ads-profile')
                             @include('frontend.includes.horizontal-ads')
                         </div>
                     </div>

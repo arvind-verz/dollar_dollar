@@ -44,6 +44,7 @@
                                                 <th>Property type&emsp;&emsp;</th>
                                                 <th>Loan amount&emsp;&emsp;</th>
                                                 <th>Loan type&emsp;&emsp;</th>
+                                                <th>Existing bank loan&emsp;</th>
                                                 <th>Created on</th>
                                                 <th>Action</th>
                                             </tr>
@@ -83,6 +84,9 @@
                                                         </td>
                                                         <td>
                                                             {{ $loanEnquiry->loan_type }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $loanEnquiry->existing_bank_loan }}
                                                         </td>
                                                         <td>
                                                             @if ($loanEnquiry->created_at == null)

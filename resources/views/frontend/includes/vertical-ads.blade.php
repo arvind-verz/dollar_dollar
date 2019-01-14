@@ -5,7 +5,7 @@
         $ad_end_date = strtotime($ads->ad_end_date);
         ?>
 
-        @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads->paid_ad_image))
+        @if($ads->paid_ads_status==1 && $current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads->paid_ad_image))
             <div class="pt-2">
                 <a href="{{ isset($ads->paid_ad_link) ? asset($ads->paid_ad_link) : '#' }}"
                    target="_blank"><img src="{{ asset($ads->paid_ad_image) }}" alt=""></a>

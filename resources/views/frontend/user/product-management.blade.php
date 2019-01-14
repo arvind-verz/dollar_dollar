@@ -92,7 +92,8 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <input type="text" class="form-control hide orther-hide" name="bank_id_other" value=""
                                                    placeholder="Enter Bank or Financial Institution name">
-                                    </div>
+                                    </div></div>
+                                    <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Account Name</label>
@@ -112,16 +113,16 @@
                                                     <!-- <span class="suffix_k">K</span> -->
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                 <div class="form-group">
                                                     <label>Tenure</label>
                                                     <input type="text" class="form-control " name="tenure"
                                                            value="{{ old('tenure') }}">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                 <div class="form-group">
-                                                    <select class="form-control mt-30" name="tenure_calender">
+                                                    <select class="form-control mt-30 mt-34" name="tenure_calender">
                                                         <option value="D" selected>Days</option>
                                                         <option value="M">Months</option>
                                                         <option value="Y">Years</option>
@@ -314,6 +315,7 @@
                                         </div>
                                     </div>
                                 @endif
+                                 @include('frontend.includes.vertical-ads-profile')
                                 @include('frontend.includes.horizontal-ads')
                             </div>
                     </div>

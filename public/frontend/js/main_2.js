@@ -18,10 +18,9 @@ var isMobile = {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 }
-
 $(".ps-poster-popup .close-popup").click(function () {
-    $(this).parents(".ps-poster-popup").slideUp();
-    $(this).parents(".ps-poster-popup").next(".product-popup").slideDown();
+    $(this).parent().slideUp();
+    $(this).parent().next(".product-popup").slideDown();
 });
 function backgroundImage() {
     var databackground = $('[data-background]');
@@ -121,25 +120,17 @@ function productCollapse() {
             $(this).html("More Details <i class='fa fa-angle-down'></i>")
             $(this).closest('.ps-product').find('.ps-product__detail').slideUp();
         }
-        // $(this).parents(".ps-product__content").find(".table-new").parent().before("<div class='row'><div class='scroll-table'></div></div>");
-        $(this).parents(".ps-product__content").find(".scroll-table").css({"height":"20px","width":$(this).parents(".ps-product__content").find(".table-new").width()+"px"});
-        
-        $(this).parents(".ps-product__content").find(".scroll-table").parent().scroll(function(){
-            $(this).parents(".ps-product__content").find(".table-new").parent().scrollLeft($(this).parents(".ps-product__content").find(".scroll-table").parent().scrollLeft());
-          });
     });
-    //if (isMobile.any()) {
-    if (screen.width < 768) {
+    if (isMobile.any()) {
+        // if (screen.width < 768) {
         $('.ps-product__more').on('click', function (e) {
             e.preventDefault();
             $(this).next().html("More Data <i class='fa fa-angle-down'></i>");
             $(this).next().removeClass('active');
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideUp();
             $(this).closest('.ps-product').find('.ps-table-wrap').slideUp();
-            $(this).parents(".ps-product__content").find(".ps-table.ps-table--product").after($(this).parents(".ps-product__content").find(".ps-product__detail > .ps-criteria-detail > p"));
-            $(this).parents(".ps-product__content").find("p").removeClass("is-active");
+            // $(this).parents(".ps-product__content").find(".ps-table.ps-table--product").after($(this).parents(".ps-product__content").find(".ps-product__detail > .ps-criteria-detail > p"));
             
-            $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").find(".ps-poster-popup"));
         })
         // }
     }
@@ -153,29 +144,28 @@ function moreInfo() {
             $(this).html("Less Data <i class='fa fa-angle-up'></i>")
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideDown();
             $(this).closest('.ps-product').find('.ps-table-wrap').slideDown();
-            $(this).parents(".ps-product__content").find("p").addClass("is-active");
+            $(this).parents(".ps-product__content").find("p").addClass("active");
         }
         else {
             $(this).removeClass('active');
             $(this).html("More Data <i class='fa fa-angle-down'></i>")
             $(this).closest('.ps-product').find('.ps-table.ps-table--product').slideUp();
             $(this).closest('.ps-product').find('.ps-table-wrap').slideUp();
-            $(this).parents(".ps-product__content").find("p").removeClass("is-active");
+            $(this).parents(".ps-product__content").find("p").removeClass("active");
         }
         $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").find(".ps-product__table"));
-        $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").find(".ps-table-wrap"));
+        $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").children(".ps-table-wrap"));
     });
-    //if (isMobile.any()) {
-    if (screen.width < 768) {
+    if (isMobile.any()) {
+        // if (screen.width < 768) {
         $('.ps-product__info').on('click', function (e) {
             e.preventDefault();
             $(this).prev().html("More Details <i class='fa fa-angle-down'></i>");
             $(this).prev().removeClass('active');
             $(this).closest('.ps-product').find('.ps-product__detail').slideUp();
-            $(this).parents(".ps-product__content").find(".ps-table.ps-table--product").after($(this).parents(".ps-product__content").find(".ps-product__detail > .ps-criteria-detail > p"));
+            // $(this).parents(".ps-product__content").find(".ps-table.ps-table--product").after($(this).parents(".ps-product__content").find(".ps-product__detail > .ps-criteria-detail > p"));
             $(this).parents(".ps-product ").find(".ps-loan-right").after($(this).parents(".ps-product ").find(".loan_table"));
             $(this).parents(".ps-product ").find(".loan_table .ps-table-wrap").css('display','table');
-            $(this).parents(".ps-product__content").find(".ps-product__panel").after($(this).parents(".ps-product__content").find(".ps-poster-popup"));
         })
         // }
     }
@@ -186,39 +176,25 @@ function backToTop() {
     var element = $('#totop');
     $(window).scroll(function () {
         var scrollCur = $(window).scrollTop();
-        if($(window).width() > 767){
-            if (scrollCur > 300) {
-                // scroll down
-                // if (scrollCur > 00) {
-                    element.parent().addClass('active');
-                // } else {
-                //     element.parent().removeClass('active');
-                // }
+        if (scrollCur > scrollPos) {
+            // scroll down
+            if (scrollCur > 00) {
+                element.parent().addClass('active');
             } else {
-                // scroll up
                 element.parent().removeClass('active');
             }
-        }else{
-            if (scrollCur > 0) {
-                // scroll down
-                // if (scrollCur > 00) {
-                    element.parent().addClass('active');
-                // } else {
-                //     element.parent().removeClass('active');
-                // }
-            } else {
-                // scroll up
-                element.parent().removeClass('active');
-            }
+        } else {
+            // scroll up
+            element.parent().removeClass('active');
         }
 
         scrollPos = scrollCur;
         
-        // if (isMobile.any()) {
-        //     setTimeout(function(){
-        //         $('#totop').parent().removeClass('active');
-        //     },2000)
-        // }
+        if (isMobile.any()) {
+            setTimeout(function(){
+                $('#totop').parent().removeClass('active');
+            },2000)
+        }
     });
 
     element.on('click', function () {
@@ -266,37 +242,7 @@ $(document).ready(function () {
     $("input[name='search_value']").each(function (c, obj) {
         $(obj).val(addCommas(parseFloat($(obj).val()).toFixed(0))).val();
     });
-    $(".ps-form__option").before("<div class='product-mobile'>Show search<span></span></div>")
-    $(".product-mobile").click(function(){
-        $(".owl-carousel").trigger('refresh.owl.carousel');
-        $(this).next().slideToggle("slow");
-    });
-   if($(window).width() < 1201){
-    //   $(".ps-page--deposit .ps-slider--feature-product").each(function(){
-    //       $(this).before("<div class='ps-block--legend-table'><div class='ps-block__header show-slider'><h3>Slider</h3><span></span></div></div>");
-    //   });
-    //   $(".show-slider").click(function(){
-    //       $(this).parent().parent().find(".ps-slider--feature-product").slideToggle("slow");
-    //   });
-   }else{
-       $(".ps-page--deposit .ps-slider--feature-product").each(function(){
-           $(this).find(".ps-block--legend-table").hide();
-       });
-   }
-   if($(window).width() < 768){
-       $(".ps-home-fixed-deposit .ps-tab-list").before("<div class='ps-block--legend-table show-tab-list'><div class='ps-block__header'><h3>"+$(".ps-home-fixed-deposit .ps-tab-list .current a").text()+"</h3><span></span></div></div>");
-       $(".show-tab-list").click(function(){
-           $(this).parent().find(".ps-tab-list").slideToggle("slow");
-       });
-       $(".ps-home-fixed-deposit .ps-tab-list li").click(function(){
-           $(".show-tab-list h3").text($(".ps-home-fixed-deposit .ps-tab-list .current a").text());
-       });
-        $(".ps-form__option.flex-box label").click(function(){
-            $(this).next().slideToggle("slow");
-        });
-   }else{
-       $(".show-tab-list").hide();
-   }
+   
 });
 $("input[name='search_value']").on("change", function () {
     var n = $(this).val();
@@ -362,22 +308,16 @@ $(".ps-block__content").on("click", function () {
         $(".content-detail").html("SHOW DETAILS");
         $(this).find(".content-detail").html("LESS DETAILS");
         $(this).addClass("active");
-        var a = $(this).parents(".ps-block--product-info").index();
-        $(this).parents(".ps-criteria-detail").find(".ps-criteria-detail__content").slideUp();
-        $(this).parents(".ps-criteria-detail").find(".ps-criteria-detail__content").eq(a).slideDown();
-        console.log(a);
-        // var detailId = $(this).find(".content-detail").data('detail-id');
-        // var content = $('#' + detailId).html();
-        // $('#formula-' + formulaDetailId + '-details').html(content);
-        // $('#formula-' + formulaDetailId + '-details').css('display', 'block');
-        // $('#formula-' + formulaDetailId + '-details').addClass("active");
+        var detailId = $(this).find(".content-detail").data('detail-id');
+        var content = $('#' + detailId).html();
+        $('#formula-' + formulaDetailId + '-details').html(content);
+        $('#formula-' + formulaDetailId + '-details').css('display', 'block');
+        $('#formula-' + formulaDetailId + '-details').addClass("active");
 
     } else {
         $(this).find(".content-detail").html("SHOW DETAILS");
-        var a = $(this).parents(".ps-block--product-info").index();
-        $(this).parents(".ps-criteria-detail").find(".ps-criteria-detail__content").eq(a).slideUp();
-        // $('#formula-' + formulaDetailId + '-details').css('display', 'none');
-        // $('#formula-' + formulaDetailId + '-details').removeClass("active");
+        $('#formula-' + formulaDetailId + '-details').css('display', 'none');
+        $('#formula-' + formulaDetailId + '-details').removeClass("active");
     }
 
 });
@@ -552,7 +492,16 @@ $(document).ready(function () {
         }
     })
 
-   
+    setTimeout(function () {
+        $(".owl-slider").each(function () {
+            var cf1 = $(this).attr('data-owl-item');
+            var cf2 = $(this).find(".owl-item").length;
+            if (cf2 <= cf1) {
+                $(this).find(".owl-nav").hide();
+            }
+        });
+
+    }, 3000);
 
 
 
@@ -578,47 +527,6 @@ $(document).ready(function () {
          owl.trigger('prev.owl.carousel', [300]);
     })
     
-    
-    // setTimeout(function () {
-    //     $('.ps-slider--home .owl-item').each(function() {
-    //         var image_path = $(this).find("img").attr('src');
-    //         $(this).css({
-    //             'background': 'url(' + image_path + ')'
-    //         });
-    //     });
-        
-    // }, 2000);
-    
-    if (screen.width < 768) {
-        $("body").on("click", ".ps-wiget--footer h3", function () {
-            $(this).next().slideToggle();
-        });
-    };
-    setTimeout(function () {
-        $(".owl-slider").each(function () {
-            var cf1 = $(this).attr('data-owl-item');
-            var cf2 = $(this).find(".owl-item").length;
-            if (cf2 <= cf1) {
-                $(this).find(".owl-nav").hide();console.log("yes");
-            }
-        });
-    },1000);
+     
+     
 });
-
-
-$(window).on("load",function(){
-    $(".ps-product .ps-table-wrap").mCustomScrollbar({
-      axis:"x",
-      theme:"dark-3"
-    });
-    $(".ps-dashboard .ps-table").mCustomScrollbar({
-      axis:"x",
-      theme:"dark-3"
-    });
-    $(".table-new").parent().mCustomScrollbar({
-      axis:"x",
-      theme:"dark-3"
-    });
-    
-});
-

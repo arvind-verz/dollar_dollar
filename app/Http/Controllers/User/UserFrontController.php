@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ForgotPassword;
+use App\AdsManagement;
 
 
 class UserFrontController extends Controller
@@ -245,16 +246,38 @@ class UserFrontController extends Controller
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         } else {
+            $ads = collect([]);
+            $adsCollection = AdsManagement::where('delete_status', 0)
+                        ->where('display', 1)
+                        ->where('page', 'email')
+                        ->inRandomOrder()
+                        ->get();
+                    
+                    if ($adsCollection->count()) {
+                        $ads = \Helper::manageAds($adsCollection);
+                    }
+        $current_time = strtotime(date('Y-m-d', strtotime('now')));
+        $ad_start_date = strtotime($ads->ad_start_date);
+        $ad_end_date = strtotime($ads->ad_end_date);
+        
 
+        if($ads->paid_ads_status==1 && $current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads->paid_ad_image)) {
+            $ad = $ads->paid_ad_image;
+             $adLink = $ads->paid_ad_link;
+
+        }else {
+            $ad = $ads->ad_image;
+            $adLink = $ads->ad_link;
+        }
             DB::table('password_resets')->insert(['email' => $user->email, 'token' => str_random(80), 'created_at' => Carbon::now()->toDateTimeString()]);
             $pw_reset = DB::table('password_resets')->where('email', $user->email)->first();
             $token = \Helper::base64_encode($pw_reset->token);
             $url = url('/') . '/password-reset/' . $token;
             $contactUrl = url('/') . '/contact';
 
-            $data = ['first_name' => $user->first_name, 'last_name' => $user->last_name, 'url' => $url, 'contact_url' => $contactUrl];
+            $data = ['ad_link'=>$adLink,'ad'=> $ad,'first_name' => $user->first_name, 'last_name' => $user->last_name, 'url' => $url, 'contact_url' => $contactUrl];
             try {
-                Mail::to(ADMIN_EMAIL)->send(new ForgotPassword($data));
+                Mail::to($user->email)->send(new ForgotPassword($data));
             } catch (Exception $exception) {
                 //dd($exception);
                 return redirect()->back()->with('error', 'Oops! Something wrong please try after sometime.');
@@ -285,10 +308,10 @@ class UserFrontController extends Controller
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator->errors());
         }
+
         $token = \Helper::base64_decode($request->token);
         $detail = DB::table('password_resets')->where('token', $token)->first();
         if ($detail) {
-            //dd($detail->email,$request->email);
             if ($detail->email != $request->email) {
                 return back()->with(['error' => 'Email does not match with our records']);
             }

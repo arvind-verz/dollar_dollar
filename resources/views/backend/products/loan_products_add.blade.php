@@ -86,6 +86,20 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group display-none" id="apply-link">
+                                        <input type="hidden" id="apply-link-status" name="apply_link_status" value="1"/>
+                                        {{Form::label('apply_link', 'Apply Button Link',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-8">
+                                            {{Form::text('apply_link', old('Apply Link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                        <div class="col-sm-2 " id="apply-status">
+                                            <button type="button" data-status="true" id=""
+                                                    class="btn btn-block btn-success btn-social"
+                                                    onclick="changeApplyStatus(this)"><i class="fa fa-check"></i> Enable
+                                            </button>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Formula</label>
 

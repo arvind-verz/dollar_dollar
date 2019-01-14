@@ -10,5 +10,6 @@ Reset Password
 <p>If you did not make such request, you can ignore this email. We assure you that your account is safe.</p>
 @endcomponent
 <p>For general enquiries or concerns, you may get in touch with us <a href="{{$data['contact_url']}}">here</a>.</p>
-{{ config('app.name') }}
+<p>Regards,<br/>DollarDollar.sg</p>
+<p><a href="@if(isset($data['ad_link'])){{$data['ad_link']}}@endif"><img src="@if(isset($data['ad'])){{asset($data['ad'])}}@endif" alt=""></a></p>
 @endcomponent

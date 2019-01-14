@@ -16,7 +16,7 @@
     <tr>
         <td>Last Name</td>
         <td>:</td>
-        <td>={{$data['last_name']}}</td>
+        <td>{{$data['last_name']}}</td>
     </tr>
     <tr>
         <td>Email</td>

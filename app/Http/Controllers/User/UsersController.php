@@ -516,6 +516,10 @@ class UsersController extends Controller
                     } else {
                         $users->status = 0;
                     }
+                }elseif($type == 'bulk_user_clear_remove'){
+                    $users = User::find($id);
+                    $users->log_status = 0;
+                
                 }
                 //return $users;
 

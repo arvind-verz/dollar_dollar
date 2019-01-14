@@ -74,7 +74,7 @@
                                     <label for="">Year</label>
 
                                     <select class="form-control tenure-0" name="tenure_f1[{{$key}}]">
-                                        @for($i=1;$i<=6;$i++)
+                                        @for($i=1;$i<=30;$i++)
                                             <option name="{{$i}}"
                                                     @if(isset($value->tenure) && $value->tenure==$i) selected @endif>{{$i}}</option>
                                         @endfor
@@ -82,10 +82,10 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label for="">Rate type</label>
-                                    <select class="form-control" name="floating_rate_type_f1[{{$key}}]" id="">
-                                        <option value="{{FIX_RATE_TYPE}}" @if($value->floating_rate_type==FIX_RATE_TYPE) selected="selected" @endif>{{FIX_RATE_TYPE}}</option>
-                                        <option value="{{SIBOR_RATE_TYPE}}" @if($value->floating_rate_type==SIBOR_RATE_TYPE) selected="selected" @endif>{{SIBOR_RATE_TYPE}}</option>
-                                    </select>
+                                
+                                    <input type="text" class="form-control" id=""
+                                           name="floating_rate_type_f1[{{$key}}]" value="{{$value->floating_rate_type}}"
+                                           placeholder="">
                                 </div>
                                 <div class="col-md-2 ">
                                     <label for="">Bonus interest</label>
@@ -105,6 +105,7 @@
                                            name="rate_interest_other_f1[{{$key}}]" value="{{$value->rate_interest_other}}"
                                            placeholder="">
                                 </div>
+                                
                             </div>
 
                             <div class="col-sm-2" id="add-home-loan-placement-range-f1-button">
@@ -139,10 +140,9 @@
                         </div>
                         <div class="col-md-2">
                             <label for="">Rate type</label>
-                            <select class="form-control" name="there_after_rate_type" id="">
-                                <option value="{{FIX_RATE_TYPE}}" @if($value->there_after_rate_type==FIX_RATE_TYPE) selected="selected" @endif >{{FIX_RATE_TYPE}}</option>
-                                <option value="{{SIBOR_RATE_TYPE}}" @if($value->there_after_rate_type==SIBOR_RATE_TYPE) selected="selected" @endif >{{SIBOR_RATE_TYPE}}</option>
-                            </select>
+                            <input type="text" class="form-control" id=""
+                                   name="there_after_rate_type" value="{{$value->there_after_rate_type}}"
+                                   placeholder="">
                         </div>
                         <div class="col-md-2 ">
                             <label for="">Bonus interest</label>
@@ -153,7 +153,7 @@
                         <div class="col-md-3">
                             <label for="">Rate name (other)</label>
                             <input type="text" class="form-control" id=""
-                                   name="there_after_rate_type_name_other" value="{{$value->there_after_rate_name_other}}"
+                                   name="there_after_rate_name_other" value="{{$value->there_after_rate_name_other}}"
                                    placeholder="">
                         </div>
                         <div class="col-md-2 ">
@@ -225,10 +225,10 @@
                     </div>
                     <div class="col-md-2">
                         <label for="">Rate type</label>
-                        <select class="form-control" name="floating_rate_type_f1[0]" id="">
-                            <option value="{{FIX_RATE_TYPE}}" >{{FIX_RATE_TYPE}}</option>
-                            <option value="{{SIBOR_RATE_TYPE}}" >{{SIBOR_RATE_TYPE}}</option>
-                        </select>
+                        
+                        <input type="text" class="form-control" id=""
+                               name="floating_rate_type_f1[0]" value=""
+                               placeholder="">
                     </div>
                     <div class="col-md-2 ">
                         <label for="">Bonus interest</label>
@@ -252,7 +252,7 @@
                 <div class="col-sm-2" id="add-home-loan-placement-range-f1-button">
                     <button type="button"
                             class="btn btn-info pull-left mr-15 mt-25 add-home-loan-range-f1-button"
-                            data-range-id="0" onClick="addMorePlacementRange(this);"><i
+                            data-range-id="1" onClick="addMorePlacementRange(this);"><i
                                 class="fa fa-plus"></i>
                     </button>
                 </div>
@@ -271,10 +271,10 @@
                 </div>
                 <div class="col-md-2">
                     <label for="">Rate type</label>
-                    <select class="form-control" name="there_after_rate_type" id="">
-                        <option value="{{FIX_RATE_TYPE}}" >{{FIX_RATE_TYPE}}</option>
-                        <option value="{{SIBOR_RATE_TYPE}}" >{{SIBOR_RATE_TYPE}}</option>
-                    </select>
+            
+                    <input type="text" class="form-control" id=""
+                               name="there_after_rate_type" value=""
+                               placeholder="">
                 </div>
                 <div class="col-md-2 ">
                     <label for="">Bonus interest</label>

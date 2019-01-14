@@ -63,7 +63,7 @@ class LoginController extends Controller
         /*$this->validate($request, [
         'g-recaptcha-response' => 'required|captcha'
         ]);*/
-        return array_merge($request->only($this->username(), 'password'), ['status' => 1, 'delete_status' => 0]);
+        return array_merge($request->only($this->username(), 'password'), ['delete_status' => 0]);
     }
 
     /**

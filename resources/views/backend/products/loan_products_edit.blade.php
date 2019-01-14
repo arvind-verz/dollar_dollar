@@ -85,7 +85,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group display-none" id="apply-link">
+                                    <div class="form-group " id="apply-link">
 
                                         <input type="hidden" id="apply-link-status" name="apply_link_status"
                                                value="{{$product->apply_link_status}}"/>

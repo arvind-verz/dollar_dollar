@@ -77,7 +77,9 @@
                                         <input type="text" class="form-control hide orther-hide" name="bank_id_other" value="{{ $product_management->other_bank }}"
                                                    placeholder="Enter Bank or Financial Institution name">
                                     </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                </div>
+                             <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                     <div class="form-group">
                                         <label>Account Name</label>
                                         <input class="form-control" name="account_name" type="text"

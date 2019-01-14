@@ -52,7 +52,7 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="banners" class="table ">
+                                        <table id="ads" class="table ">
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort">
@@ -82,7 +82,8 @@
                                                     <th>Paid Horizontal Ad Link</th>
                                                 @endif
                                                 <th>Expiry Date</th>
-                                                <th>Status</th>
+                                                <th>Paid Status</th>
+                                                <th>Active Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
@@ -166,12 +167,18 @@
                                                                 {!!  date("Y-m-d h:i A", strtotime($ad->ad_end_date))   !!}
                                                             @endif
                                                         </td>
+                                                        
                                                         <?php
                                                         $expiryDate = \Helper::convertToCarbonEndDate($ad->ad_end_date);
                                                         $todayDate = \Carbon\Carbon::now();
                                                         ?>
-                                                        <td>@if($todayDate>$expiryDate) Expired @else
+                                                                <td>@if($ad->paid_ads_status==0) Disable @elseif($todayDate>$expiryDate) Expired @else
                                                                 Active @endif </td>
+                                                        <td>
+                                                           
+                                                                @if($ad->display==0) Deactivate @else
+                                                                Active @endif
+                                                            </td>
                                                         <td>
                                                             @if (!empty($ad->created_at))
                                                                 {!!  date("Y-m-d h:i A", strtotime($ad->created_at))   !!}

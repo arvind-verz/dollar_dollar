@@ -166,6 +166,7 @@ class AccountInformationController extends Controller
                 $accountInformation->updated_by = "User";
                 $accountInformation->updated_at = Carbon::now()->toDateTimeString();
             } elseif ($request->type == "deactivate") {
+               // $accountInformation->status = 0;
                 $accountInformation->status = 0;
                 $accountInformation->updated_by = "User";
                 $accountInformation->updated_at = Carbon::now()->toDateTimeString();

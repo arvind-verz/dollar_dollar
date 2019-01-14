@@ -86,16 +86,16 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group display-none" id="apply-link">
-                                        <input type="hidden" id="apply-link-status" name="apply_link_status" value="1"/>
+                                    <div class="form-group " id="apply-link">
+                                        <input type="hidden" id="apply-link-status" name="apply_link_status" value="0"/>
                                         {{Form::label('apply_link', 'Apply Button Link',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-8">
-                                            {{Form::text('apply_link', old('Apply Link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('apply_link', old('Apply Link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => '','readonly'=>'readonly'])}}
                                         </div>
                                         <div class="col-sm-2 " id="apply-status">
-                                            <button type="button" data-status="true" id=""
-                                                    class="btn btn-block btn-success btn-social"
-                                                    onclick="changeApplyStatus(this)"><i class="fa fa-check"></i> Enable
+                                            <button type="button" data-status="false" id=""
+                                                    class="btn btn-block btn-danger btn-social"
+                                                    onclick="changeApplyStatus(this)"><i class="fa fa-times"></i> Disable
                                             </button>
                                         </div>
                                     </div>
@@ -114,6 +114,24 @@
                                                 @endif
                                             </select>
                                             <input type="hidden" id="hidden-formula" value="{{ old('formula') }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group display-none" id="none-formula-slider">
+                                        <label class="col-sm-2 control-label">Slider Display Status</label>
+
+                                        <div class="col-sm-10">
+
+                                            <select class="form-control select2"
+                                                    data-placeholder="" name="slider_status"
+                                                    style="width: 100%;">
+                                                <option value="0" @if(old('slider_status') == 0) selected="selected" @endif >
+                                                    No
+                                                </option>
+                                                <option value="1" @if(old('slider_status') == 1) selected="selected" @endif>
+                                                    Yes
+                                                </option>
+
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group" >
@@ -403,7 +421,6 @@
             var formula = $("#hidden-formula").val();
             //var product_id = $("#product-id").val();
             if ((promotion_type.length != 0) && (formula.length != 0)) {
-                //alert(formula);
                 $.ajax({
                     method: "POST",
                     url: "{{url('/admin/promotion-products/get-formula')}}",
@@ -415,14 +432,14 @@
                 });
 
             }
-            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
+            /*if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
                 $('#apply-link').removeClass('display-none');
                 $('#placement-amount-content').html("Maximum Placement Amount");
             } else {
                 $('#apply-link').addClass('display-none');
                 $('#placement-amount-content').html("Minimum Placement Amount");
 
-            }
+            }*/
             if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
             } else {
@@ -448,10 +465,12 @@
                 '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
             ];
-            if (formula == 0) {
+            if (formula.length == 0) {
                 $('#formula-details-error-section').removeClass('display-none');
+                $('#none-formula-slider').removeClass('display-none');
             } else {
                 $('#formula-details-error-section').addClass('display-none');
+                $('#none-formula-slider').addClass('display-none');
             }
             if (jQuery.inArray(formula, utilFormula) !== -1) {
 
@@ -539,11 +558,11 @@
                     $("select[name='formula']").html(data);
                 }
             });
-            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
+            /*if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
                 $('#apply-link').removeClass('display-none');
             } else {
                 $('#apply-link').addClass('display-none');
-            }
+            }*/
 
             if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
@@ -585,10 +604,12 @@
                 '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
             ];
-            if (formula == 0) {
+            if (formula.length == 0) {
                 $('#formula-details-error-section').removeClass('display-none');
+                $('#none-formula-slider').removeClass('display-none');
             } else {
                 $('#formula-details-error-section').addClass('display-none');
+                $('#none-formula-slider').addClass('display-none');
             }
             if (jQuery.inArray(formula, utilFormula) !== -1) {
 

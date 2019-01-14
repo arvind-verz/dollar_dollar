@@ -1,12 +1,13 @@
+<div class="product-mobile">Show Product<span></span></div>
 <div class="product-row-01 clearfix slider-class">
     @php $i = 1;$featured = []; @endphp
-    @foreach($sliderProducts as $product)
-        @if($product->featured==1)
+    @foreach($products as $product)
+        @if($product->featured==1 &&  $product->slider_status==1)
             @php $featured[] = $i; @endphp
             <div class="product-col-01">
                 <div class="ps-slider--feature-product saving">
-                    <div class="ps-block--short-product second highlight" data-mh="product"><img
-                                src="{{ asset($product->brand_logo) }}" alt="">
+                    <div class="ps-block--short-product second highlight" data-mh="product">
+                        <div class="slider-img"><img  src="{{ asset($product->brand_logo) }}" alt=""></div>
                         @if(isset($searchFilter['filter']))
                             <h4>
                                 <strong>
@@ -78,7 +79,16 @@
             @php $i++; @endphp
         @endif
     @endforeach
-    @php $i = 1;$featured_item = 5-count($featured);
+    @php $i = 1;
+    $featured_item = 5-count($featured);
+    $featured_item_md = 3-count($featured);
+    if($featured_item>5){
+    $featured_item = 0;
+    $featured_item_md = 0 ;
+    }elseif($featured_item>3){
+    $featured_item_md = 0 ;
+    }
+    
     $featured_count = count($featured);
     $featured_width = 0;
     if($featured_count==1) {
@@ -95,15 +105,15 @@
         <div class="ps-slider--feature-product saving nav-outside owl-slider" data-owl-auto="true"
              data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true"
              data-owl-dots="false" data-owl-item="{{ $featured_item }}" data-owl-item-xs="1"
-             data-owl-item-sm="1" data-owl-item-md="{{ $featured_item }}"
+             data-owl-item-sm="1" data-owl-item-md="{{$featured_item_md}}"
              data-owl-item-lg="{{ $featured_item }}" data-owl-duration="1000" data-owl-mousedrag="on"
              data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
              data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
             @php $i = 1; @endphp
-            @foreach($sliderProducts as $product)
-                @if($product->featured==0)
-                    <div class="ps-block--short-product second" data-mh="product"><img
-                                src="{{ asset($product->brand_logo) }}" alt="">
+            @foreach($products as $product)
+                @if($product->featured==0 &&  $product->slider_status==1)
+                    <div class="ps-block--short-product second" data-mh="product">
+                        <div class="slider-img"><img  src="{{ asset($product->brand_logo) }}" alt=""></div>
                         @if(isset($searchFilter['filter']))
                             <h4>
                                 <strong>

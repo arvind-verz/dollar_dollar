@@ -203,8 +203,8 @@
                 <div class="row">
                     <div class="col-xs-3">
                         <div class="form-icon"><i class="fa fa-globe"></i>
-                            <input class="form-control" type="text" placeholder="+65" name="country_code"
-                                   value="@if (Auth::user()){{Auth::user()->country_code}}@else @if(old('country_code')){{old('country_code')}} @else +65 @endif @endif">
+                            <input class="form-control" type="text" placeholder="Country code +65" name="country_code"
+                                   value="@if (Auth::user()){{Auth::user()->country_code}}@elseif(old('country_code')){{old('country_code')}} @endif">
                             @if ($errors->has('country_code'))
                                 <span class="text-danger">
                                                     <strong>{{ $errors->first('country_code') }}</strong>
@@ -219,7 +219,7 @@
                     </div>
                     <div class="col-xs-9">
                         <div class="form-icon"><i class="fa fa-mobile-phone"></i>
-                            <input class="form-control only_numeric" type="text" placeholder="Enter Mobile Number"
+                            <input class="form-control only_numeric" type="text" placeholder="Telephone without country code"
                                    name="telephone"
                                    value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif">
 

@@ -95,7 +95,7 @@
                                                         if (count($range)) {
                                                             $productRange = $range[0];
                                                         }
-                                                    }
+                                                    } 
                                                     ?>
                                                     <tr>
                                                         <td>

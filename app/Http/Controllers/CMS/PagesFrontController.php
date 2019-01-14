@@ -210,6 +210,7 @@ class PagesFrontController extends Controller
                         ->where('page', 'account')
                         ->inRandomOrder()
                         ->get();
+                        //dd($adsCollection);
                     if ($adsCollection->count()) {
                         $ads = \Helper::manageAds($adsCollection);
                     }
@@ -4594,11 +4595,11 @@ class PagesFrontController extends Controller
                         <table class="ps-table ps-table--product ps-table--product-3">
                             <thead>
                             <tr>
-                                <th class="combine-criteria-padding">CRITERIA</th>
-                                <th class="combine-criteria-padding">SALARY</th>
-                                <th class="combine-criteria-padding">Giro</th>
-                                <th class="combine-criteria-padding">SPEND</th>
-                                <th class="combine-criteria-padding">
+                                <th class="combine-criteria-padding" style="width:19%">CRITERIA</th>
+                                <th class="combine-criteria-padding" style="width:9%">SALARY</th>
+                                <th class="combine-criteria-padding" style="width:9%">Giro</th>
+                                <th class="combine-criteria-padding" style="width:9%">SPEND</th>
+                                <th class="combine-criteria-padding" style="width:21%">
                                     Loan
                                     <div class="row">
                                         <div class="width-50">
@@ -4661,7 +4662,7 @@ class PagesFrontController extends Controller
                                         </div>
                                     </div>
                                 </th>
-                                <th class="combine-criteria-padding">
+                                <th class="combine-criteria-padding" style="width:21%">
                                     Wealth
                                     <div class="row">
                                         <div class="width-50">
@@ -4702,7 +4703,7 @@ class PagesFrontController extends Controller
                                     <td class="text-center <?php if ($product->criteria_1 == true) {
                                         echo "highlight";
                                     } ?> "
-                                        colspan="2">1 Criteria Met
+                                        colspan="3">1 Criteria Met
                                         - <?php if ($range->bonus_interest_criteria1 <= 0) {
                                             echo "-";
                                         } else {
@@ -4712,7 +4713,7 @@ class PagesFrontController extends Controller
                                     <td class=" text-center  <?php if ($product->criteria_2 == true) {
                                         echo "highlight";
                                     } ?> "
-                                        colspan="2">2 Criteria
+                                        colspan="1">2 Criteria
                                         - <?php if ($range->bonus_interest_criteria2 <= 0) {
                                             echo "-";
                                         } else {
@@ -5356,7 +5357,9 @@ class PagesFrontController extends Controller
                             <div class="ps-slider--feature-product saving">
                                 <div class="ps-block--short-product second highlight"
                                      data-mh="product">
+                                    <div class="slider-img">
                                     <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
                                     <h4 class="slider-heading">
                                         <strong>
                                             <?php if ($product->by_order_value == INTEREST) { ?>
@@ -5486,7 +5489,9 @@ class PagesFrontController extends Controller
                             if ($product->featured == 0) { ?>
 
                                 <div class="ps-block--short-product second">
+                                    <div class="slider-img">
                                     <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
                                     <h4 class="slider-heading">
                                         <strong>
                                             <?php if ($product->by_order_value == INTEREST) { ?>
@@ -5613,7 +5618,7 @@ class PagesFrontController extends Controller
                          data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
                          data-owl-gap="10" data-owl-item="<?php echo $featured_item; ?>"
                          data-owl-item-lg="<?php echo $featured_item; ?>"
-                         data-owl-item-md="<?php echo $featured_item; ?>" data-owl-item-sm="2"
+                         data-owl-item-md="3" data-owl-item-sm="2"
                          data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
                          data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
                          data-owl-nav-right="<i class='fa fa-angle-right'></i>"
@@ -5623,7 +5628,9 @@ class PagesFrontController extends Controller
 
                             <div
                                 class='ps-block--short-product second  <?php if ($product->featured == 1) echo "highlight"; ?> '>
-                                <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                <div class="slider-img">
+                                    <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
                                 <h4 class="slider-heading">
                                     <strong>
                                         <?php if ($product->by_order_value == INTEREST) { ?>
@@ -5745,7 +5752,9 @@ class PagesFrontController extends Controller
                             <div class="ps-slider--feature-product saving">
                                 <div class="ps-block--short-product second highlight"
                                      data-mh="product">
+                                    <div class="slider-img">
                                     <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
                                     <h4 class="slider-heading">
                                         <strong>
                                             <?php if ($product->by_order_value == INTEREST) { ?>
@@ -5825,7 +5834,9 @@ class PagesFrontController extends Controller
                             if ($product->featured == 0) { ?>
 
                                 <div class="ps-block--short-product second">
+                                    <div class="slider-img">
                                     <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
                                     <h4 class="slider-heading">
                                         <strong>
                                             <?php if ($product->by_order_value == INTEREST) { ?>
@@ -5900,7 +5911,7 @@ class PagesFrontController extends Controller
                          data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
                          data-owl-gap="10" data-owl-item="<?php echo $featured_item; ?>"
                          data-owl-item-lg="<?php echo $featured_item; ?>"
-                         data-owl-item-md="<?php echo $featured_item; ?>" data-owl-item-sm="2"
+                         data-owl-item-md="3" data-owl-item-sm="2"
                          data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
                          data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
                          data-owl-nav-right="<i class='fa fa-angle-right'></i>"
@@ -5910,7 +5921,9 @@ class PagesFrontController extends Controller
 
                             <div
                                 class='ps-block--short-product second  <?php if ($product->featured == 1) echo "highlight"; ?> '>
-                                <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                               <div class="slider-img">
+                                    <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
                                 <h4 class="slider-heading">
                                     <strong>
                                         <?php if ($product->by_order_value == INTEREST) { ?>

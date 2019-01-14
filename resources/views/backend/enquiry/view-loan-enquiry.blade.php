@@ -80,6 +80,12 @@
                                             {{ $enquiry->loan_type }}
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>Existing bank loan</th>
+                                        <td>
+                                            {{ $enquiry->existing_bank_loan }}
+                                        </td>
+                                    </tr>
                                 @endif
                             </table>
                         </div>

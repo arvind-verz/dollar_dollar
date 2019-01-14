@@ -421,7 +421,6 @@ class EnquiryFrontController extends Controller
 
     public function postLoanEnquiry(Request $request)
     {
-
         //check validation
         $fields = ['g-recaptcha-response' => 'required|captcha'];
 
@@ -473,7 +472,7 @@ class EnquiryFrontController extends Controller
         $loanEnquiry->property_type = isset($request->property_type_search) ? $request->property_type_search : null;
         $loanEnquiry->loan_amount = isset($request->loan_amount) ? $request->loan_amount : null;
         $loanEnquiry->loan_type = isset($request->loan_type) ? $request->loan_type : null;
-
+        $loanEnquiry->existing_bank_loan = isset($request->existing_bank_loan) ? $request->existing_bank_loan : null;
         $loanEnquiry->full_name = $request->full_name;
         $loanEnquiry->email = $request->email;
         $loanEnquiry->country_code = $request->country_code;
@@ -493,7 +492,7 @@ class EnquiryFrontController extends Controller
         try {
             Mail::to(ADMIN_EMAIL)->send(new LoanEnquiryMail($data));
         } catch (Exception $exception) {
-            dd($exception);
+            //dd($exception);
             return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');

@@ -452,7 +452,13 @@ class ProductsController extends Controller
         //dd($product->ads_placement);
         $product->status = $request->status;
         $product->featured = $request->featured;
-        $product->save();
+        if(!is_null($request->formula))
+        {
+            $product->slider_status = 1;
+        }else
+        {
+            $product->slider_status = $request->slider_status;    
+        }$product->save();
 
         //store activity log
         activity()
@@ -876,6 +882,13 @@ class ProductsController extends Controller
 
         $product->status = $request->status;
         $product->featured = $request->featured;
+        if(!is_null($request->formula))
+        {
+            $product->slider_status = 1;
+        }else
+        {
+            $product->slider_status = $request->slider_status;    
+        }
         $product->save();
 
         //store activity log
@@ -1651,17 +1664,16 @@ class ProductsController extends Controller
                         <div class="col-md-3 ">
                             <label for="">Year</label>
                             <select class="form-control tenure-0" name="tenure_f1[<?php echo $request->range_id; ?>]">
-                                <?php for($i=1;$i<=6;$i++) { ?>
-                                <option name="tenure_f1[<?php echo $request->range_id; ?>]" ><?php echo $i; ?></option>
+                                <?php for($i=1;$i<=30;$i++) { ?>
+                                <option name="tenure_f1[<?php echo $request->range_id; ?>]" <?php if($i==$request->range_id){echo 'selected="selected"';} ?> ><?php echo $i; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="col-md-2">
                             <label for="">Rate type</label>
-                            <select class="form-control" name="floating_rate_type_f1[<?php echo $request->range_id; ?>]" id="">
-                                <option value="<?php echo FIX_RATE_TYPE;?>" ><?php echo FIX_RATE_TYPE;?></option>
-                                <option value="<?php echo SIBOR_RATE_TYPE;?>" ><?php echo SIBOR_RATE_TYPE;?></option>
-                            </select>
+                             <input type="text" class="form-control" id=""
+                                   name="floating_rate_type_f1[<?php echo $request->range_id; ?>]" value=""
+                                   placeholder="">
                         </div>
                         <div class="col-md-2">
                             <label for="">Bonus Interest</label>

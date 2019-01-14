@@ -46,8 +46,12 @@
                                                 <th>Content</th>
                                                 <th>Page</th>
                                                 <th>Target</th>
-                                                <th>Image</th>
+                                                <th>Default Banner</th>
+                                                <th>Paid Banner</th>
                                                 <!--<th>View Order</th>-->
+                                                 <th>Expiry Date</th>
+                                                <th>Paid Status</th>
+                                                <th>Active Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
                                                 <th>Action</th>
@@ -71,15 +75,44 @@
                                                         </td>
                                                         <td>
                                                             <div class="attachment-block clearfix">
+                                                                @if($banner->banner_image)
                                                                 <img class="attachment-img"
                                                                      src="{!! asset($banner->banner_image) !!}"
                                                                      alt="Banner Image">
+                                                                     @endif
+                                                            </div>
+
+                                                        </td>
+                                                        <td>
+                                                            <div class="attachment-block clearfix">
+                                                                @if($banner->fixed_banner)
+                                                                <img class="attachment-img"
+                                                                     src="{!! asset($banner->fixed_banner) !!}"
+                                                                     alt="Banner Image">
+                                                                     @endif
                                                             </div>
 
                                                         </td>
                                                         <!--<td>
                                                             {!! $banner->view_order   !!}
                                                         </td>-->
+                                                    
+                                                        <td>
+                                                            @if (!empty($banner->banner_end_date))
+                                                                {!!  date("Y-m-d h:i A", strtotime($banner->banner_end_date))   !!}
+                                                            @endif
+                                                        </td>
+                                                        <?php
+                                                        $expiryDate = \Helper::convertToCarbonEndDate($banner->banner_end_date);
+                                                        $todayDate = \Carbon\Carbon::now();
+                                                        ?>
+                                                        <td>@if($banner->paid_ads_status==0) Disable @elseif($todayDate>$expiryDate) Expired @else
+                                                                Active @endif </td>
+                                                        <td>
+                                                           
+                                                                @if($banner->display==0) Deactivate @else
+                                                                Active @endif
+                                                            </td>
                                                         <td>
                                                             @if ($banner->created_at == null)
                                                                 {{$banner->created_at}}

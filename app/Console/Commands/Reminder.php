@@ -81,9 +81,36 @@ class Reminder extends Command
                         }
                         if(!is_null($reminderDate) && ($reminderDate==$detail->end_date ))
                         {
+                            
+                            $ads = collect([]);
+                        $adsCollection = \DB::table('ads_management')->where('delete_status', 0)
+                        ->where('display', 1)
+                        ->where('page', 'email')
+                        ->inRandomOrder()
+                        ->get();
+                    
+                    if ($adsCollection->count()) {
+                        $ads = \Helper::manageAds($adsCollection);
+                    }
+                    $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                    $ad_start_date = strtotime($ads->ad_start_date);
+                    $ad_end_date = strtotime($ads->ad_end_date);
+                    $ad = null;
+                    $adLink = null;
+            
+                    if($ads->paid_ads_status==1 && $current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads->paid_ad_image)) {
+                        $ad = $ads->paid_ad_image;
+                         $adLink = $ads->paid_ad_link;
+            
+                    }else {
+                        $ad = $ads->ad_image;
+                        $adLink = $ads->ad_link;
+                    }
                             Mail::send('frontend.emails.reminder',[
                                 'account_name' => $detail->account_name,
-                                'end_date' => $detail->end_date
+                                'end_date' => $detail->end_date,
+                                'ad'=>$ad,
+                                'adLink'=>$adLink
                             ] , function ($message) use ($detail) {
                                 $message->to($detail->email)->subject('A Product reminder');
                             });

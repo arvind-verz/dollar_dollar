@@ -77,6 +77,6 @@
         <p>&nbsp;</p>
         <div class="enquiry-url" style="text-align: center;"><button class="ps-btn" type="button" data-toggle="modal" data-target="#myModalInsurance">Enquire now</button></div>
         <p style="text-align: center;">&nbsp;</p>
-        <p style="text-align: center;"><span style="color: #ff0000;"><span style="color: #ff0000;">DISCLAIMER</span><strong>:&nbsp;</strong><span style="color: #999999;">In order to provide this service free to you, our business partner will pay us commission based on the products that you have purchased to cater to your needs. The service and products offered are never affected by the commission DollarDollar and our business partners received. Strict guidelines will be in place to ensure the product(s) you have purchased is of your needs and we will work closely to ensure your best interest come first.&nbsp;</span></span></p>
+        <p style="text-align: center;"><span style="color: #ff0000;"><strong style="color: #ff0000;">DISCLAIMER:&nbsp;</strong><span style="color: #999999;">In order to provide this service free to you, our business partner will pay us commission based on the products that you have purchased to cater to your needs. The service and products offered are never affected by the commission DollarDollar and our business partners received. Strict guidelines will be in place to ensure the product(s) you have purchased is of your needs and we will work closely to ensure your best interest come first.&nbsp;</span></span></p>
     </div>
 </div>

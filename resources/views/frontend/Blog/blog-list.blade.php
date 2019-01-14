@@ -66,7 +66,7 @@
                                     <span class="ps-post__meta"><a
                                                 href="{{ url('get-blog-by-category/' . $detail->menu_id)}}">{{$detail->menu_title}}</a></span>
 
-                                    <?php
+                                    <div class="ps-post-text"><?php
                                         $string = strip_tags($detail->short_description);
                                         if (strlen($string) > 300) {
                                         $stringCut = substr($string, 0, 300);
@@ -75,6 +75,7 @@
                                         }
                                     ?>
                                     {{$string}}..<a class="ps-link " href="{{ url($detail->slug) }}">Read More</a>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach

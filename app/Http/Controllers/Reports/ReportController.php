@@ -45,11 +45,9 @@ class ReportController extends Controller
 
     public function customerDeleteDeactivationReport()
     {
-        //$CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, CUSTOMER_MODULE_ID);
+        //$CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, CUSTOMER_MODULE_ID);   
 
-        //get all users
-
-        $users = User::where('delete_status', 1)->orWhere('status',0)
+        $users = User::where('log_status', 1)->where(function ($query) {$query->where('delete_status', 1)->orWhere('status',0);})
             ->get();
         //dd($products);
         return view("backend.reports.customer-report.delete-deactivation", compact("users", "CheckLayoutPermission"));

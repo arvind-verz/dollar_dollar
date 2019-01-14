@@ -57,10 +57,10 @@
                                     <h5>Contact Information</h5>
 
                                     <p><strong>  Name: </strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</p>
-
-                                    <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
-                                    <p><strong> Newsletter: </strong><a href="#">@if(AUTH::user()->email_notification==1) Yes @else No @endif</a></p>
-                                    <p><strong> Consent to marketing information: </strong><a href="#">@if(AUTH::user()->adviser==1) Yes @else No @endif</a></p>
+                                    <p><strong>  Contact Number: </strong> {{ AUTH::user()->country_code . ' ' . AUTH::user()->tel_phone }}</p>
+                                    <p><strong> Email: </strong>{{ AUTH::user()->email }}</p>
+                                    <p><strong> Newsletter: </strong>@if(AUTH::user()->email_notification==1) Yes @else No @endif</p>
+                                    <p><strong> Consent to marketing information: </strong>@if(AUTH::user()->adviser==1) Yes @else No @endif</p>
                                 </div>
                             </div>
                             @if(count($products))
@@ -79,8 +79,8 @@
                                              data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
                                              data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                                             @foreach($products as $product)
-                                                <div class="ps-block--short-product second"><img
-                                                            src="{{ asset($product->brand_logo) }}" alt="">
+                                                <div class="ps-block--short-product second"><div class="slider-img"><img
+                                                            src="{{ asset($product->brand_logo) }}" alt=""></div>
                                                     <h4><strong>up to   <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
                                                                 %</span></strong>
                                                     </h4>

@@ -7,5 +7,6 @@
 <p>For more information, you may read some of our useful tips and tricks in our blog <a href="{{$data['blog_url']}}">here</a>.
 </p>
 <p>Have a good rest of your day!</p>
-{{ config('app.name') }}
+<p>Regards,<br/>DollarDollar.sg</p>
+<p><a href="@if(isset($data['ad_link'])){{$data['ad_link']}}@endif"><img src="@if(isset($data['ad'])){{asset($data['ad'])}}@endif" alt=""></a></p>
 @endcomponent

@@ -85,7 +85,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group display-none" id="apply-link">
+                                    <div class="form-group" id="apply-link">
 
                                         <input type="hidden" id="apply-link-status" name="apply_link_status"
                                                value="{{$product->apply_link_status}}"/>
@@ -123,6 +123,26 @@
                                                 <option value="">None</option>
                                             </select>
                                             <input type="hidden" id="hidden-formula" value="{{ $product->formula_id }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group display-none" id="none-formula-slider">
+                                        <label class="col-sm-2 control-label">Slider Display Status</label>
+
+                                        <div class="col-sm-10">
+
+                                            <select class="form-control select2"
+                                                    data-placeholder="" name="slider_status" id="slider-status"
+                                                    style="width: 100%;">
+                                                <option value="0"
+                                                        @if($product->slider_status == 0) selected="selected" @endif >
+                                                    No
+                                                </option>
+                                                <option value="1"
+                                                        @if($product->slider_status == 1) selected="selected" @endif>
+                                                    Yes
+                                                </option>
+
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -493,7 +513,7 @@
             var formula = $("#hidden-formula").val();
             //var product_id = $("#product-id").val();
             //alert(product_name_id);
-            if ((promotion_type.length != 0) && (formula.length != 0)) {
+            if ((promotion_type.length != 0) /*&& (formula.length != 0)*/) {
                 //alert(formula);
                 $.ajax({
                     method: "POST",
@@ -506,14 +526,14 @@
                 });
 
             }
-            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
+            /*if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
                 $('#apply-link').removeClass('display-none');
                 $('#placement-amount-content').html("Maximum Placement Amount");
             } else {
                 $('#apply-link').addClass('display-none');
                 $('#placement-amount-content').html("Minimum Placement Amount");
 
-            }
+            }*/
 
             if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
@@ -547,10 +567,12 @@
 
              }*/
 
-            if (formula == 0) {
+            if (formula.length == 0) {
                 $('#formula-details-error-section').removeClass('display-none');
+                $('#none-formula-slider').removeClass('display-none');
             } else {
                 $('#formula-details-error-section').addClass('display-none');
+                $('#none-formula-slider').addClass('display-none');
             }
             if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
@@ -663,10 +685,12 @@
                 '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
             ];
-            if (formula == 0) {
+            if (formula.length == 0) {
                 $('#formula-details-error-section').removeClass('display-none');
+                $('#none-formula-slider').removeClass('display-none');
             } else {
                 $('#formula-details-error-section').addClass('display-none');
+                $('#none-formula-slider').addClass('display-none');
             }
             if (jQuery.inArray(formula, utilFormula) !== -1) {
 
@@ -740,11 +764,11 @@
                     $("select[name='formula']").html(data);
                 }
             });
-            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
+            /*if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
                 $('#apply-link').removeClass('display-none');
             } else {
                 $('#apply-link').addClass('display-none');
-            }
+            }*/
             if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
             } else {
