@@ -235,7 +235,7 @@ if ($request->hasFile('paid_ad_image')) {
 $adImageCount++;
 } elseif (!is_null($ads->paid_ad_image)) {
 $adImageCount++;
-$paidAddStatus = $ads->paid_ads_status;
+$paidAddStatus = $request->paid_ads_status;
 }
 if ($request->page == "account" || $request->page == "blog") {
 if ($request->hasFile('horizontal_banner_ad_image')) {
@@ -247,7 +247,8 @@ if ($request->hasFile('horizontal_paid_ad_image')) {
 $adImageCount++;
 } elseif (!is_null($ads->horizontal_paid_ad_image)) {
 $adImageCount++;
-$paidAddStatus = $ads->paid_ads_status;
+$paidAddStatus = $request->paid_ads_status;
+
 }
 }
 $validator = Validator::make($request->all(), $validatorFields);
