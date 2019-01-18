@@ -45,7 +45,7 @@
 
     {{--Page content start--}}
     <main class="ps-main">
-        <div class="container">
+        <div class="container ps-document">
             @if(session('error'))
                 <div class="row">
                     <div class="col-lg-12">

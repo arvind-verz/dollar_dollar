@@ -173,12 +173,17 @@ $banner->fixed_banner = $fixedBanner;
 $banner->fixed_banner_link = ($request->fixed_banner_link ? $request->fixed_banner_link : '');
 $banner->display = $request->display;
 $banner->paid_ads_status = $request->paid_ads_status;
-
-$ad_range_date = explode('-', $request->ad_range_date);
+if(isset($request->ad_range_date)){
+    $ad_range_date = explode('-', $request->ad_range_date);
 $ad_start_date = $ad_range_date[0];
 $ad_end_date = $ad_range_date[1];
 $banner->banner_start_date = \Helper::startOfDayBefore($ad_start_date);
 $banner->banner_end_date = \Helper::endOfDayAfter($ad_end_date);
+}else{
+	$banner->banner_start_date = null;
+$banner->banner_end_date = null;
+}
+
 
 $banner->created_at = Carbon::now()->toDateTimeString();
 $banner->save();

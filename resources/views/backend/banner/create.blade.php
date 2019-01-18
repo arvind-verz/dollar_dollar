@@ -86,14 +86,15 @@
                         @if($type=='home-page')
                         <div class="form-group">
                                 <input type="hidden" id="paid-ads-status" name="paid_ads_status" value="1"/>
-                                <label>Paid Ads</label>
-                                <div style="width:20%" id="paid-ads">
+                                <label class="col-sm-2 col-lg-2 col-md-2 control-label">Paid Ads</label>
+                                <div class="col-sm-2 col-lg-2 col-md-2" id="paid-ads">
                                     <button type="button" data-status="true" id=""
                                     class="btn btn-block btn-success btn-social"
                                     onclick="changePaidAdsStatus(this)"><i class="fa fa-check"></i> Enable
                                     </button>
                                 </div>
-                                <div style="width:70%"></div>
+                                <div lass="col-sm-8 col-lg-8 col-md-8"></div>
+                            </div>
                             
                         <div class="form-group">
                             {{Form::label('fixed_banner', 'Paid Banner Image',['class'=>'col-sm-2 control-label'])}}

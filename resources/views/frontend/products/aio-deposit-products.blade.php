@@ -200,6 +200,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
         </div>
         <!-- Search form end -->
         @if(count($products))
+        @include('productsSpInnerSlider')
         @include('productsInnerSlider')
         @endif
         @include('frontend.includes.legend')

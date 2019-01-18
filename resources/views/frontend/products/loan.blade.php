@@ -210,6 +210,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
         </div>
         @if(count($products))
         @include('loanProductsInnerSlider')
+        {{-- @include('loanSpInnerProductsSlider') --}}
         @endif
         <?php
         $adspopup = json_decode($page->ads_placement);

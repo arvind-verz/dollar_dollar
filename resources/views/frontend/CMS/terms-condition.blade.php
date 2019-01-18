@@ -50,7 +50,7 @@
     {{--Page content start--}}
     @if($page->slug!=THANK_SLUG)
         <main class="ps-main">
-            <div class="container">
+            <div class="container ps-document">
                 <h3 class="ps-heading mb-35">
                     <span> {{$pageHeading}} </span> {{implode(' ',$pageName)}}
                 </h3>

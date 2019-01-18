@@ -1,5 +1,4 @@
-<div class="product-mobile">Show Product<span></span></div>
-<div class="product-row-01 clearfix slider-class">
+<div class="product-row-01  pc-only clearfix slider-class">
     @php $i = 1;$featured = []; @endphp
     @foreach($products as $product)
         @if($product->featured==1 &&  $product->slider_status==1)

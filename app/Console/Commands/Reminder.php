@@ -58,18 +58,21 @@ class Reminder extends Command
         $endDate = $endDate->format('Y-m-d H:i:s');
         $reminderData = \DB::table('product_managements')
             ->join('users', 'product_managements.user_id', 'users.id')
-            ->where('product_managements.end_date', '>', $endDate)->get()->toArray();
-        //dd($reminderData);
+            ->where('product_managements.end_date', '>', $endDate)
+            ->where('users.status', '=', 1)
+            ->get()->toArray();
+        
 
         if (count($reminderData)) {
 
             foreach ($reminderData as $k => $detail) {
                 if (!$detail->product_reminder) {
-                    $detail->product_reminder = [];
+                    $detail->product_reminder = null;
                 } else {
                     $detail->product_reminder = json_decode($detail->product_reminder);
                 }
-                if (count($detail->product_reminder)) {
+               
+                if ($detail->product_reminder) {
                     foreach ($detail->product_reminder as $dayKey => $reminderDay) {
                         $reminderDate = null;
                         if ($reminderDay == '1 Day') {

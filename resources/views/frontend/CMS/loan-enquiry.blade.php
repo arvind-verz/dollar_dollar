@@ -54,7 +54,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
 </div>
 <!-- my code -->
 <div class="ps-page--deposit ps-loan">
-    <div class="container">
+    <div class="container ps-document">
         <?php
         //$pageName = strtok($page->name, " ");;
         $pageName = explode(' ', trim($page->name));

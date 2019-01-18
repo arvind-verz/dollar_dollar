@@ -652,6 +652,9 @@
     text-align: center;
 }
 .ps-home-blog .ps-section__left{border-right: 1px solid #e9e9e9;}
+.mt-30.mt-34{margin-top:34px;}
+.owl-nav{opacity:0;}
+.owl-nav.show{opacity:1;}
 @media (max-width: 1200px){
     .ps-slider--home .owl-item{
         background-position: 75% center !important;

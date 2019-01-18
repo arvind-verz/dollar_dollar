@@ -31,15 +31,15 @@ if (!$systemSetting) {
     <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries-->
     <!--WARNING: Respond.js doesn't work if you view the page via file://-->
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127066821-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-127066821-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
     
       gtag('config', 'UA-127066821-1');
-    </script>-->
-    <!--<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/d0c9d1a35fc9a0bd73890de51/5fb5604a48423d0ba92bb0c8a.js");</script>-->
+    </script>
+    <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/d0c9d1a35fc9a0bd73890de51/5fb5604a48423d0ba92bb0c8a.js");</script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->

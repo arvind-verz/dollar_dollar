@@ -74,8 +74,13 @@ class LoginController extends Controller
      */
     protected function sendLoginResponse(Request $request)
     {
+        
         $request->session()->regenerate();
-
+        $user = User::where('email', $request->email)->first();
+        if($user){
+            $user->status = 1;
+            $user->save();
+        }
         return $this->authenticated($request, $this->guard()->user())
         ?: redirect($request->redirect_url);
     }
@@ -200,6 +205,10 @@ class LoginController extends Controller
         $user     = Socialite::driver($provider)->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
+        if($authUser){
+            $authUser->status = 1;
+            $authUser->save();
+        }
         return redirect(url($this->redirectTo));
     }
 

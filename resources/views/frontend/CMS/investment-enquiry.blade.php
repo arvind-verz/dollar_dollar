@@ -45,7 +45,7 @@
 
     {{--Page content start--}}
     <main class="ps-main">
-        <div class="container">
+        <div class="container ps-document">
             <?php
             //$pageName = strtok($page->name, " ");;
             $pageName = explode(' ', trim($page->name));

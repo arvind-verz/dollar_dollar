@@ -266,7 +266,7 @@ $(document).ready(function () {
     $("input[name='search_value']").each(function (c, obj) {
         $(obj).val(addCommas(parseFloat($(obj).val()).toFixed(0))).val();
     });
-    $(".ps-form__option").before("<div class='product-mobile'>Show search<span></span></div>")
+    $(".ps-form__option").before("<div class='product-mobile'>Sort By<span></span></div>")
     $(".product-mobile").click(function(){
         $(".owl-carousel").trigger('refresh.owl.carousel');
         $(this).next().slideToggle("slow");
@@ -300,10 +300,14 @@ $(document).ready(function () {
 });
 $("input[name='search_value']").on("change", function () {
     var n = $(this).val();
+     n = $(this).val().replace(/,/g, ''),
+    n = +n;
+   
+    
     if (!n || isNaN(n)) {
         n = $('#placement-id').data('value');
     }
-    n = parseInt(n);
+     n = parseInt(n);
     if (n > 999) {
         n = Math.round(parseInt(n) / 1000) * 1000;
     } else {
@@ -353,31 +357,22 @@ $(".currency").on("change", function () {
 
 });
 
-$(".ps-block__content").on("click", function () {
+$(".ps-block__content").click(function () {
     var headingText = $(this).find(".content-detail").text();
     var formulaDetailId = $(this).find(".content-detail").data('formula');
     $(".ps-block__content").removeClass("active");
 
-    if (headingText == "SHOW DETAILS") {
-        $(".content-detail").html("SHOW DETAILS");
-        $(this).find(".content-detail").html("LESS DETAILS");
+    if (headingText == "Show DETAILS") {
+        $(this).find(".content-detail").text("LESS DETAILS");
         $(this).addClass("active");
         var a = $(this).parents(".ps-block--product-info").index();
         $(this).parents(".ps-criteria-detail").find(".ps-criteria-detail__content").slideUp();
         $(this).parents(".ps-criteria-detail").find(".ps-criteria-detail__content").eq(a).slideDown();
-        console.log(a);
-        // var detailId = $(this).find(".content-detail").data('detail-id');
-        // var content = $('#' + detailId).html();
-        // $('#formula-' + formulaDetailId + '-details').html(content);
-        // $('#formula-' + formulaDetailId + '-details').css('display', 'block');
-        // $('#formula-' + formulaDetailId + '-details').addClass("active");
 
     } else {
-        $(this).find(".content-detail").html("SHOW DETAILS");
+        $(this).find(".content-detail").text("Show DETAILS");
         var a = $(this).parents(".ps-block--product-info").index();
         $(this).parents(".ps-criteria-detail").find(".ps-criteria-detail__content").eq(a).slideUp();
-        // $('#formula-' + formulaDetailId + '-details').css('display', 'none');
-        // $('#formula-' + formulaDetailId + '-details').removeClass("active");
     }
 
 });
@@ -598,8 +593,8 @@ $(document).ready(function () {
         $(".owl-slider").each(function () {
             var cf1 = $(this).attr('data-owl-item');
             var cf2 = $(this).find(".owl-item").length;
-            if (cf2 <= cf1) {
-                $(this).find(".owl-nav").hide();console.log("yes");
+            if (cf2 > cf1) {
+                $(this).find(".owl-nav").addClass("show");
             }
         });
     },1000);
