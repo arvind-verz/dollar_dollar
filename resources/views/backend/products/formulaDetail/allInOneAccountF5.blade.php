@@ -54,7 +54,7 @@
 
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Spend 1)</label>
+                                    <label for="">Bonus Interest (Spend 2)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="bonus_interest_spend_1_aioa5"
                                            value="{{ $value->bonus_interest_spend_1  }}"
@@ -70,7 +70,7 @@
                         <div class="col-sm-8 ">
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Minimum Requirement Amount (Spend 2)</label>
+                                    <label for="">Minimum Requirement Amount (Spend 1)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="minimum_spend_2_aioa5" value="{{ $value->minimum_spend_2  }}"
                                            placeholder="">
