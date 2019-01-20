@@ -259,11 +259,15 @@ class ProductsController extends Controller
                 $range['max_range'] = (int)$request->max_placement_aioa1;
 
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa1;
+                $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa1_2;
                 $range['bonus_interest_salary'] = (float)$request->bonus_interest_salary_aioa1;
+                $range['bonus_interest_salary_2'] = (float)$request->bonus_interest_salary_aioa1_2;
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa1;
                 $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
                 $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
+                $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa1_2;
                 $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
+                $range['bonus_interest_spend_2'] = (float)$request->bonus_interest_spend_aioa1_2;
                 $range['minimum_privilege_pa'] = (int)$request->minimum_privilege_pa_aioa1;
                 $range['bonus_interest_privilege'] = (float)$request->bonus_interest_privilege_aioa1;
                 //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
@@ -304,8 +308,10 @@ class ProductsController extends Controller
                 $range['max_range'] = (int)$request->max_placement_aioa3;
 
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
+                $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa3_2;
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
                 $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
+                $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa3_2;
                 $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
                 $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
                 $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
@@ -332,6 +338,8 @@ class ProductsController extends Controller
                     $range = [];
                     $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
                     $range['minimum_spend'] = (int)$request->minimum_spend_aioa4;
+                    $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa4_2;
+                    $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa4_2;
                     $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
                     $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
                     $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
@@ -355,6 +363,8 @@ class ProductsController extends Controller
                 $range['bonus_interest_spend_2'] = $request->bonus_interest_spend_2_aioa5 ? (float)$request->bonus_interest_spend_2_aioa5 : null;
                 $range['minimum_salary'] = $request->minimum_salary_aioa5 ? (int)$request->minimum_salary_aioa5 : null;
                 $range['bonus_interest_salary'] = $request->bonus_interest_salary_aioa5 ? (float)$request->bonus_interest_salary_aioa5 : null;
+                $range['minimum_salary_2'] = $request->minimum_salary_aioa5_2 ? (int)$request->minimum_salary_aioa5_2 : null;
+                $range['bonus_interest_salary_2'] = $request->bonus_interest_salary_aioa5_2 ? (float)$request->bonus_interest_salary_aioa5_2 : null;
                 $range['minimum_giro_payment'] = $request->minimum_giro_payment_aioa5 ? (int)$request->minimum_giro_payment_aioa5 : null;
                 $range['bonus_interest_giro_payment'] = $request->bonus_interest_giro_payment_aioa5 ? (float)$request->bonus_interest_giro_payment_aioa5 : null;
                 $range['minimum_privilege_pa'] = $request->minimum_privilege_pa_aioa5 ? (int)$request->minimum_privilege_pa_aioa5 : null;
@@ -362,7 +372,7 @@ class ProductsController extends Controller
                 $range['minimum_loan_pa'] = $request->minimum_loan_pa_aioa5 ? (int)$request->minimum_loan_pa_aioa5 : null;
                 $range['bonus_interest_loan'] = $request->bonus_interest_loan_aioa5 ? (float)$request->bonus_interest_loan_aioa5 : null;
 
-                $range['other_interest1_name'] = $request->other_interest_name1_aioa5 ? $request->other_interest_name1_aioa5 : null;
+                $range['other_interest1_name'] = $request->other_interest1_name_aioa5 ? $request->other_interest1_name_aioa5 : null;
                 $range['other_minimum_amount1'] = $request->other_minimum_amount1_aioa5 ? (int)$request->other_minimum_amount1_aioa5 : null;
                 $range['other_interest1'] = $request->other_interest1_aioa5 ? (float)$request->other_interest1_aioa5 : null;
                 $range['status_other1'] = $request->status_other1_aioa5 ? (int)$request->status_other1_aioa5 : 0;
@@ -686,11 +696,15 @@ class ProductsController extends Controller
                 $range['max_range'] = (int)$request->max_placement_aioa1;
 
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa1;
+                $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa1_2;
                 $range['bonus_interest_salary'] = (float)$request->bonus_interest_salary_aioa1;
+                $range['bonus_interest_salary_2'] = (float)$request->bonus_interest_salary_aioa1_2;
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa1;
                 $range['bonus_interest_giro_payment'] = (float)$request->bonus_interest_giro_payment_aioa1;
                 $range['minimum_spend'] = (int)$request->minimum_spend_aioa1;
+                $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa1_2;
                 $range['bonus_interest_spend'] = (float)$request->bonus_interest_spend_aioa1;
+                $range['bonus_interest_spend_2'] = (float)$request->bonus_interest_spend_aioa1_2;
                 $range['minimum_privilege_pa'] = (int)$request->minimum_privilege_pa_aioa1;
                 $range['bonus_interest_privilege'] = (float)$request->bonus_interest_privilege_aioa1;
                 //$range['minimum_loan_pa'] = (int)$request->minimum_loan_pa_aioa1;
@@ -724,6 +738,8 @@ class ProductsController extends Controller
                     $min = $range['max_range'] + 1;
                     $previousMax = $range['max_range'];
                 }
+
+                
                 $ranges = json_encode($ranges);
             }
             if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F3])) {
@@ -731,8 +747,10 @@ class ProductsController extends Controller
                 $range['max_range'] = (int)$request->max_placement_aioa3;
 
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
+                $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa3_2;
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
                 $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
+                $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa3_2;
                 $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
                 $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
                 $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
@@ -747,7 +765,6 @@ class ProductsController extends Controller
                 $range['bonus_interest_criteria3'] = (float)$request->bonus_interest_criteria3_aioa3;
                 $range['first_cap_amount'] = (int)$request->first_cap_amount_aioa3;
                 $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa3;
-
                 $ranges[] = $range;
                 $ranges = json_encode($ranges);
             }
@@ -759,6 +776,8 @@ class ProductsController extends Controller
                     $range = [];
                     $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
                     $range['minimum_spend'] = (int)$request->minimum_spend_aioa4;
+                    $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa4_2;
+                    $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa4_2;
                     $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
                     $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
                     $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
@@ -770,6 +789,7 @@ class ProductsController extends Controller
                     $range['bonus_interest_criteria_b'] = (float)$bonusInterestB[$k];
                     $ranges[] = $range;
                 }
+
                 $ranges = json_encode($ranges);
             }
             if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F5])) {
@@ -781,6 +801,8 @@ class ProductsController extends Controller
                 $range['bonus_interest_spend_2'] = $request->bonus_interest_spend_2_aioa5 ? (float)$request->bonus_interest_spend_2_aioa5 : null;
                 $range['minimum_salary'] = $request->minimum_salary_aioa5 ? (int)$request->minimum_salary_aioa5 : null;
                 $range['bonus_interest_salary'] = $request->bonus_interest_salary_aioa5 ? (float)$request->bonus_interest_salary_aioa5 : null;
+                $range['minimum_salary_2'] = $request->minimum_salary_aioa5_2 ? (int)$request->minimum_salary_aioa5_2 : null;
+                $range['bonus_interest_salary_2'] = $request->bonus_interest_salary_aioa5_2 ? (float)$request->bonus_interest_salary_aioa5_2 : null;
                 $range['minimum_giro_payment'] = $request->minimum_giro_payment_aioa5 ? (int)$request->minimum_giro_payment_aioa5 : null;
                 $range['bonus_interest_giro_payment'] = $request->bonus_interest_giro_payment_aioa5 ? (float)$request->bonus_interest_giro_payment_aioa5 : null;
                 $range['minimum_privilege_pa'] = $request->minimum_privilege_pa_aioa5 ? (int)$request->minimum_privilege_pa_aioa5 : null;

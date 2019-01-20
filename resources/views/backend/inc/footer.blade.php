@@ -1327,9 +1327,16 @@ return $.trim($(this).val());
 var SalaryMinAmount = allInOneAccountF1.find('input[name="minimum_salary_aioa1"]').map(function () {
 return $.trim($(this).val());
 }).get();
+var SalaryMinAmount2 = allInOneAccountF1.find('input[name="minimum_salary_aioa1_2"]').map(function () {
+return $.trim($(this).val());
+}).get();
 var SalaryBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_salary_aioa1"]').map(function () {
 return $.trim($(this).val());
 }).get();
+var SalaryBonusInterest2 = allInOneAccountF1.find('input[name="bonus_interest_salary_aioa1_2"]').map(function () {
+return $.trim($(this).val());
+}).get();
+
 var GiroMinAmount = allInOneAccountF1.find('input[name="minimum_giro_payment_aioa1"]').map(function () {
 return $.trim($(this).val());
 }).get();
@@ -1339,7 +1346,13 @@ return $.trim($(this).val());
 var SpendMinAmount = allInOneAccountF1.find('input[name="minimum_spend_aioa1"]').map(function () {
 return $.trim($(this).val());
 }).get();
+var SpendMinAmount2 = allInOneAccountF1.find('input[name="minimum_spend_aioa1_2"]').map(function () {
+return $.trim($(this).val());
+}).get();
 var SpendBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_spend_aioa1"]').map(function () {
+return $.trim($(this).val());
+}).get();
+var SpendBonusInterest2 = allInOneAccountF1.find('input[name="bonus_interest_spend_aioa1_2"]').map(function () {
 return $.trim($(this).val());
 }).get();
 var PrivilegeMinAmount = allInOneAccountF1.find('input[name="minimum_privilege_pa_aioa1"]').map(function () {
@@ -1366,6 +1379,7 @@ return $.trim($(this).val());
 var RemainingBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_remaining_amount_aioa1"]').map(function () {
 return $.trim($(this).val());
 }).get();
+
 if (Number(minPlacement) > Number(minPlacementAmount) || Number(maxPlacement) > Number(minPlacementAmount)) {
 errors[i] = 'All placement must be less than or equal maximum placement amount.';
 i++;
@@ -1375,11 +1389,19 @@ errors[i] = 'Please check your placement range. ';
 i++;
 }
 if (SalaryMinAmount == '') {
-errors[i] = 'The minimum requirement amount (Salary) is required.';
+errors[i] = 'The minimum requirement amount (Salary 1) is required.';
 i++;
 }
 if (SalaryBonusInterest == '') {
-errors[i] = 'The  bonus interest (Salary) is required.';
+errors[i] = 'The  bonus interest (Salary 1) is required.';
+i++;
+}
+if (SalaryMinAmount2 =='' && SalaryBonusInterest2 != '') {
+errors[i] = 'The minimum requirement amount (Salary 2) is required.';
+i++;
+}
+if (SalaryMinAmount2 !='' && SalaryBonusInterest2 == '') {
+errors[i] = 'The  bonus interest (Salary 2) is required.';
 i++;
 }
 if (GiroMinAmount == '') {
@@ -1391,13 +1413,29 @@ errors[i] = 'The  bonus interest (Giro) is required.';
 i++;
 }
 if (SpendMinAmount == '') {
-errors[i] = 'The minimum requirement amount (Spend) is required.';
+errors[i] = 'The minimum requirement amount (Spend 1) is required.';
 i++;
 }
 if (SpendBonusInterest == '') {
-errors[i] = 'The  bonus interest (Spend) is required.';
+errors[i] = 'The  bonus interest (Spend 1) is required.';
 i++;
 }
+if (SpendMinAmount2 =='' && SpendBonusInterest2 != '') {
+errors[i] = 'The minimum requirement amount (Spend 2) is required.';
+i++;
+}
+if (SpendMinAmount2 !='' && SpendBonusInterest2 == '') {
+errors[i] = 'The  bonus interest (Spend 2) is required.';
+i++;
+}
+if ( SpendMinAmount2 !='' && Number(SpendMinAmount2) !=0  && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
+errors[i] = 'Spend 2 amount must be grater than Spend 1.';
+i++;
+}
+if ( SalaryMinAmount2 !='' && Number(SalaryMinAmount2) !=0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) { 
+errors[i] = 'Salary 2 amount must be grater than Salary 1.';
+i++;
+} 
 if (PrivilegeMinAmount == '') {
 errors[i] = 'The minimum requirement amount (Privilege) is required.';
 i++;
@@ -1423,7 +1461,7 @@ errors[i] = 'The  bonus interest (Remaining) is required.';
 i++;
 }
 if (parseInt(minPlacement) > parseInt(FirstCapAmount)) {
-errors[i] = 'The  first cap amount  is not greater than minimum placement.';
+errors[i] = 'The  first cap amount  is must be greater than minimum placement.';
 i++;
 }
 }
@@ -1438,6 +1476,12 @@ return $.trim($(this).val());
 var SalaryMinAmount = allInOneAccountF2.find('input[name="minimum_salary_aioa2"]').map(function () {
 return $.trim($(this).val());
 }).get();
+var SpendMinAmount2 = allInOneAccountF2.find('input[name="minimum_spend_aioa2_2"]').map(function () {
+return $.trim($(this).val());
+}).get();
+var SalaryMinAmount2 = allInOneAccountF2.find('input[name="minimum_salary_aioa2_2"]').map(function () {
+return $.trim($(this).val());
+}).get();
 var maxPlacements = allInOneAccountF2.find('input[name^="max_placement_aioa2"]').map(function () {
 return $.trim($(this).val());
 }).get();
@@ -1449,17 +1493,27 @@ return $.trim($(this).val());
 }).get();
 var rangeError = false;
 if (SpendMinAmount == '') {
-errors[i] = 'The minimum requirement amount (Spend) is required.';
+errors[i] = 'The minimum requirement amount (Spend 1) is required.';
+i++;
+}
+if (SalaryMinAmount == '') {
+errors[i] = 'The minimum requirement amount (Salary 1) is required.';
 i++;
 }
 if (GiroMinAmount == '') {
 errors[i] = 'The minimum requirement amount (Giro) is required.';
 i++;
 }
-if (SalaryMinAmount == '') {
-errors[i] = 'The minimum requirement amount (Salary) is required.';
+
+if ( SpendMinAmount2 !='' && Number(SpendMinAmount2) !=0  && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
+errors[i] = 'Spend 2 amount must be grater than Spend 1.';
 i++;
 }
+if ( SalaryMinAmount2 !='' && Number(SalaryMinAmount2) !=0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) { 
+errors[i] = 'Salary 2 amount must be grater than Salary 1.';
+i++;
+} 
+
 $.each(maxPlacements, function (k, v) {
 if (maxPlacements[k] == '') {
 errors[i] = 'The placement is required.';
@@ -1500,10 +1554,16 @@ return $.trim($(this).val());
 var SalaryMinAmount = allInOneAccountF3.find('input[name="minimum_salary_aioa3"]').map(function () {
 return $.trim($(this).val());
 }).get();
+var SpendMinAmount = allInOneAccountF3.find('input[name="minimum_spend_aioa3"]').map(function () {
+return $.trim($(this).val());
+}).get();
 var GiroMinAmount = allInOneAccountF3.find('input[name="minimum_giro_payment_aioa3"]').map(function () {
 return $.trim($(this).val());
 }).get();
-var SpendMinAmount = allInOneAccountF3.find('input[name="minimum_spend_aioa3"]').map(function () {
+var SalaryMinAmount2 = allInOneAccountF3.find('input[name="minimum_salary_aioa3_2"]').map(function () {
+return $.trim($(this).val());
+}).get();
+var SpendMinAmount2 = allInOneAccountF3.find('input[name="minimum_spend_aioa3_2"]').map(function () {
 return $.trim($(this).val());
 }).get();
 var HirePurchaseMinAmount = allInOneAccountF3.find('input[name="minimum_hire_purchase_loan_aioa3"]').map(function () {
@@ -1560,12 +1620,20 @@ if (SalaryMinAmount == '') {
 errors[i] = 'The minimum requirement amount (Salary) is required.';
 i++;
 }
+if (SpendMinAmount == '') {
+errors[i] = 'The minimum requirement amount (Spend) is required.';
+i++;
+}
 if (GiroMinAmount == '') {
 errors[i] = 'The minimum requirement amount (Giro) is required.';
 i++;
 }
-if (SpendMinAmount == '') {
-errors[i] = 'The minimum requirement amount (Spend) is required.';
+if ( SpendMinAmount2 !='' && Number(SpendMinAmount2) !=0  && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
+errors[i] = 'Spend 2 amount must be grater than Spend 1.';
+i++;
+}
+if ( SalaryMinAmount2 !='' && Number(SalaryMinAmount2) !=0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) { 
+errors[i] = 'Salary 2 amount must be grater than Salary 1.';
 i++;
 }
 if (HirePurchaseMinAmount == '') {
@@ -1625,7 +1693,7 @@ errors[i] = 'The  bonus interest (Remaining) is required.';
 i++;
 }
 if (parseInt(minPlacement) > parseInt(FirstCapAmount)) {
-errors[i] = 'The  first cap amount  is not greater than minimum placement.';
+errors[i] = 'The  first cap amount  is must be greater than minimum placement.';
 i++;
 }
 }
@@ -1638,6 +1706,12 @@ var SpendMinAmount = allInOneAccountF4.find('input[name="minimum_spend_aioa4"]')
 return $.trim($(this).val());
 }).get();
 var HomeMinAmount = allInOneAccountF4.find('input[name="minimum_home_loan_aioa4"]').map(function () {
+return $.trim($(this).val());
+}).get();
+var SalaryMinAmount2 = allInOneAccountF4.find('input[name="minimum_salary_aioa4_2"]').map(function () {
+return $.trim($(this).val());
+}).get();
+var SpendMinAmount2 = allInOneAccountF4.find('input[name="minimum_spend_aioa4_2"]').map(function () {
 return $.trim($(this).val());
 }).get();
 var InsuranceMinAmount = allInOneAccountF4.find('input[name="minimum_insurance_aioa4"]').map(function () {
@@ -1669,12 +1743,12 @@ if (SpendMinAmount == '') {
 errors[i] = 'The minimum requirement amount (Spend) is required.';
 i++;
 }
-if (GiroMinAmount == '') {
-errors[i] = 'The minimum requirement amount (Giro) is required.';
-i++;
-}
 if (SalaryMinAmount == '') {
 errors[i] = 'The minimum requirement amount (Salary) is required.';
+i++;
+}
+if (GiroMinAmount == '') {
+errors[i] = 'The minimum requirement amount (Giro) is required.';
 i++;
 }
 if (HomeMinAmount == '') {
@@ -1691,6 +1765,14 @@ i++;
 }
 if (boardRate == '') {
 errors[i] = 'The board rate is required.';
+i++;
+}
+if ( SpendMinAmount2 !='' && Number(SpendMinAmount2) !=0  && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
+errors[i] = 'Spend 2 amount must be grater than Spend 1.';
+i++;
+}
+if ( SalaryMinAmount2 !='' && Number(SalaryMinAmount2) !=0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) { 
+errors[i] = 'Salary 2 amount must be grater than Salary 1.';
 i++;
 }
 if (firstCapAmount == '') {
@@ -1759,10 +1841,10 @@ return $.trim($(this).val());
 var maxPlacement = allInOneAccountF5.find('input[name="max_placement_aioa5"]').map(function () {
 return $.trim($(this).val());
 }).get();
-var SpendMinAmount1 = allInOneAccountF5.find('input[name="minimum_spend_1_aioa5"]').map(function () {
+var SpendMinAmount = allInOneAccountF5.find('input[name="minimum_spend_1_aioa5"]').map(function () {
 return $.trim($(this).val());
 }).get();
-var SpendBonusInterest1 = allInOneAccountF5.find('input[name="bonus_interest_spend_1_aioa5"]').map(function () {
+var SpendBonusInterest = allInOneAccountF5.find('input[name="bonus_interest_spend_1_aioa5"]').map(function () {
 return $.trim($(this).val());
 }).get();
 var SpendMinAmount2 = allInOneAccountF5.find('input[name="minimum_spend_2_aioa5"]').map(function () {
@@ -1775,6 +1857,12 @@ var SalaryMinAmount = allInOneAccountF5.find('input[name="minimum_salary_aioa5"]
 return $.trim($(this).val());
 }).get();
 var SalaryBonusInterest = allInOneAccountF5.find('input[name="bonus_interest_salary_aioa5"]').map(function () {
+return $.trim($(this).val());
+}).get();
+var SalaryMinAmount2 = allInOneAccountF5.find('input[name="minimum_salary_aioa5_2"]').map(function () {
+return $.trim($(this).val());
+}).get();
+var SalaryBonusInterest2 = allInOneAccountF5.find('input[name="bonus_interest_salary_aioa5_2"]').map(function () {
 return $.trim($(this).val());
 }).get();
 var GiroMinAmount = allInOneAccountF5.find('input[name="minimum_giro_payment_aioa5"]').map(function () {
@@ -1821,34 +1909,47 @@ if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parse
 errors[i] = 'Please check your placement range. ';
 i++;
 }
-if (SpendMinAmount1 != '') {
-if (SpendBonusInterest1 == '') {
+if (SalaryMinAmount == '') {
+errors[i] = 'The minimum requirement amount (Salary 1) is required.';
+i++;
+}
+if (SalaryBonusInterest == '') {
+errors[i] = 'The  bonus interest (Salary 1) is required.';
+i++;
+}
+if (SpendMinAmount == '') {
+errors[i] = 'The minimum requirement amount (Spend 1) is required.';
+i++;
+}
+if (SpendBonusInterest == '') {
 errors[i] = 'The  bonus interest (Spend 1) is required.';
 i++;
 }
+if (SalaryMinAmount2 =='' && SalaryBonusInterest2 != '') {
+errors[i] = 'The minimum requirement amount (Salary 2) is required.';
+i++;
 }
-if (SpendMinAmount2 != '') {
-if (SpendBonusInterest2 == '') {
+if (SalaryMinAmount2 !='' && SalaryBonusInterest2 == '') {
+errors[i] = 'The  bonus interest (Salary 2) is required.';
+i++;
+}
+if (SpendMinAmount2 =='' && SpendBonusInterest2 != '') {
+errors[i] = 'The minimum requirement amount (Spend 2) is required.';
+i++;
+}
+if (SpendMinAmount2 !='' && SpendBonusInterest2 == '') {
 errors[i] = 'The  bonus interest (Spend 2) is required.';
 i++;
-}
-}
-if (SpendMinAmount1 != '' && SpendMinAmount2 != '') {
-if (SpendMinAmount1 == SpendMinAmount2) {
-errors[i] = 'You cannot input same amount for spend 1 and spend 2.';
+} 
+if ( SpendMinAmount2 !='' && Number(SpendMinAmount2) !=0  && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
+errors[i] = 'Spend 2 amount must be grater than Spend 1.';
 i++;
 }
-if (SpendMinAmount1 > SpendMinAmount2) {
-errors[i] = 'spend 2 amount must be grater than spend 1.';
+if ( SalaryMinAmount2 !='' && Number(SalaryMinAmount2) !=0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) { 
+errors[i] = 'Salary 2 amount must be grater than Salary 1.';
 i++;
 }
-}
-if (SalaryMinAmount != '') {
-if (SalaryBonusInterest == '') {
-errors[i] = 'The  bonus interest (Salary) is required.';
-i++;
-}
-}
+
 if (GiroMinAmount != '') {
 if (GiroBonusInterest == '') {
 errors[i] = 'The  bonus interest (Giro) is required.';
@@ -1886,7 +1987,7 @@ errors[i] = 'The  bonus interest (Remaining) is required.';
 i++;
 }
 if (parseInt(minPlacement) > parseInt(FirstCapAmount)) {
-errors[i] = 'The  first cap amount  is not greater than minimum placement.';
+errors[i] = 'The  first cap amount  is must be greater than minimum placement.';
 i++;
 }
 }

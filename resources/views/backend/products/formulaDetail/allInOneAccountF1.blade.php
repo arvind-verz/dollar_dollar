@@ -71,14 +71,14 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="">Minimum Requirement Amount (Salary 2)</label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="minimum_salary_aioa1_2" value="{{ $value->minimum_salary_2  }}"
+                                           name="minimum_salary_aioa1_2" value="{{ isset($value->minimum_salary_2)?$value->minimum_salary_2:null  }}"
                                            placeholder="">
 
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="">Bonus Interest (Salary 2)</label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="bonus_interest_salary_aioa1_2" value="{{ $value->bonus_interest_salary_2  }}"
+                                           name="bonus_interest_salary_aioa1_2" value="{{ isset($value->bonus_interest_salary_2)?$value->bonus_interest_salary_2:null  }}"
                                            placeholder="">
                                 </div>
                             </div>
@@ -137,14 +137,14 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="">Minimum Requirement Amount (Spend 2)</label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="minimum_spend_aioa1_2"  value="{{ $value->minimum_spend_2  }}"
+                                           name="minimum_spend_aioa1_2"  value="{{ isset($value->minimum_spend_2)?$value->minimum_spend_2:null  }}"
                                            placeholder="">
 
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="">Bonus Interest (Spend 2)</label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="bonus_interest_spend_aioa1_2"  value="{{ $value->bonus_interest_spend_2  }}"
+                                           name="bonus_interest_spend_aioa1_2"  value="{{ isset($value->bonus_interest_spend_2)?$value->bonus_interest_spend_2:null  }}"
                                            placeholder="">
                                 </div>
                             </div>

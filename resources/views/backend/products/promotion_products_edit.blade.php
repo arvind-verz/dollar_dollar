@@ -146,7 +146,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        @if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT)
+                                        {{Form::label('minimum_placement_amount', 'Maximum Placement Amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+                                        @else
                                         {{Form::label('minimum_placement_amount', 'Minimum Placement Amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+                                        @endif
                                         <div class="col-sm-10">
                                             {{Form::text('minimum_placement_amount', $product->minimum_placement_amount, ['id'=>'minimum-placement-amount','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
