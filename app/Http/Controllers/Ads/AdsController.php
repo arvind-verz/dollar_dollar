@@ -248,7 +248,6 @@ $adImageCount++;
 } elseif (!is_null($ads->horizontal_paid_ad_image)) {
 $adImageCount++;
 $paidAddStatus = $request->paid_ads_status;
-
 }
 }
 $validator = Validator::make($request->all(), $validatorFields);
@@ -304,7 +303,6 @@ if ($ads->horizontal_banner_ad_image != 'noimage.jpg') {
 }
 $ads->horizontal_banner_ad_image = $horizontal_banner_ad_image;
 }
-
 if ($request->hasFile('paid_ad_image')) {
 // Get filename with the extension
 $filenameWithExt = $request->file('paid_ad_image')->getClientOriginalName();

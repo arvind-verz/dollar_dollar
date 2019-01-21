@@ -163,11 +163,10 @@ class ProductsController extends Controller
             $product->until_end_date = null;
         }
 
-        if($request->product_type==LOAN)
-        {
+        if ($request->product_type == LOAN) {
             $product->minimum_loan_amount = $request->minimum_loan_amount;
             $product->lock_in = $request->lock_in;
-        }else{
+        } else {
             $product->maximum_interest_rate = $request->maximum_interest_rate;
             $product->promotion_period = $request->promotion_period;
             $product->minimum_placement_amount = $request->minimum_placement_amount;
@@ -415,6 +414,44 @@ class ProductsController extends Controller
                 }
                 $ranges = json_encode($ranges);
             }
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F6])) {
+                $min = 1;
+                $previousMax = 0;
+
+                $minSalaryInterests = $request->bonus_interest_salary_aioa6;
+                $minSpendInterests = $request->bonus_interest_spend_aioa6;
+                $minOtherInterests = $request->bonus_interest_other_aioa6;
+                $minWealthInterests = $request->bonus_interest_wealth_aioa6;
+                foreach ($request->max_placement_aioa6 as $k => $v) {
+
+                    $range = [];
+                    $range['minimum_grow'] = $request->minimum_grow_aioa6;
+                    $range['cap_grow'] = $request->cap_grow_aioa6;
+                    $range['bonus_interest_grow'] = (float)$request->bonus_interest_grow_aioa6;
+                    $range['cap_boost'] = $request->cap_boost_aioa6;
+                    $range['bonus_interest_boost'] = (float)$request->bonus_interest_boost_aioa6;
+                    $range['other_interest_name'] = $request->other_interest_name_aioa6;
+                    $range['status_other'] = $request->status_other_aioa6;
+                    $range['first_cap_amount'] = $request->first_cap_amount_aioa6;
+                    $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa6;
+
+                    $range['minimum_salary'] = $request->minimum_salary_aioa6;
+                    $range['bonus_interest_salary'] = (float)$minSalaryInterests[$k];
+                    $range['minimum_spend'] = $request->minimum_spend_aioa6;
+                    $range['bonus_interest_spend'] = (float)$minSpendInterests[$k];
+                    $range['minimum_other'] = $request->minimum_other_aioa6;
+                    $range['bonus_interest_other'] = (float)$minOtherInterests[$k];
+                    $range['minimum_wealth'] = $request->minimum_wealth_aioa6;
+                    $range['bonus_interest_wealth'] = (float)$minWealthInterests[$k];
+                    $range['min_range'] = (int)$min;
+                    $range['max_range'] = (int)$v + $previousMax;
+                    $ranges[] = $range;
+                    $min = $range['max_range'] + 1;
+                    $previousMax = $range['max_range'];
+                }
+                $ranges = json_encode($ranges);
+
+            }
         }
         function intVal($x)
         {
@@ -465,13 +502,12 @@ class ProductsController extends Controller
         //dd($product->ads_placement);
         $product->status = $request->status;
         $product->featured = $request->featured;
-        if(!is_null($request->formula))
-        {
+        if (!is_null($request->formula)) {
             $product->slider_status = 1;
-        }else
-        {
-            $product->slider_status = $request->slider_status;    
-        }$product->save();
+        } else {
+            $product->slider_status = $request->slider_status;
+        }
+        $product->save();
 
         //store activity log
         activity()
@@ -601,11 +637,10 @@ class ProductsController extends Controller
             $product->until_end_date = null;
         }
 
-        if($request->product_type==LOAN)
-        {
+        if ($request->product_type == LOAN) {
             $product->minimum_loan_amount = $request->minimum_loan_amount;
             $product->lock_in = $request->lock_in;
-           }else{
+        } else {
             $product->maximum_interest_rate = $request->maximum_interest_rate;
             $product->promotion_period = $request->promotion_period;
             $product->minimum_placement_amount = $request->minimum_placement_amount;
@@ -739,7 +774,7 @@ class ProductsController extends Controller
                     $previousMax = $range['max_range'];
                 }
 
-                
+
                 $ranges = json_encode($ranges);
             }
             if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F3])) {
@@ -850,6 +885,44 @@ class ProductsController extends Controller
                 }
                 $ranges = json_encode($ranges);
             }
+            if (in_array($product->formula_id, [ALL_IN_ONE_ACCOUNT_F6])) {
+                $min = 1;
+                $previousMax = 0;
+
+                $minSalaryInterests = $request->bonus_interest_salary_aioa6;
+                $minSpendInterests = $request->bonus_interest_spend_aioa6;
+                $minOtherInterests = $request->bonus_interest_other_aioa6;
+                $minWealthInterests = $request->bonus_interest_wealth_aioa6;
+                foreach ($request->max_placement_aioa6 as $k => $v) {
+
+                    $range = [];
+                    $range['minimum_grow'] = $request->minimum_grow_aioa6;
+                    $range['cap_grow'] = $request->cap_grow_aioa6;
+                    $range['bonus_interest_grow'] = (float)$request->bonus_interest_grow_aioa6;
+                    $range['cap_boost'] = $request->cap_boost_aioa6;
+                    $range['bonus_interest_boost'] = (float)$request->bonus_interest_boost_aioa6;
+                    $range['other_interest_name'] = $request->other_interest_name_aioa6;
+                    $range['status_other'] = $request->status_other_aioa6;
+                    $range['first_cap_amount'] = $request->first_cap_amount_aioa6;
+                    $range['bonus_interest_remaining_amount'] = (float)$request->bonus_interest_remaining_amount_aioa6;
+
+                    $range['minimum_salary'] = $request->minimum_salary_aioa6;
+                    $range['bonus_interest_salary'] = (float)$minSalaryInterests[$k];
+                    $range['minimum_spend'] = $request->minimum_spend_aioa6;
+                    $range['bonus_interest_spend'] = (float)$minSpendInterests[$k];
+                    $range['minimum_other'] = $request->minimum_other_aioa6;
+                    $range['bonus_interest_other'] = (float)$minOtherInterests[$k];
+                    $range['minimum_wealth'] = $request->minimum_wealth_aioa6;
+                    $range['bonus_interest_wealth'] = (float)$minWealthInterests[$k];
+                    $range['min_range'] = (int)$min;
+                    $range['max_range'] = (int)$v + $previousMax;
+                    $ranges[] = $range;
+                    $min = $range['max_range'] + 1;
+                    $previousMax = $range['max_range'];
+                }
+                $ranges = json_encode($ranges);
+
+            }
         }
         function intVal($x)
         {
@@ -909,12 +982,10 @@ class ProductsController extends Controller
 
         $product->status = $request->status;
         $product->featured = $request->featured;
-        if(!is_null($request->formula))
-        {
+        if (!is_null($request->formula)) {
             $product->slider_status = 1;
-        }else
-        {
-            $product->slider_status = $request->slider_status;    
+        } else {
+            $product->slider_status = $request->slider_status;
         }
         $product->save();
 
@@ -1691,14 +1762,17 @@ class ProductsController extends Controller
                         <div class="col-md-3 ">
                             <label for="">Year</label>
                             <select class="form-control tenure-0" name="tenure_f1[<?php echo $request->range_id; ?>]">
-                                <?php for($i=1;$i<=30;$i++) { ?>
-                                <option name="tenure_f1[<?php echo $request->range_id; ?>]" <?php if($i==$request->range_id){echo 'selected="selected"';} ?> ><?php echo $i; ?></option>
+                                <?php for ($i = 1; $i <= 30; $i++) { ?>
+                                    <option
+                                        name="tenure_f1[<?php echo $request->range_id; ?>]" <?php if ($i == $request->range_id) {
+                                        echo 'selected="selected"';
+                                    } ?> ><?php echo $i; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="col-md-2">
                             <label for="">Rate type</label>
-                             <input type="text" class="form-control" id=""
+                            <input type="text" class="form-control" id=""
                                    name="floating_rate_type_f1[<?php echo $request->range_id; ?>]" value=""
                                    placeholder="">
                         </div>
@@ -1731,6 +1805,89 @@ class ProductsController extends Controller
                             <i class="fa fa-minus"> </i>
                         </button>
                     </div>
+                </div>
+            </div>
+            <?php
+        } elseif (in_array($request->formula, [ALL_IN_ONE_ACCOUNT_F6])) {
+            ?>
+            <div id="aioa_placement_range_f6_<?php echo $request->range_id; ?>">
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-8 ">
+
+                        <div class="input-group date ">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-danger">Next
+                                </button>
+                            </div>
+                            <input type="text" class="form-control pull-right only_numeric"
+                                   name="max_placement_aioa6[<?php echo $request->range_id; ?>]"
+                                   value="">
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button"
+                                class="btn btn-danger -pull-right  remove-placement-range-button "
+                                data-range-id="<?php echo $request->range_id; ?>"
+                                onClick="removePlacementRange(this);">
+                            <i class="fa fa-minus"> </i>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="form-group ">
+                    <label for="title" class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-8 ">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="">Bonus Interest (Salary)</label>
+                                <input type="text" class="form-control only_numeric"
+                                       id="bonus_interest_salary_<?php echo $request->range_id; ?>"
+                                       name="bonus_interest_salary_aioa6[<?php echo $request->range_id; ?>]"
+                                       value=""
+                                       placeholder="">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="">Bonus Interest (Spend)</label>
+                                <input type="text" class="form-control only_numeric"
+                                       id="bonus_interest_spend_<?php echo $request->range_id; ?>"
+                                       name="bonus_interest_spend_aioa6[<?php echo $request->range_id; ?>]"
+                                       value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">&emsp;</div>
+                </div>
+
+                <div class="form-group ">
+                    <label for="title" class="col-sm-2 control-label"></label>
+
+                    <div class="col-sm-8 ">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="">Bonus Interest (Other)</label>
+                                <input type="text" class="form-control only_numeric"
+                                       id="bonus_interest_other_<?php echo $request->range_id; ?>"
+                                       name="bonus_interest_other_aioa6[<?php echo $request->range_id; ?>]"
+                                       value=""
+                                       placeholder="">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="">Bonus Interest (Wealth)</label>
+                                <input type="text" class="form-control only_numeric"
+                                       id="bonus_interest_wealth_<?php echo $request->range_id; ?>"
+                                       name="bonus_interest_wealth_aioa6[<?php echo $request->range_id; ?>]"
+                                       value=""
+                                       placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">&emsp;</div>
                 </div>
             </div>
             <?php
@@ -1939,7 +2096,7 @@ class ProductsController extends Controller
             $validate['rate_type'] = 'required';
             $validate['tenure'] = 'required';
             $validate['property_type'] = 'required';
-           /* $validate['completion'] = 'required';*/
+            /* $validate['completion'] = 'required';*/
 
         }
 
@@ -1994,8 +2151,7 @@ class ProductsController extends Controller
             ->where('product_managements.end_date', '>', $endDate)
             ->where('users.status', '=', 1)
             ->get();
-            
-        
+
 
         if ($reminderData->count()) {
 
@@ -2005,51 +2161,50 @@ class ProductsController extends Controller
                 } else {
                     $detail->product_reminder = json_decode($detail->product_reminder);
                 }
-               //dd($detail);
+                //dd($detail);
                 if ($detail->product_reminder) {
                     foreach ($detail->product_reminder as $dayKey => $reminderDay) {
                         $reminderDate = null;
                         if ($reminderDay == '1 Day') {
-                            $reminderDate =date('Y-m-d H:i:s', strtotime($endDate. ' + 1 days'));
+                            $reminderDate = date('Y-m-d H:i:s', strtotime($endDate . ' + 1 days'));
                         } elseif ($reminderDay == '1 Week') {
-                            $reminderDate =date('Y-m-d H:i:s', strtotime($endDate. ' + 7 days'));
-                        }elseif($reminderDay == '2 Week'){
-                            $reminderDate =date('Y-m-d H:i:s', strtotime($endDate. ' + 14 days'));
+                            $reminderDate = date('Y-m-d H:i:s', strtotime($endDate . ' + 7 days'));
+                        } elseif ($reminderDay == '2 Week') {
+                            $reminderDate = date('Y-m-d H:i:s', strtotime($endDate . ' + 14 days'));
                         }
 
-                        if(!is_null($reminderDate) && ($reminderDate==$detail->end_date ))
-                        { 
-                            
+                        if (!is_null($reminderDate) && ($reminderDate == $detail->end_date)) {
+
                             $ads = collect([]);
-                        $adsCollection = \DB::table('ads_management')->where('delete_status', 0)
-                        ->where('display', 1)
-                        ->where('page', 'email')
-                        ->inRandomOrder()
-                        ->get();
-                    
-                    if ($adsCollection->count()) {
-                        $ads = \Helper::manageAds($adsCollection);
-                    }
-                    $current_time = strtotime(date('Y-m-d', strtotime('now')));
-                    $ad_start_date = strtotime($ads->ad_start_date);
-                    $ad_end_date = strtotime($ads->ad_end_date);
-                    $ad = null;
-                    $adLink = null;
-            
-                    if($ads->paid_ads_status==1 && $current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads->paid_ad_image)) {
-                        $ad = $ads->paid_ad_image;
-                         $adLink = $ads->paid_ad_link;
-                    
-                    }else {
-                        $ad = $ads->ad_image;
-                        $adLink = $ads->ad_link;
-                    }
-                            Mail::send('frontend.emails.reminder',[
+                            $adsCollection = \DB::table('ads_management')->where('delete_status', 0)
+                                ->where('display', 1)
+                                ->where('page', 'email')
+                                ->inRandomOrder()
+                                ->get();
+
+                            if ($adsCollection->count()) {
+                                $ads = \Helper::manageAds($adsCollection);
+                            }
+                            $current_time = strtotime(date('Y-m-d', strtotime('now')));
+                            $ad_start_date = strtotime($ads->ad_start_date);
+                            $ad_end_date = strtotime($ads->ad_end_date);
+                            $ad = null;
+                            $adLink = null;
+
+                            if ($ads->paid_ads_status == 1 && $current_time >= $ad_start_date && $current_time <= $ad_end_date && !empty($ads->paid_ad_image)) {
+                                $ad = $ads->paid_ad_image;
+                                $adLink = $ads->paid_ad_link;
+
+                            } else {
+                                $ad = $ads->ad_image;
+                                $adLink = $ads->ad_link;
+                            }
+                            Mail::send('frontend.emails.reminder', [
                                 'account_name' => $detail->account_name,
                                 'end_date' => $detail->end_date,
-                                'ad'=>$ad,
-                                'adLink'=>$adLink
-                            ] , function ($message) use ($detail) {
+                                'ad' => $ad,
+                                'adLink' => $adLink
+                            ], function ($message) use ($detail) {
                                 $message->to($detail->email)->subject('A Product reminder');
                             });
 
@@ -2060,7 +2215,8 @@ class ProductsController extends Controller
             }
         }
     }
-    public  function  changeRateType(Request $request)
+
+    public function  changeRateType(Request $request)
     {
         if ($request->rate_type == FLOATING_RATE) {
             ?>
@@ -2068,8 +2224,9 @@ class ProductsController extends Controller
 
             <div class="col-sm-4">
                 <select class="form-control" name="rate_type_f1" id="rate-type">
-                    <option value="<?php echo FIXED_RATE; ?>" ><?php echo FIXED_RATE; ?></option>
-                    <option value="<?php echo FLOATING_RATE; ?>" selected="selected"><?php echo FLOATING_RATE; ?></option>
+                    <option value="<?php echo FIXED_RATE; ?>"><?php echo FIXED_RATE; ?></option>
+                    <option value="<?php echo FLOATING_RATE; ?>"
+                            selected="selected"><?php echo FLOATING_RATE; ?></option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -2079,7 +2236,7 @@ class ProductsController extends Controller
             </div>
             <div class="col-sm-2">
             </div>
-                <?php
+            <?php
 
         } else { ?>
             <label for="title" class="col-sm-2 control-label">Rate type</label>
@@ -2097,6 +2254,7 @@ class ProductsController extends Controller
         }
 
     }
+
     public function pathUpdateInTechAndLong()
     {
 
