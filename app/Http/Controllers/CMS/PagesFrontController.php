@@ -3501,8 +3501,10 @@ class PagesFrontController extends Controller
                 $interestEarns = [];
                 $product->highlight = false;
                 $product->salary_highlight = false;
+                $product->salary_highlight_2 = false;
                 $product->payment_highlight = false;
                 $product->spend_highlight = false;
+                $product->spend_highlight_2 = false;
                 $product->privilege_highlight = false;
                 $product->loan_highlight = false;
                 $product->bonus_highlight = false;
@@ -3529,7 +3531,11 @@ class PagesFrontController extends Controller
 
                     $totalInterest = 0;
                     if ($status == true) {
-                        if ($salary > 0 && $productRange->minimum_salary <= $salary) {
+                        if (isset($productRange->minimum_salary_2) && $salary > 0 && $productRange->minimum_salary_2 <= $salary) {
+                            $product->salary_highlight_2 = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary_2;
+                            $criteriaMatchCount++;
+                        } elseif ($salary > 0 && $productRange->minimum_salary <= $salary) {
                             $product->salary_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
                             $criteriaMatchCount++;
@@ -3539,7 +3545,11 @@ class PagesFrontController extends Controller
                             $totalInterest = $totalInterest + $productRange->bonus_interest_giro_payment;
                             $criteriaMatchCount++;
                         }
-                        if ($spend > 0 && $productRange->minimum_spend <= $spend) {
+                        if (isset($productRange->minimum_salary_2) && $spend > 0 && $productRange->minimum_spend_2 <= $spend) {
+                            $product->spend_highlight_2 = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_spend_2;
+                            $criteriaMatchCount++;
+                        } elseif ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $product->spend_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest_spend;
                             $criteriaMatchCount++;
@@ -3688,9 +3698,9 @@ class PagesFrontController extends Controller
                     }
                 }
 
-                if(count($totalInterests)){
+                if (count($totalInterests)) {
                     $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
-                }else{
+                } else {
                     $product->total_interest = 0;
                 }
 
@@ -4145,7 +4155,7 @@ class PagesFrontController extends Controller
 
                 foreach ($productRanges as $k => $productRange) {
                     $interestEarn = 0;
-                    
+
                     if ($minPlacement == $productRange->min_range && $minPlacement <= $placement) {
                         if ($lastCalculatedAmount < $placement) {
                             if ($salaryStatus == true) {
@@ -4238,7 +4248,7 @@ class PagesFrontController extends Controller
                                     $product->wealth_highlight = true;
                                 }
                                 $product->highlight_index = $k;
-                               // $totalInterests[] = $productRange->$criteria;
+                                // $totalInterests[] = $productRange->$criteria;
                                 $lastCalculatedAmount = $productRange->max_range;
                             }
 

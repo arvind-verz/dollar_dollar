@@ -269,9 +269,21 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
                         @foreach($productRanges as $range)
                         <tr>
                             <td class="text-left">Bonus Interest PA</td>
-                            <td class="text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
+                           {{-- <td class="text-center @if($product->salary_highlight==true ) highlight @endif"> @if($range->bonus_interest_salary<=0)
                                 - @else {{ $range->bonus_interest_salary }} % @endif
-                            </td>
+                            </td>--}}
+                            <td><table cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class=" text-center @if($product->salary_highlight==true ) highlight @endif">
+                                            @if($range->bonus_interest_salary<=0)
+                                                - @else {{ $range->bonus_interest_salary }}
+                                            % @endif</td>
+                                        <td class=" text-center @if($product->salary_highlight_2==true ) highlight @endif">
+                                            @if($range->bonus_interest_salary_2<=0)
+                                                - @else {{ $range->bonus_interest_salary_2 }}
+                                            % @endif</td>
+                                    </tr>
+                                </table></td>
                             <td class="text-center @if($product->payment_highlight==true ) highlight @endif"> @if($range->bonus_interest_giro_payment<=0)
                                 - @else {{ $range->bonus_interest_giro_payment }} % @endif
                             </td>
