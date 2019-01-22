@@ -2075,10 +2075,10 @@
                         var WealthMinAmount  = allInOneAccountF6.find('input[name="minimum_wealth_aioa6"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var FirstCapAmount = allInOneAccountF6.find('input[name="first_cap_amount_aioa6"]').map(function () {
+                        /*var FirstCapAmount = allInOneAccountF6.find('input[name="first_cap_amount_aioa6"]').map(function () {
                             return $.trim($(this).val());
-                        }).get();
-                        var bonusInterestRemaining = allInOneAccountF6.find('input[name="bonus_interest_remaining_amount_aioa6"]').map(function () {
+                        }).get();*/
+                        var baseInterest = allInOneAccountF6.find('input[name="bonus_interest_remaining_amount_aioa6"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var MaxPlacements = allInOneAccountF6.find('input[name^="max_placement_aioa6"]').map(function () {
@@ -2129,12 +2129,12 @@
                             errors[i] = 'The Min amount (Wealth) is required.';
                             i++;
                         }
-                        if (FirstCapAmount == '') {
+                        /*if (FirstCapAmount == '') {
                             errors[i] = 'The First cap amount is required.';
                             i++;
-                        }
-                        if (bonusInterestRemaining == '') {
-                            errors[i] = 'The Remaining bonus interest is required.';
+                        }*/
+                        if (baseInterest == '') {
+                            errors[i] = 'The Base interest is required.';
                             i++;
                         }
 

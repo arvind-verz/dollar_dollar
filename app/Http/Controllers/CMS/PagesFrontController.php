@@ -4101,10 +4101,9 @@ class PagesFrontController extends Controller
                 $criteriaMatchCount = 0;
                 $product->highlight_index = 0;
                 $product->highlight = false;
-                $product->salary_highlight = false;
-                $product->spend_highlight = false;
-                $product->other_highlight = false;
-                $product->wealth_highlight = false;
+
+                $product->grow_highlight = false;
+                $product->boost_highlight = false;
                 $maxRanges = [];
                 $minRanges = [];
                 $totalInterests = [];
@@ -4116,28 +4115,28 @@ class PagesFrontController extends Controller
                 $wealthStatus = false;
                 $growStatus = true;
                 $boostStatus = true;
+                $baseInterest = true;
 
 
                 //$placement = 0;
                 if ($salary >= $productRanges[0]->minimum_salary) {
                     $salaryStatus = true;
-
                 }
                 if ($spend >= $productRanges[0]->minimum_spend) {
                     $spendStatus = true;
-
                 }
                 if ($productRanges[0]->status_other == 1 && !is_null($productRanges[0]->other_interest_name)) {
                     $otherStatus = true;
-
                 }
                 if ($privilege > 0 && $productRanges[0]->minimum_wealth <= ($privilege / 12)) {
                     $wealthStatus = true;
-
                 }
 
                 foreach ($productRanges as $key => $productRange) {
-
+                    $productRange->salary_highlight = false;
+                    $productRange->spend_highlight = false;
+                    $productRange->other_highlight = false;
+                    $productRange->wealth_highlight = false;
                     $maxRanges[] = $productRange->max_range;
                     $minRanges[] = $productRange->min_range;
                     if ($searchValue >= $productRange->min_range) {
@@ -4152,132 +4151,146 @@ class PagesFrontController extends Controller
                 $minPlacement = array_last(array_sort($minRanges));
                 $lastRange = array_last($productRanges);
                 $lastCalculatedAmount = 0;
-
+                $interestRangeCount = 1;
+                $interestPercentTotal = 0;
                 foreach ($productRanges as $k => $productRange) {
                     $interestEarn = 0;
-
                     if ($minPlacement == $productRange->min_range && $minPlacement <= $placement) {
                         if ($lastCalculatedAmount < $placement) {
                             if ($salaryStatus == true) {
-                                $interestEarn += round(($placement - $lastCalculatedAmount) * ($lastRange->bonus_interest_salary / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                                $product->salary_highlight = true;
+                                $interestEarn += round(($productRange->max_range-$lastCalculatedAmount) * ($lastRange->bonus_interest_salary / 100), 2);
+                                $productRange->salary_highlight = true;
+                                $interestPercentTotal += $lastRange->bonus_interest_salary;
                             }
                             if ($spendStatus == true) {
-                                $interestEarn += round(($placement - $lastCalculatedAmount) * ($lastRange->bonus_interest_spend / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                                $product->spend_highlight = true;
+                                $interestEarn += round(($productRange->max_range-$lastCalculatedAmount) * ($lastRange->bonus_interest_spend / 100), 2);
+                                $productRange->spend_highlight = true;
+                                $interestPercentTotal += $lastRange->bonus_interest_spend;
                             }
                             if ($otherStatus == true) {
-                                $interestEarn += round(($placement - $lastCalculatedAmount) * ($lastRange->bonus_interest_other / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                                $product->other_highlight = true;
+                                $interestEarn += round(($productRange->max_range-$lastCalculatedAmount) * ($lastRange->bonus_interest_other / 100), 2);
+                                $productRange->other_highlight = true;
+                                $interestPercentTotal += $lastRange->bonus_interest_other;
                             }
                             if ($wealthStatus == true) {
-                                $interestEarn += round(($placement - $lastCalculatedAmount) * ($lastRange->bonus_interest_wealth / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                                $product->wealth_highlight = true;
+                                $interestEarn += round(($productRange->max_range-$lastCalculatedAmount) * ($lastRange->bonus_interest_wealth / 100), 2);
+                                $productRange->wealth_highlight = true;
+                                $interestPercentTotal += $lastRange->bonus_interest_wealth;
                             }
-                            /*if ($growStatus == true) {
-                                $interestEarn += round(($placement - $lastCalculatedAmount) * ($lastRange->$criteria / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                            }
-                            if ($boostStatus == true) {
-                                $interestEarn += round(($placement - $lastCalculatedAmount) * ($lastRange->$criteria / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                            }*/
+
+                            $interestEarns[] = $interestEarn;
+
 
                             $productRange->above_range = true;
                             $product->highlight_index = $k;
                             $lastCalculatedAmount = $placement;
                         }
                         $productRange->interest_earn = $interestEarn;
-
-
                     } else {
-
                         if ($productRange->max_range < $placement) {
-
                             if ($salaryStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_salary / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                                $product->salary_highlight = true;
+                                $productRange->salary_highlight = true;
+                                $interestPercentTotal += $productRange->bonus_interest_salary;
                             }
                             if ($spendStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_spend / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                                $product->spend_highlight = true;
+                                $productRange->spend_highlight = true;
+                                $interestPercentTotal += $productRange->bonus_interest_spend;
                             }
                             if ($otherStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_other / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                                $product->other_highlight = true;
+                                $productRange->other_highlight = true;
+                                $interestPercentTotal += $productRange->bonus_interest_other;
                             }
                             if ($wealthStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_wealth / 100), 2);
-                                $interestEarns[] = $interestEarn;
-                                $product->wealth_highlight = true;
+                                $productRange->wealth_highlight = true;
+                                $interestPercentTotal += $productRange->bonus_interest_wealth;
                             }
+
+                            $interestEarns[] = $interestEarn;
                             $product->highlight_index = $k;
 
                             //$totalInterests[] = $productRange->$criteria;
                             $lastCalculatedAmount = $productRange->max_range;
-
-
                         } else {
                             if ($lastCalculatedAmount < $placement) {
 
                                 if ($salaryStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_salary / 100), 2);
-                                    $interestEarns[] = $interestEarn;
-                                    $product->salary_highlight = true;
+                                    $productRange->salary_highlight = true;
+                                    $interestPercentTotal += $productRange->bonus_interest_salary;
                                 }
                                 if ($spendStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_spend / 100), 2);
-                                    $interestEarns[] = $interestEarn;
-                                    $product->spend_highlight = true;
+                                    $productRange->spend_highlight = true;
+                                    $interestPercentTotal += $productRange->bonus_interest_spend;
                                 }
                                 if ($otherStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_other / 100), 2);
-                                    $interestEarns[] = $interestEarn;
-                                    $product->other_highlight = true;
+                                    $productRange->other_highlight = true;
+                                    $interestPercentTotal += $productRange->bonus_interest_other;
                                 }
                                 if ($wealthStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_wealth / 100), 2);
-                                    $interestEarns[] = $interestEarn;
-                                    $product->wealth_highlight = true;
+                                    $productRange->wealth_highlight = true;
+                                    $interestPercentTotal += $productRange->bonus_interest_wealth;
                                 }
+
                                 $product->highlight_index = $k;
-                                // $totalInterests[] = $productRange->$criteria;
+                                $interestEarns[] = $interestEarn;
                                 $lastCalculatedAmount = $productRange->max_range;
                             }
-
                         }
                         $productRange->interest_earn = $interestEarn;
                         //$productRange->criteria = $productRange->$criteria;
                         $productRange->above_range = false;
                     }
+                    $interestRangeCount++;
                 }
-
-                //$product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
-                $product->interest_earned = array_sum($interestEarns);
+                $product->grow_interest_total;
+                $product->boost_interest_total;
+                $product->base_interest_total;
+                if ($placement>= $productRanges[0]->minimum_grow ) {
+                    if($placement>$productRanges[0]->cap_grow){
+                        $product->grow_interest_total = round($productRanges[0]->cap_grow * ( $productRanges[0]->bonus_interest_grow / 100), 2);
+                    }else{
+                        $product->grow_interest_total = round($placement * ( $productRanges[0]->bonus_interest_grow / 100), 2);
+                    }
+                    $product->interest_earned +=  $product->grow_interest_total;
+                    $product->grow_highlight = true;
+                    $product->total_interest += $productRanges[0]->bonus_interest_grow;
+                }
+                if ($boostStatus == true) {
+                    if($placement>$productRanges[0]->cap_boost){
+                        $product->boost_interest_total = round($productRanges[0]->cap_boost * ( $productRanges[0]->bonus_interest_boost / 100), 2);
+                    }else{
+                        $product->boost_interest_total = round($placement * ( $productRanges[0]->bonus_interest_boost / 100), 2);
+                    }
+                    $product->interest_earned += $product->boost_interest_total;
+                    $product->boost_highlight = true;
+                    $product->total_interest += $productRanges[0]->bonus_interest_boost;
+                }
+                if ($baseInterest == true) {
+                    $product->base_interest_total = round($placement * ( $productRanges[0]->bonus_interest_remaining_amount / 100), 2);
+                    $product->interest_earned += $product->base_interest_total;
+                    $product->base_highlight = true;
+                    $product->total_interest += $productRanges[0]->bonus_interest_remaining_amount;
+                }
+                $product->total_interest += round($interestPercentTotal / $interestRangeCount, 2);
+                $product->interest_earned += array_sum($interestEarns);
                 $product->placement = $placement;
                 $product->product_range = $productRanges;
-                $product->criteriaCount = $criteriaMatchCount;
-
-
                 if ($status == true) {
                     $product->highlight = true;
                     $filterProducts[] = $product;
                 } else {
                     $remainingProducts[] = $product;
                 }
-
-
             } elseif (empty($product->promotion_formula_id)) {
                 $filterProducts[] = $product;
             }
-
         }
         $products = collect($filterProducts);
         $remainingProducts = collect($remainingProducts);

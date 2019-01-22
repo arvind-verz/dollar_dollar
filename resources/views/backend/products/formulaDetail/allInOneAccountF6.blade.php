@@ -93,21 +93,21 @@
 
                         <div class="col-sm-8 ">
                             <div class="form-row">
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-6 mb-3">
                                     <label for="">Other Criteria Name</label>
                                     <input type="text" class="form-control "
                                            name="other_interest_name_aioa6"
                                            value="{{ $value->other_interest_name  }}"
                                            placeholder="">
                                 </div>
-                                <div class="col-md-4 mb-3">
+                               {{-- <div class="col-md-4 mb-3">
                                     <label for="">Minimum Requirement Amount (Other)</label>
                                     <input type="text" class="form-control only_numeric"
                                            name="minimum_other_aioa6" value="{{ $value->minimum_other  }}"
                                            placeholder="">
 
-                                </div>
-                                <div class="col-md-4 mb-3">
+                                </div>--}}
+                                <div class="col-md-6 mb-3">
                                     @if($value->status_other==1)
                                         <input type="hidden" id="aioa-6-1-status-input" name="status_other_aioa6"
                                                value="1"/>
@@ -136,15 +136,15 @@
 
                         <div class="col-sm-8 ">
                             <div class="form-row">
-                                <div class="col-md-6 mb-3">
+                                {{--<div class="col-md-6 mb-3">
                                     <label for="">First Cap Amount</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="first_cap_amount_aioa6" value="{{ $value->first_cap_amount  }}"
                                            placeholder="">
 
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Remaining)</label>
+                                </div>--}}
+                                <div class="col-md-612 mb-3">
+                                    <label for="">Base Interest</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="bonus_interest_remaining_amount_aioa6"
                                            value="{{ $value->bonus_interest_remaining_amount  }}"
@@ -341,21 +341,21 @@
 
             <div class="col-sm-8 ">
                 <div class="form-row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label for="">Other Criteria Name</label>
                         <input type="text" class="form-control "
                                name="other_interest_name_aioa6"
                                value=""
                                placeholder="">
                     </div>
-                    <div class="col-md-4 mb-3">
+                   {{-- <div class="col-md-4 mb-3">
                         <label for="">Minimum Requirement Amount (Other)</label>
                         <input type="text" class="form-control only_numeric"
                                name="minimum_other_aioa6" value=""
                                placeholder="">
 
-                    </div>
-                    <div class="col-md-4 mb-3">
+                    </div>--}}
+                    <div class="col-md-6 mb-3">
 
                         <input type="hidden" id="aioa-6-1-status-input" name="status_other_aioa6"
                                value="1"/>
@@ -374,15 +374,15 @@
 
             <div class="col-sm-8 ">
                 <div class="form-row">
-                    <div class="col-md-6 mb-3">
+                    {{--<div class="col-md-6 mb-3">
                         <label for="">First Cap Amount</label>
                         <input type="text" class="form-control only_numeric" id=""
                                name="first_cap_amount_aioa6" value=""
                                placeholder="">
 
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="">Bonus Interest (Remaining)</label>
+                    </div>--}}
+                    <div class="col-md-12 mb-3">
+                        <label for="">Base Interest </label>
                         <input type="text" class="form-control only_numeric" id=""
                                name="bonus_interest_remaining_amount_aioa6"
                                value=""
