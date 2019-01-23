@@ -22,6 +22,12 @@
                         <i class="fa fa-book"></i>
 
                         <h3 class="box-title">{{$productType}}</h3>
+                        @if($productTypeId==LOAN)
+                            <a href="{{ route('rate-type.index') }}"
+                               class="btn btn-info pull-right mr-10"><i class="fa fa-money"></i>
+                               Rate Types
+                            </a>
+                        @endif
                         @if($productTypeId==ALL_IN_ONE_ACCOUNT || $productTypeId==LOAN)
                             <a href="{{ route('tool-tip',['productTypeId'=>$productTypeId]) }}"
                                class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>

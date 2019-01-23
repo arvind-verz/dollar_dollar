@@ -323,6 +323,13 @@
                     /*'order': [[15, 'desc'], [14, 'desc']],*/
                     "columnDefs": []
                 });
+        $('#rate-types').DataTable(
+                {
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[4, 'desc'], [3, 'desc']],
+                    "columnDefs": []
+                });
         /*$('#product-ads').DataTable(
          {
          "pageLength": 100,
@@ -2577,5 +2584,17 @@
             applyButton = '<i class="fa fa-check"></i>Enable';
         }
         $(obj).html(applyButton);
+    }
+    function changeRateType(obj) {
+
+        var key = $(obj).data('key');
+        var firstInput =  $('#'+key);        
+        if(obj.value=="null"){
+            firstInput.removeAttr("readonly");
+        }else{
+            var interestValue = $(obj).find(':selected').attr('data-interest');
+            firstInput.val(interestValue);
+            firstInput.attr('readonly', 'readonly');
+        }
     }
 </script>

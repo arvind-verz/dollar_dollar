@@ -10,6 +10,7 @@ use App\PlacementRange;
 use App\ProductName;
 use App\PromotionFormula;
 use App\PromotionProducts;
+use App\RateType;
 use App\Rules\MaxRule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +55,8 @@ class ProductsController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
         if ($productTypeId == LOAN) {
-            return view('backend.products.loan_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
+            $rateTypes = RateType::where('delete_status',0)->get();
+            return view('backend.products.loan_products_add', compact('rateTypes','CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
         } else {
             return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
 
@@ -540,7 +542,8 @@ class ProductsController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
         if ($request->product_type_id == LOAN) {
-            return view('backend.products.loan_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+            $rateTypes = RateType::where('delete_status',0)->get();
+            return view('backend.products.loan_products_edit', compact('rateTypes','CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
         } else {
             return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
         }
@@ -1752,6 +1755,8 @@ class ProductsController extends Controller
             </div>
             <?php
         } elseif (in_array($request->formula, [LOAN_F1])) {
+
+            $rateTypes = RateType::where('delete_status',0)->get();
             ?>
             <div id="home_loan_range_f1_<?php echo $request->range_id; ?>">
                 <div class="form-group">
@@ -1772,13 +1777,21 @@ class ProductsController extends Controller
                         </div>
                         <div class="col-md-2">
                             <label for="">Rate type</label>
-                            <input type="text" class="form-control" id=""
-                                   name="floating_rate_type_f1[<?php echo $request->range_id; ?>]" value=""
-                                   placeholder="">
+                            <!--<input type="text" class="form-control" id=""
+                                   name="floating_rate_type_f1[<?php /*echo $request->range_id; */?>]" value=""
+                                   placeholder="">-->
+                            <select class="form-control " data-key="bonus-interest-<?php echo $request->range_id; ?>" name="floating_rate_type_f1[<?php echo $request->range_id; ?>]" onchange="changeRateType(this);">
+                                <option value="null" id="">None</option>
+                                <?php if($rateTypes->count()) {
+                                foreach($rateTypes as $rateType) { ?>
+                                <option value="<?php echo $rateType->name;?>" data-interest="<?php echo $rateType->interest_rate; ?>" ><?php echo $rateType->name; ?></option>
+                                <?php }
+                                } ?>
+                            </select>
                         </div>
                         <div class="col-md-2">
                             <label for="">Bonus Interest</label>
-                            <input type="text" class="form-control only_numeric" id="" value=""
+                            <input type="text" class="form-control only_numeric" id="bonus-interest-<?php echo $request->range_id; ?>" value=""
                                    name="bonus_interest_f1[<?php echo $request->range_id; ?>]"
                                    placeholder="">
                         </div>

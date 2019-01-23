@@ -292,6 +292,10 @@ Route::group(array('prefix' => 'admin'), function () {
     /* REMOVE IMAGE */
     Route::post('/remove-image', 'AdminController@removeImage')->name('remove-image');
 
+    /*Start Rate types*/
+    Route::get('/rate-type-destroy', 'Products\RateTypeController@destroy')->name('rate-type-destroy');
+    Route::resource('/rate-type', 'Products\RateTypeController');
+    /*End Rate types*/
 
 
 

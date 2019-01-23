@@ -356,7 +356,6 @@
 
                     </div>--}}
                     <div class="col-md-6 mb-3">
-
                         <input type="hidden" id="aioa-6-1-status-input" name="status_other_aioa6"
                                value="1"/>
                         <label for="">Status</label>
@@ -396,7 +395,6 @@
         <div id="aioa_placement_range_f6_0">
             <div class="form-group">
                 <label for="title" class="col-sm-2 control-label"></label>
-
                 <div class="col-sm-8 ">
 
                     <div class="input-group date ">
@@ -409,7 +407,6 @@
                                value="{{ old('max_placement') ? old('max_placement') :''  }}">
 
                     </div>
-
                 </div>
                 <div class="col-sm-2" id="add-aioa-placement-range-f6-button">
                     <button type="button"
@@ -441,7 +438,6 @@
                                    value=""
                                    placeholder="">
                         </div>
-
                     </div>
                 </div>
                 <div class="col-sm-2">&emsp;</div>
