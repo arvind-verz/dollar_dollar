@@ -68,7 +68,7 @@ class PagesFrontNewController extends Controller
                 $spend = (int)$searchDetail['spend'];
                 $privilege = isset($searchDetail['privilege']) ? (int)$searchDetail['privilege'] : 0;
                 $loan = isset($searchDetail['loan']) ? (int)$searchDetail['loan'] : 0;
-                $growStatus = false;
+                $growStatus = true;
                 $boostStatus = false;
                 $otherStatus = false;
                 $productRanges = json_decode($product->product_range);
@@ -87,7 +87,7 @@ class PagesFrontNewController extends Controller
                 $spend = (int)$searchDetail['spend'];
                 $privilege = isset($searchDetail['privilege']) ? (int)$searchDetail['privilege'] : 0;
                 $loan = isset($searchDetail['loan']) ? (int)$searchDetail['loan'] : 0;
-                $growStatus = false;
+                $growStatus = true;
                 $boostStatus = false;
                 $otherStatus = false;
                 $productRanges = json_decode($product->product_range);
