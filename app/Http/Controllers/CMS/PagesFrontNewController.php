@@ -77,9 +77,9 @@ class PagesFrontNewController extends Controller
                     if (isset($checkBoxDetail['boost_interest'])) {
                         $boostStatus = true;
                     }
-                    if (isset($checkBoxDetail['grow_interest'])) {
+                    /*if (isset($checkBoxDetail['grow_interest'])) {
                         $growStatus = true;
-                    }
+                    }*/
                 }
             } else {
                 $salary = (int)$searchDetail['salary'];
@@ -96,9 +96,9 @@ class PagesFrontNewController extends Controller
                     if (isset($checkBoxDetail['boost_interest'])) {
                         $boostStatus = true;
                     }
-                    if (isset($checkBoxDetail['grow_interest'])) {
+                    /*if (isset($checkBoxDetail['grow_interest'])) {
                         $growStatus = true;
-                    }
+                    }*/
                 }
             }
             $status = false;
@@ -340,28 +340,29 @@ class PagesFrontNewController extends Controller
                                     </th>
                                 <?php } ?>
                                 <th class="text-left" >Wealth</th>
+                                <th class="text-left" >Grow</th>
 
-                                    <th class="combine-criteria-padding <?php if ($product->other_highlight == true) {
+                                    <!--<th class="combine-criteria-padding <?php /*if ($product->other_highlight == true) {
                                         echo 'active';
-                                    } ?> ">
+                                    } */?> ">
                                         <div class="">
                                             <div class="width-50">
                                                 <div class="ps-checkbox">
                                                     <input class="form-control" type="checkbox"
                                                            onchange="changeOCBC360Criteria(this);"
                                                            name="grow_interest"
-                                                           data-product-id="<?php echo $product->product_id; ?>"
+                                                           data-product-id="<?php /*echo $product->product_id; */?>"
                                                            value="true"
-                                                        <?php if ($product->grow_highlight) { ?>
+                                                        <?php /*if ($product->grow_highlight) { */?>
                                                         checked="checked"
-                                                        <?php } ?>
-                                                           id="grow-interest-<?php echo $product->product_id; ?>">
+                                                        <?php /*} */?>
+                                                           id="grow-interest-<?php /*echo $product->product_id; */?>">
                                                     <label
-                                                        for="grow-interest-<?php echo $product->product_id; ?>">Grow</label>
+                                                        for="grow-interest-<?php /*echo $product->product_id; */?>">Grow</label>
                                                 </div>
                                             </div>
                                         </div>
-                                    </th>
+                                    </th>-->
                                 <th class="combine-criteria-padding <?php if ($product->boost_highlight == true) {
                                     echo 'active';
                                 } ?> ">

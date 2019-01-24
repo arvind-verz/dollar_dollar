@@ -1227,7 +1227,11 @@
                                                                 style="{{--@if($product->criteria_b_highlight==true) color:#66ec76; @endif--}}">
                                                                 Wealth
                                                             </th>
-                                                            <th class="combine-criteria-padding  @if($product->grow_highlight==true) active @endif">
+                                                            <th class="text-left"
+                                                                style="{{--@if($product->criteria_b_highlight==true) color:#66ec76; @endif--}}">
+                                                                Grow
+                                                            </th>
+                                                           {{-- <th class="combine-criteria-padding  @if($product->grow_highlight==true) active @endif">
                                                                 <div class="">
                                                                     <div class="width-50">
                                                                         <div class="ps-checkbox">
@@ -1244,7 +1248,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </th>
+                                                            </th>--}}
                                                             <th class="combine-criteria-padding  @if($product->boost_highlight==true) active @endif">
                                                                 <div class="">
                                                                     <div class="width-50">
