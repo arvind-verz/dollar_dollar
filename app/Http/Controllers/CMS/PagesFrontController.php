@@ -3473,8 +3473,8 @@ class PagesFrontController extends Controller
                 $searchFilter['salary'] = $defaultSalary;
                 $searchFilter['giro'] = $defaultGiro;
                 $searchFilter['spend'] = $defaultSpend;
-                $searchFilter['privilege'] = $defaultLoan;
-                $searchFilter['loan'] = $defaultPrivilege;
+                $searchFilter['privilege'] = $defaultPrivilege;
+                $searchFilter['loan'] = $defaultLoan;
                 $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
@@ -3495,7 +3495,7 @@ class PagesFrontController extends Controller
             }
             $status = false;
             $productRanges = json_decode($product->product_range);
-            //dd($searchFilter);
+
             if ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F1) {
                 $totalInterests = [];
                 $interestEarns = [];
@@ -4230,7 +4230,7 @@ class PagesFrontController extends Controller
 
                             $interestEarns[] = $interestEarn;
                             $product->highlight_index = $k;
-
+                            //dd($wealthStatus,$privilege);
                             //$totalInterests[] = $productRange->$criteria;
                             $lastCalculatedAmount = $productRange->max_range;
                         } else {
