@@ -834,7 +834,7 @@ button {
     display:block;
     position:absolute;
     left:0;
-    top:0px;
+    top:6px;
     height:17px;
     width:17px;
     z-index:10;
@@ -853,7 +853,7 @@ button {
     content:'';
     display:block;
     position:absolute;
-    top:2px;
+    top:8px;
     left:5px;
     width:6px;
     height:10px;
@@ -923,7 +923,7 @@ button {
     display:block;
     position:absolute;
     left:0;
-    top:0px;
+    top:5px;
     height:20px;
     width:20px;
     z-index:10;
@@ -942,7 +942,7 @@ button {
     content:'';
     display:block;
     position:absolute;
-    top:5px;
+    top:10px;
     left:5px;
     width:10px;
     height:10px;
@@ -6476,7 +6476,7 @@ span.ps-post__meta a {
 .recaptcha>div>div{float:right;max-width: 100%;}
 .modal form .ps-block__content{padding:0 15px 0 35px;text-align:left;position:relative;}
 .modal form .ps-block__content input{position:absolute;left:15px;}
-#myModalUser .modal-dialog{width:500px;max-width:100%;}
+#myModalUser .modal-dialog{width:400px;max-width:100%;}
 .icon-sibar {
     display:none;
 }

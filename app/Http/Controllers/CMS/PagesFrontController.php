@@ -4145,7 +4145,7 @@ class PagesFrontController extends Controller
                     $otherStatus = true;
                     $product->other_highlight = true;
                 }
-                if ($privilege > 0 && $productRanges[0]->minimum_wealth <= ($privilege / 12)) {
+                if ($privilege > 0 && ($productRanges[0]->minimum_wealth <= ($privilege / 12))) {
                     $wealthStatus = true;
                 }
 
