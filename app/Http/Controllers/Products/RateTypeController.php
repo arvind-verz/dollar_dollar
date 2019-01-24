@@ -136,7 +136,7 @@ class RateTypeController extends Controller
             return redirect()->action('Products\RateTypeController@index')->with('error', OPPS_ALERT);
         }
 
-        $products = PromotionProducts::where('promotion_type_id', 6)->whereNotNull('product_range')->where('id', 214)->get();
+        $products = PromotionProducts::where('promotion_type_id', 6)->whereNotNull('product_range')->get();
         if ($products->count()) {
             foreach ($products as $product) {
                 $productRanges = json_decode($product->product_range);

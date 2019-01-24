@@ -110,9 +110,9 @@
                     <div class="row">
                         <div class="ps-block__content">
                             <div class="">
-                                    <input type="radio" class="" name="type" value="delete"> Delete
-                                    <input type="radio" class="" name="type" value="deactivate" checked="checked"> Deactivate
-
+                                    <input type="radio" class="" name="type" value="deactivate" checked="checked"> Deactivate - Your account will be teamporary deactivated until you login again. You will no longer receive any newsletter or alert for your deposit deu from dollardollar.sg
+                                    <br><br>
+                                    <input type="radio" class="" name="type" value="delete"> Delete - Your account will be permanently deleted and all your personal information will be removed from Dollardollar.sg
                             </div>
                             <div class="" style="padding: 20px 50px;">
                                 <div class="col-sm-6 col-md-6 col-lg-6">

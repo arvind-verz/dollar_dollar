@@ -84,6 +84,7 @@ Route::get('/blog-search', 'CMS\PagesFrontController@getBlogByCategories')->name
 
 Route::post('/combine-criteria-filter', 'CMS\PagesFrontController@combineCriteriaFilter')->name('combine-criteria-filter');
 Route::post('/general-individual-criteria-filter', 'CMS\PagesFrontController@generalIndividualCriteriaFilter')->name('general-individual-criteria-filter');
+Route::post('/ocbc-360-criteria-filter', 'CMS\PagesFrontNewController@ocbcCriteriaFilter')->name('ocbc-360-criteria-filter');
 
 /* TAGS FRONTEND */
 Route::get('/tags/{slug}', 'CMS\PagesFrontController@search_tags');

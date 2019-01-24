@@ -24,7 +24,7 @@
                         <h3 class="box-title">{{$productType}}</h3>
                         @if($productTypeId==LOAN)
                             <a href="{{ route('rate-type.index') }}"
-                               class="btn btn-info pull-right mr-10"><i class="fa fa-money"></i>
+                               class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
                                Rate Types
                             </a>
                         @endif

@@ -770,9 +770,13 @@ $j = 0;
 foreach ($productRanges as $k => $productRange) {
 $productRange->tenure_highlight = false;
 $interest = $productRange->bonus_interest + $productRange->rate_interest_other;
-$mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-$result = $mortage->calculate();
-$productRange->monthly_payment = $result->monthlyPayment;
+if ($interest <= 0) {
+                            $productRange->monthly_payment = 0;
+                        }else{
+                            $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                            $result = $mortage->calculate();
+                            $productRange->monthly_payment = $result->monthlyPayment;
+                        }
 if ($tenure > $totalTenure) {
 if ($j <= 2) {
 $totalInterest += $interest;
@@ -786,18 +790,26 @@ $j++;
 while ($j <= 2)
 {
 $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
-$mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-$result = $mortage->calculate();
-$monthlyThereAfterPayment = $result->monthlyPayment;
+if ($interest <= 0) {
+                            $monthlyThereAfterPayment = 0;
+                        }else{
+                            $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                            $result = $mortage->calculate();
+                            $monthlyThereAfterPayment = $result->monthlyPayment;
+                        }
 $totalInterest += $interest;
 $totalTenure++;
 $totalMonthlyInstallment += $monthlyThereAfterPayment;
 $j++;
 }
 $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
-$mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-$result = $mortage->calculate();
-$product->there_after_installment = $result->monthlyPayment;
+if ($interest <= 0) {
+                        $product->there_after_installment = 0;
+                    }else{
+                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                        $result = $mortage->calculate();
+                        $product->there_after_installment = $result->monthlyPayment;
+                    }
 $product->placement = $searchValue;
 $product->tenure = $tenure;
 if ($tenure > $productRangeCount) {

@@ -86,8 +86,12 @@
             if (event.keyCode == 189) {
                 event.preventDefault();
             }
+            else if (event.keyCode == 109) {
+                event.preventDefault();
+            }
         })
         $(".only_numeric").numeric();
+        $(".only_numeric-with-minus").numeric();
     });
     function check_url(link) {
 //alert(link);

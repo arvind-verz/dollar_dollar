@@ -3545,7 +3545,7 @@ class PagesFrontController extends Controller
                             $totalInterest = $totalInterest + $productRange->bonus_interest_giro_payment;
                             $criteriaMatchCount++;
                         }
-                        if (isset($productRange->minimum_salary_2) && $spend > 0 && $productRange->minimum_spend_2 <= $spend) {
+                        if (isset($productRange->minimum_spend_2) && $spend > 0 && $productRange->minimum_spend_2 <= $spend) {
                             $product->spend_highlight_2 = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest_spend_2;
                             $criteriaMatchCount++;
@@ -3611,9 +3611,11 @@ class PagesFrontController extends Controller
                 $interestEarns = [];
                 $criteria = null;
                 //$placement = 0;
-                if (($spend >= $productRanges[0]->minimum_spend) && ($salary >= $productRanges[0]->minimum_salary || $giro >= $productRanges[0]->minimum_giro_payment)) {
+                if ((($spend >= $productRanges[0]->minimum_spend_2) || ($spend >= $productRanges[0]->minimum_spend)) && (($salary >= $productRanges[0]->minimum_salary_2) || ($salary >= $productRanges[0]->minimum_salary) || ($giro >= $productRanges[0]->minimum_giro_payment))) {
                     $criteriaMatchCount = 1;
-                    if ($salary >= $productRanges[0]->minimum_salary) {
+                    if (isset($productRanges[0]->minimum_salary_2) && $salary > 0 && $productRanges[0]->minimum_salary_2 <= $salary) {
+                        $criteriaMatchCount++;
+                    } elseif ($salary > 0 && $productRanges[0]->minimum_salary <= $salary) {
                         $criteriaMatchCount++;
                     }
                     if ($giro >= $productRanges[0]->minimum_giro_payment) {
@@ -3623,7 +3625,8 @@ class PagesFrontController extends Controller
                     $product->criteria_b_highlight = true;
                     $status = true;
 
-                } elseif (($spend >= $productRanges[0]->minimum_spend)) {
+                }
+                elseif (($spend >= $productRanges[0]->minimum_spend) || ($spend >= $productRanges[0]->minimum_spend_2)) {
                     $criteria = "bonus_interest_criteria_a";
                     $product->criteria_a_highlight = true;
                     $status = true;
@@ -3749,13 +3752,18 @@ class PagesFrontController extends Controller
                     }
                     $totalInterest = 1;
                     if ($status == true) {
-                        if ($salary > 0 && $productRange->minimum_salary <= $salary) {
+
+                        if (isset($productRange->minimum_salary_2) && $salary > 0 && $productRange->minimum_salary_2 <= $salary) {
+                            $criteriaMatchCount++;
+                        } elseif ($salary > 0 && $productRange->minimum_salary <= $salary) {
                             $criteriaMatchCount++;
                         }
                         if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
                             $criteriaMatchCount++;
                         }
-                        if ($spend > 0 && $productRange->minimum_spend <= $spend) {
+                        if (isset($productRange->minimum_spend_2) && $spend > 0 && $productRange->minimum_spend_2 <= $spend) {
+                            $criteriaMatchCount++;
+                        } elseif ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
                         }
                         if ($privilege > 0 && $productRange->minimum_insurance <= ($privilege / 12)) {
@@ -3844,10 +3852,16 @@ class PagesFrontController extends Controller
                 $criteriaMatchCount = 0;
                 $criteriaValue = 0;
 
-                if ($salary > 0 && $baseDetail->minimum_salary <= $salary) {
+
+
+                if ($salary > 0 && ((isset($baseDetail->minimum_salary_2) && $baseDetail->minimum_salary_2 <= $salary)||($baseDetail->minimum_salary <= $salary))) {
                     $criteriaValue = $criteriaValue + $salary;
                     $criteriaCount++;
-                    if ($spend > 0 && $baseDetail->minimum_spend <= $spend) {
+                    if (isset($baseDetail->minimum_spend_2) && $spend > 0 && $baseDetail->minimum_spend_2 <= $spend) {
+                        $criteriaCount++;
+                        $criteriaMatchCount++;
+                        $criteriaValue = $criteriaValue + $spend;
+                    } elseif ($spend > 0 && $baseDetail->minimum_spend <= $spend) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
                         $criteriaValue = $criteriaValue + $spend;
@@ -4023,12 +4037,14 @@ class PagesFrontController extends Controller
                                 $criteriaMatchCount++;
                             }
                         }
-                        if (!empty($productRange->minimum_salary)) {
-                            if ($salary > 0 && $productRange->minimum_salary <= $salary) {
-                                $product->salary_highlight = true;
-                                $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
-                                $criteriaMatchCount++;
-                            }
+                        if (isset($productRange->minimum_salary_2) && $salary > 0 && $productRange->minimum_salary_2 <= $salary) {
+                            $product->salary_highlight_2 = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary_2;
+                            $criteriaMatchCount++;
+                        } elseif ($salary > 0 && $productRange->minimum_salary <= $salary) {
+                            $product->salary_highlight = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
+                            $criteriaMatchCount++;
                         }
                         if (!empty($productRange->minimum_giro_payment)) {
                             if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
@@ -4101,7 +4117,7 @@ class PagesFrontController extends Controller
                 $criteriaMatchCount = 0;
                 $product->highlight_index = 0;
                 $product->highlight = false;
-
+                $product->other_highlight = false;
                 $product->grow_highlight = false;
                 $product->boost_highlight = false;
                 $maxRanges = [];
@@ -4127,6 +4143,7 @@ class PagesFrontController extends Controller
                 }
                 if ($productRanges[0]->status_other == 1 && !is_null($productRanges[0]->other_interest_name)) {
                     $otherStatus = true;
+                    $product->other_highlight = true;
                 }
                 if ($privilege > 0 && $productRanges[0]->minimum_wealth <= ($privilege / 12)) {
                     $wealthStatus = true;
@@ -4158,22 +4175,23 @@ class PagesFrontController extends Controller
                     if ($minPlacement == $productRange->min_range && $minPlacement <= $placement) {
                         if ($lastCalculatedAmount < $placement) {
                             if ($salaryStatus == true) {
-                                $interestEarn += round(($productRange->max_range-$lastCalculatedAmount) * ($lastRange->bonus_interest_salary / 100), 2);
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_salary / 100), 2);
                                 $productRange->salary_highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_salary;
                             }
                             if ($spendStatus == true) {
-                                $interestEarn += round(($productRange->max_range-$lastCalculatedAmount) * ($lastRange->bonus_interest_spend / 100), 2);
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_spend / 100), 2);
                                 $productRange->spend_highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_spend;
                             }
                             if ($otherStatus == true) {
-                                $interestEarn += round(($productRange->max_range-$lastCalculatedAmount) * ($lastRange->bonus_interest_other / 100), 2);
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_other / 100), 2);
                                 $productRange->other_highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_other;
+
                             }
                             if ($wealthStatus == true) {
-                                $interestEarn += round(($productRange->max_range-$lastCalculatedAmount) * ($lastRange->bonus_interest_wealth / 100), 2);
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_wealth / 100), 2);
                                 $productRange->wealth_highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_wealth;
                             }
@@ -4202,6 +4220,7 @@ class PagesFrontController extends Controller
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_other / 100), 2);
                                 $productRange->other_highlight = true;
                                 $interestPercentTotal += $productRange->bonus_interest_other;
+
                             }
                             if ($wealthStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_wealth / 100), 2);
@@ -4252,28 +4271,28 @@ class PagesFrontController extends Controller
                 $product->grow_interest_total;
                 $product->boost_interest_total;
                 $product->base_interest_total;
-                if ($placement>= $productRanges[0]->minimum_grow ) {
-                    if($placement>$productRanges[0]->cap_grow){
-                        $product->grow_interest_total = round($productRanges[0]->cap_grow * ( $productRanges[0]->bonus_interest_grow / 100), 2);
-                    }else{
-                        $product->grow_interest_total = round($placement * ( $productRanges[0]->bonus_interest_grow / 100), 2);
+                if ($placement >= $productRanges[0]->minimum_grow) {
+                    if ($placement > $productRanges[0]->cap_grow) {
+                        $product->grow_interest_total = round($productRanges[0]->cap_grow * ($productRanges[0]->bonus_interest_grow / 100), 2);
+                    } else {
+                        $product->grow_interest_total = round($placement * ($productRanges[0]->bonus_interest_grow / 100), 2);
                     }
-                    $product->interest_earned +=  $product->grow_interest_total;
+                    $product->interest_earned += $product->grow_interest_total;
                     $product->grow_highlight = true;
                     $product->total_interest += $productRanges[0]->bonus_interest_grow;
                 }
                 if ($boostStatus == true) {
-                    if($placement>$productRanges[0]->cap_boost){
-                        $product->boost_interest_total = round($productRanges[0]->cap_boost * ( $productRanges[0]->bonus_interest_boost / 100), 2);
-                    }else{
-                        $product->boost_interest_total = round($placement * ( $productRanges[0]->bonus_interest_boost / 100), 2);
+                    if ($placement > $productRanges[0]->cap_boost) {
+                        $product->boost_interest_total = round($productRanges[0]->cap_boost * ($productRanges[0]->bonus_interest_boost / 100), 2);
+                    } else {
+                        $product->boost_interest_total = round($placement * ($productRanges[0]->bonus_interest_boost / 100), 2);
                     }
                     $product->interest_earned += $product->boost_interest_total;
                     $product->boost_highlight = true;
                     $product->total_interest += $productRanges[0]->bonus_interest_boost;
                 }
                 if ($baseInterest == true) {
-                    $product->base_interest_total = round($placement * ( $productRanges[0]->bonus_interest_remaining_amount / 100), 2);
+                    $product->base_interest_total = round($placement * ($productRanges[0]->bonus_interest_remaining_amount / 100), 2);
                     $product->interest_earned += $product->base_interest_total;
                     $product->base_highlight = true;
                     $product->total_interest += $productRanges[0]->bonus_interest_remaining_amount;
@@ -4291,6 +4310,7 @@ class PagesFrontController extends Controller
             } elseif (empty($product->promotion_formula_id)) {
                 $filterProducts[] = $product;
             }
+
         }
         $products = collect($filterProducts);
         $remainingProducts = collect($remainingProducts);
@@ -4483,9 +4503,14 @@ class PagesFrontController extends Controller
                     foreach ($productRanges as $k => $productRange) {
                         $productRange->tenure_highlight = false;
                         $interest = $productRange->bonus_interest + $productRange->rate_interest_other;
-                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-                        $result = $mortage->calculate();
-                        $productRange->monthly_payment = $result->monthlyPayment;
+                        if ($interest <= 0) {
+                            $productRange->monthly_payment = 0;
+                        }else{
+                            $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                            $result = $mortage->calculate();
+                            $productRange->monthly_payment = $result->monthlyPayment;
+                        }
+
                         if ($tenure > $totalTenure) {
                             if ($j <= 2) {
                                 $totalInterest += $interest;
@@ -4500,18 +4525,28 @@ class PagesFrontController extends Controller
 
                     while ($j <= 2) {
                         $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
-                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-                        $result = $mortage->calculate();
-                        $monthlyThereAfterPayment = $result->monthlyPayment;
+                        if ($interest <= 0) {
+                            $monthlyThereAfterPayment = 0;
+                        }else{
+                            $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                            $result = $mortage->calculate();
+                            $monthlyThereAfterPayment = $result->monthlyPayment;
+                        }
+
                         $totalInterest += $interest;
                         $totalTenure++;
                         $totalMonthlyInstallment += $monthlyThereAfterPayment;
                         $j++;
                     }
                     $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
-                    $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-                    $result = $mortage->calculate();
-                    $product->there_after_installment = $result->monthlyPayment;
+                    if ($interest <= 0) {
+                        $product->there_after_installment = 0;
+                    }else{
+                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                        $result = $mortage->calculate();
+                        $product->there_after_installment = $result->monthlyPayment;
+                    }
+
                     $product->placement = $searchValue;
                     $product->tenure = $tenure;
 

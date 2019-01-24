@@ -55,8 +55,8 @@ class ProductsController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
         if ($productTypeId == LOAN) {
-            $rateTypes = RateType::where('delete_status',0)->get();
-            return view('backend.products.loan_products_add', compact('rateTypes','CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
+            $rateTypes = RateType::where('delete_status', 0)->get();
+            return view('backend.products.loan_products_add', compact('rateTypes', 'CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
         } else {
             return view('backend.products.promotion_products_add', compact('CheckLayoutPermission', 'promotion_types', 'formulas', 'banks', 'productType', 'productTypeId', 'legends', 'currencies'));
 
@@ -397,7 +397,17 @@ class ProductsController extends Controller
                 foreach ($request->tenure_f1 as $k => $v) {
                     $range = [];
                     $range['tenure'] = (int)$v;
-                    $range['floating_rate_type'] = $floatingRateTypes[$k];
+                    if ($floatingRateTypes[$k] == "null") {
+                        $range['floating_rate_type'] = null;
+                    } else {
+                        $range['floating_rate_type'] = $floatingRateTypes[$k];
+                    }
+                    if ($request->there_after_rate_type == "null") {
+                        $range['there_after_rate_type'] = null;
+                    } else {
+                        $range['there_after_rate_type'] = $request->there_after_rate_type;
+                    }
+
                     $range['bonus_interest'] = (float)$bonusInterests[$k];
                     $range['rate_name_other'] = $rateNameOthers[$k];
                     $range['rate_interest_other'] = (float)$rateInterestOthers[$k];
@@ -407,8 +417,6 @@ class ProductsController extends Controller
                     $range['rate_type_name'] = $request->rate_type_name_f1;
                     $range['property_type'] = $request->property_type_f1;
                     $range['completion_status'] = $request->completion_status_f1;
-
-                    $range['there_after_rate_type'] = $request->there_after_rate_type;
                     $range['there_after_bonus_interest'] = (float)$request->there_after_bonus_interest;
                     $range['there_after_rate_name_other'] = $request->there_after_rate_name_other;
                     $range['there_after_rate_interest_other'] = (float)$request->there_after_rate_interest_other;
@@ -542,8 +550,8 @@ class ProductsController extends Controller
         $CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, PRODUCT_ID);
         $currencies = Currency::where('delete_status', 0)->get();
         if ($request->product_type_id == LOAN) {
-            $rateTypes = RateType::where('delete_status',0)->get();
-            return view('backend.products.loan_products_edit', compact('rateTypes','CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
+            $rateTypes = RateType::where('delete_status', 0)->get();
+            return view('backend.products.loan_products_edit', compact('rateTypes', 'CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
         } else {
             return view('backend.products.promotion_products_edit', compact('CheckLayoutPermission', 'promotion_types', 'product', 'formula', 'banks', 'productType', 'legends', 'currencies'));
         }
@@ -869,7 +877,17 @@ class ProductsController extends Controller
                 foreach ($request->tenure_f1 as $k => $v) {
                     $range = [];
                     $range['tenure'] = (int)$v;
-                    $range['floating_rate_type'] = $floatingRateTypes[$k];
+                    if ($floatingRateTypes[$k] == "null") {
+                        $range['floating_rate_type'] = null;
+                    } else {
+                        $range['floating_rate_type'] = $floatingRateTypes[$k];
+                    }
+                    if ($request->there_after_rate_type == "null") {
+                        $range['there_after_rate_type'] = null;
+                    } else {
+                        $range['there_after_rate_type'] = $request->there_after_rate_type;
+                    }
+
                     $range['bonus_interest'] = (float)$bonusInterests[$k];
                     $range['rate_name_other'] = $rateNameOthers[$k];
                     $range['rate_interest_other'] = (float)$rateInterestOthers[$k];
@@ -879,8 +897,6 @@ class ProductsController extends Controller
                     $range['rate_type_name'] = $request->rate_type_name_f1;
                     $range['property_type'] = $request->property_type_f1;
                     $range['completion_status'] = $request->completion_status_f1;
-
-                    $range['there_after_rate_type'] = $request->there_after_rate_type;
                     $range['there_after_bonus_interest'] = (float)$request->there_after_bonus_interest;
                     $range['there_after_rate_name_other'] = $request->there_after_rate_name_other;
                     $range['there_after_rate_interest_other'] = (float)$request->there_after_rate_interest_other;
@@ -1756,7 +1772,7 @@ class ProductsController extends Controller
             <?php
         } elseif (in_array($request->formula, [LOAN_F1])) {
 
-            $rateTypes = RateType::where('delete_status',0)->get();
+            $rateTypes = RateType::where('delete_status', 0)->get();
             ?>
             <div id="home_loan_range_f1_<?php echo $request->range_id; ?>">
                 <div class="form-group">
@@ -1778,20 +1794,24 @@ class ProductsController extends Controller
                         <div class="col-md-2">
                             <label for="">Rate type</label>
                             <!--<input type="text" class="form-control" id=""
-                                   name="floating_rate_type_f1[<?php /*echo $request->range_id; */?>]" value=""
+                                   name="floating_rate_type_f1[<?php /*echo $request->range_id; */ ?>]" value=""
                                    placeholder="">-->
-                            <select class="form-control " data-key="bonus-interest-<?php echo $request->range_id; ?>" name="floating_rate_type_f1[<?php echo $request->range_id; ?>]" onchange="changeRateType(this);">
+                            <select class="form-control " data-key="bonus-interest-<?php echo $request->range_id; ?>"
+                                    name="floating_rate_type_f1[<?php echo $request->range_id; ?>]"
+                                    onchange="changeRateType(this);">
                                 <option value="null" id="">None</option>
-                                <?php if($rateTypes->count()) {
-                                foreach($rateTypes as $rateType) { ?>
-                                <option value="<?php echo $rateType->name;?>" data-interest="<?php echo $rateType->interest_rate; ?>" ><?php echo $rateType->name; ?></option>
-                                <?php }
+                                <?php if ($rateTypes->count()) {
+                                    foreach ($rateTypes as $rateType) { ?>
+                                        <option value="<?php echo $rateType->name; ?>"
+                                                data-interest="<?php echo $rateType->interest_rate; ?>"><?php echo $rateType->name; ?></option>
+                                    <?php }
                                 } ?>
                             </select>
                         </div>
                         <div class="col-md-2">
                             <label for="">Bonus Interest</label>
-                            <input type="text" class="form-control only_numeric" id="bonus-interest-<?php echo $request->range_id; ?>" value=""
+                            <input type="text" class="form-control only_numeric"
+                                   id="bonus-interest-<?php echo $request->range_id; ?>" value=""
                                    name="bonus_interest_f1[<?php echo $request->range_id; ?>]"
                                    placeholder="">
                         </div>

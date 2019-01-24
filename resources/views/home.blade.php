@@ -399,7 +399,7 @@ $datetime = Helper::todayDate();
                     </div>
                     <div class="ps-block--home-signup">
                         <h3>
-                        Create an account to manage your privilege easily.
+                        Create an account to manage all your deposits easily.
                         <strong>
                         It is free!
                         </strong>

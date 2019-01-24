@@ -1,8 +1,12 @@
 <div class="display-none" id="loanF1">
     @if(isset($product) && (in_array($product->formula_id,[LOAN_F1])))
         @if(count($product->product_range))
-            <?php $ProductRanges = $product->product_range; ?>
-
+            <?php $ProductRanges = $product->product_range; 
+                        $rateTypesArray = [];
+                        if($rateTypes->count()){
+                          $rateTypesArray = $rateTypes->toArray();
+                        }
+                    ?>
             <div class="form-group" id="rate-type-content">
                 @if($ProductRanges[0]->rate_type==FLOATING_RATE)
                     <label for="title" class="col-sm-2 control-label">Rate type</label>
@@ -25,8 +29,8 @@
 
                     <div class="col-sm-8">
                         <select class="form-control" name="rate_type_f1" id="rate-type">
-                            <option value="{{FIXED_RATE}}">{{FIXED_RATE}}</option>
-                            <option value="{{FLOATING_RATE}}" selected="selected">{{FLOATING_RATE}}</option>
+                            <option value="{{FIXED_RATE}}" selected="selected">{{FIXED_RATE}}</option>
+                            <option value="{{FLOATING_RATE}}" >{{FLOATING_RATE}}</option>
                         </select>
                     </div>
                     <input type="hidden" class="form-control" id="" name="rate_type_name_f1" value="" placeholder="">
@@ -105,7 +109,7 @@
                             <div class="col-md-2 ">
                                 <label for="">Bonus interest</label>
                                 <input type="text" class="form-control only_numeric " id="bonus-interest-{{$key}}"
-                                       name="bonus_interest_f1[{{$key}}]" value="{{$value->bonus_interest}}"
+                                       name="bonus_interest_f1[{{$key}}]" value="{{$value->bonus_interest}}"  @if(in_array($value->floating_rate_type,$rateTypesArray)) readonly="readonly" @endif
                                        placeholder="">
                             </div>
                             <div class="col-md-3">
@@ -116,7 +120,7 @@
                             </div>
                             <div class="col-md-2 ">
                                 <label for="">Rate interest (other)</label>
-                                <input type="text" class="form-control only_numeric" id=""
+                                <input type="text" class="form-control only_numeric-with-minus" id=""
                                        name="rate_interest_other_f1[{{$key}}]" value="{{$value->rate_interest_other}}"
                                        placeholder="">
                             </div>
@@ -173,7 +177,7 @@
                     <div class="col-md-2 ">
                         <label for="">Bonus interest</label>
                         <input type="text" class="form-control only_numeric  " id="there-after-bonus-interest-{{$key}}"
-                               name="there_after_bonus_interest" value="{{$value->there_after_bonus_interest}}"
+                               name="there_after_bonus_interest" value="{{$value->there_after_bonus_interest}}" @if(in_array($value->there_after_rate_type,$rateTypesArray)) readonly="readonly" @endif
                                placeholder="">
                     </div>
                     <div class="col-md-3">
@@ -184,7 +188,7 @@
                     </div>
                     <div class="col-md-2 ">
                         <label for="">Rate interest (other)</label>
-                        <input type="text" class="form-control only_numeric" id=""
+                        <input type="text" class="form-control only_numeric-with-minus" id=""
                                name="there_after_rate_interest_other"
                                value="{{$value->there_after_rate_interest_other}}"
                                placeholder="">
@@ -280,7 +284,7 @@
                     </div>
                     <div class="col-md-2 ">
                         <label for="">Rate interest (other)</label>
-                        <input type="text" class="form-control only_numeric" id=""
+                        <input type="text" class="form-control only_numeric-with-minus" id=""
                                name="rate_interest_other_f1[0]" value=""
                                placeholder="">
                     </div>
@@ -321,7 +325,7 @@
                         @endif
                     </select>
                 </div>
-                <div class="col-md-2 ">
+                <div class="col-md-2">
                     <label for="">Bonus interest</label>
                     <input type="text" class="form-control only_numeric" id="there-after-bonus-interest-0"
                            name="there_after_bonus_interest" value=""
@@ -335,7 +339,7 @@
                 </div>
                 <div class="col-md-2 ">
                     <label for="">Rate interest (other)</label>
-                    <input type="text" class="form-control only_numeric" id=""
+                    <input type="text" class="form-control only_numeric-with-minus" id=""
                            name="there_after_rate_interest_other" value=""
                            placeholder="">
                 </div>
@@ -343,6 +347,7 @@
             <div class="col-sm-2">
             </div>
         </div>
+        
     @endif
 
 </div>

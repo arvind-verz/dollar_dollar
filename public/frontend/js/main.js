@@ -266,7 +266,8 @@ $(document).ready(function () {
     $("input[name='search_value']").each(function (c, obj) {
         $(obj).val(addCommas(parseFloat($(obj).val()).toFixed(0))).val();
     });
-    $(".ps-form__option").before("<div class='product-mobile'>Sort By<span></span></div>")
+    
+    $(".ps-form__option").before("<div class='product-mobile'>Now Search<span></span></div>")
     $(".product-mobile").click(function(){
         $(".owl-carousel").trigger('refresh.owl.carousel');
         $(this).next().slideToggle("slow");
@@ -290,6 +291,7 @@ $(document).ready(function () {
        });
        $(".ps-home-fixed-deposit .ps-tab-list li").click(function(){
            $(".show-tab-list h3").text($(".ps-home-fixed-deposit .ps-tab-list .current a").text());
+           $(".ps-tab-list").slideToggle("slow");
        });
         $(".ps-form__option.flex-box label").click(function(){
             $(this).next().slideToggle("slow");
@@ -362,7 +364,8 @@ $(".ps-block__content").click(function () {
     var formulaDetailId = $(this).find(".content-detail").data('formula');
     $(".ps-block__content").removeClass("active");
 
-    if (headingText == "Show DETAILS") {
+    if (headingText == "Show DETAILS" ||headingText == "SHOW DETAILS") {
+        $(".ps-block--product-info .ps-block__more").text("Show DETAILS");
         $(this).find(".content-detail").text("LESS DETAILS");
         $(this).addClass("active");
         var a = $(this).parents(".ps-block--product-info").index();
@@ -403,7 +406,15 @@ $(window).on('load', function () {
 });
 
 function clickSliderhome(id) {
-    $(".ps-slider--home .owl-dot:nth-child(" + id + ")").click();
+     if (screen.width < 768) {
+         id = id + 1;
+         if($(".ps-slider--home .owl-dot").length < id){
+             id = 1;
+         };console.log(id);
+        $(".ps-slider--home .owl-dot:nth-child(" + id + ")").click();
+     }else{
+         $(".ps-slider--home .owl-dot:nth-child(" + id + ")").click();
+     }
 }
 function checkOtherValidation(obj) {
 
@@ -597,7 +608,13 @@ $(document).ready(function () {
                 $(this).find(".owl-nav").addClass("show");
             }
         });
-    },1000);
+    },1500);
+    
+   /* $(".ps-product .ps-product__heading").each(function(){
+        if($(this).find("strong").text() == "UOB Super Saving PROMO:" || $(this).find("strong").text() == ""){
+            $(this).parent().find(".ps-table--product th").text().replace("TIER", "");
+        }
+    });*/
 });
 
 
@@ -612,8 +629,8 @@ $(window).on("load",function(){
     });
     $(".table-new").parent().mCustomScrollbar({
       axis:"x",
-      theme:"dark-3"
+      theme:"dark-3",
+      setLeft: "0px",
     });
-    
 });
 

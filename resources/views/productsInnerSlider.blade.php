@@ -46,7 +46,7 @@
                                 Rate: </span>{{ $product->maximum_interest_rate }}%</p>
 
                             <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
-                                <span class="slider-font">Min:</span> @if($product->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT){{$product->currency_code}} @else
+                                <span class="slider-font">Max:</span> @if($product->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT){{$product->currency_code}} @else
                                     SGD @endif
                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                             </p>
@@ -153,7 +153,7 @@
                                 Rate: </span>{{ $product->maximum_interest_rate }}%</p>
 
                             <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
-                                <span class="slider-font">Min:</span> @if($product->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT){{$product->currency_code}} @else
+                                <span class="slider-font">Max:</span> @if($product->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT){{$product->currency_code}} @else
                                     SGD @endif
                                 ${{ Helper::inThousand($product->minimum_placement_amount) }}
                             </p>

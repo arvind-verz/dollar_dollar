@@ -106,13 +106,13 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
                                 class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) active @endif">
                                 <input type="radio" name="filter" value="{{TENURE}}"
                                 style="opacity: 0;position: absolute;"
-                                @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) checked @endif>tenure
+                                @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) checked @endif>Tenor
                                 </button>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                             <div class="row ps-col-tiny">
-                                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 ">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                     <div class="form-group form-group--nest">
                                         <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                             @elseif(!isset($searchFilter['filter']))$@endif
@@ -125,7 +125,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
                                         <button type="submit">Go</button>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
                                     <select class="form-control currency" name="currency">
                                         <option value="">All</option>
                                         @if(count($currencies))

@@ -106,13 +106,13 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
                                 class="ps-btn filter submit-search search_type @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) active @endif">
                                 <input type="radio" name="filter" value="{{TENURE}}"
                                 style="opacity: 0;position: absolute;"
-                                @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) checked @endif>tenure
+                                @if(isset($searchFilter['filter']) && $searchFilter['filter']==TENURE) checked @endif>Tenor
                                 </button>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
                             <div class="row ps-col-tiny">
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 ">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                     <div class="form-group form-group--nest">
                                         <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                             @elseif(!isset($searchFilter['filter']))$@endif
@@ -124,7 +124,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
                                         <button type="submit">Go</button>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                     <div class="form-group  ">
                                         <select class="form-control sort-by" name="sort_by">
                                             <option value="" disabled="disabled" selected="selected">Arrange by
