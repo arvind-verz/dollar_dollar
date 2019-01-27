@@ -2129,7 +2129,7 @@ class ProductsController extends Controller
             $validate['rate_type'] = 'required';
             $validate['tenure'] = 'required';
             $validate['property_type'] = 'required';
-            /* $validate['completion'] = 'required';*/
+            $validate['completion'] = 'required';
 
         }
 
@@ -2156,7 +2156,7 @@ class ProductsController extends Controller
             $toolTips->rate_type = $request->rate_type;
             $toolTips->tenure = $request->tenure;
             $toolTips->property_type = $request->property_type;
-            //$toolTips->completion = $request->completion;
+            $toolTips->completion = $request->completion;
         }
         $toolTips->save();
 

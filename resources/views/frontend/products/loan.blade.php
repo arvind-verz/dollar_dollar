@@ -127,9 +127,9 @@
                             </div>
                             <div class="form-group--label form-group--label4">
                                 <div class="form-group__content">
-                                    <label>Completion @if(isset($toolTips->property_type))
+                                    <label>Completion @if(isset($toolTips->completion))
                                             <a class="ps-tooltip" href="javascript:void(0)"
-                                               data-tooltip="{{$toolTips->property_type}}"><i
+                                               data-tooltip="{{$toolTips->completion}}"><i
                                                         class="fa fa-exclamation-circle"></i></a>
                                         @endif</label>
                                     <select class="form-control" name="completion">

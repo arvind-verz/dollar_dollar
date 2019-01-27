@@ -73,7 +73,7 @@
                             {{Form::label('banner_image', 'Default Banner Image',['class'=>'col-sm-2 control-label'])}}
                             <div class="col-sm-10">
                                 {{Form::file('banner_image', ['class' => 'form-control', 'placeholder' => ''])}}
-                                <div class="text-muted"><strong>Note:</strong> Image size should be @if($type=="inner-page")1920*428 @else 1200*428 @endif for better display</div>
+                                <div class="text-muted"><strong>Note:</strong> Image size should be @if($type=="inner-page")1920*360 @else 1200*360 @endif for better display</div>
                             </div>
                             
                         </div>
@@ -100,7 +100,7 @@
                             {{Form::label('fixed_banner', 'Paid Banner Image',['class'=>'col-sm-2 control-label'])}}
                             <div class="col-sm-10">
                                 {{Form::file('fixed_banner', ['class' => 'form-control paid-ad', 'placeholder' => ''])}}
-                                <div class="text-muted"><strong>Note:</strong> Image size should be @if($type=="inner-page")1920*428 @else 1200*428 @endif for better display</div>
+                                <div class="text-muted"><strong>Note:</strong> Image size should be @if($type=="inner-page")1920*360 @else 1200*360 @endif for better display</div>
                             </div>
                             
                         </div>

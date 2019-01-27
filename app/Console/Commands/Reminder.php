@@ -58,6 +58,7 @@ class Reminder extends Command
         $endDate = $endDate->format('Y-m-d H:i:s');
         $reminderData = \DB::table('product_managements')
             ->join('users', 'product_managements.user_id', 'users.id')
+            ->leftJoin('brands', 'product_managements.bank_id', '=', 'brands.id')
             ->where('product_managements.end_date', '>', $endDate)
             ->where('users.status', '=', 1)
             ->get()->toArray();
@@ -110,8 +111,15 @@ class Reminder extends Command
                         $adLink = $ads->ad_link;
                     }
                             Mail::send('frontend.emails.reminder',[
+                                'bank_logo' => $detail->brand_logo,
+                                'other_bank' => $detail->other_bank,
                                 'account_name' => $detail->account_name,
+                                'amount' => $detail->amount,
+                                'tenure' => $detail->tenure,
+                                'tenure_calender' => $detail->tenure_calender,
+                                'start_date' => $detail->start_date,
                                 'end_date' => $detail->end_date,
+                                'interest_earned' => $detail->interest_earned,
                                 'ad'=>$ad,
                                 'adLink'=>$adLink
                             ] , function ($message) use ($detail) {

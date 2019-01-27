@@ -85,12 +85,12 @@
                                         {{Form::text('property_type', $toolTips->property_type, ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
-                               {{-- <div class="form-group">
-                                    {{Form::label('completion', 'Rate type',['class'=>'col-sm-2 control-label'])}}
+                                <div class="form-group">
+                                    {{Form::label('completion', 'Completion',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
                                         {{Form::text('completion', $toolTips->completion, ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
-                                </div>--}}
+                                </div>
                             @endif
                         </div>
                         <!-- /.box-body -->
@@ -167,12 +167,12 @@
                                         {{Form::text('property_type', '', ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
                                 </div>
-                                {{--<div class="form-group">
-                                    {{Form::label('completion', 'Rate type',['class'=>'col-sm-2 control-label'])}}
+                                <div class="form-group">
+                                    {{Form::label('completion', 'Completion',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
                                         {{Form::text('completion', '', ['class' => 'form-control ', 'placeholder' => ''])}}
                                     </div>
-                                </div>--}}
+                                </div>
                             @endif
                         </div>
                         <!-- /.box-body -->

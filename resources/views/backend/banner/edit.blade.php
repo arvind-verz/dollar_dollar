@@ -64,7 +64,7 @@
                             {{Form::label('banner_image', 'Default Banner Image',['class'=>'col-sm-2 control-label'])}}
                             <div class="@if(isset($banner->banner_image) && ($banner->banner_image != ''))col-sm-8 @else col-sm-10 @endif">
                                 {{Form::file('banner_image', ['class' => 'form-control', 'placeholder' => ''])}}
-                                <div class="text-muted"><strong>Note:</strong> Image size should be @if($type=="inner-page")1920*428 @else 1200*428 @endif for better display</div>
+                                <div class="text-muted"><strong>Note:</strong> Image size should be @if($type=="inner-page")1920*360 @else 1200*360 @endif for better display</div>
                             </div>
                             @if(isset($banner->banner_image) && ($banner->banner_image != ''))
                             <div class=" col-sm-2">
@@ -111,7 +111,7 @@
                                 
                                 @endif
                                 
-                                <div class="text-muted"><strong>Note:</strong> Image size should be @if($type=="inner-page")1920*428 @else 1200*428 @endif for better display</div>
+                                <div class="text-muted"><strong>Note:</strong> Image size should be @if($type=="inner-page")1920*360 @else 1200*360 @endif for better display</div>
                             </div>
                             @if(isset($banner->fixed_banner) && ($banner->fixed_banner != ''))
                             <div class=" col-sm-2">

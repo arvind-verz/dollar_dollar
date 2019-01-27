@@ -69,7 +69,7 @@ return [
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
     'required' => 'The :attribute field is required.',
-    'required' => 'The field is required.',
+    'required' => 'The :attribute field is required.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -174,7 +174,13 @@ return [
         'last_name' => [
             'required' => 'This field is required.',
         ],
-        'cotact' => [
+        'contact' => [
+            'required' => 'This field is required.',
+        ],
+        'g-recaptcha-response' => [
+            'required' => 'This field is required.',
+        ],
+        'confirm_password' => [
             'required' => 'This field is required.',
         ],
     ],
