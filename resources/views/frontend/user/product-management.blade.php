@@ -106,7 +106,7 @@
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                                 <div class="form-group">
                                                     <label>Amount<sup>*</sup></label>
-                                                    <input class="form-control prefix_dollar" required="required"
+                                                    <input class="form-control prefix_dollar only_numeric" required="required"
                                                            name="amount"
                                                            type="text" placeholder="Enter Amount"
                                                            value="{{ old('amount') }}">
@@ -116,7 +116,7 @@
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                 <div class="form-group">
                                                     <label>Tenure</label>
-                                                    <input type="text" class="form-control " name="tenure"
+                                                    <input type="text" class="form-control only_numeric" name="tenure"
                                                            value="{{ old('tenure') }}">
                                                 </div>
                                             </div>
@@ -215,7 +215,7 @@
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                                 <div class="form-group submit">
                                                     <label style="margin: 5px 0 5px;">Do not Send Reminders</label>
-                                                    <input type="checkbox" class="form-control" disabled="disabled"
+                                                    <input type="checkbox" class="form-control" checked="checked" disabled="disabled"
                                                            name="dod_reminder"
                                                            @if(old('dod_reminder')==1) checked @endif>
 
@@ -354,7 +354,13 @@
                 $(".select2").select2("val", " ");
             }
             else {
-                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
+                if ($("input[name='dod_reminder']").is(":checked") !== false) {
+                    $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+                    $(".reminder").find('input[type=checkbox]').prop("disabled", true);
+                    $(".select2").select2("val", " ");
+                }else{
+                    $(".reminder").find('input[type=checkbox]').prop("disabled", false);
+                }
                 $("input[name='dod_reminder']").attr("disabled", false);
             }
         });

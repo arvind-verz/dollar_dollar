@@ -50,7 +50,7 @@
                                 <div class="form-group">
                                     {{Form::label('icon', 'Icon',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
-                                        <input type="text" value="{{old('icon')}}" name="icon" class="form-control" maxlength="2">
+                                        <input type="text" value="{{old('icon')}}" name="icon" class="form-control" maxlength="4">
                                         
                                     </div>
                                 </div>

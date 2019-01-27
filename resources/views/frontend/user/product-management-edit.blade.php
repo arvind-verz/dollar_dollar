@@ -92,7 +92,7 @@
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
                                                 <label>Amount<sup>*</sup></label>
-                                                <input class="form-control" required="required" name="amount" type="text"
+                                                <input class="form-control only_numeric" required="required" name="amount" type="text"
                                                        placeholder="Enter Amount" value="{{ $product_management->amount }}">
                                                 <!-- <span class="suffix_k">K</span> -->
                                             </div>
@@ -100,7 +100,7 @@
                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                             <div class="input-group form-group">
                                                 <label>Tenure</label>
-                                                <input type="text" class="form-control " name="tenure"
+                                                <input type="text" class="form-control  only_numeric" name="tenure"
                                                        value="{{ $product_management->tenure }}">
                                             </div>
                                         </div>
@@ -243,7 +243,13 @@
                 $(".select2").select2("val", " ");
             }
             else {
-                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
+                if ($("input[name='dod_reminder']").is(":checked") !== false) {
+                    $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+                    $(".reminder").find('input[type=checkbox]').prop("disabled", true);
+                    $(".select2").select2("val", " ");
+                }else{
+                    $(".reminder").find('input[type=checkbox]').prop("disabled", false);
+                }
                 $("input[name='dod_reminder']").attr("disabled", false);
             }
         });

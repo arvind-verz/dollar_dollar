@@ -570,13 +570,6 @@
                                                         alt=""></a></div>
                                         @php } @endphp
                                     @endif
-                                    <h4 class="ps-product__heading"><strong
-                                                class="highlight">{{$product->product_name}}
-                                            :</strong>
-                                        Fulfil up to 3 criteria and earn up
-                                        to @if($product->maximum_interest_rate<=0)
-                                            - @else  {{ $product->maximum_interest_rate }}% @endif
-                                    </h4>
 
                                     <div id='{{$product->product_id}}'>
                                         <div class="ps-table-wrap">
@@ -1801,15 +1794,6 @@
                                                                 alt=""></a></div>
                                                 @php } @endphp
                                             @endif
-                                            <h4 class="ps-product__heading"><strong
-                                                        class="highlight">{{$product->product_name}}
-                                                    :</strong>
-                                                Fulfil up to 3 criteria and earn up
-                                                to @if($product->maximum_interest_rate<=0)
-                                                    - @else  {{ $product->maximum_interest_rate }}
-                                                    % @endif
-                                            </h4>
-
                                             <div class="ps-table-wrap"
                                                  id='{{$product->product_id}}'>
                                                 <form id="form-{{$product->product_id}}"

@@ -86,7 +86,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
                 </div>
                 <div class="ps-block__content">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                        <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 ">
                             <div class="ps-form__option flex-box">
                                 <label>Sort by:</label>
                                 <button type="button"
@@ -110,9 +110,9 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
                                 </button>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+                        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 ">
                             <div class="row ps-col-tiny">
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12 ">
                                     <div class="form-group form-group--nest">
                                         <div class="form-group__content">@if(isset($searchFilter['filter']) && $searchFilter['filter']=='Placement')
                                             @elseif(!isset($searchFilter['filter']))$@endif
@@ -124,7 +124,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
                                         <button type="submit">Go</button>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 ">
                                     <div class="form-group  ">
                                         <select class="form-control sort-by" name="sort_by">
                                             <option value="" disabled="disabled" selected="selected">Arrange by

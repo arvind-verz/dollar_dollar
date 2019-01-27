@@ -34,7 +34,7 @@
                                 <span class="slider-font"> Min: </span> SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}
                             </p>
                         </div>
-                        <a class="ps-btn" href="#p-{{$product->id}}">More info</a>
+                        <a class="ps-btn" href="#p-{{$product->product_id}}">More info</a>
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                                 <span class="slider-font"> Min: </span> SGD ${{ Helper::inThousand($product->minimum_loan_amount) }}
                             </p>
                         </div>
-                        <a class="ps-btn" href="#p-{{$product->id}}">More info</a>
+                        <a class="ps-btn" href="#p-{{$product->product_id}}">More info</a>
                     </div>
                     @php $i++; @endphp
                 @endif

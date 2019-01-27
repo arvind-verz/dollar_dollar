@@ -347,7 +347,7 @@ define('HDB_PRIVATE_PROPERTY', "HDB/Private");
 define('COMMERCIAL_PROPERTY', "Commercial Individual");
 
 //Completion status
-define('COMPLETE', "Complete");
+define('COMPLETE', "Completed");
 define('BUC', "BUC");
 define('ALL', "ALL");
 

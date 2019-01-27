@@ -170,6 +170,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
             
             <div class="ps-form__content mt-5 mb-5">
                 <div class=" recaptcha">
+                    <p>One of representative from DollarDollar’s partner will go through the different home  loan available from different banks that is most suitable for you. I consent that this assigned representative can contact me via various communication (Voice Call, SMS and Email)</p>
                     {!! app('captcha')->display($attributes = [],
                     $lang = []) !!}
                     <span class="captcha-err">

@@ -320,7 +320,7 @@ $datetime = Helper::todayDate();
 <div class="ps-home-blog">
     <div class="container">
         <div class="row">
-            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12  home-blog">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  home-blog">
                 <div class="ps-section__left">
                     <div class="ps-section__header">
                         <a href="{{ url('blog-list') }}">
@@ -382,7 +382,7 @@ $datetime = Helper::todayDate();
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 home-fb">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 home-fb">
                 <div class="ps-section__right">
                     <div class="ps-fanpage">
                         <div class="fb-page" data-adapt-container-width="true" data-height="280"

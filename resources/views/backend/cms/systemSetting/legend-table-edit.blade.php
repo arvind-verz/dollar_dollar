@@ -52,7 +52,7 @@
                                 <div class="form-group">
                                     {{Form::label('icon', ' Icon',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10 ">
-                                        {{Form::text('icon', $systemSetting->icon,['class' => 'form-control', 'placeholder' => ''])}}
+                                        {{Form::text('icon', $systemSetting->icon,['maxlength'=>'4','class' => 'form-control', 'placeholder' => ''])}}
                                     </div>
                                 </div>
                                 <div class="form-group">

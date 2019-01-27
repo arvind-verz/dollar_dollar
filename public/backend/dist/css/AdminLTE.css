@@ -6742,3 +6742,12 @@ td img {
     max-height: 150px;
     overflow-y: -webkit-paged-x;
 }
+.legend-icon {
+    display: inline-block;
+    width: auto;
+    height: 25px;
+    border-radius: 3px 10px;
+    color: #fff;
+    font-weight: 600;
+    padding: 1px 10px;
+}

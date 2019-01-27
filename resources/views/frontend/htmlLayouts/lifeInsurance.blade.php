@@ -16,10 +16,11 @@
                 <p><span style="font-size: 11pt; color: #808080;">The unexpected possibility of leaving your loved ones behind can be worrisome. Having covered, life insurance serves to alleviate the financial struggle that a family might face especially when the sole breadwinner is no longer around.</span></p>
                 <strong>Life Insurance Protects You and Your Family</strong>
                 <p><span style="color: #808080;">You have the option to nominate your loved ones to receive the sum assured of a Life Insurance policy in the event of death. This will help to cover their financial expenses.</span></p>
+                <strong><span style="font-size: 14pt;">Find a Life Insurance policy catered to you</span><span style="font-size: 14pt;">r</span><span style="font-size: 14pt;"> needs</span></strong>
+                <p>These are some of the common Life Insurance policies that can guide you to find what you need.</p>
             </div>
         </div>
-        <strong><span style="font-size: 14pt;">Find a Life Insurance policy catered to you</span><span style="font-size: 14pt;">r</span><span style="font-size: 14pt;"> needs</span></strong>
-        <p>These are some of the common Life Insurance policies that can guide you to find what you need.</p>
+        
         <table class="ps-table ps-table--default ps-table--life" style="width: 1139px;">
             <thead>
             <tr>

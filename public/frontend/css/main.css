@@ -2006,6 +2006,7 @@ button {
     color:#303030;
     font-weight:700;
     text-transform:uppercase;
+    margin-top: 5px;
 }
 
 .ps-block--legend-table .ps-block__content p img {

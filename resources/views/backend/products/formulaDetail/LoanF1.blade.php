@@ -325,7 +325,7 @@
                         @endif
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 ">
                     <label for="">Bonus interest</label>
                     <input type="text" class="form-control only_numeric" id="there-after-bonus-interest-0"
                            name="there_after_bonus_interest" value=""
