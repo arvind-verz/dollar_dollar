@@ -281,6 +281,7 @@
                                                                         @if($range->bonus_interest_salary<=0)
                                                                             - @else {{ $range->bonus_interest_salary }}
                                                                         % @endif</td>
+                                                                </tr><tr>
                                                                     <td class=" text-center @if($product->salary_highlight_2==true ) highlight @endif">
                                                                         @if($range->bonus_interest_salary_2<=0)
                                                                             - @else {{ $range->bonus_interest_salary_2 }}
@@ -301,6 +302,7 @@
                                                                         @if($range->bonus_interest_spend<=0)
                                                                             - @else {{ $range->bonus_interest_spend }}
                                                                         % @endif</td>
+                                                                </tr><tr>
                                                                     <td class=" text-center @if($product->spend_highlight_2==true ) highlight @endif">
                                                                         @if($range->bonus_interest_spend_2<=0)
                                                                             - @else {{ $range->bonus_interest_spend_2 }}
@@ -1011,6 +1013,7 @@
                                                                                 @if($range->bonus_interest_spend_1<=0)
                                                                                     - @else {{ $range->bonus_interest_spend_1 }}
                                                                                 % @endif</td>
+                                                                        </tr><tr>
                                                                             <td class=" text-center @if($product->spend_2_highlight==true ) highlight @endif">
                                                                                 @if($range->bonus_interest_spend_2<=0)
                                                                                     - @else {{ $range->bonus_interest_spend_2 }}
@@ -1027,6 +1030,7 @@
                                                                                 @if($range->bonus_interest_salary<=0)
                                                                                     - @else {{ $range->bonus_interest_salary }}
                                                                                 % @endif</td>
+                                                                        </tr><tr>
                                                                             <td class=" text-center @if($product->salary_highlight_2==true ) highlight @endif">
                                                                                 @if($range->bonus_interest_salary_2<=0)
                                                                                     - @else {{ $range->bonus_interest_salary_2 }}
@@ -1528,6 +1532,7 @@
                                                                             @if($range->bonus_interest_salary<=0)
                                                                                 - @else {{ $range->bonus_interest_salary }}
                                                                             % @endif</td>
+                                                                        </tr><tr>
                                                                         <td class=" text-center @if($product->salary_highlight_2==true ) highlight @endif">
                                                                             @if($range->bonus_interest_salary_2<=0)
                                                                                 - @else {{ $range->bonus_interest_salary_2 }}
@@ -1548,6 +1553,7 @@
                                                                                 @if($range->bonus_interest_spend<=0)
                                                                                     - @else {{ $range->bonus_interest_spend }}
                                                                                 % @endif</td>
+                                                                        </tr><tr>
                                                                             <td class=" text-center @if($product->spend_highlight_2==true ) highlight @endif">
                                                                                 @if($range->bonus_interest_spend_2<=0)
                                                                                     - @else {{ $range->bonus_interest_spend_2 }}
@@ -2197,6 +2203,7 @@
                                                                                         @if($range->bonus_interest_spend_1<=0)
                                                                                             - @else {{ $range->bonus_interest_spend_1 }}
                                                                                         % @endif</td>
+                                                                                </tr><tr>
                                                                                     <td class=" text-center  td-unique text-center @if($product->spend_2_highlight==true ) highlight @endif">
                                                                                         @if($range->bonus_interest_spend_2<=0)
                                                                                             - @else {{ $range->bonus_interest_spend_2 }}
@@ -2213,6 +2220,7 @@
                                                                                         @if($range->bonus_interest_salary<=0)
                                                                                             - @else {{ $range->bonus_interest_salary }}
                                                                                         % @endif</td>
+                                                                                </tr><tr>
                                                                                     <td class=" text-center @if($product->salary_highlight_2==true ) highlight @endif">
                                                                                         @if($range->bonus_interest_salary_2<=0)
                                                                                             - @else {{ $range->bonus_interest_salary_2 }}
