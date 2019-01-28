@@ -1920,19 +1920,21 @@
                             errors[i] = 'Please check your placement range. ';
                             i++;
                         }
-                        if (SalaryMinAmount == '') {
+                        /*if (SalaryMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Salary 1) is required.';
                             i++;
                         }
-                        if (SalaryBonusInterest == '') {
-                            errors[i] = 'The  bonus interest (Salary 1) is required.';
-                            i++;
-                        }
+
                         if (SpendMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Spend 1) is required.';
                             i++;
                         }
-                        if (SpendBonusInterest == '') {
+                        */
+                        if (SalaryMinAmount != '' && SalaryBonusInterest == '') {
+                            errors[i] = 'The  bonus interest (Salary 1) is required.';
+                            i++;
+                        }
+                        if (SpendMinAmount != '' && SpendBonusInterest == '') {
                             errors[i] = 'The  bonus interest (Spend 1) is required.';
                             i++;
                         }

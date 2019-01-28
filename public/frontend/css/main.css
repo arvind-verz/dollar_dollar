@@ -6473,8 +6473,8 @@ span.ps-post__meta a {
 .mCS-light-3.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar, 
 .mCS-light-3.mCSB_scrollTools_horizontal .mCSB_draggerRail{height:10px;}
 .ps-product__detail.table .mCSB_scrollTools.mCSB_scrollTools_horizontal{top:0;}
-.recaptcha{float:left;width:100%;}
-.recaptcha>div>div{float:right;max-width: 100%;}
+.ps-loan .recaptcha{float:left;width:100%;}
+.ps-loan .recaptcha>div>div{float:right;max-width: 100%;}
 .modal form .ps-block__content{padding:0 15px 0 35px;text-align:left;position:relative;}
 .modal form .ps-block__content input{position:absolute;left:15px;}
 #myModalUser .modal-dialog{width:400px;max-width:100%;}

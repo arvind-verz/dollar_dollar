@@ -205,9 +205,9 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2 " id="ongoing">
-                                            <button type="button" data-status="false" id="ongoing-status"
-                                                    class="btn btn-block btn-danger btn-social"
-                                                    onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i>
+                                            <button type="button" data-status="true" id="ongoing-status"
+                                                    class="btn btn-block btn-success btn-social"
+                                                    onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i>
                                                 Ongoing
                                             </button>
                                         </div>
@@ -243,7 +243,7 @@
                                                 <option value="1" selected="selected">
                                                     Active
                                                 </option>
-                                                <option value="0" @if(old('status') == 0) selected="selected" @endif>
+                                                <option value="0">
                                                     Deactivate
                                                 </option>
                                             </select>
@@ -400,6 +400,8 @@
     <!-- /.content -->
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#promotion_start_date").val(null);
+            $("#promotion_end_date").val(null);
             var promotion_type = $("#product-type").val();
             var formula = $("#hidden-formula").val();
 //var product_id = $("#product-id").val();

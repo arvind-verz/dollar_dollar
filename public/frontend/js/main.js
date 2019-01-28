@@ -364,6 +364,7 @@ $(".ps-block__content").click(function () {
     var headingText = $(this).find(".content-detail").text();
     var formulaDetailId = $(this).find(".content-detail").data('formula');
     $(".ps-block__content").removeClass("active");
+    $(".ps-criteria-detail").find(".ps-criteria-detail__content").slideUp();
 
     if (headingText == "Show DETAILS" ||headingText == "SHOW DETAILS") {
         $(".ps-block--product-info .ps-block__more").text("Show DETAILS");

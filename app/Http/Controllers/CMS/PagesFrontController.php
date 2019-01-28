@@ -3733,6 +3733,17 @@ class PagesFrontController extends Controller
                 $product->hire_loan = false;
                 $product->renovation_loan = false;
                 $product->unit_trust = false;
+                $product->salary_highlight = false;
+                $product->salary_highlight_2 = false;
+                $product->payment_highlight = false;
+                $product->spend_highlight = false;
+                $product->spend_highlight_2 = false;
+                $product->housing_loan_highlight = false;
+                $product->education_loan_highlight = false;
+                $product->hire_loan_highlight = false;
+                $product->renovation_loan_highlight = false;
+                $product->life_insurance_highlight = false;
+                $product->unit_trust_highlight = false;
                 $totalInterests = [];
                 $interestEarns = [];
 
@@ -3755,41 +3766,52 @@ class PagesFrontController extends Controller
 
                         if (isset($productRange->minimum_salary_2) && $salary > 0 && $productRange->minimum_salary_2 <= $salary) {
                             $criteriaMatchCount++;
+                            $product->salary_highlight_2 = true;
                         } elseif ($salary > 0 && $productRange->minimum_salary <= $salary) {
                             $criteriaMatchCount++;
+                            $product->salary_highlight = true;
                         }
                         if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
                             $criteriaMatchCount++;
+                            $product->payment_highlight = true;
                         }
                         if (isset($productRange->minimum_spend_2) && $spend > 0 && $productRange->minimum_spend_2 <= $spend) {
                             $criteriaMatchCount++;
+                            $product->spend_highlight_2 = true;
                         } elseif ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
+                            $product->spend_highlight = true;
                         }
                         if ($privilege > 0 && $productRange->minimum_insurance <= ($privilege / 12)) {
                             $criteriaMatchCount++;
                             $product->life_insurance = true;
+                            $product->life_insurance_highlight = true;
                         }
                         if ($privilege > 0 && $productRange->minimum_unit_trust <= ($privilege / 12)) {
                             $criteriaMatchCount++;
                             $product->unit_trust = true;
+                            $product->unit_trust_highlight = true;
                         }
                         if ($loan > 0 && $productRange->minimum_hire_purchase_loan <= ($loan)) {
                             $criteriaMatchCount++;
                             $product->hire_loan = true;
+                            $product->hire_loan_highlight = true;
 
                         }
                         if ($loan > 0 && $productRange->minimum_renovation_loan <= ($loan)) {
                             $criteriaMatchCount++;
                             $product->renovation_loan = true;
+                            $product->renovation_loan_highlight = true;
                         }
                         if ($loan > 0 && $productRange->minimum_home_loan <= ($loan)) {
                             $criteriaMatchCount++;
                             $product->housing_loan = true;
+                            $product->housing_loan_highlight = true;
                         }
                         if ($loan > 0 && $productRange->minimum_education_loan <= ($loan)) {
                             $criteriaMatchCount++;
                             $product->education_loan = true;
+                            $product->education_loan_highlight = true;
                         }
 
                         if ($criteriaMatchCount == 1) {
@@ -3840,6 +3862,8 @@ class PagesFrontController extends Controller
             } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F4) {
                 //dd($product);
                 $product->highlight = false;
+                $product->criteria_a_highlight = false;
+                $product->criteria_b_highlight = false;
                 $maxRanges = [];
                 $totalInterest = 0;
                 $interestEarn = 0;
@@ -3886,11 +3910,14 @@ class PagesFrontController extends Controller
                         $status = true;
                         $criteria = "bonus_interest_criteria_a";
                         $highlight = "criteria_a_highlight";
+                        $product->criteria_a_highlight = true;
+
 
                     } elseif ($criteriaMatchCount >= 2) {
                         $status = true;
                         $criteria = "bonus_interest_criteria_b";
                         $highlight = "criteria_b_highlight";
+                        $product->criteria_b_highlight = true;
 
                     } else {
                         $status = false;
@@ -4117,7 +4144,11 @@ class PagesFrontController extends Controller
                 $criteriaMatchCount = 0;
                 $product->highlight_index = 0;
                 $product->highlight = false;
+
+                $product->salary_highlight = false;
+                $product->spend_highlight = false;
                 $product->other_highlight = false;
+                $product->wealth_highlight = false;
                 $product->grow_highlight = false;
                 $product->boost_highlight = false;
                 $maxRanges = [];
@@ -4177,22 +4208,26 @@ class PagesFrontController extends Controller
                             if ($salaryStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_salary / 100), 2);
                                 $productRange->salary_highlight = true;
+                                $product->salary_highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_salary;
                             }
                             if ($spendStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_spend / 100), 2);
                                 $productRange->spend_highlight = true;
+                                $product->spend_highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_spend;
                             }
                             if ($otherStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_other / 100), 2);
                                 $productRange->other_highlight = true;
+                                $product->other_highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_other;
 
                             }
                             if ($wealthStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_wealth / 100), 2);
                                 $productRange->wealth_highlight = true;
+                                $product->wealth_highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_wealth;
                             }
 
@@ -4209,22 +4244,26 @@ class PagesFrontController extends Controller
                             if ($salaryStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_salary / 100), 2);
                                 $productRange->salary_highlight = true;
+                                $product->salary_highlight = true;
                                 $interestPercentTotal += $productRange->bonus_interest_salary;
                             }
                             if ($spendStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_spend / 100), 2);
                                 $productRange->spend_highlight = true;
+                                $product->spend_highlight = true;
                                 $interestPercentTotal += $productRange->bonus_interest_spend;
                             }
                             if ($otherStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_other / 100), 2);
                                 $productRange->other_highlight = true;
+                                $product->other_highlight = true;
                                 $interestPercentTotal += $productRange->bonus_interest_other;
 
                             }
                             if ($wealthStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_wealth / 100), 2);
                                 $productRange->wealth_highlight = true;
+                                $product->wealth_highlight = true;
                                 $interestPercentTotal += $productRange->bonus_interest_wealth;
                             }
 
@@ -4239,21 +4278,25 @@ class PagesFrontController extends Controller
                                 if ($salaryStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_salary / 100), 2);
                                     $productRange->salary_highlight = true;
+                                    $product->salary_highlight = true;
                                     $interestPercentTotal += $productRange->bonus_interest_salary;
                                 }
                                 if ($spendStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_spend / 100), 2);
                                     $productRange->spend_highlight = true;
+                                    $product->spend_highlight = true;
                                     $interestPercentTotal += $productRange->bonus_interest_spend;
                                 }
                                 if ($otherStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_other / 100), 2);
                                     $productRange->other_highlight = true;
+                                    $product->other_highlight = true;
                                     $interestPercentTotal += $productRange->bonus_interest_other;
                                 }
                                 if ($wealthStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_wealth / 100), 2);
                                     $productRange->wealth_highlight = true;
+                                    $product->wealth_highlight = true;
                                     $interestPercentTotal += $productRange->bonus_interest_wealth;
                                 }
 
@@ -5215,6 +5258,7 @@ class PagesFrontController extends Controller
                                 $criteriaMatchCount++;
                             }
                         }
+
                         if (!empty($productRange->minimum_spend_1) && ($product->spend_2_highlight == false)) {
                             if ($spend > 0 && $productRange->minimum_spend_1 <= $spend) {
 
@@ -5226,14 +5270,14 @@ class PagesFrontController extends Controller
                             }
                         }
 
-                        if (!empty($productRange->minimum_salary)) {
-                            if ($salary > 0 && $productRange->minimum_salary <= $salary) {
-                                if ($highlightStatus == 1) {
-                                    $product->salary_highlight = true;
-                                }
-                                $totalInterest += $productRange->bonus_interest_salary;
-                                $criteriaMatchCount++;
-                            }
+                        if (isset($productRange->minimum_salary_2) && $salary > 0 && $productRange->minimum_salary_2 <= $salary) {
+                            $product->salary_highlight_2 = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary_2;
+                            $criteriaMatchCount++;
+                        } elseif ($salary > 0 && $productRange->minimum_salary <= $salary) {
+                            $product->salary_highlight = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
+                            $criteriaMatchCount++;
                         }
                         if (!empty($productRange->minimum_giro_payment)) {
                             if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
@@ -5318,10 +5362,10 @@ class PagesFrontController extends Controller
                                 <th class="">CRITERIA</th>
                                 <?php $firstRange = $productRanges[0];
                                 if (!empty($firstRange->minimum_spend_1) || !empty($firstRange->minimum_spend_2)) { ?>
-                                    <th>SPEND</th>
+                                    <th class="<?php if($product->spend_2_highlight==true || $product->spend_1_highlight==true) { echo'active'; } ?>">SPEND</th>
                                 <?php }
                                 if (!empty($firstRange->minimum_salary)) { ?>
-                                    <th>SALARY</th> <?php }
+                                    <th class="<?php if($product->spend_2_highlight==true) { echo'active'; } ?>">SALARY</th> <?php }
                                 if (!empty($firstRange->minimum_giro_payment)) { ?>
 
                                     <th>PAYMENT</th> <?php }

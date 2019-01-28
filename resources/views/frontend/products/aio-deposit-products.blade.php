@@ -262,7 +262,7 @@
                                             <thead>
                                             <tr>
                                                 <th>CRITERIA</th>
-                                                <th>SALARY</th>
+                                                <th class="@if($product->salary_highlight==true ) highlight @endif">SALARY</th>
                                                 <th>PAYMENT</th>
                                                 <th>SPEND</th>
                                                 <th>PRIVILEGE</th>
@@ -436,13 +436,12 @@
                                         <table class="ps-table ps-table--product ps-table--product-2">
                                             <thead>
                                             <tr>
+
                                                 <th class="text-left">Balance</th>
-                                                <th class="text-left"
-                                                    style="@if($product->criteria_a_highlight==true) color:#66ec76; @endif">
+                                                <th class="text-left @if($product->criteria_a_highlight==true) active @endif">
                                                     Criteria a <br/><span
                                                             class="subtitle">(spend)</span></th>
-                                                <th class="text-left"
-                                                    style="@if($product->criteria_b_highlight==true) color:#66ec76; @endif">
+                                                <th class="text-left @if($product->criteria_b_highlight==true) active @endif">
                                                     Criteria b <br/><span class="subtitle">(Spend + Salary/Giro)</span>
                                                 </th>
                                                 <th class="text-left" style="">Interest Earned for each Tier</th>
@@ -583,11 +582,11 @@
                                                         <th class="combine-criteria-padding" style="width:19%">
                                                             CRITERIA
                                                         </th>
-                                                        <th class="combine-criteria-padding" style="width:9%">SALARY
+                                                        <th class="combine-criteria-padding @if($product->salary_highlight==true || $product->salary_highlight_2==true) active @endif" style="width:9%">SALARY
                                                         </th>
-                                                        <th class="combine-criteria-padding" style="width:9%">PAYMENT
+                                                        <th class="combine-criteria-padding @if($product->payment_highlight==true ) active @endif" style="width:9%">PAYMENT
                                                         </th>
-                                                        <th class="combine-criteria-padding" style="width:9%">SPEND</th>
+                                                        <th class="combine-criteria-padding @if($product->spend_highlight==true || $product->spend_highlight_2==true) active @endif" style="width:9%">SPEND</th>
                                                         <th class="combine-criteria-padding" style="width:27%">
                                                             Loan
                                                             <div class="row">
@@ -601,7 +600,7 @@
                                                                                data-product-id="{{$product->product_id}}"
                                                                                value="true"
                                                                                id="housing-loan-{{$product->product_id}}">
-                                                                        <label for="housing-loan-{{$product->product_id}}">Housing</label>
+                                                                        <label for="housing-loan-{{$product->product_id}}" class="@if($product->housing_loan_highlight==true) active @endif">Housing</label>
                                                                     </div>
                                                                     <div class="ps-checkbox">
                                                                         <input class="form-control" type="checkbox"
@@ -611,7 +610,7 @@
                                                                                value="true"
                                                                                id='education-loan-{{$product->product_id}}'
                                                                                @if($product->education_loan) checked=checked @endif/>
-                                                                        <label for="education-loan-{{$product->product_id}}">Education</label>
+                                                                        <label for="education-loan-{{$product->product_id}}" class="@if($product->education_loan_highlight==true) active @endif">Education</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="width-50">
@@ -622,7 +621,7 @@
                                                                                data-product-id="{{$product->product_id}}"
                                                                                id="hire-loan-{{$product->product_id}}"
                                                                                @if($product->hire_loan) checked=checked @endif/>
-                                                                        <label for="hire-loan-{{$product->product_id}}">Hire
+                                                                        <label for="hire-loan-{{$product->product_id}}" class="@if($product->hire_loan_highlight==true) active @endif">Hire
                                                                             Purchase
                                                                         </label>
                                                                     </div>
@@ -634,7 +633,7 @@
                                                                                value="true"
                                                                                id="renovation-loan-{{$product->product_id}}"
                                                                                @if($product->renovation_loan) checked=checked @endif/>
-                                                                        <label for="renovation-loan-{{$product->product_id}}">Renovation
+                                                                        <label for="renovation-loan-{{$product->product_id}}" class="@if($product->renovation_loan_highlight==true) active @endif">Renovation
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -652,7 +651,7 @@
                                                                                @if($product->life_insurance) checked=checked
                                                                                @endif value="true"
                                                                                id="life-insurance-{{$product->product_id}}"/>
-                                                                        <label for="life-insurance-{{$product->product_id}}">Insurance</label>
+                                                                        <label for="life-insurance-{{$product->product_id}}" class="@if($product->life_insurance_highlight==true) active @endif">Insurance</label>
                                                                     </div>
                                                                     <div class="ps-checkbox">
                                                                         <input class="form-control" type="checkbox"
@@ -661,7 +660,7 @@
                                                                                data-product-id="{{$product->product_id}}"
                                                                                id="unit-trust-{{$product->product_id}}"
                                                                                @if($product->unit_trust) checked=checked @endif/>
-                                                                        <label for="unit-trust-{{$product->product_id}}">Unit
+                                                                        <label for="unit-trust-{{$product->product_id}}" class="@if($product->unit_trust_highlight==true) active @endif">Unit
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -814,9 +813,9 @@
                                             <thead>
                                             <tr>
                                                 <th>Monthly Transaction</th>
-                                                <th>Criteria A <br/><span class="subtitle">(Salary + 1 category)</span>
+                                                <th class="@if($product->criteria_a_highlight==true ) active @endif">Criteria A <br/><span class="subtitle">(Salary + 1 category)</span>
                                                 </th>
-                                                <th>Criteria B <br/><span
+                                                <th class="@if($product->criteria_b_highlight==true ) active @endif">Criteria B <br/><span
                                                             class="subtitle">(Salary + 2 OR more Cateogry)</span>
                                                 </th>
                                                 <th>Total Interest Earned for SGD
@@ -910,7 +909,8 @@
                                     <div class="ps-product__footer"><a class="ps-product__more" href="#">More
                                             Details<i class="fa fa-angle-down"></i></a><a
                                                 class="ps-product__info sp-only" href="#">More
-                                            data<i class="fa fa-angle-down"></i></a></div>
+                                            data<i class="fa fa-angle-down"></i></a>
+                                    </div>
                                 </div>
                             </div>
                             <!-- General INDIVIDUAL CRITERIA BASE -->
@@ -949,15 +949,15 @@
                                                     <tr>
                                                         <th>CRITERIA</th>
                                                         @if(!empty($firstRange->minimum_spend_1)|| !empty($firstRange->minimum_spend_2))
-                                                            <th>SPEND</th>@endif
+                                                            <th class="@if($product->spend_2_highlight==true || $product->spend_1_highlight==true) active @endif">SPEND</th>@endif
                                                         @if(!empty($firstRange->minimum_salary))
-                                                            <th>SALARY</th>@endif
+                                                            <th class="@if($product->salary_highlight==true || $product->salary_highlight_2==true ) active @endif">SALARY</th>@endif
                                                         @if(!empty($firstRange->minimum_giro_payment))
-                                                            <th>PAYMENT</th>@endif
+                                                            <th class="@if($product->payment_highlight==true ) active @endif">PAYMENT</th>@endif
                                                         @if(!empty($firstRange->minimum_privilege_pa))
-                                                            <th>PRIVILEGE</th>@endif
+                                                            <th class="@if($product->privilege_highlight==true ) active @endif">PRIVILEGE</th>@endif
                                                         @if(!empty($firstRange->minimum_loan_pa))
-                                                            <th>LOAN</th>@endif
+                                                            <th class="@if($product->loan_highlight==true ) active @endif">LOAN</th>@endif
                                                         @if(!empty($firstRange->other_minimum_amount1)&& ($firstRange->status_other1 == 1))
                                                             <th class="combine-criteria-padding  @if($product->other_highlight1==true) active @endif">
                                                                 <div class="">
@@ -972,7 +972,7 @@
                                                                                    @if($product->other_highlight1==true) checked='checked'
                                                                                    @endif
                                                                                    id="other-interest1-{{$product->product_id}}">
-                                                                            <label for="other-interest1-{{$product->product_id}}">{{$firstRange->other_interest1_name}}</label>
+                                                                            <label for="other-interest1-{{$product->product_id}}" class="@if($product->other_highlight1==true) active @endif">{{$firstRange->other_interest1_name}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -992,7 +992,7 @@
                                                                                    @endif
                                                                                    data-product-id="{{$product->product_id}}"
                                                                                    id="other-interest2-{{$product->product_id}}">
-                                                                            <label for="other-interest2-{{$product->product_id}}">{{$firstRange->other_interest2_name}}
+                                                                            <label for="other-interest2-{{$product->product_id}}" class="@if($product->other_highlight2==true) active @endif">{{$firstRange->other_interest2_name}}
                                                                             </label>
                                                                         </div>
                                                                     </div>
@@ -1192,16 +1192,16 @@
                                                         <thead>
                                                         <tr>
                                                             <th class="text-left">Balance</th>
-                                                            <th class="text-left"
-                                                                style="{{--@if($product->criteria_a_highlight==true) color:#66ec76; @endif--}}">
+                                                            <th class="text-left @if($product->salary_highlight==true) active @endif"
+                                                                style="">
                                                                 Salary
                                                             </th>
-                                                            <th class="text-left"
-                                                                style="{{--@if($product->criteria_b_highlight==true) color:#66ec76; @endif--}}">
+                                                            <th class="text-left @if($product->spend_highlight==true) active @endif"
+                                                                style="">
                                                                 Spend
                                                             </th>
                                                             @if($firstRange->status_other == 1)
-                                                                <th class="combine-criteria-padding  @if($product->other_highlight==true) active @endif">
+                                                                <th class="combine-criteria-padding" >
                                                                     <div class="">
                                                                         <div class="width-60">
                                                                             <div class="ps-checkbox">
@@ -1214,17 +1214,17 @@
                                                                                        @if($product->other_highlight==true) checked='checked'
                                                                                        @endif
                                                                                        id="other-interest-{{$product->product_id}}">
-                                                                                <label for="other-interest-{{$product->product_id}}">{{$firstRange->other_interest_name}}</label>
+                                                                                <label for="other-interest-{{$product->product_id}}" class="@if($product->other_highlight==true) active @endif">{{$firstRange->other_interest_name}}</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </th>
                                                             @endif
-                                                            <th class="text-left"
+                                                            <th class="text-left @if($product->wealth_highlight==true) active @endif"
                                                                 style="{{--@if($product->criteria_b_highlight==true) color:#66ec76; @endif--}}">
                                                                 Wealth
                                                             </th>
-                                                            <th class="text-left"
+                                                            <th class="text-left @if($product->grow_highlight==true) active @endif"
                                                                 style="{{--@if($product->criteria_b_highlight==true) color:#66ec76; @endif--}}">
                                                                 Grow
                                                             </th>
@@ -1246,7 +1246,7 @@
                                                                     </div>
                                                                 </div>
                                                             </th>--}}
-                                                            <th class="combine-criteria-padding  @if($product->boost_highlight==true) active @endif">
+                                                            <th class="combine-criteria-padding ">
                                                                 <div class="">
                                                                     <div class="width-50">
                                                                         <div class="ps-checkbox">
@@ -1259,7 +1259,7 @@
                                                                                    @if($product->boost_highlight==true) checked='checked'
                                                                                    @endif
                                                                                    id="boost-interest-{{$product->product_id}}">
-                                                                            <label for="boost-interest-{{$product->product_id}}">Boost</label>
+                                                                            <label for="boost-interest-{{$product->product_id}}" class="@if($product->boost_highlight==true) active @endif">Boost</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>

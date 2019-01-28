@@ -81,9 +81,9 @@
                                             @foreach($products as $product)
                                                 <div class="ps-block--short-product second"><div class="slider-img"><img
                                                             src="{{ asset($product->brand_logo) }}" alt=""></div>
-                                                    <h4><strong>up to   <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
+                                                    <p class="highlight highlight-bg "><strong>up to   <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
                                                                 %</span></strong>
-                                                    </h4>
+                                                    </p>
 
                                                     <div class="ps-block__info">
                                                         <p><span class="slider-font">Rate: </span>{{ $product->maximum_interest_rate }}
@@ -93,7 +93,7 @@
                                                             ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                         </p>
 
-                                                        <p class="highlight highlight-bg ">
+                                                        <p>
                                                             @if($product->promotion_period==ONGOING)
                                                                  {{ $product->promotion_period }}
                                                             @elseif($product->promotion_type_id!=ALL_IN_ONE_ACCOUNT)
