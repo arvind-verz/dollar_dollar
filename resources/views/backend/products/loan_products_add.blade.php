@@ -67,7 +67,7 @@
                                     <div class="form-group">
                                         {{Form::label('bank_sub_title', 'Bank Sub Title',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('bank_sub_title', old('bank_sub_title'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('bank_sub_title', old('bank_sub_title'), ['id' => '', 'class' => ' tiny-mce  form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 
@@ -99,7 +99,23 @@
                                             </button>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Shortlist Button Status</label>
 
+                                        <div class="col-sm-10">
+
+                                            <select class="form-control select2"
+                                                    data-placeholder="" name="shortlist_status"
+                                                    style="width: 100%;">
+                                                <option value="1" selected="selected">
+                                                    Active
+                                                </option>
+                                                <option value="0" >
+                                                    Deactivate
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Formula</label>
 
@@ -146,10 +162,10 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       data-date="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}"
+                                                       data-date="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) : null  }}"
                                                        name="promotion_start_date" id="promotion_start_date"
                                                        onchange="dateChange(this);"
-                                                       value="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}">
+                                                       value="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) : null  }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
@@ -166,10 +182,10 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       data-date="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}"
+                                                       data-date="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :null  }}"
                                                        name="promotion_end_date" id="promotion_end_date"
                                                        onchange="dateChange(this);"
-                                                       value="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}">
+                                                       value="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :null  }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
@@ -177,9 +193,9 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2 " id="ongoing">
-                                            <button type="button" data-status="false" id="ongoing-status"
-                                                    class="btn btn-block btn-danger btn-social"
-                                                    onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i>
+                                            <button type="button" data-status="true" id="ongoing-status"
+                                                    class="btn btn-block btn-success btn-social"
+                                                    onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i>
                                                 Ongoing
                                             </button>
                                         </div>
@@ -197,9 +213,9 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}"
+                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :null  }}"
                                                        name="until_end_date" id="until-end-date"
-                                                       value="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}">
+                                                       value="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :null  }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
@@ -219,7 +235,7 @@
                                                 <option value="1" selected="selected">
                                                     Active
                                                 </option>
-                                                <option value="0" @if(old('status') == 0) selected="selected" @endif>
+                                                <option value="0" >
                                                     Deactivate
                                                 </option>
                                             </select>
@@ -257,7 +273,7 @@
                                     <div class="form-group">
                                         {{Form::label('product_footer', 'Other Detail',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('product_footer', old('product_footer'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('product_footer', old('product_footer'), ['id' => '', 'class' => ' tiny-mce  form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 

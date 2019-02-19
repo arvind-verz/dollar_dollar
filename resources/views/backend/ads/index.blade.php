@@ -56,37 +56,50 @@
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort">
-                                                    Delete/Update
                                                 </th>
-                                                @if($type=='product')
-                                                    <th>Product Page</th>
-                                                @elseif($type=='blog')
-                                                    <th>Blog Page</th>
-                                                @endif
+                                                <th>Action</th>
+
+                                                <th class="@if(!in_array($type,['product','blog'])) display-none @endif">
+                                                    @if($type=='product')
+                                                        Product Page
+                                                    @elseif($type=='blog')
+                                                        Blog Page
+                                                    @endif
+                                                </th>
                                                 <th>Title</th>
-                                                <th>@if($type=='account' || $type=='blog')Vertical Ad Banner @else Ad Image @endif</th>
-                                                <th>@if($type=='account' || $type=='blog')Vertical Ad Banner Link @else Ad
-                                                    Link @endif</th>
-                                                @if($type=='account' || $type=='blog')
-                                                    <th>@if($type=='account' || $type=='blog')Horizontal Ad Banner @else Horizontal
-                                                        Banner @endif</th>
-                                                    <th>@if($type=='account' || $type=='blog')Horizontal Ad Banner Link @else Horizontal
-                                                        Banner Link @endif</th>
-                                                @endif
-                                                <th>@if($type=='account' || $type=='blog')Paid Vertical Ad  @else Paid Ad
+                                                <th>@if($type=='account' || $type=='blog')Vertical Ad Banner @else Ad
                                                     Image @endif</th>
-                                                <th>@if($type=='account' || $type=='blog')Paid Vertical Ad Link  @else Paid Ad
-                                                    Link @endif</th>
-                                                @if($type=='account' || $type=='blog')
-                                                    <th>Paid Horizontal Ad</th>
-                                                    <th>Paid Horizontal Ad Link</th>
-                                                @endif
+                                                <th>@if($type=='account' || $type=='blog')Vertical Ad Banner Link @else
+                                                        Ad
+                                                        Link @endif</th>
+
+                                                <th class="@if(!in_array($type,['account','blog'])) display-none @endif">@if($type=='account' || $type=='blog')
+                                                        Horizontal Ad Banner @else
+                                                        Horizontal
+                                                        Banner @endif</th>
+                                                <th class="@if(!in_array($type,['account','blog'])) display-none @endif">@if($type=='account' || $type=='blog')
+                                                        Horizontal Ad Banner
+                                                        Link @else Horizontal
+                                                        Banner Link @endif</th>
+
+                                                <th>@if($type=='account' || $type=='blog')Paid Vertical Ad  @else Paid
+                                                    Ad
+                                                    Image @endif</th>
+                                                <th>@if($type=='account' || $type=='blog')Paid Vertical Ad Link  @else
+                                                        Paid Ad
+                                                        Link @endif</th>
+                                                <th class="@if(!in_array($type,['account','blog'])) display-none @endif">
+                                                    Paid Horizontal Ad
+                                                </th>
+                                                <th class="@if(!in_array($type,['account','blog'])) display-none @endif">
+                                                    Paid Horizontal Ad Link
+                                                </th>
                                                 <th>Expiry Date</th>
                                                 <th>Paid Status</th>
                                                 <th>Active Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -96,97 +109,6 @@
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]"
                                                                    value="{{ $ad->id }}">
-                                                        </td>
-                                                        @if($type=='product' || $type=='blog')
-                                                            <td>
-                                                                {{  $ad->page_type  }}
-                                                            </td>
-                                                        @endif
-                                                        <td>
-                                                            {{  $ad->title  }}
-                                                        </td>
-                                                        <td>
-                                                            @if(!empty($ad->ad_image))
-                                                                <img src="{{ asset($ad->ad_image) }}" alt=""
-                                                                     width="100px">
-                                                            @else
-                                                                Not available
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if(!empty($ad->ad_link))<a href="{{$ad->ad_link}}"
-                                                                                        target="_blank">{{$ad->ad_link}}</a>@endif
-                                                        </td>
-                                                        @if($type=='account' || $type=='blog')
-                                                            <td>
-                                                                @if(!empty($ad->horizontal_banner_ad_image))
-                                                                    <img src="{{ asset($ad->horizontal_banner_ad_image) }}"
-                                                                         alt="" width="100px">
-                                                                @else
-                                                                    Not available
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                @if(!empty($ad->horizontal_banner_ad_link))<a
-                                                                        href="{{$ad->horizontal_banner_ad_link}}"
-                                                                        target="_blank">{{$ad->horizontal_banner_ad_link}}</a>@endif
-                                                            </td>
-                                                        @endif
-                                                        <td>
-                                                            @if(!empty($ad->paid_ad_image))
-                                                                <img src="{{ asset($ad->paid_ad_image) }}" alt=""
-                                                                     width="100px">
-                                                            @else
-                                                                Not available
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if(!empty($ad->paid_ad_link))<a
-                                                                    href="{{$ad->paid_ad_link}}"
-                                                                    target="_blank">{{$ad->paid_ad_link}}</a>
-                                                            @endif
-                                                        </td>
-                                                        @if($type=='account' || $type=='blog')
-                                                            <td>
-                                                                @if(!empty($ad->horizontal_paid_ad_image))
-                                                                    <img src="{{ asset($ad->horizontal_paid_ad_image) }}"
-                                                                         alt="" width="100px">
-                                                                @else
-                                                                    Not available
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                @if(!empty($ad->horizontal_paid_ad_link))<a
-                                                                        href="{{$ad->horizontal_paid_ad_link}}"
-                                                                        target="_blank">{{$ad->horizontal_paid_ad_link}}</a>
-                                                                @endif
-                                                            </td>
-                                                        @endif
-                                                        <td>
-                                                            @if (!empty($ad->ad_end_date))
-                                                                {!!  date("Y-m-d h:i A", strtotime($ad->ad_end_date))   !!}
-                                                            @endif
-                                                        </td>
-                                                        
-                                                        <?php
-                                                        $expiryDate = \Helper::convertToCarbonEndDate($ad->ad_end_date);
-                                                        $todayDate = \Carbon\Carbon::now();
-                                                        ?>
-                                                                <td>@if($ad->paid_ads_status==0) Disable @elseif($todayDate>$expiryDate) Expired @else
-                                                                Active @endif </td>
-                                                        <td>
-                                                           
-                                                                @if($ad->display==0) Deactivate @else
-                                                                Active @endif
-                                                            </td>
-                                                        <td>
-                                                            @if (!empty($ad->created_at))
-                                                                {!!  date("Y-m-d h:i A", strtotime($ad->created_at))   !!}
-                                                            @endif
-                                                        </td>
-                                                        <td>@if (!empty($ad->updated_at))
-                                                                {!!  date("Y-m-d h:i A", strtotime($ad->updated_at))   !!}
-                                                            @endif
                                                         </td>
                                                         <td class="text-center">
 
@@ -205,7 +127,97 @@
                                                                 </a>
                                                             @endif
 
+
                                                         </td>
+
+                                                        <td class="@if(!in_array($type,['product','blog'])) display-none @endif">
+                                                            {{  $ad->page_type  }}
+                                                        </td>
+                                                        <td>
+                                                            {{  $ad->title  }}
+                                                        </td>
+                                                        <td>
+                                                            @if(!empty($ad->ad_image))
+                                                                <img src="{{ asset($ad->ad_image) }}" alt=""
+                                                                     width="100px">
+                                                            @else
+                                                                Not available
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if(!empty($ad->ad_link))<a href="{{$ad->ad_link}}"
+                                                                                        target="_blank">{{$ad->ad_link}}</a>@endif
+                                                        </td>
+
+                                                        <td class="@if(!in_array($type,['account','blog'])) display-none @endif">
+                                                            @if(!empty($ad->horizontal_banner_ad_image))
+                                                                <img src="{{ asset($ad->horizontal_banner_ad_image) }}"
+                                                                     alt="" width="100px">
+                                                            @else
+                                                                Not available
+                                                            @endif
+                                                        </td>
+                                                        <td class="@if(!in_array($type,['account','blog'])) display-none @endif">
+                                                            @if(!empty($ad->horizontal_banner_ad_link))<a
+                                                                    href="{{$ad->horizontal_banner_ad_link}}"
+                                                                    target="_blank">{{$ad->horizontal_banner_ad_link}}</a>@endif
+                                                        </td>
+                                                        <td>
+                                                            @if(!empty($ad->paid_ad_image))
+                                                                <img src="{{ asset($ad->paid_ad_image) }}" alt=""
+                                                                     width="100px">
+                                                            @else
+                                                                Not available
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if(!empty($ad->paid_ad_link))<a
+                                                                    href="{{$ad->paid_ad_link}}"
+                                                                    target="_blank">{{$ad->paid_ad_link}}</a>
+                                                            @endif
+                                                        </td>
+                                                            <td class="@if(!in_array($type,['account','blog'])) display-none @endif">
+                                                                @if(!empty($ad->horizontal_paid_ad_image))
+                                                                    <img src="{{ asset($ad->horizontal_paid_ad_image) }}"
+                                                                         alt="" width="100px">
+                                                                @else
+                                                                    Not available
+                                                                @endif
+                                                            </td>
+                                                            <td class="@if(!in_array($type,['account','blog'])) display-none @endif">
+                                                                @if(!empty($ad->horizontal_paid_ad_link))<a
+                                                                        href="{{$ad->horizontal_paid_ad_link}}"
+                                                                        target="_blank">{{$ad->horizontal_paid_ad_link}}</a>
+                                                                @endif
+                                                            </td>
+                                                        <td>
+                                                            @if (!empty($ad->ad_end_date))
+                                                                {!!  date("Y-m-d H:i", strtotime($ad->ad_end_date))   !!}
+                                                            @endif
+                                                        </td>
+
+                                                        <?php
+                                                        $expiryDate = \Helper::convertToCarbonEndDate($ad->ad_end_date);
+                                                        $todayDate = \Carbon\Carbon::now();
+                                                        ?>
+                                                        <td>@if($ad->paid_ads_status==0)
+                                                                Disable @elseif($todayDate>$expiryDate) Expired @else
+                                                                Active @endif </td>
+                                                        <td>
+
+                                                            @if($ad->display==0) Deactivate @else
+                                                                Active @endif
+                                                        </td>
+                                                        <td>
+                                                            @if (!empty($ad->created_at))
+                                                                {!!  date("Y-m-d H:i", strtotime($ad->created_at))   !!}
+                                                            @endif
+                                                        </td>
+                                                        <td>@if (!empty($ad->updated_at))
+                                                                {!!  date("Y-m-d H:i", strtotime($ad->updated_at))   !!}
+                                                            @endif
+                                                        </td>
+
                                                     </tr>
                                                 @endforeach
                                             @endif

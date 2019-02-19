@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use DB;
 use DateTime;
+use App\SystemSetting;
 use App\Mail\Reminder as RM;
 
 
@@ -25,6 +26,7 @@ class Reminder extends Command
      * @var string
      */
     protected $description = 'Send Reminder to User';
+    private $systemSetting;
 
     /**
      * Create a new command instance.
@@ -34,6 +36,16 @@ class Reminder extends Command
     public function __construct()
     {
         parent::__construct();
+        $systemSetting = \Helper::getSystemSetting();
+        if (!$systemSetting) {
+            $systemSetting = new SystemSetting();
+            $systemSetting->email_sender_name = env('MAIL_FROM_NAME');
+            $systemSetting->admin_email = env('ADMIN_EMAIL');
+            $systemSetting->auto_email = env('MAIL_FROM_ADDRESS');
+        }
+
+        $this->systemSetting = $systemSetting;
+
     }
 
     /**
@@ -43,6 +55,7 @@ class Reminder extends Command
      */
     public function handle()
     {
+        $systemSetting = $this->systemSetting;
         $dtNow = new DateTime();
 
         $beginOfDay = clone $dtNow;
@@ -52,7 +65,10 @@ class Reminder extends Command
 
         $endOfDay = clone $beginOfDay;
         $endOfDay->modify('tomorrow');
-
+        $logo = null;
+        if ($systemSetting) {
+            $logo = $systemSetting->logo;
+        }
         // adjust from the next day to the end of the day, per original question
         $endDate = $endOfDay->modify('1 second ago');
         $endDate = $endDate->format('Y-m-d H:i:s');
@@ -72,7 +88,8 @@ class Reminder extends Command
                 } else {
                     $detail->product_reminder = json_decode($detail->product_reminder);
                 }
-               
+                $detail->auto_email = $systemSetting->auto_email;
+                $detail->email_sender_name = $systemSetting->email_sender_name;
                 if ($detail->product_reminder) {
                     foreach ($detail->product_reminder as $dayKey => $reminderDay) {
                         $reminderDate = null;
@@ -114,15 +131,20 @@ class Reminder extends Command
                                 'bank_logo' => $detail->brand_logo,
                                 'other_bank' => $detail->other_bank,
                                 'account_name' => $detail->account_name,
+                                'first_name' => $detail->first_name,
+                                'last_name' => $detail->last_name,
                                 'amount' => $detail->amount,
                                 'tenure' => $detail->tenure,
                                 'tenure_calender' => $detail->tenure_calender,
+                                'reminder_day' => $reminderDay,
                                 'start_date' => $detail->start_date,
                                 'end_date' => $detail->end_date,
                                 'interest_earned' => $detail->interest_earned,
                                 'ad'=>$ad,
-                                'adLink'=>$adLink
+                                'adLink'=>$adLink,
+                                'logo'=>$logo,
                             ] , function ($message) use ($detail) {
+                                $message->from($detail->auto_email,$detail->email_sender_name);
                                 $message->to($detail->email)->subject('A Product reminder');
                             });
 

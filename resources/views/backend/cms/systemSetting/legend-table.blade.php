@@ -101,17 +101,28 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Action</th>
                                     <th>Type</th>
                                     <th>Icon</th>
                                     <th>Title</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(count($systemSetting))
                                 @foreach($systemSetting as $setting)
                                 <tr>
+                                    <td class="text-center">
+                                        <a class="btn btn-app edit" title="Edit Page"
+                                           href="{{ route("system-setting-legend-table.edit",["id"=>$setting->id]) }}"><i
+                                                    class="fa fa-edit"></i> Edit</a>
+                                        <a class="btn btn-app delete" title="Delete Brand"
+                                           onclick="return confirm('Are you sure to delete this?')"
+                                           href="{{ route("system-setting-legend-table-destory",["id"=>$setting->id]) }}">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </a>
+                                    </td>
                                     <td>
                                         @if($setting->page_type == FIX_DEPOSIT)
                                         {{FIX_DEPOSIT_MODULE}}
@@ -138,16 +149,7 @@
                                         Deactivate
                                         @endif
                                     </td>
-                                    <td class="text-center">
-                                        <a class="btn btn-app edit" title="Edit Page"
-                                            href="{{ route("system-setting-legend-table.edit",["id"=>$setting->id]) }}"><i
-                                        class="fa fa-edit"></i> Edit</a>
-                                        <a class="btn btn-app delete" title="Delete Brand"
-                                            onclick="return confirm('Are you sure to delete this?')"
-                                            href="{{ route("system-setting-legend-table-destory",["id"=>$setting->id]) }}">
-                                            <i class="fa fa-trash"></i> Delete
-                                        </a>
-                                    </td>
+
                                 </tr>
                                 @endforeach
                                 @endif

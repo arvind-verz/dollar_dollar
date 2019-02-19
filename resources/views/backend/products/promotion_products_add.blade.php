@@ -59,7 +59,7 @@
                                     <div class="form-group">
                                         {{Form::label('bank_sub_title', 'Bank Sub Title',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('bank_sub_title', old('bank_sub_title'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('bank_sub_title', old('bank_sub_title'), ['id' => '', 'class' => ' tiny-mce form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -154,12 +154,12 @@
                                         <div class="form-group">
                                             {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
                                             <div class="col-sm-8">
-                                                {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => ''])}}
+                                                {{Form::text('promotion_period', ONGOING, ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => ''])}}
                                             </div>
                                             <div class="col-sm-2 " id="ongoing-1">
-                                                <button type="button" data-status="false" id="ongoing-status-1"
-                                                        class="btn btn-block btn-danger btn-social"
-                                                        onclick="changeOnGoingStatus1(this)"><i class="fa fa-times"></i>
+                                                <button type="button" data-status="true" id="ongoing-status-1"
+                                                        class="btn btn-block btn-success btn-social"
+                                                        onclick="changeOnGoingStatus1(this)"><i class="fa fa-check"></i>
                                                     Ongoing
                                                 </button>
                                             </div>
@@ -222,10 +222,10 @@
                                                         Date
                                                     </button>
                                                 </div>
-                                                <input type="text" class="form-control pull-right datepicker1"
-                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}"
+                                                <input type="text" class="form-control pull-right datepicker1" disabled="disabled"
+                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) : null  }}"
                                                        name="until_end_date" id="until-end-date"
-                                                       value="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}">
+                                                       value="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :null  }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
@@ -305,7 +305,7 @@
                                     <div class="form-group">
                                         {{Form::label('product_footer', 'Other Detail',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('product_footer', old('product_footer'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('product_footer', old('product_footer'), ['id' => '', 'class' => ' tiny-mce form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">

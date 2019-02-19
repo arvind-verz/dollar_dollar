@@ -109,7 +109,10 @@ class PagesFrontNewController extends Controller
                 $criteriaMatchCount = 0;
                 $product->highlight_index = 0;
                 $product->highlight = false;
+                $product->salary_highlight = false;
+                $product->spend_highlight = false;
                 $product->other_highlight = false;
+                $product->wealth_highlight = false;
                 $product->grow_highlight = false;
                 $product->boost_highlight = false;
                 $maxRanges = [];
@@ -167,18 +170,21 @@ class PagesFrontNewController extends Controller
                             if ($salaryStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_salary / 100), 2);
                                 $productRange->salary_highlight = true;
+                                $product->salary_highlight = true;
                                 $product->highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_salary;
                             }
                             if ($spendStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_spend / 100), 2);
                                 $productRange->spend_highlight = true;
+                                $product->spend_highlight = true;
                                 $product->highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_spend;
                             }
                             if ($otherStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_other / 100), 2);
                                 $productRange->other_highlight = true;
+                                $product->other_highlight = true;
                                 $product->highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_other;
                             }
@@ -186,6 +192,7 @@ class PagesFrontNewController extends Controller
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_wealth / 100), 2);
                                 $productRange->wealth_highlight = true;
                                 $product->highlight = true;
+                                $product->wealth_highlight = true;
                                 $interestPercentTotal += $lastRange->bonus_interest_wealth;
                             }
 
@@ -202,6 +209,7 @@ class PagesFrontNewController extends Controller
                             if ($salaryStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_salary / 100), 2);
                                 $productRange->salary_highlight = true;
+                                $product->salary_highlight = true;
                                 $product->highlight = true;
                                 $interestPercentTotal += $productRange->bonus_interest_salary;
                             }
@@ -209,17 +217,20 @@ class PagesFrontNewController extends Controller
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_spend / 100), 2);
                                 $productRange->spend_highlight = true;
                                 $product->highlight = true;
+                                $product->spend_highlight = true;
                                 $interestPercentTotal += $productRange->bonus_interest_spend;
                             }
                             if ($otherStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_other / 100), 2);
                                 $productRange->other_highlight = true;
                                 $product->highlight = true;
+                                $product->other_highlight = true;
                                 $interestPercentTotal += $productRange->bonus_interest_other;
                             }
                             if ($wealthStatus == true) {
                                 $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_wealth / 100), 2);
                                 $productRange->wealth_highlight = true;
+                                $product->wealth_highlight = true;
                                 $product->highlight = true;
                                 $interestPercentTotal += $productRange->bonus_interest_wealth;
                             }
@@ -236,11 +247,13 @@ class PagesFrontNewController extends Controller
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_salary / 100), 2);
                                     $productRange->salary_highlight = true;
                                     $product->highlight = true;
+                                    $product->salary_highlight = true;
                                     $interestPercentTotal += $productRange->bonus_interest_salary;
                                 }
                                 if ($spendStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_spend / 100), 2);
                                     $productRange->spend_highlight = true;
+                                    $product->spend_highlight = true;
                                     $product->highlight = true;
                                     $interestPercentTotal += $productRange->bonus_interest_spend;
                                 }
@@ -248,12 +261,14 @@ class PagesFrontNewController extends Controller
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_other / 100), 2);
                                     $productRange->other_highlight = true;
                                     $product->highlight = true;
+                                    $product->other_highlight = true;
                                     $interestPercentTotal += $productRange->bonus_interest_other;
                                 }
                                 if ($wealthStatus == true) {
                                     $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_wealth / 100), 2);
                                     $productRange->wealth_highlight = true;
                                     $product->highlight = true;
+                                    $product->wealth_highlight = true;
                                     $interestPercentTotal += $productRange->bonus_interest_wealth;
                                 }
 
@@ -293,8 +308,8 @@ class PagesFrontNewController extends Controller
                     $product->highlight = true;
                     $product->total_interest += $productRanges[0]->bonus_interest_boost;
                 }
-                if ($baseInterest == true) {
-                    $product->base_interest_total = round($placement * ($productRanges[0]->bonus_interest_remaining_amount / 100), 2);
+                if ($maxPlacement< $placement) {
+                    $product->base_interest_total = round(($placement-$maxPlacement) * ($productRanges[0]->bonus_interest_remaining_amount / 100), 2);
                     $product->interest_earned += $product->base_interest_total;
                     $product->base_highlight = true;
                     $product->total_interest += $productRanges[0]->bonus_interest_remaining_amount;
@@ -312,8 +327,8 @@ class PagesFrontNewController extends Controller
                             <tr>
                                 <th class="text-left">Balance</th>
                                 <?php $firstRange = $productRanges[0]; ?>
-                                <th class="text-left">Salary</th>
-                                <th class="text-left">Spend</th>
+                                <th class="text-left <?php if($product->salary_highlight==true  ) { echo'active'; } ?>">Salary</th>
+                                <th class="text-left <?php if($product->spend_highlight==true  ) { echo'active'; } ?>">Spend</th>
                                 <?php
                                 if ($firstRange->status_other == 1) { ?>
                                     <th class="combine-criteria-padding <?php if ($product->other_highlight == true) {
@@ -333,14 +348,18 @@ class PagesFrontNewController extends Controller
 
                                                            id="other-interest-<?php echo $product->product_id; ?>">
                                                     <label
-                                                        for="other-interest-<?php echo $product->product_id; ?>"><?php echo $firstRange->other_interest_name; ?></label>
+                                                        for="other-interest-<?php echo $product->product_id; ?>" class="<?php if($product->other_highlight==true  ) { echo'active'; } ?>"><?php echo $firstRange->other_interest_name; ?></label>
                                                 </div>
                                             </div>
                                         </div>
                                     </th>
                                 <?php } ?>
-                                <th class="text-left" >Wealth</th>
-                                <th class="text-left" >Grow</th>
+                                <th class="text-left <?php if ($product->wealth_highlight == true) {
+                                    echo 'active';
+                                } ?> " >Wealth</th>
+                                <th class="text-left <?php if ($product->grow_highlight == true) {
+                                    echo 'active';
+                                } ?> " >Grow</th>
 
                                     <!--<th class="combine-criteria-padding <?php /*if ($product->other_highlight == true) {
                                         echo 'active';
@@ -379,7 +398,7 @@ class PagesFrontNewController extends Controller
                                                     } ?>
                                                        id="boost-interest-<?php echo $product->product_id; ?>">
                                                 <label
-                                                    for="boost-interest-<?php echo $product->product_id; ?>">Boost</label>
+                                                    for="boost-interest-<?php echo $product->product_id; ?>" class="<?php if($product->boost_highlight==true  ) { echo'active'; } ?>">Boost</label>
                                             </div>
                                         </div>
                                     </div>

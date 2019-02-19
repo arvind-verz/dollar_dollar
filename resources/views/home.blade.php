@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+<meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+<meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+<meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
 <?php
@@ -219,7 +228,7 @@ $datetime = Helper::todayDate();
                                     <li class="" id="catList3">
                                         <a class="aboutpage" id="showContent-3" data-order-by="{{PROMOTION_PERIOD}}"
                                             target="showContent-container-3">
-                                            tenure
+                                            Tenor
                                         </a>
                                     </li>
                                 </ul>
@@ -251,7 +260,7 @@ $datetime = Helper::todayDate();
             <div class="ps-section__footer" ><a href="{{url(FIXED_DEPOSIT_MODE)}}" id="view-all-rate">View all bank rates</a></div>
         </div>
     </div>
-    <div class="ps-section__content bg--cover mt-10" style="background:#ffffff;">
+   <!-- <div class="ps-section__content bg--cover mt-10" style="background:#ffffff;">
         <div class="container">
             <div class="ps-tabs">
                 <div class="ps-tab active" id="tab-1">
@@ -314,7 +323,7 @@ $datetime = Helper::todayDate();
             </div>
             <div class="ps-section__footer" ><a href="{{url(LOAN_MODE)}}" id="view-all-rate">View all bank rates</a></div>
         </div>
-    </div>
+    </div> -->
 </div>
 {{--Blog section start--}}
 <div class="ps-home-blog">
@@ -405,13 +414,13 @@ $datetime = Helper::todayDate();
                         </strong>
                         </h3>
                         <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6"> <a class="ps-btn ps-btn--yellow WIDTH-50" href="https://www.dollardollar.sg/login/facebook" style="">
+                        <div class="col-lg-6 col-md-6 col-sm-6"> <a class="ps-btn ps-btn--yellow WIDTH-50" href="@if(AUTH::check()) {{url('product-management')}} @else {{route('social-login',['provider'=>'facebook','redirect_url'=>'product-management'])}}  @endif" style="">
                         <i class="fab fa-facebook-f">
                         </i>
                         Signup with facebook
                         </a>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6"><a class="ps-btn ps-btn--outline" href="https://www.dollardollar.sg/login/google">
+                        <div class="col-lg-6 col-md-6 col-sm-6"><a class="ps-btn ps-btn--outline" href="@if(AUTH::check()) {{url('product-management')}} @else {{route('social-login',['provider'=>'google','redirect_url'=>'product-management'])}} @endif">
                         Sign Up with
                         email
                         </a>

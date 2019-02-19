@@ -115,7 +115,7 @@
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                 <div class="form-group">
-                                                    <label>Tenure</label>
+                                                    <label>Tenor</label>
                                                     <input type="text" class="form-control only_numeric" name="tenure"
                                                            value="{{ old('tenure') }}">
                                                 </div>
@@ -248,7 +248,7 @@
                                                             <br> Name
                                                         </th>
                                                         <th>Amount</th>
-                                                        <th>Tenure
+                                                        <th>Tenor
                                                             <br> (M= months,
                                                             <br> D = Days)
                                                             <br> Y = Years)
@@ -304,10 +304,6 @@
                                                                 </td>
                                                             </tr>
                                                         @endforeach
-                                                    @else
-                                                        <tr>
-                                                            <td class="text-center" colspan="9">No data found.</td>
-                                                        </tr>
                                                     @endif
                                                     </tbody>
                                                 </table>

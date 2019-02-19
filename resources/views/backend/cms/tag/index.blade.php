@@ -74,13 +74,13 @@
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort">
-                                                    Delete/Update
                                                 </th>
+                                                <th>Action</th>
                                                 <th>Title</th>
                                                 <th>Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -90,25 +90,6 @@
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]"
                                                                    value="{{ $tag->id }}">
-                                                        </td>
-
-                                                        <td>
-                                                            {{ $tag->title }}
-                                                        </td>
-                                                        <td>
-                                                            <i class="fa {{ ($tag->status==1) ? "fa-check text-success":"fa-times text-danger" }} inline"></i>
-                                                        </td>
-                                                        <td>
-                                                            @if ($tag->created_at == null)
-                                                                {{$tag->created_at}}
-                                                            @endif
-                                                            {!!  date("Y-m-d h:i A", strtotime($tag->created_at))   !!}
-
-                                                        </td>
-                                                        <td>@if ($tag->updated_at == null)
-                                                                {{$tag->updated_at}}
-                                                            @endif
-                                                            {!!  date("Y-m-d h:i A", strtotime($tag->updated_at))   !!}
                                                         </td>
                                                         <td class="text-center">
                                                             @if($CheckLayoutPermission[0]->edit==1)
@@ -127,6 +108,25 @@
                                                                 </a>
                                                             @endif
                                                         </td>
+                                                        <td>
+                                                            {{ $tag->title }}
+                                                        </td>
+                                                        <td>
+                                                            <i class="fa {{ ($tag->status==1) ? "fa-check text-success":"fa-times text-danger" }} inline"></i>
+                                                        </td>
+                                                        <td>
+                                                            @if ($tag->created_at == null)
+                                                                {{$tag->created_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d H:i", strtotime($tag->created_at))   !!}
+
+                                                        </td>
+                                                        <td>@if ($tag->updated_at == null)
+                                                                {{$tag->updated_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d H:i", strtotime($tag->updated_at))   !!}
+                                                        </td>
+
                                                     </tr>
                                                 @endforeach
                                             @endif

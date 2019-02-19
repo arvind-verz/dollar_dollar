@@ -23,16 +23,17 @@
         }
     }
 </style>
-<?php
-$systemSetting = \Helper::getSystemSetting();
-$logo = null;
-if ($systemSetting) {
-    $logo = $systemSetting->logo;
-}
-?>
+
 
 <table class="wrapper" width="100%" cellpadding="0" cellspacing="0"
        style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; background-color: #f5f8fa; margin: 0; padding: 0; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
+    <?php
+    $systemSetting = \Helper::getSystemSetting();
+    $logo = null;
+    if ($systemSetting) {
+        $logo = $systemSetting->logo;
+    }
+    ?>
     <tr>
         <td align="center" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box;">
             <table class="content" width="100%" cellpadding="0" cellspacing="0"
@@ -43,7 +44,7 @@ if ($systemSetting) {
                         <a href="{{ config('app.url') }}"
                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;">
                             @if($logo)
-                                <img src="{{ asset($logo) }}"/>
+                                <img src="{{url($logo)}}"/>
                             @else
                                 {{ config('app.name') }}
                             @endif
@@ -61,21 +62,21 @@ if ($systemSetting) {
                                 <td class="content-cell"
                                     style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 35px;">
                                     <p style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787E; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        Greetings {{$account_name}},</p>
+                                        Greetings {{$first_name}} {{$last_name}},</p>
 
                                     <div class="table"
                                          style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box;">
                                         <table style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; margin: 30px auto; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
                                             <tr>
                                                 <td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787E; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">
-                                                    This serves as your friendly reminder that you have
-                                                    until {{date("Y-m-d", strtotime($end_date))}} before your purchased
-                                                    products expire.
+                                                    This serves as a friendly reminder that your deposit is going to due
+                                                    in {{$reminder_day}}, the due date will be
+                                                    on {{date("d-m-Y", strtotime($end_date))}}.
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787E; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">
-                                                    See product details attached.
+                                                    Below are your deposit details:
                                                 </td>
                                             </tr>
                                             <tr>
@@ -134,7 +135,7 @@ if ($systemSetting) {
                                                                 <td class="content-cell" align="left"
                                                                     style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 5px;">
                                                                     @if($amount)
-                                                                        {{ $amount }}
+                                                                        ${{ $amount }}
                                                                     @endif
                                                                 </td>
                                                             </tr>
@@ -187,7 +188,7 @@ if ($systemSetting) {
                                                                 </td>
                                                             </tr>
                                                         @endif
-                                                            @if($interest_earned)
+                                                        @if($interest_earned)
                                                             <tr>
                                                                 <td class="content-cell" align="left"
                                                                     style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 5px;">
@@ -199,7 +200,7 @@ if ($systemSetting) {
                                                                 </td>
                                                                 <td class="content-cell" align="left"
                                                                     style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 5px;">
-                                                                    {{ isset($interest_earned) ? $interest_earned : '-' }}
+                                                                    {{ isset($interest_earned) ? '$'.$interest_earned : '-' }}
                                                                 </td>
                                                             </tr>
                                                         @endif
@@ -210,7 +211,16 @@ if ($systemSetting) {
                                         </table>
                                     </div>
                                     <p style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787E; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        Have a good day!
+                                        You can visit our product page for other promotions or you can consult our
+                                        experienced and professional Financial <a target="_blank"
+                                                                                  rel="noopener noreferrer"
+                                                                                  href="{{url('investment')}}"
+                                                                                  style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #3869D4;">Advisors</a>
+                                        to maximise your potential interest earned.
+                                    </p>
+
+                                    <p style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787E; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
+                                        Thank you and have a good day!
                                     </p>
 
                                     <p style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787E; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">

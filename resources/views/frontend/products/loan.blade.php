@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
     <?php
@@ -174,21 +183,26 @@
                             </div>
                             <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12 ">
                                 <div class="row ps-col-tiny">
-                                    <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12 ">
-                                        <div class="form-group form-group--nest">
-                                            <div class="form-group__content">
-                                                <input class="form-control only_numeric prefix_dollar" type="text"
-                                                       placeholder=""
-                                                       name="search_value" id="search_value"
-                                                       value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}"/>
-                                            </div>
-                                            <button type="submit">Go</button>
-                                        </div>
+                                    <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12 form-group--label">
+										<div class="form-group__content flex-box">
+											<label>Loan
+											<a class="ps-tooltip" href="javascript:void(0)" data-tooltip="Loan"><i class="fa fa-exclamation-circle"></i></a>
+											</label>
+											<div class="form-group form-group--nest">
+												<div class="form-group__content">
+													<input class="form-control only_numeric prefix_dollar" type="text"
+														   placeholder=""
+														   name="search_value" id="search_value"
+														   value="{{ isset($searchFilter['search_value']) ? $searchFilter['search_value'] : '' }}"/>
+												</div>
+												<button type="submit">Go</button>
+											</div>
+										</div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group  ">
                                             <select class="form-control sort-by" name="sort_by">
-                                                <option value="" disabled="disabled" selected="selected">Arrange by
+                                                <option value="" disabled="disabled" selected="selected">Arrange By
                                                 </option>
                                                 <option value="1"
                                                         @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
@@ -216,7 +230,7 @@
             </div>
             @if(count($products))
                 @include('loanProductsInnerSlider')
-                {{-- @include('loanSpInnerProductsSlider') --}}
+                @include('loanSpInnerProductsSlider')
             @endif
             <?php
             $adspopup = json_decode($page->ads_placement);
@@ -245,12 +259,15 @@
                             <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
                                                          data-src="{{ asset($product->brand_logo) }}"></div>
                             <div class="ps-product__promo left">
-                                <label class="ps-btn--checkbox ">
-                                    <input type="checkbox" id="" name="short_list_ids[]"
-                                           value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist
-                                    this
-                                    Loan
-                                </label>
+                                @if($product->shortlist_status==1)
+                                    <label class="ps-btn--checkbox ">
+                                        <input type="checkbox" id="" name="short_list_ids[]"
+                                               value="{{$product->product_id}}"
+                                               class="checkbox short-list"><span></span>Shortlist
+                                        this
+                                        Loan
+                                    </label>
+                                @endif
                             </div>
                         </div>
                         <div class="ps-loan__text1">{!! $product->bank_sub_title !!}</div>
@@ -284,8 +301,7 @@
                                                 <tr>
                                                     <td class=" @if($productRange->tenure_highlight==true) highlight @endif">
                                                         YEAR {{$productRange->tenure}}</td>
-                                                    <td>{{$productRange->bonus_interest+$productRange->rate_interest_other}}
-                                                        %
+                                                    <td>{{$productRange->bonus_interest+$productRange->rate_interest_other}}%
                                                         @if(!empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&empty($productRange->rate_name_other)&&empty($productRange->rate_interest_other))
                                                             ({{$productRange->floating_rate_type}})
                                                         @elseif(empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&!empty($productRange->rate_name_other)&& !empty($productRange->rate_interest_other))
@@ -319,34 +335,29 @@
                                                 <td class=" @if($product->highlight==true) highlight @endif ">THEREAFTER
                                                 </td>
                                                 <td>
-                                                    {{($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other)}}
-                                                    %
+                                                    {{($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other)}}%
                                                     @if(!empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&&empty($productRanges[0]->there_after_rate_interest_other))
                                                         ({{$productRanges[0]->there_after_rate_type}})
                                                     @elseif(empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&!empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                         ({{$productRanges[0]->there_after_bonus_interest}}%
                                                         @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}
-                                                        %
+                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%
                                                         ({{$productRanges[0]->there_after_rate_name_other}}))
                                                     @elseif(!empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&!empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                         ({{$productRanges[0]->there_after_rate_type}}
                                                         @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}
-                                                        %
+                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%
                                                         ({{$productRanges[0]->there_after_rate_name_other}}))
                                                     @elseif(empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& empty($productRanges[0]->there_after_rate_interest_other))
                                                     @elseif(empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                         ( {{$productRanges[0]->there_after_bonus_interest}}%
                                                         @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}
-                                                        %)
+                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%)
                                                     @elseif(empty($productRanges[0]->there_after_rate_type)&&empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                     @elseif(!empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                         ({{$productRanges[0]->there_after_rate_type}}
                                                         @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}
-                                                        % )
+                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}% )
                                                     @endif
                                                 </td>
                                                 <td class=" @if($product->highlight==true) highlight @endif ">
@@ -468,11 +479,14 @@
                             <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
                                                          data-src="{{ asset($product->brand_logo) }}"></div>
                             <div class="ps-product__promo left">
-                                <label class="ps-btn--checkbox ">
-                                    <input type="checkbox" id="" name="short_list_ids[]"
-                                           value="{{$product->product_id}}" class="checkbox short-list"><span></span>Shortlist
-                                    this
-                                </label>
+                                @if($product->shortlist_status==1)
+                                    <label class="ps-btn--checkbox ">
+                                        <input type="checkbox" id="" name="short_list_ids[]"
+                                               value="{{$product->product_id}}"
+                                               class="checkbox short-list"><span></span>Shortlist
+                                        this
+                                    </label>
+                                @endif
                             </div>
                         </div>
                         <div class="ps-loan__text1">{!! $product->bank_sub_title !!}</div>
@@ -506,8 +520,7 @@
                                                 <tr>
                                                     <td class=" ">
                                                         YEAR {{$productRange->tenure}}</td>
-                                                    <td>{{$productRange->bonus_interest+$productRange->rate_interest_other}}
-                                                        %
+                                                    <td>{{$productRange->bonus_interest+$productRange->rate_interest_other}}%
                                                         @if(!empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&empty($productRange->rate_name_other)&&empty($productRange->rate_interest_other))
                                                             ({{$productRange->floating_rate_type}})
                                                         @elseif(empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&!empty($productRange->rate_name_other)&& !empty($productRange->rate_interest_other))
@@ -541,34 +554,29 @@
                                                 <td class="  ">THEREAFTER
                                                 </td>
                                                 <td>
-                                                    {{($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other)}}
-                                                    %
+                                                    {{($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other)}}%
                                                     @if(!empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&&empty($productRanges[0]->there_after_rate_interest_other))
                                                         ({{$productRanges[0]->there_after_rate_type}})
                                                     @elseif(empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&!empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                         ({{$productRanges[0]->there_after_bonus_interest}}%
                                                         @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}
-                                                        %
+                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%
                                                         ({{$productRanges[0]->there_after_rate_name_other}}))
                                                     @elseif(!empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&!empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                         ({{$productRanges[0]->there_after_rate_type}}
                                                         @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}
-                                                        %
+                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%
                                                         ({{$productRanges[0]->there_after_rate_name_other}}))
                                                     @elseif(empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& empty($productRanges[0]->there_after_rate_interest_other))
                                                     @elseif(empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                         ( {{$productRanges[0]->there_after_bonus_interest}}%
                                                         @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}
-                                                        %)
+                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%)
                                                     @elseif(empty($productRanges[0]->there_after_rate_type)&&empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                     @elseif(!empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
                                                         ({{$productRanges[0]->there_after_rate_type}}
                                                         @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}
-                                                        % )
+                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}% )
                                                     @endif
                                                 </td>
                                                 <td class=" ">

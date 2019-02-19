@@ -450,6 +450,33 @@ $day = 'Year';
 }
 return $day;
 }
+public static function daysMonthYearShortForm($tenure_type, $tenure)
+{
+$day = '';
+if(is_numeric($tenure))
+{
+if ($tenure_type == 1) {
+if ($tenure > 1) {
+$day = 'Days';
+} else {
+$day = 'Day';
+}
+} elseif ($tenure_type == 2) {
+if ($tenure > 1) {
+$day = 'Mths';
+} else {
+$day = 'Mth';
+}
+} elseif ($tenure_type == 3) {
+if ($tenure > 1) {
+$day = 'Years';
+} else {
+$day = 'Year';
+}
+}
+}
+return $day;
+}
 public static function daysOrMonthForSlider($tenure_type, $tenure)
 {
 $day = '';
@@ -540,11 +567,11 @@ public static function inRoundTwoDecimal($amount)
 {
 $intVal = intval(number_format((float)$amount, 2, '.', ''));
 if (($amount - $intVal) > 0.009) {
-if(($amount - $intVal) > 0.09){
-$amount = number_format((float)$amount, 1);
-}else{
+/*if(($amount - $intVal) > 0.09){
 $amount = number_format((float)$amount, 2);
-}
+}else{*/
+$amount = number_format((float)$amount, 2);
+/*}*/
 }else{
 $amount = $intVal;
 }
@@ -571,7 +598,7 @@ public static function getHomeProducts($productType, $byOrderValue)
 {
 $products = DB::table('promotion_products')->join('promotion_types',
 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
 ->join('promotion_formula', 'promotion_products.formula_id', '=',
 'promotion_formula.id')
 ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
@@ -695,7 +722,7 @@ public static function getLoanProducts($productType, $byOrderValue)
 {
 $filter = $byOrderValue ? $byOrderValue : INTEREST;
 $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
 ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
 //->whereNotNull('promotion_products.formula_id')
 ->where('promotion_types.id', '=', $productType)

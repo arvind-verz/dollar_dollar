@@ -1,75 +1,177 @@
-<div class="ps-criteria-detail">
-    <p>BOC SmartSaver is a saving plan for BOC Multi-Currency Savings Account (MCSA) to earn Bonus Rate. Earn up to 3.15% on your first 60K in account.</p>
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-            <h4 class="ps-product__heading">Criteria Details</h4>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-            <div class="row">
-                <div class="table-new">
-                    <div class="ps-block--product-info">
-                        <h5>Spend</h5>
-                        <div class="ps-block__content">
-                            <p>Spend - Spending on Credit/Debit Card</p>
-                            <a class="ps-block__more content-detail" data-formula="2" data-detail-id="formula-2-spend">SHOW DETAILS</a></div>
-                    </div>
-                    <div class="ps-block--product-info">
-                        <h5>Salary</h5>
-                        <div class="ps-block__content">
-                            <p>Giro &ndash; 3 GIRO Debit Transaction&nbsp;</p>
-                            <a class="ps-block__more content-detail" data-formula="2" data-detail-id="formula-2-giro">Show DETAILS</a></div>
-                    </div>
-                    <div class="ps-block--product-info">
-                        <h5>Payment</h5>
-                        <div class="ps-block__content">
-                            <p>Salary &ndash; Credit of Salary (min $2k)</p>
-                            <a class="ps-block__more content-detail" data-formula="2" data-detail-id="formula-2-salary">Show DETAILS</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="" class="ps-criteria-detail__content">
-        <h5><strong>Spend</strong></h5>
-        <ul class="ps-list--arrow-circle">
-            <li>Minimum spending of $500 <strong>OR</strong>&nbsp;spending of $1500 on selected BOC Debit/Credit Card to earn Bonus Rate. Higher spending of minimum $1500 will unlock higher Bonus Rate.</li>
-            <li>Only retail transaction and recurring bill payment will contribute to card spent, refer to BOC for exclusion of transactions</li>
-            <li>Primary card holder has to be primary account holder of BOC SmartSaver Account to qualify for card spend. Supplementary card spending will be accrued to Primary card holder's spending.</li>
-        </ul>
-    </div>
-    <div id="" class="ps-criteria-detail__content">
-        <h5><strong>Salary</strong></h5>
-        <ul class="ps-list--arrow-circle">
-            <li>Salary Credit of minimum $2000 <strong>OR</strong> salary credit of $6000 to earn Bonus Rate. Higher Salary crediting of $6000 will unlock higher Bonus Rate.&nbsp;</li>
-            <li>Only salary credit transaction made via GIRO reflected as 'IBG-SALA' or other transaction code determined by BOC will be valid</li>
-            <li>Total salary credit amount will be combined if there are multiple salary credit within the month</li>
-        </ul>
-    </div>
-    <div id="" class="ps-criteria-detail__content">
-        <h5><strong>Payment</strong></h5>
-        <ul class="ps-list--arrow-circle">
-            <li>Make 3 bill payment per calendar month from BOC BonusSaver Account with BOC Online Banking OR through GIRO payment to any BOC participating billing organization</li>
-            <li>Each bill payment has to be minimum of $30 and deduction from Multi-Currency Savings Account</li>
-        </ul>
-    </div>
+<div class="product-mobile">Show Product<span></span></div>
+<div class="product-row-01 sp-only clearfix slider-class">
+    @php $i = 1;$featured = []; @endphp
+    @foreach($products as $product)
+@if($product->featured==1)
+<?php $featured[] = $i; ?>
+@php $i++; @endphp
+@endif
+@endforeach
+<?php $i = 1;$featured_item = 5 - count($featured);
+$featured_count = count($featured);
+$featured_width = 0;
+/*if ($featured_count == 1) {
+$featured_width = 2;
+} elseif ($featured_count == 2) {
+$featured_width = 3;
+} elseif ($featured_count == 3) {
+$featured_width = 4;
+} */
+?>
+    <div class="product-col-00 dump-padding-left">
+        <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
+            data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
+            data-owl-gap="10" data-owl-item="{{ $featured_item }}"
+            data-owl-item-lg="{{ $featured_item }}"
+            data-owl-item-md="3" data-owl-item-sm="2"
+            data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
+            data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
+            data-owl-nav-right="<i class='fa fa-angle-right'></i>"
+            data-owl-speed="5000">
+            @foreach ($products as $product)
+            @if($product->featured==1 &&  $product->slider_status==1)
+            <div class="ps-block--short-product second highlight" data-mh="product">
+                        <div class="slider-img"><img  src="{{ asset($product->brand_logo) }}" alt=""></div>
+                        @if(isset($searchFilter['filter']))
+                            <h4>
+                                <strong>
+                                    @if($searchFilter['filter']==INTEREST)
+                                        Up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
+                                            %</span>
+                                    @endif
+                                    @if($searchFilter['filter']==PLACEMENT)
+                                        Min:   <span class="highlight-slider">
+                            SGD ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
+                                    @endif
+                                    @if($searchFilter['filter']==TENURE)
+                                        @if($product->promotion_period==ONGOING)
+                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                        @else
+                                            @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                            @elseif($product->tenure_value > 0)
+                                                <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                            @elseif(is_numeric($product->promotion_period))
+                                                <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                            @else
+                                                <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                            @endif
+                                        @endif
+                                    @endif
+                                    @if($searchFilter['filter']==CRITERIA)
+                                        up to  <span class="highlight-slider"> {{ $product->promotion_period }}
+                                            Criteria </span>
+                                    @endif
+                                </strong>
+                            </h4>
+                        @endif
+                        <div class="ps-block__info">
+                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
+                                <span class="slider-font">
+                                Rate: </span>{{ $product->maximum_interest_rate }}%</p>
 
-</div>
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                <h4 class="ps-product__heading">Keypoints</h4>
-                <ul class="ps-list--arrow-circle">
-                    <li>BOC Multi-Currency Savings Account (MCSA) is required to enjoy BOC SmartSaver promotion.</li>
-                    <li>Only one (1) BOC MCSA will be eligible for Bonus Rate in the event that there is more than one (1) BOC MCSA , BOC MCAS can be open on a single <strong>OR</strong> joint-alternate basis (&amp;/OR signing condition if there are 2 or more account holder)</li>
-                    <li>Bonus Rate is accorded to the first $60K in BOC MCSA, Bonus Rate is calculated at the end of each calendar month based on Monthly Average Balance and is credited within 15th working day in the following month</li>
-                    <li>Additional of 0.6% PA Bonus Rate will be accorded to account balance above $60K to $1 Million when you fulfil at least 1 of the 3 criteria (Spend, Salary or Payment).</li>
-                    <li>Please refer to <a href="http://www.bankofchina.com/sg/pbservice/pb1/201611/t20161130_8271280.html" target="_blank" rel="noopener">BOC</a> for full details of this promotion&nbsp;</li>
-                </ul>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                    <div class="ps-product__actions"><a class="ps-btn ps-btn--outline" href="http://www.bankofchina.com/sg/pbservice/pb1/201611/t20161130_8271280.html" target="_blank" rel="noopener">Main Page</a><a class="ps-btn ps-btn--outline" href="http://pic.bankofchina.com/bocappd/singapore/201611/P020161124585545533707.pdf" target="_blank" rel="noopener">T&amp;C</a></div>
-                </div>
-            </div>
+                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
+                                <span class="slider-font">Min:</span> @if($product->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT){{$product->currency_code}} @else
+                                    SGD @endif
+                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                            </p>
+
+                            @if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT)
+                                <p class="@if($searchFilter['filter']==CRITERIA) highlight highlight-bg @endif">
+                                    {{ $product->promotion_period }} {{CRITERIA}}
+                                </p>
+                            @else
+                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
+                                    @if($product->promotion_period==ONGOING)
+                                         {{ $product->promotion_period }}
+                                    @else
+                                        @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                            {{ $product->remaining_days }}  <span
+                                                    class="slider-font">{{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}</span>
+                                        @else
+                                            {{$product->promotion_period}} @if($product->tenure_value > 0) <span
+                                                    class="slider-font">{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}</span> @endif
+                                        @endif
+                                    @endif
+                                </p>
+                            @endif
+                        </div>
+                        <a class="ps-btn" href="#p-{{ $i }}">More info</a>
+                    </div>
+            @endif
+            @if($product->featured==0 &&  $product->slider_status==1)
+            <div class="ps-block--short-product second" data-mh="product">
+                        <div class="slider-img"><img  src="{{ asset($product->brand_logo) }}" alt=""></div>
+                        @if(isset($searchFilter['filter']))
+                            <h4>
+                                <strong>
+                                    @if($searchFilter['filter']==INTEREST)
+                                        Up to <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
+                                            %</span>
+                                    @endif
+                                    @if($searchFilter['filter']==PLACEMENT)
+                                        Min:   <span class="highlight-slider">
+                            SGD ${{ Helper::inThousand($product->minimum_placement_amount) }} </span>
+                                    @endif
+                                    @if($searchFilter['filter']==TENURE)
+                                        @if($product->promotion_period==ONGOING)
+                                            <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                        @else
+                                            @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                                <span class="highlight-slider"> {{ $product->remaining_days }} </span> {{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}
+                                            @elseif($product->tenure_value > 0)
+                                                <span class="highlight-slider"> {{ $product->promotion_period }} </span>{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}
+                                            @elseif(is_numeric($product->promotion_period))
+                                                <span class="highlight-slider"> {{ $product->promotion_period }} </span> {{\Helper::daysOrMonthForSlider(2,  $product->promotion_period)}}
+                                            @else
+                                                <span class="highlight-slider"> {{ $product->promotion_period }} </span>
+                                            @endif
+                                        @endif
+                                    @endif
+                                    @if($searchFilter['filter']==CRITERIA)
+                                        up to  <span class="highlight-slider"> {{ $product->promotion_period }}
+                                            Criteria </span>
+                                    @endif
+                                </strong>
+                            </h4>
+                        @endif
+
+                        <div class="ps-block__info">
+                            <p class=" @if($searchFilter['filter']==INTEREST) highlight highlight-bg @endif">
+                                <span class="slider-font">
+                                Rate: </span>{{ $product->maximum_interest_rate }}%</p>
+
+                            <p class="@if($searchFilter['filter']==PLACEMENT) highlight highlight-bg @endif">
+                                <span class="slider-font">Min:</span> @if($product->promotion_type_id ==FOREIGN_CURRENCY_DEPOSIT){{$product->currency_code}} @else
+                                    SGD @endif
+                                ${{ Helper::inThousand($product->minimum_placement_amount) }}
+                            </p>
+
+                            @if($product->promotion_type_id==ALL_IN_ONE_ACCOUNT)
+                                <p class="@if($searchFilter['filter']==CRITERIA) highlight highlight-bg @endif">
+                                    {{ $product->promotion_period }} {{CRITERIA}}
+                                </p>
+                            @else
+                                <p class="@if($searchFilter['filter']==TENURE) highlight highlight-bg @endif">
+                                    @if($product->promotion_period==ONGOING)
+                                        {{ $product->promotion_period }}
+                                    @else
+                                        @if(in_array($product->formula_id,[SAVING_DEPOSIT_F1,FOREIGN_CURRENCY_DEPOSIT_F2,PRIVILEGE_DEPOSIT_F1]))
+                                            {{ $product->remaining_days }}  <span
+                                                    class="slider-font">{{\Helper::daysOrMonthForSlider(1,  $product->remaining_days)}}</span>
+                                        @else
+                                            {{$product->promotion_period}} @if($product->tenure_value > 0) <span
+                                                    class="slider-font">{{\Helper::daysOrMonthForSlider(2,  $product->tenure_value)}}</span> @endif
+                                        @endif
+                                    @endif
+                                </p>
+                            @endif
+                        </div>
+                        <a class="ps-btn" href="#p-{{ (count($featured)+$i) }}">More info</a>
+                    </div>
+            @endif
+             @php $i++; @endphp
+            @endforeach
         </div>
     </div>
 </div>

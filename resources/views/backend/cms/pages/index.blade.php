@@ -43,41 +43,20 @@
                                         <table id="pages" class="table ">
                                             <thead>
                                             <tr>
+                                                <th>Action</th>
                                                 <th>Name</th>
                                                 <th>Menu</th>
                                                 <th>Slug</th>
+                                                <th>Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @if($pages->count())
                                                 @foreach($pages as $page)
                                                     <tr>
-                                                        <td>
-                                                            {{ $page->name }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $page->menu_title }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $page->slug }}
-                                                        </td>
-                                                        <td>
-                                                            @if ($page->created_at == null)
-                                                                {{$page->created_at}}
-                                                            @endif
-                                                                {!!  date("Y-m-d h:i A", strtotime($page->created_at))   !!}
-
-                                                        </td>
-                                                        <td>@if ($page->updated_at == null)
-                                                                {{$page->updated_at}}
-                                                            @endif
-                                                            {!!  date("Y-m-d h:i A", strtotime($page->updated_at))   !!}
-
-                                                        </td>
-
                                                         <td class="text-center">
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Page"
@@ -97,6 +76,37 @@
 
 
                                                         </td>
+                                                        <td>
+                                                            {{ $page->name }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $page->menu_title }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $page->slug }}
+                                                        </td>
+                                                        <td>
+                                                            @if($page->status==1)
+                                                                Active
+                                                            @else
+                                                                Deactivate
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($page->created_at == null)
+                                                                {{$page->created_at}}
+                                                            @endif
+                                                                {!!  date("Y-m-d H:i", strtotime($page->created_at))   !!}
+
+                                                        </td>
+                                                        <td>@if ($page->updated_at == null)
+                                                                {{$page->updated_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d H:i", strtotime($page->updated_at))   !!}
+
+                                                        </td>
+
+
                                                     </tr>
                                                 @endforeach
                                             @endif

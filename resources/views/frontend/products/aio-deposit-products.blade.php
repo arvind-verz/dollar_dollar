@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
     <?php
@@ -174,7 +183,7 @@
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                         <div class="form-group ">
                                             <select class="form-control sort-by" name="sort_by">
-                                                <option value="" disabled="disabled" selected="selected">Arrange by
+                                                <option value="" disabled="disabled" selected="selected">Arrange By
                                                 </option>
                                                 <option value="1"
                                                         @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
@@ -444,7 +453,7 @@
                                                 <th class="text-left @if($product->criteria_b_highlight==true) active @endif">
                                                     Criteria b <br/><span class="subtitle">(Spend + Salary/Giro)</span>
                                                 </th>
-                                                <th class="text-left" style="">Interest Earned for each Tier</th>
+                                                <th class="text-left" style="">Interest Earned for <br/>each Tier</th>
                                                 <th class="text-left">Total Interest Earned
                                                     for {{ Helper::inThousand($product->placement) }}</th>
                                             </tr>
@@ -493,7 +502,7 @@
                                                         } if ($key != (count($productRanges) - 1)) {
                                                             $prevMaxRange = $range->max_range;
                                                         }?>
-                                                        -${{ Helper::inRoundTwoDecimal($range->interest_earn) }}
+                                                        - ${{ Helper::inRoundTwoDecimal($range->interest_earn) }}
                                                         ({{ $range->criteria }}%)
                                                     </td>
                                                     @if($key==0)
@@ -672,28 +681,35 @@
                                                     @foreach($productRanges as $range)
                                                         <tr>
                                                             <td colspan="1" class="text-left">Bonus Interest PA</td>
-                                                            <td class="text-center @if($product->criteria_1==true ) highlight @endif"
-                                                                colspan="3">1 Criteria Met
-                                                                @if($range->bonus_interest_criteria1<=0)
-                                                                    - @else - {{ $range->bonus_interest_criteria1 }}
-                                                                % @endif
-                                                            </td>
-                                                            <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
-                                                                colspan="1">2 Criteria
-                                                                @if($range->bonus_interest_criteria2<=0)
-                                                                    - @else - {{ $range->bonus_interest_criteria2 }}
-                                                                % @endif
-                                                            </td>
-                                                            <td class="text-center @if($product->criteria_3==true ) highlight @endif"
-                                                                colspan="1">3
-                                                                Criteria @if($range->bonus_interest_criteria3<=0)
-                                                                    - @else - {{ $range->bonus_interest_criteria3 }}
-                                                                    % @endif
-                                                            </td>
+															<td colspan="5" style="padding:0;">
+																<table class="3-col-eq"> 
+																	<tr>
+																		<td class="text-center @if($product->criteria_1==true ) highlight @endif"
+																			colspan="3">1 Criteria Met
+																			@if($range->bonus_interest_criteria1<=0)
+																				- @else - {{ $range->bonus_interest_criteria1 }}
+																			% @endif
+																		</td>
+																		<td class=" text-center @if($product->criteria_2==true ) highlight @endif"
+																			colspan="1">2 Criteria
+																			@if($range->bonus_interest_criteria2<=0)
+																				- @else - {{ $range->bonus_interest_criteria2 }}
+																			% @endif
+																		</td>
+																		<td class="text-center @if($product->criteria_3==true ) highlight @endif"
+																			colspan="1">3
+																			Criteria @if($range->bonus_interest_criteria3<=0)
+																				- @else - {{ $range->bonus_interest_criteria3 }}
+																				% @endif
+																		</td>
+																	</tr>
+																</table>
+															</td>
+                                                            
                                                         </tr>
                                                         <tr>
                                                             <td colspan="1" class="text-left">Total Bonus Interest
-                                                                Earned for
+                                                                Earned for SGD
                                                                 ${{ Helper::inThousand($range->placement) }}</td>
                                                             <td class=" text-center @if($product->highlight==true ) highlight @endif"
                                                                 colspan="5">
@@ -955,7 +971,7 @@
                                                         @if(!empty($firstRange->minimum_giro_payment))
                                                             <th class="@if($product->payment_highlight==true ) active @endif">PAYMENT</th>@endif
                                                         @if(!empty($firstRange->minimum_privilege_pa))
-                                                            <th class="@if($product->privilege_highlight==true ) active @endif">PRIVILEGE</th>@endif
+                                                            <th class="@if($product->privilege_highlight==true ) active @endif">WEALTH</th>@endif
                                                         @if(!empty($firstRange->minimum_loan_pa))
                                                             <th class="@if($product->loan_highlight==true ) active @endif">LOAN</th>@endif
                                                         @if(!empty($firstRange->other_minimum_amount1)&& ($firstRange->status_other1 == 1))
@@ -1668,7 +1684,7 @@
                                                         <th>Balance</th>
                                                         <th>Criteria a (spend)</th>
                                                         <th>Criteria b (Spend + Salary/Giro)</th>
-                                                        <th>Interest Earned for each Tier</th>
+                                                        <th>Interest Earned for <br/>each Tier</th>
                                                         <th>Total Interest Earned
                                                             for {{ Helper::inThousand($product->placement) }}</th>
                                                     </tr>
@@ -1719,7 +1735,7 @@
                                                                 } if ($key != (count($productRanges) - 1)) {
                                                                     $prevMaxRange = $range->max_range;
                                                                 }?>
-                                                                -${{ Helper::inThousand($range->interest_earn) }}
+                                                                - ${{ Helper::inThousand($range->interest_earn) }}
                                                                 ({{ $range->criteria }}%)
                                                             </td>
                                                             @if($key==0)
@@ -1903,28 +1919,34 @@
                                                         @foreach($productRanges as $range)
                                                             <tr>
                                                                 <td>Bonus Interest PA</td>
-                                                                <td class="text-center @if($product->criteria_1==true ) highlight @endif"
-                                                                    colspan="3">1 Criteria Met
-                                                                    @if($range->bonus_interest_criteria1<=0)
-                                                                        - @else - {{ $range->bonus_interest_criteria1 }}
-                                                                    % @endif
-                                                                </td>
-                                                                <td class=" text-center @if($product->criteria_2==true ) highlight @endif"
-                                                                    colspan="1">2 Criteria
-                                                                    @if($range->bonus_interest_criteria2<=0)
-                                                                        - @else - {{ $range->bonus_interest_criteria2 }}
-                                                                    % @endif
-                                                                </td>
-                                                                <td class="text-center @if($product->criteria_3==true ) highlight @endif"
-                                                                    colspan="1">3
-                                                                    Criteria @if($range->bonus_interest_criteria3<=0)
-                                                                        - @else - {{ $range->bonus_interest_criteria3 }}
-                                                                        % @endif
-                                                                </td>
+																<td colspan="5">
+																	<table class="3-col-eq"> 
+																		<tr>
+																			<td class="text-center @if($product->criteria_1==true ) highlight @endif"
+																				colspan="3">1 Criteria Met
+																				@if($range->bonus_interest_criteria1<=0)
+																					- @else - {{ $range->bonus_interest_criteria1 }}
+																				% @endif
+																			</td>
+																			<td class=" text-center @if($product->criteria_2==true ) highlight @endif"
+																				colspan="1">2 Criteria
+																				@if($range->bonus_interest_criteria2<=0)
+																					- @else - {{ $range->bonus_interest_criteria2 }}
+																				% @endif
+																			</td>
+																			<td class="text-center @if($product->criteria_3==true ) highlight @endif"
+																				colspan="1">3
+																				Criteria @if($range->bonus_interest_criteria3<=0)
+																					- @else - {{ $range->bonus_interest_criteria3 }}
+																					% @endif
+																			</td>
+																		</tr>
+																	</table>
+																</td>
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="1">Total Bonus Interest
-                                                                    Earned for
+                                                                    Earned for SGD
                                                                     ${{ Helper::inThousand($range->placement) }}</td>
                                                                 <td class=" text-center @if($product->highlight==true ) highlight @endif"
                                                                     colspan="5">
@@ -2145,7 +2167,7 @@
                                                                 @if(!empty($firstRange->minimum_giro_payment))
                                                                     <th>PAYMENT</th>@endif
                                                                 @if(!empty($firstRange->minimum_privilege_pa))
-                                                                    <th>PRIVILEGE</th>@endif
+                                                                    <th>WEALTH</th>@endif
                                                                 @if(!empty($firstRange->minimum_loan_pa))
                                                                     <th>LOAN</th>@endif
                                                                 @if(!empty($firstRange->other_minimum_amount1)&& ($firstRange->status_other1 == 1))

@@ -57,7 +57,7 @@
                         <div class="form-group">
                             {{Form::label('banner_content', ' Content',['class'=>'col-sm-2 control-label'])}}
                             <div class="col-sm-10">
-                                {{Form::textarea('banner_content',  $banner->banner_content, ['id' => '', 'class' => 'form-control text-color-base ', 'placeholder' => ''])}}
+                                {{Form::textarea('banner_content',  $banner->banner_content, ['id' => '', 'class' => ' tiny-mce form-control text-color-base ', 'placeholder' => ''])}}
                             </div>
                         </div>
                         <div class="form-group">

@@ -99,7 +99,7 @@
                                         </div>  
                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                             <div class="input-group form-group">
-                                                <label>Tenure</label>
+                                                <label>Tenor</label>
                                                 <input type="text" class="form-control  only_numeric" name="tenure"
                                                        value="{{ $product_management->tenure }}">
                                             </div>

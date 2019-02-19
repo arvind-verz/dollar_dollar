@@ -203,6 +203,7 @@ define('PROFILEDASHBOARD', "profile-dashboard");
 define('ACCOUNTINFO', "account-information");
 define('PRODUCTMANAGEMENT', "product-management");
 define('FORGOT_PASSWORD', "forgot-password");
+define('RESET_PASSWORD', "reset-password");
 define('FORGOT_PASSWORD_RESET', "forgot-password-reset");
 define('PRODUCT_MANAGEMENT_SLUG', "product-management");
 
@@ -348,6 +349,17 @@ define('COMMERCIAL_PROPERTY', "Commercial Individual");
 
 //Completion status
 define('COMPLETE', "Completed");
+define('COMPLETE_BUC', "Completed/BUC");
 define('BUC', "BUC");
 define('ALL', "ALL");
+
+//log status
+define('DEACTIVATED', 1);
+define('DELETED', 2);
+
+//update By
+define('ADMIN_USER', 'Admin');
+define('FRONT_USER', 'User');
+
+
 

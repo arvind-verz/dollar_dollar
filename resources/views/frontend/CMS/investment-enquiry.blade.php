@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
     <?php
@@ -90,7 +99,9 @@
                     <input class="form-control" type="checkbox" id="goal-4" value="{{GOAL_OTHER}}" name="goals[]"
                     @if (!is_null(old('goals'))) {{ in_array(GOAL_OTHER,old('goals'))? "CHECKED" : "" }} @endif/>
                     <label for="goal-4">{{GOAL_OTHER}}</label>
-                </div><br/>
+                </div>
+                <br/>
+
                 <div class="short-form mt-10 hide">
                     <input class="form-control" type="text" id="goal-other-value" name="goal_other_value"
                            data-target="goal-4"
@@ -120,14 +131,16 @@
                     <input class="form-control" type="radio" value="{{NO}}" id="level-2" name="experience"
                            @if (old('experience')==NO) checked="CHECKED"@endif />
                     <label for="level-2">{{NO}}</label>
-                </div><br/>
+                </div>
+                <br/>
                 @if ($errors->has('experience'))
                     <span class="text-danger">
                                                     <strong>{{ $errors->first('experience') }}</strong>
                                                     </span>
                 @endif
                 <div class="short-form mb-10 hide">
-                    <label>Please state the type of investment you have invested before (e.g Unit Trust, Bonds, etc...)</label>
+                    <label>Please state the type of investment you have invested before (e.g Unit Trust, Bonds,
+                        etc...)</label>
                     <input class="form-control" type="text" id="experience-detail" name="experience_detail"
                            placeholder=""
                            value="{{old('experience_detail')}}">
@@ -187,7 +200,7 @@
             <div class="form-group">
                 <h5 class="ps-heading--3">4. What is your age?</h5>
                 <input class="form-control only_numeric" type="text" id="age" name="age" data-target=""
-                        placeholder=""
+                       placeholder=""
                        value="{{old('age')}}">
                 @if ($errors->has('age'))
                     <span class="text-danger">
@@ -226,7 +239,9 @@
                     <input class="form-control" type="checkbox" id="time-5" value="{{TIME_OTHER}}" name="time[]"
                     @if (!is_null(old('time'))) {{ in_array(TIME_OTHER,old('time'))? "CHECKED" : "" }} @endif/>
                     <label for="time-5">{{TIME_OTHER}}</label>
-                </div><br/>
+                </div>
+                <br/>
+
                 <div class="short-form mt-10 hide">
                     <input class="form-control" type="text" id="other-value" name="other_value" data-target="time-5"
                            onkeyup="checkOtherValidation(this)" placeholder="Please Specify"
@@ -284,16 +299,16 @@
                                                     </span>
                             @endif
                             @if(Auth::check())
-                            <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit
-                                Info</a>
+                                <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit
+                                    Info</a>
                             @endif
                         </div>
 
                     </div>
                     <div class="col-xs-9">
                         <div class="form-icon"><i class="fa fa-mobile-phone"></i>
-                            <input class="form-control only_numeric" type="text" 
-                                   name="telephone"  placeholder="Telephone without country code"
+                            <input class="form-control only_numeric" type="text"
+                                   name="telephone" placeholder="Telephone without country code"
                                    value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif">
 
                         </div>
@@ -305,6 +320,22 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class=" recaptcha">
+                    {!! app('captcha')->display($attributes = [],
+                    $lang = []) !!}
+                    <span class="captcha-err">
+                    </span>
+                    @if ($errors->has('g-recaptcha-response'))
+                        <span class="text-danger">
+                        <strong>
+                            {{ $errors->first('g-recaptcha-response') }}
+                        </strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
+
             <div class="form-group submit">
                 <button class="ps-btn">Submit</button>
             </div>
@@ -320,9 +351,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            var auth = '{{Auth::check()}}' ; 
-            if(auth == '1'){
-            inputs_checked(); }
+            var auth = '{{Auth::check()}}';
+            if (auth == '1') {
+                inputs_checked();
+            }
             /*var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
              inputs.prop("disabled", true);
              $("input[name='coverage'], input[name='level'], input[name='time[]']").on("change", function() {

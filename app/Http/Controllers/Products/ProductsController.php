@@ -151,7 +151,10 @@ class ProductsController extends Controller
         }
 
         $product = new PromotionProducts();
-
+        if(isset($request->shortlist_status))
+        {
+            $product->shortlist_status = $request->shortlist_status;
+        }
         $product->product_name = $request->name;
         $product->bank_id = $request->bank;
         $product->bank_sub_title = $request->bank_sub_title;
@@ -290,10 +293,10 @@ class ProductsController extends Controller
                     $bonusInterestB = $request->bonus_interest_criteria_b_aioa2;
                     $range = [];
                     $range['minimum_spend'] = (int)$request->minimum_spend_aioa2;
-                    $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa2_2;
+                    //$range['minimum_spend_2'] = (int)$request->minimum_spend_aioa2_2;
                     $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
                     $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
-                    $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa2_2;
+                    //$range['minimum_salary_2'] = (int)$request->minimum_salary_aioa2_2;
                     $range['min_range'] = (int)$min;
                     $range['max_range'] = (int)$v + $previousMax;
                     $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
@@ -309,10 +312,10 @@ class ProductsController extends Controller
                 $range['max_range'] = (int)$request->max_placement_aioa3;
 
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
-                $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa3_2;
+                //$range['minimum_salary_2'] = (int)$request->minimum_salary_aioa3_2;
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
                 $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
-                $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa3_2;
+                //$range['minimum_spend_2'] = (int)$request->minimum_spend_aioa3_2;
                 $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
                 $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
                 $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
@@ -339,8 +342,8 @@ class ProductsController extends Controller
                     $range = [];
                     $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
                     $range['minimum_spend'] = (int)$request->minimum_spend_aioa4;
-                    $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa4_2;
-                    $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa4_2;
+                    //$range['minimum_salary_2'] = (int)$request->minimum_salary_aioa4_2;
+                    //$range['minimum_spend_2'] = (int)$request->minimum_spend_aioa4_2;
                     $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
                     $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
                     $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;
@@ -635,6 +638,11 @@ class ProductsController extends Controller
             $request->file('ad_horizontal_image_popup_top')->move($destinationPath, $adHorizontalPopupImageTop);
         }
 
+        if(isset($request->shortlist_status))
+        {
+            //dd($request->shortlist_status);
+            $product->shortlist_status = $request->shortlist_status;
+        }
         $product->product_name = $request->name;
         $product->bank_id = $request->bank;
         $product->bank_sub_title = $request->bank_sub_title;
@@ -772,10 +780,10 @@ class ProductsController extends Controller
                     $bonusInterestB = $request->bonus_interest_criteria_b_aioa2;
                     $range = [];
                     $range['minimum_spend'] = (int)$request->minimum_spend_aioa2;
-                    $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa2_2;
+                    //$range['minimum_spend_2'] = (int)$request->minimum_spend_aioa2_2;
                     $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa2;
                     $range['minimum_salary'] = (int)$request->minimum_salary_aioa2;
-                    $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa2_2;
+                    //$range['minimum_salary_2'] = (int)$request->minimum_salary_aioa2_2;
                     $range['min_range'] = (int)$min;
                     $range['max_range'] = (int)$v + $previousMax;
                     $range['bonus_interest_criteria_a'] = (float)$bonusInterestA[$k];
@@ -793,10 +801,10 @@ class ProductsController extends Controller
                 $range['max_range'] = (int)$request->max_placement_aioa3;
 
                 $range['minimum_salary'] = (int)$request->minimum_salary_aioa3;
-                $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa3_2;
+                //$range['minimum_salary_2'] = (int)$request->minimum_salary_aioa3_2;
                 $range['minimum_giro_payment'] = (int)$request->minimum_giro_payment_aioa3;
                 $range['minimum_spend'] = (int)$request->minimum_spend_aioa3;
-                $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa3_2;
+                //$range['minimum_spend_2'] = (int)$request->minimum_spend_aioa3_2;
                 $range['minimum_hire_purchase_loan'] = (int)$request->minimum_hire_purchase_loan_aioa3;
                 $range['minimum_renovation_loan'] = (int)$request->minimum_renovation_loan_aioa3;
                 $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa3;
@@ -822,8 +830,8 @@ class ProductsController extends Controller
                     $range = [];
                     $range['minimum_salary'] = (int)$request->minimum_salary_aioa4;
                     $range['minimum_spend'] = (int)$request->minimum_spend_aioa4;
-                    $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa4_2;
-                    $range['minimum_spend_2'] = (int)$request->minimum_spend_aioa4_2;
+                   // $range['minimum_salary_2'] = (int)$request->minimum_salary_aioa4_2;
+                    //$range['minimum_spend_2'] = (int)$request->minimum_spend_aioa4_2;
                     $range['minimum_home_loan'] = (int)$request->minimum_home_loan_aioa4;
                     $range['minimum_insurance'] = (int)$request->minimum_insurance_aioa4;
                     $range['minimum_investment'] = (int)$request->minimum_investment_aioa4;

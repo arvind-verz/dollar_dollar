@@ -66,6 +66,8 @@
                                 @if($ProductRanges[0]->completion_status==COMPLETE) selected="selected" @endif>{{COMPLETE}}</option>
                         <option value="{{BUC}}"
                                 @if($ProductRanges[0]->completion_status==BUC) selected="selected" @endif>{{BUC}}</option>
+                        <option value="{{COMPLETE_BUC}}"
+                                @if($ProductRanges[0]->completion_status==COMPLETE_BUC) selected="selected" @endif>{{COMPLETE_BUC}}</option>
                     </select>
                 </div>
                 <div class="col-sm-2">
@@ -220,7 +222,7 @@
                 <select class="form-control" name="property_type_f1" id="property-type">
                     <option value="{{HDB_PROPERTY}}">{{HDB_PROPERTY}}</option>
                     <option value="{{PRIVATE_PROPERTY}}">{{PRIVATE_PROPERTY}}</option>
-                    <option value="{{HDB_PRIVATE_PROPERTY}}">{{HDB_PRIVATE_PROPERTY}}</option>
+                    <option value="{{HDB_PRIVATE_PROPERTY}}" selected="selected">{{HDB_PRIVATE_PROPERTY}}</option>
                     <option value="{{COMMERCIAL_PROPERTY}}">{{COMMERCIAL_PROPERTY}}</option>
                 </select>
             </div>
@@ -234,6 +236,7 @@
                 <select class="form-control" name="completion_status_f1" id="completion-status">
                     <option value="{{COMPLETE}}">{{COMPLETE}}</option>
                     <option value="{{BUC}}">{{BUC}}</option>
+                    <option value="{{COMPLETE_BUC}}">{{COMPLETE_BUC}}</option>
                 </select>
             </div>
             <div class="col-sm-2">

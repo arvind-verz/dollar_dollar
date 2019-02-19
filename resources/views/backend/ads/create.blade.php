@@ -39,6 +39,7 @@
                                     <option value="{{PRIVILEGE_DEPOSIT_MODE}}" @if(old('page_type')==PRIVILEGE_DEPOSIT_MODE) selected="selected" @endif>Privilege Deposit</option>
                                     <option value="{{FOREIGN_CURRENCY_DEPOSIT_MODE}}" @if(old('page_type')==FOREIGN_CURRENCY_DEPOSIT_MODE) selected="selected" @endif>Foreign Currency Deposit</option>
                                     <option value="{{AIO_DEPOSIT_MODE}}" @if(old('page_type')==AIO_DEPOSIT_MODE) selected="selected" @endif>All in One Deposit</option>
+                                    <option value="{{LOAN_MODE}}" @if(old('page_type')==LOAN_MODE) selected="selected" @endif>Loan</option>
                                 </select>
                             </div>
                             @endif
@@ -60,7 +61,7 @@
                                 <label>@if($type=='account'||$type=='blog')Vertical Ad Banner @else Ad Image @endif </label>
                                 <input type="file" name="ad_image" value="{{old('')}}" class="form-control">
                                 <p class="text-muted"><strong>Note:</strong> Image
-                                    size should be @if($type=='account'||$type=='blog') 225*470 @elseif($type=='email') 570*200 @else 1200*350 @endif for better display
+                                    size should be @if($type=='account'||$type=='blog') 277*600 @elseif($type=='email') 570*200 @else 1200*350 @endif for better display
                                 </p>
                             </div>
                             <div class="form-group">
@@ -72,7 +73,7 @@
                                 <label>@if($type=='account')Horizontal Ad Banner @else Horizontal Banner @endif</label>
                                 <input type="file" name="horizontal_banner_ad_image" class="form-control" >
                                 <p class="text-muted"><strong>Note:</strong> Image
-                                    size should be @if($type=='account'||$type=='blog')980*280 @else 1200*350 @endif for better display
+                                    size should be @if($type=='account'||$type=='blog')785*280 @else 1200*350 @endif for better display
                                 </p>
                             </div>
                             <div class="form-group">
@@ -96,7 +97,7 @@
                                 <label>@if($type=='account'||$type=='blog')Paid Vertical Ad  @else Paid Ad Image @endif</label>
                                 <input type="file" name="paid_ad_image" class="form-control paid-ad">
                                 <p class="text-muted"><strong>Note:</strong> Image
-                                    size should be @if($type=='account'||$type=='blog')225*470 @elseif($type=='email') 570*200 @else 1200*350 @endif for better display
+                                    size should be @if($type=='account'||$type=='blog')277*600 @elseif($type=='email') 570*200 @else 1200*350 @endif for better display
                                 </p>
                             </div>
                             <div class="form-group">
@@ -108,7 +109,7 @@
                                 <label>Paid Horizontal Ad</label>
                                 <input type="file" name="horizontal_paid_ad_image" class="form-control paid-ad">
                                 <p class="text-muted"><strong>Note:</strong> Image
-                                    size should be @if($type=='account'||$type=='blog')980*280 @else 1200*350 @endif for better display
+                                    size should be @if($type=='account'||$type=='blog')785*280 @else 1200*350 @endif for better display
                                 </p>
                             </div>
                             <div class="form-group">

@@ -2,7 +2,7 @@
 <script>
     var editor_config = {
         path_absolute: "{{ URL::to('/') }}/",
-        selector: "textarea",
+        selector: ".tiny-mce",
         content_css: [
             APP_URL + '/frontend/css/plugin.css',
             APP_URL + '/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
@@ -186,6 +186,7 @@
 <script src="{{ asset('backend/bower_components/fastclick/lib/fastclick.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('backend/dist/js/adminlte.min.js')}}"></script>
+<script src="{{ asset('backend/dist/js/backend.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('backend/dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
@@ -283,684 +284,6 @@
 </script>
 <script>
     $(document).ready(function () {
-//Initialize Select2 Elements
-        $('.select2').select2();
-        $('#reports').DataTable();
-        $('#activities').DataTable(
-                {
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[6, 'desc']],
-                    "columnDefs": []
-                });
-        $('#users').DataTable(
-                {
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[8, 'desc'], [7, 'desc']],
-                    "aoColumnDefs": [{
-                        "aTargets": [0, 1],
-                        "bSortable": false,
-                    }]
-                });
-        $('#admins').DataTable(
-                {
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[5, 'desc'], [4, 'desc']],
-                    "aoColumnDefs": [{
-                        "aTargets": [0],
-                        "bSortable": false,
-                    }]
-                });
-        $('#banners').DataTable(
-                {
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[10, 'desc'], [9, 'desc']],
-                    "columnDefs": []
-                });
-        $('#ads').DataTable(
-                {
-                    "pageLength": 100,
-                    'ordering': true,
-                    /*'order': [[15, 'desc'], [14, 'desc']],*/
-                    "columnDefs": []
-                });
-        $('#rate-types').DataTable(
-                {
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[4, 'desc'], [3, 'desc']],
-                    "columnDefs": []
-                });
-        /*$('#product-ads').DataTable(
-         {
-         "pageLength": 100,
-         'ordering': true,
-         'order': [[11, 'desc'], [10, 'desc']],
-         "columnDefs": []
-         });
-         $('#email-ads').DataTable(
-         {
-         "pageLength": 100,
-         'ordering': true,
-         'order': [[10, 'desc'], [9, 'desc']],
-         "columnDefs": []
-         });*/
-        $('#brands').DataTable(
-                {
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[3, 'asc']],
-                    "columnDefs": []
-                });
-        $('#pages').DataTable(
-                {
-                    dom: 'lBfrtip',
-                    buttons: [
-                        {
-                            extend: 'print',
-                            footer: true,
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
-                        },
-                        {
-                            extend: 'csv',
-                            footer: true,
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            footer: true,
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4]
-                            }
-                        }
-                    ],
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [
-                        [4, 'desc'],
-                        [3, 'desc']
-                    ],
-                    "aoColumnDefs": [{
-                        "aTargets": [5],
-                        "bSortable": false,
-                    }],
-                });
-        $('#customer-report').DataTable(
-                {
-                    dom: 'lBfrtip',
-                    buttons: [
-                        {
-                            extend: 'print',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7]
-                            },
-                            title: 'Customer management',
-                            customize: function (win) {
-                                $(win.document.body)
-                                        .css('font-size', '10pt');
-                                $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                            }
-                        },
-                        {
-                            extend: 'csv',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Profile ' + today;
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Profile ' + today;
-                            }
-                        }
-                    ],
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[0, 'asc']],
-                    "aoColumnDefs": [{
-                        "aTargets": [],
-                        "bSortable": false,
-                    },
-                        {width: 300, targets: 0},
-                        {width: 300, targets: 1},
-                        {width: 100, targets: 2},
-                        {width: 100, targets: 3},
-                        {width: 150, targets: 4},
-                        {width: 100, targets: 5},
-                        {width: 100, targets: 6},
-                        {width: 100, targets: 7}
-                    ],
-                });
-        $('#customer-deletion-report').DataTable(
-                {
-                    dom: 'lBfrtip',
-                    buttons: [
-                        {
-                            extend: 'print',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5]
-                            },
-                            title: 'Customer Deletion',
-                            customize: function (win) {
-                                $(win.document.body)
-                                        .css('font-size', '10pt');
-                                $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                            }
-                        },
-                        {
-                            extend: 'csv',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Customer deletion ' + today;
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Customer deletion ' + today;
-                            }
-                        }
-                    ],
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[5, 'desc']],
-                    "aoColumnDefs": [{
-                        "aTargets": [],
-                        "bSortable": false,
-                    },
-                        {width: 300, targets: 0},
-                        {width: 300, targets: 1},
-                        {width: 100, targets: 2},
-                        {width: 100, targets: 3},
-                        {width: 150, targets: 4},
-                        {width: 100, targets: 5}
-                    ],
-                });
-        $('#contact-table').DataTable(
-                {
-                    dom: 'lBfrtip',
-                    buttons: [
-                        {
-                            extend: 'print',
-                            footer: true,
-                            title: 'Contact enquiry',
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
-                            },
-                            customize: function (win) {
-                                $(win.document.body)
-                                        .css('font-size', '10pt');
-                                $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                            },
-                        },
-                        {
-                            extend: 'csv',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Contact ' + today;
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Contact ' + today;
-                            }
-                        }
-                    ],
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[6, 'desc']],
-                    "aoColumnDefs": [{
-                        "aTargets": [0, 7],
-                        "bSortable": false,
-                    },
-                        {width: 50, targets: 0},
-                        {width: 100, targets: 1},
-                        {width: 100, targets: 2},
-                        {width: 100, targets: 3},
-                        {width: 100, targets: 4},
-                        {width: 400, targets: 5}
-                    ]
-                });
-        $('#life').DataTable(
-                {
-                    dom: 'lBfrtip',
-                    buttons: [
-                        {
-                            extend: 'print',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                            },
-                            title: 'Life enquiry',
-                            customize: function (win) {
-                                $(win.document.body)
-                                        .css('font-size', '10pt');
-                                $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                            }
-                        },
-                        {
-                            extend: 'csv',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Life ' + today;
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Life ' + today;
-                            }
-                        }
-                    ],
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[10, 'desc']],
-                    "aoColumnDefs": [{
-                        "aTargets": [0, 11],
-                        "bSortable": false,
-                    }],
-                });
-        $('#investment').DataTable(
-                {
-                    dom: 'lBfrtip',
-                    buttons: [
-                        {
-                            extend: 'print',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-                            },
-                            title: 'Investment enquiry',
-                            customize: function (win) {
-                                $(win.document.body)
-                                        .css('font-size', '10pt');
-                                $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                            }
-                        },
-                        {
-                            extend: 'csv',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Invest ' + today;
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Invest ' + today;
-                            }
-                        }
-                    ],
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[12, 'desc']],
-                    "aoColumnDefs": [{
-                        "aTargets": [0, 13],
-                        "bSortable": false,
-                    }],
-                });
-        $('#health').DataTable(
-                {
-                    dom: 'lBfrtip',
-                    buttons: [
-                        {
-                            extend: 'print',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-                            },
-                            title: 'Health enquiry',
-                            customize: function (win) {
-                                $(win.document.body)
-                                        .css('font-size', '10pt');
-                                $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                            }
-                        },
-                        {
-                            extend: 'csv',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Health ' + today;
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Health ' + today;
-                            }
-                        }
-                    ],
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[9, 'desc']],
-                    "aoColumnDefs": [{
-                        "aTargets": [0, 10],
-                        "bSortable": false,
-                    }],
-                });
-        $('#loan-enquiry').DataTable(
-                {
-                    dom: 'lBfrtip',
-                    buttons: [
-                        {
-                            extend: 'print',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                            },
-                            title: 'Loan enquiry',
-                            customize: function (win) {
-                                $(win.document.body)
-                                        .css('font-size', '10pt');
-                                $(win.document.body).find('table')
-                                        .addClass('compact')
-                                        .css('font-size', 'inherit');
-                            }
-                        },
-                        {
-                            extend: 'csv',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Loan ' + today;
-                            }
-                        },
-                        {
-                            extend: 'excel',
-                            footer: true,
-                            exportOptions: {
-                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                var yy = yyyy.toString().substring(2);
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yy + '' + mm + '' + dd;
-                                return 'Loan ' + today;
-                            }
-                        }
-                    ],
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[10, 'desc']],
-                    "aoColumnDefs": [{
-                        "aTargets": [0, 11],
-                        "bSortable": false,
-                    }],
-                });
-        $('#products').DataTable(
-                {
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[8, 'desc'], [7, 'desc']],
-                    "columnDefs": []
-                });
-        $('#menus').DataTable(
-                {
-                    "pageLength": 100,
-                    'ordering': true,
-                    'order': [[1, 'asc']],
-                    "columnDefs": []
-                });
-        $('#report').DataTable(
-                {
-                    dom: 'Bfrtip',
-                    "pageLength": 50,
-                    buttons: [
-                        {
-                            text: 'Export Customers Report',
-                            extend: 'excel',
-                            exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6]
-                            },
-                            filename: function () {
-                                var today = new Date();
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1; //January is 0!
-                                var yyyy = today.getFullYear();
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = yyyy + '' + mm + '' + dd;
-                                return 'Customers-Report ' + today;
-                            }
-                        }
-                    ],
-                });
         $('#rootwizard').bootstrapWizard({
             'tabClass': 'nav nav-pills',
             'onPrevious': function (tab, navigation, index) {
@@ -1030,7 +353,7 @@
                             }
                         });
                     }
-                    if (!bank) {
+                    if (!bank && formula) {
                         errors[i] = 'The bank is required.';
                         i++;
                     }
@@ -1930,26 +1253,26 @@
                             i++;
                         }
                         */
-                        if (SalaryMinAmount != '' && SalaryBonusInterest == '') {
+                        /*if (SalaryMinAmount != '' && SalaryBonusInterest == '') {
                             errors[i] = 'The  bonus interest (Salary 1) is required.';
                             i++;
                         }
                         if (SpendMinAmount != '' && SpendBonusInterest == '') {
                             errors[i] = 'The  bonus interest (Spend 1) is required.';
                             i++;
-                        }
+                        }*/
                         if (SalaryMinAmount2 == '' && SalaryBonusInterest2 != '') {
                             errors[i] = 'The minimum requirement amount (Salary 2) is required.';
                             i++;
                         }
-                        if (SalaryMinAmount2 != '' && SalaryBonusInterest2 == '') {
+                        /*if (SalaryMinAmount2 != '' && SalaryBonusInterest2 == '') {
                             errors[i] = 'The  bonus interest (Salary 2) is required.';
                             i++;
                         }
                         if (SpendMinAmount2 == '' && SpendBonusInterest2 != '') {
                             errors[i] = 'The minimum requirement amount (Spend 2) is required.';
                             i++;
-                        }
+                        }*/
                         if (SpendMinAmount2 != '' && SpendBonusInterest2 == '') {
                             errors[i] = 'The  bonus interest (Spend 2) is required.';
                             i++;
@@ -2029,35 +1352,37 @@
                         var otherInterest = $('#loanF1').find('input[name^="rate_interest_other_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        if (rateType == '') {
-                            errors[i] = 'The  rate type is required.';
-                            i++;
-                        }
-                        if (propertyType == '') {
-                            errors[i] = 'The  property type is required.';
-                            i++;
-                        }
-                        if (completionStatus == '') {
-                            errors[i] = 'The  completion status is required.';
-                            i++;
-                        }
-                        $.each(tenures, function (k, v) {
-                            if (tenures[k] == '') {
-                                errors[i] = 'The year is required.';
+                        if(formula) {
+                            if (rateType == '') {
+                                errors[i] = 'The  rate type is required.';
                                 i++;
-                                return false;
                             }
-                        });
-                        $.each(tenures, function (k, v) {
-                            if (bonusInterests[k] == '' && otherInterest[k] == '') {
-                                errors[i] = 'Minimum one interest is required.';
+                            if (propertyType == '') {
+                                errors[i] = 'The  property type is required.';
                                 i++;
-                                return false;
                             }
-                        });
-                        if (thereAfterBonus == '' && thereAfterOther == '') {
-                            errors[i] = 'Minimum one there after interest is required.';
-                            i++;
+                            if (completionStatus == '') {
+                                errors[i] = 'The  completion status is required.';
+                                i++;
+                            }
+                            $.each(tenures, function (k, v) {
+                                if (tenures[k] == '') {
+                                    errors[i] = 'The year is required.';
+                                    i++;
+                                    return false;
+                                }
+                            });
+                            $.each(tenures, function (k, v) {
+                                if (bonusInterests[k] == '' && otherInterest[k] == '') {
+                                    errors[i] = 'Minimum one interest is required.';
+                                    i++;
+                                    return false;
+                                }
+                            });
+                            if (thereAfterBonus == '' && thereAfterOther == '') {
+                                errors[i] = 'Minimum one there after interest is required.';
+                                i++;
+                            }
                         }
                     }
                     if (formula == 25) {

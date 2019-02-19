@@ -42,6 +42,7 @@
                                         <table id="banners" class="table ">
                                             <thead>
                                             <tr>
+                                                <th>Action</th>
                                                 <th>Title</th>
                                                 <th>Content</th>
                                                 <th>Page</th>
@@ -54,13 +55,31 @@
                                                 <th>Active Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @if($banners->count())
                                                 @foreach($banners as $banner)
                                                     <tr>
+                                                        <td class="text-center">
+
+                                                            @if($CheckLayoutPermission[0]->edit==1)
+                                                                <a class="btn btn-app edit" title="Edit Banner"
+                                                                   href="{{ route("banner.edit",["id"=>$banner->id, 'type'=>$type]) }}">
+                                                                    <i class="fa fa-edit"></i> Edit
+                                                                </a>
+                                                            @endif
+
+                                                            @if($CheckLayoutPermission[0]->delete==1)
+                                                                <a class="btn btn-app delete" title="Delete Banner"
+                                                                   onclick="return confirm('Are you sure to delete this?')"
+                                                                   href="{{ route("banner-destroy",["id"=>$banner->id, 'type'=>$type]) }}">
+                                                                    <i class="fa fa-trash"></i> Delete
+                                                                </a>
+                                                            @endif
+
+                                                        </td>
                                                         <td>
                                                             {!!   strip_tags($banner->title) !!}
                                                         </td>
@@ -96,10 +115,10 @@
                                                         <!--<td>
                                                             {!! $banner->view_order   !!}
                                                         </td>-->
-                                                    
+
                                                         <td>
                                                             @if (!empty($banner->banner_end_date))
-                                                                {!!  date("Y-m-d h:i A", strtotime($banner->banner_end_date))   !!}
+                                                                {!!  date("Y-m-d H:i", strtotime($banner->banner_end_date))   !!}
                                                             @endif
                                                         </td>
                                                         <?php
@@ -109,7 +128,7 @@
                                                         <td>@if($banner->paid_ads_status==0) Disable @elseif($todayDate>$expiryDate) Expired @else
                                                                 Active @endif </td>
                                                         <td>
-                                                           
+
                                                                 @if($banner->display==0) Deactivate @else
                                                                 Active @endif
                                                             </td>
@@ -117,33 +136,16 @@
                                                             @if ($banner->created_at == null)
                                                                 {{$banner->created_at}}
                                                             @endif
-                                                                {!!  date("Y-m-d h:i A", strtotime($banner->created_at))   !!}
+                                                                {!!  date("Y-m-d H:i", strtotime($banner->created_at))   !!}
 
                                                         </td>
                                                         <td>@if ($banner->updated_at == null)
                                                                 {{$banner->updated_at}}
                                                             @endif
-                                                            {!!  date("Y-m-d h:i A", strtotime($banner->updated_at))   !!}
+                                                            {!!  date("Y-m-d H:i", strtotime($banner->updated_at))   !!}
 
                                                         </td>
-                                                        <td class="text-center">
 
-                                                            @if($CheckLayoutPermission[0]->edit==1)
-                                                                <a class="btn btn-app edit" title="Edit Banner"
-                                                                   href="{{ route("banner.edit",["id"=>$banner->id, 'type'=>$type]) }}">
-                                                                    <i class="fa fa-edit"></i> Edit
-                                                                </a>
-                                                            @endif
-
-                                                            @if($CheckLayoutPermission[0]->delete==1)
-                                                                    <a class="btn btn-app delete" title="Delete Banner"
-                                                                       onclick="return confirm('Are you sure to delete this?')"
-                                                                       href="{{ route("banner-destroy",["id"=>$banner->id, 'type'=>$type]) }}">
-                                                                        <i class="fa fa-trash"></i> Delete
-                                                                    </a>
-                                                            @endif
-
-                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @endif

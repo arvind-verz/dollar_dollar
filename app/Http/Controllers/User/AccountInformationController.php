@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\AdsManagement;
 use Carbon\Carbon;
+use App\UserLog;
 
 class AccountInformationController extends Controller
 {
@@ -165,13 +166,31 @@ class AccountInformationController extends Controller
                 $accountInformation->delete_status = 1;
                 $accountInformation->updated_by = "User";
                 $accountInformation->updated_at = Carbon::now()->toDateTimeString();
+
+                $userLog = New UserLog();
+                $userLog->user_id = $id;
+                $userLog->status = DELETED;
+                $userLog->updated_by_id = $id;
+                $userLog->updated_by = FRONT_USER;
+                $userLog->updated_on = Carbon::now()->toDateTimeString();
+
             } elseif ($request->type == "deactivate") {
-               // $accountInformation->status = 0;
+                // $accountInformation->status = 0;
                 $accountInformation->status = 0;
                 $accountInformation->updated_by = "User";
                 $accountInformation->updated_at = Carbon::now()->toDateTimeString();
+
+                $userLog = New UserLog();
+                $userLog->user_id = $id;
+                $userLog->status = DEACTIVATED;
+                $userLog->updated_by_id = $id;
+                $userLog->updated_by = FRONT_USER;
+                $userLog->updated_on = Carbon::now()->toDateTimeString();
+
+
             }
             $accountInformation->save();
+            $userLog->save();
         }
         return redirect()->route('user.logout')->with('success', 'Data ' . UPDATED_ALERT);
     }

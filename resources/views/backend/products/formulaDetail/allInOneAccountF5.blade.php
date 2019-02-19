@@ -162,14 +162,14 @@
                         <div class="col-sm-8 ">
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Minimum Requirement Amount (Privilege)</label>
+                                    <label for="">Minimum Requirement Amount (Wealth)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="minimum_privilege_pa_aioa5" value="{{ $value->minimum_privilege_pa  }}"
                                            placeholder="">
 
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Privilege)</label>
+                                    <label for="">Bonus Interest (Wealth)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="bonus_interest_privilege_aioa5"
                                            value="{{ $value->bonus_interest_privilege  }}"
@@ -465,14 +465,14 @@
                 <div class="col-sm-8 ">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Minimum Requirement Amount (Privilege)</label>
+                            <label for="">Minimum Requirement Amount (Wealth)</label>
                             <input type="text" class="form-control only_numeric" id=""
                                    name="minimum_privilege_pa_aioa5"
                                    placeholder="">
 
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Bonus Interest (Privilege)</label>
+                            <label for="">Bonus Interest (Wealth)</label>
                             <input type="text" class="form-control only_numeric" id=""
                                    name="bonus_interest_privilege_aioa5"
                                    placeholder="">

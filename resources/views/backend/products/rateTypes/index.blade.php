@@ -79,11 +79,13 @@
                                                {{-- <th><input type="checkbox" name="all_bulk_remove" class="no-sort">
                                                     Delete/Update
                                                 </th>--}}
+                                                <th>Action</th>
                                                 <th>Name</th>
+                                                <th>Bank Name</th>
                                                 <th>Interest Rate</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -94,25 +96,6 @@
                                                             <input type="checkbox" name="bluk_remove[]"
                                                                    value="{{ $rateType->id }}">
                                                         </td>--}}
-
-                                                        <td>
-                                                            {{ $rateType->name }}
-                                                        </td>
-                                                        <td>
-                                                            {{$rateType->interest_rate}}%
-                                                        </td>
-                                                        <td>
-                                                            @if (!empty($rateType->created_at))
-                                                                {!!  date("Y-m-d h:i A", strtotime($rateType->created_at))   !!}
-                                                            @endif
-
-
-                                                        </td>
-                                                        <td>@if (!empty($rateType->updated_at ))
-                                                                {!!  date("Y-m-d h:i A", strtotime($rateType->updated_at))   !!}
-                                                            @endif
-
-                                                        </td>
                                                         <td class="text-center">
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Rate Type"
@@ -130,6 +113,26 @@
                                                                 </a>
                                                             @endif
                                                         </td>
+                                                        <td>
+                                                            {{ $rateType->name }}
+                                                        </td>
+                                                        <td>{{ $rateType->bank_name }}</td>
+                                                        <td>
+                                                            {{$rateType->interest_rate}}%
+                                                        </td>
+                                                        <td>
+                                                            @if (!empty($rateType->created_at))
+                                                                {!!  date("Y-m-d H:i", strtotime($rateType->created_at))   !!}
+                                                            @endif
+
+
+                                                        </td>
+                                                        <td>@if (!empty($rateType->updated_at ))
+                                                                {!!  date("Y-m-d H:i", strtotime($rateType->updated_at))   !!}
+                                                            @endif
+
+                                                        </td>
+
                                                     </tr>
                                                 @endforeach
                                             @endif

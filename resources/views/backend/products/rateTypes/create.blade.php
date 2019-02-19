@@ -57,6 +57,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="title" class="col-sm-2 control-label">Bank</label>
+
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="bank" id="bank">
+                                        <option value="">None</option>
+                                        @if($banks->count())
+                                            @foreach($banks as $bank)
+                                                <option value="{{$bank->id}}"
+                                                        @if(old('bank')==$bank->id) selected="selected" @endif>{{$bank->title}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 {{Form::label('interest_rate', 'Interest Rate',['class'=>'col-sm-2 control-label'])}}
                                 <div class="col-sm-10">
                                     {{Form::text('interest_rate', old('interest_rate'), ['class' => 'form-control only_numeric', 'placeholder' => ''])}}

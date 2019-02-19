@@ -11,8 +11,9 @@ if (!$systemSetting) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    @yield('description')
+    @yield('keywords')
+    @yield('author')
     <link href=" {{ asset('apple-touch-icon.png') }}" rel="apple-touch-icon">
     <link href="{{ asset('favicon.png') }}" rel="icon">
     <title>@yield('title')</title>

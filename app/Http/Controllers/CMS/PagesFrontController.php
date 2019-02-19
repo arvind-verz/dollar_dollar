@@ -74,7 +74,7 @@ class PagesFrontController extends Controller
                 ->get();
 
             $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+                ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                 ->where('promotion_products.featured', '=', 1)
                 ->where('promotion_products.delete_status', '=', 0)
@@ -330,6 +330,16 @@ class PagesFrontController extends Controller
                     /*sent all pages detail into this function and than return to blade file*/
                     return $this->forgotPassword($details);
 
+                } elseif ($slug == RESET_PASSWORD) {
+                    $details = [];
+                    $details['brands'] = $brands;
+                    $details['page'] = $page;
+                    $details['systemSetting'] = $systemSetting;
+                    $details['banners'] = $banners;
+
+                    /*sent all pages detail into this function and than return to blade file*/
+                    return $this->resetPassword($details);
+
                 }
 
             } elseif ($page->is_blog == 1) {
@@ -429,7 +439,7 @@ class PagesFrontController extends Controller
             ->get();
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
             //->whereNotNull('promotion_products.formula_id')
@@ -1000,7 +1010,7 @@ class PagesFrontController extends Controller
             ->get();
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', PRIVILEGE_DEPOSIT)
             //->whereNotNull('promotion_products.formula_id')
@@ -1845,7 +1855,7 @@ class PagesFrontController extends Controller
             ->get();
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
             //->whereNotNull('promotion_products.formula_id')
@@ -2566,7 +2576,7 @@ class PagesFrontController extends Controller
             ->get();
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_types.id', '=', FOREIGN_CURRENCY_DEPOSIT)
@@ -3420,7 +3430,7 @@ class PagesFrontController extends Controller
         $toolTips = ToolTip::where('promotion_id', ALL_IN_ONE_ACCOUNT)->first();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_types.id', '=', ALL_IN_ONE_ACCOUNT)
@@ -3611,11 +3621,9 @@ class PagesFrontController extends Controller
                 $interestEarns = [];
                 $criteria = null;
                 //$placement = 0;
-                if ((($spend >= $productRanges[0]->minimum_spend_2) || ($spend >= $productRanges[0]->minimum_spend)) && (($salary >= $productRanges[0]->minimum_salary_2) || ($salary >= $productRanges[0]->minimum_salary) || ($giro >= $productRanges[0]->minimum_giro_payment))) {
+                if ((($spend >= $productRanges[0]->minimum_spend)) && (($salary >= $productRanges[0]->minimum_salary) || ($giro >= $productRanges[0]->minimum_giro_payment))) {
                     $criteriaMatchCount = 1;
-                    if (isset($productRanges[0]->minimum_salary_2) && $salary > 0 && $productRanges[0]->minimum_salary_2 <= $salary) {
-                        $criteriaMatchCount++;
-                    } elseif ($salary > 0 && $productRanges[0]->minimum_salary <= $salary) {
+                    if ($salary > 0 && $productRanges[0]->minimum_salary <= $salary) {
                         $criteriaMatchCount++;
                     }
                     if ($giro >= $productRanges[0]->minimum_giro_payment) {
@@ -3625,8 +3633,7 @@ class PagesFrontController extends Controller
                     $product->criteria_b_highlight = true;
                     $status = true;
 
-                }
-                elseif (($spend >= $productRanges[0]->minimum_spend) || ($spend >= $productRanges[0]->minimum_spend_2)) {
+                } elseif (($spend >= $productRanges[0]->minimum_spend)) {
                     $criteria = "bonus_interest_criteria_a";
                     $product->criteria_a_highlight = true;
                     $status = true;
@@ -3764,10 +3771,7 @@ class PagesFrontController extends Controller
                     $totalInterest = 1;
                     if ($status == true) {
 
-                        if (isset($productRange->minimum_salary_2) && $salary > 0 && $productRange->minimum_salary_2 <= $salary) {
-                            $criteriaMatchCount++;
-                            $product->salary_highlight_2 = true;
-                        } elseif ($salary > 0 && $productRange->minimum_salary <= $salary) {
+                        if ($salary > 0 && $productRange->minimum_salary <= $salary) {
                             $criteriaMatchCount++;
                             $product->salary_highlight = true;
                         }
@@ -3775,10 +3779,7 @@ class PagesFrontController extends Controller
                             $criteriaMatchCount++;
                             $product->payment_highlight = true;
                         }
-                        if (isset($productRange->minimum_spend_2) && $spend > 0 && $productRange->minimum_spend_2 <= $spend) {
-                            $criteriaMatchCount++;
-                            $product->spend_highlight_2 = true;
-                        } elseif ($spend > 0 && $productRange->minimum_spend <= $spend) {
+                        if ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
                             $product->spend_highlight = true;
                         }
@@ -3877,15 +3878,10 @@ class PagesFrontController extends Controller
                 $criteriaValue = 0;
 
 
-
-                if ($salary > 0 && ((isset($baseDetail->minimum_salary_2) && $baseDetail->minimum_salary_2 <= $salary)||($baseDetail->minimum_salary <= $salary))) {
+                if ($salary > 0 && ($baseDetail->minimum_salary <= $salary)) {
                     $criteriaValue = $criteriaValue + $salary;
                     $criteriaCount++;
-                    if (isset($baseDetail->minimum_spend_2) && $spend > 0 && $baseDetail->minimum_spend_2 <= $spend) {
-                        $criteriaCount++;
-                        $criteriaMatchCount++;
-                        $criteriaValue = $criteriaValue + $spend;
-                    } elseif ($spend > 0 && $baseDetail->minimum_spend <= $spend) {
+                    if ($spend > 0 && $baseDetail->minimum_spend <= $spend) {
                         $criteriaCount++;
                         $criteriaMatchCount++;
                         $criteriaValue = $criteriaValue + $spend;
@@ -4161,7 +4157,7 @@ class PagesFrontController extends Controller
                 $otherStatus = false;
                 $wealthStatus = false;
                 $growStatus = true;
-                $boostStatus = true;
+                $boostStatus = false;
                 $baseInterest = true;
 
 
@@ -4334,8 +4330,8 @@ class PagesFrontController extends Controller
                     $product->boost_highlight = true;
                     $product->total_interest += $productRanges[0]->bonus_interest_boost;
                 }
-                if ($baseInterest == true) {
-                    $product->base_interest_total = round($placement * ($productRanges[0]->bonus_interest_remaining_amount / 100), 2);
+                if ($maxPlacement < $placement) {
+                    $product->base_interest_total = round(($placement - $maxPlacement) * ($productRanges[0]->bonus_interest_remaining_amount / 100), 2);
                     $product->interest_earned += $product->base_interest_total;
                     $product->base_highlight = true;
                     $product->total_interest += $productRanges[0]->bonus_interest_remaining_amount;
@@ -4413,10 +4409,11 @@ class PagesFrontController extends Controller
     public
     function loan($request)
     {
+        $ads_manage = [];
         $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
-            ->where('page_type', AIO_DEPOSIT_MODE)
+            ->where('page_type', LOAN_MODE)
             ->inRandomOrder()
             ->get();
         if ($adsCollection->count()) {
@@ -4435,7 +4432,7 @@ class PagesFrontController extends Controller
         $toolTips = ToolTip::where('promotion_id', LOAN)->first();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_types.id', '=', LOAN)
@@ -4479,6 +4476,7 @@ class PagesFrontController extends Controller
                     $placement = 0;
                     $searchValue = $defaultPlacement;
                     $rateType = $defaultRateType;
+
                     $tenure = $defaultTenure;
                     $propertyType = $defaultPropertyType;
                     $completion = $defaultCompletion;
@@ -4488,7 +4486,7 @@ class PagesFrontController extends Controller
                     $searchFilter['property_type'] = $defaultPropertyType;
                     $searchFilter['completion'] = $defaultCompletion;
                     $searchFilter['filter'] = INTEREST;
-                    $searchFilter['sort_by'] = MAXIMUM;
+                    $searchFilter['sort_by'] = MINIMUM;
                 } else {
                     $placement = 0;
                     $searchFilter = $request;
@@ -4511,12 +4509,26 @@ class PagesFrontController extends Controller
                     $totalInterests = [];
                     $interestEarns = [];
                     $product->highlight = false;
-
                     $firstProductRange = $productRanges[0];
-                    if ($rateType != BOTH_VALUE && ($rateType != $firstProductRange->rate_type)) {
+                    if ($product->minimum_loan_amount > $searchValue) {
                         $status = false;
                     }
-                    if ($completion != ALL && ($completion != $firstProductRange->completion_status)) {
+                    if ($rateType != BOTH_VALUE && ($rateType != $firstProductRange->rate_type)) {
+                        $status = false;
+                        dd($searchValue,$product->minimum_loan_amount);
+
+                    }
+
+                    $bucProperty = [BUC, COMPLETE_BUC];
+                    $completionProperty = [COMPLETE, COMPLETE_BUC];
+                    $commonCompletion = [];
+
+                    if ($completion == BUC) {
+                        $commonCompletion = $bucProperty;
+                    } elseif ($completion == COMPLETE) {
+                        $commonCompletion = $completionProperty;
+                    }
+                    if (!in_array($firstProductRange->completion_status, $commonCompletion)) {
                         $status = false;
                     }
 
@@ -4532,7 +4544,7 @@ class PagesFrontController extends Controller
                         if (!in_array($firstProductRange->property_type, $commonProperty)) {
                             $status = false;
                         }
-                    } elseif ($propertyType != COMMERCIAL_PROPERTY) {
+                    } elseif ($propertyType != $firstProductRange->property_type) {
                         $status = false;
                     }
                     /*if (($searchValue < $firstProductRange->min_range) || ($searchValue > $firstProductRange->max_range)) {
@@ -4548,7 +4560,7 @@ class PagesFrontController extends Controller
                         $interest = $productRange->bonus_interest + $productRange->rate_interest_other;
                         if ($interest <= 0) {
                             $productRange->monthly_payment = 0;
-                        }else{
+                        } else {
                             $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
                             $result = $mortage->calculate();
                             $productRange->monthly_payment = $result->monthlyPayment;
@@ -4570,7 +4582,7 @@ class PagesFrontController extends Controller
                         $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
                         if ($interest <= 0) {
                             $monthlyThereAfterPayment = 0;
-                        }else{
+                        } else {
                             $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
                             $result = $mortage->calculate();
                             $monthlyThereAfterPayment = $result->monthlyPayment;
@@ -4584,7 +4596,7 @@ class PagesFrontController extends Controller
                     $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
                     if ($interest <= 0) {
                         $product->there_after_installment = 0;
-                    }else{
+                    } else {
                         $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
                         $result = $mortage->calculate();
                         $product->there_after_installment = $result->monthlyPayment;
@@ -4676,7 +4688,7 @@ class PagesFrontController extends Controller
         $highlightStatus = isset($request->status) ? $request->status : 1;
 
         $product = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_formula.promotion_id', '=', ALL_IN_ONE_ACCOUNT)
             ->where('promotion_products.delete_status', '=', 0)
@@ -4769,6 +4781,17 @@ class PagesFrontController extends Controller
                 $product->hire_loan = false;
                 $product->renovation_loan = false;
                 $product->unit_trust = false;
+                $product->salary_highlight = false;
+                $product->salary_highlight_2 = false;
+                $product->payment_highlight = false;
+                $product->spend_highlight = false;
+                $product->spend_highlight_2 = false;
+                $product->housing_loan_highlight = false;
+                $product->education_loan_highlight = false;
+                $product->hire_loan_highlight = false;
+                $product->renovation_loan_highlight = false;
+                $product->life_insurance_highlight = false;
+                $product->unit_trust_highlight = false;
                 $totalInterests = [];
                 $interestEarns = [];
 
@@ -4791,37 +4814,46 @@ class PagesFrontController extends Controller
 
                         if ($salary > 0 && $productRange->minimum_salary <= $salary) {
                             $criteriaMatchCount++;
+                            $product->salary_highlight = true;
                         }
                         if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
                             $criteriaMatchCount++;
+                            $product->payment_highlight = true;
                         }
                         if ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
+                            $product->spend_highlight = true;
                         }
                         if ((isset($checkBoxDetail['life_insurance'])) && ($minimumInsurance > 0 && $productRange->minimum_insurance <= ($minimumInsurance))) {
                             $criteriaMatchCount++;
                             $product->life_insurance = true;
+                            $product->life_insurance_highlight = true;
                         }
                         if ((isset($checkBoxDetail['unit_trust'])) && ($minimumUnitTrust > 0 && $productRange->minimum_unit_trust <= ($minimumUnitTrust))) {
 
                             $criteriaMatchCount++;
                             $product->unit_trust = true;
+                            $product->unit_trust_highlight = true;
                         }
                         if ((isset($checkBoxDetail['hire_loan'])) && ($minimumHirePurchaseLoan > 0 && $productRange->minimum_hire_purchase_loan <= ($minimumHirePurchaseLoan))) {
                             $criteriaMatchCount++;
                             $product->hire_loan = true;
+                            $product->hire_loan_highlight = true;
                         }
                         if ((isset($checkBoxDetail['renovation_loan'])) && ($minimumRenovationLoan > 0 && $productRange->minimum_renovation_loan <= ($minimumRenovationLoan))) {
                             $criteriaMatchCount++;
                             $product->renovation_loan = true;
+                            $product->renovation_loan_highlight = true;
                         }
                         if ((isset($checkBoxDetail['housing_loan'])) && ($minimumHomeLoan > 0 && $productRange->minimum_home_loan <= ($minimumHomeLoan))) {
                             $criteriaMatchCount++;
                             $product->housing_loan = true;
+                            $product->housing_loan_highlight = true;
                         }
                         if ((isset($checkBoxDetail['education_loan'])) && ($minimumEducationLoan > 0 && $productRange->minimum_education_loan <= ($minimumEducationLoan))) {
                             $criteriaMatchCount++;
                             $product->education_loan = true;
+                            $product->education_loan_highlight = true;
                         }
 
                         if ($criteriaMatchCount == 1) {
@@ -4881,10 +4913,19 @@ class PagesFrontController extends Controller
                             <thead>
                             <tr>
                                 <th class="combine-criteria-padding" style="width:19%">CRITERIA</th>
-                                <th class="combine-criteria-padding" style="width:9%">SALARY</th>
-                                <th class="combine-criteria-padding" style="width:9%">Giro</th>
-                                <th class="combine-criteria-padding" style="width:9%">SPEND</th>
-                                <th class="combine-criteria-padding" style="width:21%">
+                                <th class="combine-criteria-padding <?php if ($product->salary_highlight == true || $product->salary_highlight_2 == true) {
+                                    echo 'active';
+                                } ?>" style="width:9%">SALARY
+                                </th>
+                                <th class="combine-criteria-padding <?php if ($product->payment_highlight == true) {
+                                    echo 'active';
+                                } ?>" style="width:9%">Giro
+                                </th>
+                                <th class="combine-criteria-padding <?php if ($product->spend_highlight == true || $product->spend_highlight_2 == true) {
+                                    echo 'active';
+                                } ?>" style="width:9%">SPEND
+                                </th>
+                                <th class="combine-criteria-padding " style="width:21%">
                                     Loan
                                     <div class="row">
                                         <div class="width-50">
@@ -4900,7 +4941,10 @@ class PagesFrontController extends Controller
                                                        value="true"
                                                        id="housing-loan-<?php echo $product->product_id; ?>">
                                                 <label
-                                                    for="housing-loan-<?php echo $product->product_id; ?>">Housing</label>
+                                                    for="housing-loan-<?php echo $product->product_id; ?>"
+                                                    class="<?php if ($product->housing_loan_highlight == true) {
+                                                        echo 'active';
+                                                    } ?>">Housing</label>
                                             </div>
                                             <div class="ps-checkbox">
                                                 <input class="form-control" type="checkbox"
@@ -4913,7 +4957,10 @@ class PagesFrontController extends Controller
                                                         echo "checked = checked";
                                                     } ?>/>
                                                 <label
-                                                    for="education-loan-<?php echo $product->product_id; ?>">Education</label>
+                                                    for="education-loan-<?php echo $product->product_id; ?>"
+                                                    class="<?php if ($product->education_loan_highlight == true) {
+                                                        echo 'active';
+                                                    } ?>">Education</label>
                                             </div>
                                         </div>
                                         <div class="width-50">
@@ -4927,7 +4974,10 @@ class PagesFrontController extends Controller
                                                     <?php if ($product->hire_loan) {
                                                         echo "checked = checked";
                                                     } ?>/>
-                                                <label for="hire-loan-<?php echo $product->product_id; ?>">Hire
+                                                <label for="hire-loan-<?php echo $product->product_id; ?>"
+                                                       class="<?php if ($product->hire_loan_highlight == true) {
+                                                           echo 'active';
+                                                       } ?>">Hire
                                                     loan</label>
                                             </div>
                                             <div class="ps-checkbox">
@@ -4941,7 +4991,10 @@ class PagesFrontController extends Controller
                                                         echo "checked = checked";
                                                     } ?>/>
                                                 <label
-                                                    for="renovation-loan-<?php echo $product->product_id; ?>">Renovation</label>
+                                                    for="renovation-loan-<?php echo $product->product_id; ?>"
+                                                    class="<?php if ($product->renovation_loan_highlight == true) {
+                                                        echo 'active';
+                                                    } ?>">Renovation</label>
                                             </div>
 
                                         </div>
@@ -4961,7 +5014,10 @@ class PagesFrontController extends Controller
                                                     } ?> value="true"
                                                        id="life-insurance-<?php echo $product->product_id; ?>"/>
                                                 <label
-                                                    for="life-insurance-<?php echo $product->product_id; ?>">Insurance</label>
+                                                    for="life-insurance-<?php echo $product->product_id; ?>"
+                                                    class="<?php if ($product->life_insurance_highlight == true) {
+                                                        echo 'active';
+                                                    } ?>">Insurance</label>
                                             </div>
                                             <div class="ps-checkbox">
                                                 <input class="form-control" type="checkbox"
@@ -4973,7 +5029,10 @@ class PagesFrontController extends Controller
                                                     <?php if ($product->unit_trust) {
                                                         echo "checked = checked";
                                                     } ?>/>
-                                                <label for="unit-trust-<?php echo $product->product_id; ?>">Unit</label>
+                                                <label for="unit-trust-<?php echo $product->product_id; ?>"
+                                                       class="<?php if ($product->unit_trust_highlight == true) {
+                                                           echo 'active';
+                                                       } ?>">Unit</label>
                                             </div>
                                         </div>
                                     </div>
@@ -5116,7 +5175,7 @@ class PagesFrontController extends Controller
         $highlightStatus = isset($request->status) ? $request->status : 1;
 
         $product = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_formula.promotion_id', '=', ALL_IN_ONE_ACCOUNT)
             ->where('promotion_products.delete_status', '=', 0)
@@ -5199,6 +5258,7 @@ class PagesFrontController extends Controller
                 $interestEarns = [];
                 $product->highlight = false;
                 $product->salary_highlight = false;
+                $product->salary_highlight_2 = false;
                 $product->payment_highlight = false;
                 $product->spend_1_highlight = false;
                 $product->spend_2_highlight = false;
@@ -5362,18 +5422,33 @@ class PagesFrontController extends Controller
                                 <th class="">CRITERIA</th>
                                 <?php $firstRange = $productRanges[0];
                                 if (!empty($firstRange->minimum_spend_1) || !empty($firstRange->minimum_spend_2)) { ?>
-                                    <th class="<?php if($product->spend_2_highlight==true || $product->spend_1_highlight==true) { echo'active'; } ?>">SPEND</th>
+                                    <th class="<?php if ($product->spend_2_highlight == true || $product->spend_1_highlight == true) {
+                                        echo 'active';
+                                    } ?>">SPEND
+                                    </th>
                                 <?php }
                                 if (!empty($firstRange->minimum_salary)) { ?>
-                                    <th class="<?php if($product->spend_2_highlight==true) { echo'active'; } ?>">SALARY</th> <?php }
+                                    <th class="<?php if ($product->salary_highlight == true || $product->salary_highlight_2 == true) {
+                                        echo 'active';
+                                    } ?>">SALARY
+                                    </th> <?php }
                                 if (!empty($firstRange->minimum_giro_payment)) { ?>
 
-                                    <th>PAYMENT</th> <?php }
+                                    <th class="<?php if ($product->payment_highlight == true) {
+                                        echo 'active';
+                                    } ?>">PAYMENT
+                                    </th> <?php }
                                 if (!empty($firstRange->minimum_privilege_pa)) { ?>
 
-                                    <th>PRIVILEGE</th> <?php }
+                                    <th class="<?php if ($product->privilege_highlight == true) {
+                                        echo 'active';
+                                    } ?>">PRIVILEGE
+                                    </th> <?php }
                                 if (!empty($firstRange->minimum_loan_pa)) { ?>
-                                    <th>LOAN</th> <?php }
+                                    <th class="<?php if ($product->loan_highlight == true) {
+                                        echo 'active';
+                                    } ?>">LOAN
+                                    </th> <?php }
                                 if (!empty($firstRange->other_minimum_amount1) && ($firstRange->status_other1 == 1)) { ?>
                                     <th class="combine-criteria-padding">
                                         <div class="">
@@ -5390,7 +5465,10 @@ class PagesFrontController extends Controller
                                                         } ?>
                                                            id="other-interest1-<?php echo $product->product_id; ?>">
                                                     <label
-                                                        for="other-interest1-<?php echo $product->product_id; ?>"><?php echo $firstRange->other_interest1_name; ?></label>
+                                                        for="other-interest1-<?php echo $product->product_id; ?>"
+                                                        class="<?php if ($product->other_highlight1 == true) {
+                                                            echo 'active';
+                                                        } ?>"><?php echo $firstRange->other_interest1_name; ?></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -5412,7 +5490,10 @@ class PagesFrontController extends Controller
                                                         } ?>
                                                            id="other-interest2-<?php echo $product->product_id; ?>">
                                                     <label
-                                                        for="other-interest2-<?php echo $product->product_id; ?>"><?php echo $firstRange->other_interest2_name; ?></label>
+                                                        for="other-interest2-<?php echo $product->product_id; ?>"
+                                                        class="<?php if ($product->other_highlight2 == true) {
+                                                            echo 'active';
+                                                        } ?>"><?php echo $firstRange->other_interest2_name; ?></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -5439,6 +5520,8 @@ class PagesFrontController extends Controller
                                                         } ?>
 
                                                     </td>
+                                                </tr>
+                                                <tr>
                                                     <td class=" text-center <?php if ($product->spend_2_highlight == true) {
                                                         echo "highlight";
                                                     } ?>">
@@ -5454,15 +5537,36 @@ class PagesFrontController extends Controller
 
                                         </td>
                                     <?php }
-                                    if (!empty($firstRange->minimum_salary)) { ?>
-                                        <td class=" text-center  <?php if ($product->salary_highlight == true) {
+                                    if (!empty($firstRange->minimum_salary) || !empty($firstRange->minimum_salary_2)) { ?>
+                                        <td class=" pt-0 pb-0 pl-0 pr-0 text-center <?php if ($product->salary_highlight == true || $product->salary_highlight_2 == true) {
                                             echo "highlight";
                                         } ?> ">
-                                            <?php if ($range->bonus_interest_salary <= 0) {
-                                                echo "-";
-                                            } else {
-                                                echo "$range->bonus_interest_salary" . '%';
-                                            } ?>
+                                            <table cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td class=" text-center <?php if ($product->salary_highlight == true) {
+                                                        echo "highlight";
+                                                    } ?> ">
+                                                        <?php if ($range->bonus_interest_salary <= 0) {
+                                                            echo "-";
+                                                        } else {
+                                                            echo $range->bonus_interest_salary . "%";
+                                                        } ?>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class=" text-center <?php if ($product->salary_highlight_2 == true) {
+                                                        echo "highlight";
+                                                    } ?>">
+                                                        <?php if ($range->bonus_interest_salary_2 <= 0) {
+                                                            echo "-";
+                                                        } else {
+                                                            echo $range->bonus_interest_salary_2 . "%";
+                                                        } ?>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
 
                                         </td>
                                     <?php }
@@ -5625,6 +5729,18 @@ class PagesFrontController extends Controller
         $banners = $details['banners'];
 
         return view('frontend.user.forgot-password', compact("brands", "page", "systemSetting", "banners"));
+    }
+
+    public
+    function resetPassword($details)
+    {
+//        $details = \Helper::get_page_detail(TERMS_CONDITION);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+
+        return view('frontend.user.reset-new-password', compact("brands", "page", "systemSetting", "banners"));
     }
 
     public

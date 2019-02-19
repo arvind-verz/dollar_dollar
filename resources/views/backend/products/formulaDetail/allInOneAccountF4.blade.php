@@ -9,13 +9,13 @@
         <div class="col-sm-8 ">
             <div class="form-row">
                 <div class="col-md-4 mb-3">
-                    <label for="">Minimum Amount (Salary 1)</label>
+                    <label for="">Minimum Amount (Salary)</label>
                     <input type="text" class="form-control only_numeric" id=""
                     name="minimum_salary_aioa4" value="{{ $value->minimum_salary}}"
                     placeholder="">
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="">Minimum Amount (Spend 1)</label>
+                    <label for="">Minimum Amount (Spend)</label>
                     <input type="text" class="form-control only_numeric" id=""
                     name="minimum_spend_aioa4"
                     value="{{ $value->minimum_spend}}"
@@ -31,7 +31,7 @@
         </div>
         <div class="col-sm-2">&emsp;</div>
     </div>
-    <div class="form-group ">
+    {{--<div class="form-group ">
         <label for="title" class="col-sm-2 control-label"></label>
         <div class="col-sm-8 ">
             <div class="form-row">
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="col-sm-2">&emsp;</div>
-    </div>
+    </div>--}}
     <div class="form-group ">
         <label for="title" class="col-sm-2 control-label"></label>
         <div class="col-sm-8 ">
@@ -177,13 +177,13 @@
         <div class="col-sm-8 ">
             <div class="form-row">
                 <div class="col-md-4 mb-3">
-                    <label for="">Minimum Amount (Salary 1)</label>
+                    <label for="">Minimum Amount (Salary)</label>
                     <input type="text" class="form-control only_numeric" id=""
                     name="minimum_salary_aioa4" value=""
                     placeholder="">
                 </div>
                 <div class="col-md-4 mb-3">
-                    <label for="">Minimum Amount (Spend 1)</label>
+                    <label for="">Minimum Amount (Spend)</label>
                     <input type="text" class="form-control only_numeric" id=""
                     name="minimum_spend_aioa4"
                     value=""
@@ -199,7 +199,7 @@
         </div>
         <div class="col-sm-2">&emsp;</div>
     </div>
-    <div class="form-group ">
+    {{--<div class="form-group ">
         <label for="title" class="col-sm-2 control-label"></label>
         <div class="col-sm-8 ">
             <div class="form-row">
@@ -222,7 +222,7 @@
             </div>
         </div>
         <div class="col-sm-2">&emsp;</div>
-    </div>
+    </div>--}}
     <div class="form-group ">
         <label for="title" class="col-sm-2 control-label"></label>
         <div class="col-sm-8 ">

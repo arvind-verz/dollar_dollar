@@ -98,9 +98,9 @@ class SystemSettingController extends Controller
             'email_sender_name' => 'required',
             'admin_email' => 'required | email',
             'auto_email' => 'required | email',
-            'company_name' => 'required ',
-            'contact_phone' => 'required ',
-            'contact_email' => 'required | email ',
+            //'company_name' => 'required ',
+            //'contact_phone' => 'required ',
+            //'contact_email' => 'required | email ',
         ]);
 
         $systemSetting = SystemSetting::find($id);

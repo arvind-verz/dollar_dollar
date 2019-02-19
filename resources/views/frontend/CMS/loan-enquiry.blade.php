@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
 <?php
@@ -166,7 +175,13 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
             </label>
             <label class="hide refinance-loan">Existing Bank Loan<input class="" name="existing_bank_loan"
                 value="{{old('existing_bank_loan')}}"
-            type="text"></label>
+            type="text" placeholder="E.g UOB">
+                @if ($errors->has('existing_bank_loan'))
+                    <span class="text-danger" id="">
+                    <strong>{{ $errors->first('existing_bank_loan') }}</strong>
+                </span>
+                @endif
+            </label>
             
             <div class="ps-form__content mt-5 mb-5">
                 <div class=" recaptcha">
@@ -187,7 +202,7 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
             @if(\Illuminate\Support\Facades\Auth::check())
             <label>
                 <div class="form-icon">
-                    <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}" class="standard-link">Edit
+                    <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'loan-enquiry']) }}" class="standard-link">Edit
                     Info</a>
                 </div>
             </label>

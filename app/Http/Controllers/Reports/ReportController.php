@@ -9,6 +9,7 @@ use Excel;
 use DB;
 use App\User;
 use App\Exports\CustomersReportExport;
+use App\UserLog;
 
 class ReportController extends Controller
 {
@@ -47,9 +48,11 @@ class ReportController extends Controller
     {
         //$CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, CUSTOMER_MODULE_ID);   
 
-        $users = User::where('log_status', 1)->where(function ($query) {$query->where('delete_status', 1)->orWhere('status',0);})
+        $users = UserLog::join('users', 'user_logs.user_id', '=', 'users.id')
+            ->where('user_logs.delete_status', 0)
+            ->select('users.first_name','users.last_name','users.email','users.tel_phone','user_logs.*')
             ->get();
-        //dd($products);
+        //dd($users);
         return view("backend.reports.customer-report.delete-deactivation", compact("users", "CheckLayoutPermission"));
     }
 

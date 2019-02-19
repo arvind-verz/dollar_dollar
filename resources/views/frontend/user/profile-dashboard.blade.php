@@ -51,7 +51,7 @@
 
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5>
+                                    <h5><img src="/img/icons/user.png" alt="">Account Information</h5>
                                 </div>
                                 <div class="ps-block__content">
                                     <h5>Contact Information</h5>
@@ -66,7 +66,7 @@
                             @if(count($products))
                                 <div class="ps-block--box info recommended-product">
                                     <div class="ps-block__header">
-                                        <h5><img src="img/icons/file.png" alt="">Featured products</h5>
+                                        <h5><img src="/img/icons/file.png" alt="">Featured products</h5>
                                         <!-- <a href="#">View all</a> -->
                                     </div>
                                     <div class="ps-block__content">
@@ -121,7 +121,7 @@
                             @endif
                             <div class="ps-block--box info no-border" style="padding: 0;">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/file.png" alt="">All my Accounts</h5>
+                                    <h5><img src="/img/icons/file.png" alt="">All my Accounts</h5>
                                     <!-- <a href="#">View all</a> -->
                                 </div>
                                 <div class="ps-block__content">
@@ -134,7 +134,7 @@
                                                     <br> Name
                                                 </th>
                                                 <th>Amount</th>
-                                                <th>Tenure
+                                                <th>Tenor
                                                     <br> (M= months,
                                                     <br> D = Days)
                                                 </th>
@@ -187,10 +187,6 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
-                                            @else
-                                                <tr>
-                                                    <td class="text-center" colspan="9">No data found.</td>
-                                                </tr>
                                             @endif
                                             </tbody>
                                         </table>

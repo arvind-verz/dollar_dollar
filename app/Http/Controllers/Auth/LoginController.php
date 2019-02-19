@@ -76,7 +76,7 @@ class LoginController extends Controller
     {
         
         $request->session()->regenerate();
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->where('delete_status',0)->first();
         if($user){
             $user->status = 1;
             $user->save();
@@ -202,7 +202,7 @@ class LoginController extends Controller
         if (!$request->has('code') || $request->has('denied')) {
             return redirect(url($this->redirectTo));
         }
-        $user     = Socialite::driver($provider)->user();
+        $user     = Socialite::driver($provider)->stateless()->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         if($authUser){

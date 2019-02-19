@@ -1,7 +1,7 @@
 @component('mail::message')
 <p>Greetings {{$data['first_name']}} {{$data['last_name']}},</p>
-<p>You are reading this email because we have received a request from you to change your password.</p>
-<p>To reset your password, you click the button below and follow the instructions stated there.</p>
+<p>We have received a request from you to change your password.</p>
+<p>To reset your password, simply click the button below and it will bring you to a new page to reset your password.</p>
 @component('mail::button', ['url' => $data['url']])
 Reset Password
 @endcomponent

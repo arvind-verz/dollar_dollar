@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
     <?php
@@ -115,7 +124,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
+                            <label>Password <span class="optional">(Min. 8 characters)</span></label>
                             <input class="form-control" type="password" name="password" placeholder="Enter Password Here">
                            @if ($errors->has('password'))
                             <span class="text-danger">
