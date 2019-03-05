@@ -1610,7 +1610,7 @@ class PagesFrontController extends Controller
                     $monthlySavingAmount = [];
                     $baseInterests = [];
                     $additionalInterests = [];
-                    $baseInterestAll=[];
+                    $baseInterestAll = [];
                     $additionalInterestsAll = [];
                     $totalInterestAmount = 0;
 
@@ -1621,8 +1621,8 @@ class PagesFrontController extends Controller
 
                     for ($i = 1; $i <= ($productRange->placement_month); $i++) {
 
-                        $baseInterest = round(($productRange->base_interest/100) * ($placement * $i) * (31 /365),5);
-                        $AdditionalInterest = round((($productRange->bonus_interest/100) * (($placement * $i) + $baseInterest))  * (31 /365),5);
+                        $baseInterest = round(($productRange->base_interest / 100) * ($placement * $i) * (31 / 365), 5);
+                        $AdditionalInterest = round((($productRange->bonus_interest / 100) * (($placement * $i) + $baseInterest)) * (31 / 365), 5);
                         $baseInterestAll[] = $baseInterest;
                         $additionalInterestsAll[] = $AdditionalInterest;
                         if (in_array($i, $product->months)) {
@@ -2314,7 +2314,7 @@ class PagesFrontController extends Controller
                     $monthlySavingAmount = [];
                     $baseInterests = [];
                     $additionalInterests = [];
-                    $baseInterestAll=[];
+                    $baseInterestAll = [];
                     $additionalInterestsAll = [];
                     $totalInterestAmount = 0;
 
@@ -2325,8 +2325,8 @@ class PagesFrontController extends Controller
 
                     for ($i = 1; $i <= ($productRange->placement_month); $i++) {
 
-                        $baseInterest = round(($productRange->base_interest/100) * ($placement * $i) * (31 /365),5);
-                        $AdditionalInterest = round((($productRange->bonus_interest/100) * (($placement * $i) + $baseInterest))  * (31 /365),5);
+                        $baseInterest = round(($productRange->base_interest / 100) * ($placement * $i) * (31 / 365), 5);
+                        $AdditionalInterest = round((($productRange->bonus_interest / 100) * (($placement * $i) + $baseInterest)) * (31 / 365), 5);
                         $baseInterestAll[] = $baseInterest;
                         $additionalInterestsAll[] = $AdditionalInterest;
                         if (in_array($i, $product->months)) {
@@ -3199,7 +3199,7 @@ class PagesFrontController extends Controller
                     $monthlySavingAmount = [];
                     $baseInterests = [];
                     $additionalInterests = [];
-                    $baseInterestAll=[];
+                    $baseInterestAll = [];
                     $additionalInterestsAll = [];
                     $totalInterestAmount = 0;
 
@@ -3210,8 +3210,8 @@ class PagesFrontController extends Controller
 
                     for ($i = 1; $i <= ($productRange->placement_month); $i++) {
 
-                        $baseInterest = round(($productRange->base_interest/100) * ($placement * $i) * (31 /365),5);
-                        $AdditionalInterest = round((($productRange->bonus_interest/100) * (($placement * $i) + $baseInterest))  * (31 /365),5);
+                        $baseInterest = round(($productRange->base_interest / 100) * ($placement * $i) * (31 / 365), 5);
+                        $AdditionalInterest = round((($productRange->bonus_interest / 100) * (($placement * $i) + $baseInterest)) * (31 / 365), 5);
                         $baseInterestAll[] = $baseInterest;
                         $additionalInterestsAll[] = $AdditionalInterest;
                         if (in_array($i, $product->months)) {
@@ -4458,6 +4458,7 @@ class PagesFrontController extends Controller
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MINIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
+        $pageNo = isset($request['page_no']) ? $request['page_no'] : 1;
 
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -4523,6 +4524,7 @@ class PagesFrontController extends Controller
                     $searchFilter['completion'] = $defaultCompletion;
                     $searchFilter['filter'] = INTEREST;
                     $searchFilter['sort_by'] = MINIMUM;
+                    $pageNo = 1;
                 } else {
                     $placement = 0;
                     $searchFilter = $request;
@@ -4536,6 +4538,7 @@ class PagesFrontController extends Controller
                     $propertyType = $searchFilter['property_type'] = isset($searchFilter['property_type']) ? $searchFilter['property_type'] : null;
                     $completion = $searchFilter['completion'] = isset($searchFilter['completion']) ? $searchFilter['completion'] : null;
                     $searchFilter['filter'] = $searchFilter['filter'] ? $searchFilter['filter'] : PLACEMENT;
+                    $pageNo = $searchFilter['page_no'] ? $searchFilter['page_no'] : 1;
 
                 }
                 $status = true;
@@ -4687,10 +4690,16 @@ class PagesFrontController extends Controller
                     $products = $products->sortByDesc('lock_in')->values();
                 }
             }
+
             $featured = $products->where('featured', 1)->values();
             $nonFeatured = $products->where('featured', 0)->values();
             $products = $featured->merge($nonFeatured);
             $sliderProducts = $products->where('promotion_formula_id', '!=', null)->values();
+            $totalProductNo = $products->count();
+            $productPerPage = 10;
+            $pages = ceil($totalProductNo / $productPerPage);
+            $products = $products->forPage($pageNo, $productPerPage);
+
         }
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
@@ -4716,7 +4725,7 @@ class PagesFrontController extends Controller
         }
 
         //dd($products);
-        return view('frontend.products.loan', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "ads_manage", "toolTips"));
+        return view('frontend.products.loan', compact("pageNo", "pages", "brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "ads_manage", "toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)
@@ -6424,5 +6433,10 @@ class PagesFrontController extends Controller
 
             }
         }
+    }
+    
+    public function loanLoadMore(Request $request)
+    {
+    	return "hello";
     }
 }
