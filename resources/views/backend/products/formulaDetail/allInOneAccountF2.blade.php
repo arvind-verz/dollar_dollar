@@ -1,7 +1,7 @@
 <div class="display-none" id="allInOneAccountF2">
     @if(isset($product) && (in_array($product->formula_id,[ALL_IN_ONE_ACCOUNT_F2])))
         @if(count($product->product_range))
-            <?php $prevMax = 0 ?>
+            <?php $prevMax = 0 ;?>
             @foreach($product->product_range as $key => $value)
                 @if($key==0)
                     <div class="form-group ">
@@ -17,6 +17,13 @@
 
                                 </div>
                                 <div class="col-md-4 mb-3">
+                                    <label for="">Minimum Requirement Amount (Salary)</label>
+                                    <input type="text" class="form-control only_numeric" id=""
+                                           name="minimum_salary_aioa2" value="{{ $value->minimum_salary}}"
+                                           placeholder="">
+
+                                </div>
+                                <div class="col-md-4 mb-3">
                                     <label for="">Minimum Requirement Number of Payment (Giro)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="minimum_giro_payment_aioa2"
@@ -24,17 +31,37 @@
                                            placeholder="">
 
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="">Minimum Requirement Amount (Salary)</label>
-                                    <input type="text" class="form-control only_numeric" id=""
-                                           name="minimum_salary_aioa2" value="{{ $value->minimum_salary}}"
-                                           placeholder="">
-
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-sm-2">&emsp;</div>
                     </div>
+                    {{--<div class="form-group ">
+                        <label for="title" class="col-sm-2 control-label"></label>
+
+                        <div class="col-sm-8 ">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Minimum Requirement Amount (Spend 2)</label>
+                                    <input type="text" class="form-control only_numeric" id=""
+                                           name="minimum_spend_aioa2_2" value="{{ isset($value->minimum_spend_2)?$value->minimum_spend_2:null}}"
+                                           placeholder="">
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="">Minimum Requirement Amount (Salary 2)</label>
+                                    <input type="text" class="form-control only_numeric" id=""
+                                           name="minimum_salary_aioa2_2" value="{{ isset($value->minimum_salary_2)?$value->minimum_salary_2:null}}"
+                                           placeholder="">
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-sm-2">&emsp;</div>
+                    </div>--}}
                 @endif
                 <div id="aioa_placement_range_f2_{{$key}}">
 
@@ -122,23 +149,51 @@
 
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="">Minimum Requirement Number of Payment (Giro)</label>
-                        <input type="text" class="form-control only_numeric" id=""
-                               name="minimum_giro_payment_aioa2" value=""
-                               placeholder="">
-
-                    </div>
-                    <div class="col-md-4 mb-3">
                         <label for="">Minimum Requirement Amount (Salary)</label>
                         <input type="text" class="form-control only_numeric" id=""
                                name="minimum_salary_aioa2" value=""
                                placeholder="">
 
                     </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="">Minimum Requirement Number of Payment (Giro)</label>
+                        <input type="text" class="form-control only_numeric" id=""
+                               name="minimum_giro_payment_aioa2" value=""
+                               placeholder="">
+
+                    </div>
+                    
                 </div>
             </div>
             <div class="col-sm-2">&emsp;</div>
         </div>
+       {{-- <div class="form-group ">
+            <label for="title" class="col-sm-2 control-label"></label>
+
+            <div class="col-sm-8 ">
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="">Minimum Requirement Amount (Spend 2)</label>
+                        <input type="text" class="form-control only_numeric" id=""
+                               name="minimum_spend_aioa2_2" value=""
+                               placeholder="">
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="">Minimum Requirement Amount (Salary 2)</label>
+                        <input type="text" class="form-control only_numeric" id=""
+                               name="minimum_salary_aioa2_2" value=""
+                               placeholder="">
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-sm-2">&emsp;</div>
+        </div>--}}
+        
         <div id="aioa_placement_range_f2_0">
             <div class="form-group">
                 <label for="title" class="col-sm-2 control-label"></label>

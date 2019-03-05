@@ -7,7 +7,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>{{DASHBOARD}}</a></li>
-            <li><a href="{{ route('blog.index') }}">{{BLOG_MODULE}}</a></li>
+            <li><a href="{{ route('filter-category', ['id' => $filterCategory]) }}">{{BLOG_MODULE}}</a></li>
             <li class="active">{{BLOG_MODULE_SINGLE.' '.ADD_ACTION}}</li>
         </ol>
     </section>
@@ -66,13 +66,13 @@
                                     <div class="form-group">
                                         {{Form::label('short_description', 'Short Description',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('short_description', old('short_description'), ['id' => 'article-ckeditor', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('short_description', old('short_description'), ['id' => 'article-ckeditor', 'class' => ' tiny-mce form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('contents', 'Contents',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('contents', old('contents'), ['id' => 'article-ckeditor', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('contents', old('contents'), ['id' => 'article-ckeditor', 'class' => ' tiny-mce  form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -114,7 +114,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('meta_title', 'Meta Title',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('meta_title', 'Meta Author',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('meta_title', old('meta_title'), ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
@@ -125,12 +125,12 @@
                                             {{Form::text('meta_keyword', old('meta_keyword'), ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-                                    {{--<div class="form-group">
+                                    <div class="form-group">
                                         {{Form::label('meta_description', 'Meta Description',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::textarea('meta_description', old('meta_description'), ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
-                                    </div>--}}
+                                    </div>
 
                                 </div>
                                 <!-- /.tab-pane -->
@@ -206,7 +206,7 @@
                         </div>
                         <!-- nav-tabs-custom -->
                         <div class="box-footer">
-                            <a href="{{ route('blog.index') }}"
+                            <a href="{{ route('filter-category', ['id' => $filterCategory]) }}"
                                class="btn btn-default"><i class="fa fa-close">
                                 </i> Cancel</a>
 

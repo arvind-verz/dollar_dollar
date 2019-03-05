@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
 
@@ -89,7 +98,7 @@
                         @endforeach
                     @endif
                     @include('frontend.includes.vertical-ads')
-                    <div class="ps-fanpage">
+                     <div class="ps-fanpage">
                         <div class="fb-page" data-href="https://www.facebook.com/dollardollar.sg/"
                              data-tabs="timeline" data-width="500" data-height="280" data-small-header="false"
                              data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
@@ -98,7 +107,7 @@
                                         href="https://www.facebook.com/dollardollar.sg/">DollarDollar</a>
                             </blockquote>
                         </div>
-                    </div>
+                    </div> 
 
                 </div>
             </div>

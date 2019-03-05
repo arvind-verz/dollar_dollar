@@ -35,14 +35,15 @@
                                         <table id="contact-table"  class="table table-bordered">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"></th>
+                                                <th>Action</th>
                                                 <th>Full&nbsp;name&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Email&emsp;&emsp;&emsp;</th>
                                                 <th>Contact&nbsp;number&emsp;&emsp;&emsp;</th>
                                                 <th>Subject&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Message&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Created on</th>
-                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -51,6 +52,23 @@
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $contactEnquiry->id }}">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if($CheckLayoutPermission[0]->view==1)
+                                                                <a class="btn btn-app view" title="Viw Contact Enquiry"
+                                                                   href="{{ route("contact-enquiry.show",["id"=>$contactEnquiry->id]) }}">
+                                                                    <i class="fa fa-eye"></i> View
+                                                                </a>
+                                                            @endif
+
+                                                            @if($CheckLayoutPermission[0]->delete==1)
+                                                                <a class="btn btn-app delete "
+                                                                   title="Delete Contact Enquiry"
+                                                                   onclick="return confirm('Are you sure to delete this?')"
+                                                                   href="{{ route("contact-enquiry-destroy",["id"=>$contactEnquiry->id]) }}">
+                                                                    <i class="fa fa-trash"></i> Delete
+                                                                </a>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             {!!   str_replace(' ', '&nbsp;', $contactEnquiry->full_name) !!}
@@ -71,28 +89,10 @@
                                                             @if ($contactEnquiry->created_at == null)
                                                                 {{$contactEnquiry->created_at}}
                                                             @endif
-                                                                {!!  date("Y-m-d h:i A", strtotime($contactEnquiry->created_at))   !!}
+                                                                {!!  date("Y-m-d H:i", strtotime($contactEnquiry->created_at))   !!}
 
                                                         </td>
-                                                        <td class="text-center">
-                                                            @if($CheckLayoutPermission[0]->view==1)
-                                                                <a class="btn btn-app view" title="Viw Contact Enquiry"
-                                                                   href="{{ route("contact-enquiry.show",["id"=>$contactEnquiry->id]) }}">
-                                                                    <i class="fa fa-eye"></i> View
-                                                                </a>
-                                                            @endif
 
-                                                            @if($CheckLayoutPermission[0]->delete==1)
-                                                                <a class="btn btn-app delete "
-                                                                   title="Delete Contact Enquiry"
-                                                                   onclick="return confirm('Are you sure to delete this?')"
-                                                                   href="{{ route("contact-enquiry-destroy",["id"=>$contactEnquiry->id]) }}">
-                                                                    <i class="fa fa-trash"></i> Delete
-                                                                </a>
-                                                            @endif
-
-
-                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @endif

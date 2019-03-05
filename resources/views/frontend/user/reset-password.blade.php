@@ -20,22 +20,7 @@ $banners = $details['banners'];
 
     {{--Page content start--}}
     @include('frontend.includes.messages')
-    @if(count($errors) > 0)
-        <div class="col-md-12">
-            <div class="box-body">
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-ban"></i> Error!</h4>
-                    @foreach($errors->all() as $error)
-                        <p>
-                            {!!  $error !!}
-                        </p>
-                    @endforeach
 
-                </div>
-            </div>
-        </div>
-    @endif
     @if(session('status'))
         <div class="col-md-12">
             <div class="box-body">
@@ -61,7 +46,7 @@ $banners = $details['banners'];
                         <div class="ps-dashboard__content">
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/user.png" alt="">Change password</h5>
+                                    <h5><img src="/img/icons/user.png" alt="">Change password</h5>
                                 </div>
                                 <div class="ps-block__content">
                                     {!! Form::open(['route' => ['forgot-password-reset'], 'method'   => 'POST']) !!}
@@ -70,18 +55,42 @@ $banners = $details['banners'];
                                     <p><strong> Email Address : </strong><input type="text" class="form-control"
                                                                               name="email"
                                                                               placeholder=""
-                                                                              value="{{ old('email') }}"></p>
+                                                                              value="{{ old('email') }}">
+                                                                               @if ($errors->has('email'))
+                                        <span class="text-danger">
+                                            <strong>
+                                                {{ $errors->first('email') }}
+                                            </strong>
+                                        </span>
+                                        @endif
+                                                                              </p>
 
                                     <p><strong> New Password: </strong><input type="password" class="form-control"
                                                                               name="password"
                                                                               placeholder=""
-                                                                              value="{{ old('password') }}"></p>
+                                                                              value="{{ old('password') }}">
+                                                                               @if ($errors->has('password'))
+                                        <span class="text-danger">
+                                            <strong>
+                                                {{ $errors->first('password') }}
+                                            </strong>
+                                        </span>
+                                        @endif
+                                                                              </p>
 
                                     <p><strong> Confirm Password: </strong><input type="password"
-                                                                                  class="form-control only_numeric"
+                                                                                  class="form-control"
                                                                                   name="confirm_password"
                                                                                   placeholder=""
-                                                                                  value=""></p>
+                                                                                  value="">
+                                                                                  @if ($errors->has('confirm_password'))
+                                        <span class="text-danger">
+                                            <strong>
+                                                {{ $errors->first('confirm_password') }}
+                                            </strong>
+                                        </span>
+                                        @endif
+                                                                                  </p>
                                     <button type="submit" class="btn btn-success">Change my password</button>
                                     {!! Form::close() !!}
                                 </div>

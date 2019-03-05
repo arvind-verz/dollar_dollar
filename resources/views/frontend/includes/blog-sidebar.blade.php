@@ -31,6 +31,7 @@ function printBlogCategories($parentCategories, $parent = 0, $id, $deep = 0) {//
 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
     <div class="ps-sidebar">
         <h3>Blog</h3>
+        <p>Our latest news, developments, and pieces of advice on banking and finance.</p>
         {!! Form::open(['class' => 'form-horizontal','url' => 'blog-search', 'method' => 'GET', 'id' => 'blog_search']) !!}
         <div class="mb-20 ">
             <input type="hidden" name="blog_id" value="{{ $id }}">

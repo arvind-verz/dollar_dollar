@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
 
@@ -61,7 +70,7 @@
     {{--Page content start--}}
     @if($page->slug!=THANK_SLUG)
         <main class="ps-main">
-            <div class="container">
+            <div class="container ps-document">
                 <h3 class="ps-heading mb-20 pl-15">
                     <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
                 </h3>
@@ -91,8 +100,8 @@
         if(auth_check==1) {
             $(".ps-block--highlight button").remove();
             $(".enquiry-url button").remove();
-            $(".ps-block--highlight h4").after('<a class="ps-btn" href="'+redirect_url+'">Enquire now</a>');
-            $(".enquiry-url").html('<a class="ps-btn" href="'+redirect_url+'">Enquire now</a>');
+            $(".ps-block--highlight h4").after('<a class="ps-btn" href="'+redirect_url+'">Enquire now for free</a>');
+            $(".enquiry-url").html('<a class="ps-btn" href="'+redirect_url+'">Enquire now for free</a>');
         }
     });
 </script>
@@ -110,12 +119,16 @@
             <div class="col-lg-12">
                 <p>You have to Login/Register to enquire now!</p>
             </div>
-            <div class="col-lg-12">
-                <a class="ps-btn" href="{{ url($redirect_url) }}">Login</a>
+             <div class="col-lg-12">
+                <a class="ps-btn" href="@if(!empty($redirect_url)) {{ url('login_page', ['redirect_url' => $redirect_url]) }} @else {{ url('login_page') }} @endif">Login</a>
             </div>
             <div class="col-lg-12">
                 <a class="ps-btn ps-btn--outline" href="@if(!empty($redirect_url)) {{ url('registration_page', ['redirect_url' => $redirect_url]) }} @else {{ url('registration') }} @endif">Signup</a>
             </div>
+            <div class="col-lg-12">
+                <a class="standard-link" href="@if(!empty($redirect_url)) {{ url($redirect_url) }} @else # @endif">Else click here to continue</a>
+            </div>
+            <div class="clearfix"></div>
         </div>
         <img src="https://www.dollardollar.sg/frontend/images/logo_1535015224_7664b296e0e085eaa5e4852c2e8b11ba_1539598995.jpg" alt="">
       </div>

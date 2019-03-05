@@ -22,6 +22,12 @@
                         <i class="fa fa-book"></i>
 
                         <h3 class="box-title">{{$productType}}</h3>
+                        @if($productTypeId==LOAN)
+                            <a href="{{ route('rate-type.index') }}"
+                               class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
+                                Rate Types
+                            </a>
+                        @endif
                         @if($productTypeId==ALL_IN_ONE_ACCOUNT || $productTypeId==LOAN)
                             <a href="{{ route('tool-tip',['productTypeId'=>$productTypeId]) }}"
                                class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
@@ -62,33 +68,72 @@
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove" class="no-sort">
-                                                    Delete/Update
                                                 </th>
+                                                <th>Action</th>
                                                 <th>Product Name</th>
                                                 <th>Bank Name</th>
-                                                <th>Product Type</th>
-                                                <th>Formula Name</th>
+                                                @if($productTypeId==LOAN)
+                                                    <th>Rate Type</th>
+                                                    <th>Property Type</th>
+                                                @else
+                                                    <th>Product Type</th>
+                                                    <th>Formula Name</th>
+                                                @endif
                                                 <th>Featured</th>
                                                 <th>Status</th>
-                                                <th>@if($productTypeId==ALL_IN_ONE_ACCOUNT)Created on @else
+                                                <th>@if($productTypeId==ALL_IN_ONE_ACCOUNT)Created on
+                                                    @elseif($productTypeId==LOAN)
+                                                        Completion Status
+                                                    @else
                                                         Expiry @endif</th>
                                                 <th>Updated on</th>
-                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <?php $i = 1; ?>
                                             @if($products->count())
                                                 @foreach($products as $product)
+                                                    <?php
+                                                    $productRange = null;
+                                                    if ($product->product_range) {
+                                                        $range = \GuzzleHttp\json_decode($product->product_range);
+                                                        if (count($range)) {
+                                                            $productRange = $range[0];
+                                                        }
+                                                    }
+                                                    ?>
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]"
                                                                    value="{{ $product->id }}">
                                                         </td>
+                                                        <td>
+                                                            @if($CheckLayoutPermission[0]->edit==1)
+                                                                <a class="btn btn-app edit" title="Edit Product"
+                                                                   href="{{ route("promotion-products-edit",["id"=>$product->id,'product_type_id'=>$productTypeId]) }}">
+                                                                    <i class="fa fa-edit"></i> Edit
+                                                                </a>
+                                                            @endif
+
+                                                            @if($CheckLayoutPermission[0]->delete==1)
+                                                                <a class="btn btn-app delete" title="Delete Product"
+                                                                   onclick="return confirm('Are you sure to delete this?')"
+                                                                   href="{{ route("promotion-products-remove",["id"=>$product->id,'product_type_id'=>$productTypeId]) }}">
+                                                                    <i class="fa fa-trash"></i> Delete
+                                                                </a>
+                                                            @endif
+
+                                                        </td>
                                                         <td>{{ $product->product_name }}</td>
                                                         <td>{{ $product->bank_name }}</td>
-                                                        <td>{{ $product->promotion_type }}</td>
-                                                        <td>{{ $product->promotion_formula }}</td>
+                                                        @if($productTypeId==LOAN)
+                                                            <td>@if($productRange) {{$productRange->rate_type}} @endif</td>
+                                                            <td>@if($productRange) {{$productRange->property_type}} @endif</td>
+                                                        @else
+                                                            <td>{{ $product->promotion_type }}</td>
+                                                            <td>{{ $product->promotion_formula }}</td>
+                                                        @endif
                                                         <td>@if ($product->featured == 1)
                                                                 Yes
                                                             @else
@@ -106,7 +151,11 @@
                                                                 @if ($product->created_at == null)
                                                                     {{$product->created_at}}
                                                                 @endif
-                                                                {!!  date("Y-m-d h:i A", strtotime($product->created_at))   !!}
+                                                                {!!  date("Y-m-d H:i", strtotime($product->created_at))   !!}
+                                                            @elseif($productTypeId==LOAN)
+                                                                @if ($productRange)
+                                                                    {{$productRange->completion_status}}
+                                                                @endif
                                                             @else
                                                                 @if ($product->promotion_period == ONGOING)
                                                                     {{ONGOING}}
@@ -119,7 +168,7 @@
                                                                     }
                                                                     ?>
 
-                                                                    @if ($untilEndDate != null && $untilEndDate > $todayDate) {!!  date("Y-m-d h:i A", strtotime($product->until_end_date))   !!} @else {{EXPIRED}}  @endif
+                                                                    @if ($untilEndDate != null && $untilEndDate > $todayDate) {!!  date("Y-m-d", strtotime($product->until_end_date))   !!} @else {{EXPIRED}}  @endif
                                                                 @endif
                                                             @endif
 
@@ -128,25 +177,10 @@
                                                         <td>@if ($product->updated_at == null)
                                                                 {{$product->updated_at}}
                                                             @endif
-                                                            {!!  date("Y-m-d h:i A", strtotime($product->updated_at))   !!}
+                                                            {!!  date("Y-m-d H:i", strtotime($product->updated_at))   !!}
                                                         </td>
 
-                                                        <td>
-                                                            @if($CheckLayoutPermission[0]->edit==1)
-                                                                <a class="btn btn-app edit" title="Edit Product"
-                                                                   href="{{ route("promotion-products-edit",["id"=>$product->id,'product_type_id'=>$productTypeId]) }}">
-                                                                    <i class="fa fa-edit"></i> Edit
-                                                                </a>
-                                                            @endif
 
-                                                            @if($CheckLayoutPermission[0]->delete==1)
-                                                                <a class="btn btn-app delete" title="Delete Product"
-                                                                   onclick="return confirm('Are you sure to delete this?')"
-                                                                   href="{{ route("promotion-products-remove",["id"=>$product->id,'product_type_id'=>$productTypeId]) }}">
-                                                                    <i class="fa fa-trash"></i> Delete
-                                                                </a>
-                                                            @endif
-                                                        </td>
                                                     </tr>
                                                     <?php $i++; ?>
                                                 @endforeach
