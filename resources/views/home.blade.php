@@ -260,70 +260,7 @@ $datetime = Helper::todayDate();
             <div class="ps-section__footer" ><a href="{{url(FIXED_DEPOSIT_MODE)}}" id="view-all-rate">View all bank rates</a></div>
         </div>
     </div>
-   <!-- <div class="ps-section__content bg--cover mt-10" style="background:#ffffff;">
-        <div class="container">
-            <div class="ps-tabs">
-                <div class="ps-tab active" id="tab-1">
-                    <div class="ps-block--desposit">
-                        <div class="ps-block__header">
-                            <h3>
-                            <strong id="product-heading">
-                            Home Loan
-                            </strong>
-                            </h3>
-                            <div class="ps-block__actions">
-                                <ul class="catListing clearfix">
-                                    <li class="selected" id="catList1">
-                                        <a class="loan-page" id="showContent-1"
-                                            data-order-by="{{INTEREST}}"
-                                            data-promotion-type ="{{LOAN}}"
-                                            target="showContent-container-1">
-                                            {{INTEREST}}
-                                        </a>
-                                    </li>
-                                    <li class="" id="catList2">
-                                        <a class="loan-page" id="showContent-2"
-                                            data-order-by="{{TENURE}}"
-                                            data-promotion-type ="{{LOAN}}"
-                                            target="showContent-container-2">
-                                            Lock
-                                        </a>
-                                    </li>
-                                    <li class="" id="catList3">
-                                        <a class="loan-page" id="showContent-3" data-order-by="{{INSTALLMENT}}"
-                                            data-promotion-type ="{{LOAN}}" target="showContent-container-3">
-                                            Min Loan
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="productGridContainer target-content" id="showContent-container-1">
-                            <div class="product-row-01 clearfix pc-only" id="loan-pc-slider">
-                                <?php
-                                $products = \Helper::getLoanProducts(LOAN,INTEREST);
-                                $i = 1;$featured = [];
-                                ?>
-                                @if($products->count())
-                                @include('loanPcProductsSlider')
-                                @endif
-                            </div>
-                            <div class="product-row-01 clearfix sp-only" id='loan-sp-slider'>
-                                <?php
-                                $products = \Helper::getLoanProducts(LOAN, INTEREST);
-                                $i = 1;$featured = [];
-                                ?>
-                                @if($products->count())
-                                @include('loanSpProductsSlider')
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ps-section__footer" ><a href="{{url(LOAN_MODE)}}" id="view-all-rate">View all bank rates</a></div>
-        </div>
-    </div> -->
+
 </div>
 {{--Blog section start--}}
 <div class="ps-home-blog">
@@ -394,10 +331,9 @@ $datetime = Helper::todayDate();
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 home-fb">
                 <div class="ps-section__right">
                     <div class="ps-fanpage">
-                        <div class="fb-page" data-adapt-container-width="true" data-height="280"
+                        <div class="fb-page" data-adapt-container-width="true" data-height="220" data-width="650"
                             data-hide-cover="false" data-href="https://www.facebook.com/dollardollar.sg/"
-                            data-show-facepile="true" data-small-header="false" data-tabs="timeline"
-                            data-width="500">
+                            data-show-facepile="true" data-small-header="false" data-tabs="timeline">
                             <blockquote cite="https://www.facebook.com/dollardollar.sg/"
                                 class="fb-xfbml-parse-ignore">
                                 <a href="https://www.facebook.com/dollardollar.sg/">

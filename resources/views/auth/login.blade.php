@@ -64,22 +64,7 @@
     </div>
 
     {{--Page content start--}}
-    <!--@if(count($errors) > 0)
-    <div class="col-md-12">
-        <div class="box-body">
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> Error!</h4>
-                @foreach($errors->all() as $error)
-                    <p>
-                        {!!  $error !!}
-                    </p>
-                @endforeach
 
-            </div>
-        </div>
-    </div>
-    @endif-->
     @if(session('status'))
         <div class="col-md-12">
             <div class="box-body">
@@ -105,7 +90,7 @@
                         <div class="form-group">
                             <label>Email</label>
                             <div class="form-icon"><i class="fa fa-envelope"></i>
-                                <input class="form-control" type="text" name="email" placeholder="Enter Email Address Here">
+                                <input class="form-control" type="text" value="{{old('email')}}" name="email" placeholder="Enter Email Address Here">
                             </div>
                             @if ($errors->has('email'))
                             <span class="text-danger">

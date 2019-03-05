@@ -168,8 +168,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
-                                <div class="row ps-col-tiny">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                                <div class="row ps-col-tiny ps-asc">
+                                    <div class="col-sm-6 col-xs-12 form-group--label">
                                         <div class="form-group form-group--nest">
                                             <div class="form-group__content">
                                                 <input class="form-control only_numeric prefix_dollar" type="text"
@@ -180,28 +180,32 @@
                                             <button type="submit">Go</button>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
-                                        <div class="form-group ">
-                                            <select class="form-control sort-by" name="sort_by">
-                                                <option value="" disabled="disabled" selected="selected">Arrange By
-                                                </option>
-                                                <option value="1"
-                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
-                                                    Ascending
-                                                </option>
-                                                <option value="2"
-                                                        @if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
-                                                    Descending
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 ">
-                                        <div class="form-group ">
-                                            <a class="btn refresh form-control " style="width: 78px;"
-                                               href="{{url(AIO_DEPOSIT_MODE)}}/#logo-detail"> <i
-                                                        class="fa fa-refresh"></i></a>
-                                        </div>
+                                    <div class="col-sm-6 col-xs-12 refresh-button">
+										<div class="row">
+											<div class="col-sm-4 col-sm-push-8 col-xs-12 refresh-button for1">
+												<div class="form-group ">
+													<a class="btn refresh form-control "
+													   href="{{url(AIO_DEPOSIT_MODE)}}/#logo-detail"> <i
+																class="fa fa-refresh"></i></a>
+												</div>
+											</div>
+											<div class="col-sm-8 col-sm-pull-4 col-xs-12 for">
+												<div class="form-group ">
+													<select class="form-control sort-by" name="sort_by">
+														<option value="" disabled="disabled" selected="selected">Arrange By
+														</option>
+														<option value="1"
+																@if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==1) selected @endif>
+															Ascending
+														</option>
+														<option value="2"
+																@if(isset($searchFilter['sort_by']) && $searchFilter['sort_by']==2) selected @endif>
+															Descending
+														</option>
+													</select>
+												</div>
+											</div>
+										</div>
                                     </div>
                                 </div>
                             </div>
@@ -245,8 +249,8 @@
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
                                 <div class="ps-product__header">
-                                    <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                 data-src="{{ asset($product->brand_logo) }}"></div>
+                                    <div class="slider-img"><img  alt=""
+                                                                 src="{{ asset($product->brand_logo) }}"></div>
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                            href="{{$product->apply_link}}">Apply
@@ -332,7 +336,7 @@
                                                             than ${{ Helper::inThousand($range->bonus_amount) }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="1" class="text-left">Total Bonus Interest Earned for
+                                                    <td colspan="1" class="text-left">Total Bonus Interest Earned for SGD
                                                         ${{Helper::inThousand($range->placement)}}</td>
                                                     <td class="text-center @if($product->highlight==true ) highlight @endif"
                                                         colspan="5">
@@ -420,8 +424,8 @@
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
                                 <div class="ps-product__header">
-                                    <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                 data-src="{{ asset($product->brand_logo) }}"></div>
+                                    <div class="slider-img"><img  alt=""
+                                                                 src="{{ asset($product->brand_logo) }}"></div>
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                            href="{{$product->apply_link}}">Apply
@@ -489,20 +493,8 @@
                                                             - @else  {{ $range->bonus_interest_criteria_b }}% @endif
                                                     </td>
                                                     <td>
-                                                        <?php
-                                                        if ($key == 0) {
-                                                            echo "First ";
-                                                            echo "$" . Helper::inThousand($range->max_range);
-                                                        } elseif ($key == (count($productRanges) - 1)) {
-                                                            echo "Above ";
-                                                            echo "$" . Helper::inThousand(($prevMaxRange));
-                                                        } else {
-                                                            echo "Next ";
-                                                            echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
-                                                        } if ($key != (count($productRanges) - 1)) {
-                                                            $prevMaxRange = $range->max_range;
-                                                        }?>
-                                                        - ${{ Helper::inRoundTwoDecimal($range->interest_earn) }}
+
+                                                       ${{ Helper::inRoundTwoDecimal($range->interest_earn) }}
                                                         ({{ $range->criteria }}%)
                                                     </td>
                                                     @if($key==0)
@@ -559,8 +551,8 @@
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
                                 <div class="ps-product__header">
-                                    <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                 data-src="{{ asset($product->brand_logo) }}"></div>
+                                    <div class="slider-img"><img  alt=""
+                                                                 src="{{ asset($product->brand_logo) }}"></div>
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                            href="{{$product->apply_link}}">Apply
@@ -685,7 +677,7 @@
 																<table class="3-col-eq"> 
 																	<tr>
 																		<td class="text-center @if($product->criteria_1==true ) highlight @endif"
-																			colspan="3">1 Criteria Met
+																			colspan="3">1 Criteria
 																			@if($range->bonus_interest_criteria1<=0)
 																				- @else - {{ $range->bonus_interest_criteria1 }}
 																			% @endif
@@ -803,8 +795,8 @@
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
                                 <div class="ps-product__header">
-                                    <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                 data-src="{{ asset($product->brand_logo) }}"></div>
+                                    <div class="slider-img"><img  alt=""
+                                                                 src="{{ asset($product->brand_logo) }}"></div>
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                            href="{{$product->apply_link}}">Apply
@@ -934,8 +926,8 @@
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="p-{{ $j }}">
                                 <div class="ps-product__header">
-                                    <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                 data-src="{{ asset($product->brand_logo) }}"></div>
+                                    <div class="slider-img"><img  alt=""
+                                                                 src="{{ asset($product->brand_logo) }}"></div>
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                            href="{{$product->apply_link}}">Apply
@@ -1178,8 +1170,8 @@
                                 <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                      id="p-{{ $j }}">
                                     <div class="ps-product__header">
-                                        <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                     data-src="{{ asset($product->brand_logo) }}"></div>
+                                        <div class="slider-img"><img  alt=""
+                                                                     src="{{ asset($product->brand_logo) }}"></div>
                                         @if(!empty($product->apply_link_status))
                                             <div class="ps-product__action"><a class="ps-btn ps-btn--red"
                                                                                href="{{$product->apply_link}}">Apply
@@ -1398,8 +1390,8 @@
                             <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                  id="r-{{ $j }}">
                                 <div class="ps-product__header">
-                                    <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                 data-src="{{ asset($product->brand_logo) }}"></div>
+                                    <div class="slider-img"><img  alt=""
+                                                                 src="{{ asset($product->brand_logo) }}"></div>
                                     @if(!empty($product->apply_link_status))
                                         <div class="ps-product__action"><a
                                                     class="ps-btn ps-btn--red"
@@ -1466,9 +1458,7 @@
                         @php $j++; @endphp
                         @endforeach
                     @else
-                        <div class="ps-block--legend-table">
-                            <div class="ps-block__header">
-                            </div>
+                        <div class="ps-block--legend-table1">
                             <div class="ps-block__content text-center">
                                 <p>{{CRITERIA_ERROR}}</p>
                             </div>
@@ -1498,8 +1488,8 @@
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
                                         <div class="ps-product__header">
-                                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                         data-src="{{ asset($product->brand_logo) }}">
+                                            <div class="slider-img"><img  alt=""
+                                                                         src="{{ asset($product->brand_logo) }}">
                                             </div>
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -1596,8 +1586,7 @@
                                                                 ${{ Helper::inThousand($range->bonus_amount) }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="2">Total Bonus Interest Earned for
-                                                                ${{Helper::inThousand($range->placement)}}</td>
+                                                            <td colspan="2">Total Bonus Interest Earned for SGD ${{Helper::inThousand($range->placement)}}</td>
                                                             <td class="text-center @if($product->highlight==true ) highlight @endif"
                                                                 colspan="4">
                                                                 <span class="nill"> {{ NILL }}</span><br/>
@@ -1654,8 +1643,8 @@
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
                                         <div class="ps-product__header">
-                                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                         data-src="{{ asset($product->brand_logo) }}">
+                                            <div class="slider-img"><img  alt=""
+                                                                         src="{{ asset($product->brand_logo) }}">
                                             </div>
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -1722,20 +1711,7 @@
                                                                 % @endif
                                                             </td>
                                                             <td>
-                                                                <?php
-                                                                if ($key == 0) {
-                                                                    echo "First ";
-                                                                    echo "$" . Helper::inThousand($range->max_range);
-                                                                } elseif ($key == (count($productRanges) - 1)) {
-                                                                    echo "Above ";
-                                                                    echo "$" . Helper::inThousand(($prevMaxRange));
-                                                                } else {
-                                                                    echo "Next ";
-                                                                    echo "$" . Helper::inThousand($range->max_range - $prevMaxRange);
-                                                                } if ($key != (count($productRanges) - 1)) {
-                                                                    $prevMaxRange = $range->max_range;
-                                                                }?>
-                                                                - ${{ Helper::inThousand($range->interest_earn) }}
+                                                                ${{ Helper::inThousand($range->interest_earn) }}
                                                                 ({{ $range->criteria }}%)
                                                             </td>
                                                             @if($key==0)
@@ -1793,8 +1769,8 @@
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
                                         <div class="ps-product__header">
-                                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                         data-src="{{ asset($product->brand_logo) }}">
+                                            <div class="slider-img"><img  alt=""
+                                                                         src="{{ asset($product->brand_logo) }}">
                                             </div>
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -1835,7 +1811,7 @@
                                                             <th class="combine-criteria-padding" style="width:9%">
                                                                 SPEND
                                                             </th>
-                                                            <th class="combine-criteria-padding" style="width:21%">
+                                                            <th class="combine-criteria-padding" style="width:27%">
                                                                 Loan
                                                                 <div class="row">
                                                                     <div class="width-50">
@@ -1886,7 +1862,7 @@
                                                                     </div>
                                                                 </div>
                                                             </th>
-                                                            <th class="combine-criteria-padding" style="width:21%">
+                                                            <th class="combine-criteria-padding" style="width:15%">
                                                                 Wealth
                                                                 <div class="row">
                                                                     <div class="width-50">
@@ -1919,11 +1895,11 @@
                                                         @foreach($productRanges as $range)
                                                             <tr>
                                                                 <td>Bonus Interest PA</td>
-																<td colspan="5">
+																<td colspan="5" style="padding:0;">
 																	<table class="3-col-eq"> 
 																		<tr>
 																			<td class="text-center @if($product->criteria_1==true ) highlight @endif"
-																				colspan="3">1 Criteria Met
+																				colspan="3">1 Criteria
 																				@if($range->bonus_interest_criteria1<=0)
 																					- @else - {{ $range->bonus_interest_criteria1 }}
 																				% @endif
@@ -2005,8 +1981,8 @@
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
                                         <div class="ps-product__header">
-                                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                         data-src="{{ asset($product->brand_logo) }}">
+                                            <div class="slider-img"><img  alt=""
+                                                                         src="{{ asset($product->brand_logo) }}">
                                             </div>
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -2128,8 +2104,8 @@
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
                                         <div class="ps-product__header">
-                                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                         data-src="{{ asset($product->brand_logo) }}">
+                                            <div class="slider-img"><img  alt=""
+                                                                         src="{{ asset($product->brand_logo) }}">
                                             </div>
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -2280,8 +2256,7 @@
                                                                         </td>@endif
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="1">Total Bonus Interest Earned for
-                                                                        ${{Helper::inThousand($range->placement)}}</td>
+                                                                    <td colspan="1">Total Bonus Interest Earned for SGD ${{Helper::inThousand($range->placement)}}</td>
                                                                     <td class="text-center @if($product->highlight==true ) highlight @endif"
                                                                         colspan="{{$range->colspan}}">
                                                                         <span class="nill"> {{ NILL }}</span><br/>
@@ -2339,8 +2314,8 @@
                                     <div class="ps-product ps-product--2 @if($product->featured==1) featured-1 @endif"
                                          id="r-{{ $j }}">
                                         <div class="ps-product__header">
-                                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                                         data-src="{{ asset($product->brand_logo) }}">
+                                            <div class="slider-img"><img  alt=""
+                                                                         src="{{ asset($product->brand_logo) }}">
                                             </div>
                                             @if(!empty($product->apply_link_status))
                                                 <div class="ps-product__action"><a
@@ -2433,7 +2408,7 @@
                 cache: false,
                 async: false,
                 success: function (data) {
-                    $('#' + product_id).html(data);
+                    $('#form-' + product_id).html(data);
                 }
             });
         }
@@ -2454,7 +2429,7 @@
                 cache: false,
                 async: false,
                 success: function (data) {
-                    $('#' + product_id).html(data);
+                    $('#form-' + product_id).html(data);
                 }
             });
         }
@@ -2475,8 +2450,8 @@
                 cache: false,
                 async: false,
                 success: function (data) {
-                    console.log(data);
-                    $('#' + product_id).html(data);
+
+                    $('#form-' + product_id).html(data);
                 }
             });
         }

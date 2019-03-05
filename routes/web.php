@@ -592,7 +592,7 @@ Route::group(array('prefix' => 'admin'), function () {
 
     /*Start Rate types*/
 
-    Route::get('/rate-type-destroy', 'Products\RateTypeController@destroy')->name('rate-type-destroy');
+    Route::get('/rate-type-destroy/{id}', 'Products\RateTypeController@destroy')->name('rate-type-destroy');
 
     Route::resource('/rate-type', 'Products\RateTypeController');
 

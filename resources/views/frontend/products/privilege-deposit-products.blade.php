@@ -193,8 +193,8 @@
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="p-{{ $j }}">
                         <div class="ps-product__header">
-                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                         data-src="{{ asset($product->brand_logo) }}"></div>
+                            <div class="slider-img"><img  alt=""
+                                                         src="{{ asset($product->brand_logo) }}"></div>
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
                             $todayEndDate = \Helper::endOfDayAfter();
@@ -245,9 +245,11 @@
                                                             $monthShortSuffix = \Helper::daysMonthYearShortForm(2, $tenure);
                                                             ?>
                                                             <th class="center"
-                                                                style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure}}
-                                                                <span class="desktop">{{$monthSuffix}}</span>
-                                                                <span class="mb">{{$monthShortSuffix}}</span>
+                                                                style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">
+                                                                <span class="desktop">{{ $tenure}}
+                                                                    &nbsp;{{$monthSuffix}}</span>
+                                                                <span class="mb">{{ $tenure}}
+                                                                    &nbsp;{{$monthShortSuffix}}</span>
                                                             </th>
                                                         @endforeach
                                                     </tr>
@@ -323,7 +325,7 @@
                                                 <a target="_blank"
                                                    href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                             src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                            alt="" target="_blank">
+                                                            alt="">
 
                                                     <div class="close-popup">
                                                         <i class="fa fa-times" aria-hidden="true"></i>
@@ -404,9 +406,10 @@
                                                 if(!empty($ads[2]->ad_horizontal_image_popup)) {
                                                 @endphp
                                                 <div class="ps-poster-popup">
-                                                    <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                    <a target="_blank"
+                                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : 'javascript:void(0)' }}"
-                                                                alt="" target="_blank">
+                                                                alt="">
 
                                                         <div class="close-popup">
                                                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -444,12 +447,7 @@
                                                                     @if($key==0)
                                                                         <td rowspan="{{count($product->product_ranges)}}"
                                                                             class="center color-border-none @if( $product->tenure_highlight = true) highlight @endif">{{ $productRange->tenure}}
-                                                                            <?php
-                                                                            $monthSuffix = \Helper::days_or_month_or_year(2, $productRange->tenure);
-                                                                            $monthShortSuffix = \Helper::daysMonthYearShortForm(2, $productRange->tenure);
-                                                                            ?>
-                                                                            <span class="desktop">{{$monthSuffix}}</span>
-                                                                            <span class="mb">{{$monthShortSuffix}}</span>
+
                                                                         </td>
                                                                     @endif
                                                                     <td class="center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
@@ -503,9 +501,10 @@
                                                     if(!empty($ads[2]->ad_horizontal_image_popup)) {
                                                     @endphp
                                                     <div class="ps-poster-popup">
-                                                        <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                        <a target="_blank"
+                                                           href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                     src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                    alt="" target="_blank">
+                                                                    alt="">
 
                                                             <div class="close-popup">
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
@@ -571,7 +570,8 @@
                                                         ?>
                                                         <div class="ps-product__poster">
                                                             <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
-                                                               target="_blank"><img
+                                                               target="_blank">
+                                                                <img
                                                                         src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
                                                                         alt=""></a>
                                                         </div>
@@ -605,9 +605,10 @@
                                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
                                                         @endphp
                                                         <div class="ps-poster-popup">
-                                                            <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                            <a target="_blank"
+                                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                         src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                        alt="" target="_blank">
+                                                                        alt="">
 
                                                                 <div class="close-popup">
                                                                     <i class="fa fa-times"
@@ -705,9 +706,10 @@
                                                             {
                                                             @endphp
                                                             <div class="ps-poster-popup">
-                                                                <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                                <a target="_blank"
+                                                                   href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                             src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                            alt="" target="_blank">
+                                                                            alt="">
 
                                                                     <div class="close-popup">
                                                                         <i class="fa fa-times"
@@ -795,10 +797,11 @@
                                                                 {
                                                                 @endphp
                                                                 <div class="ps-poster-popup">
-                                                                    <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                                    <a target="_blank"
+                                                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}">
+                                                                        <img
                                                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                                alt=""
-                                                                                target="_blank">
+                                                                                alt="">
 
                                                                         <div class="close-popup">
                                                                             <i class="fa fa-times"
@@ -817,10 +820,11 @@
                                                                 {
                                                                 @endphp
                                                                 <div class="ps-poster-popup">
-                                                                    <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
+                                                                    <a target="_blank"
+                                                                       href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
                                                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                                                 alt=""
-                                                                                target="_blank">
+                                                                                >
 
                                                                         <div class="close-popup">
                                                                             <i class="fa fa-times"
@@ -856,9 +860,7 @@
                     @php $j++; @endphp
                 @endforeach
             @else
-                <div class="ps-block--legend-table">
-                    <div class="ps-block__header">
-                    </div>
+                <div class="ps-block--legend-table1">
                     <div class="ps-block__content text-center">
                         <p>{{CRITERIA_ERROR}}</p>
                     </div>
@@ -886,8 +888,8 @@
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="r-{{ $j }}">
                         <div class="ps-product__header">
-                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                         data-src="{{ asset($product->brand_logo) }}"></div>
+                            <div class="slider-img"><img  alt=""
+                                                         src="{{ asset($product->brand_logo) }}"></div>
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
                             $todayEndDate = \Helper::endOfDayAfter();
@@ -938,9 +940,11 @@
                                                             $monthShortSuffix = \Helper::daysMonthYearShortForm(2, $tenure);
                                                             ?>
                                                             <th class="center"
-                                                                style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure}}
-                                                                <span class="desktop">{{$monthSuffix}}</span>
-                                                                <span class="mb">{{$monthShortSuffix}}</span>
+                                                                style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">
+                                                                <span class="desktop">{{ $tenure}}
+                                                                    &nbsp;{{$monthSuffix}}</span>
+                                                                <span class="mb">{{ $tenure}}
+                                                                    &nbsp;{{$monthShortSuffix}}</span>
                                                             </th>
                                                         @endforeach
                                                     </tr>
@@ -1010,7 +1014,7 @@
                                                 <a target="_blank"
                                                    href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                             src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                            alt="" target="_blank">
+                                                            alt="">
 
                                                     <div class="close-popup">
                                                         <i class="fa fa-times" aria-hidden="true"></i>
@@ -1083,9 +1087,10 @@
                                                 if(!empty($ads[2]->ad_horizontal_image_popup)) {
                                                 @endphp
                                                 <div class="ps-poster-popup">
-                                                    <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                    <a target="_blank"
+                                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                alt="" target="_blank">
+                                                                alt="">
 
                                                         <div class="close-popup">
                                                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -1176,9 +1181,10 @@
                                                     if(!empty($ads[2]->ad_horizontal_image_popup)) {
                                                     @endphp
                                                     <div class="ps-poster-popup">
-                                                        <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                        <a target="_blank"
+                                                           href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                     src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                    alt="" target="_blank">
+                                                                    alt="">
 
                                                             <div class="close-popup">
                                                                 <i class="fa fa-times" aria-hidden="true"></i>
@@ -1271,9 +1277,10 @@
                                                         if(!empty($ads[2]->ad_horizontal_image_popup)) {
                                                         @endphp
                                                         <div class="ps-poster-popup">
-                                                            <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                            <a target="_blank"
+                                                               href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                         src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                        alt="" target="_blank">
+                                                                        alt="">
 
                                                                 <div class="close-popup">
                                                                     <i class="fa fa-times"
@@ -1367,9 +1374,10 @@
                                                             {
                                                             @endphp
                                                             <div class="ps-poster-popup">
-                                                                <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                                <a target="_blank"
+                                                                   href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                             src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                                                            alt="" target="_blank">
+                                                                            alt="">
 
                                                                     <div class="close-popup">
                                                                         <i class="fa fa-times"
@@ -1453,10 +1461,11 @@
                                                                 {
                                                                 @endphp
                                                                 <div class="ps-poster-popup">
-                                                                    <a href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
+                                                                    <a target="_blank"
+                                                                       href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
                                                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                                                 alt=""
-                                                                                target="_blank">
+                                                                                >
 
                                                                         <div class="close-popup">
                                                                             <i class="fa fa-times"
@@ -1475,10 +1484,11 @@
                                                                 {
                                                                 @endphp
                                                                 <div class="ps-poster-popup">
-                                                                    <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
+                                                                    <a target="_blank"
+                                                                       href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
                                                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                                                 alt=""
-                                                                                target="_blank">
+                                                                                >
 
                                                                         <div class="close-popup">
                                                                             <i class="fa fa-times"

@@ -27,9 +27,10 @@ define('PROMOTION', 'Promotion');
 
 
 //set mail name
-//define('ADMIN_EMAIL', 'enquiry@dollardollar.sg');
-define('ADMIN_EMAIL', 'nicckk.verz@gmail.com');
-define('ENQUIRY_EMAIL', '');
+define('ADMIN_EMAIL', 'admin@dollardollar.sg');
+define('WEALTH_EMAIL', 'wealth@dollardollar.sg');
+define('HOME_LOAN_EMAIL', 'homeloan@dollardollar.sg');
+define('ENQUIRY_EMAIL', 'contactus@dollardollar.sg');
 
 //Activity log status
 define('CREATE', 'Created');
@@ -326,7 +327,7 @@ define('PROMOTION_PERIOD', "promotion_period");
 //currency
 define('SGD', "SGD");
 //product name
-define('FIX_DEPOSIT_TITLE', "Fix Deposit");
+define('FIX_DEPOSIT_TITLE', "Fixed Deposit");
 define('SAVING_DEPOSIT_TITLE', "Saving Deposit");
 define('FOREIGN_DEPOSIT_TITLE', "Foreign Deposit");
 define('PRIVILEGE_DEPOSIT_TITLE', "Privilege Deposit");

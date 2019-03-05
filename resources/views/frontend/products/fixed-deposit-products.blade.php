@@ -186,17 +186,17 @@
                                         src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
                                         alt="">
 
+                            </a>
                                 <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div>
-                            </a>
                         </div>
                     @endif
                     <div class="ps-product @if($product->featured==1) featured-1 @endif"
                          id="p-{{ $j }}">
                         <div class="ps-product__header">
-                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                         data-src="{{ asset($product->brand_logo) }}"></div>
+                            <div class="slider-img"><img  alt=""
+                                                         src="{{ asset($product->brand_logo) }}"></div>
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
                             $todayEndDate = \Helper::endOfDayAfter();
@@ -241,8 +241,9 @@
                                                     $monthShortSuffix = \Helper::daysMonthYearShortForm(2, $tenure);
                                                     ?>
                                                     <th class="center"
-                                                        style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure}} <span class="desktop">{{$monthSuffix}}</span>
-                                                        <span class="mb">{{$monthShortSuffix}}</span>  </th>
+                                                        style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">
+                                                        <span class="desktop">{{ $tenure}}&nbsp;{{$monthSuffix}}</span>
+                                                        <span class="mb">{{ $tenure}}&nbsp;{{$monthShortSuffix}}</span>  </th>
                                                 @endforeach
                                             </tr>
                                             </thead>
@@ -321,10 +322,10 @@
                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                 alt="" target="_blank">
 
+                                    </a>
                                         <div class="close-popup">
                                             <i class="fa fa-times" aria-hidden="true"></i>
                                         </div>
-                                    </a>
                                 </div>
                                 <?php } ?>
                             @endif
@@ -349,9 +350,7 @@
                     <?php $j++; ?>
                 @endforeach
             @else
-                <div class="ps-block--legend-table">
-                    <div class="ps-block__header">
-                    </div>
+                <div class="ps-block--legend-table1">
                     <div class="ps-block__content text-center">
                         <p>{{CRITERIA_ERROR}}</p>
                     </div>
@@ -375,18 +374,18 @@
                                         src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
                                         alt="">
 
+                            </a>
                                 <div class="close-popup">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </div>
-                            </a>
                         </div>
                     @endif
                     @if($product->formula_id==FIX_DEPOSIT_F1)
                         <div class="ps-product @if($product->featured==1) featured-1 @endif"
                              id="r-{{ $j }}">
                             <div class="ps-product__header">
-                                <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                             data-src="{{ asset($product->brand_logo) }}"></div>
+                                <div class="slider-img"><img  alt=""
+                                                             src="{{ asset($product->brand_logo) }}"></div>
                                 <?php
                                 $todayStartDate = \Helper::startOfDayBefore();
                                 $todayEndDate = \Helper::endOfDayAfter();
@@ -431,8 +430,9 @@
                                                         $monthShortSuffix = \Helper::daysMonthYearShortForm(2, $tenure);
                                                         ?>
                                                         <th class="center"
-                                                            style="@if(count($tenures)>4)width:auto; @else width:165px; @endif">{{ $tenure}} <span class="desktop">{{$monthSuffix}}</span>
-                                                            <span class="mb">{{$monthShortSuffix}}</span>
+                                                            style="@if(count($tenures)>4)width:auto; @else width:165px; @endif"> 
+                                                            <span class="desktop">{{ $tenure}}&nbsp;{{$monthSuffix}}</span>
+                                                            <span class="mb">{{ $tenure}}&nbsp;{{$monthShortSuffix}}</span>
                                                         </th>
                                                     @endforeach
                                                 </tr>
@@ -506,10 +506,10 @@
                                                     src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                     alt="" target="_blank">
 
+                                        </a>
                                             <div class="close-popup">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </div>
-                                        </a>
                                     </div>
                                     <?php } ?>
                                 @endif

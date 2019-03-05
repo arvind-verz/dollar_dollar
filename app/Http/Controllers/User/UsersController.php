@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\InvestmentEnquiry;
 use App\LoanEnquiry;
 use App\User;
 use App\Admin;
@@ -584,7 +585,11 @@ class UsersController extends Controller
                 } elseif ($type == 'bulk_life_insurance_remove') {
                     $users = LifeInsuranceEnquiry::find($id);
                     $users->delete_status = 1;
-                } elseif ($type == 'bulk_tag_remove') {
+                }elseif ($type == 'bulk_investment_remove') {
+                    $users = InvestmentEnquiry::find($id);
+                    $users->delete_status = 1;
+                }
+                elseif ($type == 'bulk_tag_remove') {
                     $users = Tag::find($id);
                     $users->delete_status = 1;
                 } elseif ($type == 'bulk_tag_status_update') {

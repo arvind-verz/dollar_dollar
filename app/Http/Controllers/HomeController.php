@@ -26,16 +26,9 @@ class HomeController extends Controller
     {
         $systemSettingHomepage = systemSettingHomepage::where('delete_status', 0)
             ->get();
-        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
-            ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
-            //->where('promotion_products.promotion_start', '<=', DB::raw('CURDATE()'))
-            //->where('promotion_products.promotion_end', '>=', DB::raw('CURDATE()'))
-            ->select('promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*')
-            ->get();
-//dd($promotion_products);
         $blogs = Page::where('delete_status', 0)
             ->where('is_blog', 1)
+            ->select('id','slug','blog_image','created_at','short_description')
             ->inRandomOrder()
             ->limit(5)
             ->get();
@@ -50,7 +43,7 @@ class HomeController extends Controller
         if (!$systemSetting) {
             return back()->with('error', OPPS_ALERT);
         }
-        return view('home', compact("brands", "page", "systemSetting", "blogs", "promotion_products", "systemSettingHomepage"));
+        return view('home', compact("brands", "page", "systemSetting", "blogs", "systemSettingHomepage"));
     }
 
     public function depositType(Request $request)

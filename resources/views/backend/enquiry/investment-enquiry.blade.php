@@ -26,7 +26,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
-                        <input type="hidden" name="bulk_remove_type" value="bulk_life_insurance_remove">
+                        <input type="hidden" name="bulk_remove_type" value="bulk_investment_remove">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>

@@ -110,7 +110,7 @@
                                 Horizontal Banner @endif</label>
                                 <input type="file" name="horizontal_banner_ad_image" class="form-control">
                                 <p class="text-muted"> Image
-                                    size should be @if($type=='account'||$type=='blog')785*280 @else 1200*350 @endif for better display
+                                    size should be @if($type=='blog')785*280 @elseif($type=='account')890*350 @else 1200*350 @endif for better display
                                 </p>
                                 @if(isset($ads->horizontal_banner_ad_image) && ($ads->horizontal_banner_ad_image != ''))
                                 <div class="col-sm-2">
@@ -180,7 +180,7 @@
                                 <label>Paid Horizontal Ad</label>
                                 <input type="file" name="horizontal_paid_ad_image" class="form-control paid-ad" @if($ads->paid_ads_status==0) disabled="disabled" @endif>
                                 <p class="text-muted"> Image
-                                    size should be @if($type=='account'||$type=='blog')785*280 @else 1200*350 @endif for better display
+                                    size should be @if($type=='blog')785*280 @elseif($type=='account')890*350 @else 1200*350 @endif for better display
                                 </p>
                                 @if(isset($ads->horizontal_paid_ad_image) && ($ads->horizontal_paid_ad_image != ''))
                                 <div class="col-sm-2">

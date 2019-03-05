@@ -85,8 +85,8 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
             <input type="hidden" name="product_ids"
             value=" @if(isset($searchFilter['product_ids'])) {{$searchFilter['product_ids']}} @else {{old('product_ids')}} @endif">
             <label>FULL NAME
-                <input class="full-name" @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
-                value="@if (Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@else {{old('full_name')}} @endif"
+                <input class="full-name" @if(\Illuminate\Support\Facades\Auth::check())  @endif
+                value="@if(old('full_name')){{old('full_name')}}@elseif (Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@endif"
                 name="full_name" type="text" >
             </label>
             @if ($errors->has('full_name'))
@@ -95,8 +95,8 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
             </span>
             @endif
             <label>EMAIL<input class="email" name="email" type="text"
-                @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly" @endif
-            value="@if (Auth::user()){{Auth::user()->email}}@else {{old('email')}} @endif"></label>
+                @if(\Illuminate\Support\Facades\Auth::check())  @endif
+            value="@if(old('email')){{old('email')}}@elseif(Auth::user()){{Auth::user()->email}}@endif"></label>
             @if ($errors->has('email'))
             <span class="text-danger" id="other-value-error">
                 <strong>{{ $errors->first('email') }}</strong>
@@ -105,15 +105,15 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
            
                 <div class="row">
                     <div class="col-md-3 col-lg-3 col-sm-3 col-xs-4"> <label class="">Country Code<input type="text" name="country_code"
-                        value="+65" placeholder="" > @if ($errors->has('country_code'))
+                        value="@if(old('country_code')){{old('country_code')}}@elseif(Auth::user()){{Auth::user()->country_code}}@else +65 @endif" placeholder="" > @if ($errors->has('country_code'))
                         <span class="text-danger mt-5" id="">
                             <strong>{{ $errors->first('country_code') }}</strong>
                         </span>
                     @endif </label></div>
                     <div class="col-md-9 col-lg-9 col-sm-9 col-xs-8"><label class="">Mobile<input name="telephone" class=""
-                        @if(\Illuminate\Support\Facades\Auth::check()) readonly="readonly"
+                        @if(\Illuminate\Support\Facades\Auth::check())
                         @endif
-                        value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif"
+                        value="@if(old('telephone')){{old('telephone')}}@elseif(Auth::user()){{Auth::user()->tel_phone}}@endif"
                         type="text" placeholder="Telephone only">
                         @if ($errors->has('telephone'))
                         <span class="text-danger mt-5" id="">
@@ -199,14 +199,14 @@ src="{{asset($banner->banner_image )}}" alt=""></div>
                     @endif
                 </div>
             </div>
-            @if(\Illuminate\Support\Facades\Auth::check())
+           {{-- @if(\Illuminate\Support\Facades\Auth::check())
             <label>
                 <div class="form-icon">
                     <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'loan-enquiry']) }}" class="standard-link">Edit
                     Info</a>
                 </div>
             </label>
-            @endif
+            @endif--}}
             <button type="submit">SUBMIT</button>
         </div>
         {!! Form::close() !!}

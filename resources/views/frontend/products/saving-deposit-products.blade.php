@@ -194,8 +194,8 @@
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="p-{{ $j }}">
                         <div class="ps-product__header">
-                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                         data-src="{{ asset($product->brand_logo) }}"></div>
+                            <div class="slider-img"><img  alt=""
+                                                         src="{{ asset($product->brand_logo) }}"></div>
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
                             $todayEndDate = \Helper::endOfDayAfter();
@@ -700,7 +700,7 @@
                                                             {
                                                             @endphp
                                                             <div class="ps-poster-popup">
-                                                                <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
+                                                                <a  target="_blank" href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
                                                                             src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                                             alt=""
                                                                             target="_blank">
@@ -738,9 +738,7 @@
                     @php $j++; @endphp
                 @endforeach
             @else
-                <div class="ps-block--legend-table">
-                    <div class="ps-block__header">
-                    </div>
+                <div class="ps-block--legend-table1">
                     <div class="ps-block__content text-center">
                         <p>{{CRITERIA_ERROR}}</p>
                     </div>
@@ -768,8 +766,8 @@
                     <div class="ps-product  @if($product->featured==1) featured-1 @endif "
                          id="r-{{ $j }}">
                         <div class="ps-product__header">
-                            <div class="slider-img"><img data-sizes="auto" class="lazyload" alt=""
-                                                         data-src="{{ asset($product->brand_logo) }}"></div>
+                            <div class="slider-img"><img  alt=""
+                                                         src="{{ asset($product->brand_logo) }}"></div>
                             <?php
                             $todayStartDate = \Helper::startOfDayBefore();
                             $todayEndDate = \Helper::endOfDayAfter();
@@ -1248,7 +1246,7 @@
                                                                 {
                                                                 @endphp
                                                                 <div class="ps-poster-popup">
-                                                                    <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
+                                                                    <a  target="_blank" href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
                                                                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                                                                 alt=""
                                                                                 target="_blank">

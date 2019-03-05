@@ -160,18 +160,11 @@
                                                    data-tooltip="{{$toolTip->reminder_tooltip}}"><i
                                                             class="fa fa-exclamation-circle"></i></a>
                                                 @endif
-                                                        <!--<select class="form-control select2-multiple " id="reminder"-->
-                                                <!--        disabled="disabled"-->
-                                                <!--        name="reminder[]" multiple="multiple"-->
-                                                <!--        style="width: 100%;height:45px;">-->
-                                                <!--    <option value="1 Day">1 Day</option>-->
-                                                <!--    <option value="1 Week">1 Week</option>-->
-                                                <!--    <option value="2 Week">2 Week</option>-->
-                                                <!--</select>-->
+
                                                 <div class="reminder">
                                                     <label><input type="checkbox" name="reminder1" value="1 Day"><span>1 Day</span></label>
                                                     <label><input type="checkbox" name="reminder2" value="1 Week"><span>1 Week</span></label>
-                                                    <label><input type="checkbox" name="reminder3" value="2 Week"><span>2 Week</span></label>
+                                                    <label><input type="checkbox" name="reminder3" value="2 Weeks"><span>2 Weeks</span></label>
                                                 </div>
                                         </div>
                                     </div>

@@ -20,7 +20,7 @@
                 <p>These are some of the common Life Insurance policies that can guide you to find what you need.</p>
             </div>
         </div>
-        
+        <div class='table-responsive'>
         <table class="ps-table ps-table--default ps-table--life" style="width: 1139px;">
             <thead>
             <tr>
@@ -75,6 +75,7 @@
             </tr>
             </tbody>
         </table>
+		</div>
         <p>&nbsp;</p>
         <div class="enquiry-url" style="text-align: center;"><button class="ps-btn" type="button" data-toggle="modal" data-target="#myModalInsurance">Enquire now</button></div>
         <p style="text-align: center;">&nbsp;</p>

@@ -211,11 +211,11 @@
                                         </table>
                                     </div>
                                     <p style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787E; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        You can visit our product page for other promotions or you can consult our
-                                        experienced and professional Financial <a target="_blank"
-                                                                                  rel="noopener noreferrer"
-                                                                                  href="{{url('investment')}}"
-                                                                                  style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #3869D4;">Advisors</a>
+                                        You may visit our product page for other promotions or consult our
+                                        experienced and professional <a target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        href="{{url('investment-enquiry')}}"
+                                                                        style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #3869D4;">Financial Advisors</a>
                                         to maximise your potential interest earned.
                                     </p>
 

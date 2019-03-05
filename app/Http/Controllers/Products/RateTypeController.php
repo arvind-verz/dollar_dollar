@@ -201,9 +201,6 @@ class RateTypeController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->delete_permission(@Auth::user()->role_type_id, 4) == PRODUCT_ID) {
-            return redirect()->back()->with('error', OPPS_ALERT);
-        }
         $rateType = RateType::where('id', $id)->first();
         if (!$rateType) {
             return redirect()->action('Products\RateTypeController@index')->with('error', OPPS_ALERT);

@@ -284,7 +284,7 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to($systemSetting->admin_email)->send(new HealthEnquiryMail($data));
+            Mail::to(WEALTH_EMAIL)->send(new HealthEnquiryMail($data));
             Mail::to($request->email)->send(new ThankYou($data));
         } catch (Exception $exception) {
             //dd($exception);
@@ -374,7 +374,7 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to($systemSetting->admin_email)->send(new LifeEnquiryMail($data));
+            Mail::to(WEALTH_EMAIL)->send(new LifeEnquiryMail($data));
             Mail::to($request->email)->send(new ThankYou($data));
         } catch (Exception $exception) {
 
@@ -480,7 +480,7 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to($systemSetting->admin_email)->send(new InvestmentEnquiryMail($data));
+            Mail::to(WEALTH_EMAIL)->send(new InvestmentEnquiryMail($data));
             Mail::to($request->email)->send(new ThankYou($data));
         } catch (Exception $exception) {
 
@@ -594,7 +594,7 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to($systemSetting->admin_email)->send(new LoanEnquiryMail($data));
+            Mail::to(HOME_LOAN_EMAIL)->send(new LoanEnquiryMail($data));
             Mail::to($request->email)->send(new ThankYou($data));
         } catch (Exception $exception) {
             //dd($exception);

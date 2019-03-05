@@ -223,7 +223,7 @@
 
                 <div class="form-icon"><i class="fa fa-user"></i>
                     <input class="form-control" type="text" name="full_name" placeholder="Enter Name Here"
-                           value="@if (Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@else {{old('full_name')}} @endif">
+                           value="@if(old('full_name')){{old('full_name')}}@elseif(Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@endif">
                 </div>
                 @if ($errors->has('full_name'))
                     <span class="text-danger">
@@ -236,7 +236,7 @@
 
                 <div class="form-icon"><i class="fa fa-envelope"></i>
                     <input class="form-control" type="text" name="email"
-                           value="@if (Auth::user()){{Auth::user()->email}}@else {{old('email')}} @endif"
+                           value="@if(old('email')){{old('email')}}@elseif(Auth::user()){{Auth::user()->email}}@endif"
                            placeholder="Enter Email Address Here">
                 </div>
                 @if ($errors->has('email'))
@@ -252,16 +252,16 @@
                     <div class="col-xs-3">
                         <div class="form-icon"><i class="fa fa-globe"></i>
                             <input class="form-control" type="text" placeholder="Country code +65" name="country_code"
-                                   value="@if (Auth::user()){{Auth::user()->country_code}}@elseif(old('country_code')){{old('country_code')}} @endif">
+                                   value="@if(old('country_code')){{old('country_code')}}@elseif(Auth::user()){{Auth::user()->country_code}}@else +65 @endif">
                             @if ($errors->has('country_code'))
                                 <span class="text-danger">
                                                     <strong>{{ $errors->first('country_code') }}</strong>
                                                     </span>
                             @endif
-                            @if(Auth::check())
+                            {{--@if(Auth::check())
                                 <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit
                                     Info</a>
-                            @endif
+                            @endif--}}
                         </div>
 
                     </div>
@@ -270,7 +270,7 @@
                             <input class="form-control only_numeric" type="text"
                                    placeholder="Telephone without country code"
                                    name="telephone"
-                                   value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif">
+                                   value="@if(old('telephone')){{old('telephone')}}@elseif(Auth::user()){{Auth::user()->tel_phone}}@endif">
 
                         </div>
                         @if ($errors->has('telephone'))
@@ -311,9 +311,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var auth = '{{Auth::check()}}';
-            if (auth == '1') {
-                inputs_checked();
-            }
+            /*if (auth == '1') {
+             inputs_checked();
+             }*/
             if ($("#time-5").is(":checked")) {
                 $("#other-value").parent("div").removeClass("hide");
             }

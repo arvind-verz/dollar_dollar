@@ -1978,8 +1978,14 @@ button {
 .ps-block--legend-table {
     margin-bottom:20px;
 }
-
+.ps-block--legend-table1 {
+    margin-bottom:20px;
+}
 .ps-block--legend-table .ps-block__header {
+    padding:15px 25px;
+    background-color:#f6f6f6;
+}
+.ps-block--legend-table1 .ps-block__header {
     padding:15px 25px;
     background-color:#f6f6f6;
 }
@@ -1992,8 +1998,20 @@ button {
     font-weight:700;
     color:#303030;
 }
+.ps-block--legend-table1 .ps-block__header h3 {
+    margin-bottom:0;
+    font-family:"Montserrat", sans-serif;
+    font-size:14px;
+    text-transform:uppercase;
+    font-weight:700;
+    color:#303030;
+}
 
 .ps-block--legend-table .ps-block__content {
+    padding:10px 25px;
+    background-color:#fff;
+}
+.ps-block--legend-table1 .ps-block__content {
     padding:10px 25px;
     background-color:#fff;
 }
@@ -2008,17 +2026,36 @@ button {
     text-transform:uppercase;
     margin-top: 5px;
 }
+.ps-block--legend-table1 .ps-block__content p {
+    display:inline-block;
+    margin-bottom:0;
+    margin-right:50px;
+    font-family:"Montserrat", sans-serif;
+    color:#303030;
+    font-weight:700;
+    text-transform:uppercase;
+    margin-top: 5px;
+}
 
 .ps-block--legend-table .ps-block__content p img {
+    margin-right:20px;
+}
+.ps-block--legend-table1 .ps-block__content p img {
     margin-right:20px;
 }
 
 .ps-block--legend-table .ps-block__content p:last-child {
     margin-right:0;
 }
+.ps-block--legend-table1 .ps-block__content p:last-child {
+    margin-right:0;
+}
 
 @media (max-width:767px) and (max-width:767px) {
     .ps-block--legend-table .ps-block__content p {
+        margin-bottom:10px;
+    }
+    .ps-block--legend-table1 .ps-block__content p {
         margin-bottom:10px;
     }
 }
@@ -2356,7 +2393,7 @@ button {
 }
 
 .ps-insurgence p {
-    margin-bottom:25px;
+    margin-bottom:30px !important;
 }
 
 .ps-insurgence p strong {
@@ -3080,7 +3117,7 @@ button {
 }
 
 .ps-product--2 .ps-criteria-detail {
-    margin-bottom:45px;
+    /*margin-bottom:45px;*/
     position:relative;
 }
 
@@ -3233,6 +3270,9 @@ button {
     /*}*/
     .nill {
         padding:0 !important;
+		display: inline-block;
+		text-align: center;
+		width: 100%;
     }
 
     .ps-product .ps-table-wrap {
@@ -5429,6 +5469,8 @@ html .bg--parallax {
     padding-bottom:30px;
     text-align: center;
     /*background: #fff;*/
+    display: table;
+    margin: auto;
 }
 .ps-product__poster{
     text-align: center;
@@ -5448,7 +5490,7 @@ html .bg--parallax {
     z-index:1;
     color:#000;
     cursor:pointer;
-	padding:10px;
+	padding:10px 20px;
 }
 
 .product-popup {
@@ -5459,9 +5501,9 @@ html .bg--parallax {
     background-color:#e2ffe6;
 }
 
-.ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer {
+/*.ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer {
     overflow-x:auto;
-}
+}*/
 
 .ps-page--deposit .ps-slider--feature-product.owl-carousel .owl-stage-outer::-webkit-scrollbar-track {
     border-radius:15px;
@@ -5773,12 +5815,15 @@ span.ps-post__meta a {
     background:transparent;
 }
 
-.ps-page--deposit .owl-carousel .owl-item .ps-block--short-product {
+.ps-page--deposit .ps-slider--feature-product .ps-block--short-product {
     margin:0 10px;
     position:relative;
 }
+.ps-home-fixed-deposit .ps-block--desposit {height:450px;overflow:hidden;}
+.display_fixed .ps-block--short-product {width:224px;float:left;}
+.display_fixed .owl-item .ps-block--short-product{width:100%;float:unset;}
 
-.ps-page--deposit .owl-carousel .owl-item .ps-block--short-product:before {
+.ps-page--deposit .ps-slider--feature-product .ps-block--short-product:before {
     content:'';
     position:absolute;
     height:335px;
@@ -6045,6 +6090,7 @@ span.ps-post__meta a {
 }
 
 .default-case thead tr th, td {
+	text-transform:none;
     text-transform:initial;
 }
 
@@ -6095,6 +6141,10 @@ span.ps-post__meta a {
 }
 
 .ps-block--legend-table .ps-block__header {
+    background:#95d0f3;
+    margin-top:20px;
+}
+.ps-block--legend-table1 .ps-block__header {
     background:#95d0f3;
     margin-top:20px;
 }
@@ -6425,9 +6475,12 @@ span.ps-post__meta a {
 }
 
 .table-new {
-    display:flex;
+    display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+	width:auto;
     width:max-content;
-    width:-moz-max-content;
+    width: -moz-max-content;
+	width: -webkit-max-content;
+	width: -o-max-content
 }
 
 .ps-product .ps-product__info.sp-only {
@@ -6602,7 +6655,13 @@ span.ps-post__meta a {
         display:none;
     }
 
+
     .ps-block--legend-table .ps-block__content p {
+        width:100%;
+        margin-bottom:5px;
+        margin-right:0;
+    }
+    .ps-block--legend-table1 .ps-block__content p {
         width:100%;
         margin-bottom:5px;
         margin-right:0;
@@ -6612,8 +6671,21 @@ span.ps-post__meta a {
         position:relative;
         cursor:pointer;
     }
+    .ps-block--legend-table1 .ps-block__header {
+        position:relative;
+        cursor:pointer;
+    }
 
     .ps-block--legend-table .ps-block__header span {
+        position:absolute;
+        top:17px;
+        right:20px;
+        display:inline-block;
+        border-left:10px solid transparent;
+        border-right:10px solid transparent;
+        border-top:10px solid #fff;
+    }
+    .ps-block--legend-table1 .ps-block__header span {
         position:absolute;
         top:17px;
         right:20px;
@@ -6644,6 +6716,9 @@ span.ps-post__meta a {
 		margin-right:-55px;
 	}
 	.ps-main img{height:auto !important;}
+    .owl-next{
+        margin: 0 !important;
+    }
 }
 
 @media only screen and (max-width:800px) {
@@ -7424,7 +7499,7 @@ h4.modal-title {
     display: block;
 }
 .ps-product .ps-poster-popup{
-    padding-top: 30px;
+    margin-top: 30px;
 }
 .ps-main .ps-btn:hover{
     background-color: #fecb5b;
@@ -7475,6 +7550,16 @@ h4.modal-title {
 .ps-home--links .ps-block--home-link p{font-weight:400;font-size:13px;}
 .h-table1 th{width:33.333%;}
 .h-table2 th{width:50%;}
+.pagination li a .active{
+    background: #fdb515;
+    color: #ffffff;
+}
+@media only screen and (min-width:1201px) {
+	.ps-slider--home .owl-item img { max-width: 1000px !important; }
+}
+@media only screen and (min-width:1199px) {
+	.ps-home-blog .ps-section__right { border-left: none; }
+}
 @media only screen and (min-width:990px) {
     .ps-home-blog .col-lg-6{
         max-height: 554px;

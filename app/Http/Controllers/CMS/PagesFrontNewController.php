@@ -320,7 +320,7 @@ class PagesFrontNewController extends Controller
                 $product->product_range = $productRanges;
                 //return $product;
                 ?>
-                <div class="ps-table-wrap">
+
                     <form id="form-<?php echo $product->product_id; ?>" class="ps-form--filter" method="post">
                         <table class="ps-table ps-table--product ps-table--product-3">
                             <thead>
@@ -476,7 +476,7 @@ class PagesFrontNewController extends Controller
                             </tbody>
                         </table>
                     </form>
-                </div>
+
                 <?php
                 $range = $productRanges[0];
                 if ($status == true) { ?>

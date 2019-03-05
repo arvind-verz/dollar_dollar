@@ -139,6 +139,7 @@ public static function getBrands()
 {
 $brands = Brand::where('delete_status', 0)
 ->where('display', 1)
+->select('brand_logo')
 ->orderBy('view_order', 'ASC')
 ->get();
 return $brands;
@@ -605,9 +606,10 @@ $products = DB::table('promotion_products')->join('promotion_types',
 ->where('promotion_products.promotion_type_id', '=', $productType)
 ->where('promotion_products.delete_status', '=', 0)
 ->where('promotion_products.status', '=', 1)
-->select('brands.id as brand_id', 'promotion_products.id as promotion_product_id',
-'promotion_products.*', 'promotion_types.*', 'promotion_formula.*', 'brands.*', 'currency.code as currency_code',
-'currency.icon as currency_icon', 'currency.currency as currency_name')
+->select('promotion_products.featured','promotion_products.slider_status','brands.id as brand_id', 'promotion_products.id as promotion_product_id',
+'promotion_products.maximum_interest_rate','promotion_products.minimum_placement_amount','promotion_products.promotion_period','promotion_products.formula_id',
+'promotion_products.formula_id','promotion_products.promotion_type_id','promotion_products.slider_status','promotion_products.until_end_date', 'currency.code as currency_code',
+'currency.icon as currency_icon', 'currency.currency as currency_name','brands.brand_logo')
 ->get();
 $searchFilter=null;
 if ($byOrderValue == 'minimum_placement_amount') {
