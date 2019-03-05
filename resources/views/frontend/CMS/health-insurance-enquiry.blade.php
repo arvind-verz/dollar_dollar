@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
     <?php
@@ -45,7 +54,7 @@
 
     {{--Page content start--}}
     <main class="ps-main">
-        <div class="container">
+        <div class="container ps-document">
             <?php
             //$pageName = strtok($page->name, " ");;
             $pageName = explode(' ', trim($page->name));
@@ -86,6 +95,7 @@
                            name="coverage" @if (old('coverage')==SEMI_PRIVATE_COVERAGE) checked="CHECKED"@endif/>
                     <label for="coverage-2">{{SEMI_PRIVATE_COVERAGE}}</label>
                 </div>
+                <br/>
                 @if ($errors->has('coverage'))
                     <span class="text-danger">
                                                     <strong>{{ $errors->first('coverage') }}</strong>
@@ -105,15 +115,16 @@
                            @if (old('level')==NO) checked="CHECKED"@endif />
                     <label for="level-2">{{NO}}</label>
                 </div>
+                <br/>
                 @if ($errors->has('level'))
                     <span class="text-danger">
                                                     <strong>{{ $errors->first('level') }}</strong>
                                                     </span>
                 @endif
-                <div class="short-form mb-10 hide">
+                <div class="short-form mt-10 hide">
                     <label>Please briefly state what health conditions you have</label>
                     <input class="form-control" type="text" id="health_condition" name="health_condition" placeholder=""
-                           value="">
+                           value="{{old('health_condition')}}">
                 </div>
                 @if ($errors->has('health_condition'))
                     <span class="text-danger" id="health-condition">
@@ -154,7 +165,9 @@
                     @if (!is_null(old('time'))) {{ in_array(TIME_OTHER,old('time'))? "CHECKED" : "" }} @endif/>
                     <label for="time-5">{{TIME_OTHER}}</label>
                 </div>
-                <div class="short-form mb-10 hide">
+                <br/>
+
+                <div class="short-form mt-10 hide">
                     <input class="form-control" type="text" id="other-value" name="other_value" data-target="time-5"
                            onkeyup="checkOtherValidation(this)" placeholder="Please Specify"
                            value="{{old('other_value')}}">
@@ -175,7 +188,7 @@
 
                 <div class="form-icon"><i class="fa fa-user"></i>
                     <input class="form-control" type="text" name="full_name" placeholder="Enter Name Here"
-                           value="@if (Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@else {{old('full_name')}} @endif">
+                           value="@if(old('full_name')){{old('full_name')}}@elseif(Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@endif">
                 </div>
                 @if ($errors->has('full_name'))
                     <span class="text-danger">
@@ -188,7 +201,7 @@
 
                 <div class="form-icon"><i class="fa fa-envelope"></i>
                     <input class="form-control" type="text" name="email"
-                           value="@if (Auth::user()){{Auth::user()->email}}@else {{old('email')}} @endif"
+                           value="@if(old('email')){{old('email')}}@elseif(Auth::user()){{Auth::user()->email}}@endif"
                            placeholder="Enter Email Address Here">
                 </div>
                 @if ($errors->has('email'))
@@ -203,23 +216,26 @@
                 <div class="row">
                     <div class="col-xs-3">
                         <div class="form-icon"><i class="fa fa-globe"></i>
-                            <input class="form-control" type="text" placeholder="+65" name="country_code"
-                                   value="{{ old('country_code') ? old('country_code') : (Auth::user()->country_code) ? Auth::user()->country_code : '+65' }}">
+                            <input class="form-control" type="text" placeholder="Country code +65" name="country_code"
+                                   value="@if(old('country_code')){{old('country_code')}}@elseif (Auth::user()){{Auth::user()->country_code}}@else +65 @endif">
                             @if ($errors->has('country_code'))
                                 <span class="text-danger">
                                                     <strong>{{ $errors->first('country_code') }}</strong>
                                                     </span>
                             @endif
-                            <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'health-insurance-enquiry']) }}">Edit
-                                Info</a>
+                            {{--@if(Auth::check())
+                                <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'health-insurance-enquiry']) }}">Edit
+                                    Info</a>
+                            @endif--}}
                         </div>
 
                     </div>
                     <div class="col-xs-9">
                         <div class="form-icon"><i class="fa fa-mobile-phone"></i>
-                            <input class="form-control only_numeric" type="text" placeholder="Enter Mobile Number"
+                            <input class="form-control only_numeric" type="text"
+                                   placeholder="Telephone without country code"
                                    name="telephone"
-                                   value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif">
+                                   value="@if(old('telephone')){{old('telephone')}}@elseif (Auth::user()){{Auth::user()->tel_phone}}@endif">
 
                         </div>
                         @if ($errors->has('telephone'))
@@ -228,6 +244,21 @@
                                                     </span>
                         @endif
                     </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class=" recaptcha">
+                    {!! app('captcha')->display($attributes = [],
+                    $lang = []) !!}
+                    <span class="captcha-err">
+                    </span>
+                    @if ($errors->has('g-recaptcha-response'))
+                        <span class="text-danger">
+                        <strong>
+                            {{ $errors->first('g-recaptcha-response') }}
+                        </strong>
+                    </span>
+                    @endif
                 </div>
             </div>
             <div class="form-group submit">
@@ -246,8 +277,10 @@
     {{--contact us or what we offer section end--}}
     <script type="text/javascript">
         $(document).ready(function () {
-
-            inputs_checked();
+            var auth = '{{Auth::check()}}';
+            if (auth == '1') {
+                inputs_checked();
+            }
             /*var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
              inputs.prop("disabled", true);
              $("input[name='coverage'], input[name='level'], input[name='time[]']").on("change", function() {
@@ -255,15 +288,15 @@
              });*/
 
             if ($("#level-1").is(":checked")) {
-                    $("input[name='health_condition']").parent("div").removeClass("hide");
+                $("input[name='health_condition']").parent("div").removeClass("hide");
             }
             if ($("#time-5").is(":checked")) {
                 $("#other-value").parent("div").removeClass("hide");
             }
         });
-        function inputs_checked() {
-            $(" input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
-        }
+        /*function inputs_checked() {
+         $(" input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
+         }*/
 
         $("input[name='level']").on("change", function () {
             if ($(this).val() == 'Yes') {

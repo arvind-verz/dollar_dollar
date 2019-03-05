@@ -45,7 +45,8 @@
                                         <table id="users" class="table ">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete/Update</th>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"></th>
+                                                <th>Action</th>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
                                                 <th>Email</th>
@@ -54,7 +55,7 @@
                                                 <th>Created on</th>
                                                 <th>Updated on by user</th>
                                                 <th>Updated on by admin</th>
-                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -64,6 +65,28 @@
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $user->id }}">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <!-- @if($CheckLayoutPermission[0]->delete==1)
+                                                                    <a class="btn btn-app view" title="Product View" href="{{ route("product-view", ["id"=>$user->id]) }}">
+                                                                    <i class="fa fa-eye" aria-hidden="true"></i> Product View
+                                                                </a>
+                                                            @endif -->
+                                                            @if($CheckLayoutPermission[0]->edit==1)
+                                                                <a class="btn btn-app edit" title="Edit User"
+                                                                   href="{{ route("users.edit",["id"=>$user->id]) }}">
+                                                                    <i class="fa fa-edit"></i> Edit
+                                                                </a>
+                                                            @endif
+                                                            @if($CheckLayoutPermission[0]->delete==1)
+                                                                <a class="btn btn-app delete" title="Delete User"
+                                                                   onclick="return confirm('Are you sure to delete this?')"
+                                                                   href="{{ route("user-destroy",["id"=>$user->id]) }}">
+                                                                    <i class="fa fa-trash"></i> Delete
+                                                                </a>
+                                                            @endif
+
+
                                                         </td>
                                                         <td>
                                                             {!!   $user->first_name !!}
@@ -88,45 +111,24 @@
                                                             @if($user->created_at==null)
                                                                 {!! $user->created_at !!}
                                                             @else
-                                                                {!!  date("Y-m-d h:i A", strtotime($user->created_at))   !!}
+                                                                {!!  date("Y-m-d H:i", strtotime($user->created_at))   !!}
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if($user->updated_at_user==null)
                                                                 {!! $user->updated_at_user !!}
                                                             @else
-                                                                {!!  date("Y-m-d h:i A", strtotime($user->updated_at_user))   !!}
+                                                                {!!  date("Y-m-d H:i", strtotime($user->updated_at_user))   !!}
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if($user->updated_at_admin==null)
                                                                 {!! $user->updated_at_admin !!}
                                                             @else
-                                                                {!!  date("Y-m-d h:i A", strtotime($user->updated_at_admin))   !!}
+                                                                {!!  date("Y-m-d H:i", strtotime($user->updated_at_admin))   !!}
                                                             @endif
                                                         </td>
-                                                        <td class="text-center">
-                                                            <!-- @if($CheckLayoutPermission[0]->delete==1)
-                                                                <a class="btn btn-app view" title="Product View" href="{{ route("product-view", ["id"=>$user->id]) }}">
-                                                                    <i class="fa fa-eye" aria-hidden="true"></i> Product View
-                                                                </a>
-                                                            @endif -->
-                                                            @if($CheckLayoutPermission[0]->edit==1)
-                                                                <a class="btn btn-app edit" title="Edit User"
-                                                                   href="{{ route("users.edit",["id"=>$user->id]) }}">
-                                                                    <i class="fa fa-edit"></i> Edit
-                                                                </a>
-                                                            @endif
-                                                            @if($CheckLayoutPermission[0]->delete==1)
-                                                                <a class="btn btn-app delete" title="Delete User"
-                                                                   onclick="return confirm('Are you sure to delete this?')"
-                                                                   href="{{ route("user-destroy",["id"=>$user->id]) }}">
-                                                                    <i class="fa fa-trash"></i> Delete
-                                                                </a>
-                                                            @endif
 
-
-                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @endif

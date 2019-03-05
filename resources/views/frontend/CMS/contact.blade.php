@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
 <?php
@@ -54,6 +63,10 @@ $banners = Helper::getBanners($slug);
             </span>
             
         </h3>
+			<!--<p><a class="ps-logo" href="https://www.dollardollar.sg/home"><img src="https://www.dollardollar.sg/frontend/images/logo_1542872866.png" alt=""></a></p>-->
+			    <p vertical-align="middle"> <!--<i class="fa fa-phone-square fa-2x" aria-hidden="true"></i> <a href="tel:+6591552665">Tel: (65) 9155 2665 </a>--> 
+			   <a href="mailto:enquiry@dollardollar.sg"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i> <span style="margin-top:10px;">contactus@dollardollar.sg</span></a></p>
+			<p>If you have any enquiry, please do not hesitate to contact us. Leave us a message and we <br>will get back to you shortly.</p>
         {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 ">
@@ -133,23 +146,30 @@ $banners = Helper::getBanners($slug);
                     </div>
                     <div class="form-group">
                         <label>
-                            Subject
+                            Enquiry Purpose
                         </label>
-                        <input class="form-control" name="subject" placeholder="Enter Subject Here" type="text" value="{{old('subject')}}">
-                            @if ($errors->has('subject'))
-                            <span class="text-danger">
-                                <strong>
-                                    {{ $errors->first('subject') }}
-                                </strong>
-                            </span>
-                            @endif
-                        </input>
+						<select class="form-control" name="subject">
+							<option value="General">General</option>
+							<option value="Bank Products">Bank Products</option>
+							<option value="Loan">Loan</option>
+							<option value="Insurance">Insurance</option>
+							<option value="Investment">Investment</option>
+							<option value="Feedback">Feedback</option>
+							<option value="Others">Others</option>
+						</select>
+                        @if ($errors->has('subject'))
+						<span class="text-danger">
+							<strong>
+								{{ $errors->first('subject') }}
+							</strong>
+						</span>
+						@endif
                     </div>
                     <div class="form-group">
                         <label>
-                            Description
+                            Comments/Feedback
                         </label>
-                        <textarea class="form-control sm" cols="" name="message" rows="12">{{ old('message') ? old('message') : '' }}</textarea>
+                        <textarea class="form-control sm" cols="" name="message" rows="12" maxlength="3000">{{ old('message') ? old('message') : '' }}</textarea>
                         @if ($errors->has('message'))
                         <span class="text-danger">
                             <strong>
