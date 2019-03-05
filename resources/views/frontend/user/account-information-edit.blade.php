@@ -52,7 +52,7 @@
 
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5>
+                                    <h5><img src="/img/icons/user.png" alt="">Account Information</h5>
                                 </div>
                                 <div class="ps-block__content">
                                     {!! Form::open(['route' => ['account-information.update', AUTH::user()->id], 'method'   => 'POST']) !!}

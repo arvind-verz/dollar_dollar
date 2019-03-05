@@ -15,14 +15,28 @@ use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ForgotPassword;
+use App\AdsManagement;
+use App\SystemSetting;
+use App\Mail\ResetNewPassword;
 
 
 class UserFrontController extends Controller
 {
 
+    private $systemSetting;
+
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['logout', 'getLoginStatus', 'postContactUs', 'postForgotPassword', 'postForgotPasswordReset', 'postResetPassword']]);
+        $this->middleware('auth', ['except' => ['logout', 'getLoginStatus', 'postContactUs','postResetNewPassword', 'postForgotPassword', 'postForgotPasswordReset', 'postResetPassword']]);
+        $systemSetting = \Helper::getSystemSetting();
+        if (!$systemSetting) {
+            $systemSetting = new SystemSetting();
+            $systemSetting->email_sender_name = env('MAIL_FROM_NAME');
+            $systemSetting->admin_email = env('ADMIN_EMAIL');
+            $systemSetting->auto_email = env('MAIL_FROM_ADDRESS');
+        }
+
+        $this->systemSetting = $systemSetting;
     }
 
     /**
@@ -212,6 +226,8 @@ class UserFrontController extends Controller
     /*Contct us */
     public function postContactUs(Request $request)
     {
+        $systemSetting = $this->systemSetting;
+
         //check validation
         $fields = [
             'full_name' => 'required|max:255',
@@ -221,8 +237,11 @@ class UserFrontController extends Controller
         ];
         $this->validate($request, $fields);
         $data = $request->all();
+        $data['sender_email'] = $systemSetting->auto_email;
+        $data['sender_name'] = $systemSetting->email_sender_name;
+
         try {
-            Mail::to(ADMIN_EMAIL)->send(new ContactUs($data));
+            Mail::to($systemSetting->admin_email)->send(new ContactUs($data));
         } catch (Exception $exception) {
 
             return redirect(url('contact-us'))->with('error', 'Oops! Something wrong please try after sometime.');
@@ -232,6 +251,7 @@ class UserFrontController extends Controller
 
     public function postForgotPassword(Request $request)
     {
+        $systemSetting = $this->systemSetting;
         $validator = Validator::make($request->all(), [
             'email' => 'required|email'
         ]);
@@ -245,16 +265,98 @@ class UserFrontController extends Controller
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         } else {
+            $ads = collect([]);
+            $adsCollection = AdsManagement::where('delete_status', 0)
+                        ->where('display', 1)
+                        ->where('page', 'email')
+                        ->inRandomOrder()
+                        ->get();
+                    
+                    if ($adsCollection->count()) {
+                        $ads = \Helper::manageAds($adsCollection);
+                    }
+        $current_time = strtotime(date('Y-m-d', strtotime('now')));
+        $ad_start_date = strtotime($ads->ad_start_date);
+        $ad_end_date = strtotime($ads->ad_end_date);
+        
 
+        if($ads->paid_ads_status==1 && $current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads->paid_ad_image)) {
+            $ad = $ads->paid_ad_image;
+             $adLink = $ads->paid_ad_link;
+
+        }else {
+            $ad = $ads->ad_image;
+            $adLink = $ads->ad_link;
+        }
             DB::table('password_resets')->insert(['email' => $user->email, 'token' => str_random(80), 'created_at' => Carbon::now()->toDateTimeString()]);
             $pw_reset = DB::table('password_resets')->where('email', $user->email)->first();
             $token = \Helper::base64_encode($pw_reset->token);
             $url = url('/') . '/password-reset/' . $token;
             $contactUrl = url('/') . '/contact';
 
-            $data = ['first_name' => $user->first_name, 'last_name' => $user->last_name, 'url' => $url, 'contact_url' => $contactUrl];
+            $data = ['ad_link'=>$adLink,'ad'=> $ad,'first_name' => $user->first_name, 'last_name' => $user->last_name, 'url' => $url, 'contact_url' => $contactUrl];
+            $data['sender_email'] = $systemSetting->auto_email;
+            $data['sender_name'] = $systemSetting->email_sender_name;
             try {
-                Mail::to(ADMIN_EMAIL)->send(new ForgotPassword($data));
+                Mail::to($user->email)->send(new ForgotPassword($data));
+            } catch (Exception $exception) {
+                //dd($exception);
+                return redirect()->back()->with('error', 'Oops! Something wrong please try after sometime.');
+            }
+
+            return redirect()->back()->with(['status' => 'We have sent password reset link to your mail', 'form' => 'forgot']);
+        }
+    }
+    public function postResetNewPassword(Request $request)
+    {
+        $systemSetting = $this->systemSetting;
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator->errors())->with('form', 'forgot');
+        }
+        $user = User::where('email', $request->email)->where('delete_status', 0)->first();
+        if (!$user) {
+            $validator->getMessageBag()->add('email', 'We cant find a user with this e-mail address.');
+        }
+        if ($validator->getMessageBag()->count()) {
+            return back()->withInput()->withErrors($validator->errors());
+        } else {
+            $ads = collect([]);
+            $adsCollection = AdsManagement::where('delete_status', 0)
+                ->where('display', 1)
+                ->where('page', 'email')
+                ->inRandomOrder()
+                ->get();
+
+            if ($adsCollection->count()) {
+                $ads = \Helper::manageAds($adsCollection);
+            }
+            $current_time = strtotime(date('Y-m-d', strtotime('now')));
+            $ad_start_date = strtotime($ads->ad_start_date);
+            $ad_end_date = strtotime($ads->ad_end_date);
+
+
+            if($ads->paid_ads_status==1 && $current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads->paid_ad_image)) {
+                $ad = $ads->paid_ad_image;
+                $adLink = $ads->paid_ad_link;
+
+            }else {
+                $ad = $ads->ad_image;
+                $adLink = $ads->ad_link;
+            }
+            DB::table('password_resets')->insert(['email' => $user->email, 'token' => str_random(80), 'created_at' => Carbon::now()->toDateTimeString()]);
+            $pw_reset = DB::table('password_resets')->where('email', $user->email)->first();
+            $token = \Helper::base64_encode($pw_reset->token);
+            $url = url('/') . '/password-reset/' . $token;
+            $contactUrl = url('/') . '/contact';
+
+            $data = ['ad_link'=>$adLink,'ad'=> $ad,'first_name' => $user->first_name, 'last_name' => $user->last_name, 'url' => $url, 'contact_url' => $contactUrl];
+            $data['sender_email'] = $systemSetting->auto_email;
+            $data['sender_name'] = $systemSetting->email_sender_name;
+            try {
+                Mail::to($user->email)->send(new ResetNewPassword($data));
             } catch (Exception $exception) {
                 //dd($exception);
                 return redirect()->back()->with('error', 'Oops! Something wrong please try after sometime.');
@@ -285,10 +387,10 @@ class UserFrontController extends Controller
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator->errors());
         }
+
         $token = \Helper::base64_decode($request->token);
         $detail = DB::table('password_resets')->where('token', $token)->first();
         if ($detail) {
-            //dd($detail->email,$request->email);
             if ($detail->email != $request->email) {
                 return back()->with(['error' => 'Email does not match with our records']);
             }

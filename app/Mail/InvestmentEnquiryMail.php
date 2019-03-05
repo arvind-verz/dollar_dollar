@@ -26,7 +26,7 @@ class InvestmentEnquiryMail extends Mailable
     {
         $data = $this->data;
         //dd($data);
-        return $this->markdown('backend.emails.investmentEnquiry', compact("data"));
+        return $this->subject('Investment Enquiry')->from($data['sender_email'], $data['sender_name'])->markdown('backend.emails.investmentEnquiry', compact("data"));
     }
 
 }

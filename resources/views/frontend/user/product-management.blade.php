@@ -92,7 +92,8 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <input type="text" class="form-control hide orther-hide" name="bank_id_other" value=""
                                                    placeholder="Enter Bank or Financial Institution name">
-                                    </div>
+                                    </div></div>
+                                    <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="form-group">
                                             <label>Account Name</label>
@@ -105,23 +106,23 @@
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                                 <div class="form-group">
                                                     <label>Amount<sup>*</sup></label>
-                                                    <input class="form-control prefix_dollar" required="required"
+                                                    <input class="form-control prefix_dollar only_numeric" required="required"
                                                            name="amount"
                                                            type="text" placeholder="Enter Amount"
                                                            value="{{ old('amount') }}">
                                                     <!-- <span class="suffix_k">K</span> -->
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                 <div class="form-group">
-                                                    <label>Tenure</label>
-                                                    <input type="text" class="form-control " name="tenure"
+                                                    <label>Tenor</label>
+                                                    <input type="text" class="form-control only_numeric" name="tenure"
                                                            value="{{ old('tenure') }}">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                 <div class="form-group">
-                                                    <select class="form-control mt-30" name="tenure_calender">
+                                                    <select class="form-control mt-30 mt-34" name="tenure_calender">
                                                         <option value="D" selected>Days</option>
                                                         <option value="M">Months</option>
                                                         <option value="Y">Years</option>
@@ -159,18 +160,11 @@
                                                    data-tooltip="{{$toolTip->reminder_tooltip}}"><i
                                                             class="fa fa-exclamation-circle"></i></a>
                                                 @endif
-                                                        <!--<select class="form-control select2-multiple " id="reminder"-->
-                                                <!--        disabled="disabled"-->
-                                                <!--        name="reminder[]" multiple="multiple"-->
-                                                <!--        style="width: 100%;height:45px;">-->
-                                                <!--    <option value="1 Day">1 Day</option>-->
-                                                <!--    <option value="1 Week">1 Week</option>-->
-                                                <!--    <option value="2 Week">2 Week</option>-->
-                                                <!--</select>-->
+
                                                 <div class="reminder">
                                                     <label><input type="checkbox" name="reminder1" value="1 Day"><span>1 Day</span></label>
                                                     <label><input type="checkbox" name="reminder2" value="1 Week"><span>1 Week</span></label>
-                                                    <label><input type="checkbox" name="reminder3" value="2 Week"><span>2 Week</span></label>
+                                                    <label><input type="checkbox" name="reminder3" value="2 Weeks"><span>2 Weeks</span></label>
                                                 </div>
                                         </div>
                                     </div>
@@ -214,7 +208,7 @@
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                                 <div class="form-group submit">
                                                     <label style="margin: 5px 0 5px;">Do not Send Reminders</label>
-                                                    <input type="checkbox" class="form-control" disabled="disabled"
+                                                    <input type="checkbox" class="form-control" checked="checked" disabled="disabled"
                                                            name="dod_reminder"
                                                            @if(old('dod_reminder')==1) checked @endif>
 
@@ -247,7 +241,7 @@
                                                             <br> Name
                                                         </th>
                                                         <th>Amount</th>
-                                                        <th>Tenure
+                                                        <th>Tenor
                                                             <br> (M= months,
                                                             <br> D = Days)
                                                             <br> Y = Years)
@@ -303,10 +297,6 @@
                                                                 </td>
                                                             </tr>
                                                         @endforeach
-                                                    @else
-                                                        <tr>
-                                                            <td class="text-center" colspan="9">No data found.</td>
-                                                        </tr>
                                                     @endif
                                                     </tbody>
                                                 </table>
@@ -314,6 +304,7 @@
                                         </div>
                                     </div>
                                 @endif
+                                 @include('frontend.includes.vertical-ads-profile')
                                 @include('frontend.includes.horizontal-ads')
                             </div>
                     </div>
@@ -352,7 +343,13 @@
                 $(".select2").select2("val", " ");
             }
             else {
-                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
+                if ($("input[name='dod_reminder']").is(":checked") !== false) {
+                    $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
+                    $(".reminder").find('input[type=checkbox]').prop("disabled", true);
+                    $(".select2").select2("val", " ");
+                }else{
+                    $(".reminder").find('input[type=checkbox]').prop("disabled", false);
+                }
                 $("input[name='dod_reminder']").attr("disabled", false);
             }
         });

@@ -67,7 +67,7 @@
                                     <div class="form-group">
                                         {{Form::label('bank_sub_title', 'Bank Sub Title',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('bank_sub_title', $product->bank_sub_title, ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('bank_sub_title', $product->bank_sub_title, ['id' => '', 'class' => ' tiny-mce form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -113,6 +113,24 @@
                                                     Enable
                                                 </button>
                                             @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Shortlist Button Status</label>
+
+                                        <div class="col-sm-10">
+
+                                            <select class="form-control select2"
+                                                    data-placeholder="" name="shortlist_status"
+                                                    style="width: 100%;">
+                                                <option value="1"
+                                                        @if($product->shortlist_status == 1) selected="selected" @endif >
+                                                    Active
+                                                </option>
+                                                <option value="0" @if($product->shortlist_status == 0) selected="selected" @endif>
+                                                    Deactivate
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -303,7 +321,7 @@
                                     <div class="form-group">
                                         {{Form::label('product_footer', 'Other Detail',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('product_footer', $product->product_footer, ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('product_footer', $product->product_footer, ['id' => '', 'class' => ' tiny-mce  form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <?php

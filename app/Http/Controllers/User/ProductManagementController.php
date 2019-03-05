@@ -46,7 +46,9 @@ class ProductManagementController extends Controller
         $validate = Validator::make($request->all(), [
             'bank_id' => 'required',
             'amount' => 'required|numeric',
-            'interest_earned' => 'nullable'
+            'interest_earned' => 'nullable',
+            'start_date'      => 'nullable|before_or_equal:end_date',
+
         ]);
         if ($validate->fails()) {
             return redirect('product-management')
@@ -144,15 +146,15 @@ class ProductManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $product_management = ProductManagement::find($id);
         $validate = Validator::make($request->all(), [
             'bank_id' => 'required',
             'amount' => 'required|numeric',
-            'interest_earned' => 'nullable'
-        ]);
+            'interest_earned' => 'nullable',
+            'start_date'      => 'nullable|before_or_equal:end_date',
+            ]);
         if ($validate->fails()) {
-            return redirect('product-management')
+            return redirect('product-management/edit/'.$id)
                 ->withErrors($validate)
                 ->withInput();
         } else {

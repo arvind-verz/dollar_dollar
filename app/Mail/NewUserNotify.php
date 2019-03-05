@@ -24,6 +24,6 @@ class NewUserNotify extends Mailable
     public function build()
     {
         $data = $this->data;
-        return $this->subject('New user register')->markdown('backend.emails.newUserNotify', compact("data"));
+        return $this->subject('New user register')->from($data['sender_email'], $data['sender_name'])->markdown('backend.emails.newUserNotify', compact("data"));
     }
 }

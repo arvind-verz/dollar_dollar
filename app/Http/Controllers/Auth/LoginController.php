@@ -63,7 +63,7 @@ class LoginController extends Controller
         /*$this->validate($request, [
         'g-recaptcha-response' => 'required|captcha'
         ]);*/
-        return array_merge($request->only($this->username(), 'password'), ['status' => 1, 'delete_status' => 0]);
+        return array_merge($request->only($this->username(), 'password'), ['delete_status' => 0]);
     }
 
     /**
@@ -74,8 +74,13 @@ class LoginController extends Controller
      */
     protected function sendLoginResponse(Request $request)
     {
+        
         $request->session()->regenerate();
-
+        $user = User::where('email', $request->email)->where('delete_status',0)->first();
+        if($user){
+            $user->status = 1;
+            $user->save();
+        }
         return $this->authenticated($request, $this->guard()->user())
         ?: redirect($request->redirect_url);
     }
@@ -197,15 +202,19 @@ class LoginController extends Controller
         if (!$request->has('code') || $request->has('denied')) {
             return redirect(url($this->redirectTo));
         }
-        $user     = Socialite::driver($provider)->user();
+        $user     = Socialite::driver($provider)->stateless()->user();
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
+        if($authUser){
+            $authUser->status = 1;
+            $authUser->save();
+        }
         return redirect(url($this->redirectTo));
     }
 
     public function findOrCreateUser($user, $provider)
     {
-        $authUser = User::where('email', $user->email)->first();
+        $authUser = User::where('email', $user->email)->where('delete_status',0)->first();
         if ($authUser) {
             return $authUser;
         }

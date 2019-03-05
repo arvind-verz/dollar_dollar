@@ -29,6 +29,6 @@ class NewUserWelcome extends Mailable
     public function build()
     {
         $data = $this->data;
-        return $this->subject('Welcome to Dollar Dollar')->markdown('frontend.emails.newUser', compact("data"));
+        return $this->subject('Welcome to Dollar Dollar')->from($data['sender_email'], $data['sender_name'])->markdown('frontend.emails.newUser', compact("data"));
     }
 }

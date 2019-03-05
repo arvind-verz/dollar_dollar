@@ -26,7 +26,7 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
-                        <input type="hidden" name="bulk_remove_type" value="bulk_enquiry_remove">
+                        <input type="hidden" name="bulk_remove_type" value="bulk_loan_enquiry_remove">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>
@@ -35,7 +35,8 @@
                                         <table id="loan-enquiry"  class="table table-bordered">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete</th>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"></th>
+                                                <th>Action</th>
                                                 <th>Full&nbsp;name&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</th>
                                                 <th>Email&emsp;&emsp;&emsp;</th>
                                                 <th>Contact&nbsp;number&emsp;&emsp;&emsp;</th>
@@ -44,8 +45,9 @@
                                                 <th>Property type&emsp;&emsp;</th>
                                                 <th>Loan amount&emsp;&emsp;</th>
                                                 <th>Loan type&emsp;&emsp;</th>
+                                                <th>Existing bank loan&emsp;</th>
                                                 <th>Created on</th>
-                                                <th>Action</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -57,6 +59,23 @@
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $loanEnquiry->id }}">
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if($CheckLayoutPermission[0]->view==1)
+                                                                <a class="btn btn-app view" title="Viw Contact Enquiry"
+                                                                   href="{{ route("loan-enquiry.show",["id"=>$loanEnquiry->id]) }}">
+                                                                    <i class="fa fa-eye"></i> View
+                                                                </a>
+                                                            @endif
+
+                                                            @if($CheckLayoutPermission[0]->delete==1)
+                                                                <a class="btn btn-app delete "
+                                                                   title="Delete Contact Enquiry"
+                                                                   onclick="return confirm('Are you sure to delete this?')"
+                                                                   href="{{ route("loan-enquiry-destroy",["id"=>$loanEnquiry->id]) }}">
+                                                                    <i class="fa fa-trash"></i> Delete
+                                                                </a>
+                                                            @endif
                                                         </td>
                                                         <td>
                                                             {!!   str_replace(' ', '&nbsp;', $loanEnquiry->full_name) !!}
@@ -85,29 +104,16 @@
                                                             {{ $loanEnquiry->loan_type }}
                                                         </td>
                                                         <td>
+                                                            {{ $loanEnquiry->existing_bank_loan }}
+                                                        </td>
+                                                        <td>
                                                             @if ($loanEnquiry->created_at == null)
                                                                 {{$loanEnquiry->created_at}}
                                                             @endif
-                                                                {!!  date("Y-m-d h:i A", strtotime($loanEnquiry->created_at))   !!}
+                                                                {!!  date("Y-m-d H:i", strtotime($loanEnquiry->created_at))   !!}
 
                                                         </td>
-                                                        <td class="text-center">
-                                                            @if($CheckLayoutPermission[0]->view==1)
-                                                                <a class="btn btn-app view" title="Viw Contact Enquiry"
-                                                                   href="{{ route("loan-enquiry.show",["id"=>$loanEnquiry->id]) }}">
-                                                                    <i class="fa fa-eye"></i> View
-                                                                </a>
-                                                            @endif
 
-                                                            @if($CheckLayoutPermission[0]->delete==1)
-                                                                <a class="btn btn-app delete "
-                                                                   title="Delete Contact Enquiry"
-                                                                   onclick="return confirm('Are you sure to delete this?')"
-                                                                   href="{{ route("loan-enquiry-destroy",["id"=>$loanEnquiry->id]) }}">
-                                                                    <i class="fa fa-trash"></i> Delete
-                                                                </a>
-                                                            @endif
-                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @endif

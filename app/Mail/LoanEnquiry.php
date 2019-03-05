@@ -25,6 +25,6 @@ class LoanEnquiry extends Mailable
     public function build()
     {
         $data = $this->data;
-        return $this->markdown('backend.emails.loanEnquiry', compact("data"));
+        return $this->subject('Loan Enquiry')->from($data['sender_email'], $data['sender_name'])->markdown('backend.emails.loanEnquiry', compact("data"));
     }
 }

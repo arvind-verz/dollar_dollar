@@ -38,7 +38,7 @@
                         <div class="ps-dashboard__content">
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="img/icons/user.png" alt="">Forgot Password</h5>
+                                    <h5><img src="/img/icons/user.png" alt="">Forgot Password</h5>
                                 </div>
                                 <div class="ps-block__content">
                                     {!! Form::open(['route' => ['forgot-password'], 'method'   => 'POST']) !!}

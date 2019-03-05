@@ -74,7 +74,7 @@ class AdminController extends Controller
                     $adImageCount++;
                 }
             }
-            if ($adImageCount <= 1) {
+            if ($adImageCount <= 0) {
                 echo "error";
             } else {
                 if ($place == 'horizontal') {

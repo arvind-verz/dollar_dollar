@@ -12,6 +12,7 @@ use App\Mail\HealthEnquiryMail;
 use App\Mail\LifeEnquiryMail;
 use App\Mail\InvestmentEnquiryMail;
 use App\Mail\LoanEnquiry as LoanEnquiryMail;
+use App\Mail\ThankYou;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Exception;
@@ -21,6 +22,8 @@ use Validator;
 use App\Page;
 use App\LoanEnquiry;
 use App\PromotionProducts;
+use App\SystemSetting;
+use App\AdsManagement;
 
 class EnquiryFrontController extends Controller
 {
@@ -29,6 +32,48 @@ class EnquiryFrontController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private $systemSetting;
+    private $ads;
+
+    public function __construct()
+    {
+        $systemSetting = \Helper::getSystemSetting();
+        if (!$systemSetting) {
+            $systemSetting = new SystemSetting();
+            $systemSetting->email_sender_name = env('MAIL_FROM_NAME');
+            $systemSetting->admin_email = env('ADMIN_EMAIL');
+            $systemSetting->auto_email = env('MAIL_FROM_ADDRESS');
+        }
+
+        $this->systemSetting = $systemSetting;
+
+        $ads = AdsManagement::where('delete_status', 0)
+            ->where('display', 1)
+            ->where('page', 'email')
+            ->inRandomOrder()
+            ->first();
+
+        if ($ads) {
+
+            $current_time = strtotime(date('Y-m-d', strtotime('now')));
+            $ad_start_date = strtotime($ads->ad_start_date);
+            $ad_end_date = strtotime($ads->ad_end_date);
+
+            if ($ads->paid_ads_status == 1 && $current_time >= $ad_start_date && $current_time <= $ad_end_date && !empty($ads->paid_ad_image)) {
+                $ad = $ads->paid_ad_image;
+                $adLink = $ads->paid_ad_link;
+            } else {
+                $ad = $ads->ad_image;
+                $adLink = $ads->ad_link;
+            }
+
+            $ads->ad = $ad;
+            $ads->ad_link = $adLink;
+        }
+        $this->ads = $ads;
+
+    }
+
     public function index()
     {
         //
@@ -103,20 +148,22 @@ class EnquiryFrontController extends Controller
     /*Contact us */
     public function postContactEnquiry(Request $request)
     {
+        $systemSetting = $this->systemSetting;
+        $ads = $this->ads;
         //check validation
         $fields = [
-            
+
             'subject' => 'required|max:255',
             'message' => 'required|max:3500',
             'g-recaptcha-response' => 'required|captcha'
         ];
         $validator = Validator::make($request->all(), $fields);
-         if (!$request->full_name) {
+        if (!$request->full_name) {
             $validator->getMessageBag()->add('full_name', 'This field is required.');
         }
         if (!$request->email) {
             $validator->getMessageBag()->add('email', 'This field is required.');
-        }elseif(\Helper::isValidEmail($request->email) == false){
+        } elseif (\Helper::isValidEmail($request->email) == false) {
             $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
         }
         if (!$request->telephone) {
@@ -125,10 +172,18 @@ class EnquiryFrontController extends Controller
         if (!$request->country_code) {
             $validator->getMessageBag()->add('country_code', 'This field is required.');
         }
-         if ($validator->getMessageBag()->count()) {
+        if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
         $data = $request->all();
+        $data['sender_email'] = $systemSetting->auto_email;
+        $data['sender_name'] = $systemSetting->email_sender_name;
+        $data['ad'] = null;
+        $data['ad_link'] = null;
+        if($ads){
+            $data['ad'] = $ads->ad;
+            $data['ad_link'] = $ads->ad_link;
+        }
 
         $contactEnquiry = new ContactEnquiry();
 
@@ -141,7 +196,8 @@ class EnquiryFrontController extends Controller
         $contactEnquiry->save();
 
         try {
-            Mail::to(ADMIN_EMAIL)->send(new ContactEnquiryMail($data));
+            Mail::to($systemSetting->admin_email)->send(new ContactEnquiryMail($data));
+            Mail::to($request->email)->send(new ThankYou($data));
         } catch (Exception $exception) {
             //dd($exception);
             return redirect(url('contact'))->with('error', 'Oops! Something wrong please try after sometime.');
@@ -151,14 +207,16 @@ class EnquiryFrontController extends Controller
 
     public function postHealthEnquiry(Request $request)
     {
+        $systemSetting = $this->systemSetting;
+        $ads = $this->ads;
+
         // dd($request->all());
         //check validation
         $fields = [
             'coverage' => 'required|max:255',
             'level' => 'required|max:255',
             'time' => 'required|max:255',
-        
-
+            'g-recaptcha-response' => 'required|captcha'
         ];
 
         if (isset($request->time)) {
@@ -172,12 +230,12 @@ class EnquiryFrontController extends Controller
             }
         }
         $validator = Validator::make($request->all(), $fields);
-         if (!$request->full_name) {
+        if (!$request->full_name) {
             $validator->getMessageBag()->add('full_name', 'This field is required.');
         }
         if (!$request->email) {
             $validator->getMessageBag()->add('email', 'This field is required.');
-        }elseif(\Helper::isValidEmail($request->email) == false){
+        } elseif (\Helper::isValidEmail($request->email) == false) {
             $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
         }
         if (!$request->telephone) {
@@ -190,7 +248,14 @@ class EnquiryFrontController extends Controller
             return back()->withInput()->withErrors($validator->errors());
         }
         $data = $request->all();
-
+        $data['sender_email'] = $systemSetting->auto_email;
+        $data['sender_name'] = $systemSetting->email_sender_name;
+        $data['ad'] = null;
+        $data['ad_link'] = null;
+        if($ads){
+            $data['ad'] = $ads->ad;
+            $data['ad_link'] = $ads->ad_link;
+        }
         $healthInsuranceEnquiry = new HealthInsuranceEnquiry();
 
         $healthInsuranceEnquiry->coverage = $request->coverage;
@@ -219,9 +284,10 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to(ADMIN_EMAIL)->send(new HealthEnquiryMail($data));
+            Mail::to(WEALTH_EMAIL)->send(new HealthEnquiryMail($data));
+            Mail::to($request->email)->send(new ThankYou($data));
         } catch (Exception $exception) {
-            dd($exception);
+            //dd($exception);
             return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
@@ -229,6 +295,9 @@ class EnquiryFrontController extends Controller
 
     public function postLifeEnquiry(Request $request)
     {
+        $systemSetting = $this->systemSetting;
+        $ads = $this->ads;
+
         //dd($request->all());
         //check validation
         $fields = [
@@ -237,8 +306,7 @@ class EnquiryFrontController extends Controller
             'dob' => 'required|max:255',
             'smoke' => 'required|max:255',
             'time' => 'required',
-            
-
+            'g-recaptcha-response' => 'required|captcha'
         ];
 
         if (isset($request->time)) {
@@ -247,12 +315,12 @@ class EnquiryFrontController extends Controller
             }
         }
         $validator = Validator::make($request->all(), $fields);
-         if (!$request->full_name) {
+        if (!$request->full_name) {
             $validator->getMessageBag()->add('full_name', 'This field is required.');
         }
         if (!$request->email) {
             $validator->getMessageBag()->add('email', 'This field is required.');
-        }elseif(\Helper::isValidEmail($request->email) == false){
+        } elseif (\Helper::isValidEmail($request->email) == false) {
             $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
         }
         if (!$request->telephone) {
@@ -265,6 +333,14 @@ class EnquiryFrontController extends Controller
             return back()->withInput()->withErrors($validator->errors());
         }
         $data = $request->all();
+        $data['sender_email'] = $systemSetting->auto_email;
+        $data['sender_name'] = $systemSetting->email_sender_name;
+        $data['ad'] = null;
+        $data['ad_link'] = null;
+        if($ads){
+            $data['ad'] = $ads->ad;
+            $data['ad_link'] = $ads->ad_link;
+        }
 
         $lifeInsuranceEnquiry = new LifeInsuranceEnquiry();
         $components = [];
@@ -288,7 +364,7 @@ class EnquiryFrontController extends Controller
 
         $lifeInsuranceEnquiry->save();
 
-       if (Auth::check()) {
+        if (Auth::check()) {
             $user = User::find(Auth::user()->id);
 
             $user->country_code = $request->country_code;
@@ -298,7 +374,8 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to(ADMIN_EMAIL)->send(new LifeEnquiryMail($data));
+            Mail::to(WEALTH_EMAIL)->send(new LifeEnquiryMail($data));
+            Mail::to($request->email)->send(new ThankYou($data));
         } catch (Exception $exception) {
 
             return redirect(url(LIFE_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
@@ -309,13 +386,16 @@ class EnquiryFrontController extends Controller
     public function investmentEnquiry(Request $request)
     {
 
+        $systemSetting = $this->systemSetting;
+        $ads = $this->ads;
         //check validation
         $fields = [
             'goals' => 'required',
             'experience' => 'required',
             'risks' => 'required',
             'age' => 'required',
-            'time' => 'required'
+            'time' => 'required',
+            'g-recaptcha-response' => 'required|captcha'
         ];
         if (isset($request->experience)) {
             if ($request->experience == YES) {
@@ -334,13 +414,13 @@ class EnquiryFrontController extends Controller
         }
 
         $validator = Validator::make($request->all(), $fields);
-        
+
         if (!$request->full_name) {
             $validator->getMessageBag()->add('full_name', 'This field is required.');
         }
         if (!$request->email) {
             $validator->getMessageBag()->add('email', 'This field is required.');
-        }elseif(\Helper::isValidEmail($request->email) == false){
+        } elseif (\Helper::isValidEmail($request->email) == false) {
             $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
         }
         if (!$request->telephone) {
@@ -353,6 +433,14 @@ class EnquiryFrontController extends Controller
             return back()->withInput()->withErrors($validator->errors());
         }
         $data = $request->all();
+        $data['sender_email'] = $systemSetting->auto_email;
+        $data['sender_name'] = $systemSetting->email_sender_name;
+        $data['ad'] = null;
+        $data['ad_link'] = null;
+        if($ads){
+            $data['ad'] = $ads->ad;
+            $data['ad_link'] = $ads->ad_link;
+        }
 
         $investmentEnquiry = new InvestmentEnquiry();
         $goals = [];
@@ -392,7 +480,8 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to(ADMIN_EMAIL)->send(new InvestmentEnquiryMail($data));
+            Mail::to(WEALTH_EMAIL)->send(new InvestmentEnquiryMail($data));
+            Mail::to($request->email)->send(new ThankYou($data));
         } catch (Exception $exception) {
 
             return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
@@ -402,6 +491,7 @@ class EnquiryFrontController extends Controller
 
     public function loanEnquiry(Request $request)
     {
+
         $searchFilter = $request->all();
         //dd($searchFilter);
         $page = Page::where('pages.slug', LOAN_ENQUIRY)
@@ -421,7 +511,8 @@ class EnquiryFrontController extends Controller
 
     public function postLoanEnquiry(Request $request)
     {
-
+        $systemSetting = $this->systemSetting;
+        $ads = $this->ads;
         //check validation
         $fields = ['g-recaptcha-response' => 'required|captcha'];
 
@@ -431,6 +522,8 @@ class EnquiryFrontController extends Controller
         }
         if (!$request->email) {
             $validator->getMessageBag()->add('email', 'This field is required.');
+        } elseif (\Helper::isValidEmail($request->email) == false) {
+            $validator->getMessageBag()->add('email', 'The email must be a valid email address.');
         }
         if (!$request->telephone) {
             $validator->getMessageBag()->add('telephone', 'This field is required.');
@@ -446,6 +539,8 @@ class EnquiryFrontController extends Controller
         }
         if (!$request->loan_type) {
             $validator->getMessageBag()->add('loan_type', 'This field is required.');
+        }else if($request->loan_type =='Refinance' && is_null($request->existing_bank_loan)){
+            $validator->getMessageBag()->add('existing_bank_loan', 'This field is required.');
         }
         if (!$request->country_code) {
             $validator->getMessageBag()->add('country_code', 'This field is required.');
@@ -454,6 +549,14 @@ class EnquiryFrontController extends Controller
             return back()->withInput()->withErrors($validator->errors());
         }
         $data = $request->all();
+        $data['sender_email'] = $systemSetting->auto_email;
+        $data['sender_name'] = $systemSetting->email_sender_name;
+        $data['ad'] = null;
+        $data['ad_link'] = null;
+        if($ads){
+            $data['ad'] = $ads->ad;
+            $data['ad_link'] = $ads->ad_link;
+        }
 
         $loanEnquiry = new LoanEnquiry();
         $productIds = [];
@@ -462,7 +565,7 @@ class EnquiryFrontController extends Controller
         }
         $productNames = [];
         if (count($productIds)) {
-            $products = PromotionProducts::whereIn('id',$productIds)->where('delete_status', 0)->where('status', 1)->get();
+            $products = PromotionProducts::whereIn('id', $productIds)->where('delete_status', 0)->where('status', 1)->get();
             if ($products->count()) {
                 $productNames = $products->pluck('product_name')->all();
             }
@@ -473,13 +576,13 @@ class EnquiryFrontController extends Controller
         $loanEnquiry->property_type = isset($request->property_type_search) ? $request->property_type_search : null;
         $loanEnquiry->loan_amount = isset($request->loan_amount) ? $request->loan_amount : null;
         $loanEnquiry->loan_type = isset($request->loan_type) ? $request->loan_type : null;
-
+        $loanEnquiry->existing_bank_loan = isset($request->existing_bank_loan) ? $request->existing_bank_loan : null;
         $loanEnquiry->full_name = $request->full_name;
         $loanEnquiry->email = $request->email;
         $loanEnquiry->country_code = $request->country_code;
         $loanEnquiry->telephone = $request->telephone;
         $loanEnquiry->save();
-        if(Auth::check()) {
+        if (Auth::check()) {
             if (Auth::user()->email == $request->email) {
                 $user = User::find(Auth::user()->id);
 
@@ -491,10 +594,11 @@ class EnquiryFrontController extends Controller
         }
 
         try {
-            Mail::to(ADMIN_EMAIL)->send(new LoanEnquiryMail($data));
+            Mail::to(HOME_LOAN_EMAIL)->send(new LoanEnquiryMail($data));
+            Mail::to($request->email)->send(new ThankYou($data));
         } catch (Exception $exception) {
-            dd($exception);
-            return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+            //dd($exception);
+            return redirect(url(LOAN_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
         }
         return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
     }

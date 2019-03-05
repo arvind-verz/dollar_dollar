@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
     <?php
@@ -45,22 +54,7 @@
 
     {{--Page content start--}}
     @include('frontend.includes.messages')
-   <!-- @if(count($errors) > 0)
-    <div class="col-md-12">
-        <div class="box-body">
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> Error!</h4>
-                @foreach($errors->all() as $error)
-                    <p>
-                        {!!  $error !!}
-                    </p>
-                @endforeach
-
-            </div>
-        </div>
-    </div>
-    @endif-->
+    
     <main class="ps-main">
         <div class="container">
             <h3 class="ps-heading mb-35"><span> Register to DollarDollar.sg </span></h3>
@@ -130,7 +124,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
+                            <label>Password <span class="optional">(Min. 8 characters)</span></label>
                             <input class="form-control" type="password" name="password" placeholder="Enter Password Here">
                            @if ($errors->has('password'))
                             <span class="text-danger">

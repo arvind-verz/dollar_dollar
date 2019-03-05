@@ -1,4 +1,13 @@
 @extends('frontend.layouts.app')
+@section('description')
+    <meta name="description" content="{{$page->meta_description}}">
+@endsection
+@section('keywords')
+    <meta name="keywords" content="{{$page->meta_keyword}}">
+@endsection
+@section('author')
+    <meta name="author" content="{{$page->meta_title}}">
+@endsection
 @section('title', $page->title)
 @section('content')
 <?php
@@ -56,8 +65,8 @@ $banners = Helper::getBanners($slug);
         </h3>
 			<!--<p><a class="ps-logo" href="https://www.dollardollar.sg/home"><img src="https://www.dollardollar.sg/frontend/images/logo_1542872866.png" alt=""></a></p>-->
 			    <p vertical-align="middle"> <!--<i class="fa fa-phone-square fa-2x" aria-hidden="true"></i> <a href="tel:+6591552665">Tel: (65) 9155 2665 </a>--> 
-			   <a href="mailto:enquiry@dollardollar.sg"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i> <span style="margin-top:10px;">enquiry@dollardollar.sg</span></a></p>
-			<p>If you have any enquiry, please do not hesitate to contact us. Leave us a message and we will get back to you shortly.</p>
+			   <a href="mailto:enquiry@dollardollar.sg"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i> <span style="margin-top:10px;">contactus@dollardollar.sg</span></a></p>
+			<p>If you have any enquiry, please do not hesitate to contact us. Leave us a message and we <br>will get back to you shortly.</p>
         {!! Form::open(['url' => ['post-contact-enquiry'], 'class'=>'ps-form--enquiry ps-form--health-insurance', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 ">

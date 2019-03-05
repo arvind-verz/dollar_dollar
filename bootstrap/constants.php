@@ -27,9 +27,10 @@ define('PROMOTION', 'Promotion');
 
 
 //set mail name
-//define('ADMIN_EMAIL', 'enquiry@dollardollar.sg');
-define('ADMIN_EMAIL', 'nicckk.verz@gmail.com');
-define('ENQUIRY_EMAIL', '');
+define('ADMIN_EMAIL', 'admin@dollardollar.sg');
+define('WEALTH_EMAIL', 'wealth@dollardollar.sg');
+define('HOME_LOAN_EMAIL', 'homeloan@dollardollar.sg');
+define('ENQUIRY_EMAIL', 'contactus@dollardollar.sg');
 
 //Activity log status
 define('CREATE', 'Created');
@@ -73,6 +74,7 @@ define('BLOG_MODULE', "Blog Management");
 define('BLOG_CATEGORY_MODULE', "Blog Category Management");
 define('ENQUIRY_MODULE', "Enquiry Management");
 define('TAG_MODULE', "Tag Management");
+define('RATE_TYPE_MODULE', "Rate Type Management");
 define('REPORT_MODULE', "Report Management");
 define('FIX_DEPOSIT_MODULE', "Fix Deposit");
 define('SAVING_DEPOSIT_MODULE', "Saving Deposit");
@@ -109,6 +111,7 @@ define('INVESTMENT_ENQUIRY_MODULE', "Investment Enquiry");
 define('CONTACT_ENQUIRY_MODULE', "Contact Enquiry");
 define('LOAN_ENQUIRY_MODULE', "Loan Enquiry");
 define('TAG_MODULE_SINGLE', "Tag");
+define('RATE_TYPE_MODULE_SINGLE', "Rate Type");
 define('PRODUCT_NAME_MODULE_SINGLE', "Product Name");
 define('FORMULA_DETAIL_MODULE_SINGLE', "Formula Detail");
 define('PLACEMENT_RANGE_MODULE_SINGLE', "Placement Range");
@@ -201,6 +204,7 @@ define('PROFILEDASHBOARD', "profile-dashboard");
 define('ACCOUNTINFO', "account-information");
 define('PRODUCTMANAGEMENT', "product-management");
 define('FORGOT_PASSWORD', "forgot-password");
+define('RESET_PASSWORD', "reset-password");
 define('FORGOT_PASSWORD_RESET', "forgot-password-reset");
 define('PRODUCT_MANAGEMENT_SLUG', "product-management");
 
@@ -264,6 +268,7 @@ define('ALL_IN_ONE_ACCOUNT_F2', 8);
 define('ALL_IN_ONE_ACCOUNT_F3', 9);
 define('ALL_IN_ONE_ACCOUNT_F4', 10);
 define('ALL_IN_ONE_ACCOUNT_F5', 23);
+define('ALL_IN_ONE_ACCOUNT_F6', 25);
 define('PRIVILEGE_DEPOSIT_F1', 11);
 define('PRIVILEGE_DEPOSIT_F2', 12);
 define('PRIVILEGE_DEPOSIT_F3', 13);
@@ -322,7 +327,7 @@ define('PROMOTION_PERIOD', "promotion_period");
 //currency
 define('SGD', "SGD");
 //product name
-define('FIX_DEPOSIT_TITLE', "Fix Deposit");
+define('FIX_DEPOSIT_TITLE', "Fixed Deposit");
 define('SAVING_DEPOSIT_TITLE', "Saving Deposit");
 define('FOREIGN_DEPOSIT_TITLE', "Foreign Deposit");
 define('PRIVILEGE_DEPOSIT_TITLE', "Privilege Deposit");
@@ -344,7 +349,18 @@ define('HDB_PRIVATE_PROPERTY', "HDB/Private");
 define('COMMERCIAL_PROPERTY', "Commercial Individual");
 
 //Completion status
-define('COMPLETE', "Complete");
+define('COMPLETE', "Completed");
+define('COMPLETE_BUC', "Completed/BUC");
 define('BUC', "BUC");
 define('ALL', "ALL");
+
+//log status
+define('DEACTIVATED', 1);
+define('DELETED', 2);
+
+//update By
+define('ADMIN_USER', 'Admin');
+define('FRONT_USER', 'User');
+
+
 

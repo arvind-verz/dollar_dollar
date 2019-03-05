@@ -11,6 +11,7 @@ class ForgotPassword extends Mailable
 {
     use Queueable, SerializesModels;
     private $data;
+
     /**
      * Create a new message instance.
      *
@@ -29,6 +30,6 @@ class ForgotPassword extends Mailable
     public function build()
     {
         $data = $this->data;
-        return $this->subject('Forgot your login password?')->markdown('frontend.emails.ForgotPassword', compact("data"));
+        return $this->subject('Forgot your login password?')->from($data['sender_email'], $data['sender_name'])->markdown('frontend.emails.ForgotPassword', compact("data"));
     }
 }

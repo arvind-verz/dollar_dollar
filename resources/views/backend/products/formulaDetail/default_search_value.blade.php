@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{Form::label('completion', 'Rate type',['class'=>'col-sm-2 control-label'])}}
+                                    {{Form::label('completion', 'Completion',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
                                         <select class="form-control" name="completion">
                                             <option value="{{COMPLETE}}"
@@ -215,7 +215,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{Form::label('completion', 'Rate type',['class'=>'col-sm-2 control-label'])}}
+                                    {{Form::label('completion', 'Completion',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
                                         <select class="form-control" name="completion">
                                             <option value="{{COMPLETE}}">{{COMPLETE}}</option>
