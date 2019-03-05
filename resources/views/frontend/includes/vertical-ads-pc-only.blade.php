@@ -10,7 +10,7 @@
                 <a href="{{ isset($ads->paid_ad_link) ? asset($ads->paid_ad_link) : '#' }}"
                    target="_blank"><img src="{{ asset($ads->paid_ad_image) }}" alt=""></a>
             </div>
-        @elseif($ads->ad_image)
+        @else
             <div class="ps-post__thumbnail ads pc-only">
                 <a href="{{ isset($ads->ad_link) ? asset($ads->ad_link) : '#' }}" target="_blank"><img
                             src="{{ asset($ads->ad_image) }}" alt=""></a>

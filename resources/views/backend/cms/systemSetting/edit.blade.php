@@ -22,7 +22,7 @@
                     {!! Form::open(['class' => 'form-horizontal','url' => ['admin/system-setting', $systemSetting->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs pull-right">
-                            {{--<li><a href="#contact" data-toggle="tab">Contact</a></li>--}}
+                            <li><a href="#contact" data-toggle="tab">Contact</a></li>
                             <li><a href="#email" data-toggle="tab">Email</a></li>
                             <li class="active"><a href="#detail" data-toggle="tab">Basic Detail</a></li>
                             
@@ -54,31 +54,31 @@
                                     <div class="form-group">
                                         {{Form::label('footer', 'Footer',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('footer', $systemSetting->footer, ['class' => 'form-control tiny-mce', 'placeholder' => ''])}}
+                                            {{Form::textarea('footer', $systemSetting->footer, ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('contact_us_section', 'Contact Us Now',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('contact_us_section', $systemSetting->contact_us_section, ['class' => 'form-control tiny-mce', 'placeholder' => ''])}}
+                                            {{Form::textarea('contact_us_section', $systemSetting->contact_us_section, ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('offer_section', 'What We Offer',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('offer_section', $systemSetting->offer_section, ['class' => 'form-control tiny-mce', 'placeholder' => ''])}}
+                                            {{Form::textarea('offer_section', $systemSetting->offer_section, ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('footer_3', 'Footer 3',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('footer_3', $systemSetting->footer3, ['class' => 'form-control tiny-mce', 'placeholder' => ''])}}
+                                            {{Form::textarea('footer_3', $systemSetting->footer3, ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         {{Form::label('footer_4', 'Footer 4',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('footer_4', $systemSetting->footer4, ['class' => 'form-control tiny-mce', 'placeholder' => ''])}}
+                                            {{Form::textarea('footer_4', $systemSetting->footer4, ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 
@@ -86,6 +86,8 @@
                                 <!-- /.tab-pane -->
 
                                 <div class="tab-pane" id="email">
+
+
                                     <div class="form-group">
                                         {{Form::label('email_sender_name', 'Email Sender Name',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
@@ -93,13 +95,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('admin_email', 'To Email',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('admin_email', 'admin',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('admin_email', $systemSetting->admin_email, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        {{Form::label('auto_email', 'From Email',['class'=>'col-sm-2 control-label'])}}
+                                        {{Form::label('auto_email', 'Auto Email',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::text('auto_email', $systemSetting->auto_email, ['id' => '', 'class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
@@ -107,7 +109,7 @@
                                 </div>
 
                                 <!-- /.tab-pane -->
-                                <!--<div class="tab-pane" id="contact">
+                                <div class="tab-pane" id="contact">
                                     <div class="form-group">
                                         {{Form::label('company_name', 'Company Name',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
@@ -150,7 +152,7 @@
                                             {{Form::label('company_address', 'Company Addresses',['class'=>'col-sm-2 control-label'])}}
                                             <div class="col-sm-10">
                                                 <div class="input-group">
-                                                    {{Form::textarea('contact_addresses[]','', ['class' => 'form-control plain-text-area', 'placeholder' => ''])}}
+                                                    {{Form::textarea('contact_addresses[]','', ['class' => 'form-control ', 'placeholder' => ''])}}
                                                     <span class="input-group-addon btn-info"
                                                           onClick="addMoreTextArea();"
                                                           id=""><i class="fa fa-plus-square"></i></span>
@@ -160,7 +162,7 @@
 
                                     @endif
 
-                                    <div id="inner"></div>-->
+                                    <div id="inner"></div>
 
                                 </div>
                             </div>

@@ -2,13 +2,13 @@
     <?php $ads = \GuzzleHttp\json_decode($product->ads_placement);  ?>
     @if(isset($ads[3]->ad_horizontal_image_popup_top))
         <div class="ps-poster-popup">
+            <div class="close-popup">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
             <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : 'javascript:void(0)' }}"
                target="_blank"><img
                         src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
-                        alt="">
-            <div class="close-popup">
-                <i class="fa fa-times" aria-hidden="true"></i>
-            </div></a>
+                        alt=""></a>
         </div>
     @endif
     <div class="ps-product @if($page->slug==AIO_DEPOSIT_MODE) ps-product--2 @endif  @if($product->featured==1) featured-1 @endif "
@@ -36,7 +36,7 @@
                         @elseif($product->promotion_end < $todayStartDate)
                             {{EXPIRED}}
                         @elseif($product->promotion_end > $todayStartDate)
-                            {{UNTIL}} {{ date('d/m/y', strtotime($product->promotion_end)) }}
+                            {{UNTIL}} {{ date('d M Y', strtotime($product->promotion_end)) }}
                         @endif
                     </p>
 
@@ -70,15 +70,15 @@
             @endif
             @if(!empty($ads[2]->ad_horizontal_image_popup))
                 <div class="ps-poster-popup">
+                    <div class="close-popup">
+                        <i class="fa fa-times"
+                           aria-hidden="true"></i>
+                    </div>
 
                     <a href="{{ isset($ads[2]->ad_link_horizontal_popup) ? $ads[2]->ad_link_horizontal_popup : 'javascript:void(0)' }}"><img
                                 src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
                                 alt=""
-                                target="_blank">
-                    <div class="close-popup">
-                        <i class="fa fa-times"
-                           aria-hidden="true"></i>
-                    </div></a>
+                                target="_blank"></a>
 
                 </div>
             @endif

@@ -25,19 +25,30 @@
                             <td>
                                 <div style="width: 100%; overflow-x: auto;">
 
-                                    <table id="" class="table ">
+                                    <table id="brands" class="table ">
                                         <thead>
                                         <tr>
-                                            <th>Action</th>
+
                                             <th>Role Name</th>
                                             <th>Modules</th>
                                             <th>Role Access</th>
-
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($role_array as $key=>$value)
                                             <tr>
+                                                <td>
+                                                    {!! $key   !!}
+                                                </td>
+
+                                                <td>
+                                                    <?php echo implode(", ", $role_array[$key]["modules"]);?>
+                                                </td>
+                                                <td>
+                                                    <?php echo implode(", ", $role_array[$key]["Access"]);?>
+
+                                                </td>
                                                 <td class="text-center">
                                                     @if($CheckLayoutPermission[0]->edit==1)
                                                         <a class="btn btn-app edit" title="Edit Permission"
@@ -54,18 +65,6 @@
                                                     @endif
 
                                                 </td>
-                                                <td>
-                                                    {!! $key   !!}
-                                                </td>
-
-                                                <td>
-                                                    <?php echo implode(", ", $role_array[$key]["modules"]);?>
-                                                </td>
-                                                <td>
-                                                    <?php echo implode(", ", $role_array[$key]["Access"]);?>
-
-                                                </td>
-
                                             </tr>
                                         @endforeach
                                         @endif

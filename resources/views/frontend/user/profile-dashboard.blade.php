@@ -30,7 +30,7 @@
     @endif
     <main class="ps-main">
         <div class="container">
-            <div class="row c-profile">
+            <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                     <div class="ps-sidebar">
                         <ul class="ps-list--sidebar">
@@ -38,7 +38,7 @@
                             <li><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        @include('frontend.includes.vertical-ads-profile')
+                        {{--@include('frontend.includes.vertical-ads')--}}
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -47,43 +47,41 @@
                             <h3>My Profile Dashboard</h3>
                         </div>
                         <div class="ps-dashboard__content">
-                            <p>Hello, <strong>  {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</strong></p>
+                            <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
 
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="/img/icons/user.png" alt="">Account Information</h5>
+                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5>
                                 </div>
                                 <div class="ps-block__content">
                                     <h5>Contact Information</h5>
 
-                                    <p><strong>  Name: </strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</p>
-                                    <p><strong>  Contact Number: </strong> {{ AUTH::user()->country_code . ' ' . AUTH::user()->tel_phone }}</p>
-                                    <p><strong> Email: </strong>{{ AUTH::user()->email }}</p>
-                                    <p><strong> Newsletter: </strong>@if(AUTH::user()->email_notification==1) Yes @else No @endif</p>
-                                    <p><strong> Consent to marketing information: </strong>@if(AUTH::user()->adviser==1) Yes @else No @endif</p>
+                                    <p><strong> Name: </strong> {{ AUTH::user()->first_name }}</p>
+
+                                    <p><strong> Email: </strong><a href="#">{{ AUTH::user()->email }}</a></p>
                                 </div>
                             </div>
                             @if(count($products))
                                 <div class="ps-block--box info recommended-product">
                                     <div class="ps-block__header">
-                                        <h5><img src="/img/icons/file.png" alt="">Featured products</h5>
+                                        <h5><img src="img/icons/file.png" alt="">Featured products</h5>
                                         <!-- <a href="#">View all</a> -->
                                     </div>
                                     <div class="ps-block__content">
                                         <div class="c-list ps-slider--feature-product saving nav-outside owl-slider"
                                              data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
                                              data-owl-gap="0" data-owl-nav="true" data-owl-dots="false"
-                                             data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="2"
+                                             data-owl-item="3" data-owl-item-xs="1" data-owl-item-sm="1"
                                              data-owl-item-md="2" data-owl-item-lg="3" data-owl-duration="1000"
                                              data-owl-mousedrag="on"
                                              data-owl-nav-left="&lt;i class='fa fa-caret-left'&gt;&lt;/i&gt;"
                                              data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                                             @foreach($products as $product)
-                                                <div class="ps-block--short-product second"><div class="slider-img"><img
-                                                            src="{{ asset($product->brand_logo) }}" alt=""></div>
-                                                    <p class="highlight highlight-bg "><strong>up to   <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
+                                                <div class="ps-block--short-product second"><img
+                                                            src="{{ asset($product->brand_logo) }}" alt="">
+                                                    <h4><strong>up to   <span class="highlight-slider"> {{ $product->maximum_interest_rate }}
                                                                 %</span></strong>
-                                                    </p>
+                                                    </h4>
 
                                                     <div class="ps-block__info">
                                                         <p><span class="slider-font">Rate: </span>{{ $product->maximum_interest_rate }}
@@ -93,7 +91,7 @@
                                                             ${{ Helper::inThousand($product->minimum_placement_amount) }}
                                                         </p>
 
-                                                        <p>
+                                                        <p class="highlight highlight-bg ">
                                                             @if($product->promotion_period==ONGOING)
                                                                  {{ $product->promotion_period }}
                                                             @elseif($product->promotion_type_id!=ALL_IN_ONE_ACCOUNT)
@@ -121,7 +119,7 @@
                             @endif
                             <div class="ps-block--box info no-border" style="padding: 0;">
                                 <div class="ps-block__header">
-                                    <h5><img src="/img/icons/file.png" alt="">All my Accounts</h5>
+                                    <h5><img src="img/icons/file.png" alt="">All my Accounts</h5>
                                     <!-- <a href="#">View all</a> -->
                                 </div>
                                 <div class="ps-block__content">
@@ -134,7 +132,7 @@
                                                     <br> Name
                                                 </th>
                                                 <th>Amount</th>
-                                                <th>Tenor
+                                                <th>Tenure
                                                     <br> (M= months,
                                                     <br> D = Days)
                                                 </th>
@@ -187,13 +185,16 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                            @else
+                                                <tr>
+                                                    <td class="text-center" colspan="9">No data found.</td>
+                                                </tr>
                                             @endif
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            @include('frontend.includes.vertical-ads-profile')
                             @include('frontend.includes.horizontal-ads')
                         </div>
                     </div>

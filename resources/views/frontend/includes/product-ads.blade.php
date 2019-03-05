@@ -4,7 +4,7 @@
     $ad_start_date = strtotime($ads_manage->ad_start_date);
     $ad_end_date = strtotime($ads_manage->ad_end_date);
     ?>
-    @if($ads_manage->paid_ads_status==1 && $current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage->paid_ad_image))
+    @if($current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads_manage->paid_ad_image))
         <a href="{{ isset($ads_manage->paid_ad_link) ? $ads_manage->paid_ad_link : 'javascript:void(0)' }}"
            target="_blank"><img
                     src="{{ isset($ads_manage->paid_ad_image) ? asset($ads_manage->paid_ad_image) : '' }}"

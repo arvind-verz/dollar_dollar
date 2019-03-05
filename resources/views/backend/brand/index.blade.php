@@ -53,8 +53,7 @@
                                         <table id="brands" class="table ">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"></th>
-                                                <th>Action</th>
+                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort"> Delete/Update</th>
                                                 <th>Title</th>
                                                 <th>Status</th>
                                                 <th>Link</th>
@@ -63,7 +62,7 @@
                                                 <th>View Order</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -72,25 +71,6 @@
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $brand->id }}">
-                                                        </td>
-                                                        <td class="text-center">
-
-                                                            @if($CheckLayoutPermission[0]->edit==1)
-                                                                <a class="btn btn-app edit" title="Edit Brand"
-                                                                   href="{{ route("brand.edit",["id"=>$brand->id]) }}">
-                                                                    <i class="fa fa-edit"></i> Edit
-                                                                </a>
-                                                            @endif
-
-                                                            @if($CheckLayoutPermission[0]->delete==1)
-                                                                <a class="btn btn-app delete" title="Delete Brand"
-                                                                   onclick="return confirm('Are you sure to delete this?')"
-                                                                   href="{{ route("brand-destroy",["id"=>$brand->id]) }}">
-                                                                    <i class="fa fa-trash"></i> Delete
-                                                                </a>
-                                                            @endif
-
-
                                                         </td>
                                                         <td>
                                                             {{ $brand->title }}
@@ -123,16 +103,34 @@
                                                             @if ($brand->created_at == null)
                                                                 {{$brand->created_at}}
                                                             @endif
-                                                            {!!  date("Y-m-d H:i", strtotime( $brand->created_at))   !!}
+                                                            {!!  date("Y-m-d h:i A", strtotime( $brand->created_at))   !!}
 
                                                         </td>
                                                         <td>@if ($brand->updated_at == null)
                                                                 {{$brand->updated_at}}
                                                             @endif
-                                                            {!!  date("Y-m-d H:i", strtotime($brand->updated_at ))   !!}
+                                                            {!!  date("Y-m-d h:i A", strtotime($brand->updated_at ))   !!}
 
                                                         </td>
+                                                        <td class="text-center">
 
+                                                            @if($CheckLayoutPermission[0]->edit==1)
+                                                                <a class="btn btn-app edit" title="Edit Brand"
+                                                                   href="{{ route("brand.edit",["id"=>$brand->id]) }}">
+                                                                    <i class="fa fa-edit"></i> Edit
+                                                                </a>
+                                                            @endif
+
+                                                            @if($CheckLayoutPermission[0]->delete==1)
+                                                                <a class="btn btn-app delete" title="Delete Brand"
+                                                                   onclick="return confirm('Are you sure to delete this?')"
+                                                                   href="{{ route("brand-destroy",["id"=>$brand->id]) }}">
+                                                                    <i class="fa fa-trash"></i> Delete
+                                                                </a>
+                                                            @endif
+
+
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @endif

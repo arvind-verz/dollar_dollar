@@ -52,19 +52,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <a class="btn btn-app delete bulk_remove hide" title="Delete Tags"><i class="fa fa-trash"></i>
-                            <span class="badge"></span>Delete</a>
 
-                        <div class="form-group col-md-2 bulk_status hide">
-                            <span class="badge"></span>
-                            <select class="form-control" name="select_type">
-                                <option value="">-- Select --</option>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
-                        <input type="hidden" name="bulk_remove_type" value="bulk_tag_remove">
-                        <input type="hidden" name="bulk_update_type" value="bulk_tag_status_update">
                         <table style="table-layout: fixed; width: 100%;">
                             <tr>
                                 <td>
@@ -73,14 +61,11 @@
                                         <table id="tags" class="table">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox" name="all_bulk_remove" class="no-sort">
-                                                </th>
-                                                <th>Action</th>
                                                 <th>Title</th>
                                                 <th>Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -88,8 +73,22 @@
                                                 @foreach($tags as $tag)
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" name="bluk_remove[]"
-                                                                   value="{{ $tag->id }}">
+                                                            {{ $tag->title }}
+                                                        </td>
+                                                        <td>
+                                                            <i class="fa {{ ($tag->status==1) ? "fa-check text-success":"fa-times text-danger" }} inline"></i>
+                                                        </td>
+                                                        <td>
+                                                            @if ($tag->created_at == null)
+                                                                {{$tag->created_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d h:i A", strtotime($tag->created_at))   !!}
+
+                                                        </td>
+                                                        <td>@if ($tag->updated_at == null)
+                                                                {{$tag->updated_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d h:i A", strtotime($tag->updated_at))   !!}
                                                         </td>
                                                         <td class="text-center">
                                                             @if($CheckLayoutPermission[0]->edit==1)
@@ -108,25 +107,6 @@
                                                                 </a>
                                                             @endif
                                                         </td>
-                                                        <td>
-                                                            {{ $tag->title }}
-                                                        </td>
-                                                        <td>
-                                                            <i class="fa {{ ($tag->status==1) ? "fa-check text-success":"fa-times text-danger" }} inline"></i>
-                                                        </td>
-                                                        <td>
-                                                            @if ($tag->created_at == null)
-                                                                {{$tag->created_at}}
-                                                            @endif
-                                                            {!!  date("Y-m-d H:i", strtotime($tag->created_at))   !!}
-
-                                                        </td>
-                                                        <td>@if ($tag->updated_at == null)
-                                                                {{$tag->updated_at}}
-                                                            @endif
-                                                            {!!  date("Y-m-d H:i", strtotime($tag->updated_at))   !!}
-                                                        </td>
-
                                                     </tr>
                                                 @endforeach
                                             @endif

@@ -39,7 +39,11 @@
                             <li class="current"><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                       @include('frontend.includes.vertical-ads-profile')
+                        @if(count($ads))
+                        <div class="pt-2">
+                            <a href="{{ isset($ads->ad_link) ? asset($ads[0]->ad_link) : '#' }}" target="_blank"><img src="{{ asset($ads[0]->ad_image) }}" alt=""></a>
+                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -51,15 +55,13 @@
                             <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="/img/icons/user.png" alt="">Change Password</h5>
+                                    <h5><img src="img/icons/user.png" alt="">Change Password</h5>
                                 </div>
                                 <div class="ps-block__content">
                                     {!! Form::open(['route' => ['user.resetpassword.update', AUTH::user()->id], 'method'   => 'POST']) !!}
                                     <p><strong> Old Password: </strong> <input type="password" class="form-control" name="old_password" placeholder="Enter old password" value="{{ old('old_password') }}"></p>
                                     <p><strong> New Password: </strong><input type="password" class="form-control" name="new_password" placeholder="Enter new password" value="{{ old('new_password') }}"></p>
                                     <p><strong> Confirm Password: </strong><input type="password" class="form-control" name="new_password_confirmation" placeholder="Enter contact number" value=""></p>
-                                    <p><a href="{{ url(RESET_PASSWORD) }}" target="_blank">Reset password</a></p>
-                                    <p><b>Note:</b> For account login/signup with Facebook there is no password assigned therefore please click on reset password if you requires one.</p>
                                     <button type="submit" class="btn btn-success">Save</button>
                                     {!! Form::close() !!}
                                 </div>
