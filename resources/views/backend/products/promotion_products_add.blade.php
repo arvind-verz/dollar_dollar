@@ -1,7 +1,6 @@
 @extends('backend.layouts.app')
 @section('content')
     <section class="content-header">
-
         <h1>
             {{strtoupper( PRODUCT_MODULE )}}
             <small>{{$productType}}</small>
@@ -14,7 +13,6 @@
             <li class="active">{{'Product '.ADD_ACTION}}</li>
         </ol>
     </section>
-
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -24,7 +22,6 @@
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom" id="rootwizard">
                         <ul class="nav nav-tabs pull-right">
-
                             <li><a href="#basic-detail" data-toggle="tab" class="pointer-disable">Other Detail</a></li>
                             <li><a href="#formula-detail" data-toggle="tab" class="pointer-disable">Formula Detail</a>
                             </li>
@@ -32,13 +29,10 @@
                                     Detail</a></li>
                             <li class="pull-left header"><i class="fa fa-edit"></i>
                                 {{'Product '.ADD_ACTION}}</li>
-
                         </ul>
                         <div class="box-body">
-
                             {!! Form::open(['id'=>'addProduct','class' => 'form-horizontal','route' => 'promotion-products-add-db', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
                                     <!-- Custom Tabs (Pulled to the right) -->
-
                             <div class="tab-content">
                                 <div class="tab-pane active" id="product-detail">
                                     <div class="form-group">
@@ -47,7 +41,6 @@
                                             {{Form::text('name', old('name'), ['id'=>'name','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Bank</label>
 
@@ -63,14 +56,12 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         {{Form::label('bank_sub_title', 'Bank Sub Title',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('bank_sub_title', old('bank_sub_title'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('bank_sub_title', old('bank_sub_title'), ['id' => '', 'class' => ' tiny-mce form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Product Type</label>
 
@@ -86,20 +77,20 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group display-none" id="apply-link">
-                                        <input type="hidden" id="apply-link-status" name="apply_link_status" value="1"/>
+                                    <div class="form-group " id="apply-link">
+                                        <input type="hidden" id="apply-link-status" name="apply_link_status" value="0"/>
                                         {{Form::label('apply_link', 'Apply Button Link',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-8">
-                                            {{Form::text('apply_link', old('Apply Link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                            {{Form::text('apply_link', old('Apply Link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => '','readonly'=>'readonly'])}}
                                         </div>
                                         <div class="col-sm-2 " id="apply-status">
-                                            <button type="button" data-status="true" id=""
-                                                    class="btn btn-block btn-success btn-social"
-                                                    onclick="changeApplyStatus(this)"><i class="fa fa-check"></i> Enable
+                                            <button type="button" data-status="false" id=""
+                                                    class="btn btn-block btn-danger btn-social"
+                                                    onclick="changeApplyStatus(this)"><i class="fa fa-times"></i>
+                                                Disable
                                             </button>
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Formula</label>
 
@@ -116,8 +107,32 @@
                                             <input type="hidden" id="hidden-formula" value="{{ old('formula') }}">
                                         </div>
                                     </div>
-                                    <div class="form-group" >
-                                        {{Form::label('minimum_placement_amount', 'Minimum Placement Amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+                                    <div class="form-group display-none" id="none-formula-slider">
+                                        <label class="col-sm-2 control-label">Slider Display Status</label>
+
+                                        <div class="col-sm-10">
+                                            <select class="form-control select2"
+                                                    data-placeholder="" name="slider_status"
+                                                    style="width: 100%;">
+                                                <option value="0"
+                                                        @if(old('slider_status') == 0) selected="selected" @endif >
+                                                    No
+                                                </option>
+                                                <option value="1"
+                                                        @if(old('slider_status') == 1) selected="selected" @endif>
+                                                    Yes
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @if($productTypeId==ALL_IN_ONE_ACCOUNT)
+                                            {{Form::label('minimum_placement_amount', 'Maximum Placement Amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+
+                                        @else
+                                            {{Form::label('minimum_placement_amount', 'Minimum Placement Amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+
+                                        @endif
                                         <div class="col-sm-10">
                                             {{Form::text('minimum_placement_amount', old('minimum_placement_amount'), ['id'=>'minimum-placement-amount','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
@@ -139,18 +154,17 @@
                                         <div class="form-group">
                                             {{Form::label('promotion_period', 'Placement Period',['class'=>'col-sm-2 control-label'])}}
                                             <div class="col-sm-8">
-                                                {{Form::text('promotion_period', old('promotion_period'), ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => ''])}}
+                                                {{Form::text('promotion_period', ONGOING, ['id'=>'promotion-period','class' => 'form-control', 'placeholder' => ''])}}
                                             </div>
                                             <div class="col-sm-2 " id="ongoing-1">
-                                                <button type="button" data-status="false" id="ongoing-status-1"
-                                                        class="btn btn-block btn-danger btn-social"
-                                                        onclick="changeOnGoingStatus1(this)"><i class="fa fa-times"></i>
+                                                <button type="button" data-status="true" id="ongoing-status-1"
+                                                        class="btn btn-block btn-success btn-social"
+                                                        onclick="changeOnGoingStatus1(this)"><i class="fa fa-check"></i>
                                                     Ongoing
                                                 </button>
                                             </div>
                                         </div>
                                     @endif
-
                                     <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Date Range</label>
 
@@ -172,9 +186,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-4 ">
-
                                             <div class="input-group date ">
                                                 <div class="input-group-btn">
                                                     <button type="button" class="btn btn-danger">End
@@ -193,49 +205,45 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2 " id="ongoing">
-                                            <button type="button" data-status="false" id="ongoing-status"
-                                                    class="btn btn-block btn-danger btn-social"
-                                                    onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i>
+                                            <button type="button" data-status="true" id="ongoing-status"
+                                                    class="btn btn-block btn-success btn-social"
+                                                    onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i>
                                                 Ongoing
                                             </button>
                                         </div>
                                     </div>
-
                                     <div class="form-group " id="until-end-section">
                                         <label for="title" class="col-sm-2 control-label">Until End Date</label>
 
                                         <div class="col-sm-10 ">
-
                                             <div class="input-group date ">
                                                 <div class="input-group-btn">
                                                     <button type="button" class="btn btn-danger">End
                                                         Date
                                                     </button>
                                                 </div>
-                                                <input type="text" class="form-control pull-right datepicker1"
-                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}"
+                                                <input type="text" class="form-control pull-right datepicker1" disabled="disabled"
+                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) : null  }}"
                                                        name="until_end_date" id="until-end-date"
-                                                       value="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}">
+                                                       value="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :null  }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Status</label>
 
                                         <div class="col-sm-10">
-
                                             <select class="form-control select2"
                                                     data-placeholder="" name="status"
                                                     style="width: 100%;">
                                                 <option value="1" selected="selected">
                                                     Active
                                                 </option>
-                                                <option value="0" @if(old('status') == 0) selected="selected" @endif>
+                                                <option value="0">
                                                     Deactivate
                                                 </option>
                                             </select>
@@ -245,7 +253,6 @@
                                         <label class="col-sm-2 control-label">Featured</label>
 
                                         <div class="col-sm-10">
-
                                             <select class="form-control select2"
                                                     data-placeholder="" name="featured"
                                                     style="width: 100%;">
@@ -255,13 +262,11 @@
                                                 <option value="1" @if(old('featured') == 1) selected="selected" @endif>
                                                     Yes
                                                 </option>
-
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.tab-pane -->
-
                                 <div class="tab-pane" id="formula-detail">
                                     <div class="form-group display-none " id="currencyDiv">
                                         <label for="title" class="col-sm-2 control-label">Currency Type</label>
@@ -294,22 +299,23 @@
                                     @include('backend.products.formulaDetail.allInOneAccountF3')
                                     @include('backend.products.formulaDetail.allInOneAccountF4')
                                     @include('backend.products.formulaDetail.allInOneAccountF5')
+                                    @include('backend.products.formulaDetail.allInOneAccountF6')
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
                                         {{Form::label('product_footer', 'Other Detail',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('product_footer', old('product_footer'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('product_footer', old('product_footer'), ['id' => '', 'class' => ' tiny-mce form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         {{Form::label('ad_horizontal_image', 'Ad Horizontal Image',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
                                             {{Form::file('ad_horizontal_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                         <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
-                                            size should be @if($productTypeId==ALL_IN_ONE_ACCOUNT)1140*160 @else 1140*160 @endif for better display
+                                            size should be @if($productTypeId==ALL_IN_ONE_ACCOUNT)1140*160 @else
+                                                1140*160 @endif for better display
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -363,9 +369,7 @@
                                             {{Form::text('ad_horizontal_link_popup_top', old('ad_horizontal_link_popup_top'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
-
                                 </div>
-
                                 <!-- /.box-body -->
                                 <div class="box-footer wizard">
                                     <a href="{{ route('promotion-products',['productTypeId'=>$productTypeId]) }}"
@@ -383,7 +387,6 @@
                                 </div>
                                 <!-- /.tab-content -->
                                 {!! Form::close() !!}
-
                             </div>
                         </div>
                         <!-- nav-tabs-custom -->
@@ -394,16 +397,15 @@
             <!-- /.box -->
         </div>
     </section>
-
     <!-- /.content -->
     <script type="text/javascript">
-
         $(document).ready(function () {
+            $("#promotion_start_date").val(null);
+            $("#promotion_end_date").val(null);
             var promotion_type = $("#product-type").val();
             var formula = $("#hidden-formula").val();
-            //var product_id = $("#product-id").val();
+//var product_id = $("#product-id").val();
             if ((promotion_type.length != 0) && (formula.length != 0)) {
-                //alert(formula);
                 $.ajax({
                     method: "POST",
                     url: "{{url('/admin/promotion-products/get-formula')}}",
@@ -413,22 +415,20 @@
                         $("select[name='formula']").html(data);
                     }
                 });
-
             }
-            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
-                $('#apply-link').removeClass('display-none');
-                $('#placement-amount-content').html("Maximum Placement Amount");
-            } else {
-                $('#apply-link').addClass('display-none');
-                $('#placement-amount-content').html("Minimum Placement Amount");
-
-            }
+            /*if (promotion_type == '
+            <?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
+             $('#apply-link').removeClass('display-none');
+             $('#placement-amount-content').html("Maximum Placement Amount");
+             } else {
+             $('#apply-link').addClass('display-none');
+             $('#placement-amount-content').html("Minimum Placement Amount");
+             }*/
             if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
             } else {
                 $('#currencyDiv').addClass('display-none');
             }
-
             var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
             var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
@@ -448,36 +448,30 @@
                 '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
             ];
-            if (formula == 0) {
+            if (formula.length == 0) {
                 $('#formula-details-error-section').removeClass('display-none');
+                $('#none-formula-slider').removeClass('display-none');
             } else {
                 $('#formula-details-error-section').addClass('display-none');
+                $('#none-formula-slider').addClass('display-none');
             }
             if (jQuery.inArray(formula, utilFormula) !== -1) {
-
                 $('#until-end-section').removeClass('display-none');
-
-
-            }if (jQuery.inArray(formula, FDP1) !== -1) {
-
+            }
+            if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
-
-
             }
             if (jQuery.inArray(formula, SDP3) !== -1) {
-                //alert("Hello");
+//alert("Hello");
                 $('#savingDepositF3').removeClass('display-none');
-
             }
             if (jQuery.inArray(formula, SDP6) !== -1) {
-                //alert("Hello");
+//alert("Hello");
                 $('#savingDepositF4').removeClass('display-none');
-
             }
             if (jQuery.inArray(formula, SDP5) !== -1) {
-                //alert("Hello");
+//alert("Hello");
                 $('#savingDepositF5').removeClass('display-none');
-
             }
             if (jQuery.inArray(formula, SDP1) !== -1) {
                 $('#savingDepositF1').removeClass('display-none');
@@ -488,32 +482,23 @@
                 }
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
-
                 $('#allInOneAccountF1').removeClass('display-none');
-
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
-
                 $('#allInOneAccountF2').removeClass('display-none');
-
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
-
                 $('#allInOneAccountF3').removeClass('display-none');
-
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
-
                 $('#allInOneAccountF4').removeClass('display-none');
-
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>') {
-
                 $('#allInOneAccountF5').removeClass('display-none');
-
             }
-
-
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F6; ?>') {
+                $('#allInOneAccountF6').removeClass('display-none');
+            }
         });
         $("select[name='product_type']").on("change", function () {
             $('#fixDepositF1').addClass('display-none');
@@ -526,10 +511,11 @@
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
             $('#allInOneAccountF5').addClass('display-none');
+            $('#allInOneAccountF6').addClass('display-none');
             $('#until-end-section').addClass('display-none');
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
-            //alert(formula);
+//alert(formula);
             $.ajax({
                 method: "POST",
                 url: "{{url('/admin/promotion-products/get-formula')}}",
@@ -539,18 +525,17 @@
                     $("select[name='formula']").html(data);
                 }
             });
-            if (promotion_type == '<?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
-                $('#apply-link').removeClass('display-none');
-            } else {
-                $('#apply-link').addClass('display-none');
-            }
-
+            /*if (promotion_type == '
+            <?php echo ALL_IN_ONE_ACCOUNT ; ?>') {
+             $('#apply-link').removeClass('display-none');
+             } else {
+             $('#apply-link').addClass('display-none');
+             }*/
             if (promotion_type == '<?php echo FOREIGN_CURRENCY_DEPOSIT ; ?>') {
                 $('#currencyDiv').removeClass('display-none');
             } else {
                 $('#currencyDiv').addClass('display-none');
             }
-
         });
         $("select[name='formula']").on("change", function () {
             var formula = $(this).val();
@@ -564,8 +549,8 @@
             $('#allInOneAccountF3').addClass('display-none');
             $('#allInOneAccountF4').addClass('display-none');
             $('#allInOneAccountF5').addClass('display-none');
+            $('#allInOneAccountF6').addClass('display-none');
             $('#until-end-section').addClass('display-none');
-
             var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
             var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
             var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
@@ -585,36 +570,31 @@
                 '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                 '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>',
             ];
-            if (formula == 0) {
+            if (formula.length == 0) {
                 $('#formula-details-error-section').removeClass('display-none');
+                $('#none-formula-slider').removeClass('display-none');
             } else {
                 $('#formula-details-error-section').addClass('display-none');
+                $('#none-formula-slider').addClass('display-none');
             }
             if (jQuery.inArray(formula, utilFormula) !== -1) {
-
                 $('#until-end-section').removeClass('display-none');
-
-
             }
             if (jQuery.inArray(formula, FDP1) !== -1) {
                 $('#fixDepositF1').removeClass('display-none');
-
             }
             if (jQuery.inArray(formula, SDP3) !== -1) {
-                //alert("Hello");
+//alert("Hello");
                 addCounter();
                 $('#savingDepositF3').removeClass('display-none');
-
             }
             if (jQuery.inArray(formula, SDP6) !== -1) {
-                //alert("Hello");
+//alert("Hello");
                 $('#savingDepositF4').removeClass('display-none');
-
             }
             if (jQuery.inArray(formula, SDP5) !== -1) {
-                //alert("Hello");
+//alert("Hello");
                 $('#savingDepositF5').removeClass('display-none');
-
             }
             if (jQuery.inArray(formula, SDP1) !== -1) {
                 $('#savingDepositF1').removeClass('display-none');
@@ -625,37 +605,28 @@
                 }
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>') {
-
                 $('#allInOneAccountF1').removeClass('display-none');
-
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>') {
-
                 $('#allInOneAccountF2').removeClass('display-none');
-
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>') {
-
                 $('#allInOneAccountF3').removeClass('display-none');
-
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>') {
-
                 $('#allInOneAccountF4').removeClass('display-none');
-
             }
             if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>') {
-
                 $('#allInOneAccountF5').removeClass('display-none');
-
             }
-
+            if (formula == '<?php echo ALL_IN_ONE_ACCOUNT_F6; ?>') {
+                $('#allInOneAccountF6').removeClass('display-none');
+            }
         });
         $("select[name='product_type']").on("change", function () {
             var promotion_type = $(this).val();
             var formula = $("#formula").val();
-
-            //alert(formula);
+//alert(formula);
             $.ajax({
                 method: "POST",
                 url: "{{url('/admin/promotion-products/get-formula')}}",
@@ -665,7 +636,6 @@
                     $("select[name='formula']").html(data);
                 }
             });
-
         });
     </script>
 @endsection

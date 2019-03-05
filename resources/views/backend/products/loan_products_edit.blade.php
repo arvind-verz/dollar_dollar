@@ -67,7 +67,7 @@
                                     <div class="form-group">
                                         {{Form::label('bank_sub_title', 'Bank Sub Title',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('bank_sub_title', $product->bank_sub_title, ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('bank_sub_title', $product->bank_sub_title, ['id' => '', 'class' => ' tiny-mce form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -116,6 +116,24 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">Shortlist Button Status</label>
+
+                                        <div class="col-sm-10">
+
+                                            <select class="form-control select2"
+                                                    data-placeholder="" name="shortlist_status"
+                                                    style="width: 100%;">
+                                                <option value="1"
+                                                        @if($product->shortlist_status == 1) selected="selected" @endif >
+                                                    Active
+                                                </option>
+                                                <option value="0" @if($product->shortlist_status == 0) selected="selected" @endif>
+                                                    Deactivate
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="title" class="col-sm-2 control-label">Formula</label>
 
                                         <div class="col-sm-10">
@@ -125,12 +143,12 @@
                                             <input type="hidden" id="hidden-formula" value="{{ $product->formula_id }}">
                                         </div>
                                     </div>
-                                    {{--<div class="form-group">
-                                        {{Form::label('monthly_installment', 'Monthly Installment',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+                                    <div class="form-group">
+                                        {{Form::label('minimum_loan_amount', 'Minimum loan amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('monthly_installment', $product->monthly_installment, ['id'=>'monthly-installment','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                            {{Form::text('minimum_loan_amount', $product->minimum_loan_amount, ['id'=>'minimum-loan-amount','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
-                                    </div>--}}
+                                    </div>
                                     {{--<div class="form-group">
                                         {{Form::label('maximum_interest_rate', 'Interest Rate',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
@@ -303,7 +321,7 @@
                                     <div class="form-group">
                                         {{Form::label('product_footer', 'Other Detail',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('product_footer', $product->product_footer, ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('product_footer', $product->product_footer, ['id' => '', 'class' => ' tiny-mce  form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <?php
@@ -458,9 +476,8 @@
         $(document).ready(function () {
             var promotion_type = $("#product-type").val();
             var formula = $("#hidden-formula").val();
-            //var product_id = $("#product-id").val();
-            if ((promotion_type.length != 0) && (formula.length != 0)) {
-                //alert(formula);
+            if ((promotion_type.length != 0)) {
+
                 $.ajax({
                     method: "POST",
                     url: "{{url('/admin/promotion-products/get-formula')}}",
@@ -481,6 +498,18 @@
 
                 $('#loanF1').removeClass('display-none');
             }
+            $(document).on('change', '#rate-type', function() {
+                var rate_type = $(this).val();
+                $.ajax({
+                    method: "POST",
+                    url: "{{url('/admin/promotion-products/change-rate-type')}}",
+                    data: {rate_type: rate_type},
+                    cache: false,
+                    success: function (data) {
+                        $("#rate-type-content").html(data);
+                    }
+                });
+            });
         });
         $("select[name='product_type']").on("change", function () {
             $('#loanF1').addClass('display-none');
@@ -510,20 +539,7 @@
                 $('#loanF1').removeClass('display-none');
             }
         });
-        $("select[name='product_type']").on("change", function () {
-            var promotion_type = $(this).val();
-            var formula = $("#formula").val();
-            //alert(formula);
-            $.ajax({
-                method: "POST",
-                url: "{{url('/admin/promotion-products/get-formula')}}",
-                data: {promotion_type: promotion_type, formula: formula},
-                cache: false,
-                success: function (data) {
-                    $("select[name='formula']").html(data);
-                }
-            });
-        });
+
         function removeImage(ref, id, ad_type) {
             $.ajax({
                 method: "POST",

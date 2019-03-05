@@ -67,7 +67,7 @@
                                     <div class="form-group">
                                         {{Form::label('bank_sub_title', 'Bank Sub Title',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('bank_sub_title', old('bank_sub_title'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('bank_sub_title', old('bank_sub_title'), ['id' => '', 'class' => ' tiny-mce  form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 
@@ -83,6 +83,36 @@
                                                                 @if(old('product_type') == $product_type->id) selected="selected" @endif>{{$product_type->name}}</option>
                                                     @endforeach
                                                 @endif
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group display-none" id="apply-link">
+                                        <input type="hidden" id="apply-link-status" name="apply_link_status" value="1"/>
+                                        {{Form::label('apply_link', 'Apply Button Link',['class'=>'col-sm-2 control-label'])}}
+                                        <div class="col-sm-8">
+                                            {{Form::text('apply_link', old('Apply Link'), ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
+                                        </div>
+                                        <div class="col-sm-2 " id="apply-status">
+                                            <button type="button" data-status="true" id=""
+                                                    class="btn btn-block btn-success btn-social"
+                                                    onclick="changeApplyStatus(this)"><i class="fa fa-check"></i> Enable
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Shortlist Button Status</label>
+
+                                        <div class="col-sm-10">
+
+                                            <select class="form-control select2"
+                                                    data-placeholder="" name="shortlist_status"
+                                                    style="width: 100%;">
+                                                <option value="1" selected="selected">
+                                                    Active
+                                                </option>
+                                                <option value="0" >
+                                                    Deactivate
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -102,12 +132,12 @@
                                             <input type="hidden" id="hidden-formula" value="{{ old('formula') }}">
                                         </div>
                                     </div>
-                                    {{--<div class="form-group" >
-                                        {{Form::label('monthly_installment', 'Monthly Installment',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
+                                    <div class="form-group" >
+                                        {{Form::label('minimum_loan_amount', 'Minimum loan amount',['class'=>'col-sm-2 control-label','id'=>'placement-amount-content'])}}
                                         <div class="col-sm-10">
-                                            {{Form::text('monthly_installment', old('monthly_installment'), ['id'=>'monthly-installment','class' => 'form-control only_numeric', 'placeholder' => ''])}}
+                                            {{Form::text('minimum_loan_amount', old('minimum_loan_amount'), ['id'=>'minimum-loan-amount','class' => 'form-control only_numeric', 'placeholder' => ''])}}
                                         </div>
-                                    </div>--}}
+                                    </div>
                                     {{--<div class="form-group">
                                         {{Form::label('maximum_interest_rate', 'Interest Rate',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
@@ -132,10 +162,10 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       data-date="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}"
+                                                       data-date="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) : null  }}"
                                                        name="promotion_start_date" id="promotion_start_date"
                                                        onchange="dateChange(this);"
-                                                       value="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) :date('Y-m-d', time())  }}">
+                                                       value="{{ old('promotion_start_date') ? date('Y-m-d', strtotime(old('promotion_start_date'))) : null  }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
@@ -152,10 +182,10 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       data-date="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}"
+                                                       data-date="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :null  }}"
                                                        name="promotion_end_date" id="promotion_end_date"
                                                        onchange="dateChange(this);"
-                                                       value="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :date('Y-m-d', time())  }}">
+                                                       value="{{ old('promotion_end_date') ? date('Y-m-d', strtotime(old('promotion_end_date'))) :null  }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
@@ -163,9 +193,9 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-2 " id="ongoing">
-                                            <button type="button" data-status="false" id="ongoing-status"
-                                                    class="btn btn-block btn-danger btn-social"
-                                                    onclick="changeOnGoingStatus(this)"><i class="fa fa-times"></i>
+                                            <button type="button" data-status="true" id="ongoing-status"
+                                                    class="btn btn-block btn-success btn-social"
+                                                    onclick="changeOnGoingStatus(this)"><i class="fa fa-check"></i>
                                                 Ongoing
                                             </button>
                                         </div>
@@ -183,9 +213,9 @@
                                                     </button>
                                                 </div>
                                                 <input type="text" class="form-control pull-right datepicker1"
-                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}"
+                                                       data-date="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :null  }}"
                                                        name="until_end_date" id="until-end-date"
-                                                       value="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :date('Y-m-d', time())  }}">
+                                                       value="{{ old('until_end_date') ? date('Y-m-d', strtotime(old('until_end_date'))) :null  }}">
 
                                                 <div class="input-group-addon ">
                                                     <i class="fa fa-calendar"></i>
@@ -205,7 +235,7 @@
                                                 <option value="1" selected="selected">
                                                     Active
                                                 </option>
-                                                <option value="0" @if(old('status') == 0) selected="selected" @endif>
+                                                <option value="0" >
                                                     Deactivate
                                                 </option>
                                             </select>
@@ -243,7 +273,7 @@
                                     <div class="form-group">
                                         {{Form::label('product_footer', 'Other Detail',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('product_footer', old('product_footer'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('product_footer', old('product_footer'), ['id' => '', 'class' => ' tiny-mce  form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
 
@@ -368,6 +398,19 @@
 
                 $('#loanF1').removeClass('display-none');
             }
+
+            $(document).on('change', '#rate-type', function() {
+                var rate_type = $(this).val();
+                $.ajax({
+                    method: "POST",
+                    url: "{{url('/admin/promotion-products/change-rate-type')}}",
+                    data: {rate_type: rate_type},
+                    cache: false,
+                    success: function (data) {
+                        $("#rate-type-content").html(data);
+                    }
+                });
+            });
         });
         $("select[name='product_type']").on("change", function () {
             $('#loanF1').addClass('display-none');
