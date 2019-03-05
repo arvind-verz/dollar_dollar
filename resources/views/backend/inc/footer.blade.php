@@ -1,8 +1,9 @@
 <!-- Scripts -->
 <script>
+
     var editor_config = {
         path_absolute: "{{ URL::to('/') }}/",
-        selector: ".tiny-mce",
+        selector: "textarea",
         content_css: [
             APP_URL + '/frontend/css/plugin.css',
             APP_URL + '/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
@@ -20,6 +21,7 @@
                     ed.plugins.variables.addVariable('account_id');
                 }
             });
+
             ed.on('variableClick', function (e) {
                 console.log('click', e);
             });
@@ -66,12 +68,15 @@
         }
     };
     tinymce.init(editor_config);
+
     // Load multiple scripts
     var scriptLoader = new tinymce.dom.ScriptLoader();
+
     scriptLoader.add(APP_URL + '/frontend/js/jquery.min.js');
     scriptLoader.add(APP_URL + '/frontend/js/plugin.js');
     scriptLoader.add(APP_URL + '/frontend/plugins/jquery-ui/jquery-ui.min.js');
     scriptLoader.add(APP_URL + '/frontend/js/main.js');
+
     tinymce.init({
         selector: "textarea.text-color-base ",  // change this value according to your HTML
         plugins: "textcolor colorpicker ",
@@ -79,6 +84,8 @@
         fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 36pt 48pt 72pt",
         height: "100"
     });
+
+
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -86,24 +93,22 @@
             if (event.keyCode == 189) {
                 event.preventDefault();
             }
-            else if (event.keyCode == 109) {
-                event.preventDefault();
-            }
         })
         $(".only_numeric").numeric();
-        $(".only_numeric-with-minus").numeric();
     });
+
     function check_url(link) {
-//alert(link);
-//Get input value
+        //alert(link);
+        //Get input value
     }
     $(document).ready(function () {
-//Date picker
+        //Date picker
         $('.datepicker1').datepicker({
             autoclose: true,
             format: 'yyyy-mm-dd'
         });
     });
+
     $(function () {
         if ($('.date_range').val() == '') {
             $('.date_range').daterangepicker({
@@ -112,6 +117,7 @@
                     format: 'YYYY/MM/DD'
                 }
             }, function (start, end, label) {
+
                 $('.date_range').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
             });
         }
@@ -125,7 +131,9 @@
         }
     });
 </script>
+
 <!-- ./wrapper -->
+
 <!-- jQuery 3 -->
 <script src="{{ asset('backend/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -186,7 +194,6 @@
 <script src="{{ asset('backend/bower_components/fastclick/lib/fastclick.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('backend/dist/js/adminlte.min.js')}}"></script>
-<script src="{{ asset('backend/dist/js/backend.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('backend/dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
@@ -222,6 +229,7 @@
         });
         $("input[name='bluk_remove[]']").on("click", function () {
             var value = $(this).val();
+
             $(this).each(function () {
                 if ($(this).is(":checked")) {
                     bulk_arr.push(value);
@@ -233,6 +241,7 @@
                     bulk_arr1.pop(value);
                 }
             });
+
             if (bulk_arr.length < 1) {
                 $("a.bulk_remove, div.bulk_status").addClass("hide");
                 $("a.bluk_remove, div.bulk_status").find(".badge").text('');
@@ -242,10 +251,12 @@
                 $("a.bulk_remove").find(".badge").text(bulk_arr.length);
                 $("div.bulk_status").find(".badge").text(bulk_arr1.length);
             }
-//alert(bulk_arr);
+            //alert(bulk_arr);
         });
+
         $("input[name='all_bulk_remove']").on("click", function () {
             bulk_arr = [];
+
             if ($(this).is(":checked")) {
                 $("input[name='bluk_remove[]']").each(function () {
                     var value = $(this).val();
@@ -269,6 +280,7 @@
                 $("a.bulk_remove, div.bulk_status").find(".badge").text('');
             }
         });
+
         $("a.bulk_remove").on("click", function () {
             var r = confirm("Are you sure?");
             var type = $("input[name='bulk_remove_type']").val();
@@ -284,10 +296,542 @@
 </script>
 <script>
     $(document).ready(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+        $('#reports').DataTable();
+
+        $('#activities').DataTable(
+                {
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[6, 'desc']],
+                    "columnDefs": []
+                });
+        $('#users').DataTable(
+                {
+                    "pageLength": 100,
+                    'ordering': true,
+                    "aoColumnDefs": [{
+                        "aTargets": [0, 1],
+                        "bSortable": false,
+
+                    }]
+                });
+        $('#admins').DataTable(
+                {
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[5, 'desc'], [4, 'desc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [0],
+                        "bSortable": false,
+
+                    }]
+                });
+        $('#banners').DataTable(
+                {
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[0, 'asc'], [3, 'asc']],
+                    "columnDefs": []
+                });
+        $('#brands').DataTable(
+                {
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[3, 'asc']],
+                    "columnDefs": []
+                });
+
+        $('#pages').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            footer: true,
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                            }
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4]
+                            }
+                        }
+                    ],
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [
+                        [4, 'desc'],
+                        [3, 'desc']
+                    ],
+                    "aoColumnDefs": [{
+                        "aTargets": [5],
+                        "bSortable": false,
+
+                    }],
+
+                });
+        $('#customer-report').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7]
+                            },
+                            title: 'Customer management',
+                            customize: function (win) {
+                                $(win.document.body)
+                                        .css('font-size', '10pt');
+
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Profile ' + today;
+                            }
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Profile ' + today;
+                            }
+                        }
+                    ],
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[0, 'asc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [],
+                        "bSortable": false,
+
+                    },
+                        {width: 300, targets: 0},
+                        {width: 300, targets: 1},
+                        {width: 100, targets: 2},
+                        {width: 100, targets: 3},
+                        {width: 150, targets: 4},
+                        {width: 100, targets: 5},
+                        {width: 100, targets: 6},
+                        {width: 100, targets: 7}
+                    ],
+
+                });
+        $('#contact-table').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            footer: true,
+                            title: 'Contact enquiry',
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            customize: function (win) {
+                                $(win.document.body)
+                                        .css('font-size', '10pt');
+
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                            },
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Contact ' + today;
+                            }
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Contact ' + today;
+                            }
+                        }
+                    ],
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[6, 'desc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [0, 7],
+                        "bSortable": false,
+
+                    },
+                        {width: 50, targets: 0},
+                        {width: 100, targets: 1},
+                        {width: 100, targets: 2},
+                        {width: 100, targets: 3},
+                        {width: 100, targets: 4},
+                        {width: 400, targets: 5}
+                    ]
+
+                });
+
+
+        $('#life').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            },
+                            title: 'Life enquiry',
+                            customize: function (win) {
+                                $(win.document.body)
+                                        .css('font-size', '10pt');
+
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Life ' + today;
+                            }
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Life ' + today;
+                            }
+                        }
+                    ],
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[10, 'desc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [0, 11],
+                        "bSortable": false,
+
+                    }],
+
+                });
+
+        $('#investment').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                            },
+                            title: 'Investment enquiry',
+                            customize: function (win) {
+                                $(win.document.body)
+                                        .css('font-size', '10pt');
+
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                            }
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Invest ' + today;
+                            }
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Invest ' + today;
+                            }
+                        }
+                    ],
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[12, 'desc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [0, 13],
+                        "bSortable": false,
+
+                    }],
+
+                });
+
+        $('#health').DataTable(
+                {
+                    dom: 'lBfrtip',
+                    buttons: [
+                        {
+                            extend: 'print',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            },
+                            title: 'Health enquiry',
+                            customize: function (win) {
+                                $(win.document.body)
+                                        .css('font-size', '10pt');
+
+                                $(win.document.body).find('table')
+                                        .addClass('compact')
+                                        .css('font-size', 'inherit');
+                            }
+
+                        },
+                        {
+                            extend: 'csv',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Health ' + today;
+                            }
+
+                        },
+                        {
+                            extend: 'excel',
+                            footer: true,
+                            exportOptions: {
+                                columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                var yy = yyyy.toString().substring(2);
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yy + '' + mm + '' + dd;
+                                return 'Health ' + today;
+                            }
+                        }
+                    ],
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[9, 'desc']],
+                    "aoColumnDefs": [{
+                        "aTargets": [0, 10],
+                        "bSortable": false,
+
+                    }],
+
+                });
+        $('#products').DataTable(
+                {
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[8, 'desc'], [7, 'desc']],
+                    "columnDefs": []
+                });
+        $('#menus').DataTable(
+                {
+                    "pageLength": 100,
+                    'ordering': true,
+                    'order': [[1, 'asc']],
+                    "columnDefs": []
+                });
+        $('#report').DataTable(
+                {
+                    dom: 'Bfrtip',
+                    "pageLength": 50,
+                    buttons: [
+                        {
+                            text: 'Export Customers Report',
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4, 5, 6]
+                            },
+                            filename: function () {
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+                                    mm = '0' + mm
+                                }
+                                today = yyyy + '' + mm + '' + dd;
+                                return 'Customers-Report ' + today;
+                            }
+                        }
+                    ],
+                });
+
         $('#rootwizard').bootstrapWizard({
+
             'tabClass': 'nav nav-pills',
             'onPrevious': function (tab, navigation, index) {
-//alert(index);
+                //alert(index);
                 $("#error-div").addClass('display-none');
                 var product_id = $.trim($("#product-id").val());
                 var errorSection = document.getElementById("js-errors");
@@ -296,6 +840,7 @@
                 var formula = $.trim($('#formula').val());
                 var errors = new Array();
                 var i = 0;
+
                 var LOAN = ['<?php echo LOAN_F1; ?>'];
                 var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
                 var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
@@ -310,24 +855,26 @@
                     '<?php echo PRIVILEGE_DEPOSIT_F1; ?>',
                     '<?php echo FOREIGN_CURRENCY_DEPOSIT_F2; ?>'
                 ];
+
                 var SDP6 = [
                     '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
                 ];
                 var AIOA = ['<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>'];
+
                 if (index == 1) {
                     var name = $.trim($('#name').val());
                     var bank = $.trim($('#bank').val());
                     var ongoingStatus = $.trim($('#ongoing-status-1').data('status'));
                     var productType = $.trim($('#product-type').val());
                     var currency = $.trim($('#currency').val());
-                    var minimumLoanAmount = $.trim($('#minimum-loan-amount').val());
+                    var monthlyInstallment = $.trim($('#monthly-installment').val());
                     var maxInterestRate = $.trim($('#maximum-interest-rate').val());
                     var lockIn = $.trim($('#lock-in').val());
                     var promotionPeriod = $.trim($('#promotion-period').val());
                     var untilEndDate = $.trim($('#until-end-date').val());
                     var startDate = $.trim($('#promotion_start_date').val());
                     var endDate = $.trim($('#promotion_end_date').val());
-// Make sure we entered the name
+                    // Make sure we entered the name
                     if (!name) {
                         errors[i] = 'The name is required.';
                         i++;
@@ -353,7 +900,7 @@
                             }
                         });
                     }
-                    if (!bank && formula) {
+                    if (!bank) {
                         errors[i] = 'The bank is required.';
                         i++;
                     }
@@ -365,19 +912,20 @@
                         errors[i] = 'The date is required.';
                         i++;
                     }
-                    if ((jQuery.inArray(formula, LOAN) !== -1) || (productType == '<?php echo LOAN ;?>')) {
+
+                    if ((jQuery.inArray(formula, LOAN) !== -1) && (productType == '<?php echo LOAN ;?>')) {
                         /*if (!maxInterestRate) {
-                         errors[i] = 'The interest rate is required.';
-                         i++;
-                         }*/
+                            errors[i] = 'The interest rate is required.';
+                            i++;
+                        }*/
                         if (!lockIn) {
                             errors[i] = 'The lock in is required.';
                             i++;
                         }
-                        if (!minimumLoanAmount) {
-                            errors[i] = 'The minumum loan amount is required.';
+                        /*if (!monthlyInstallment) {
+                            errors[i] = 'The monthly installment is required.';
                             i++;
-                        }
+                        }*/
                     } else {
                         if (!minPlacementAmount && (jQuery.inArray(formula, AIOA) !== -1)) {
                             errors[i] = 'The maximum placement is required.';
@@ -412,6 +960,7 @@
                         errors[i] = 'The currency type is required.';
                         i++;
                     }
+
                     if (jQuery.inArray(formula, FDP1) !== -1) {
                         var minPlacements = $('#fixDepositF1').find('input[name^="min_placement"]').map(function () {
                             return $.trim($(this).val());
@@ -427,12 +976,15 @@
                         }).get();
                         var tenureError = false;
                         var rangeError = false;
+
                         $.each(minPlacements, function (k, v) {
                             if (minPlacements[k] == '' || maxPlacements[k] == '') {
                                 errors[i] = 'The placement range is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                         $.each(tenures, function (k, v) {
                             if (tenures[k] == '') {
@@ -441,6 +993,7 @@
                                 tenureError = true;
                                 return false;
                             }
+
                         });
                         $.each(interests, function (k, v) {
                             if (interests[k] == '') {
@@ -448,16 +1001,20 @@
                                 i++;
                                 return false;
                             }
+
                         });
                         $.each(minPlacements, function (k, v) {
+
                             if (Number(v) < Number(minPlacementAmount)) {
                                 errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
                                 i++;
+
                                 return false;
                             }
                             if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
                                 errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
                                 i++;
+
                                 return false;
                             }
                         });
@@ -481,22 +1038,28 @@
                             if (minPlacements[k] == '' || maxPlacements[k] == '') {
                                 errors[i] = 'The placement range is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                         $.each(bonusInterest, function (k, v) {
                             if (bonusInterest[k] == '') {
                                 errors[i] = 'The bonus interest is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                         $.each(boardInterest, function (k, v) {
                             if (boardInterest[k] == '') {
                                 errors[i] = 'The board interest is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                         if (formula == '<?php echo SAVING_DEPOSIT_F2; ?>') {
                             var tenure = $('#savingDepositF1').find('input[name="tenure_sdp1"]').map(function () {
@@ -507,6 +1070,7 @@
                                 i++;
                             }
                         }
+
                         if (rangeError == false) {
                             $.ajax({
                                 method: "POST",
@@ -526,15 +1090,20 @@
                                 }
                             });
                         }
+
                         $.each(minPlacements, function (k, v) {
+
                             if (Number(v) < Number(minPlacementAmount)) {
+
                                 errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
                                 i++;
+
                                 return false;
                             }
                             if (Number(maxPlacements[k]) < Number(minPlacementAmount)) {
                                 errors[i] = 'All placement must be greater than or equal to minimum placement amount.';
                                 i++;
+
                                 return false;
                             }
                         });
@@ -554,22 +1123,28 @@
                             if (maxPlacements[k] == '') {
                                 errors[i] = 'The placement is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                         $.each(bonusInterest, function (k, v) {
                             if (bonusInterest[k] == '') {
                                 errors[i] = 'The bonus interest is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                         $.each(boardInterest, function (k, v) {
                             if (boardInterest[k] == '') {
                                 errors[i] = 'The board interest is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                     }
                     if (jQuery.inArray(formula, SDP3) !== -1) {
@@ -589,6 +1164,7 @@
                             errors[i] = 'Please check your placement range. ';
                             i++;
                         }
+
                         if (averageInterestRate == '') {
                             errors[i] = 'The average interest rate is required.';
                             i++;
@@ -596,11 +1172,15 @@
                         if (siborRate == '') {
                             errors[i] = 'The sibor rate is required.';
                             i++;
+
                         }
                         if (Number(minPlacement) < Number(minPlacementAmount) || Number(maxPlacement) < Number(minPlacementAmount)) {
+
                             errors[i] = 'All placement must be greater than or equal minimum placement amount.';
                             i++;
+
                         }
+
                     }
                     if (jQuery.inArray(formula, SDP5) !== -1) {
                         var minPlacement = $('#savingDepositF5').find('input[name="min_placement_sdp5"]').map(function () {
@@ -621,10 +1201,12 @@
                         var displayMonth = $('#savingDepositF5').find('input[name="display_month_sdp5"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
+
                         if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
                             errors[i] = 'Please check your placement range. ';
                             i++;
                         }
+
                         if (baseInterest == '') {
                             errors[i] = 'The base interest rate is required.';
                             i++;
@@ -646,10 +1228,14 @@
                             i++;
                         }
                         if (Number(minPlacement) < Number(minPlacementAmount) || Number(maxPlacement) < Number(minPlacementAmount)) {
+
                             errors[i] = 'All placement must be greater than or equal minimum placement amount.';
                             i++;
+
                         }
+
                     }
+
                     if (formula == 7) {
                         var allInOneAccountF1 = $('#allInOneAccountF1');
                         var minPlacement = allInOneAccountF1.find('input[name="min_placement_aioa1"]').map(function () {
@@ -661,16 +1247,9 @@
                         var SalaryMinAmount = allInOneAccountF1.find('input[name="minimum_salary_aioa1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var SalaryMinAmount2 = allInOneAccountF1.find('input[name="minimum_salary_aioa1_2"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
                         var SalaryBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_salary_aioa1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var SalaryBonusInterest2 = allInOneAccountF1.find('input[name="bonus_interest_salary_aioa1_2"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-
                         var GiroMinAmount = allInOneAccountF1.find('input[name="minimum_giro_payment_aioa1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -680,13 +1259,7 @@
                         var SpendMinAmount = allInOneAccountF1.find('input[name="minimum_spend_aioa1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var SpendMinAmount2 = allInOneAccountF1.find('input[name="minimum_spend_aioa1_2"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
                         var SpendBonusInterest = allInOneAccountF1.find('input[name="bonus_interest_spend_aioa1"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var SpendBonusInterest2 = allInOneAccountF1.find('input[name="bonus_interest_spend_aioa1_2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var PrivilegeMinAmount = allInOneAccountF1.find('input[name="minimum_privilege_pa_aioa1"]').map(function () {
@@ -715,27 +1288,22 @@
                         }).get();
 
                         if (Number(minPlacement) > Number(minPlacementAmount) || Number(maxPlacement) > Number(minPlacementAmount)) {
+
                             errors[i] = 'All placement must be less than or equal maximum placement amount.';
                             i++;
+
                         }
                         if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
                             errors[i] = 'Please check your placement range. ';
                             i++;
                         }
+
                         if (SalaryMinAmount == '') {
-                            errors[i] = 'The minimum requirement amount (Salary 1) is required.';
+                            errors[i] = 'The minimum requirement amount (Salary) is required.';
                             i++;
                         }
                         if (SalaryBonusInterest == '') {
-                            errors[i] = 'The  bonus interest (Salary 1) is required.';
-                            i++;
-                        }
-                        if (SalaryMinAmount2 == '' && SalaryBonusInterest2 != '') {
-                            errors[i] = 'The minimum requirement amount (Salary 2) is required.';
-                            i++;
-                        }
-                        if (SalaryMinAmount2 != '' && SalaryBonusInterest2 == '') {
-                            errors[i] = 'The  bonus interest (Salary 2) is required.';
+                            errors[i] = 'The  bonus interest (Salary) is required.';
                             i++;
                         }
                         if (GiroMinAmount == '') {
@@ -747,27 +1315,11 @@
                             i++;
                         }
                         if (SpendMinAmount == '') {
-                            errors[i] = 'The minimum requirement amount (Spend 1) is required.';
+                            errors[i] = 'The minimum requirement amount (Spend) is required.';
                             i++;
                         }
                         if (SpendBonusInterest == '') {
-                            errors[i] = 'The  bonus interest (Spend 1) is required.';
-                            i++;
-                        }
-                        if (SpendMinAmount2 == '' && SpendBonusInterest2 != '') {
-                            errors[i] = 'The minimum requirement amount (Spend 2) is required.';
-                            i++;
-                        }
-                        if (SpendMinAmount2 != '' && SpendBonusInterest2 == '') {
-                            errors[i] = 'The  bonus interest (Spend 2) is required.';
-                            i++;
-                        }
-                        if (SpendMinAmount2 != '' && Number(SpendMinAmount2) != 0 && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
-                            errors[i] = 'Spend 2 amount must be grater than Spend 1.';
-                            i++;
-                        }
-                        if (SalaryMinAmount2 != '' && Number(SalaryMinAmount2) != 0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) {
-                            errors[i] = 'Salary 2 amount must be grater than Salary 1.';
+                            errors[i] = 'The  bonus interest (Spend) is required.';
                             i++;
                         }
                         if (PrivilegeMinAmount == '') {
@@ -795,7 +1347,7 @@
                             i++;
                         }
                         if (parseInt(minPlacement) > parseInt(FirstCapAmount)) {
-                            errors[i] = 'The  first cap amount  is must be greater than minimum placement.';
+                            errors[i] = 'The  first cap amount  is not greater than minimum placement.';
                             i++;
                         }
                     }
@@ -810,12 +1362,6 @@
                         var SalaryMinAmount = allInOneAccountF2.find('input[name="minimum_salary_aioa2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var SpendMinAmount2 = allInOneAccountF2.find('input[name="minimum_spend_aioa2_2"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var SalaryMinAmount2 = allInOneAccountF2.find('input[name="minimum_salary_aioa2_2"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
                         var maxPlacements = allInOneAccountF2.find('input[name^="max_placement_aioa2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -826,25 +1372,17 @@
                             return $.trim($(this).val());
                         }).get();
                         var rangeError = false;
+
                         if (SpendMinAmount == '') {
-                            errors[i] = 'The minimum requirement amount (Spend 1) is required.';
-                            i++;
-                        }
-                        if (SalaryMinAmount == '') {
-                            errors[i] = 'The minimum requirement amount (Salary 1) is required.';
+                            errors[i] = 'The minimum requirement amount (Spend) is required.';
                             i++;
                         }
                         if (GiroMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Giro) is required.';
                             i++;
                         }
-
-                        if (SpendMinAmount2 != '' && Number(SpendMinAmount2) != 0 && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
-                            errors[i] = 'Spend 2 amount must be grater than Spend 1.';
-                            i++;
-                        }
-                        if (SalaryMinAmount2 != '' && Number(SalaryMinAmount2) != 0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) {
-                            errors[i] = 'Salary 2 amount must be grater than Salary 1.';
+                        if (SalaryMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Salary) is required.';
                             i++;
                         }
 
@@ -855,20 +1393,25 @@
                                 rangeError = true;
                                 return false;
                             }
+
                         });
                         $.each(bonusInterestA, function (k, v) {
                             if (bonusInterestA[k] == '') {
                                 errors[i] = 'The bonus interest (A) is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                         $.each(bonusInterestB, function (k, v) {
                             if (bonusInterestB[k] == '') {
                                 errors[i] = 'The bonus interest (B) is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                         var minPlacements = [];
                         var min = 0;
@@ -888,16 +1431,10 @@
                         var SalaryMinAmount = allInOneAccountF3.find('input[name="minimum_salary_aioa3"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var SpendMinAmount = allInOneAccountF3.find('input[name="minimum_spend_aioa3"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
                         var GiroMinAmount = allInOneAccountF3.find('input[name="minimum_giro_payment_aioa3"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var SalaryMinAmount2 = allInOneAccountF3.find('input[name="minimum_salary_aioa3_2"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var SpendMinAmount2 = allInOneAccountF3.find('input[name="minimum_spend_aioa3_2"]').map(function () {
+                        var SpendMinAmount = allInOneAccountF3.find('input[name="minimum_spend_aioa3"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var HirePurchaseMinAmount = allInOneAccountF3.find('input[name="minimum_hire_purchase_loan_aioa3"]').map(function () {
@@ -942,9 +1479,13 @@
                         var RemainingBonusInterest = allInOneAccountF3.find('input[name="bonus_interest_remaining_amount_aioa3"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
+
+
                         if (Number(minPlacement) > Number(minPlacementAmount) || Number(maxPlacement) > Number(minPlacementAmount)) {
+
                             errors[i] = 'All placement must be less than or equal maximum placement amount.';
                             i++;
+
                         }
                         if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
                             errors[i] = 'Please check your placement range. ';
@@ -954,20 +1495,12 @@
                             errors[i] = 'The minimum requirement amount (Salary) is required.';
                             i++;
                         }
-                        if (SpendMinAmount == '') {
-                            errors[i] = 'The minimum requirement amount (Spend) is required.';
-                            i++;
-                        }
                         if (GiroMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Giro) is required.';
                             i++;
                         }
-                        if (SpendMinAmount2 != '' && Number(SpendMinAmount2) != 0 && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
-                            errors[i] = 'Spend 2 amount must be grater than Spend 1.';
-                            i++;
-                        }
-                        if (SalaryMinAmount2 != '' && Number(SalaryMinAmount2) != 0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) {
-                            errors[i] = 'Salary 2 amount must be grater than Salary 1.';
+                        if (SpendMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Spend) is required.';
                             i++;
                         }
                         if (HirePurchaseMinAmount == '') {
@@ -1027,7 +1560,7 @@
                             i++;
                         }
                         if (parseInt(minPlacement) > parseInt(FirstCapAmount)) {
-                            errors[i] = 'The  first cap amount  is must be greater than minimum placement.';
+                            errors[i] = 'The  first cap amount  is not greater than minimum placement.';
                             i++;
                         }
                     }
@@ -1040,12 +1573,6 @@
                             return $.trim($(this).val());
                         }).get();
                         var HomeMinAmount = allInOneAccountF4.find('input[name="minimum_home_loan_aioa4"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var SalaryMinAmount2 = allInOneAccountF4.find('input[name="minimum_salary_aioa4_2"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var SpendMinAmount2 = allInOneAccountF4.find('input[name="minimum_spend_aioa4_2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var InsuranceMinAmount = allInOneAccountF4.find('input[name="minimum_insurance_aioa4"]').map(function () {
@@ -1073,16 +1600,17 @@
                             return $.trim($(this).val());
                         }).get();
                         var rangeError = false;
+
                         if (SpendMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Spend) is required.';
                             i++;
                         }
-                        if (SalaryMinAmount == '') {
-                            errors[i] = 'The minimum requirement amount (Salary) is required.';
-                            i++;
-                        }
                         if (GiroMinAmount == '') {
                             errors[i] = 'The minimum requirement amount (Giro) is required.';
+                            i++;
+                        }
+                        if (SalaryMinAmount == '') {
+                            errors[i] = 'The minimum requirement amount (Salary) is required.';
                             i++;
                         }
                         if (HomeMinAmount == '') {
@@ -1101,14 +1629,6 @@
                             errors[i] = 'The board rate is required.';
                             i++;
                         }
-                        if (SpendMinAmount2 != '' && Number(SpendMinAmount2) != 0 && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
-                            errors[i] = 'Spend 2 amount must be grater than Spend 1.';
-                            i++;
-                        }
-                        if (SalaryMinAmount2 != '' && Number(SalaryMinAmount2) != 0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) {
-                            errors[i] = 'Salary 2 amount must be grater than Salary 1.';
-                            i++;
-                        }
                         if (firstCapAmount == '') {
                             errors[i] = 'The first cap amount is required.';
                             i++;
@@ -1120,21 +1640,28 @@
                                 rangeError = true;
                                 return false;
                             }
+
                         });
                         $.each(bonusInterestA, function (k, v) {
                             if (bonusInterestA[k] == '') {
                                 errors[i] = 'The bonus interest (A) is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
                         $.each(bonusInterestB, function (k, v) {
                             if (bonusInterestB[k] == '') {
                                 errors[i] = 'The bonus interest (B) is required.';
                                 i++;
+
                                 return false;
                             }
+
                         });
+
+
                         if (rangeError == false) {
                             $.ajax({
                                 method: "POST",
@@ -1143,6 +1670,7 @@
                                 cache: false,
                                 async: false,
                                 success: function (data) {
+
                                     if (data == 1) {
                                         errors[i] = 'Please check your placement range ';
                                         i++;
@@ -1154,15 +1682,20 @@
                                 }
                             });
                         }
+
                         $.each(minPlacements, function (k, v) {
+
                             if (Number(v) > Number(minPlacementAmount)) {
+
                                 errors[i] = 'All placement must be less than or equal to maximum placement amount.';
                                 i++;
+
                                 return false;
                             }
                             if (Number(maxPlacements[k]) > Number(minPlacementAmount)) {
                                 errors[i] = 'All placement must be less than or equal to maximum placement amount.';
                                 i++;
+
                                 return false;
                             }
                         });
@@ -1175,10 +1708,10 @@
                         var maxPlacement = allInOneAccountF5.find('input[name="max_placement_aioa5"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var SpendMinAmount = allInOneAccountF5.find('input[name="minimum_spend_1_aioa5"]').map(function () {
+                        var SpendMinAmount1 = allInOneAccountF5.find('input[name="minimum_spend_1_aioa5"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var SpendBonusInterest = allInOneAccountF5.find('input[name="bonus_interest_spend_1_aioa5"]').map(function () {
+                        var SpendBonusInterest1 = allInOneAccountF5.find('input[name="bonus_interest_spend_1_aioa5"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var SpendMinAmount2 = allInOneAccountF5.find('input[name="minimum_spend_2_aioa5"]').map(function () {
@@ -1191,12 +1724,6 @@
                             return $.trim($(this).val());
                         }).get();
                         var SalaryBonusInterest = allInOneAccountF5.find('input[name="bonus_interest_salary_aioa5"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var SalaryMinAmount2 = allInOneAccountF5.find('input[name="minimum_salary_aioa5_2"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var SalaryBonusInterest2 = allInOneAccountF5.find('input[name="bonus_interest_salary_aioa5_2"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var GiroMinAmount = allInOneAccountF5.find('input[name="minimum_giro_payment_aioa5"]').map(function () {
@@ -1235,55 +1762,45 @@
                         var status1 = allInOneAccountF5.find('input[name="status_other_aioa5"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
+
+
                         if (Number(minPlacement) > Number(minPlacementAmount) || Number(maxPlacement) > Number(minPlacementAmount)) {
+
                             errors[i] = 'All placement must be less than or equal maximum placement amount.';
                             i++;
+
                         }
                         if (minPlacement == '' || maxPlacement == '' || ( parseInt(minPlacement) > parseInt(maxPlacement))) {
                             errors[i] = 'Please check your placement range. ';
                             i++;
                         }
-                        /*if (SalaryMinAmount == '') {
-                            errors[i] = 'The minimum requirement amount (Salary 1) is required.';
-                            i++;
+                        if (SpendMinAmount1 != '') {
+                            if (SpendBonusInterest1 == '') {
+                                errors[i] = 'The  bonus interest (Spend 1) is required.';
+                                i++;
+                            }
                         }
-
-                        if (SpendMinAmount == '') {
-                            errors[i] = 'The minimum requirement amount (Spend 1) is required.';
-                            i++;
+                        if (SpendMinAmount2 != '') {
+                            if (SpendBonusInterest2 == '') {
+                                errors[i] = 'The  bonus interest (Spend 2) is required.';
+                                i++;
+                            }
                         }
-                        */
-                        /*if (SalaryMinAmount != '' && SalaryBonusInterest == '') {
-                            errors[i] = 'The  bonus interest (Salary 1) is required.';
-                            i++;
+                        if (SpendMinAmount1 != '' && SpendMinAmount2 != '') {
+                            if (SpendMinAmount1 == SpendMinAmount2) {
+                                errors[i] = 'You cannot input same amount for spend 1 and spend 2.';
+                                i++;
+                            }
+                            if (SpendMinAmount1 > SpendMinAmount2) {
+                                errors[i] = 'spend 2 amount must be grater than spend 1.';
+                                i++;
+                            }
                         }
-                        if (SpendMinAmount != '' && SpendBonusInterest == '') {
-                            errors[i] = 'The  bonus interest (Spend 1) is required.';
-                            i++;
-                        }*/
-                        if (SalaryMinAmount2 == '' && SalaryBonusInterest2 != '') {
-                            errors[i] = 'The minimum requirement amount (Salary 2) is required.';
-                            i++;
-                        }
-                        /*if (SalaryMinAmount2 != '' && SalaryBonusInterest2 == '') {
-                            errors[i] = 'The  bonus interest (Salary 2) is required.';
-                            i++;
-                        }
-                        if (SpendMinAmount2 == '' && SpendBonusInterest2 != '') {
-                            errors[i] = 'The minimum requirement amount (Spend 2) is required.';
-                            i++;
-                        }*/
-                        if (SpendMinAmount2 != '' && SpendBonusInterest2 == '') {
-                            errors[i] = 'The  bonus interest (Spend 2) is required.';
-                            i++;
-                        }
-                        if (SpendMinAmount2 != '' && Number(SpendMinAmount2) != 0 && (Number(SpendMinAmount) >= Number(SpendMinAmount2))) {
-                            errors[i] = 'Spend 2 amount must be grater than Spend 1.';
-                            i++;
-                        }
-                        if (SalaryMinAmount2 != '' && Number(SalaryMinAmount2) != 0 && (Number(SalaryMinAmount) >= Number(SalaryMinAmount2))) {
-                            errors[i] = 'Salary 2 amount must be grater than Salary 1.';
-                            i++;
+                        if (SalaryMinAmount != '') {
+                            if (SalaryBonusInterest == '') {
+                                errors[i] = 'The  bonus interest (Salary) is required.';
+                                i++;
+                            }
                         }
 
                         if (GiroMinAmount != '') {
@@ -1292,12 +1809,14 @@
                                 i++;
                             }
                         }
+
                         if (PrivilegeMinAmount != '') {
                             if (PrivilegeBonusInterest == '') {
                                 errors[i] = 'The  bonus interest (Privilege) is required.';
                                 i++;
                             }
                         }
+
                         if (LoanMinAmount != '') {
                             if (LoanBonusInterest == '') {
                                 errors[i] = 'The  bonus interest (Loan) is required.';
@@ -1313,6 +1832,7 @@
                                 errors[i] = 'The other interest is required.';
                                 i++;
                             }
+
                         }
                         if (FirstCapAmount == '') {
                             errors[i] = 'The  first cap amount is required.';
@@ -1322,12 +1842,15 @@
                             errors[i] = 'The  bonus interest (Remaining) is required.';
                             i++;
                         }
+
+
                         if (parseInt(minPlacement) > parseInt(FirstCapAmount)) {
-                            errors[i] = 'The  first cap amount  is must be greater than minimum placement.';
+                            errors[i] = 'The  first cap amount  is not greater than minimum placement.';
                             i++;
                         }
                     }
-                    if ((jQuery.inArray(formula, LOAN) !== -1) || (productType == '<?php echo LOAN ;?>')) {
+                    if ((jQuery.inArray(formula, LOAN) !== -1) || (productType == '<?php echo LOAN ;?>'))
+                        {
                         var rateType = $('#loanF1').find('select[name="rate_type_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
@@ -1337,179 +1860,56 @@
                         var completionStatus = $('#loanF1').find('select[name="completion_status_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var thereAfterBonus = $('#loanF1').find('input[name="there_after_bonus_interest"]').map(function () {
+                        var floatingRateType = $('#loanF1').find('select[name="floating_rate_type_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var thereAfterOther = $('#loanF1').find('input[name="there_after_rate_interest_other"]').map(function () {
+                        var boardRate = $('#loanF1').find('input[name="board_rate_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var tenures = $('#loanF1').find('select[name^="tenure_f1"]').map(function () {
+                        var tenures = $('#loanF1').find('input[name^="tenure_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
                         var bonusInterests = $('#loanF1').find('input[name^="bonus_interest_f1"]').map(function () {
                             return $.trim($(this).val());
                         }).get();
-                        var otherInterest = $('#loanF1').find('input[name^="rate_interest_other_f1"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        if(formula) {
-                            if (rateType == '') {
-                                errors[i] = 'The  rate type is required.';
-                                i++;
-                            }
-                            if (propertyType == '') {
-                                errors[i] = 'The  property type is required.';
-                                i++;
-                            }
-                            if (completionStatus == '') {
-                                errors[i] = 'The  completion status is required.';
-                                i++;
-                            }
-                            $.each(tenures, function (k, v) {
-                                if (tenures[k] == '') {
-                                    errors[i] = 'The year is required.';
-                                    i++;
-                                    return false;
-                                }
-                            });
-                            $.each(tenures, function (k, v) {
-                                if (bonusInterests[k] == '' && otherInterest[k] == '') {
-                                    errors[i] = 'Minimum one interest is required.';
-                                    i++;
-                                    return false;
-                                }
-                            });
-                            if (thereAfterBonus == '' && thereAfterOther == '') {
-                                errors[i] = 'Minimum one there after interest is required.';
-                                i++;
-                            }
-                        }
-                    }
-                    if (formula == 25) {
-
-                        var allInOneAccountF6 = $('#allInOneAccountF6');
-                        var GrowMinAmount = allInOneAccountF6.find('input[name="minimum_grow_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var GrowCapAmount = allInOneAccountF6.find('input[name="cap_grow_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var GrowBonusInterest = allInOneAccountF6.find('input[name="bonus_interest_grow_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var BoostCapAmount = allInOneAccountF6.find('input[name="cap_boost_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var BoostBonusInterest = allInOneAccountF6.find('input[name="bonus_interest_boost_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-
-                        var SalaryMinAmount = allInOneAccountF6.find('input[name="minimum_salary_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var SpendMinAmount = allInOneAccountF6.find('input[name="minimum_spend_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var WealthMinAmount  = allInOneAccountF6.find('input[name="minimum_wealth_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        /*var FirstCapAmount = allInOneAccountF6.find('input[name="first_cap_amount_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();*/
-                        var baseInterest = allInOneAccountF6.find('input[name="bonus_interest_remaining_amount_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var MaxPlacements = allInOneAccountF6.find('input[name^="max_placement_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var bonusInterestSalary = allInOneAccountF6.find('input[name^="bonus_interest_salary_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-                        var bonusInterestSpend = allInOneAccountF6.find('input[name^="bonus_interest_spend_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
-
-                        var bonusInterestWealth = allInOneAccountF6.find('input[name^="bonus_interest_wealth_aioa6"]').map(function () {
-                            return $.trim($(this).val());
-                        }).get();
                         var rangeError = false;
-                        if (GrowMinAmount == '') {
-                            errors[i] = 'The minimum amount (Grow) is required.';
+                        if (rateType == '') {
+                            errors[i] = 'The  rate type is required.';
                             i++;
                         }
-                        if (GrowCapAmount == '') {
-                            errors[i] = 'The Cap amount (Grow) is required.';
+                        if (propertyType == '') {
+                            errors[i] = 'The  property type is required.';
                             i++;
                         }
-                        if (GrowBonusInterest == '') {
-                            errors[i] = 'The Bonus interest (Grow) is required.';
+                        if (completionStatus == '') {
+                            errors[i] = 'The  completion status is required.';
                             i++;
                         }
-                        if (BoostCapAmount == '') {
-                            errors[i] = 'The Cap amount (Boost) is required.';
+                        if (floatingRateType == '') {
+                            errors[i] = 'The  board rate type is required.';
                             i++;
                         }
-                        if (BoostBonusInterest == '') {
-                            errors[i] = 'The Bonus interest (Boost) is required.';
+                        if (boardRate == '') {
+                            errors[i] = 'The  board rate is required.';
                             i++;
                         }
+                        $.each(tenures, function (k, v) {
+                            if (tenures[k] == '') {
+                                errors[i] = 'The tenure is required.';
+                                i++;
 
+                                return false;
+                            }
 
-                        if (SalaryMinAmount == '') {
-                            errors[i] = 'The Min amount (Salary) is required.';
-                            i++;
-                        }
-                        if (SpendMinAmount == '') {
-                            errors[i] = 'The Min amount (Spend) is required.';
-                            i++;
-                        }
-                        if (WealthMinAmount == '') {
-                            errors[i] = 'The Min amount (Wealth) is required.';
-                            i++;
-                        }
-                        /*if (FirstCapAmount == '') {
-                            errors[i] = 'The First cap amount is required.';
-                            i++;
-                        }*/
-                        if (baseInterest == '') {
-                            errors[i] = 'The Base interest is required.';
-                            i++;
-                        }
+                        });
+                        $.each(bonusInterests, function (k, v) {
+                            if (bonusInterests[k] == '') {
+                                errors[i] = 'The bonus interest is required.';
+                                i++;
 
-                        $.each(MaxPlacements, function (k, v) {
-                            if (MaxPlacements[k] == '') {
-                                errors[i] = 'The placement is required.';
-                                i++;
-                                rangeError = true;
                                 return false;
                             }
-                        });
-                        $.each(bonusInterestSalary, function (k, v) {
-                            if (bonusInterestSalary[k] == '') {
-                                errors[i] = 'The bonus interest (Salary) is required.';
-                                i++;
-                                return false;
-                            }
-                        });
-                        $.each(bonusInterestSpend, function (k, v) {
-                            if (bonusInterestSpend[k] == '') {
-                                errors[i] = 'The bonus interest (Spend) is required.';
-                                i++;
-                                return false;
-                            }
-                        });
-                        $.each(bonusInterestWealth, function (k, v) {
-                            if (bonusInterestWealth[k] == '') {
-                                errors[i] = 'The bonus interest (Wealth) is required.';
-                                i++;
-                                return false;
-                            }
-                        });
-                        var minPlacements = [];
-                        var min = 0;
-                        $.each(maxPlacements, function (k, v) {
-                            minPlacements[k] = Number(min);
-                            min = Number(v) + Number(1);
+
                         });
                     }
                 }
@@ -1522,14 +1922,16 @@
                 }
             }
         });
+
     });
     $(".alert-hide").on("click", function () {
         $("#error-div").addClass('display-none');
     });
 </script>
 <script type="text/javascript">
+
     function addMoreTextArea() {
-// Layout options
+        // Layout options
         var $newTextArea = $('<div />', {
             'id': '',
             'class': 'form-group'
@@ -1567,9 +1969,13 @@
         var SDP6 = [
             '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
         ];
+
+
         if (jQuery.inArray(formula, FDP1) !== -1) {
+
             var data = $('#fixDepositF1').find('input[name^="tenure[0]"]').serializeArray();
             var productType = $("#product-type").val();
+
             /*var legends = new Array();
              var data = $('#fixDepositF1').find('select[name^="legend[0]"]').serializeArray();
              $.each($('select[name^="legend"]'), function() {
@@ -1588,6 +1994,7 @@
                 $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
             });
         }
+
         if (jQuery.inArray(formula, SDP1) !== -1) {
             jQuery.ajax({
                 type: "POST",
@@ -1610,6 +2017,7 @@
                 $('#add-home-loan-placement-range-f1-button').html(addMoreRangeButton);
             });
         }
+
         if (jQuery.inArray(formula, SDP6) !== -1) {
             jQuery.ajax({
                 type: "POST",
@@ -1638,26 +2046,19 @@
                 url: "{{url('/admin/add-more-placement-range')}}",
                 data: {detail: data, range_id: range_id, formula: formula}
             }).done(function (data) {
+
                 $('#aioa-placement-range-f4').append(data);
                 var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-aioa-placement-range-f4-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
                 $('#add-aioa-placement-range-f4-button').html(addMoreRangeButton);
             });
         }
-        if (formula == 25) {
-            jQuery.ajax({
-                type: "POST",
-                url: "{{url('/admin/add-more-placement-range')}}",
-                data: {detail: data, range_id: range_id, formula: formula}
-            }).done(function (data) {
-                $('#aioa-placement-range-f6').append(data);
-                var addMoreRangeButton = ' <button type="button" class="btn btn-info pull-left mr-15 add-aioa-placement-range-f6-button" data-range-id= ' + range_id + ' onClick="addMorePlacementRange(this);"><i class="fa fa-plus"></i> </button>';
-                $('#add-aioa-placement-range-f6-button').html(addMoreRangeButton);
-            });
-        }
     }
+
     function addCounter() {
         var formula = $("#formula").val();
+
         var counterValue = $("#promotion-period").val();
+
         var FDP1 = ['<?php echo FIX_DEPOSIT_F1; ?>', '<?php echo PRIVILEGE_DEPOSIT_F6; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F1; ?>'];
         var SDP3 = ['<?php echo SAVING_DEPOSIT_F3; ?>', '<?php echo PRIVILEGE_DEPOSIT_F3; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F4; ?>'];
         var SDP5 = ['<?php echo SAVING_DEPOSIT_F5; ?>', '<?php echo PRIVILEGE_DEPOSIT_F5; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F6; ?>'];
@@ -1679,6 +2080,7 @@
             });
         }
     }
+
     function removePlacementRange(id) {
         var formula = $("#formula").val();
         var range_id = $(id).data('range-id');
@@ -1707,23 +2109,28 @@
         if (formula == 10) {
             $("#aioa_placement_range_f4_" + range_id).remove();
         }
-        if (formula == 25) {
-            $("#aioa_placement_range_f6_" + range_id).remove();
-        }
         else {
             $("#placement_range_" + range_id).remove();
         }
+
+
     }
+
     function addMoreFormulaDetail(id) {
+
         var formula_detail_id = $(id).data('formula-detail-id');
         var range_id = $(id).data('range-id');
         /*$(id).addClass('display-none');*/
+
         $("#remove-formula-detail-" + range_id + formula_detail_id).removeClass('display-none');
         formula_detail_id++;
         //alert(range_id + ' ' + formula_detail_id);
         $('#add-formula-detail-' + range_id + formula_detail_id).remove();
         // Layout options
+
+
         for (var i = 0; i <= parseInt(range_id); i++) {
+
             var $newTextArea = $('<div />', {
                 'id': 'formula_detail_' + i + formula_detail_id,
                 'class': 'form-group ' + formula_detail_id
@@ -1744,6 +2151,7 @@
                     + '</div>'
                     + '</div>'
                     + '  <div class="col-sm-1 col-sm-offset-1 " id="remove-formula-detail-' + i + formula_detail_id + '">'
+
                     + ' </div>'
                     + ' <div class="col-sm-2">&emsp;</div>'
             );
@@ -1760,34 +2168,46 @@
             var addMoreFormulaDetailButton = ' <button type="button" class="btn btn-info pull-left mr-15  " data-formula-detail-id="' + formula_detail_id + '" data-range-id="' + range_id + '" id="add-formula-detail-' + range_id + formula_detail_id + '" onClick="addMoreFormulaDetail(this); " > ' + ' <i class="fa fa-plus"> </i> </button>';
             $('#add-formula-detail-button').html(addMoreFormulaDetailButton);
         }
+
     }
+
     function removeFormulaDetail(id) {
         var formula = $("#formula").val();
         var formula_detail_id = $(id).data('formula-detail-id');
         $("." + formula_detail_id).remove();
     }
     function changeTenureValue(id) {
+
         var formula_detail_id = $(id).data('formula-detail-id');
         $(".tenure-" + formula_detail_id).val($(id).val());
     }
     $(document).ready(function () {
+
+
         if ($("#link").val().length != 0) {
             $("#target-div").show();
         } else {
             $("#target-div").hide();
+
         }
+
         $('#link').trigger("change");
         // #page 7 is id of category page.
+
+
     });
     $("input[id*=link]").on("change", function () {
         if (this.value.length != 0) {
             var input_value = this.value;
             //Set input value to lower case so HTTP or HtTp become http
             input_value = input_value.toLowerCase();
+
             //Check if string starts with http:// or https://
             var regExr = /^(http:|https:)\/\/.*$/m;
+
             //Test expression
             var result = regExr.test(input_value);
+
             //If http:// or https:// is not present add http:// before user input
             if (!result) {
                 var new_value = "http://" + input_value;
@@ -1802,7 +2222,9 @@
             $('#target').val('null').trigger('change');
         }
     });
+
     $('.iconpicker').iconpicker();
+
     function dateChange(obj) {
         var ongoingButton;
         var startDate = $("#promotion_start_date").val();
@@ -1826,11 +2248,14 @@
         var status = $(obj).data('status');
         var startDate = $("#promotion_start_date").data('date');
         var endDate = $("#promotion_end_date").data('date');
+
         if (status == true) {
             if ((startDate.length == 0) && (endDate.length == 0)) {
                 var d = new Date();
+
                 var month = d.getMonth() + 1;
                 var day = d.getDate();
+
                 var output = d.getFullYear() + '-' +
                         (('' + month).length < 2 ? '0' : '') + month + '-' +
                         (('' + day).length < 2 ? '0' : '') + day;
@@ -1851,10 +2276,13 @@
              $('#until-end-date').attr('disabled', false);*/
         }
         $('#ongoing').html(ongoingButton);
+
+
     }
     function changeOnGoingStatus1(obj) {
         var ongoingButton;
         var status = $(obj).data('status');
+
         if (status == true) {
             ongoingButton = '<button type="button" data-status="false" id="ongoing-status-1" class="btn btn-block btn-danger btn-social" onclick="changeOnGoingStatus1(this)"><i class="fa fa-times"></i> Ongoing</button>';
             $('#promotion-period').val('');
@@ -1866,10 +2294,13 @@
             $('#until-end-date').attr('disabled', true);
         }
         $('#ongoing-1').html(ongoingButton);
+
+
     }
     function changeApplyStatus(obj) {
         var applyButton;
         var status = $(obj).data('status');
+
         if (status == true) {
             $('#link_ad').attr('readonly', 'readonly');
             $("#apply-link-status").val("0");
@@ -1880,22 +2311,7 @@
             applyButton = '<button type="button" data-status="true" id="" class="btn btn-block btn-success btn-social" onclick="changeApplyStatus(this)"><i class="fa fa-check"></i>Enable</button>';
         }
         $('#apply-status').html(applyButton);
-    }
-    function changePaidAdsStatus(obj) {
-        var applyButton;
-        var status = $(obj).data('status');
-        if (status == true) {
-            $('.paid-ad').attr('disabled', 'disabled');
-            $('.paid-ad-text').attr('readonly', 'readonly');
-            $("#paid-ads-status").val("0");
-            applyButton = '<button type="button" data-status="false" id="" class="btn btn-block btn-danger  btn-social" onclick="changePaidAdsStatus(this)"><i class="fa fa-times"></i>Disable</button>';
-        } else {
-            $('.paid-ad').removeAttr('disabled');
-            $('.paid-ad-text').removeAttr('readonly');
-            $("#paid-ads-status").val("1");
-            applyButton = '<button type="button" data-status="true" id="" class="btn btn-block btn-success btn-social" onclick="changePaidAdsStatus(this)"><i class="fa fa-check"></i>Enable</button>';
-        }
-        $('#paid-ads').html(applyButton);
+
     }
     function changeAIO5Status(obj) {
         var applyButton;
@@ -1915,17 +2331,7 @@
             applyButton = '<i class="fa fa-check"></i>Enable';
         }
         $(obj).html(applyButton);
-    }
-    function changeRateType(obj) {
 
-        var key = $(obj).data('key');
-        var firstInput =  $('#'+key);        
-        if(obj.value=="null"){
-            firstInput.removeAttr("readonly");
-        }else{
-            var interestValue = $(obj).find(':selected').attr('data-interest');
-            firstInput.val(interestValue);
-            firstInput.attr('readonly', 'readonly');
-        }
     }
+
 </script>

@@ -11,10 +11,10 @@
             <li class="active">{{BLOG_MODULE}}</li>
         </ol>
     </section>
-    <?php if (!isset($filterCategory)) {
+    <?php if(!isset($filterCategory)){
         $filterCategory = 'all';
     } ?>
-            <!-- Main content -->
+    <!-- Main content -->
     <section class="content">
         <div class="row">
             @include('backend.inc.messages')
@@ -25,7 +25,7 @@
 
                         <h3 class="box-title">{{BLOG_MODULE_SINGLE.'s'}}</h3>
 
-
+                        
                         <a href="{{ route("blog-add",['category'=>$filterCategory]) }}" class="">
                             @if($CheckLayoutPermission[0]->create==1)
 
@@ -36,16 +36,12 @@
 
                         </a>
 
-                        <select name="filter_category" class="form-control"
-                                style="width: 10em;float: right;margin-right: 10px;">
+                        <select name="filter_category" class="form-control" style="width: 10em;float: right;margin-right: 10px;">
                             <option value="">-- Select --</option>
-                            <option value="all" @if(isset($filterCategory) && ($filterCategory=="all")) selected @endif>
-                                All
-                            </option>
+                            <option value="all" @if(isset($filterCategory) && ($filterCategory=="all")) selected @endif>All</option>
                             @if($menus->count())
                                 @foreach($menus as $singleMenu)
-                                    <option value="{{ $singleMenu->id }}"
-                                            @if(isset($filterCategory) && ($filterCategory==$singleMenu->id)) selected @endif>{{ $singleMenu->title }}</option>
+                                    <option value="{{ $singleMenu->id }}" @if(isset($filterCategory) && ($filterCategory==$singleMenu->id)) selected @endif>{{ $singleMenu->title }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -58,24 +54,44 @@
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
 
-                                        <table id="blogs" class="table ">
+                                        <table id="pages" class="table ">
                                             <thead>
                                             <tr>
-                                                <th>Action</th>
                                                 <th>Name</th>
-                                                <th>Status</th>
-                                                <th>Ads Status</th>
                                                 <th>Category</th>
                                                 <th>Slug</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @if($pages->count())
                                                 @foreach($pages as $page)
                                                     <tr>
+                                                        <td>
+                                                            {{ $page->name }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $page->menu_title }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $page->slug }}
+                                                        </td>
+                                                        <td>
+                                                            @if ($page->created_at == null)
+                                                                {{$page->created_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d h:i A", strtotime($page->created_at))   !!}
+
+                                                        </td>
+                                                        <td>@if ($page->updated_at == null)
+                                                                {{$page->updated_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d h:i A", strtotime($page->updated_at))   !!}
+
+                                                        </td>
+
                                                         <td class="text-center">
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Page"
@@ -95,45 +111,6 @@
 
 
                                                         </td>
-                                                        <td>
-                                                            {{ $page->name }}
-                                                        </td>
-                                                        <td>
-                                                            @if($page->status==1)
-                                                                Active
-                                                            @else
-                                                                Deactivate
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if($page->disable_ads==1)
-                                                                Disabled
-                                                            @else
-                                                                Enable
-                                                            @endif
-
-                                                        </td>
-                                                        <td>
-                                                            {{ $page->menu_title }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $page->slug }}
-                                                        </td>
-                                                        <td>
-                                                            @if ($page->created_at == null)
-                                                                {{$page->created_at}}
-                                                            @endif
-                                                            {!!  date("Y-m-d H:i", strtotime($page->created_at))   !!}
-
-                                                        </td>
-                                                        <td>@if ($page->updated_at == null)
-                                                                {{$page->updated_at}}
-                                                            @endif
-                                                            {!!  date("Y-m-d H:i", strtotime($page->updated_at))   !!}
-
-                                                        </td>
-
-
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -156,9 +133,9 @@
     </section>
     <!-- /.content -->
     <script type="text/javascript">
-        $("select[name='filter_category']").on("change", function () {
+        $("select[name='filter_category']").on("change", function() {
             var value = $(this).val();
-            window.location.href = "{{ url('admin/filter-category') }}/" + value;
+            window.location.href = "{{ url('admin/filter-category') }}/"+value;
         });
     </script>
 

@@ -23,7 +23,7 @@
         <tr>
             <td>Created on</td>
             <td>:</td>
-            <td>{{   date("Y-m-d H:i", strtotime($data['created_at']))  }}</td>
+            <td>{{   date("Y-m-d h:i A", strtotime($data['created_at']))  }}</td>
         </tr>
     @endif
 </table>

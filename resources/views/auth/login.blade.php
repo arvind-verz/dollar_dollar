@@ -64,7 +64,22 @@
     </div>
 
     {{--Page content start--}}
+    @if(count($errors) > 0)
+    <div class="col-md-12">
+        <div class="box-body">
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                @foreach($errors->all() as $error)
+                    <p>
+                        {!!  $error !!}
+                    </p>
+                @endforeach
 
+            </div>
+        </div>
+    </div>
+    @endif
     @if(session('status'))
         <div class="col-md-12">
             <div class="box-body">
@@ -90,28 +105,14 @@
                         <div class="form-group">
                             <label>Email</label>
                             <div class="form-icon"><i class="fa fa-envelope"></i>
-                                <input class="form-control" type="text" value="{{old('email')}}" name="email" placeholder="Enter Email Address Here">
+                                <input class="form-control" type="text" name="email" placeholder="Enter Email Address Here">
                             </div>
-                            @if ($errors->has('email'))
-                            <span class="text-danger">
-                                <strong>
-                                    {{ $errors->first('email') }}
-                                </strong>
-                            </span>
-                            @endif
                         </div>
                         <div class="form-group">
                             <label>Password</label>
                             <div class="form-icon"><i class="fa fa-lock"></i>
                                 <input class="form-control" type="password" name="password" placeholder="Enter Password Here">
                             </div>
-                            @if ($errors->has('password'))
-                            <span class="text-danger">
-                                <strong>
-                                    {{ $errors->first('password') }}
-                                </strong>
-                            </span>
-                            @endif
                         </div>
                         <div class="form-group actions">
                             <div class="ps-checkbox ps-checkbox--inline">
@@ -132,7 +133,7 @@
                                 <div class="col-xs-6">
                                     <button type="submit" class="ps-btn">Login</button>
                                 </div>
-                                <div class="col-xs-6"><a class="ps-btn ps-btn--blue" href="@if(isset($redirect_url)) {{ route('social-login',['provider'=>'facebook','redirect_url'=>$redirect_url]) }} @else {{ url('login/facebook') }} @endif">Connect with Facebook</a></div>
+                                <div class="col-xs-6"><a class="ps-btn ps-btn--blue" href="{{ url('login/facebook') }}">Connect with Facebook</a></div>
                             </div><a class="ps-btn ps-btn--outline" href="@if(isset($redirect_url)) {{ url('registration_page', ['redirect_url' => $redirect_url]) }} @else {{ url('registration') }} @endif">Signup</a>
                         </div>
                     </div>

@@ -1,13 +1,4 @@
 @extends('frontend.layouts.app')
-@section('description')
-    <meta name="description" content="{{$page->meta_description}}">
-@endsection
-@section('keywords')
-    <meta name="keywords" content="{{$page->meta_keyword}}">
-@endsection
-@section('author')
-    <meta name="author" content="{{$page->meta_title}}">
-@endsection
 @section('title', $page->title)
 @section('content')
     <?php
@@ -54,7 +45,7 @@
 
     {{--Page content start--}}
     <main class="ps-main">
-        <div class="container ps-document">
+        <div class="container">
             @if(session('error'))
                 <div class="row">
                     <div class="col-lg-12">
@@ -75,12 +66,11 @@
             ?>
             {{--Page content start--}}
             @if($page->slug!=THANK_SLUG)
-                <h3 class="ps-heading mb-20">
-                    <span>@if(!empty($page->icon))<i
-                                class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
-                </h3>
+                        <h3 class="ps-heading mb-20">
+                            <span>@if(!empty($page->icon))<i class="{{ $page->icon }}"></i>@endif {{$pageHeading}} {{implode(' ',$pageName)}} </span>
+                        </h3>
 
-                {!!  $page->contents !!}
+                        {!!  $page->contents !!}
             @else
                 {!!  $page->contents !!}
             @endif
@@ -106,7 +96,6 @@
                     @if (!is_null(old('components'))) {{ in_array(COMPONENTS_INVESTMENT,old('components'))? "CHECKED" : "" }} @endif/>
                     <label for="component-2">{{COMPONENTS_INVESTMENT}}</label>
                 </div>
-                <br/>
                 @if ($errors->has('components'))
                     <span class="text-danger">
                                                     <strong>{{ $errors->first('components') }}</strong>
@@ -126,7 +115,6 @@
                            @if (old('gender')==GENDER_FEMALE) checked="CHECKED"@endif/>
                     <label for="gender-2">{{GENDER_FEMALE}}</label>
                 </div>
-                <br/>
                 @if ($errors->has('gender'))
                     <span class="text-danger">
                                                     <strong>{{ $errors->first('gender') }}</strong>
@@ -137,8 +125,7 @@
                 <h5 class="ps-heading--3">3. What is your date of birth?</h5>
 
                 <div class="ps-form-icon max-500"><i class="fa fa-calendar"></i>
-                    <input class="form-control " id="datepicker" value="{{old('dob')}}" name="dob" type="text"
-                           placeholder="">
+                    <input class="form-control " id="datepicker" value="{{old('dob')}}" name="dob" type="text" placeholder="">
                 </div>
                 @if ($errors->has('dob'))
                     <span class="text-danger">
@@ -161,7 +148,6 @@
                            @if (old('smoke')==NO) checked="CHECKED"@endif/>
                     <label for="smoke-2">{{NO}}</label>
                 </div>
-                <br/>
                 @if ($errors->has('smoke'))
                     <span class="text-danger">
                                                     <strong>{{ $errors->first('smoke') }}</strong>
@@ -171,9 +157,7 @@
             <div class="form-group">
                 <h5 class="ps-heading--3">5. When is the best time to reach you?</h5>
 
-                <p>One of representative from DollarDollar's partner will go through the different quotes from different
-                    insurers that is most suitable to your needs. I consent that this assigned representative can
-                    contact me via the various communication (Voice Call, SMS and Email)</p>
+                <p>One of representative from DollarDollar's partner will go through the different quotes from different insurers that is most suitable to your needs. I consent that this assigned representative can contact me via the various communication (Voice Call, SMS and Email)</p>
 
                 <div class="ps-checkbox ps-checkbox--inline">
                     <input class="form-control" type="checkbox" id="time-1" value="{{TIME_ANYTIME}}" name="time[]"
@@ -200,9 +184,7 @@
                     @if (!is_null(old('time'))) {{ in_array(TIME_OTHER,old('time'))? "CHECKED" : "" }} @endif/>
                     <label for="time-5">{{TIME_OTHER}}</label>
                 </div>
-                <br/>
-
-                <div class="short-form mt-10 hide">
+                <div class="short-form mb-10 hide">
                     <input class="form-control" type="text" id="other-value" name="other_value" data-target="time-5"
                            onkeyup="checkOtherValidation(this)" placeholder="Please Specify"
                            value="{{old('other_value')}}">
@@ -223,7 +205,7 @@
 
                 <div class="form-icon"><i class="fa fa-user"></i>
                     <input class="form-control" type="text" name="full_name" placeholder="Enter Name Here"
-                           value="@if(old('full_name')){{old('full_name')}}@elseif(Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@endif">
+                           value="@if (Auth::user()){{Auth::user()->first_name.' '.Auth::user()->last_name}}@else {{old('full_name')}} @endif">
                 </div>
                 @if ($errors->has('full_name'))
                     <span class="text-danger">
@@ -236,7 +218,7 @@
 
                 <div class="form-icon"><i class="fa fa-envelope"></i>
                     <input class="form-control" type="text" name="email"
-                           value="@if(old('email')){{old('email')}}@elseif(Auth::user()){{Auth::user()->email}}@endif"
+                           value="@if (Auth::user()){{Auth::user()->email}}@else {{old('email')}} @endif"
                            placeholder="Enter Email Address Here">
                 </div>
                 @if ($errors->has('email'))
@@ -251,26 +233,22 @@
                 <div class="row">
                     <div class="col-xs-3">
                         <div class="form-icon"><i class="fa fa-globe"></i>
-                            <input class="form-control" type="text" placeholder="Country code +65" name="country_code"
-                                   value="@if(old('country_code')){{old('country_code')}}@elseif(Auth::user()){{Auth::user()->country_code}}@else +65 @endif">
+                            <input class="form-control" type="text" placeholder="+65" name="country_code"
+                                   value="{{ old('country_code') ? old('country_code') : (Auth::user()->country_code) ? Auth::user()->country_code : '+65' }}">
                             @if ($errors->has('country_code'))
                                 <span class="text-danger">
                                                     <strong>{{ $errors->first('country_code') }}</strong>
                                                     </span>
                             @endif
-                            {{--@if(Auth::check())
-                                <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit
-                                    Info</a>
-                            @endif--}}
+                            <a href="{{ route('account-information.edit', ['id'    =>  AUTH::user()->id, 'location'  =>  'life-insurance-enquiry']) }}">Edit Info</a>
                         </div>
 
                     </div>
                     <div class="col-xs-9">
                         <div class="form-icon"><i class="fa fa-mobile-phone"></i>
-                            <input class="form-control only_numeric" type="text"
-                                   placeholder="Telephone without country code"
+                            <input class="form-control" type="text" placeholder="Enter Mobile Number"
                                    name="telephone"
-                                   value="@if(old('telephone')){{old('telephone')}}@elseif(Auth::user()){{Auth::user()->tel_phone}}@endif">
+                                   value="@if (Auth::user()){{Auth::user()->tel_phone}}@else{{old('telephone')}}@endif">
 
                         </div>
                         @if ($errors->has('telephone'))
@@ -279,21 +257,6 @@
                                                     </span>
                         @endif
                     </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class=" recaptcha">
-                    {!! app('captcha')->display($attributes = [],
-                    $lang = []) !!}
-                    <span class="captcha-err">
-                    </span>
-                    @if ($errors->has('g-recaptcha-response'))
-                        <span class="text-danger">
-                        <strong>
-                            {{ $errors->first('g-recaptcha-response') }}
-                        </strong>
-                    </span>
-                    @endif
                 </div>
             </div>
             <div class="form-group submit">
@@ -308,40 +271,42 @@
         {!! $systemSetting->{$page->contact_or_offer} !!}
     @endif
     {{--contact us or what we offer section end--}}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var auth = '{{Auth::check()}}';
-            /*if (auth == '1') {
-             inputs_checked();
-             }*/
-            if ($("#time-5").is(":checked")) {
-                $("#other-value").parent("div").removeClass("hide");
-            }
-            function inputs_checked() {
-                $(" input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
-            }
+<script type="text/javascript">
+    $(document).ready(function() {
+        inputs_checked();
+        /*var inputs = $("input[name='other_value'], input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']");
+        inputs.prop("disabled", true);
+        $("input[name='components[]'], input[name='gender'], input[name='smoke'], input[name='time[]']").on("change", function() {
+            inputs_checked();
+        });*/
+        if ($("#time-5").is(":checked")) {
+            $("#other-value").parent("div").removeClass("hide");
+        }
+        function inputs_checked() {
+            $(" input[name='full_name'], input[name='email'], input[name='country_code'], input[name='telephone']").prop("readonly", true);
+        }
 
-        });
+    });
 
-        $(document).ready(function () {
-            //Date picker
-            $('#datepicker').datepicker({
-                autoclose: true,
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "-100:+0",
-                dateFormat: "yy-mm-dd"
-            });
+    $(document).ready(function () {
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true,
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0",
+            dateFormat: "yy-mm-dd"
         });
-        $("#time-5").on("change", function () {
-            if ($(this).is(":checked")) {
-                $("#other-value").parent("div").removeClass("hide");
-            }
-            else {
-                $("#other-value").parent("div").addClass("hide");
-                $('#other-value-error').html("");
-                $('#other-value').val("");
-            }
-        });
-    </script>
+    });
+    $("#time-5").on("change", function () {
+        if ($(this).is(":checked")) {
+            $("#other-value").parent("div").removeClass("hide");
+        }
+        else {
+            $("#other-value").parent("div").addClass("hide");
+            $('#other-value-error').html("");
+            $('#other-value').val("");
+        }
+    });
+</script>
 @endsection

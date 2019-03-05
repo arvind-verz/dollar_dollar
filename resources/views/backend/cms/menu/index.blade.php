@@ -61,18 +61,35 @@
                                         <table id="menus" class="table">
                                             <thead>
                                             <tr>
-                                                <th>Action</th>
                                                 <th>Title</th>
                                                 <th>View Order</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @if($menus->count())
                                                 @foreach($menus as $menu)
                                                     <tr>
+                                                        <td>
+                                                            {{ $menu->title }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $menu->view_order }}
+                                                        </td>
+                                                        <td>
+                                                            @if ($menu->created_at == null)
+                                                                {{$menu->created_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d h:i A", strtotime($menu->created_at))   !!}
+
+                                                        </td>
+                                                        <td>@if ($menu->updated_at == null)
+                                                                {{$menu->updated_at}}
+                                                            @endif
+                                                            {!!  date("Y-m-d h:i A", strtotime($menu->updated_at))   !!}
+                                                        </td>
                                                         <td class="text-center">
                                                             @if($CheckLayoutPermission[0]->edit==1)
                                                                 <a class="btn btn-app edit" title="Edit Menu"
@@ -92,35 +109,18 @@
 
                                                             <a class="btn btn-app list" title="Menu List"
                                                                href="{{ route("getSubMenus",["id"=>$menu->id]) }}">
-                                                                <i class="fa fa-list"></i> List
+                                                                <i class="fa fa-list"></i> List 
                                                                 @if(count($countSubMenu))
                                                                     @foreach($countSubMenu as $key => $count)
                                                                         @if($key==$menu->id)
-                                                                            <span class="badge">{{ count($count) }}</span>
+                                                                        <span class="badge">{{ count($count) }}</span>
                                                                         @endif
                                                                     @endforeach
                                                                 @endif
                                                             </a>
-                                                        </td>
-                                                        <td>
-                                                            {{ $menu->title }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $menu->view_order }}
-                                                        </td>
-                                                        <td>
-                                                            @if ($menu->created_at == null)
-                                                                {{$menu->created_at}}
-                                                            @endif
-                                                            {!!  date("Y-m-d H:i", strtotime($menu->created_at))   !!}
+
 
                                                         </td>
-                                                        <td>@if ($menu->updated_at == null)
-                                                                {{$menu->updated_at}}
-                                                            @endif
-                                                            {!!  date("Y-m-d H:i", strtotime($menu->updated_at))   !!}
-                                                        </td>
-
                                                     </tr>
                                                 @endforeach
                                             @endif

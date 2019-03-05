@@ -39,7 +39,7 @@
                             <li class="current"><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        @include('frontend.includes.vertical-ads-profile')
+                        @include('frontend.includes.vertical-ads')
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -48,11 +48,11 @@
                             <h3>Profile Information</h3>
                         </div>
                         <div class="ps-dashboard__content">
-                            <p>Hello, <strong> {{ AUTH::user()->first_name . ' ' . AUTH::user()->last_name }}</strong></p>
+                            <p>Hello, <strong> {{ AUTH::user()->first_name }}</strong></p>
 
                             <div class="ps-block--box info">
                                 <div class="ps-block__header">
-                                    <h5><img src="/img/icons/user.png" alt="">Account Information</h5>
+                                    <h5><img src="img/icons/user.png" alt="">Account Information</h5>
                                 </div>
                                 <div class="ps-block__content">
                                     {!! Form::open(['route' => ['account-information.update', AUTH::user()->id], 'method'   => 'POST']) !!}

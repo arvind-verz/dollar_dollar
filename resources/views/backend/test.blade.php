@@ -417,7 +417,7 @@
                                     <div class="form-group">
                                         {{Form::label('key_points', 'Key Points',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
-                                            {{Form::textarea('key_points', old('key_points'), ['id'=>'article-ckeditor', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
+                                            {{Form::textarea('key_points', old('key_points'), ['id' => '', 'class' => 'form-control page-contents', 'placeholder' => ''])}}
                                         </div>
                                     </div>
                                     <div class="form-group">

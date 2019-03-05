@@ -46,14 +46,13 @@
                                             <thead>
                                             <tr>
                                                 <th><input type="checkbox" name="all_bulk_remove"></th>
-                                                <th>Action</th>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
                                                 <th>Email</th>
                                                 <th>Role</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
-
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -63,24 +62,6 @@
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" name="bluk_remove[]" value="{{ $admin->id }}">
-                                                        </td>
-                                                        <td class="text-center">
-                                                            @if($CheckLayoutPermission[0]->edit==1)
-                                                                <a class="btn btn-app edit" title="Edit Brand"
-                                                                   href="{{ route("admins.edit",["id"=>$admin->id]) }}">
-                                                                    <i class="fa fa-edit"></i> Edit
-                                                                </a>
-                                                            @endif
-
-                                                            @if($CheckLayoutPermission[0]->delete==1)
-                                                                <a class="btn btn-app delete" title="Delete Brand"
-                                                                   onclick="return confirm('Are you sure to delete this?')"
-                                                                   href="{{ route("admins-destroy",["id"=>$admin->id]) }}">
-                                                                    <i class="fa fa-trash"></i> Delete
-                                                                </a>
-                                                            @endif
-
-
                                                         </td>
                                                         <td>
                                                             {!!   $admin->first_name !!}
@@ -98,17 +79,34 @@
                                                             @if($admin->created_at==null)
                                                                 {!! $admin->created_at                                                                                                                                           !!}
                                                             @else
-                                                                {!!  date("Y-m-d H:i", strtotime($admin->created_at))   !!}
+                                                                {!!  date("Y-m-d h:i A", strtotime($admin->created_at))   !!}
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @if($admin->updated_at==null)
                                                                 {!! $admin->updated_at !!}
                                                             @else
-                                                                {!!  date("Y-m-d H:i", strtotime($admin->updated_at))   !!}
+                                                                {!!  date("Y-m-d h:i A", strtotime($admin->updated_at))   !!}
                                                             @endif
                                                         </td>
+                                                        <td class="text-center">
+                                                            @if($CheckLayoutPermission[0]->edit==1)
+                                                                <a class="btn btn-app edit" title="Edit Brand"
+                                                                   href="{{ route("admins.edit",["id"=>$admin->id]) }}">
+                                                                    <i class="fa fa-edit"></i> Edit
+                                                                </a>
+                                                            @endif
 
+                                                            @if($CheckLayoutPermission[0]->delete==1)
+                                                                    <a class="btn btn-app delete" title="Delete Brand"
+                                                                       onclick="return confirm('Are you sure to delete this?')"
+                                                                       href="{{ route("admins-destroy",["id"=>$admin->id]) }}">
+                                                                        <i class="fa fa-trash"></i> Delete
+                                                                    </a>
+                                                            @endif
+
+
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             @endif

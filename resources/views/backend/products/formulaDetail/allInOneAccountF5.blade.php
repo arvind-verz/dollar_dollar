@@ -54,7 +54,7 @@
 
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Spend 1)</label>
+                                    <label for="">Bonus Interest (Spend 2)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="bonus_interest_spend_1_aioa5"
                                            value="{{ $value->bonus_interest_spend_1  }}"
@@ -70,7 +70,7 @@
                         <div class="col-sm-8 ">
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Minimum Requirement Amount (Spend 2)</label>
+                                    <label for="">Minimum Requirement Amount (Spend 1)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="minimum_spend_2_aioa5" value="{{ $value->minimum_spend_2  }}"
                                            placeholder="">
@@ -93,40 +93,17 @@
                         <div class="col-sm-8 ">
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Minimum Requirement Amount (Salary 1)</label>
+                                    <label for="">Minimum Requirement Amount (Salary)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="minimum_salary_aioa5" value="{{ $value->minimum_salary  }}"
                                            placeholder="">
 
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Salary 1)</label>
+                                    <label for="">Bonus Interest (Salary)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="bonus_interest_salary_aioa5"
                                            value="{{ $value->bonus_interest_salary  }}"
-                                           placeholder="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-2">&emsp;</div>
-                    </div>
-                    <div class="form-group ">
-                        <label for="title" class="col-sm-2 control-label"></label>
-
-                        <div class="col-sm-8 ">
-                            <div class="form-row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="">Minimum Requirement Amount (Salary 2)</label>
-                                    <input type="text" class="form-control only_numeric" id=""
-                                           name="minimum_salary_aioa5_2" value="{{ isset($value->minimum_salary_2)?$value->minimum_salary_2:null  }}"
-                                           placeholder="">
-
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Salary 2)</label>
-                                    <input type="text" class="form-control only_numeric" id=""
-                                           name="bonus_interest_salary_aioa5_2"
-                                           value="{{ isset($value->bonus_interest_salary_2)?$value->bonus_interest_salary_2:null  }}"
                                            placeholder="">
                                 </div>
                             </div>
@@ -162,14 +139,14 @@
                         <div class="col-sm-8 ">
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Minimum Requirement Amount (Wealth)</label>
+                                    <label for="">Minimum Requirement Amount (Privilege)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="minimum_privilege_pa_aioa5" value="{{ $value->minimum_privilege_pa  }}"
                                            placeholder="">
 
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="">Bonus Interest (Wealth)</label>
+                                    <label for="">Bonus Interest (Privilege)</label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="bonus_interest_privilege_aioa5"
                                            value="{{ $value->bonus_interest_privilege  }}"
@@ -421,14 +398,14 @@
                 <div class="col-sm-8 ">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Minimum Requirement Amount (Salary 1)</label>
+                            <label for="">Minimum Requirement Amount (Salary)</label>
                             <input type="text" class="form-control only_numeric" id=""
                                    name="minimum_salary_aioa5"
                                    placeholder="">
 
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Bonus Interest (Salary 1)</label>
+                            <label for="">Bonus Interest (Salary)</label>
                             <input type="text" class="form-control only_numeric" id=""
                                    name="bonus_interest_salary_aioa5"
                                    placeholder="">
@@ -443,36 +420,14 @@
                 <div class="col-sm-8 ">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Minimum Requirement Amount (Salary 2)</label>
-                            <input type="text" class="form-control only_numeric" id=""
-                                   name="minimum_salary_aioa5_2"
-                                   placeholder="">
-
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="">Bonus Interest (Salary 2)</label>
-                            <input type="text" class="form-control only_numeric" id=""
-                                   name="bonus_interest_salary_aioa5_2"
-                                   placeholder="">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">&emsp;</div>
-            </div>
-            <div class="form-group ">
-                <label for="title" class="col-sm-2 control-label"></label>
-
-                <div class="col-sm-8 ">
-                    <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <label for="">Minimum Requirement Amount (Wealth)</label>
+                            <label for="">Minimum Requirement Amount (Privilege)</label>
                             <input type="text" class="form-control only_numeric" id=""
                                    name="minimum_privilege_pa_aioa5"
                                    placeholder="">
 
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Bonus Interest (Wealth)</label>
+                            <label for="">Bonus Interest (Privilege)</label>
                             <input type="text" class="form-control only_numeric" id=""
                                    name="bonus_interest_privilege_aioa5"
                                    placeholder="">

@@ -44,7 +44,7 @@
                             <li><a href="{{ url('account-information') }}">Profile Information</a></li>
                             <li class="current"><a href="{{ url('product-management') }}">Product Management</a></li>
                         </ul>
-                        @include('frontend.includes.vertical-ads-profile')
+                        {{--@include('frontend.includes.vertical-ads')--}}
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
@@ -70,16 +70,12 @@
                                                 Other
                                             </option>
                                         </select>
-                                        
+                                        <input type="text" class="form-control hide" name="bank_id_other"
+                                               value="{{ $product_management->other_bank }}"
+                                               placeholder="Enter Bank or Financial Institution name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-                                        <input type="text" class="form-control hide orther-hide" name="bank_id_other" value="{{ $product_management->other_bank }}"
-                                                   placeholder="Enter Bank or Financial Institution name">
-                                    </div>
-                                </div>
-                             <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
                                     <div class="form-group">
                                         <label>Account Name</label>
                                         <input class="form-control" name="account_name" type="text"
@@ -92,15 +88,15 @@
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
                                                 <label>Amount<sup>*</sup></label>
-                                                <input class="form-control only_numeric" required="required" name="amount" type="text"
+                                                <input class="form-control" required="required" name="amount" type="text"
                                                        placeholder="Enter Amount" value="{{ $product_management->amount }}">
                                                 <!-- <span class="suffix_k">K</span> -->
                                             </div>
                                         </div>  
                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                             <div class="input-group form-group">
-                                                <label>Tenor</label>
-                                                <input type="text" class="form-control  only_numeric" name="tenure"
+                                                <label>Tenure</label>
+                                                <input type="text" class="form-control " name="tenure"
                                                        value="{{ $product_management->tenure }}">
                                             </div>
                                         </div>
@@ -134,10 +130,23 @@
                                                data-tooltip="{{$toolTip->reminder_tooltip}}"><i
                                                         class="fa fa-exclamation-circle"></i></a>
                                         @endif
+                                        {{--<select  class="form-control select2-multiple " id="reminder" disabled="disabled"
+                                                 name="reminder[]" multiple="multiple"
+                                                 style="width: 100%;height:45px;">
+                                            <option value="1 Day"
+                                                    @if(in_array('1 Day', $productReminder)) selected @endif>1 Day
+                                            </option>
+                                            <option value="1 Week"
+                                                    @if(in_array('1 Week', $productReminder)) selected @endif>1 Week
+                                            </option>
+                                            <option value="2 Week"
+                                                    @if(in_array('2 Week', $productReminder)) selected @endif>2 Week
+                                            </option>
+                                        </select>--}}
                                             <div class="reminder">
                                                 <label><input type="checkbox" name="reminder1" value="1 Day" @if($productReminder->reminder1=='1 Day')checked @endif ><span>1 Day</span></label>
                                                 <label><input type="checkbox" name="reminder2" value="1 Week" @if($productReminder->reminder2=='1 Week')checked @endif><span>1 Week</span></label>
-                                                <label><input type="checkbox" name="reminder3" value="2 Weeks" @if($productReminder->reminder3=='2 Weeks')checked @endif><span>2 Weeks</span></label>
+                                                <label><input type="checkbox" name="reminder3" value="2 Week" @if($productReminder->reminder3=='2 Week')checked @endif><span>2 Week</span></label>
                                             </div>
                                     </div>
                                 </div>
@@ -178,7 +187,7 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                                             <div class="form-group submit">
-                                                <label style="margin: 5px 0 5px;">Do not Send Reminders</label>
+                                                <label>Do not Send Reminders</label>
                                                 <input type="checkbox" class="form-control" name="dod_reminder"
                                                        @if(old('dod_reminder')==1) checked @endif>
 
@@ -230,13 +239,7 @@
                 $(".select2").select2("val", " ");
             }
             else {
-                if ($("input[name='dod_reminder']").is(":checked") !== false) {
-                    $('.reminder').find('input[type=checkbox]:checked').removeAttr('checked');
-                    $(".reminder").find('input[type=checkbox]').prop("disabled", true);
-                    $(".select2").select2("val", " ");
-                }else{
-                    $(".reminder").find('input[type=checkbox]').prop("disabled", false);
-                }
+                $(".reminder").find('input[type=checkbox]').prop("disabled", false);
                 $("input[name='dod_reminder']").attr("disabled", false);
             }
         });

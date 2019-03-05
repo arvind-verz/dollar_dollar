@@ -68,8 +68,7 @@ return [
     'numeric' => 'The :attribute must be a number.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
-    'required' => 'The :attribute field is required.',
+    'required' => 'The :attribute is required.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -103,18 +102,8 @@ return [
     'custom' => [
         'password' => [
             'confirmed' => 'The password confirmation does not match.',
-            'required' => 'This field is required.',
         ],
         'coverage' => [
-            'required' => 'This field is required.',
-        ],
-        'email' => [
-            'required' => 'This field is required.',
-        ],
-        'message' => [
-            'required' => 'This field is required.',
-        ],
-        'subject' => [
             'required' => 'This field is required.',
         ],
         'level' => [
@@ -157,30 +146,6 @@ return [
             'required' => 'This field is required.',
         ],
         'goal_other_value' => [
-            'required' => 'This field is required.',
-        ],
-        'bank_id' => [
-            'required' => 'This field is required.',
-        ],
-        'amount' => [
-            'required' => 'This field is required.',
-        ],
-        'start_date' => [
-            'before_or_equal' => 'Date range is not valid.',
-        ],
-        'first_name' => [
-            'required' => 'This field is required.',
-        ],
-        'last_name' => [
-            'required' => 'This field is required.',
-        ],
-        'contact' => [
-            'required' => 'This field is required.',
-        ],
-        'g-recaptcha-response' => [
-            'required' => 'This field is required.',
-        ],
-        'confirm_password' => [
             'required' => 'This field is required.',
         ],
     ],
