@@ -75,7 +75,7 @@
                           action="{{ URL::route('loan.search') }}#logo-detail"
                           method="post">
                         <h4>fill in your property loan details</h4>
-
+                        <input type="hidden" name="page_no" id="page-no" value="{{$pageNo}}">
                         <div class="ps-form__values">
                             <div class="form-group--label form-group--label1">
                                 <div class="form-group__content">
@@ -466,218 +466,14 @@
                         </div>
                     </div>
             @endif
-            @if(count($remainingProducts))
-                @foreach($remainingProducts as $product)
-                    <?php
-                    $productRanges = $product->product_range;
-                    $ads = json_decode($product->ads_placement);
-                    ?>
-                    @if($page->slug==LOAN_MODE && isset($ads[3]->ad_horizontal_image_popup_top))
-                        <div class="ps-poster-popup">
-                            <div class="close-popup">
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                            </div>
-                            <a href="{{ isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : 'javascript:void(0)' }}"
-                               target="_blank"><img
-                                        src="{{ isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : '' }}"
-                                        alt=""></a>
-                        </div>
-                    @endif
-                    <div class="ps-product " id="r-{{ $product->product_id }}">
-                        <div class="ps-product__header">
-                            <div class="slider-img"><img  alt=""
-                                                         src="{{ asset($product->brand_logo) }}"></div>
-                            <div class="ps-product__promo left">
-                                @if($product->shortlist_status==1)
-                                    <label class="ps-btn--checkbox ">
-                                        <input type="checkbox" id="" name="short_list_ids[]"
-                                               value="{{$product->product_id}}"
-                                               class="checkbox short-list"><span></span>Shortlist
-                                        this
-                                    </label>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="ps-loan__text1">{!! $product->bank_sub_title !!}</div>
-                        @if(!empty($product->ads_placement))
-                            @php
-                            $ads = json_decode($product->ads_placement);
-                            if(!empty($ads[0]->ad_image_horizontal)) {
-                            @endphp
-                            <div class="ps-product__poster"><a
-                                        href="{{ isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)' }}"
-                                        target="_blank"><img
-                                            src="{{ isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : '' }}"
-                                            alt=""></a></div>
-                            @php } @endphp
-                        @endif
-                        <div class="ps-loan-content ps-loan-content1">
-                            @if($product->formula_id==LOAN_F1)
-                                <div class="ps-product__table loan_table">
-                                    <div class="ps-table-wrap">
-                                        <table class="ps-table ps-table--product">
-                                            <thead>
-                                            <tr>
-                                                <th>YEARS</th>
-                                                <th>INTEREST RATE (PA)</th>
-                                                <th>Monthly Installment</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($productRanges as $key=> $productRange)
 
-                                                <tr>
-                                                    <td class=" ">
-                                                        YEAR {{$productRange->tenure}}</td>
-                                                    <td>{{$productRange->bonus_interest+$productRange->rate_interest_other}}%
-                                                        @if(!empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&empty($productRange->rate_name_other)&&empty($productRange->rate_interest_other))
-                                                            = {{$productRange->floating_rate_type}}
-                                                        @elseif(empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&!empty($productRange->rate_name_other)&& !empty($productRange->rate_interest_other))
-                                                            = {{$productRange->bonus_interest}}%
-                                                            @if($productRange->rate_interest_other<0)-@else
-                                                                +@endif {{abs($productRange->rate_interest_other)}}%
-                                                            ({{$productRange->rate_name_other}})
-                                                        @elseif(!empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&!empty($productRange->rate_name_other)&& !empty($productRange->rate_interest_other))
-                                                            = {{$productRange->floating_rate_type}}
-                                                            @if($productRange->rate_interest_other<0)-@else
-                                                                +@endif {{abs($productRange->rate_interest_other)}}%
-                                                            ({{$productRange->rate_name_other}})
-                                                        @elseif(empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&empty($productRange->rate_name_other)&& empty($productRange->rate_interest_other))
-                                                        @elseif(empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&empty($productRange->rate_name_other)&& !empty($productRange->rate_interest_other))
-                                                            = {{$productRange->bonus_interest}}%
-                                                            @if($productRange->rate_interest_other<0)-@else
-                                                                +@endif {{abs($productRange->rate_interest_other)}}%
-                                                        @elseif(empty($productRange->floating_rate_type)&&empty($productRange->bonus_interest)&&empty($productRange->rate_name_other)&& !empty($productRange->rate_interest_other))
-                                                        @elseif(!empty($productRange->floating_rate_type)&&!empty($productRange->bonus_interest)&&empty($productRange->rate_name_other)&& !empty($productRange->rate_interest_other))
-                                                            = {{$productRange->floating_rate_type}}
-                                                            @if($productRange->rate_interest_other<0)-@else
-                                                                +@endif {{abs($productRange->rate_interest_other)}}%
-                                                        @endif
-                                                    </td>
-                                                    <td class="">
-                                                        ${{round($productRange->monthly_payment)}} / mth
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                            <tr>
-                                                <td class="  ">THEREAFTER
-                                                </td>
-                                                <td>
-                                                    {{($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other)}}%
-                                                    @if(!empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&&empty($productRanges[0]->there_after_rate_interest_other))
-                                                        = {{$productRanges[0]->there_after_rate_type}}
-                                                    @elseif(empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&!empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
-                                                        = {{$productRanges[0]->there_after_bonus_interest}}%
-                                                        @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%
-                                                        ({{$productRanges[0]->there_after_rate_name_other}})
-                                                    @elseif(!empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&!empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
-                                                        = {{$productRanges[0]->there_after_rate_type}}
-                                                        @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%
-                                                        ({{$productRanges[0]->there_after_rate_name_other}})
-                                                    @elseif(empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& empty($productRanges[0]->there_after_rate_interest_other))
-                                                    @elseif(empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
-                                                        = {{$productRanges[0]->there_after_bonus_interest}}%
-                                                        @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%
-                                                    @elseif(empty($productRanges[0]->there_after_rate_type)&&empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
-                                                    @elseif(!empty($productRanges[0]->there_after_rate_type)&&!empty($productRanges[0]->there_after_bonus_interest)&&empty($productRanges[0]->there_after_rate_name_other)&& !empty($productRanges[0]->there_after_rate_interest_other))
-                                                        = {{$productRanges[0]->there_after_rate_type}}
-                                                        @if($productRange->there_after_rate_interest_other<0)-@else
-                                                            +@endif {{abs($productRange->there_after_rate_interest_other)}}%
-                                                    @endif
-                                                </td>
-                                                <td class=" ">
-                                                    ${{round($product->there_after_installment)}} / mth
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                @if(isset($ads[1]))
-                                    <?php
-                                    if(!empty($ads[1]->ad_image_vertical)) {
-                                    ?>
-                                    <div class="ps-product__poster">
-                                        <a href="{{ isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)' }}"
-                                           target="_blank"><img class="img-center"
-                                                                src="{{ isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : '' }}"
-                                                                alt=""></a>
-                                    </div>
-                                    <?php } ?>
-                                @endif
-                                <div class="ps-loan-right disable">
-                                    <h4>For ${{ Helper::inThousand($product->placement) }} loan
-                                        with {{$product->tenure}}
-                                        years&emsp;Loan Tenure</h4>
-                                    <p style="color:#303030 !important; padding:15px; font-weight: 800; ">Loan amount is not eligible for this Loan Package</p>
-
-                                    <div class="width-50">
-                                        <p>Rate Type : <br/><strong>{{$productRanges[0]->rate_type}}
-                                                @if($productRanges[0]->rate_type_name)
-                                                    ({{$productRanges[0]->rate_type_name}}) @endif</strong></p>
-
-                                        <p>Lock In : <br/><strong>{{$product->lock_in}} Years</strong></p>
-
-                                        <p>Property : <br/><strong>{{$productRanges[0]->property_type}}</strong></p>
-                                    </div>
-                                    <div class="width-50">
-                                        <p>Rate : <br/><strong>{{$product->avg_interest}}% ({{$product->avg_tenure}}
-                                                yrs avg)</strong></p>
-
-                                        <p>Mthly Instalment :<br/>
-                                            <strong>${{round($product->monthly_installment)}} ({{$product->avg_tenure}}
-                                                yrs avg)</strong>
-                                        </p>
-
-                                        <p>Minimum Loan :
-                                            <br/>
-                                            <strong>${{ Helper::inThousand($product->minimum_loan_amount) }}
-                                            </strong>
-                                    </div>
-
-                                </div>
-                            @endif
-                        </div>
-                        <div class="clearfix"></div>
-                        @if(!empty($product->ads_placement))
-                            @php
-                            $ads = json_decode($product->ads_placement);
-                            if(!empty($ads[2]->ad_horizontal_image_popup)) {
-                            @endphp
-                            <div class="ps-poster-popup">
-                                <div class="close-popup">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </div>
-                                <a target="_blank"
-                                   href="{{isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'}}"><img
-                                            src="{{ isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : '' }}"
-                                            alt="" target="_blank"></a>
-                            </div>
-                            @php } @endphp
-                        @endif
-                        <div class="ps-product__detail">
-                            {!! $product->product_footer !!}
-                        </div>
-                        <div class="ps-product__footer"><a class="ps-product__more" href="#">More Details<i
-                                        class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
-                                                                            href="#">More data<i
-                                        class="fa fa-angle-down"></i></a></div>
-                    </div>
-                    @if($products->count()<2 && $remainingProducts->count()>=2)
-                        @if(!empty($ads_manage) && $ads_manage->page_type==LOAN_MODE && $j==2)
-                            @include('frontend.includes.product-ads')
-                        @endif
-                    @elseif(empty($products->count()) && $j==$remainingProducts->count())
-                        @if(!empty($ads_manage) && $ads_manage->page_type==LOAN_MODE)
-                            @include('frontend.includes.product-ads')
-                        @endif
-                    @endif
-                    @php $j++; @endphp
-                @endforeach
-            @endif
+                <!--ul class="pagination pull-right" id="pagination">
+                    @for($i=1;$i<=$pages;$i++)
+                    <li><a href="javascript(0)" data-page-no="{{$i}}" style="@if($i==$pageNo) background: #fdb515!important;
+                                color: #ffffff!important; @endif">{{$i}}</a></li>
+                    @endfor
+                </ul-->
+                <a href="javascript:void(0)" class="load_more_content" data-id="{{ $product->id }}">Load more</a>
         </div>
         {{--Page content end--}}
         {{--contact us or what we offer section start--}}
@@ -699,4 +495,34 @@
             {!! Form::close() !!}
         </div>
     </div>
+    <script type="text/javascript">
+        $('#pagination li a').on('click', function(e){
+            e.preventDefault();
+            var pageNo = $(this).data('page-no');
+            $('#page-no').val(pageNo);
+            document.getElementById('search-form').submit();
+
+        });
+        
+        $("document").ready(function() {
+        	$("a.load_more_content").on("click", function(e) {
+        		e.preventDefault();
+        		var search_form = $("#search-form").serialize();
+        //alert(search_form);
+        	var id = $(this).attr("data-id");
+        	$.ajax({
+                  type: 'POST',
+                  url: "{{ url('/loan-load-more') }}",
+                  data: {id:id, _token:"{{csrf_token()}}"},
+                  dataType: "JSON",
+                  cache: false,
+                  success: function(data)
+                  {
+                      alert(data);
+                  }
+              });
+        	});
+        });
+        
+    </script>
 @endsection
