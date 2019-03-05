@@ -25,6 +25,6 @@ class UpdateDetailNotify extends Mailable
     public function build()
     {
         $data = $this->data;
-        return $this->subject('Update detail notification')->markdown('frontend.emails.updateDetailNotify', compact("data"));
+        return $this->subject('Update detail notification')->from($data['sender_email'], $data['sender_name'])->markdown('frontend.emails.updateDetailNotify', compact("data"));
     }
 }

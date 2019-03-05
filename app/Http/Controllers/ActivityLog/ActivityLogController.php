@@ -60,7 +60,7 @@ class ActivityLogController extends Controller
                 }
 
                 if ($detail->created_at) {
-                    $activity['date'] = date("Y-m-d h:i A", strtotime($detail->created_at));
+                    $activity['date'] = date("Y-m-d H:i", strtotime($detail->created_at));
                 } else {
                     $activity['date'] = $detail->created_at;
                 }

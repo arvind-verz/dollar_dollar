@@ -26,7 +26,7 @@ class HealthEnquiryMail extends Mailable
     {
         $data = $this->data;
         //dd($data);
-        return $this->markdown('backend.emails.healthEnquiry', compact("data"));
+        return $this->subject('Health Insurance Enquiry')->from($data['sender_email'], $data['sender_name'])->markdown('backend.emails.healthEnquiry', compact("data"));
     }
 
 }

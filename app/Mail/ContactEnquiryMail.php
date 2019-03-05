@@ -26,7 +26,7 @@ class ContactEnquiryMail extends Mailable
     {
         $data = $this->data;
         //dd($data);
-        return $this->markdown('backend.emails.contactEnquiry', compact("data"));
+        return $this->subject('Contact Enquiry Mail')->from($data['sender_email'], $data['sender_name'])->markdown('backend.emails.contactEnquiry', compact("data"));
     }
 
 }

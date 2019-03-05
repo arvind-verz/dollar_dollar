@@ -26,7 +26,7 @@ class LifeEnquiryMail extends Mailable
     {
         $data = $this->data;
         //dd($data);
-        return $this->markdown('backend.emails.lifeEnquiry', compact("data"));
+        return $this->subject('Life Insurance Enquiry')->from($data['sender_email'], $data['sender_name'])->markdown('backend.emails.lifeEnquiry', compact("data"));
     }
 
 }

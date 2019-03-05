@@ -32,34 +32,16 @@ class systemSettingLegendTableController extends Controller
         $this->validate($request, [
             'page_type' => 'required',
             'title' => 'required',
-            'icon' => 'required|image|max:1999'
+            'icon' => 'required',
+            'icon_background' => 'required',
         ]);
-        if (!is_dir('uploads')) {
-            mkdir('uploads');
-        }
-
-        if (!is_dir('uploads/legends')) {
-            mkdir('uploads/legends');
-        }
-        $destinationPath = 'uploads/legends'; // upload path
-        $legendIcon = '';
-        if ($request->hasFile('icon')) {
-
-            // Get filename with the extension
-            $filenameWithExt = $request->file('icon')->getClientOriginalName();
-            // Get just filename
-            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
-            // Get just ext
-            $extension = $request->file('icon')->getClientOriginalExtension();
-            // Filename to store
-            $legendIcon = $filename . '_' . time() . '.' . $extension;
-            // Upload Image
-            $request->file('icon')->move($destinationPath, $legendIcon);
-        }
+        
         $legend = new systemSettingLegendTable;
         $legend->page_type = $request->page_type;
         $legend->title = $request->title;
-        $legend->icon = $destinationPath . "/" .$legendIcon;
+        $legend->icon = $request->icon;
+        $legend->icon_background = $request->icon_background;
+        $legend->status = $request->status;
         $legend->created_at = Carbon::now()->toDateTimeString();
         $legend->save();
         //store activity log
@@ -92,40 +74,17 @@ class systemSettingLegendTableController extends Controller
         $this->validate($request, [
             'page_type' => 'required',
             'title' => 'required',
-            'icon' => 'image|nullable|max:1999',
+            'icon' => 'required',
+            'icon_background' => 'required',
         ]);
 
-        if (!is_dir('uploads')) {
-            mkdir('uploads');
-        }
-
-        if (!is_dir('uploads/legends')) {
-            mkdir('uploads/legends');
-        }
-        $destinationPath = 'uploads/legends'; // upload path
-        $legendIcon = '';
-        if ($request->hasFile('icon')) {
-
-            // Get filename with the extension
-            $filenameWithExt = $request->file('icon')->getClientOriginalName();
-            // Get just filename
-            $filename = preg_replace('/\s+/', '_', pathinfo($filenameWithExt, PATHINFO_FILENAME));
-            // Get just ext
-            $extension = $request->file('icon')->getClientOriginalExtension();
-            // Filename to store
-            $legendIcon = $filename . '_' . time() . '.' . $extension;
-            // Upload Image
-            $request->file('icon')->move($destinationPath, $legendIcon);
-        }
-        if ($request->hasFile('icon')) {
-            if (!$legend->icon ) {
-                \File::delete($legend->icon);
-            }
-            $legend->icon = $destinationPath . '/' . $legendIcon;
-        }
+        
         
         $legend->page_type = $request->page_type;
         $legend->title = $request->title;
+        $legend->icon = $request->icon;
+        $legend->icon_background = $request->icon_background;
+        $legend->status = $request->status;
         $legend->updated_at = Carbon::now()->toDateTimeString();
 
         $legend->save();

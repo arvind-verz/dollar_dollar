@@ -74,7 +74,7 @@ class PagesFrontController extends Controller
                 ->get();
 
             $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-                ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+                ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
                 ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
                 ->where('promotion_products.featured', '=', 1)
                 ->where('promotion_products.delete_status', '=', 0)
@@ -174,6 +174,7 @@ class PagesFrontController extends Controller
             }
             $redirect_url = "profile-dashboard";
             $slug = $page->slug;
+
 //get banners
             $banners = \Helper::getBanners($slug);
 
@@ -185,27 +186,19 @@ class PagesFrontController extends Controller
                 if ($slug == CONTACT_SLUG) {
                     return view('frontend.CMS.contact', compact("brands", "page", "systemSetting", "banners"));
                 } elseif ($slug == HEALTH_INSURANCE_ENQUIRY) {
+
                     $redirect_url = HEALTH_INSURANCE_ENQUIRY;
-                    if (Auth::check()) {
-                        return view('frontend.CMS.health-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
-                    } else {
-                        return view('auth.login', compact("redirect_url"));
-                    }
+                    return view('frontend.CMS.health-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+
                 } elseif ($slug == LIFE_INSURANCE_ENQUIRY) {
                     $redirect_url = LIFE_INSURANCE_ENQUIRY;
-                    if (Auth::check()) {
-                        return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
-                    } else {
-                        return view('auth.login', compact("redirect_url"));
-                    }
+                    return view('frontend.CMS.life-insurance-enquiry', compact("brands", "page", "systemSetting", "banners"));
+
                 } elseif ($slug == INVESTMENT_ENQUIRY) {
 
                     $redirect_url = INVESTMENT_ENQUIRY;
-                    if (Auth::check()) {
-                        return view('frontend.CMS.investment-enquiry', compact("brands", "page", "systemSetting", "banners"));
-                    } else {
-                        return view('auth.login', compact("redirect_url"));
-                    }
+                    return view('frontend.CMS.investment-enquiry', compact("brands", "page", "systemSetting", "banners"));
+
                 } elseif ($slug == LOAN_ENQUIRY) {
                     return view('frontend.CMS.loan-enquiry', compact("brands", "page", "systemSetting", "banners"));
 
@@ -217,6 +210,7 @@ class PagesFrontController extends Controller
                         ->where('page', 'account')
                         ->inRandomOrder()
                         ->get();
+                    //dd($adsCollection);
                     if ($adsCollection->count()) {
                         $ads = \Helper::manageAds($adsCollection);
                     }
@@ -336,6 +330,16 @@ class PagesFrontController extends Controller
                     /*sent all pages detail into this function and than return to blade file*/
                     return $this->forgotPassword($details);
 
+                } elseif ($slug == RESET_PASSWORD) {
+                    $details = [];
+                    $details['brands'] = $brands;
+                    $details['page'] = $page;
+                    $details['systemSetting'] = $systemSetting;
+                    $details['banners'] = $banners;
+
+                    /*sent all pages detail into this function and than return to blade file*/
+                    return $this->resetPassword($details);
+
                 }
 
             } elseif ($page->is_blog == 1) {
@@ -435,7 +439,7 @@ class PagesFrontController extends Controller
             ->get();
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', FIX_DEPOSIT)
             //->whereNotNull('promotion_products.formula_id')
@@ -467,6 +471,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         //dd($products);
         if (!count($request)) {
 
@@ -742,8 +747,12 @@ class PagesFrontController extends Controller
                     }
                     $products = $results;
                 }
+
             }
-            $products = $products->sortByDesc('featured')->values();
+            $featured = $products->where('featured', 1)->values();
+            $nonFeatured = $products->where('featured', 0)->values();
+            $products = $featured->merge($nonFeatured);
+            $sliderProducts = $products->where('promotion_formula_id', '!=', null)->values();
         }
         if ($remainingProducts->count()) {
 
@@ -792,9 +801,12 @@ class PagesFrontController extends Controller
 
                 }
             }
-            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
+            $featured = $remainingProducts->where('featured', 1)->values();
+            $nonFeatured = $remainingProducts->where('featured', 0)->values();
+            $remainingProducts = $featured->merge($nonFeatured);
+
         }
-        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", 'ads_manage'));
+        return view('frontend.products.fixed-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "sliderProducts", "searchFilter", "legendtable", "remainingProducts", 'ads_manage'));
 
     }
 
@@ -1004,7 +1016,7 @@ class PagesFrontController extends Controller
             ->get();
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', PRIVILEGE_DEPOSIT)
             //->whereNotNull('promotion_products.formula_id')
@@ -1026,6 +1038,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         //dd($products);
         if (!count($request)) {
 
@@ -1597,6 +1610,8 @@ class PagesFrontController extends Controller
                     $monthlySavingAmount = [];
                     $baseInterests = [];
                     $additionalInterests = [];
+                    $baseInterestAll = [];
+                    $additionalInterestsAll = [];
                     $totalInterestAmount = 0;
 
                     foreach ($product->months as $month) {
@@ -1606,15 +1621,17 @@ class PagesFrontController extends Controller
 
                     for ($i = 1; $i <= ($productRange->placement_month); $i++) {
 
-                        $baseInterest = round($productRange->base_interest * $placement * $i * 31 / (365 * 100), 2);
-                        $AdditionalInterest = round($productRange->bonus_interest * ($placement + $baseInterest) * $i * 31 / (365 * 100), 2);
+                        $baseInterest = round(($productRange->base_interest / 100) * ($placement * $i) * (31 / 365), 5);
+                        $AdditionalInterest = round((($productRange->bonus_interest / 100) * (($placement * $i) + $baseInterest)) * (31 / 365), 5);
+                        $baseInterestAll[] = $baseInterest;
+                        $additionalInterestsAll[] = $AdditionalInterest;
                         if (in_array($i, $product->months)) {
-                            $baseInterests[$i] = $baseInterest;
-                            $additionalInterests[$i] = $AdditionalInterest;
+                            $baseInterests[$i] = round($baseInterest, 2);;
+                            $additionalInterests[$i] = round($AdditionalInterest, 2);;
                         }
                     }
-                    $baseInterests[] = array_sum($baseInterests);
-                    $additionalInterests[] = array_sum($additionalInterests);
+                    $baseInterests[] = array_sum($baseInterestAll);
+                    $additionalInterests[] = array_sum($additionalInterestsAll);
                     $totalInterestAmount = end($baseInterests) + end($additionalInterests);
                     $product->row_headings = $rowHeadings;
                     $product->monthly_saving_amount = $monthlySavingAmount;
@@ -1761,7 +1778,10 @@ class PagesFrontController extends Controller
                     $products = $results;
                 }
             }
-            $products = $products->sortByDesc('featured')->values();
+            $featured = $products->where('featured', 1)->values();
+            $nonFeatured = $products->where('featured', 0)->values();
+            $products = $featured->merge($nonFeatured);
+            $sliderProducts = $products->where('promotion_formula_id', '!=', null)->values();
         }
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
@@ -1809,9 +1829,11 @@ class PagesFrontController extends Controller
 
                 }
             }
-            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
+            $featured = $remainingProducts->where('featured', 1)->values();
+            $nonFeatured = $remainingProducts->where('featured', 0)->values();
+            $remainingProducts = $featured->merge($nonFeatured);
         }
-        return view('frontend.products.privilege-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts"));
+        return view('frontend.products.privilege-deposit-products', compact("brands", "page", "systemSetting", "sliderProducts", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts"));
 
     }
 
@@ -1847,7 +1869,7 @@ class PagesFrontController extends Controller
             ->get();
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_products.promotion_type_id', '=', SAVING_DEPOSIT)
             //->whereNotNull('promotion_products.formula_id')
@@ -1869,6 +1891,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         //dd($products);
 
         if (!count($request)) {
@@ -1974,8 +1997,6 @@ class PagesFrontController extends Controller
                             } elseif ($untilEndDate > $todayDate) {
                                 $tenure = $todayDate->diffInDays($untilEndDate); // tenure in days
                             }
-
-
                         }
                         $product->duration = $tenure;
                         $product->total_interest = $productRange->bonus_interest + $productRange->board_rate;
@@ -2293,6 +2314,8 @@ class PagesFrontController extends Controller
                     $monthlySavingAmount = [];
                     $baseInterests = [];
                     $additionalInterests = [];
+                    $baseInterestAll = [];
+                    $additionalInterestsAll = [];
                     $totalInterestAmount = 0;
 
                     foreach ($product->months as $month) {
@@ -2302,15 +2325,17 @@ class PagesFrontController extends Controller
 
                     for ($i = 1; $i <= ($productRange->placement_month); $i++) {
 
-                        $baseInterest = round($productRange->base_interest * $placement * $i * 31 / (365 * 100), 2);
-                        $AdditionalInterest = round($productRange->bonus_interest * ($placement + $baseInterest) * $i * 31 / (365 * 100), 2);
+                        $baseInterest = round(($productRange->base_interest / 100) * ($placement * $i) * (31 / 365), 5);
+                        $AdditionalInterest = round((($productRange->bonus_interest / 100) * (($placement * $i) + $baseInterest)) * (31 / 365), 5);
+                        $baseInterestAll[] = $baseInterest;
+                        $additionalInterestsAll[] = $AdditionalInterest;
                         if (in_array($i, $product->months)) {
-                            $baseInterests[$i] = $baseInterest;
-                            $additionalInterests[$i] = $AdditionalInterest;
+                            $baseInterests[$i] = round($baseInterest, 2);;
+                            $additionalInterests[$i] = round($AdditionalInterest, 2);;
                         }
                     }
-                    $baseInterests[] = array_sum($baseInterests);
-                    $additionalInterests[] = array_sum($additionalInterests);
+                    $baseInterests[] = array_sum($baseInterestAll);
+                    $additionalInterests[] = array_sum($additionalInterestsAll);
                     $totalInterestAmount = end($baseInterests) + end($additionalInterests);
                     $product->row_headings = $rowHeadings;
                     $product->monthly_saving_amount = $monthlySavingAmount;
@@ -2457,7 +2482,10 @@ class PagesFrontController extends Controller
                     $products = $results;
                 }
             }
-            $products = $products->sortByDesc('featured')->values();
+            $featured = $products->where('featured', 1)->values();
+            $nonFeatured = $products->where('featured', 0)->values();
+            $products = $featured->merge($nonFeatured);
+            $sliderProducts = $products->where('promotion_formula_id', '!=', null)->values();
         }
         if ($remainingProducts->count()) {
 
@@ -2506,9 +2534,11 @@ class PagesFrontController extends Controller
 
                 }
             }
-            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
+            $featured = $remainingProducts->where('featured', 1)->values();
+            $nonFeatured = $remainingProducts->where('featured', 0)->values();
+            $remainingProducts = $featured->merge($nonFeatured);
         }
-        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "remainingProducts", "ads_manage"));
+        return view('frontend.products.saving-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "sliderProducts", "searchFilter", "legendtable", "remainingProducts", "ads_manage"));
     }
 
     public function product_search_homepage(Request $request)
@@ -2537,11 +2567,12 @@ class PagesFrontController extends Controller
 
     public function search_foreign_currency_deposit(Request $request)
     {
-        return $this->foreign_currency($request);
+        return $this->foreign_currency($request->all());
     }
 
     public function foreign_currency($request)
     {
+
         $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
@@ -2556,10 +2587,9 @@ class PagesFrontController extends Controller
 
 
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
-        $currency = isset($request['currency']) ? $request['currency'] : null;
+        $currency = isset($request['currency']) ? $request['currency'] : 11;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MAXIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
-
 
         //dd($searchValue,$searchFilter);
         DB::connection()->enableQueryLog();
@@ -2568,7 +2598,7 @@ class PagesFrontController extends Controller
             ->get();
 
         $products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('currency', 'promotion_products.currency', '=', 'currency.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_types.id', '=', FOREIGN_CURRENCY_DEPOSIT)
@@ -2596,6 +2626,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         //dd($products);
         if (!count($request)) {
 
@@ -2606,6 +2637,7 @@ class PagesFrontController extends Controller
         if ($currency) {
             $products = $products->where('currency', $currency);
         }
+
         foreach ($products as $key => &$product) {
             //dd($product);
             $defaultSearch = DefaultSearch::where('promotion_id', FOREIGN_CURRENCY_DEPOSIT)->first();
@@ -2621,6 +2653,7 @@ class PagesFrontController extends Controller
                 $searchFilter['search_value'] = $defaultPlacement;
                 $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
+                $searchFilter['currency'] = 11;
             } else {
                 $placement = 0;
                 $searchFilter = $request;
@@ -3166,6 +3199,8 @@ class PagesFrontController extends Controller
                     $monthlySavingAmount = [];
                     $baseInterests = [];
                     $additionalInterests = [];
+                    $baseInterestAll = [];
+                    $additionalInterestsAll = [];
                     $totalInterestAmount = 0;
 
                     foreach ($product->months as $month) {
@@ -3175,15 +3210,17 @@ class PagesFrontController extends Controller
 
                     for ($i = 1; $i <= ($productRange->placement_month); $i++) {
 
-                        $baseInterest = round($productRange->base_interest * $placement * $i * 31 / (365 * 100), 2);
-                        $AdditionalInterest = round($productRange->bonus_interest * ($placement + $baseInterest) * $i * 31 / (365 * 100), 2);
+                        $baseInterest = round(($productRange->base_interest / 100) * ($placement * $i) * (31 / 365), 5);
+                        $AdditionalInterest = round((($productRange->bonus_interest / 100) * (($placement * $i) + $baseInterest)) * (31 / 365), 5);
+                        $baseInterestAll[] = $baseInterest;
+                        $additionalInterestsAll[] = $AdditionalInterest;
                         if (in_array($i, $product->months)) {
-                            $baseInterests[$i] = $baseInterest;
-                            $additionalInterests[$i] = $AdditionalInterest;
+                            $baseInterests[$i] = round($baseInterest, 2);;
+                            $additionalInterests[$i] = round($AdditionalInterest, 2);;
                         }
                     }
-                    $baseInterests[] = array_sum($baseInterests);
-                    $additionalInterests[] = array_sum($additionalInterests);
+                    $baseInterests[] = array_sum($baseInterestAll);
+                    $additionalInterests[] = array_sum($additionalInterestsAll);
                     $totalInterestAmount = end($baseInterests) + end($additionalInterests);
                     $product->row_headings = $rowHeadings;
                     $product->monthly_saving_amount = $monthlySavingAmount;
@@ -3332,7 +3369,10 @@ class PagesFrontController extends Controller
                     $products = $results;
                 }
             }
-            $products = $products->sortByDesc('featured')->values();
+            $featured = $products->where('featured', 1)->values();
+            $nonFeatured = $products->where('featured', 0)->values();
+            $products = $featured->merge($nonFeatured);
+            $sliderProducts = $products->where('promotion_formula_id', '!=', null)->values();
         }
         if ($remainingProducts->count()) {
 
@@ -3381,9 +3421,11 @@ class PagesFrontController extends Controller
 
                 }
             }
-            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
+            $featured = $remainingProducts->where('featured', 1)->values();
+            $nonFeatured = $remainingProducts->where('featured', 0)->values();
+            $remainingProducts = $featured->merge($nonFeatured);
         }
-        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "legendtable", "ads_manage", "remainingProducts", "currencies"));
+        return view('frontend.products.foreign-currency-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "searchFilter", "sliderProducts", "legendtable", "ads_manage", "remainingProducts", "currencies"));
 
     }
 
@@ -3420,7 +3462,7 @@ class PagesFrontController extends Controller
         $toolTips = ToolTip::where('promotion_id', ALL_IN_ONE_ACCOUNT)->first();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_types.id', '=', ALL_IN_ONE_ACCOUNT)
@@ -3441,6 +3483,7 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         foreach ($promotion_products as $key => $product) {
             $defaultSearch = DefaultSearch::where('promotion_id', ALL_IN_ONE_ACCOUNT)->first();
             if ($defaultSearch) {
@@ -3472,8 +3515,8 @@ class PagesFrontController extends Controller
                 $searchFilter['salary'] = $defaultSalary;
                 $searchFilter['giro'] = $defaultGiro;
                 $searchFilter['spend'] = $defaultSpend;
-                $searchFilter['privilege'] = $defaultLoan;
-                $searchFilter['loan'] = $defaultPrivilege;
+                $searchFilter['privilege'] = $defaultPrivilege;
+                $searchFilter['loan'] = $defaultLoan;
                 $searchFilter['filter'] = INTEREST;
                 $searchFilter['sort_by'] = MAXIMUM;
             } else {
@@ -3494,14 +3537,16 @@ class PagesFrontController extends Controller
             }
             $status = false;
             $productRanges = json_decode($product->product_range);
-            //dd($searchFilter);
+
             if ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F1) {
                 $totalInterests = [];
                 $interestEarns = [];
                 $product->highlight = false;
                 $product->salary_highlight = false;
+                $product->salary_highlight_2 = false;
                 $product->payment_highlight = false;
                 $product->spend_highlight = false;
+                $product->spend_highlight_2 = false;
                 $product->privilege_highlight = false;
                 $product->loan_highlight = false;
                 $product->bonus_highlight = false;
@@ -3528,7 +3573,11 @@ class PagesFrontController extends Controller
 
                     $totalInterest = 0;
                     if ($status == true) {
-                        if ($salary > 0 && $productRange->minimum_salary <= $salary) {
+                        if (isset($productRange->minimum_salary_2) && $salary > 0 && $productRange->minimum_salary_2 <= $salary) {
+                            $product->salary_highlight_2 = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary_2;
+                            $criteriaMatchCount++;
+                        } elseif ($salary > 0 && $productRange->minimum_salary <= $salary) {
                             $product->salary_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
                             $criteriaMatchCount++;
@@ -3538,7 +3587,11 @@ class PagesFrontController extends Controller
                             $totalInterest = $totalInterest + $productRange->bonus_interest_giro_payment;
                             $criteriaMatchCount++;
                         }
-                        if ($spend > 0 && $productRange->minimum_spend <= $spend) {
+                        if (isset($productRange->minimum_spend_2) && $spend > 0 && $productRange->minimum_spend_2 <= $spend) {
+                            $product->spend_highlight_2 = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_spend_2;
+                            $criteriaMatchCount++;
+                        } elseif ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $product->spend_highlight = true;
                             $totalInterest = $totalInterest + $productRange->bonus_interest_spend;
                             $criteriaMatchCount++;
@@ -3600,9 +3653,9 @@ class PagesFrontController extends Controller
                 $interestEarns = [];
                 $criteria = null;
                 //$placement = 0;
-                if (($spend >= $productRanges[0]->minimum_spend) && ($salary >= $productRanges[0]->minimum_salary || $giro >= $productRanges[0]->minimum_giro_payment)) {
+                if ((($spend >= $productRanges[0]->minimum_spend)) && (($salary >= $productRanges[0]->minimum_salary) || ($giro >= $productRanges[0]->minimum_giro_payment))) {
                     $criteriaMatchCount = 1;
-                    if ($salary >= $productRanges[0]->minimum_salary) {
+                    if ($salary > 0 && $productRanges[0]->minimum_salary <= $salary) {
                         $criteriaMatchCount++;
                     }
                     if ($giro >= $productRanges[0]->minimum_giro_payment) {
@@ -3687,7 +3740,12 @@ class PagesFrontController extends Controller
                     }
                 }
 
-                $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
+                if (count($totalInterests)) {
+                    $product->total_interest = round(array_sum($totalInterests) / count($totalInterests), 2);
+                } else {
+                    $product->total_interest = 0;
+                }
+
                 $product->interest_earned = array_sum($interestEarns);
                 $product->placement = $placement;
                 $product->product_range = $productRanges;
@@ -3714,6 +3772,17 @@ class PagesFrontController extends Controller
                 $product->hire_loan = false;
                 $product->renovation_loan = false;
                 $product->unit_trust = false;
+                $product->salary_highlight = false;
+                $product->salary_highlight_2 = false;
+                $product->payment_highlight = false;
+                $product->spend_highlight = false;
+                $product->spend_highlight_2 = false;
+                $product->housing_loan_highlight = false;
+                $product->education_loan_highlight = false;
+                $product->hire_loan_highlight = false;
+                $product->renovation_loan_highlight = false;
+                $product->life_insurance_highlight = false;
+                $product->unit_trust_highlight = false;
                 $totalInterests = [];
                 $interestEarns = [];
 
@@ -3733,39 +3802,49 @@ class PagesFrontController extends Controller
                     }
                     $totalInterest = 1;
                     if ($status == true) {
+
                         if ($salary > 0 && $productRange->minimum_salary <= $salary) {
                             $criteriaMatchCount++;
+                            $product->salary_highlight = true;
                         }
                         if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
                             $criteriaMatchCount++;
+                            $product->payment_highlight = true;
                         }
                         if ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
+                            $product->spend_highlight = true;
                         }
                         if ($privilege > 0 && $productRange->minimum_insurance <= ($privilege / 12)) {
                             $criteriaMatchCount++;
                             $product->life_insurance = true;
+                            $product->life_insurance_highlight = true;
                         }
                         if ($privilege > 0 && $productRange->minimum_unit_trust <= ($privilege / 12)) {
                             $criteriaMatchCount++;
                             $product->unit_trust = true;
+                            $product->unit_trust_highlight = true;
                         }
                         if ($loan > 0 && $productRange->minimum_hire_purchase_loan <= ($loan)) {
                             $criteriaMatchCount++;
                             $product->hire_loan = true;
+                            $product->hire_loan_highlight = true;
 
                         }
                         if ($loan > 0 && $productRange->minimum_renovation_loan <= ($loan)) {
                             $criteriaMatchCount++;
                             $product->renovation_loan = true;
+                            $product->renovation_loan_highlight = true;
                         }
                         if ($loan > 0 && $productRange->minimum_home_loan <= ($loan)) {
                             $criteriaMatchCount++;
                             $product->housing_loan = true;
+                            $product->housing_loan_highlight = true;
                         }
                         if ($loan > 0 && $productRange->minimum_education_loan <= ($loan)) {
                             $criteriaMatchCount++;
                             $product->education_loan = true;
+                            $product->education_loan_highlight = true;
                         }
 
                         if ($criteriaMatchCount == 1) {
@@ -3816,6 +3895,8 @@ class PagesFrontController extends Controller
             } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F4) {
                 //dd($product);
                 $product->highlight = false;
+                $product->criteria_a_highlight = false;
+                $product->criteria_b_highlight = false;
                 $maxRanges = [];
                 $totalInterest = 0;
                 $interestEarn = 0;
@@ -3828,7 +3909,8 @@ class PagesFrontController extends Controller
                 $criteriaMatchCount = 0;
                 $criteriaValue = 0;
 
-                if ($salary > 0 && $baseDetail->minimum_salary <= $salary) {
+
+                if ($salary > 0 && ($baseDetail->minimum_salary <= $salary)) {
                     $criteriaValue = $criteriaValue + $salary;
                     $criteriaCount++;
                     if ($spend > 0 && $baseDetail->minimum_spend <= $spend) {
@@ -3856,11 +3938,14 @@ class PagesFrontController extends Controller
                         $status = true;
                         $criteria = "bonus_interest_criteria_a";
                         $highlight = "criteria_a_highlight";
+                        $product->criteria_a_highlight = true;
+
 
                     } elseif ($criteriaMatchCount >= 2) {
                         $status = true;
                         $criteria = "bonus_interest_criteria_b";
                         $highlight = "criteria_b_highlight";
+                        $product->criteria_b_highlight = true;
 
                     } else {
                         $status = false;
@@ -4007,12 +4092,14 @@ class PagesFrontController extends Controller
                                 $criteriaMatchCount++;
                             }
                         }
-                        if (!empty($productRange->minimum_salary)) {
-                            if ($salary > 0 && $productRange->minimum_salary <= $salary) {
-                                $product->salary_highlight = true;
-                                $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
-                                $criteriaMatchCount++;
-                            }
+                        if (isset($productRange->minimum_salary_2) && $salary > 0 && $productRange->minimum_salary_2 <= $salary) {
+                            $product->salary_highlight_2 = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary_2;
+                            $criteriaMatchCount++;
+                        } elseif ($salary > 0 && $productRange->minimum_salary <= $salary) {
+                            $product->salary_highlight = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
+                            $criteriaMatchCount++;
                         }
                         if (!empty($productRange->minimum_giro_payment)) {
                             if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
@@ -4079,6 +4166,218 @@ class PagesFrontController extends Controller
                     $remainingProducts[] = $product;
                 }
 
+            } elseif ($product->promotion_formula_id == ALL_IN_ONE_ACCOUNT_F6) {
+
+                //dd($productRanges);
+                $criteriaMatchCount = 0;
+                $product->highlight_index = 0;
+                $product->highlight = false;
+
+                $product->salary_highlight = false;
+                $product->spend_highlight = false;
+                $product->other_highlight = false;
+                $product->wealth_highlight = false;
+                $product->grow_highlight = false;
+                $product->boost_highlight = false;
+                $maxRanges = [];
+                $minRanges = [];
+                $totalInterests = [];
+                $interestEarns = [];
+                $criteria = null;
+                $salaryStatus = false;
+                $spendStatus = false;
+                $otherStatus = false;
+                $wealthStatus = false;
+                $growStatus = true;
+                $boostStatus = false;
+                $baseInterest = true;
+
+
+                //$placement = 0;
+                if ($salary >= $productRanges[0]->minimum_salary) {
+                    $salaryStatus = true;
+                }
+                if ($spend >= $productRanges[0]->minimum_spend) {
+                    $spendStatus = true;
+                }
+                if ($productRanges[0]->status_other == 1 && !is_null($productRanges[0]->other_interest_name)) {
+                    $otherStatus = true;
+                    $product->other_highlight = true;
+                }
+                if ($privilege > 0 && ($productRanges[0]->minimum_wealth <= ($privilege / 12))) {
+                    $wealthStatus = true;
+                }
+
+                foreach ($productRanges as $key => $productRange) {
+                    $productRange->salary_highlight = false;
+                    $productRange->spend_highlight = false;
+                    $productRange->other_highlight = false;
+                    $productRange->wealth_highlight = false;
+                    $maxRanges[] = $productRange->max_range;
+                    $minRanges[] = $productRange->min_range;
+                    if ($searchValue >= $productRange->min_range) {
+                        $placement = (int)$searchValue;
+                        $status = true;
+                    } elseif (empty($placement) && (count($productRanges) - 1) == ($key)) {
+                        $placement = $productRange->max_range;
+                        $status = false;
+                    }
+                }
+                $maxPlacement = array_last(array_sort($maxRanges));
+                $minPlacement = array_last(array_sort($minRanges));
+                $lastRange = array_last($productRanges);
+                $lastCalculatedAmount = 0;
+                $interestRangeCount = 1;
+                $interestPercentTotal = 0;
+                foreach ($productRanges as $k => $productRange) {
+                    $interestEarn = 0;
+                    if ($minPlacement == $productRange->min_range && $minPlacement <= $placement) {
+                        if ($lastCalculatedAmount < $placement) {
+                            if ($salaryStatus == true) {
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_salary / 100), 2);
+                                $productRange->salary_highlight = true;
+                                $product->salary_highlight = true;
+                                $interestPercentTotal += $lastRange->bonus_interest_salary;
+                            }
+                            if ($spendStatus == true) {
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_spend / 100), 2);
+                                $productRange->spend_highlight = true;
+                                $product->spend_highlight = true;
+                                $interestPercentTotal += $lastRange->bonus_interest_spend;
+                            }
+                            if ($otherStatus == true) {
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_other / 100), 2);
+                                $productRange->other_highlight = true;
+                                $product->other_highlight = true;
+                                $interestPercentTotal += $lastRange->bonus_interest_other;
+
+                            }
+                            if ($wealthStatus == true) {
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($lastRange->bonus_interest_wealth / 100), 2);
+                                $productRange->wealth_highlight = true;
+                                $product->wealth_highlight = true;
+                                $interestPercentTotal += $lastRange->bonus_interest_wealth;
+                            }
+
+                            $interestEarns[] = $interestEarn;
+
+
+                            $productRange->above_range = true;
+                            $product->highlight_index = $k;
+                            $lastCalculatedAmount = $placement;
+                        }
+                        $productRange->interest_earn = $interestEarn;
+                    } else {
+                        if ($productRange->max_range < $placement) {
+                            if ($salaryStatus == true) {
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_salary / 100), 2);
+                                $productRange->salary_highlight = true;
+                                $product->salary_highlight = true;
+                                $interestPercentTotal += $productRange->bonus_interest_salary;
+                            }
+                            if ($spendStatus == true) {
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_spend / 100), 2);
+                                $productRange->spend_highlight = true;
+                                $product->spend_highlight = true;
+                                $interestPercentTotal += $productRange->bonus_interest_spend;
+                            }
+                            if ($otherStatus == true) {
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_other / 100), 2);
+                                $productRange->other_highlight = true;
+                                $product->other_highlight = true;
+                                $interestPercentTotal += $productRange->bonus_interest_other;
+
+                            }
+                            if ($wealthStatus == true) {
+                                $interestEarn += round(($productRange->max_range - $lastCalculatedAmount) * ($productRange->bonus_interest_wealth / 100), 2);
+                                $productRange->wealth_highlight = true;
+                                $product->wealth_highlight = true;
+                                $interestPercentTotal += $productRange->bonus_interest_wealth;
+                            }
+
+                            $interestEarns[] = $interestEarn;
+                            $product->highlight_index = $k;
+                            //dd($wealthStatus,$privilege);
+                            //$totalInterests[] = $productRange->$criteria;
+                            $lastCalculatedAmount = $productRange->max_range;
+                        } else {
+                            if ($lastCalculatedAmount < $placement) {
+
+                                if ($salaryStatus == true) {
+                                    $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_salary / 100), 2);
+                                    $productRange->salary_highlight = true;
+                                    $product->salary_highlight = true;
+                                    $interestPercentTotal += $productRange->bonus_interest_salary;
+                                }
+                                if ($spendStatus == true) {
+                                    $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_spend / 100), 2);
+                                    $productRange->spend_highlight = true;
+                                    $product->spend_highlight = true;
+                                    $interestPercentTotal += $productRange->bonus_interest_spend;
+                                }
+                                if ($otherStatus == true) {
+                                    $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_other / 100), 2);
+                                    $productRange->other_highlight = true;
+                                    $product->other_highlight = true;
+                                    $interestPercentTotal += $productRange->bonus_interest_other;
+                                }
+                                if ($wealthStatus == true) {
+                                    $interestEarn += round(($placement - $lastCalculatedAmount) * ($productRange->bonus_interest_wealth / 100), 2);
+                                    $productRange->wealth_highlight = true;
+                                    $product->wealth_highlight = true;
+                                    $interestPercentTotal += $productRange->bonus_interest_wealth;
+                                }
+
+                                $product->highlight_index = $k;
+                                $interestEarns[] = $interestEarn;
+                                $lastCalculatedAmount = $productRange->max_range;
+                            }
+                        }
+                        $productRange->interest_earn = $interestEarn;
+                        //$productRange->criteria = $productRange->$criteria;
+                        $productRange->above_range = false;
+                    }
+                    $interestRangeCount++;
+                }
+                $product->grow_interest_total;
+                $product->boost_interest_total;
+                $product->base_interest_total;
+                if ($placement >= $productRanges[0]->minimum_grow) {
+                    if ($placement > $productRanges[0]->cap_grow) {
+                        $product->grow_interest_total = round($productRanges[0]->cap_grow * ($productRanges[0]->bonus_interest_grow / 100), 2);
+                    } else {
+                        $product->grow_interest_total = round($placement * ($productRanges[0]->bonus_interest_grow / 100), 2);
+                    }
+                    $product->interest_earned += $product->grow_interest_total;
+                    $product->grow_highlight = true;
+                    $product->total_interest += $productRanges[0]->bonus_interest_grow;
+                }
+                if ($boostStatus == true) {
+                    if ($placement > $productRanges[0]->cap_boost) {
+                        $product->boost_interest_total = round($productRanges[0]->cap_boost * ($productRanges[0]->bonus_interest_boost / 100), 2);
+                    } else {
+                        $product->boost_interest_total = round($placement * ($productRanges[0]->bonus_interest_boost / 100), 2);
+                    }
+                    $product->interest_earned += $product->boost_interest_total;
+                    $product->boost_highlight = true;
+                    $product->total_interest += $productRanges[0]->bonus_interest_boost;
+                }
+                if ($maxPlacement < $placement) {
+                    $product->base_interest_total = round(($placement - $maxPlacement) * ($productRanges[0]->bonus_interest_remaining_amount / 100), 2);
+                    $product->interest_earned += $product->base_interest_total;
+                    $product->base_highlight = true;
+                    $product->total_interest += $productRanges[0]->bonus_interest_remaining_amount;
+                }
+                $product->total_interest += round($interestPercentTotal / $interestRangeCount, 2);
+                $product->interest_earned += array_sum($interestEarns);
+                $product->placement = $placement;
+                $product->product_range = $productRanges;
+                if ($status == true) {
+                    $product->highlight = true;
+                    $filterProducts[] = $product;
+                } else {
+                    $remainingProducts[] = $product;
+                }
             } elseif (empty($product->promotion_formula_id)) {
                 $filterProducts[] = $product;
             }
@@ -4105,7 +4404,10 @@ class PagesFrontController extends Controller
                     $products = $products->sortByDesc('promotion_period')->values();
                 }
             }
-            $products = $products->sortByDesc('featured')->values();
+            $featured = $products->where('featured', 1)->values();
+            $nonFeatured = $products->where('featured', 0)->values();
+            $products = $featured->merge($nonFeatured);
+            $sliderProducts = $products->where('promotion_formula_id', '!=', null)->values();
         }
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
@@ -4125,11 +4427,13 @@ class PagesFrontController extends Controller
                     $remainingProducts = $remainingProducts->sortByDesc('promotion_period')->values();
                 }
             }
-            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
+            $featured = $remainingProducts->where('featured', 1)->values();
+            $nonFeatured = $remainingProducts->where('featured', 0)->values();
+            $remainingProducts = $featured->merge($nonFeatured);
         }
 
         //dd($products);
-        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "legendtable", "ads_manage", "toolTips"));
+        return view('frontend.products.aio-deposit-products', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "legendtable", "ads_manage", "toolTips"));
     }
 
     public
@@ -4141,15 +4445,20 @@ class PagesFrontController extends Controller
     public
     function loan($request)
     {
-        $ads_manage = AdsManagement::where('delete_status', 0)
+        $ads_manage = [];
+        $adsCollection = AdsManagement::where('delete_status', 0)
             ->where('display', 1)
             ->where('page', 'product')
             ->where('page_type', LOAN_MODE)
             ->inRandomOrder()
             ->get();
+        if ($adsCollection->count()) {
+            $ads_manage = \Helper::manageAds($adsCollection);
+        }
         $brandId = isset($request['brand_id']) ? $request['brand_id'] : null;
         $sortBy = isset($request['sort_by']) ? $request['sort_by'] : MINIMUM;
         $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
+        $pageNo = isset($request['page_no']) ? $request['page_no'] : 1;
 
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -4160,13 +4469,13 @@ class PagesFrontController extends Controller
         $toolTips = ToolTip::where('promotion_id', LOAN)->first();
 
         $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_types.id', '=', LOAN)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
-            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id')
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id', 'promotion_products.id as product_id')
             ->get();
 
         $details = \Helper::get_page_detail(LOAN_MODE);
@@ -4181,8 +4490,10 @@ class PagesFrontController extends Controller
 
         $filterProducts = [];
         $remainingProducts = [];
+        $sliderProducts = collect([]);
         if ($promotion_products->count()) {
             foreach ($promotion_products as $key => $product) {
+
                 $defaultSearch = DefaultSearch::where('promotion_id', LOAN)->first();
                 if ($defaultSearch) {
                     $defaultPlacement = $defaultSearch->placement;
@@ -4195,13 +4506,14 @@ class PagesFrontController extends Controller
                     $defaultPlacement = 0;
                     $defaultRateType = BOTH_VALUE;
                     $defaultTenure = 35;
-                    $defaultPropertyType = ALL;
-                    $defaultCompletion = ALL;
+                    $defaultPropertyType = HDB_PROPERTY;
+                    $defaultCompletion = COMPLETE;
                 }
                 if (!count($request)) {
                     $placement = 0;
                     $searchValue = $defaultPlacement;
                     $rateType = $defaultRateType;
+
                     $tenure = $defaultTenure;
                     $propertyType = $defaultPropertyType;
                     $completion = $defaultCompletion;
@@ -4211,7 +4523,8 @@ class PagesFrontController extends Controller
                     $searchFilter['property_type'] = $defaultPropertyType;
                     $searchFilter['completion'] = $defaultCompletion;
                     $searchFilter['filter'] = INTEREST;
-                    $searchFilter['sort_by'] = MAXIMUM;
+                    $searchFilter['sort_by'] = MINIMUM;
+                    $pageNo = 1;
                 } else {
                     $placement = 0;
                     $searchFilter = $request;
@@ -4225,26 +4538,57 @@ class PagesFrontController extends Controller
                     $propertyType = $searchFilter['property_type'] = isset($searchFilter['property_type']) ? $searchFilter['property_type'] : null;
                     $completion = $searchFilter['completion'] = isset($searchFilter['completion']) ? $searchFilter['completion'] : null;
                     $searchFilter['filter'] = $searchFilter['filter'] ? $searchFilter['filter'] : PLACEMENT;
+                    $pageNo = $searchFilter['page_no'] ? $searchFilter['page_no'] : 1;
 
                 }
                 $status = true;
+                $remainingStatus = false;
                 $productRanges = json_decode($product->product_range);
-                //dd($searchFilter);
                 if ($product->promotion_formula_id == LOAN_F1) {
-
+                    $tenure = (int)$tenure;
                     $totalInterests = [];
                     $interestEarns = [];
                     $product->highlight = false;
-
                     $firstProductRange = $productRanges[0];
+                    if ($product->minimum_loan_amount > $searchValue) {
+                        $status = false;
+                        $remainingStatus = true;
+                    }
                     if ($rateType != BOTH_VALUE && ($rateType != $firstProductRange->rate_type)) {
                         $status = false;
+                        $remainingStatus = false;
                     }
-                    if ($completion != ALL && ($completion != $firstProductRange->completion_status)) {
-                        $status = false;
+
+                    $bucProperty = [BUC, COMPLETE_BUC];
+                    $completionProperty = [COMPLETE, COMPLETE_BUC];
+                    $commonCompletion = [];
+
+                    if ($completion == BUC) {
+                        $commonCompletion = $bucProperty;
+                    } elseif ($completion == COMPLETE) {
+                        $commonCompletion = $completionProperty;
                     }
-                    if ($propertyType != ALL && ($propertyType != $firstProductRange->property_type)) {
+                    if (!in_array($firstProductRange->completion_status, $commonCompletion)) {
                         $status = false;
+                        $remainingStatus = false;
+                    }
+
+                    $hdbProperty = [HDB_PROPERTY, HDB_PRIVATE_PROPERTY];
+                    $privateProperty = [PRIVATE_PROPERTY, HDB_PRIVATE_PROPERTY];
+                    $commonProperty = [];
+                    if (in_array($propertyType, [HDB_PROPERTY, PRIVATE_PROPERTY])) {
+                        if ($propertyType == HDB_PROPERTY) {
+                            $commonProperty = $hdbProperty;
+                        } elseif ($propertyType == PRIVATE_PROPERTY) {
+                            $commonProperty = $privateProperty;
+                        }
+                        if (!in_array($firstProductRange->property_type, $commonProperty)) {
+                            $status = false;
+                            $remainingStatus = false;
+                        }
+                    } elseif ($propertyType != $firstProductRange->property_type) {
+                        $status = false;
+                        $remainingStatus = false;
                     }
                     /*if (($searchValue < $firstProductRange->min_range) || ($searchValue > $firstProductRange->max_range)) {
                         $status = false;
@@ -4253,40 +4597,70 @@ class PagesFrontController extends Controller
                     $totalInterest = 0;
                     $totalMonthlyInstallment = 0;
                     $totalTenure = 0;
+                    $j = 0;
                     foreach ($productRanges as $k => $productRange) {
                         $productRange->tenure_highlight = false;
-                        $interest = $productRange->bonus_interest + $productRange->board_rate;
-                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-                        $result = $mortage->calculate();
-                        $productRange->monthly_payment = $result->monthlyPayment;
-                        if($tenure>($totalTenure))
-                        {
-                            $totalInterest += $interest;
-                            $totalTenure++;
-                            $totalMonthlyInstallment += $productRange->monthly_payment;
+                        $interest = $productRange->bonus_interest + $productRange->rate_interest_other;
+                        if ($interest <= 0) {
+                            $productRange->monthly_payment = 0;
+                        } else {
+                            $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                            $result = $mortage->calculate();
+                            $productRange->monthly_payment = $result->monthlyPayment;
+                        }
+
+                        if ($tenure > $totalTenure) {
+                            if ($j <= 2) {
+                                $totalInterest += $interest;
+                                $totalTenure++;
+                                $totalMonthlyInstallment += $productRange->monthly_payment;
+                            }
                             $productRange->tenure_highlight = true;
                         }
+
+                        $j++;
                     }
-                    $interest = $firstProductRange->there_after_interest + $firstProductRange->board_rate;
-                    $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-                    $result = $mortage->calculate();
-                    $product->there_after_installment = $result->monthlyPayment;
+
+                    while ($j <= 2) {
+                        $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
+                        if ($interest <= 0) {
+                            $monthlyThereAfterPayment = 0;
+                        } else {
+                            $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                            $result = $mortage->calculate();
+                            $monthlyThereAfterPayment = $result->monthlyPayment;
+                        }
+
+                        $totalInterest += $interest;
+                        $totalTenure++;
+                        $totalMonthlyInstallment += $monthlyThereAfterPayment;
+                        $j++;
+                    }
+                    $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
+                    if ($interest <= 0) {
+                        $product->there_after_installment = 0;
+                    } else {
+                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                        $result = $mortage->calculate();
+                        $product->there_after_installment = $result->monthlyPayment;
+                    }
+
                     $product->placement = $searchValue;
                     $product->tenure = $tenure;
 
                     if ($tenure > $productRangeCount) {
                         //$totalInterest += ($tenure - $productRangeCount) * $interest;
-                       // $totalMonthlyInstallment += ($tenure - $productRangeCount) * $result->monthlyPayment;
+                        // $totalMonthlyInstallment += ($tenure - $productRangeCount) * $result->monthlyPayment;
                         $product->highlight = true;;
 
                     }
-                    $product->avg_interest = $totalInterest / $totalTenure;
+                    $product->avg_interest = round(($totalInterest / $totalTenure), 2);
                     $product->monthly_installment = $totalMonthlyInstallment / $totalTenure;
-                    $product->avg_tenure =$totalTenure;
+                    $product->avg_tenure = $totalTenure;
                     $product->product_range = $productRanges;
                     if ($status == true) {
                         $filterProducts[] = $product;
-                    } else {
+                    } elseif ($remainingStatus == true && $status == false) {
                         $remainingProducts[] = $product;
                     }
 
@@ -4296,11 +4670,12 @@ class PagesFrontController extends Controller
             }
         }
         $products = collect($filterProducts);
+
         $remainingProducts = collect($remainingProducts);
         if ($products->count()) {
             if ($sortBy == MINIMUM) {
                 if ($filter == INSTALLMENT) {
-                    $products = $products->sortBy('monthly_installment')->values();
+                    $products = $products->sortBy('minimum_loan_amount')->values();
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortBy('avg_interest')->values();
                 } elseif ($filter == TENURE) {
@@ -4308,19 +4683,28 @@ class PagesFrontController extends Controller
                 }
             } else {
                 if ($filter == INSTALLMENT) {
-                    $products = $products->sortByDesc('monthly_installment')->values();
+                    $products = $products->sortByDesc('minimum_loan_amount')->values();
                 } elseif ($filter == INTEREST) {
                     $products = $products->sortByDesc('avg_interest')->values();
                 } elseif ($filter == TENURE) {
                     $products = $products->sortByDesc('lock_in')->values();
                 }
             }
-            $products = $products->sortByDesc('featured')->values();
+
+            $featured = $products->where('featured', 1)->values();
+            $nonFeatured = $products->where('featured', 0)->values();
+            $products = $featured->merge($nonFeatured);
+            $sliderProducts = $products->where('promotion_formula_id', '!=', null)->values();
+            $totalProductNo = $products->count();
+            $productPerPage = 10;
+            $pages = ceil($totalProductNo / $productPerPage);
+            $products = $products->forPage($pageNo, $productPerPage);
+
         }
         if ($remainingProducts->count()) {
             if ($sortBy == MINIMUM) {
                 if ($filter == INSTALLMENT) {
-                    $remainingProducts = $remainingProducts->sortBy('monthly_installment')->values();
+                    $remainingProducts = $remainingProducts->sortBy('minimum_loan_amount')->values();
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortBy('avg_interest')->values();
                 } elseif ($filter == TENURE) {
@@ -4328,18 +4712,20 @@ class PagesFrontController extends Controller
                 }
             } else {
                 if ($filter == INSTALLMENT) {
-                    $remainingProducts = $remainingProducts->sortByDesc('monthly_installment')->values();
+                    $remainingProducts = $remainingProducts->sortByDesc('minimum_loan_amount')->values();
                 } elseif ($filter == INTEREST) {
                     $remainingProducts = $remainingProducts->sortByDesc('avg_interest')->values();
                 } elseif ($filter == TENURE) {
                     $remainingProducts = $remainingProducts->sortByDesc('lock_in')->values();
                 }
             }
-            $remainingProducts = $remainingProducts->sortByDesc('featured')->values();
+            $featured = $remainingProducts->where('featured', 1)->values();
+            $nonFeatured = $remainingProducts->where('featured', 0)->values();
+            $remainingProducts = $featured->merge($nonFeatured);
         }
 
         //dd($products);
-        return view('frontend.products.loan', compact("brands", "page", "systemSetting", "banners", "products", "remainingProducts", "searchFilter", "ads_manage", "toolTips"));
+        return view('frontend.products.loan', compact("pageNo", "pages", "brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "ads_manage", "toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)
@@ -4355,7 +4741,7 @@ class PagesFrontController extends Controller
         $highlightStatus = isset($request->status) ? $request->status : 1;
 
         $product = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_formula.promotion_id', '=', ALL_IN_ONE_ACCOUNT)
             ->where('promotion_products.delete_status', '=', 0)
@@ -4448,6 +4834,17 @@ class PagesFrontController extends Controller
                 $product->hire_loan = false;
                 $product->renovation_loan = false;
                 $product->unit_trust = false;
+                $product->salary_highlight = false;
+                $product->salary_highlight_2 = false;
+                $product->payment_highlight = false;
+                $product->spend_highlight = false;
+                $product->spend_highlight_2 = false;
+                $product->housing_loan_highlight = false;
+                $product->education_loan_highlight = false;
+                $product->hire_loan_highlight = false;
+                $product->renovation_loan_highlight = false;
+                $product->life_insurance_highlight = false;
+                $product->unit_trust_highlight = false;
                 $totalInterests = [];
                 $interestEarns = [];
 
@@ -4470,37 +4867,46 @@ class PagesFrontController extends Controller
 
                         if ($salary > 0 && $productRange->minimum_salary <= $salary) {
                             $criteriaMatchCount++;
+                            $product->salary_highlight = true;
                         }
                         if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
                             $criteriaMatchCount++;
+                            $product->payment_highlight = true;
                         }
                         if ($spend > 0 && $productRange->minimum_spend <= $spend) {
                             $criteriaMatchCount++;
+                            $product->spend_highlight = true;
                         }
                         if ((isset($checkBoxDetail['life_insurance'])) && ($minimumInsurance > 0 && $productRange->minimum_insurance <= ($minimumInsurance))) {
                             $criteriaMatchCount++;
                             $product->life_insurance = true;
+                            $product->life_insurance_highlight = true;
                         }
                         if ((isset($checkBoxDetail['unit_trust'])) && ($minimumUnitTrust > 0 && $productRange->minimum_unit_trust <= ($minimumUnitTrust))) {
 
                             $criteriaMatchCount++;
                             $product->unit_trust = true;
+                            $product->unit_trust_highlight = true;
                         }
                         if ((isset($checkBoxDetail['hire_loan'])) && ($minimumHirePurchaseLoan > 0 && $productRange->minimum_hire_purchase_loan <= ($minimumHirePurchaseLoan))) {
                             $criteriaMatchCount++;
                             $product->hire_loan = true;
+                            $product->hire_loan_highlight = true;
                         }
                         if ((isset($checkBoxDetail['renovation_loan'])) && ($minimumRenovationLoan > 0 && $productRange->minimum_renovation_loan <= ($minimumRenovationLoan))) {
                             $criteriaMatchCount++;
                             $product->renovation_loan = true;
+                            $product->renovation_loan_highlight = true;
                         }
                         if ((isset($checkBoxDetail['housing_loan'])) && ($minimumHomeLoan > 0 && $productRange->minimum_home_loan <= ($minimumHomeLoan))) {
                             $criteriaMatchCount++;
                             $product->housing_loan = true;
+                            $product->housing_loan_highlight = true;
                         }
                         if ((isset($checkBoxDetail['education_loan'])) && ($minimumEducationLoan > 0 && $productRange->minimum_education_loan <= ($minimumEducationLoan))) {
                             $criteriaMatchCount++;
                             $product->education_loan = true;
+                            $product->education_loan_highlight = true;
                         }
 
                         if ($criteriaMatchCount == 1) {
@@ -4554,193 +4960,222 @@ class PagesFrontController extends Controller
                     }
                 }
                 ?>
-                <div class="ps-table-wrap">
-                    <form id="form-<?php echo $product->product_id; ?>" class="ps-form--filter" method="post">
-                        <table class="ps-table ps-table--product ps-table--product-3">
-                            <thead>
-                            <tr>
-                                <th class="combine-criteria-padding">CRITERIA</th>
-                                <th class="combine-criteria-padding">SALARY</th>
-                                <th class="combine-criteria-padding">Giro</th>
-                                <th class="combine-criteria-padding">SPEND</th>
-                                <th class="combine-criteria-padding">
-                                    Loan
-                                    <div class="row">
-                                        <div class="width-50">
-                                            <div class="ps-checkbox">
-                                                <input class="form-control" type="checkbox"
-                                                       onchange="changeCriteria(this);"
-                                                    <?php if ($product->housing_loan) {
-                                                        echo "checked = checked";
-                                                    } ?>
-                                                       name="housing_loan"
-                                                       data-status="<?php echo $highlightStatus; ?>"
-                                                       data-product-id="<?php echo $product->product_id; ?>"
-                                                       value="true"
-                                                       id="housing-loan-<?php echo $product->product_id; ?>">
-                                                <label
-                                                    for="housing-loan-<?php echo $product->product_id; ?>">Housing</label>
-                                            </div>
-                                            <div class="ps-checkbox">
-                                                <input class="form-control" type="checkbox"
-                                                       data-status="<?php echo $highlightStatus; ?>"
-                                                       name="education_loan" onchange="changeCriteria(this);"
-                                                       data-product-id="<?php echo $product->product_id; ?>"
-                                                       value="true"
-                                                       id='education-loan-<?php echo $product->product_id; ?>'
-                                                    <?php if ($product->education_loan) {
-                                                        echo "checked = checked";
-                                                    } ?>/>
-                                                <label
-                                                    for="education-loan-<?php echo $product->product_id; ?>">Education</label>
-                                            </div>
-                                        </div>
-                                        <div class="width-50">
-                                            <div class="ps-checkbox">
-                                                <input class="form-control" type="checkbox"
-                                                       onchange="changeCriteria(this);"
-                                                       name="hire_loan" value="true"
-                                                       data-status="<?php echo $highlightStatus; ?>"
-                                                       data-product-id="<?php echo $product->product_id; ?>"
-                                                       id="hire-loan-<?php echo $product->product_id; ?>"
-                                                    <?php if ($product->hire_loan) {
-                                                        echo "checked = checked";
-                                                    } ?>/>
-                                                <label for="hire-loan-<?php echo $product->product_id; ?>">Hire
-                                                    loan</label>
-                                            </div>
-                                            <div class="ps-checkbox">
-                                                <input class="form-control" type="checkbox"
-                                                       data-status="<?php echo $highlightStatus; ?>"
-                                                       name="renovation_loan" onchange="changeCriteria(this);"
-                                                       data-product-id="<?php echo $product->product_id; ?>"
-                                                       value="true"
-                                                       id="renovation-loan-<?php echo $product->product_id; ?>"
-                                                    <?php if ($product->renovation_loan) {
-                                                        echo "checked = checked";
-                                                    } ?>/>
-                                                <label
-                                                    for="renovation-loan-<?php echo $product->product_id; ?>">Renovation</label>
-                                            </div>
 
-                                        </div>
+                <table class="ps-table ps-table--product ps-table--product-3">
+                    <thead>
+                    <tr>
+                        <th class="combine-criteria-padding" style="width:19%">CRITERIA</th>
+                        <th class="combine-criteria-padding <?php if ($product->salary_highlight == true || $product->salary_highlight_2 == true) {
+                            echo 'active';
+                        } ?>" style="width:9%">SALARY
+                        </th>
+                        <th class="combine-criteria-padding <?php if ($product->payment_highlight == true) {
+                            echo 'active';
+                        } ?>" style="width:9%">PAYMENT
+                        </th>
+                        <th class="combine-criteria-padding <?php if ($product->spend_highlight == true || $product->spend_highlight_2 == true) {
+                            echo 'active';
+                        } ?>" style="width:9%">SPEND
+                        </th>
+                        <th class="combine-criteria-padding " style="width:27%">
+                            Loan
+                            <div class="row">
+                                <div class="width-50">
+                                    <div class="ps-checkbox">
+                                        <input class="form-control" type="checkbox"
+                                               onchange="changeCriteria(this);"
+                                            <?php if ($product->housing_loan) {
+                                                echo "checked = checked";
+                                            } ?>
+                                               name="housing_loan"
+                                               data-status="<?php echo $highlightStatus; ?>"
+                                               data-product-id="<?php echo $product->product_id; ?>"
+                                               value="true"
+                                               id="housing-loan-<?php echo $product->product_id; ?>">
+                                        <label
+                                            for="housing-loan-<?php echo $product->product_id; ?>"
+                                            class="<?php if ($product->housing_loan_highlight == true) {
+                                                echo 'active';
+                                            } ?>">Housing</label>
                                     </div>
-                                </th>
-                                <th class="combine-criteria-padding">
-                                    Wealth
-                                    <div class="row">
-                                        <div class="width-50">
-                                            <div class="ps-checkbox">
-                                                <input class="form-control" type="checkbox"
-                                                       data-product-id="<?php echo $product->product_id; ?>"
-                                                       data-status="<?php echo $highlightStatus; ?>"
-                                                       name="life_insurance" onchange="changeCriteria(this);"
-                                                    <?php if ($product->life_insurance) {
-                                                        echo "checked = checked";
-                                                    } ?> value="true"
-                                                       id="life-insurance-<?php echo $product->product_id; ?>"/>
-                                                <label
-                                                    for="life-insurance-<?php echo $product->product_id; ?>">Insurance</label>
-                                            </div>
-                                            <div class="ps-checkbox">
-                                                <input class="form-control" type="checkbox"
-                                                       onchange="changeCriteria(this);"
-                                                       name="unit_trust" value="true"
-                                                       data-status="<?php echo $highlightStatus; ?>"
-                                                       data-product-id="<?php echo $product->product_id; ?>"
-                                                       id="unit-trust-<?php echo $product->product_id; ?>"
-                                                    <?php if ($product->unit_trust) {
-                                                        echo "checked = checked";
-                                                    } ?>/>
-                                                <label for="unit-trust-<?php echo $product->product_id; ?>">Unit</label>
-                                            </div>
-                                        </div>
+                                    <div class="ps-checkbox">
+                                        <input class="form-control" type="checkbox"
+                                               data-status="<?php echo $highlightStatus; ?>"
+                                               name="education_loan" onchange="changeCriteria(this);"
+                                               data-product-id="<?php echo $product->product_id; ?>"
+                                               value="true"
+                                               id='education-loan-<?php echo $product->product_id; ?>'
+                                            <?php if ($product->education_loan) {
+                                                echo "checked = checked";
+                                            } ?>/>
+                                        <label
+                                            for="education-loan-<?php echo $product->product_id; ?>"
+                                            class="<?php if ($product->education_loan_highlight == true) {
+                                                echo 'active';
+                                            } ?>">Education</label>
+                                    </div>
+                                </div>
+                                <div class="width-50">
+                                    <div class="ps-checkbox">
+                                        <input class="form-control" type="checkbox"
+                                               onchange="changeCriteria(this);"
+                                               name="hire_loan" value="true"
+                                               data-status="<?php echo $highlightStatus; ?>"
+                                               data-product-id="<?php echo $product->product_id; ?>"
+                                               id="hire-loan-<?php echo $product->product_id; ?>"
+                                            <?php if ($product->hire_loan) {
+                                                echo "checked = checked";
+                                            } ?>/>
+                                        <label for="hire-loan-<?php echo $product->product_id; ?>"
+                                               class="<?php if ($product->hire_loan_highlight == true) {
+                                                   echo 'active';
+                                               } ?>">HIRE PURCHASE</label>
+                                    </div>
+                                    <div class="ps-checkbox">
+                                        <input class="form-control" type="checkbox"
+                                               data-status="<?php echo $highlightStatus; ?>"
+                                               name="renovation_loan" onchange="changeCriteria(this);"
+                                               data-product-id="<?php echo $product->product_id; ?>"
+                                               value="true"
+                                               id="renovation-loan-<?php echo $product->product_id; ?>"
+                                            <?php if ($product->renovation_loan) {
+                                                echo "checked = checked";
+                                            } ?>/>
+                                        <label
+                                            for="renovation-loan-<?php echo $product->product_id; ?>"
+                                            class="<?php if ($product->renovation_loan_highlight == true) {
+                                                echo 'active';
+                                            } ?>">Renovation</label>
                                     </div>
 
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php foreach ($productRanges as $range) { ?>
-                                <tr>
-                                    <td>Bonus Interest PA</td>
-                                    <td class="text-center <?php if ($product->criteria_1 == true) {
-                                        echo "highlight";
-                                    } ?> "
-                                        colspan="2">1 Criteria Met
-                                        - <?php if ($range->bonus_interest_criteria1 <= 0) {
-                                            echo "-";
-                                        } else {
-                                            echo "$range->bonus_interest_criteria1" . '%';
-                                        } ?>
-                                    </td>
-                                    <td class=" text-center  <?php if ($product->criteria_2 == true) {
-                                        echo "highlight";
-                                    } ?> "
-                                        colspan="2">2 Criteria
-                                        - <?php if ($range->bonus_interest_criteria2 <= 0) {
-                                            echo "-";
-                                        } else {
-                                            echo "$range->bonus_interest_criteria2" . '%';
-                                        } ?>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="combine-criteria-padding" style="width:15%">
+                            Wealth
+                            <div class="row">
+                                <div class="width-50">
+                                    <div class="ps-checkbox">
+                                        <input class="form-control" type="checkbox"
+                                               data-product-id="<?php echo $product->product_id; ?>"
+                                               data-status="<?php echo $highlightStatus; ?>"
+                                               name="life_insurance" onchange="changeCriteria(this);"
+                                            <?php if ($product->life_insurance) {
+                                                echo "checked = checked";
+                                            } ?> value="true"
+                                               id="life-insurance-<?php echo $product->product_id; ?>"/>
+                                        <label
+                                            for="life-insurance-<?php echo $product->product_id; ?>"
+                                            class="<?php if ($product->life_insurance_highlight == true) {
+                                                echo 'active';
+                                            } ?>">Insurance</label>
+                                    </div>
+                                    <div class="ps-checkbox">
+                                        <input class="form-control" type="checkbox"
+                                               onchange="changeCriteria(this);"
+                                               name="unit_trust" value="true"
+                                               data-status="<?php echo $highlightStatus; ?>"
+                                               data-product-id="<?php echo $product->product_id; ?>"
+                                               id="unit-trust-<?php echo $product->product_id; ?>"
+                                            <?php if ($product->unit_trust) {
+                                                echo "checked = checked";
+                                            } ?>/>
+                                        <label for="unit-trust-<?php echo $product->product_id; ?>"
+                                               class="<?php if ($product->unit_trust_highlight == true) {
+                                                   echo 'active';
+                                               } ?>">Unit</label>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    </td>
-                                    <td class="text-center  <?php if ($product->criteria_3 == true) {
-                                        echo "highlight";
-                                    } ?>"
-                                        colspan="1">3 Criteria - <?php if ($range->bonus_interest_criteria3 <= 0) {
-                                            echo " - ";
-                                        } else {
-                                            echo "$range->bonus_interest_criteria3" . '%';
-                                        } ?>
-
-                                    </td>
-                                </tr>
-                                <?php if ($status == true) { ?>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($productRanges as $range) { ?>
+                        <tr>
+                            <td>Bonus Interest PA</td>
+                            <td colspan="5" style="padding:0;">
+                                <table class="3-col-eq">
                                     <tr>
-                                        <td colspan="1">Total Bonus Interest Earned for SGD
-                                            <?php echo "$" . \Helper::inThousand($range->placement); ?>
-                                        </td>
-                                        <td class=" text-center <?php if ($product->highlight == true) {
-                                            echo 'highlight';
-                                        } ?>"
-                                            colspan="5">
-
-                                            <?php if ($range->placement > $range->first_cap_amount) {
-                                                echo "First ";
-                                                echo "$" . \Helper::inThousand($range->first_cap_amount) . ' - ' .
-                                                    '$' . \Helper::inThousand(($range->first_cap_amount * ($product->total_interest / 100))) .
-                                                    ' (' . $product->total_interest . '%), next $' .
-                                                    \Helper::inThousand(($range->placement - $range->first_cap_amount)) . ' - '
-                                                    . '$' . \Helper::inThousand((($range->bonus_interest_remaining_amount / 100) * ($range->placement - $range->first_cap_amount))) .
-                                                    ' (' . $range->bonus_interest_remaining_amount . '%)<br/> Total = $'
-                                                    . \Helper::inThousand($product->interest_earned);
+                                        <td class="text-center <?php if ($product->criteria_1 == true) {
+                                            echo "highlight";
+                                        } ?> "
+                                            colspan="3">1 Criteria
+                                            - <?php if ($range->bonus_interest_criteria1 <= 0) {
+                                                echo "-";
                                             } else {
-                                                echo "Total = $" . \Helper::inThousand($product->interest_earned);
+                                                echo "$range->bonus_interest_criteria1" . '%';
                                             } ?>
                                         </td>
-                                    </tr>
-                                <?php } else { ?>
-                                    <tr>
-                                        <td colspan="1">Total Bonus Interest Earned for SGD
-                                            <?php echo "$" . \Helper::inThousand($range->placement); ?></td>
-                                        <td class="text-center <?php if ($product->highlight == true) {
-                                            echo 'highlight';
+                                        <td class=" text-center  <?php if ($product->criteria_2 == true) {
+                                            echo "highlight";
+                                        } ?> "
+                                            colspan="1">2 Criteria
+                                            - <?php if ($range->bonus_interest_criteria2 <= 0) {
+                                                echo "-";
+                                            } else {
+                                                echo "$range->bonus_interest_criteria2" . '%';
+                                            } ?>
+
+                                        </td>
+                                        <td class="text-center  <?php if ($product->criteria_3 == true) {
+                                            echo "highlight";
                                         } ?>"
-                                            colspan="<?php echo $range->colspan; ?>">
-
-                                            <span class="nill"> <?php echo NILL; ?></span><br/>
-
-                                            <p><?php echo NOT_ELIGIBLE; ?></p>
+                                            colspan="1">3 Criteria - <?php if ($range->bonus_interest_criteria3 <= 0) {
+                                                echo " - ";
+                                            } else {
+                                                echo "$range->bonus_interest_criteria3" . '%';
+                                            } ?>
 
                                         </td>
                                     </tr>
-                                <?php }
-                            } ?>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
+                                </table>
+                        </tr>
+                        <?php if ($status == true) { ?>
+                            <tr>
+                                <td colspan="1">Total Bonus Interest Earned for SGD
+                                    <?php echo "$" . \Helper::inThousand($range->placement); ?>
+                                </td>
+                                <td class=" text-center <?php if ($product->highlight == true) {
+                                    echo 'highlight';
+                                } ?>"
+                                    colspan="5">
+
+                                    <?php if ($range->placement > $range->first_cap_amount) {
+                                        echo "First ";
+                                        echo "$" . \Helper::inThousand($range->first_cap_amount) . ' - ' .
+                                            '$' . \Helper::inThousand(($range->first_cap_amount * ($product->total_interest / 100))) .
+                                            ' (' . $product->total_interest . '%), next $' .
+                                            \Helper::inThousand(($range->placement - $range->first_cap_amount)) . ' - '
+                                            . '$' . \Helper::inThousand((($range->bonus_interest_remaining_amount / 100) * ($range->placement - $range->first_cap_amount))) .
+                                            ' (' . $range->bonus_interest_remaining_amount . '%)<br/> Total = $'
+                                            . \Helper::inThousand($product->interest_earned);
+                                    } else {
+                                        echo "Total = $" . \Helper::inThousand($product->interest_earned);
+                                    } ?>
+                                </td>
+                            </tr>
+                        <?php } else { ?>
+                            <tr>
+                                <td colspan="1">Total Bonus Interest Earned for SGD
+                                    <?php echo "$" . \Helper::inThousand($range->placement); ?></td>
+                                <td class="text-center <?php if ($product->highlight == true) {
+                                    echo 'highlight';
+                                } ?>"
+                                    colspan="<?php echo $range->colspan; ?>">
+
+                                    <span class="nill"> <?php echo NILL; ?></span><br/>
+
+                                    <p><?php echo NOT_ELIGIBLE; ?></p>
+
+                                </td>
+                            </tr>
+                        <?php }
+                    } ?>
+                    </tbody>
+                </table>
+
                 <?php
                 $range = $productRanges[0];
                 if ($status == true) { ?>
@@ -4795,7 +5230,7 @@ class PagesFrontController extends Controller
         $highlightStatus = isset($request->status) ? $request->status : 1;
 
         $product = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
-            ->join('brands', 'promotion_products.bank_id', '=', 'brands.id')
+            ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->join('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             ->where('promotion_formula.promotion_id', '=', ALL_IN_ONE_ACCOUNT)
             ->where('promotion_products.delete_status', '=', 0)
@@ -4878,6 +5313,7 @@ class PagesFrontController extends Controller
                 $interestEarns = [];
                 $product->highlight = false;
                 $product->salary_highlight = false;
+                $product->salary_highlight_2 = false;
                 $product->payment_highlight = false;
                 $product->spend_1_highlight = false;
                 $product->spend_2_highlight = false;
@@ -4937,6 +5373,7 @@ class PagesFrontController extends Controller
                                 $criteriaMatchCount++;
                             }
                         }
+
                         if (!empty($productRange->minimum_spend_1) && ($product->spend_2_highlight == false)) {
                             if ($spend > 0 && $productRange->minimum_spend_1 <= $spend) {
 
@@ -4948,14 +5385,14 @@ class PagesFrontController extends Controller
                             }
                         }
 
-                        if (!empty($productRange->minimum_salary)) {
-                            if ($salary > 0 && $productRange->minimum_salary <= $salary) {
-                                if ($highlightStatus == 1) {
-                                    $product->salary_highlight = true;
-                                }
-                                $totalInterest += $productRange->bonus_interest_salary;
-                                $criteriaMatchCount++;
-                            }
+                        if (isset($productRange->minimum_salary_2) && $salary > 0 && $productRange->minimum_salary_2 <= $salary) {
+                            $product->salary_highlight_2 = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary_2;
+                            $criteriaMatchCount++;
+                        } elseif ($salary > 0 && $productRange->minimum_salary <= $salary) {
+                            $product->salary_highlight = true;
+                            $totalInterest = $totalInterest + $productRange->bonus_interest_salary;
+                            $criteriaMatchCount++;
                         }
                         if (!empty($productRange->minimum_giro_payment)) {
                             if ($giro > 0 && $productRange->minimum_giro_payment <= $giro) {
@@ -5032,224 +5469,266 @@ class PagesFrontController extends Controller
                     }
                 }
                 ?>
-                <div class="ps-table-wrap">
-                    <form id="form-<?php echo $product->product_id; ?>" class="ps-form--filter" method="post">
-                        <table class="ps-table ps-table--product ps-table--product-3">
-                            <thead>
+
+                <table class="ps-table ps-table--product ps-table--product-3">
+                    <thead>
+                    <tr>
+                        <th class="">CRITERIA</th>
+                        <?php $firstRange = $productRanges[0];
+                        if (!empty($firstRange->minimum_spend_1) || !empty($firstRange->minimum_spend_2)) { ?>
+                            <th class="<?php if ($product->spend_2_highlight == true || $product->spend_1_highlight == true) {
+                                echo 'active';
+                            } ?>">SPEND
+                            </th>
+                        <?php }
+                        if (!empty($firstRange->minimum_salary)) { ?>
+                            <th class="<?php if ($product->salary_highlight == true || $product->salary_highlight_2 == true) {
+                                echo 'active';
+                            } ?>">SALARY
+                            </th> <?php }
+                        if (!empty($firstRange->minimum_giro_payment)) { ?>
+
+                            <th class="<?php if ($product->payment_highlight == true) {
+                                echo 'active';
+                            } ?>">PAYMENT
+                            </th> <?php }
+                        if (!empty($firstRange->minimum_privilege_pa)) { ?>
+
+                            <th class="<?php if ($product->privilege_highlight == true) {
+                                echo 'active';
+                            } ?>">PRIVILEGE
+                            </th> <?php }
+                        if (!empty($firstRange->minimum_loan_pa)) { ?>
+                            <th class="<?php if ($product->loan_highlight == true) {
+                                echo 'active';
+                            } ?>">LOAN
+                            </th> <?php }
+                        if (!empty($firstRange->other_minimum_amount1) && ($firstRange->status_other1 == 1)) { ?>
+                            <th class="combine-criteria-padding">
+                                <div class="">
+                                    <div class="width-50">
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox"
+                                                   onchange="changeIndividualCriteria(this);"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   name="other_interest1"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   value="true"
+                                                <?php if ($product->other_highlight1) {
+                                                    echo "checked = checked";
+                                                } ?>
+                                                   id="other-interest1-<?php echo $product->product_id; ?>">
+                                            <label
+                                                for="other-interest1-<?php echo $product->product_id; ?>"
+                                                class="<?php if ($product->other_highlight1 == true) {
+                                                    echo 'active';
+                                                } ?>"><?php echo $firstRange->other_interest1_name; ?></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                        <?php }
+                        if (!empty($firstRange->other_minimum_amount2) && ($firstRange->status_other2 == 1)) { ?>
+                            <th class="combine-criteria-padding">
+                                <div class="">
+                                    <div class="width-50">
+                                        <div class="ps-checkbox">
+                                            <input class="form-control" type="checkbox"
+                                                   onchange="changeIndividualCriteria(this);"
+                                                   data-status="<?php echo $highlightStatus; ?>"
+                                                   name="other_interest2"
+                                                   data-product-id="<?php echo $product->product_id; ?>"
+                                                   value="true"
+                                                <?php if ($product->other_highlight2) {
+                                                    echo "checked = checked";
+                                                } ?>
+                                                   id="other-interest2-<?php echo $product->product_id; ?>">
+                                            <label
+                                                for="other-interest2-<?php echo $product->product_id; ?>"
+                                                class="<?php if ($product->other_highlight2 == true) {
+                                                    echo 'active';
+                                                } ?>"><?php echo $firstRange->other_interest2_name; ?></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th>
+                        <?php } ?>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($productRanges as $range) { ?>
+                        <tr>
+                            <td class="text-left">Bonus Interest PA</td>
+                            <?php if (!empty($firstRange->minimum_spend_1) || !empty($firstRange->minimum_spend_2)) { ?>
+                                <td class=" pt-0 pb-0 pl-0 pr-0 text-center <?php if ($product->spend_2_highlight == true || $product->spend_1_highlight == true) {
+                                    echo "highlight";
+                                } ?> ">
+                                    <table cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td class=" text-center <?php if ($product->spend_1_highlight == true) {
+                                                echo "highlight";
+                                            } ?> ">
+                                                <?php if ($range->bonus_interest_spend_1 <= 0) {
+                                                    echo "-";
+                                                } else {
+                                                    echo $range->bonus_interest_spend_1 . "%";
+                                                } ?>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=" text-center <?php if ($product->spend_2_highlight == true) {
+                                                echo "highlight";
+                                            } ?>">
+                                                <?php if ($range->bonus_interest_spend_2 <= 0) {
+                                                    echo "-";
+                                                } else {
+                                                    echo $range->bonus_interest_spend_2 . "%";
+                                                } ?>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+                                </td>
+                            <?php }
+                            if (!empty($firstRange->minimum_salary) || !empty($firstRange->minimum_salary_2)) { ?>
+                                <td class=" pt-0 pb-0 pl-0 pr-0 text-center <?php if ($product->salary_highlight == true || $product->salary_highlight_2 == true) {
+                                    echo "highlight";
+                                } ?> ">
+                                    <table cellspacing="0" cellpadding="0">
+                                        <tr>
+                                            <td class=" text-center <?php if ($product->salary_highlight == true) {
+                                                echo "highlight";
+                                            } ?> ">
+                                                <?php if ($range->bonus_interest_salary <= 0) {
+                                                    echo "-";
+                                                } else {
+                                                    echo $range->bonus_interest_salary . "%";
+                                                } ?>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=" text-center <?php if ($product->salary_highlight_2 == true) {
+                                                echo "highlight";
+                                            } ?>">
+                                                <?php if ($range->bonus_interest_salary_2 <= 0) {
+                                                    echo "-";
+                                                } else {
+                                                    echo $range->bonus_interest_salary_2 . "%";
+                                                } ?>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+                                </td>
+                            <?php }
+                            if (!empty($firstRange->minimum_giro_payment)) { ?>
+                                <td class=" text-center  <?php if ($product->payment_highlight == true) {
+                                    echo "highlight";
+                                } ?> ">
+                                    <?php if ($range->bonus_interest_giro_payment <= 0) {
+                                        echo "-";
+                                    } else {
+                                        echo "$range->bonus_interest_giro_payment" . '%';
+                                    } ?>
+
+                                </td>
+                            <?php }
+                            if (!empty($firstRange->minimum_privilege_pa)) { ?>
+                                <td class=" text-center  <?php if ($product->privilege_highlight == true) {
+                                    echo "highlight";
+                                } ?> ">
+                                    Up to <?php if ($range->bonus_interest_privilege <= 0) {
+                                        echo "-";
+                                    } else {
+                                        echo "$range->bonus_interest_privilege" . '%';
+                                    } ?>
+
+                                </td>
+                            <?php }
+                            if (!empty($firstRange->minimum_loan_pa)) { ?>
+                                <td class=" text-center  <?php if ($product->loan_highlight == true) {
+                                    echo "highlight";
+                                } ?> ">
+                                    <?php if ($range->bonus_interest_loan <= 0) {
+                                        echo "-";
+                                    } else {
+                                        echo "$range->bonus_interest_loan" . '%';
+                                    } ?>
+
+                                </td>
+                            <?php }
+                            if (!empty($firstRange->other_minimum_amount1) && ($firstRange->status_other1 == 1)) { ?>
+                                <td class=" text-center  <?php if ($product->other_highlight1 == true) {
+                                    echo "highlight";
+                                } ?> ">
+                                    <?php if ($range->other_interest1 <= 0) {
+                                        echo "-";
+                                    } else {
+                                        echo "$range->other_interest1" . '%';
+                                    } ?>
+
+                                </td>
+                            <?php }
+                            if (!empty($firstRange->other_minimum_amount2) && ($firstRange->status_other2 == 1)) { ?>
+                                <td class=" text-center  <?php if ($product->other_highlight2 == true) {
+                                    echo "highlight";
+                                } ?> ">
+                                    <?php if ($range->other_interest2 <= 0) {
+                                        echo "-";
+                                    } else {
+                                        echo "$range->other_interest2" . '%';
+                                    } ?>
+
+                                </td>
+                            <?php } ?>
+                        </tr>
+                        <?php if ($status == true) { ?>
                             <tr>
-                                <th class="">CRITERIA</th>
-                                <?php $firstRange = $productRanges[0];
-                                if (!empty($firstRange->minimum_spend_1) || !empty($firstRange->minimum_spend_2)) { ?>
-                                    <th>SPEND</th>
-                                <?php }
-                                if (!empty($firstRange->minimum_salary)) { ?>
-                                    <th>SALARY</th> <?php }
-                                if (!empty($firstRange->minimum_giro_payment)) { ?>
+                                <td colspan="1" class="text-left">Total Bonus Interest Earned for SGD
+                                    <?php echo "$" . \Helper::inThousand($range->placement); ?>
+                                </td>
+                                <td class=" text-center <?php if ($product->highlight == true) {
+                                    echo 'highlight';
+                                } ?>" colspan="<?php echo $range->colspan; ?>">
 
-                                    <th>PAYMENT</th> <?php }
-                                if (!empty($firstRange->minimum_privilege_pa)) { ?>
+                                    <?php if ($range->placement > $range->first_cap_amount) {
+                                        echo "First ";
+                                        echo "$" . \Helper::inThousand($range->first_cap_amount) . ' - ' .
+                                            '$' . \Helper::inRoundTwoDecimal(($range->first_cap_amount * ($product->total_interest / 100))) .
+                                            ' (' . $product->total_interest . '%), remaining $' .
+                                            \Helper::inThousand(($range->placement - $range->first_cap_amount)) . ' - '
+                                            . '$' . \Helper::inRoundTwoDecimal((($range->bonus_interest_remaining_amount / 100) * ($range->placement - $range->first_cap_amount))) .
+                                            ' (' . $range->bonus_interest_remaining_amount . '%)<br/> Total = $'
+                                            . \Helper::inRoundTwoDecimal($product->interest_earned);
+                                    } else {
+                                        echo "Total = $" . \Helper::inRoundTwoDecimal($product->interest_earned);
+                                        echo "(" . $product->total_interest . "%)";
+                                    } ?>
+                                </td>
+                            </tr>
+                        <?php } else { ?>
+                            <tr>
+                                <td colspan="1">Total Bonus Interest Earned for SGD
+                                    <?php echo "$" . \Helper::inThousand($range->placement); ?></td>
+                                <td class="text-center <?php if ($product->highlight == true) {
+                                    echo 'highlight';
+                                } ?>"
+                                    colspan="<?php echo $range->colspan; ?>">
 
-                                    <th>PRIVILEGE</th> <?php }
-                                if (!empty($firstRange->minimum_loan_pa)) { ?>
-                                    <th>LOAN</th> <?php }
-                                if (!empty($firstRange->other_minimum_amount1) && ($firstRange->status_other1 == 1)) { ?>
-                                    <th class="combine-criteria-padding">
-                                        <div class="">
-                                            <div class="width-50">
-                                                <div class="ps-checkbox">
-                                                    <input class="form-control" type="checkbox"
-                                                           onchange="changeIndividualCriteria(this);"
-                                                           data-status="<?php echo $highlightStatus; ?>"
-                                                           name="other_interest1"
-                                                           data-product-id="<?php echo $product->product_id; ?>"
-                                                           value="true"
-                                                        <?php if ($product->other_highlight1) {
-                                                            echo "checked = checked";
-                                                        } ?>
-                                                           id="other-interest1-<?php echo $product->product_id; ?>">
-                                                    <label
-                                                        for="other-interest1-<?php echo $product->product_id; ?>"><?php echo $firstRange->other_interest1_name; ?></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                <?php }
-                                if (!empty($firstRange->other_minimum_amount2) && ($firstRange->status_other2 == 1)) { ?>
-                                    <th class="combine-criteria-padding">
-                                        <div class="">
-                                            <div class="width-50">
-                                                <div class="ps-checkbox">
-                                                    <input class="form-control" type="checkbox"
-                                                           onchange="changeIndividualCriteria(this);"
-                                                           data-status="<?php echo $highlightStatus; ?>"
-                                                           name="other_interest2"
-                                                           data-product-id="<?php echo $product->product_id; ?>"
-                                                           value="true"
-                                                        <?php if ($product->other_highlight2) {
-                                                            echo "checked = checked";
-                                                        } ?>
-                                                           id="other-interest2-<?php echo $product->product_id; ?>">
-                                                    <label
-                                                        for="other-interest2-<?php echo $product->product_id; ?>"><?php echo $firstRange->other_interest2_name; ?></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                <?php } ?>
-                            </thead>
-                            <tbody>
-                            <?php foreach ($productRanges as $range) { ?>
-                                <tr>
-                                    <td class="text-left">Bonus Interest PA</td>
-                                    <?php if (!empty($firstRange->minimum_spend_1) || !empty($firstRange->minimum_spend_2)) { ?>
-                                        <td class=" pt-0 pb-0 pl-0 pr-0 text-center <?php if ($product->spend_2_highlight == true || $product->spend_1_highlight == true) {
-                                            echo "highlight";
-                                        } ?> ">
-                                            <table cellspacing="0" cellpadding="0">
-                                                <tr>
-                                                    <td class="td-unique text-center <?php if ($product->spend_1_highlight == true) {
-                                                        echo "highlight";
-                                                    } ?> ">
-                                                        <?php if ($range->bonus_interest_spend_1 <= 0) {
-                                                            echo "-";
-                                                        } else {
-                                                            echo $range->bonus_interest_spend_1 . "%";
-                                                        } ?>
+                                    <span class="nill"> <?php echo NILL; ?></span><br/>
 
-                                                    </td>
-                                                    <td class="td-unique text-center <?php if ($product->spend_2_highlight == true) {
-                                                        echo "highlight";
-                                                    } ?>">
-                                                        <?php if ($range->bonus_interest_spend_2 <= 0) {
-                                                            echo "-";
-                                                        } else {
-                                                            echo $range->bonus_interest_spend_2 . "%";
-                                                        } ?>
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                    <p><?php echo NOT_ELIGIBLE; ?></p>
 
+                                </td>
+                            </tr>
+                        <?php }
+                    } ?>
+                    </tbody>
+                </table>
 
-                                        </td>
-                                    <?php }
-                                    if (!empty($firstRange->minimum_salary)) { ?>
-                                        <td class=" text-center  <?php if ($product->salary_highlight == true) {
-                                            echo "highlight";
-                                        } ?> ">
-                                            <?php if ($range->bonus_interest_salary <= 0) {
-                                                echo "-";
-                                            } else {
-                                                echo "$range->bonus_interest_salary" . '%';
-                                            } ?>
-
-                                        </td>
-                                    <?php }
-                                    if (!empty($firstRange->minimum_giro_payment)) { ?>
-                                        <td class=" text-center  <?php if ($product->payment_highlight == true) {
-                                            echo "highlight";
-                                        } ?> ">
-                                            <?php if ($range->bonus_interest_giro_payment <= 0) {
-                                                echo "-";
-                                            } else {
-                                                echo "$range->bonus_interest_giro_payment" . '%';
-                                            } ?>
-
-                                        </td>
-                                    <?php }
-                                    if (!empty($firstRange->minimum_privilege_pa)) { ?>
-                                        <td class=" text-center  <?php if ($product->privilege_highlight == true) {
-                                            echo "highlight";
-                                        } ?> ">
-                                            Up to <?php if ($range->bonus_interest_privilege <= 0) {
-                                                echo "-";
-                                            } else {
-                                                echo "$range->bonus_interest_privilege" . '%';
-                                            } ?>
-
-                                        </td>
-                                    <?php }
-                                    if (!empty($firstRange->minimum_loan_pa)) { ?>
-                                        <td class=" text-left  <?php if ($product->loan_highlight == true) {
-                                            echo "highlight";
-                                        } ?> ">
-                                            <?php if ($range->bonus_interest_loan <= 0) {
-                                                echo "-";
-                                            } else {
-                                                echo "$range->bonus_interest_loan" . '%';
-                                            } ?>
-
-                                        </td>
-                                    <?php }
-                                    if (!empty($firstRange->other_minimum_amount1) && ($firstRange->status_other1 == 1)) { ?>
-                                        <td class=" text-left  <?php if ($product->other_highlight1 == true) {
-                                            echo "highlight";
-                                        } ?> ">
-                                            <?php if ($range->other_interest1 <= 0) {
-                                                echo "-";
-                                            } else {
-                                                echo "$range->other_interest1" . '%';
-                                            } ?>
-
-                                        </td>
-                                    <?php }
-                                    if (!empty($firstRange->other_minimum_amount2) && ($firstRange->status_other2 == 1)) { ?>
-                                        <td class=" text-left  <?php if ($product->other_highlight2 == true) {
-                                            echo "highlight";
-                                        } ?> ">
-                                            <?php if ($range->other_interest2 <= 0) {
-                                                echo "-";
-                                            } else {
-                                                echo "$range->other_interest2" . '%';
-                                            } ?>
-
-                                        </td>
-                                    <?php } ?>
-                                </tr>
-                                <?php if ($status == true) { ?>
-                                    <tr>
-                                        <td colspan="1" class="text-left">Total Bonus Interest Earned for SGD
-                                            <?php echo "$" . \Helper::inThousand($range->placement); ?>
-                                        </td>
-                                        <td class=" text-center <?php if ($product->highlight == true) {
-                                            echo 'highlight';
-                                        } ?>" colspan="<?php echo $range->colspan; ?>">
-
-                                            <?php if ($range->placement > $range->first_cap_amount) {
-                                                echo "First ";
-                                                echo "$" . \Helper::inThousand($range->first_cap_amount) . ' - ' .
-                                                    '$' . \Helper::inRoundTwoDecimal(($range->first_cap_amount * ($product->total_interest / 100))) .
-                                                    ' (' . $product->total_interest . '%), remaining $' .
-                                                    \Helper::inThousand(($range->placement - $range->first_cap_amount)) . ' - '
-                                                    . '$' . \Helper::inRoundTwoDecimal((($range->bonus_interest_remaining_amount / 100) * ($range->placement - $range->first_cap_amount))) .
-                                                    ' (' . $range->bonus_interest_remaining_amount . '%)<br/> Total = $'
-                                                    . \Helper::inRoundTwoDecimal($product->interest_earned);
-                                            } else {
-                                                echo "Total = $" . \Helper::inRoundTwoDecimal($product->interest_earned);
-                                                echo "(" . $product->total_interest . "%)";
-                                            } ?>
-                                        </td>
-                                    </tr>
-                                <?php } else { ?>
-                                    <tr>
-                                        <td colspan="1">Total Bonus Interest Earned for SGD
-                                            <?php echo "$" . \Helper::inThousand($range->placement); ?></td>
-                                        <td class="text-center <?php if ($product->highlight == true) {
-                                            echo 'highlight';
-                                        } ?>"
-                                            colspan="<?php echo $range->colspan; ?>">
-
-                                            <span class="nill"> <?php echo NILL; ?></span><br/>
-
-                                            <p><?php echo NOT_ELIGIBLE; ?></p>
-
-                                        </td>
-                                    </tr>
-                                <?php }
-                            } ?>
-                            </tbody>
-                        </table>
-                    </form>
-                </div>
                 <?php
                 $range = $productRanges[0];
                 if ($status == true) { ?>
@@ -5306,6 +5785,18 @@ class PagesFrontController extends Controller
     }
 
     public
+    function resetPassword($details)
+    {
+//        $details = \Helper::get_page_detail(TERMS_CONDITION);
+        $brands = $details['brands'];
+        $page = $details['page'];
+        $systemSetting = $details['systemSetting'];
+        $banners = $details['banners'];
+
+        return view('frontend.user.reset-new-password', compact("brands", "page", "systemSetting", "banners"));
+    }
+
+    public
     function getProductSliderDetails(Request $request)
     {
         $products = \Helper::getHomeProducts($request->promotion_type, $request->by_order_value);
@@ -5321,7 +5812,9 @@ class PagesFrontController extends Controller
                             <div class="ps-slider--feature-product saving">
                                 <div class="ps-block--short-product second highlight"
                                      data-mh="product">
-                                    <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    <div class="slider-img">
+                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
                                     <h4 class="slider-heading">
                                         <strong>
                                             <?php if ($product->by_order_value == INTEREST) { ?>
@@ -5426,7 +5919,7 @@ class PagesFrontController extends Controller
                 $i = 1;
                 $featured_item = 5 - count($featured);
                 $featured_count = count($featured);
-                $featured_width = 12;
+                $featured_width = 0;
                 if ($featured_count == 1) {
                     $featured_width = 2;
                 } elseif ($featured_count == 2) {
@@ -5451,7 +5944,9 @@ class PagesFrontController extends Controller
                             if ($product->featured == 0) { ?>
 
                                 <div class="ps-block--short-product second">
-                                    <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    <div class="slider-img">
+                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
                                     <h4 class="slider-heading">
                                         <strong>
                                             <?php if ($product->by_order_value == INTEREST) { ?>
@@ -5564,21 +6059,21 @@ class PagesFrontController extends Controller
                 $i = 1;
                 $featured_item = 5 - count($featured);
                 $featured_count = count($featured);
-                $featured_width = 12;
-                if ($featured_count == 1) {
+                $featured_width = 0;
+                /*if ($featured_count == 1) {
                     $featured_width = 2;
                 } elseif ($featured_count == 2) {
                     $featured_width = 3;
                 } elseif ($featured_count == 3) {
                     $featured_width = 4;
-                }
+                }*/
                 ?>
                 <div class="product-col-0<?php echo $featured_width; ?> dump-padding-left">
                     <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
                          data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
                          data-owl-gap="10" data-owl-item="<?php echo $featured_item; ?>"
                          data-owl-item-lg="<?php echo $featured_item; ?>"
-                         data-owl-item-md="<?php echo $featured_item; ?>" data-owl-item-sm="2"
+                         data-owl-item-md="3" data-owl-item-sm="2"
                          data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
                          data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
                          data-owl-nav-right="<i class='fa fa-angle-right'></i>"
@@ -5588,7 +6083,9 @@ class PagesFrontController extends Controller
 
                             <div
                                 class='ps-block--short-product second  <?php if ($product->featured == 1) echo "highlight"; ?> '>
-                                <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                <div class="slider-img">
+                                    <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                </div>
                                 <h4 class="slider-heading">
                                     <strong>
                                         <?php if ($product->by_order_value == INTEREST) { ?>
@@ -5692,5 +6189,254 @@ class PagesFrontController extends Controller
 
             }
         }
+    }
+
+    public
+    function getLoanProductSliderDetails(Request $request)
+    {
+        $products = \Helper::getLoanProducts($request->promotion_type, $request->by_order_value);
+        $i = 1;
+        $featured = [];
+        if ($products->count()) {
+
+            if ($request->target == "loan-pc-slider") {
+                foreach ($products as $product) {
+                    if ($product->featured == 1) {
+                        $featured[] = $i; ?>
+                        <div class="product-col-01 home-featured">
+                            <div class="ps-slider--feature-product saving">
+                                <div class="ps-block--short-product second highlight"
+                                     data-mh="product">
+                                    <div class="slider-img">
+                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
+                                    <h4 class="slider-heading">
+                                        <strong>
+                                            <?php if ($product->by_order_value == INTEREST) { ?>
+                                                Avg. rate:  <span
+                                                    class="highlight-slider"> <?php echo $product->avg_interest; ?>
+                                                    %</span>
+                                            <?php }
+                                            if ($product->by_order_value == TENURE) {
+                                                ?>
+                                                Lock in: <span
+                                                    class="highlight-slider"> <?php echo $product->lock_in; ?>
+                                                    YRS </span>
+                                            <?php }
+                                            if ($product->by_order_value == INSTALLMENT) { ?>
+                                                Min:  <span
+                                                    class="highlight-slider"> SGD $<?php echo \Helper::inThousand($product->minimum_loan_amount); ?>
+                                                </span>
+                                            <?php } ?>
+                                        </strong>
+                                    </h4>
+
+                                    <div class="ps-block__info">
+                                        <p class=" <?php if ($product->by_order_value == INTEREST)
+                                            echo 'highlight highlight-bg'; ?> ">
+                                            <span class="slider-font">
+                                            Rate: </span><?php echo $product->avg_interest; ?>%</p>
+
+                                        <p class=" <?php if ($product->by_order_value == TENURE)
+                                            echo 'highlight highlight-bg'; ?>">
+                                                <span
+                                                    class="slider-font">Lock in:</span> <?php
+                                            echo $product->lock_in; ?> YRS
+                                        </p>
+
+                                        <p class="<?php if ($product->by_order_value == INSTALLMENT) echo 'highlight highlight-bg'; ?>">
+                                                    <span
+                                                        class="slider-font"> Min: SGD $<?php echo \Helper::inThousand($product->minimum_loan_amount); ?> </span>
+                                        </p>
+                                    </div>
+                                    <a class="ps-btn"
+                                       href="<?php echo url($product->product_url); ?>">
+                                        More info
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <?php $i++;
+
+                    }
+                }
+
+                $i = 1;
+                $featured_item = 5 - count($featured);
+                $featured_count = count($featured);
+                $featured_width = 0;
+                if ($featured_count == 1) {
+                    $featured_width = 2;
+                } elseif ($featured_count == 2) {
+                    $featured_width = 3;
+                } elseif ($featured_count == 3) {
+                    $featured_width = 4;
+                }
+
+                ?>
+
+                <div class="product-col-0<?php echo $featured_width; ?> dump-padding-left">
+                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
+                         data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
+                         data-owl-gap="10" data-owl-item="<?php echo $featured_item; ?>"
+                         data-owl-item-lg="<?php echo $featured_item; ?>"
+                         data-owl-item-md="<?php echo $featured_item; ?>" data-owl-item-sm="2"
+                         data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
+                         data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
+                         data-owl-nav-right="<i class='fa fa-angle-right'></i>"
+                         data-owl-speed="5000">
+                        <?php foreach ($products as $product) {
+                            if ($product->featured == 0) { ?>
+
+                                <div class="ps-block--short-product second">
+                                    <div class="slider-img">
+                                        <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                    </div>
+                                    <h4 class="slider-heading">
+                                        <strong>
+                                            <?php if ($product->by_order_value == INTEREST) { ?>
+                                                Avg. rate:  <span
+                                                    class="highlight-slider"> <?php echo $product->avg_interest; ?>
+                                                    %</span>
+                                            <?php }
+                                            if ($product->by_order_value == TENURE) {
+                                                ?>
+                                                Lock in: <span
+                                                    class="highlight-slider"> <?php echo $product->lock_in; ?>
+                                                    YRS </span>
+                                            <?php }
+                                            if ($product->by_order_value == INSTALLMENT) { ?>
+                                                Min:  <span
+                                                    class="highlight-slider"> SGD $<?php echo \Helper::inThousand($product->minimum_loan_amount); ?>
+                                                </span>
+                                            <?php } ?>
+                                        </strong>
+                                    </h4>
+
+                                    <div class="ps-block__info">
+                                        <p class=" <?php if ($product->by_order_value == INTEREST)
+                                            echo 'highlight highlight-bg'; ?> ">
+                                            <span class="slider-font">
+                                            Rate: </span><?php echo $product->avg_interest; ?>%</p>
+
+                                        <p class=" <?php if ($product->by_order_value == TENURE)
+                                            echo 'highlight highlight-bg'; ?>">
+                                                <span
+                                                    class="slider-font">Lock in:</span> <?php
+                                            echo $product->lock_in; ?> YRS
+                                        </p>
+
+                                        <p class="<?php if ($product->by_order_value == INSTALLMENT) echo 'highlight highlight-bg'; ?>">
+                                                    <span
+                                                        class="slider-font"> Min: SGD $<?php echo \Helper::inThousand($product->minimum_loan_amount); ?> </span>
+                                        </p>
+                                    </div>
+                                    <a class="ps-btn"
+                                       href="<?php echo url($product->product_url); ?>">
+                                        More info
+                                    </a>
+
+                                </div>
+                            <?php }
+                        } ?>
+                    </div>
+                </div>
+                <?php
+            } else if ($request->target == "loan-sp-slider") {
+
+                foreach ($products as $product) {
+                    if ($product->featured == 1) {
+                        $featured[] = $i;
+                        $i++;
+                    }
+                }
+                $i = 1;
+                $featured_item = 5 - count($featured);
+                $featured_count = count($featured);
+                $featured_width = 0;
+                /*if ($featured_count == 1) {
+                    $featured_width = 2;
+                } elseif ($featured_count == 2) {
+                    $featured_width = 3;
+                } elseif ($featured_count == 3) {
+                    $featured_width = 4;
+                }*/
+                ?>
+                <div class="product-col-0<?php echo $featured_width; ?> dump-padding-left">
+                    <div class="display_fixed nav-outside owl-slider owl-carousel owl-theme owl-loaded"
+                         data-owl-auto="true" data-owl-dots="false" data-owl-duration="1000"
+                         data-owl-gap="10" data-owl-item="<?php echo $featured_item; ?>"
+                         data-owl-item-lg="<?php echo $featured_item; ?>"
+                         data-owl-item-md="3" data-owl-item-sm="2"
+                         data-owl-item-xs="1" data-owl-loop="true" data-owl-mousedrag="on"
+                         data-owl-nav="true" data-owl-nav-left="<i class='fa fa-angle-left'></i>"
+                         data-owl-nav-right="<i class='fa fa-angle-right'></i>"
+                         data-owl-speed="5000">
+                        <?php foreach ($products as $product) {
+                            ?>
+
+                            <div
+                                class='ps-block--short-product second  <?php if ($product->featured == 1) echo "highlight"; ?> '>
+                                <div class="slider-img">
+                                    <img alt="" src="<?php echo asset($product->brand_logo); ?>">
+                                </div>
+                                <h4 class="slider-heading">
+                                    <strong>
+                                        <?php if ($product->by_order_value == INTEREST) { ?>
+                                            Avg. rate:  <span
+                                                class="highlight-slider"> <?php echo $product->avg_interest; ?>
+                                                %</span>
+                                        <?php }
+                                        if ($product->by_order_value == TENURE) {
+                                            ?>
+                                            Lock in: <span
+                                                class="highlight-slider"> <?php echo $product->lock_in; ?> YRS </span>
+                                        <?php }
+                                        if ($product->by_order_value == INSTALLMENT) { ?>
+                                            Min:  <span
+                                                class="highlight-slider"> SGD $<?php echo \Helper::inThousand($product->minimum_loan_amount); ?>
+                                                </span>
+                                        <?php } ?>
+                                    </strong>
+                                </h4>
+
+                                <div class="ps-block__info">
+                                    <p class=" <?php if ($product->by_order_value == INTEREST)
+                                        echo 'highlight highlight-bg'; ?> ">
+                                            <span class="slider-font">
+                                            Rate: </span><?php echo $product->avg_interest; ?>%</p>
+
+                                    <p class=" <?php if ($product->by_order_value == TENURE)
+                                        echo 'highlight highlight-bg'; ?>">
+                                                <span
+                                                    class="slider-font">Lock in:</span> <?php
+                                        echo $product->lock_in; ?> YRS
+                                    </p>
+
+                                    <p class="<?php if ($product->by_order_value == INSTALLMENT) echo 'highlight highlight-bg'; ?>">
+                                                    <span
+                                                        class="slider-font"> Min: SGD $<?php echo \Helper::inThousand($product->minimum_loan_amount); ?> </span>
+                                    </p>
+                                </div>
+                                <a class="ps-btn"
+                                   href="<?php echo url($product->product_url); ?>">
+                                    More info
+                                </a>
+
+                            </div>
+                            <?php
+                        } ?>
+                    </div>
+                </div>
+                <?php
+
+            }
+        }
+    }
+    
+    public function loanLoadMore(Request $request)
+    {
+    	return "hello";
     }
 }

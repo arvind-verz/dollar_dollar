@@ -351,13 +351,11 @@ class BlogController extends Controller
         } else {
             $page->contact_or_offer = $request->contact_or_offer;
         }
-        if (!$request->status) {
-            $page->status = 1;
-        } else {
+        if (!is_null($request->status)) {
             $page->status = $request->status;
         }
         $page->after_login = $request->after_login;
-        $page->created_at = Carbon::now()->toDateTimeString();
+        $page->updated_at = Carbon::now()->toDateTimeString();
         $page->save();
 
         $newPage = Page::find($id);

@@ -25,6 +25,6 @@ class Reminder extends Mailable
     public function build()
     {
         $data = $this->data;
-        return $this->markdown('frontend.emails.ProductReminder', compact("data"));
+        return $this->subject('Product reminder')->from($data['sender_email'], $data['sender_name'])->markdown('frontend.emails.ProductReminder', compact("data"));
     }
 }

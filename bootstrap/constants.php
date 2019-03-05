@@ -27,8 +27,10 @@ define('PROMOTION', 'Promotion');
 
 
 //set mail name
-define('ADMIN_EMAIL', 'enquiry@dollardollar.sg');
-define('ENQUIRY_EMAIL', '');
+define('ADMIN_EMAIL', 'admin@dollardollar.sg');
+define('WEALTH_EMAIL', 'wealth@dollardollar.sg');
+define('HOME_LOAN_EMAIL', 'homeloan@dollardollar.sg');
+define('ENQUIRY_EMAIL', 'contactus@dollardollar.sg');
 
 //Activity log status
 define('CREATE', 'Created');
@@ -72,6 +74,7 @@ define('BLOG_MODULE', "Blog Management");
 define('BLOG_CATEGORY_MODULE', "Blog Category Management");
 define('ENQUIRY_MODULE', "Enquiry Management");
 define('TAG_MODULE', "Tag Management");
+define('RATE_TYPE_MODULE', "Rate Type Management");
 define('REPORT_MODULE', "Report Management");
 define('FIX_DEPOSIT_MODULE', "Fix Deposit");
 define('SAVING_DEPOSIT_MODULE', "Saving Deposit");
@@ -91,6 +94,7 @@ define('BRAND_MODULE_SINGLE', "Brand");
 define('USER_MODULE_SINGLE', "User");
 define('REPORT_MODULE_SINGLE', "Report");
 define('CUSTOMER_MODULE_SINGLE', "Customer");
+define('CUSTOMER_DELETION_MODULE_SINGLE', "Customer Deletion ");
 define('ORDER_MODULE_SINGLE', "Order");
 define('HOMEPAGE_MODULE_SINGLE', "Homepage");
 define('ACTIVITY_LOG_MODULE_SINGLE', "Activity Log");
@@ -105,7 +109,9 @@ define('HEALTH_INSURANCE_ENQUIRY_MODULE', "Health Insurance Enquiry");
 define('LIFE_INSURANCE_ENQUIRY_MODULE', "Life Insurance Enquiry");
 define('INVESTMENT_ENQUIRY_MODULE', "Investment Enquiry");
 define('CONTACT_ENQUIRY_MODULE', "Contact Enquiry");
+define('LOAN_ENQUIRY_MODULE', "Loan Enquiry");
 define('TAG_MODULE_SINGLE', "Tag");
+define('RATE_TYPE_MODULE_SINGLE', "Rate Type");
 define('PRODUCT_NAME_MODULE_SINGLE', "Product Name");
 define('FORMULA_DETAIL_MODULE_SINGLE', "Formula Detail");
 define('PLACEMENT_RANGE_MODULE_SINGLE', "Placement Range");
@@ -149,22 +155,24 @@ define('TAG_MODULE_ID', 36);
 define('PRODUCT_PAGE_ID', 20);
 define('CATEGORY_PAGE_ID', 26);
 define('PROMOTION_PAGE_ID', 21);
-
+define('HOME_PAGE_ID', 18);
 //Blog menu id
 define('BLOG_MENU_ID', 21);
+define('WEALTH_MENU_ID', 22);
 define('PRODUCT_ID', 37);
 
 //Alert messages
 define('IMPORTED_ALERT', " has been successfully imported.");
 define('EXPORT_ALERT', " has been successfully exported.");
 define('ADDED_ALERT', " has been successfully added.");
+define('ADDED_ERROR_ALERT', " has been already added.");
 define('UPDATED_ALERT', " has been successfully updated.");
 define('DELETED_ALERT', " has been successfully deleted.");
 define('ALREADY_TAKEN_ALERT', " has already been taken.");
 define('OPPS_ALERT', " Oops! Something went wrong!");
 define('CREDENTIALS_ALERT', " These credentials do not match our records.");
 define('SELECT_ALERT', " has been not selected.");
-define('MAX_HOME_BANNER_ALERT', " You can upload only 5 banners for ");
+define('MAX_HOME_BANNER_ALERT', " You can upload only 4 banners for ");
 define('MAX_BANNER_ALERT', " You can upload only 1 banner for ");
 define('EMPTY_AD_IMAGE_ALERT', "At least upload one ad image.");
 
@@ -196,6 +204,7 @@ define('PROFILEDASHBOARD', "profile-dashboard");
 define('ACCOUNTINFO', "account-information");
 define('PRODUCTMANAGEMENT', "product-management");
 define('FORGOT_PASSWORD', "forgot-password");
+define('RESET_PASSWORD', "reset-password");
 define('FORGOT_PASSWORD_RESET', "forgot-password-reset");
 define('PRODUCT_MANAGEMENT_SLUG', "product-management");
 
@@ -259,6 +268,7 @@ define('ALL_IN_ONE_ACCOUNT_F2', 8);
 define('ALL_IN_ONE_ACCOUNT_F3', 9);
 define('ALL_IN_ONE_ACCOUNT_F4', 10);
 define('ALL_IN_ONE_ACCOUNT_F5', 23);
+define('ALL_IN_ONE_ACCOUNT_F6', 25);
 define('PRIVILEGE_DEPOSIT_F1', 11);
 define('PRIVILEGE_DEPOSIT_F2', 12);
 define('PRIVILEGE_DEPOSIT_F3', 13);
@@ -279,6 +289,7 @@ define('INTEREST', "Interest");
 define('TENURE', "Tenure");
 define('CRITERIA', "Criteria");
 define('INSTALLMENT', "Installment");
+define('MINIMUM_LOAN_AMOUNT', "Minimum loan");
 
 //Row Heading for Saving Deposit Formula 5
 define('CUMMULATED_MONTHLY_SAVINGS_AMOUNT', "CUMMULATED MONTHLY SAVINGS AMOUNT");
@@ -316,7 +327,7 @@ define('PROMOTION_PERIOD', "promotion_period");
 //currency
 define('SGD', "SGD");
 //product name
-define('FIX_DEPOSIT_TITLE', "Fix Deposit");
+define('FIX_DEPOSIT_TITLE', "Fixed Deposit");
 define('SAVING_DEPOSIT_TITLE', "Saving Deposit");
 define('FOREIGN_DEPOSIT_TITLE', "Foreign Deposit");
 define('PRIVILEGE_DEPOSIT_TITLE', "Privilege Deposit");
@@ -324,17 +335,32 @@ define('ALL_IN_ONE_ACCOUNT_TITLE', "All in one Account");
 define('LOAN_TITLE', "Loan");
 //drop down constants
 define('BOTH_VALUE', "Both");
+define('FIXED_RATE', "Fixed");
 define('FIX_RATE', "Fix");
 define('FLOATING_RATE', "Floating");
 define('FIX_RATE_TYPE', "Fix");
 define('SIBOR_RATE_TYPE', "Sibor");
 
 //Property type
-define('HDB_PROPERTY', "HDB/Private");
-define('PRIVATE_PROPERTY', "Commercial Individual");
+define('HDB_PROPERTY', "HDB");
+define('PRIVATE_PROPERTY', "Private");
+define('COMMERCIAL_INDIVIDUAL_PROPERTY', "Commercial/Individual");
+define('HDB_PRIVATE_PROPERTY', "HDB/Private");
+define('COMMERCIAL_PROPERTY', "Commercial Individual");
 
 //Completion status
-define('COMPLETE', "Complete");
+define('COMPLETE', "Completed");
+define('COMPLETE_BUC', "Completed/BUC");
 define('BUC', "BUC");
 define('ALL', "ALL");
+
+//log status
+define('DEACTIVATED', 1);
+define('DELETED', 2);
+
+//update By
+define('ADMIN_USER', 'Admin');
+define('FRONT_USER', 'User');
+
+
 
