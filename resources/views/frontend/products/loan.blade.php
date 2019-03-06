@@ -76,7 +76,6 @@
                           method="post">
                         <h4>fill in your property loan details</h4>
                         <input type="hidden" name="page_no" id="page-no" value="{{$pageNo}}">
-
                         <div class="ps-form__values">
                             <div class="form-group--label form-group--label1">
                                 <div class="form-group__content">
@@ -511,6 +510,7 @@
 
         $("document").ready(function () {
             var i = 2;
+            var j = 1;
             var pages = '{{$pages}}}';
             var totalPage = parseInt(pages);
             if(totalPage>=i){
@@ -518,6 +518,9 @@
             }
 
                 $("a.load_more_content").on("click", function (e) {
+                    var ids = <?php echo json_encode($productIdsPerPage); ?>;
+                    var productIds = ids[j];
+
                     if(totalPage>=i){
                     e.preventDefault();
                     var search_form = $("#search-form").serialize();
@@ -526,7 +529,7 @@
                     $.ajax({
                         type: 'POST',
                         url: "{{ url('/loan-load-more') }}",
-                        data: {page_no: i, type: type, search_form: search_form, _token: "{{csrf_token()}}"},
+                        data: {page_no: i, type: type, search_form: search_form, _token: "{{csrf_token()}}",product_ids:productIds},
                         //dataType: "JSON",
                         cache: false,
                         async: false,
@@ -538,6 +541,7 @@
                             $("a.load_more_content").remove();
                         }
                     i++;
+                    j++;
                     }
                 });
 
