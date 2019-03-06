@@ -4470,15 +4470,18 @@ class PagesFrontController extends Controller
 
         $toolTips = ToolTip::where('promotion_id', LOAN)->first();
 
-        $promotion_products = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
+        $query = PromotionProducts::join('promotion_types', 'promotion_products.promotion_type_id', '=', 'promotion_types.id')
             ->leftJoin('brands', 'promotion_products.bank_id', '=', 'brands.id')
             ->leftJoin('promotion_formula', 'promotion_products.formula_id', '=', 'promotion_formula.id')
             //->whereNotNull('promotion_products.formula_id')
             ->where('promotion_types.id', '=', LOAN)
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
-            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id', 'promotion_products.id as product_id')
-            ->get();
+            ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id', 'promotion_products.id as product_id');
+        if (isset($request['type']) && $request['type'] == 'loan_load_more') {
+            $query = $query->whereIn('promotion_products.id',$request['product_ids']);
+        }
+        $promotion_products = $query->get();
 
         $details = \Helper::get_page_detail(LOAN_MODE);
         $brands = $details['brands'];
@@ -4731,9 +4734,15 @@ class PagesFrontController extends Controller
 
         }
         $products = $products->merge($remainingProducts);
+        $productsIds = $products->pluck('product_id');
+
         $totalProductNo = $products->count();
         $pages = ceil($totalProductNo / $productPerPage);
-        $products = $products->forPage($pageNo, $productPerPage);
+        $productIdsPerPage = [];
+        for($i=1;$i<=$pages;$i++){
+            $productIdsPerPage[]= $productsIds->forPage($i, $productPerPage)->all();
+
+        }
 
       /*  $products = $products->merge($remainingProducts);
        dd($products->pluck('product_id')->all(),$remainingProducts->pluck('product_id')->all());*/
@@ -4741,10 +4750,11 @@ class PagesFrontController extends Controller
             //$products = $products->merge($nonFeatured);
             return $products;
         }
+        $products = $products->forPage($pageNo, $productPerPage);
 
         //dd($products);
 
-        return view('frontend.products.loan', compact("pageNo", "pages", "brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "ads_manage", "toolTips"));
+        return view('frontend.products.loan', compact("productIdsPerPage","pageNo", "pages", "brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "ads_manage", "toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)
@@ -6459,8 +6469,9 @@ class PagesFrontController extends Controller
         parse_str($request->search_form, $searchForm);
         $searchForm['type'] = $request->type;
         $searchForm['page_no'] = $request->page_no;
+        $searchForm['product_ids'] = $request->product_ids;
         $products = $this->loan($searchForm);
-        //return $products;
+
         $j = 1;
         if ($products->count()) {
             foreach ($products as $product) {
