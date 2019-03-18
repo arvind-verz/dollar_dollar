@@ -334,13 +334,13 @@
                                                                 <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                                 @if($key==0)
                                                                     <td rowspan="{{count($product->product_ranges)}}"
-                                                                        class="center color-border-none @if( $product->tenure_highlight = true) highlight @endif">{{ $productRange->tenure}}
+                                                                        class="center color-border-none @if( $product->tenure_highlight = true) highlight @endif">
                                                                         <?php
                                                                         $monthSuffix = \Helper::days_or_month_or_year(2, $productRange->tenure);
                                                                         $monthShortSuffix = \Helper::daysMonthYearShortForm(2, $productRange->tenure);
                                                                         ?>
-                                                                        <span class="desktop">{{$monthSuffix}}</span>
-                                                                        <span class="mb">{{$monthShortSuffix}}</span>
+                                                                        <span class="desktop">{{$productRange->tenure}}&nbsp;{{$monthSuffix}}</span>
+                                                                        <span class="mb">{{$productRange->tenure}}&nbsp;{{$monthShortSuffix}}</span>
                                                                     </td>
                                                                 @endif
                                                                 <td class=" center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)
@@ -899,13 +899,13 @@
                                                                     <td class="@if($productRange->placement_highlight==true ) highlight @endif">{{ '$' . Helper::inThousand($productRange->min_range) . ' - $' . Helper::inThousand($productRange->max_range) }}</td>
                                                                     @if($key==0)
                                                                         <td rowspan="{{count($product->product_ranges)}}"
-                                                                            class="center color-border-none">{{ $productRange->tenure}}
+                                                                            class="center color-border-none">
                                                                             <?php
                                                                             $monthSuffix = \Helper::days_or_month_or_year(2, $productRange->tenure);
                                                                             $monthShortSuffix = \Helper::daysMonthYearShortForm(2, $productRange->tenure);
                                                                             ?>
-                                                                            <span class="desktop">{{$monthSuffix}}</span>
-                                                                            <span class="mb">{{$monthShortSuffix}}</span>
+                                                                            <span class="desktop">{{$productRange->tenure}}&nbsp;{{$monthSuffix}}</span>
+                                                                            <span class="mb">{{$productRange->tenure}}&nbsp;{{$monthShortSuffix}}</span>
                                                                         </td>
                                                                     @endif
                                                                     <td class="center @if( $productRange->bonus_interest_highlight==true  ) highlight @endif">@if(($productRange->bonus_interest)<=0)

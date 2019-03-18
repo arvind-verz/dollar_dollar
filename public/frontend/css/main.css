@@ -629,7 +629,7 @@ iframe {
 }
 .ps-btn, button.ps-btn {
     display:inline-block;
-    padding:15px 40px;
+    padding:12px 40px;
     font-family:"Montserrat", sans-serif;
     font-size:11px;
     font-weight:700;
@@ -647,7 +647,7 @@ iframe {
     -o-transition:all 0.4s ease;
     transition:all 0.4s ease;
 }
-
+.load_more_content.ps-btn{font-size:13px;padding:12px 60px;}
 .ps-btn:hover, button.ps-btn:hover {
     background-color:#fecb5b;
     color:#fff;
@@ -7280,8 +7280,8 @@ span.ps-post__meta a {
         margin-bottom:10px;
     }
 
-    .ps-product--2 .ps-product__heading {
-        margin-bottom:10px;
+    .ps-product.ps-product--2 .ps-product__heading {
+        margin-bottom:5px;
     }
 
     .ps-product .ps-product__heading {

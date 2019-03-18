@@ -4478,8 +4478,8 @@ class PagesFrontController extends Controller
             ->where('promotion_products.delete_status', '=', 0)
             ->where('promotion_products.status', '=', 1)
             ->select('brands.id as brand_id', 'promotion_formula.id as promotion_formula_id', 'promotion_formula.*', 'promotion_products.*', 'brands.*', 'promotion_products.id as product_id', 'promotion_products.id as product_id');
-        if (isset($request['type']) && $request['type'] == 'loan_load_more') {
-            $query = $query->whereIn('promotion_products.id',$request['product_ids']);
+        if (isset($request['type']) && in_array($request['type'], ['loan_load_more', 'loan_load_more_by_id'])) {
+            $query = $query->whereIn('promotion_products.id', $request['product_ids']);
         }
         $promotion_products = $query->get();
 
@@ -4739,22 +4739,23 @@ class PagesFrontController extends Controller
         $totalProductNo = $products->count();
         $pages = ceil($totalProductNo / $productPerPage);
         $productIdsPerPage = [];
-        for($i=1;$i<=$pages;$i++){
-            $productIdsPerPage[]= $productsIds->forPage($i, $productPerPage)->all();
-
-        }
-
-      /*  $products = $products->merge($remainingProducts);
-       dd($products->pluck('product_id')->all(),$remainingProducts->pluck('product_id')->all());*/
-        if (isset($request['type']) && $request['type'] == 'loan_load_more') {
+        if (isset($request['type']) && in_array($request['type'], ['loan_load_more', 'loan_load_more_by_id'])) {
             //$products = $products->merge($nonFeatured);
             return $products;
         }
+        for ($i = 1; $i <= $pages; $i++) {
+            $productIdsPerPage[] = array_values($productsIds->forPage($i, $productPerPage)->all());
+
+        }
+
+        /*  $products = $products->merge($remainingProducts);
+         dd($products->pluck('product_id')->all(),$remainingProducts->pluck('product_id')->all());*/
+
         $products = $products->forPage($pageNo, $productPerPage);
 
         //dd($products);
 
-        return view('frontend.products.loan', compact("productIdsPerPage","pageNo", "pages", "brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "ads_manage", "toolTips"));
+        return view('frontend.products.loan', compact("productIdsPerPage", "pageNo", "pages", "brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "ads_manage", "toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)
@@ -6491,8 +6492,8 @@ class PagesFrontController extends Controller
                     <?php
                 }
                 ?>
-                <div class="ps-product <?php if ($product->featured == 1) echo featured - 1; ?>"
-                     id="p-<?php echo $j; ?>">
+                <div class="ps-product loaded <?php if ($product->featured == 1) echo featured - 1; ?>"
+                     id="p-<?php echo $product->product_id; ?>">
                     <div class="ps-product__header">
                         <div class="slider-img"><img alt=""
                                                      src="<?php echo asset($product->brand_logo); ?>"></div>
@@ -6545,7 +6546,7 @@ class PagesFrontController extends Controller
                                         foreach ($productRanges as $key => $productRange) {
                                             ?>
                                             <tr>
-                                                <td class="<?php if ($productRange->tenure_highlight == true && $product->eligible==true) {
+                                                <td class="<?php if ($productRange->tenure_highlight == true && $product->eligible == true) {
                                                     echo 'highlight';
                                                 } ?>">
                                                     YEAR <?php echo $productRange->tenure; ?></td>
@@ -6573,30 +6574,32 @@ class PagesFrontController extends Controller
                                                         echo abs($productRange->rate_interest_other) . ' %';
                                                         echo '(' . $productRange->rate_name_other . ')';
                                                     } elseif (empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && empty($productRange->rate_interest_other)) {
-                                                    if
-                                                        (empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other))
-															{
-                                                                echo '= ' . $productRange->bonus_interest . ' %';
-                                                                if ($productRange->rate_interest_other < 0) {
-                                                                    echo '-';
-                                                                } else {
-                                                                    echo '+';
-                                                                }
-                                                                echo abs($productRange->rate_interest_other) . ' %';
-                                                            }
-														} elseif (empty($productRange->floating_rate_type) && empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other)) {
-                                                    if (!empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other))
-                                                            echo '= ' . $productRange->floating_rate_type;
+                                                        if
+                                                        (empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other)
+                                                        ) {
+                                                            echo '= ' . $productRange->bonus_interest . ' %';
                                                             if ($productRange->rate_interest_other < 0) {
                                                                 echo '-';
                                                             } else {
                                                                 echo '+';
                                                             }
-															echo abs($productRange->rate_interest_other) . ' %';
+                                                            echo abs($productRange->rate_interest_other) . ' %';
                                                         }
+                                                    } elseif (empty($productRange->floating_rate_type) && empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other)) {
+                                                        if (!empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other))
+                                                            echo '= ' . $productRange->floating_rate_type;
+                                                        if ($productRange->rate_interest_other < 0) {
+                                                            echo '-';
+                                                        } else {
+                                                            echo '+';
+                                                        }
+                                                        echo abs($productRange->rate_interest_other) . ' %';
+                                                    }
                                                     ?>
                                                 </td>
-                                                <td class=" <?php if($productRange->tenure_highlight==true && $product->eligible==true) { echo'highlight'; } ?> ">
+                                                <td class=" <?php if ($productRange->tenure_highlight == true && $product->eligible == true) {
+                                                    echo 'highlight';
+                                                } ?> ">
                                                     <?php echo '$' . round($productRange->monthly_payment) . ' / mth'; ?>
                                                 </td>
                                             </tr>
@@ -6604,7 +6607,7 @@ class PagesFrontController extends Controller
                                         }
                                         ?>
                                         <tr>
-                                            <td class=" <?php if ($product->highlight == true && $product->eligible==true) {
+                                            <td class=" <?php if ($product->highlight == true && $product->eligible == true) {
                                                 echo 'highlight';
                                             } ?>">THEREAFTER
                                             </td>
@@ -6633,33 +6636,35 @@ class PagesFrontController extends Controller
                                                     echo abs($productRange->there_after_rate_interest_other) . '%';
                                                     echo '(' . $productRanges[0]->there_after_rate_name_other . ')';
                                                 } elseif (empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && empty($productRanges[0]->there_after_rate_interest_other)) {
-                                                if
-                                                    (empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other))
-														{
-                                                            echo '= ' . $productRanges[0]->there_after_bonus_interest . '%';
-                                                            if ($productRange->there_after_rate_interest_other < 0) {
-                                                                echo '-';
-                                                            } else {
-                                                                echo '+';
-                                                            }
-                                                            echo abs($productRange->there_after_rate_interest_other) . '%';
+                                                    if
+                                                    (empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other)
+                                                    ) {
+                                                        echo '= ' . $productRanges[0]->there_after_bonus_interest . '%';
+                                                        if ($productRange->there_after_rate_interest_other < 0) {
+                                                            echo '-';
+                                                        } else {
+                                                            echo '+';
                                                         }
-													} elseif (empty($productRanges[0]->there_fter_rate_type) && empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other)) {
-                                                if
-                                                    (!empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other))
-														{
-                                                            echo '= ' . $productRanges[0]->there_after_rate_type;
-                                                            if ($productRange->there_after_rate_interest_other < 0) {
-                                                                echo '-';
-                                                            } else {
-                                                                echo '+';
-                                                            }
-                                                            abs($productRange->there_after_rate_interest_other) . '%';
-                                                        }
+                                                        echo abs($productRange->there_after_rate_interest_other) . '%';
                                                     }
+                                                } elseif (empty($productRanges[0]->there_fter_rate_type) && empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other)) {
+                                                    if
+                                                    (!empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other)
+                                                    ) {
+                                                        echo '= ' . $productRanges[0]->there_after_rate_type;
+                                                        if ($productRange->there_after_rate_interest_other < 0) {
+                                                            echo '-';
+                                                        } else {
+                                                            echo '+';
+                                                        }
+                                                        abs($productRange->there_after_rate_interest_other) . '%';
+                                                    }
+                                                }
                                                 ?>
                                             </td>
-                                            <td class=" <?php if($product->highlight==true && $product->eligible==true) {echo 'highlight';} ?>">
+                                            <td class=" <?php if ($product->highlight == true && $product->eligible == true) {
+                                                echo 'highlight';
+                                            } ?>">
                                                 $<?php echo round($product->there_after_installment); ?> / mth
                                             </td>
                                         </tr>
@@ -6680,12 +6685,317 @@ class PagesFrontController extends Controller
                                 <?php }
                             }
                             ?>
-                            <div class="ps-loan-right <?php if(!$product->eligible){ echo 'disable'; } ?>">
+                            <div class="ps-loan-right <?php if (!$product->eligible) {
+                                echo 'disable';
+                            } ?>">
                                 <h4>For $<?php echo \Helper::inThousand($product->placement); ?> loan
                                     with <?php echo $product->tenure; ?>
                                     years&emsp;Loan Tenure</h4>
-                                <?php if(!$product->eligible){ ?>
-                                    <p style="color:#303030 !important; padding:15px; font-weight: 800; ">Loan amount is not eligible for this Loan Package</p>
+                                <?php if (!$product->eligible) { ?>
+                                    <p style="color:#303030 !important; padding:15px; font-weight: 800; ">Loan amount is
+                                        not eligible for this Loan Package</p>
+                                <?php } ?>
+                                <div class="width-50">
+                                    <p>Rate Type : <br/><strong><?php echo $productRanges[0]->rate_type; ?>
+                                            <?php if ($productRanges[0]->rate_type_name) {
+                                                echo '(' . $productRanges[0]->rate_type_name . ')';
+                                            } ?></strong></p>
+
+                                    <p>Lock In : <br/><strong><?php echo $product->lock_in; ?> Years</strong></p>
+
+                                    <p>Property : <br/><strong><?php echo $productRanges[0]->property_type; ?></strong>
+                                    </p>
+                                </div>
+                                <div class="width-50">
+                                    <p>Rate : <br/><strong><?php echo $product->avg_interest; ?>%
+                                            (<?php echo $product->avg_tenure; ?>
+                                            yrs avg)</strong></p>
+
+                                    <p>Mthly Instalment :<br/>
+                                        <strong>$<?php echo round($product->monthly_installment); ?>
+                                            (<?php echo $product->avg_tenure; ?>
+                                            yrs avg)</strong>
+                                    </p>
+
+                                    <p>Minimum Loan :
+                                        <br/>
+                                        <strong>$<?php echo \Helper::inThousand($product->minimum_loan_amount); ?>
+                                        </strong>
+                                </div>
+
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="clearfix"></div>
+                    <?php
+                    if (!empty($product->ads_placement)) {
+                        $ads = json_decode($product->ads_placement);
+                        if (!empty($ads[2]->ad_horizontal_image_popup)) {
+                            ?>
+                            <div class="ps-poster-popup">
+                                <div class="close-popup">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </div>
+                                <a target="_blank"
+                                   href="<?php echo isset($ads[2]->ad_link_horizontal_popup) ? asset($ads[2]->ad_link_horizontal_popup) : 'javascript:void(0)'; ?>"><img
+                                        src="<?php echo isset($ads[2]->ad_horizontal_image_popup) ? asset($ads[2]->ad_horizontal_image_popup) : ''; ?>"
+                                        alt="" target="_blank"></a>
+                            </div>
+                        <?php }
+                    }
+                    ?>
+                    <div class="ps-product__detail">
+                        <?php echo $product->product_footer; ?>
+                    </div>
+                    <div class="ps-product__footer"><a class="ps-product__more" href="#">More Details<i
+                                class="fa fa-angle-down"></i></a><a class="ps-product__info sp-only"
+                                                                    href="#">More data<i
+                                class="fa fa-angle-down"></i></a></div>
+                </div>
+                <?php
+
+            }
+        } else {
+            ?>
+            <div class="ps-block--legend-table1 " style="margin-top: 20px;">
+                <div class="ps-block__content text-center">
+                    <p><?php echo CRITERIA_ERROR; ?></p>
+                </div>
+            </div>
+            <?php
+        }
+    }
+
+    public function loanLoadMoreById(Request $request)
+    {
+        parse_str($request->search_form, $searchForm);
+        $searchForm['type'] = $request->type;
+        $searchForm['page_no'] = $request->page_no;
+        $searchForm['product_ids'] = array_collapse($request->product_ids);
+        $products = $this->loan($searchForm);
+        $j = 1;
+        if ($products->count()) {
+            foreach ($products as $product) {
+                $productRanges = $product->product_range;
+                $ads = json_decode($product->ads_placement);
+                if (isset($ads[3]->ad_horizontal_image_popup_top)) {
+                    ?>
+                    <div class="ps-poster-popup">
+                        <div class="close-popup">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </div>
+                        <a href="<?php echo isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : 'javascript:void(0)'; ?>"
+                           target="_blank"><img
+                                src="<?php echo isset($ads[3]->ad_horizontal_image_popup_top) ? asset($ads[3]->ad_horizontal_image_popup_top) : ''; ?>"
+                                alt=""></a>
+                    </div>
+                    <?php
+                }
+                ?>
+                <div class="ps-product loaded <?php if ($product->featured == 1) echo featured - 1; ?>"
+                     id="p-<?php echo $product->product_id; ?>">
+                    <div class="ps-product__header">
+                        <div class="slider-img"><img alt=""
+                                                     src="<?php echo asset($product->brand_logo); ?>"></div>
+                        <div class="ps-product__promo left">
+                            <?php
+                            if ($product->shortlist_status == 1) {
+                                ?>
+                                <label class="ps-btn--checkbox ">
+                                    <input type="checkbox" id="" name="short_list_ids[]"
+                                           value="<?php echo $product->product_id; ?>"
+                                           class="checkbox short-list"><span></span>Shortlist
+                                    this
+                                    Loan
+                                </label>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="ps-loan__text1"><?php echo $product->bank_sub_title; ?></div>
+                    <div class="ps-loan-content ps-loan-content1">
+                        <?php
+                        if (!empty($product->ads_placement)) {
+
+                            $ads = json_decode($product->ads_placement);
+                            if (!empty($ads[0]->ad_image_horizontal)) {
+                                ?>
+                                <div class="ps-product__poster"><a
+                                        href="<?php echo isset($ads[0]->ad_link_horizontal) ? $ads[0]->ad_link_horizontal : 'javascript:void(0)'; ?>"
+                                        target="_blank"><img
+                                            src="<?php echo isset($ads[0]->ad_image_horizontal) ? asset($ads[0]->ad_image_horizontal) : ''; ?>"
+                                            alt=""></a></div>
+                                <?php
+                            }
+                        }
+                        if ($product->formula_id == LOAN_F1) {
+                            ?>
+                            <div class="ps-product__table loan_table">
+                                <div class="ps-table-wrap">
+                                    <table class="ps-table ps-table--product">
+                                        <thead>
+                                        <tr>
+                                            <th>YEARS</th>
+                                            <th>INTEREST RATE (PA)</th>
+                                            <th>Monthly Installment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        foreach ($productRanges as $key => $productRange) {
+                                            ?>
+                                            <tr>
+                                                <td class="<?php if ($productRange->tenure_highlight == true && $product->eligible == true) {
+                                                    echo 'highlight';
+                                                } ?>">
+                                                    YEAR <?php echo $productRange->tenure; ?></td>
+                                                <td><?php echo $productRange->bonus_interest + $productRange->rate_interest_other; ?>
+                                                    %
+                                                    <?php
+                                                    if (!empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && empty($productRange->rate_interest_other)) {
+                                                        echo '= ' . $productRange->floating_rate_type;
+                                                    } elseif (empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && !empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other)) {
+                                                        echo '= ' . $productRange->bonus_interest . ' %';
+                                                        if ($productRange->rate_interest_other < 0) {
+                                                            echo '-';
+                                                        } else {
+                                                            echo '+';
+                                                        }
+                                                        echo abs($productRange->rate_interest_other) . ' %';
+                                                        echo '(' . $productRange->rate_name_other . ')';
+                                                    } elseif (!empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && !empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other)) {
+                                                        echo '= ' . $productRange->floating_rate_type;
+                                                        if ($productRange->rate_interest_other < 0) {
+                                                            echo '-';
+                                                        } else {
+                                                            echo '+';
+                                                        }
+                                                        echo abs($productRange->rate_interest_other) . ' %';
+                                                        echo '(' . $productRange->rate_name_other . ')';
+                                                    } elseif (empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && empty($productRange->rate_interest_other)) {
+                                                        if
+                                                        (empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other)
+                                                        ) {
+                                                            echo '= ' . $productRange->bonus_interest . ' %';
+                                                            if ($productRange->rate_interest_other < 0) {
+                                                                echo '-';
+                                                            } else {
+                                                                echo '+';
+                                                            }
+                                                            echo abs($productRange->rate_interest_other) . ' %';
+                                                        }
+                                                    } elseif (empty($productRange->floating_rate_type) && empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other)) {
+                                                        if (!empty($productRange->floating_rate_type) && !empty($productRange->bonus_interest) && empty($productRange->rate_name_other) && !empty($productRange->rate_interest_other))
+                                                            echo '= ' . $productRange->floating_rate_type;
+                                                        if ($productRange->rate_interest_other < 0) {
+                                                            echo '-';
+                                                        } else {
+                                                            echo '+';
+                                                        }
+                                                        echo abs($productRange->rate_interest_other) . ' %';
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td class=" <?php if ($productRange->tenure_highlight == true && $product->eligible == true) {
+                                                    echo 'highlight';
+                                                } ?> ">
+                                                    <?php echo '$' . round($productRange->monthly_payment) . ' / mth'; ?>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                        <tr>
+                                            <td class=" <?php if ($product->highlight == true && $product->eligible == true) {
+                                                echo 'highlight';
+                                            } ?>">THEREAFTER
+                                            </td>
+                                            <td>
+                                                <?php echo($productRanges[0]->there_after_bonus_interest + $productRanges[0]->there_after_rate_interest_other); ?>
+                                                %
+                                                <?php
+                                                if (!empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && empty($productRanges[0]->there_after_rate_interest_other)) {
+                                                    echo '= ' . $productRanges[0]->there_after_rate_type;
+                                                } elseif (empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && !empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other)) {
+                                                    echo '= ' . $productRanges[0]->there_after_bonus_interest . '%';
+                                                    if ($productRange->there_after_rate_interest_other < 0) {
+                                                        echo '-';
+                                                    } else {
+                                                        echo '+';
+                                                    }
+                                                    echo abs($productRange->there_after_rate_interest_other) . '%';
+                                                    echo '(' . $productRanges[0]->there_after_rate_name_other . ')';
+                                                } elseif (!empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && !empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other)) {
+                                                    echo '= ' . $productRanges[0]->there_after_rate_type;
+                                                    if ($productRange->there_after_rate_interest_other < 0) {
+                                                        echo '-';
+                                                    } else {
+                                                        echo '+';
+                                                    }
+                                                    echo abs($productRange->there_after_rate_interest_other) . '%';
+                                                    echo '(' . $productRanges[0]->there_after_rate_name_other . ')';
+                                                } elseif (empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && empty($productRanges[0]->there_after_rate_interest_other)) {
+                                                    if
+                                                    (empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other)
+                                                    ) {
+                                                        echo '= ' . $productRanges[0]->there_after_bonus_interest . '%';
+                                                        if ($productRange->there_after_rate_interest_other < 0) {
+                                                            echo '-';
+                                                        } else {
+                                                            echo '+';
+                                                        }
+                                                        echo abs($productRange->there_after_rate_interest_other) . '%';
+                                                    }
+                                                } elseif (empty($productRanges[0]->there_fter_rate_type) && empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other)) {
+                                                    if
+                                                    (!empty($productRanges[0]->there_after_rate_type) && !empty($productRanges[0]->there_after_bonus_interest) && empty($productRanges[0]->there_after_rate_name_other) && !empty($productRanges[0]->there_after_rate_interest_other)
+                                                    ) {
+                                                        echo '= ' . $productRanges[0]->there_after_rate_type;
+                                                        if ($productRange->there_after_rate_interest_other < 0) {
+                                                            echo '-';
+                                                        } else {
+                                                            echo '+';
+                                                        }
+                                                        abs($productRange->there_after_rate_interest_other) . '%';
+                                                    }
+                                                }
+                                                ?>
+                                            </td>
+                                            <td class=" <?php if ($product->highlight == true && $product->eligible == true) {
+                                                echo 'highlight';
+                                            } ?>">
+                                                $<?php echo round($product->there_after_installment); ?> / mth
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <?php
+                            if (isset($ads[1])) {
+                                if (!empty($ads[1]->ad_image_vertical)) {
+                                    ?>
+                                    <div class="ps-product__poster">
+                                        <a href="<?php echo isset($ads[1]->ad_link_vertical) ? $ads[1]->ad_link_vertical : 'javascript:void(0)'; ?>"
+                                           target="_blank"><img class="img-center"
+                                                                src="<?php echo isset($ads[1]->ad_image_vertical) ? asset($ads[1]->ad_image_vertical) : ''; ?>"
+                                                                alt=""></a>
+                                    </div>
+                                <?php }
+                            }
+                            ?>
+                            <div class="ps-loan-right <?php if (!$product->eligible) {
+                                echo 'disable';
+                            } ?>">
+                                <h4>For $<?php echo \Helper::inThousand($product->placement); ?> loan
+                                    with <?php echo $product->tenure; ?>
+                                    years&emsp;Loan Tenure</h4>
+                                <?php if (!$product->eligible) { ?>
+                                    <p style="color:#303030 !important; padding:15px; font-weight: 800; ">Loan amount is
+                                        not eligible for this Loan Package</p>
                                 <?php } ?>
                                 <div class="width-50">
                                     <p>Rate Type : <br/><strong><?php echo $productRanges[0]->rate_type; ?>

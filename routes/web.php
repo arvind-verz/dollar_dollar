@@ -657,3 +657,4 @@ Route::post('/product-search', 'CMS\PagesFrontController@product_search_homepage
 Route::post('/deposit-type', 'HomeController@depositType')->name('deposit-type');
 
 Route::post('/loan-load-more', 'CMS\PagesFrontController@loanLoadMore');
+Route::post('/loan-load-more-by-id', 'CMS\PagesFrontController@loanLoadMoreById');
