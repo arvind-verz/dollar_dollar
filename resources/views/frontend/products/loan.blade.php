@@ -266,7 +266,7 @@
                         </div>
                     @endif
                     <div class="ps-product @if($product->featured==1)featured-1 @endif"
-                         id="p-{{ $j }}">
+                         id="p-{{$product->product_id}}">
                         <div class="ps-product__header">
                             <div class="slider-img"><img alt=""
                                                          src="{{ asset($product->brand_logo) }}"></div>
@@ -476,8 +476,9 @@
         </div>
 
         <div class="row text-center">
-        <a href="javascript:void(0)" class="load_more_content btn btn-danger " style="display: none;" data-id="1">Load More</a>
+        <a href="javascript:void(0)" class="load_more_content ps-btn ps-btn--yellow " style="display: none;" data-id="1">Load More &nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></a>
         </div> <br/>
+
 
         {{--Page content end--}}
         {{--contact us or what we offer section start--}}
@@ -508,10 +509,14 @@
 
         });
 
+
+
+
         $("document").ready(function () {
+
             var i = 2;
             var j = 1;
-            var pages = '{{$pages}}}';
+            var pages = '{{$pages}}';
             var totalPage = parseInt(pages);
             if(totalPage>=i){
                 $("a.load_more_content").css('display','');
@@ -545,7 +550,63 @@
                     }
                 });
 
+            $('a.target-product').on('click', function (e) {
+                e.preventDefault();
 
+                var productId = $(this).data('product-id');
+                var pages = '{{$pages}}';
+                var totalPage = parseInt(pages);
+                var ids = <?php echo json_encode($productIdsPerPage); ?>;
+                var productIds = [];
+                var k =1;
+
+                $.each(ids, function (key, value) {
+                    if(k>j){
+                        productIds.push(value);
+                    }
+                    if ($.inArray(String(productId), value) > -1) {
+                        return false;
+                    }
+                    k++;
+                });
+                //console.log(productIds);
+                if(productIds.length>0){
+                    var search_form = $("#search-form").serialize();
+                    //alert(search_form);
+                    var type = 'loan_load_more_by_id';
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ url('/loan-load-more-by-id') }}",
+                        data: {
+                            page_no: k,
+                            type: type,
+                            search_form: search_form,
+                            _token: "{{csrf_token()}}",
+                            product_ids: productIds
+                        },
+                        //dataType: "JSON",
+                        cache: false,
+                        async: false,
+                        success: function (data) {
+                            $('#container').append(data);
+                            $('html, body').animate({
+                                scrollTop: $("#p-"+productId).offset().top
+                            },2000);
+                            if(totalPage==k) {
+                                $("a.load_more_content").remove();
+                            }
+                        }
+                    });
+
+                    i=k;
+                    j=k;
+                }
+                else{
+                        $('html, body').animate({
+                            scrollTop: $("#p-"+productId).offset().top
+                        });
+                }
+            });
         });
 
     </script>

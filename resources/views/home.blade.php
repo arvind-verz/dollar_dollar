@@ -272,7 +272,7 @@ $datetime = Helper::todayDate();
                         <a href="{{ url('blog-list') }}">
                             <h3 class="ps-heading">
                             <strong>
-                            Lastest Blog
+                            Latest Blog
                             </strong>
                             </h3>
                         </a>
