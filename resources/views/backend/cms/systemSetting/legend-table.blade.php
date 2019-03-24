@@ -25,6 +25,7 @@
                     </ul>
                     <!-- /.box-header -->
                     <div class="box-body">
+
                         <!-- Custom Tabs (Pulled to the right) -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="homepage_links">
@@ -51,7 +52,7 @@
                                     {{Form::label('icon', 'Icon',['class'=>'col-sm-2 control-label'])}}
                                     <div class="col-sm-10">
                                         <input type="text" value="{{old('icon')}}" name="icon" class="form-control" maxlength="4">
-                                        
+
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -65,7 +66,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Status</label>
                                     <div class="col-sm-10">
@@ -98,9 +99,12 @@
                     {!! Form::close() !!}
                     <hr>
                     <div class="box-body table-responsive">
+                        <a class="btn btn-app delete bulk_remove hide" title="Delete User"><i class="fa fa-trash"></i> <span class="badge"></span>Delete</a>
+                        <input type="hidden" name="bulk_remove_type" value="bulk_legend_remove">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th><input type="checkbox" name="all_bulk_remove" class="no-sort"></th>
                                     <th>Action</th>
                                     <th>Type</th>
                                     <th>Icon</th>
@@ -113,6 +117,9 @@
                                 @if(count($systemSetting))
                                 @foreach($systemSetting as $setting)
                                 <tr>
+                                    <td>
+                                        <input type="checkbox" name="bluk_remove[]" value="{{ $setting->id }}">
+                                    </td>
                                     <td class="text-center">
                                         <a class="btn btn-app edit" title="Edit Page"
                                            href="{{ route("system-setting-legend-table.edit",["id"=>$setting->id]) }}"><i

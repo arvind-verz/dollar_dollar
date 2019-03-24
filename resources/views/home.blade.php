@@ -11,6 +11,7 @@
 @section('title', $page->title)
 @section('content')
 <?php
+//dd(Hash::make('123456'));
 $slug = HOME_SLUG;
 //get banners
 $banners = \Helper::getBanners($slug);
@@ -25,7 +26,7 @@ $datetime = Helper::todayDate();
         data-owl-loop="true" data-owl-mousedrag="on" data-owl-nav="false" data-owl-smartspeed="10"
         data-owl-speed="5000">
         @foreach($banners as $banner)
-        
+
         @if($banner->paid_ads_status==1 && !empty($banner->fixed_banner) && strtotime(date('Y-m-d', strtotime('now')))
         <=strtotime(date('Y-m-d', strtotime($banner->banner_end_date))) && strtotime(date('Y-m-d', strtotime('now')))>=strtotime(date('Y-m-d', strtotime($banner->banner_start_date))) )
         <a href="{{ !empty($banner->fixed_banner_link) ? $banner->fixed_banner_link : 'javascript:void(0)' }}"
@@ -39,7 +40,7 @@ $datetime = Helper::todayDate();
                 </div>
             </div>
         </a>
-        
+
         @elseif(!empty($banner->banner_image))
         <a href="{{ !empty($banner->banner_link) ? $banner->banner_link : 'javascript:void(0)' }}"
             target="_blank">

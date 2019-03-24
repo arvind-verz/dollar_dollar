@@ -96,6 +96,22 @@
                                         </div>
                                     @endif
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">Posted On</label>
+
+                                        <div class="col-sm-10">
+
+                                            <input type="text" class="form-control datepicker1" name="posted_on" value="{{ date('Y-m-d', strtotime($page->posted_on)) }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Posted By</label>
+
+                                        <div class="col-sm-10">
+
+                                            <input type="text" class="form-control" name="posted_by" value="{{ $page->posted_by }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">Footer Info</label>
 
                                         <div class="col-sm-10">
@@ -295,4 +311,3 @@ function removeImage(ref, id) {
                 });
             }
     </script>
-

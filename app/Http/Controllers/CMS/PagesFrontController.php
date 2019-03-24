@@ -948,6 +948,61 @@ class PagesFrontController extends Controller
 
     }
 
+    public function getBlogByPostedBy($name = NULL, Request $request)
+    {
+        //dd($request->all(),$name);
+        $id = null;
+        $page = Page::where('pages.slug', BLOG_URL)
+            ->where('delete_status', 0)->first();
+        if (!$page) {
+            return back()->with('error', OPPS_ALERT);
+        }
+        $systemSetting = \Helper::getSystemSetting();
+        if (!$systemSetting) {
+            return back()->with('error', OPPS_ALERT);
+        }
+
+
+//get banners
+        $banners = \Helper::getBanners(BLOG_URL);
+
+        $query = Page::join('menus', 'pages.menu_id', '=', 'menus.id')
+            ->where('pages.delete_status', 0)
+            ->where('pages.is_blog', 1)
+            ->select('pages.*', 'menus.title as menu_title')
+            ->orderBy('pages.id', 'DESC');
+        $menu = null;
+
+        $blogSearch = null;
+
+        $query = $query->where('pages.posted_by', 'LIKE', '%' . $name . '%');
+
+        if (Auth::guest()) {
+            $details = $query->whereIn('after_login', [0, null])->paginate(10);
+        } else {
+            $details = $query->paginate(10);
+        }
+
+        $adsCollection = AdsManagement::where('delete_status', 0)
+            ->where('page', 'blog')
+            ->where('page_type', 'blog')
+            ->where('display', 1)
+            ->inRandomOrder()
+            ->get();
+        if ($adsCollection->count()) {
+            $ads = \Helper::manageAds($adsCollection);
+        }
+        if (!$details->count()) {
+            if (isset($request->b_search)) {
+                \Session::flash('error', SEARCH_RESULT_ERROR);
+            }
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch', 'menu'));
+        } else {
+            return view("frontend.Blog.blog-list", compact("details", "page", "banners", 'systemSetting', 'id', 'ads', 'blogSearch', 'menu'));
+        }
+
+    }
+
     public function search_tags($slug)
     {
         $page = Page::where('pages.slug', BLOG_URL)

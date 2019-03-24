@@ -76,6 +76,22 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">Posted On</label>
+
+                                        <div class="col-sm-10">
+
+                                            <input type="text" class="form-control datepicker1" name="posted_on" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Posted By</label>
+
+                                        <div class="col-sm-10">
+
+                                            <input type="text" class="form-control" name="posted_by" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">Footer Info</label>
 
                                         <div class="col-sm-10">
@@ -158,6 +174,7 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Tags</label>
 

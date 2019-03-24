@@ -69,6 +69,9 @@
                         {!!  $page->contents!!}
                     </div>
                     <div class="ps-post__footer">
+                        <p>
+                            <span>{{ date('M d, Y', strtotime($page->posted_on)) }} | Posted By: <a href="{{ url('blog-posted-by/' .$page->posted_by) }}">{{ $page->posted_by }}</a></span>
+                        </p>
                         @if(count($tags))
                             <p>
                                 <span>Tags:</span>
@@ -107,7 +110,7 @@
                                         href="https://www.facebook.com/dollardollar.sg/">DollarDollar</a>
                             </blockquote>
                         </div>
-                    </div> 
+                    </div>
 
                 </div>
             </div>
