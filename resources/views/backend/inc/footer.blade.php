@@ -126,32 +126,7 @@
     });
 </script>
 <!-- ./wrapper -->
-<!-- jQuery 3 -->
-<script src="{{ asset('backend/bower_components/jquery/dist/jquery.min.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('backend/bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button);
-</script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('backend/bower_components/bootstrap/dist/js/bootstrap.min.js' ) }}"></script>
-<!-- Select2 -->
-<script src="{{ asset('backend/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
-<!-- DataTables -->
-<script src="{{ asset('backend/bower_components/DataTables/datatables.min.js' ) }}"></script>
-<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.flash.min.js') }}"></script>
-<script src="{{ asset('backend/bower_components/iconpicker/fontawesome-iconpicker.js') }}"></script>
-<script type="text/javascript" language="javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script type="text/javascript" language="javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-<script type="text/javascript" language="javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('backend/bower_components/DataTables/Buttons-1.5.1/js/buttons.print.min.js') }}"></script>
-<script src="{{ asset('backend/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+
 <script src="{{ asset('frontend/js/jquery.numeric.js') }}"></script>
 <!-- Morris.js charts -->
 <script src="{{ asset('backend/bower_components/raphael/raphael.min.js') }}"></script>
@@ -1919,7 +1894,7 @@
     function changeRateType(obj) {
 
         var key = $(obj).data('key');
-        var firstInput =  $('#'+key);        
+        var firstInput =  $('#'+key);
         if(obj.value=="null"){
             firstInput.removeAttr("readonly");
         }else{

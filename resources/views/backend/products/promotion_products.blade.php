@@ -23,6 +23,38 @@
 
                         <h3 class="box-title">{{$productType}}</h3>
                         @if($productTypeId==LOAN)
+                        <select name="filter_category" class="form-control"
+                                style="width: 10em;float: right;margin-right: 10px;">
+                            <option value="">-- Select --</option>
+                            <option value="">
+                                All
+                            </option>
+                            @php $rate_type = []; @endphp
+                            @if($products->count())
+                                @foreach($products as $product)
+                                <?php
+                                $productRange = null;
+                                if ($product->product_range) {
+                                    $range = \GuzzleHttp\json_decode($product->product_range);
+                                    if (count($range)) {
+                                        $productRange = $range[0];
+                                    }
+                                }
+                                if($productTypeId==LOAN)
+                                {
+                                    if($productRange)
+                                    {
+                                        $rate_type[] = $productRange->rate_type;
+                                    }
+                                }
+
+                                ?>
+                                @endforeach
+                                @foreach(array_unique($rate_type) as $value)
+                                    <option>{{ $value }}</option>
+                                @endforeach
+                            @endif
+                        </select>
                             <a href="{{ route('rate-type.index') }}"
                                class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
                                 Rate Types
@@ -59,7 +91,7 @@
                         </div>
                         <input type="hidden" name="bulk_remove_type" value="bulk_product_remove">
                         <input type="hidden" name="bulk_update_type" value="bulk_product_status_update">
-                        <table style="table-layout: fixed; width: 100%;">
+                        <table style="table-layout: fixed; width: 100%;" id="example">
                             <tr>
                                 <td>
                                     <div style="width: 100%; overflow-x: auto;">
@@ -206,5 +238,11 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
+<script type="text/javascript">
+$(document).ready(function() {
 
+    
+});
+
+</script>
 @endsection

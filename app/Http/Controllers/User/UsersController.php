@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\ProductManagement;
 use App\AdsManagement;
 use App\ContactEnquiry;
+use App\systemSettingLegendTable;
 use App\HealthInsuranceEnquiry;
 use App\LifeInsuranceEnquiry;
 use App\PromotionProducts;
@@ -240,7 +241,7 @@ class UsersController extends Controller
             $userLog->updated_by = ADMIN_USER;
             $userLog->updated_on = Carbon::now()->toDateTimeString();
             $userLog->save();
-
+            DB::table('product_managements')->where('user_id', '=', $id)->delete();
             //store log of activity
             activity()
                 ->performedOn($user)
@@ -601,6 +602,11 @@ class UsersController extends Controller
                     }
                 } elseif ($type == 'bulk_user_clear_remove') {
                     $users = UserLog::find($id);
+                    $users->delete_status = 1;
+
+                }
+                elseif ($type == 'bulk_legend_remove') {
+                    $users = systemSettingLegendTable::find($id);
                     $users->delete_status = 1;
 
                 }

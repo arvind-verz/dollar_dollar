@@ -113,6 +113,7 @@ class BlogController extends Controller
 
 
         $page = new Page();
+
         $page->name = ucfirst($request->name);
         $page->disable_ads = $request->disable_ads;
         $page->title = ucfirst($request->title);
@@ -161,6 +162,8 @@ class BlogController extends Controller
         if (isset($request->tags)) {
             $tags = $request->tags;
         }
+        $page->posted_by = $request->posted_by;
+        $page->posted_on = $request->posted_on;
         $page->tags = json_encode($tags);
         $page->short_description = $request->short_description;
         $page->contents = $request->contents;
@@ -335,6 +338,8 @@ class BlogController extends Controller
         if (isset($request->tags)) {
             $tags = $request->tags;
         }
+        $page->posted_by = $request->posted_by;
+        $page->posted_on = $request->posted_on;
         $page->tags = json_encode($tags);
         $page->short_description = $request->short_description;
         $page->meta_title = $request->meta_title;

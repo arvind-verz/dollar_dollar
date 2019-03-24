@@ -14,6 +14,8 @@ use Validator;
 use App\AdsManagement;
 use Carbon\Carbon;
 use App\UserLog;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ProfileUpdated;
 
 class AccountInformationController extends Controller
 {
@@ -121,6 +123,8 @@ class AccountInformationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = [];
+        
         $account_information = User::find($id);
         $validate = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -148,6 +152,12 @@ class AccountInformationController extends Controller
             $account_information->adviser = $adviser;
             $account_information->save();
         }
+        $data = [
+            'sender_email'  =>  $request->email,
+            'sender_name'   =>  $request->first_name . ' ' . $request->last_name,
+        ];
+        //dd($data);
+        Mail::to($request->email)->send(new ProfileUpdated($data));
         if (!empty($request->location)) {
             return redirect($request->location)->with('success', 'Data ' . UPDATED_ALERT);
         } else {

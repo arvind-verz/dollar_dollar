@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin;
+use App\ProductManagement;
 use App\Http\Controllers\Controller;
 use App\Module;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use DB;
 use Redirect;
 use Validator;
 
@@ -289,6 +291,7 @@ class AdminController extends Controller
 
         $admin->delete_status = 1;
         $admin->save();
+        
         activity()
             ->performedOn($admin)
             ->withProperties([
@@ -529,6 +532,7 @@ class AdminController extends Controller
                 'new' => $newAdmin
             ])
             ->log(UPDATE);
+
 
         return redirect(route('update-profile', ['id' => Auth::user()->id]))->with('success', 'Profile has been successfully updated');
     }

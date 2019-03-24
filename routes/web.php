@@ -28,7 +28,7 @@
 
 Route::get('/clear', function () {
 
-    
+
 
     $exitCode2 = Artisan::call('config:clear');
 
@@ -110,7 +110,7 @@ Route::post('/registration/add', 'Auth\RegisterController@userRegistration')->na
 
 
 
-/* FRONTEND ACCOUNT 
+/* FRONTEND ACCOUNT
 
 Route::group(array('prefix' =>  'account'), function() {
 
@@ -155,6 +155,8 @@ Route::post('/post-loan-enquiry', 'Enquiry\EnquiryFrontController@postLoanEnquir
 
 
 /*Blog module end*/
+
+Route::get('/blog-posted-by/{name}', 'CMS\PagesFrontController@getBlogByPostedBy')->name('blog-posted-by');
 
 Route::get('/blog-list', 'CMS\PagesFrontController@getBlogByCategories')->name('blog-list');
 

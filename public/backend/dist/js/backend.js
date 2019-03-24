@@ -271,6 +271,8 @@ $(document).ready(function () {
                 {width: 100, targets: 7}
             ]
         });
+
+
     $('#customer-deletion-report').DataTable(
         {
             dom: 'lBfrtip',
@@ -395,10 +397,68 @@ $(document).ready(function () {
     $('#reports').DataTable();
     $('#activities').DataTable(
         {
+            dom: 'lBfrtip',
+            buttons: [
+                {
+                    extend: 'pdf',
+                    footer: true,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    filename: function () {
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1; //January is 0!
+                        var yyyy = today.getFullYear();
+                        var yy = yyyy.toString().substring(2);
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        today = yy + '' + mm + '' + dd;
+                        return 'Activitylog ' + today;
+                    }
+                },
+                {
+                    extend: 'excel',
+                    footer: true,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    filename: function () {
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1; //January is 0!
+                        var yyyy = today.getFullYear();
+                        var yy = yyyy.toString().substring(2);
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        today = yy + '' + mm + '' + dd;
+                        return 'Activitylog ' + today;
+                    }
+                }
+            ],
             "pageLength": 100,
             'ordering': true,
-            'order': [[6, 'desc']],
-            "columnDefs": []
+            'order': [[6, 'asc']],
+            "aoColumnDefs": [{
+                "aTargets": [],
+                "bSortable": false,
+            },
+                {width: 300, targets: 0},
+                {width: 300, targets: 1},
+                {width: 100, targets: 2},
+                {width: 100, targets: 3},
+                {width: 150, targets: 4},
+                {width: 100, targets: 5},
+                {width: 100, targets: 6}
+            ]
         });
 
 
@@ -848,4 +908,6 @@ $(document).ready(function () {
                 }
             ],
         });
+
+
 });

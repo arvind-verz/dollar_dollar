@@ -11,6 +11,7 @@
         //get home page categories
         $homePage=Helper::getHomeCategories();
         //dd($homePage);
+        
     @endphp
 
     <!-- Banner -->

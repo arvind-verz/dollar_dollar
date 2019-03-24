@@ -34,14 +34,9 @@
                         </div>
                     </div>
                     <!-- /.box-header -->
-                    <div class="box-body">
+                    <div class="box-body table-responsive">
 
-                        <table style="table-layout: fixed; width: 100%;">
-                            <tr>
-                                <td>
-                                    <div style="width: 100%; overflow-x: auto;">
-
-                                        <table id="activities" class="table ">
+                        <table  class="table table-bordered"   id="activities">
                                             <thead>
                                             <tr>
                                                 <th>User</th>
@@ -84,10 +79,6 @@
                                             @endif
 
                                             </tbody>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
                         </table>
 
 

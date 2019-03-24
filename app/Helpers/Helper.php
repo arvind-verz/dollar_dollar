@@ -11,6 +11,7 @@ use App\PromotionProducts;
 use App\PromotionTypes;
 use App\SystemSetting;
 use App\Tag;
+use App\Admin;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -965,5 +966,13 @@ return $ads;
 
 public static function isValidEmail($email){
 return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
+public static function getPostedBy()
+{
+    if(!empty($id)) {
+        $data = Admin::find('id', $id)->first();
+        return $data->first_name . ' ' . $data->last_name;
+    }
+    return "";
 }
 }
