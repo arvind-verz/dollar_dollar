@@ -1,7 +1,6 @@
 <?php
 
 
-
 /*
 
 |--------------------------------------------------------------------------
@@ -25,9 +24,7 @@
 /*FrontEnd Routes*/
 
 
-
 Route::get('/clear', function () {
-
 
 
     $exitCode2 = Artisan::call('config:clear');
@@ -41,7 +38,6 @@ Route::get('/clear', function () {
 });
 
 
-
 /*Home Module*/
 
 Route::get('/home', 'HomeController@index')->name('index');
@@ -53,13 +49,9 @@ Route::get('/', 'HomeController@index')->name('/');
 /*End Home Module*/
 
 
-
 Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social-login');
 
 Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
-
-
-
 
 
 /*User Module*/
@@ -72,13 +64,13 @@ Route::get('login_page/{redirect_url}', 'Auth\LoginController@logInPage');
 
 /*Forgot Password route*/
 
-    Route::post('/forgot-password', 'User\UserFrontController@postForgotPassword')->name('forgot-password');
+Route::post('/forgot-password', 'User\UserFrontController@postForgotPassword')->name('forgot-password');
 
-    Route::post('/reset-new-password', 'User\UserFrontController@postResetNewPassword')->name('reset-new-password');
+Route::post('/reset-new-password', 'User\UserFrontController@postResetNewPassword')->name('reset-new-password');
 
-    Route::get('/password-reset/{token}', 'User\UserFrontController@postForgotPasswordReset')->name('password-reset');
+Route::get('/password-reset/{token}', 'User\UserFrontController@postForgotPasswordReset')->name('password-reset');
 
-    Route::post('/forgot-password-reset', 'User\UserFrontController@postResetPassword')->name('forgot-password-reset');
+Route::post('/forgot-password-reset', 'User\UserFrontController@postResetPassword')->name('forgot-password-reset');
 
 /*End Forgot password route*/
 
@@ -91,23 +83,17 @@ Route::get('login_page/{redirect_url}', 'Auth\LoginController@logInPage');
 */
 
 
-
 Route::get('/users/resetpassword/{id}', 'Auth\LoginController@resetPassword')->name('user.resetpassword');
 
 Route::post('/users/resetpassword/update/{id}', 'Auth\LoginController@resetPasswordUpdate')->name('user.resetpassword.update');
 
 
-
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
-
 
 
 Route::post('/registration/add', 'Auth\RegisterController@userRegistration')->name('registration-add');
 
 //Route::post('/login/db', 'Auth\LoginController@userLogin')->name('login-db');
-
-
-
 
 
 /* FRONTEND ACCOUNT
@@ -119,9 +105,6 @@ Route::group(array('prefix' =>  'account'), function() {
 });
 
 /* END FRONTEND ACCOUNT */
-
-
-
 
 
 /*
@@ -139,7 +122,6 @@ Route::get('/login-status', 'User\UserFrontController@getLoginStatus')->name('us
 /*End User Module*/
 
 
-
 Route::post('/post-contact-enquiry', 'Enquiry\EnquiryFrontController@postContactEnquiry')->name('post-contact-enquiry');
 
 Route::post('/post-health-enquiry', 'Enquiry\EnquiryFrontController@postHealthEnquiry')->name('post-health-enquiry');
@@ -153,7 +135,6 @@ Route::post('/loan-enquiry', 'Enquiry\EnquiryFrontController@loanEnquiry')->name
 Route::post('/post-loan-enquiry', 'Enquiry\EnquiryFrontController@postLoanEnquiry')->name('post-loan-enquiry');
 
 
-
 /*Blog module end*/
 
 Route::get('/blog-posted-by/{name}', 'CMS\PagesFrontController@getBlogByPostedBy')->name('blog-posted-by');
@@ -163,11 +144,7 @@ Route::get('/blog-list', 'CMS\PagesFrontController@getBlogByCategories')->name('
 Route::get('/get-blog-by-category/{id}', 'CMS\PagesFrontController@getBlogByCategories')->name('get-blog-by-category');
 
 
-
 Route::get('/blog-search', 'CMS\PagesFrontController@getBlogByCategories')->name('blog-search');
-
-
-
 
 
 Route::post('/combine-criteria-filter', 'CMS\PagesFrontController@combineCriteriaFilter')->name('combine-criteria-filter');
@@ -175,7 +152,6 @@ Route::post('/combine-criteria-filter', 'CMS\PagesFrontController@combineCriteri
 Route::post('/general-individual-criteria-filter', 'CMS\PagesFrontController@generalIndividualCriteriaFilter')->name('general-individual-criteria-filter');
 
 Route::post('/ocbc-360-criteria-filter', 'CMS\PagesFrontNewController@ocbcCriteriaFilter')->name('ocbc-360-criteria-filter');
-
 
 
 /* TAGS FRONTEND */
@@ -189,13 +165,9 @@ Route::get('/tags/{slug}', 'CMS\PagesFrontController@search_tags');
 //get product slider details
 
 
-
 Route::post('/get-product-slider-details', 'CMS\PagesFrontController@getProductSliderDetails');
 
 Route::post('/get-loan-product-slider-details', 'CMS\PagesFrontController@getLoanProductSliderDetails');
-
-
-
 
 
 /*End FrontEnd Routes*/
@@ -215,7 +187,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 
 
-
     // Password reset routes
 
     Route::post('/password/email', 'Auth\AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
@@ -225,9 +196,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/password/reset', 'Auth\AdminResetPasswordController@reset');
 
     Route::get('/password/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
-
-
-
 
 
     /*Banner Module Start*/
@@ -253,7 +221,6 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Banner Module End*/
 
 
-
     /*Brand Module Start*/
 
     Route::get('/brands/destroy/{id}', 'Brand\BrandsController@destroy')->name('brand-destroy');
@@ -261,9 +228,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::resource('/brand', 'Brand\BrandsController');
 
     /*Brand Module End*/
-
-
-
 
 
     /* ADS MANAGEMENT */
@@ -279,9 +243,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/ads/update/{id}/{type}', 'Ads\AdsController@update')->name('ads.update');
 
     Route::get('/ads/destroy/{id}/{type}', 'Ads\AdsController@destroy')->name('ads.destroy');
-
-
-
 
 
     /*Customer  Module Start*/
@@ -305,9 +266,6 @@ Route::group(array('prefix' => 'admin'), function () {
     /* Customer module end*/
 
 
-
-
-
     /*Activity Log Module*/
 
     Route::get('/activity-destroy/', 'ActivityLog\ActivityLogController@destroy')->name('activity-destroy');
@@ -315,7 +273,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::resource('/activity', 'ActivityLog\ActivityLogController');
 
     /**/
-
 
 
     /*Menu Module start*/
@@ -331,7 +288,6 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Menu module end*/
 
 
-
     /*Page Module start*/
 
     Route::get('/pages/destroy/{id}', 'CMS\PagesController@destroy')->name('page-destroy');
@@ -339,7 +295,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::resource('/page', 'CMS\PagesController');
 
     /*Menu module end*/
-
 
 
     /*System setting start*/
@@ -353,9 +308,7 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::resource('/system-setting-legend-table', 'CMS\systemSettingLegendTableController');
 
 
-
     /*System setting start*/
-
 
 
     /*User Module start*/
@@ -375,7 +328,6 @@ Route::group(array('prefix' => 'admin'), function () {
     /*User Module end*/
 
 
-
     Route::get('/users/permissions/create/', 'Admin\AdminController@permissions_create')->name('permissionsCreate');
 
     Route::post('/users/permissions/store', 'Admin\AdminController@permissions_store')->name('permissionsStore');
@@ -385,7 +337,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/users/permissions/{id}/update', 'Admin\AdminController@permissions_update')->name('permissionsUpdate');
 
     Route::get('/users/permissions/destroy/{id}', 'Admin\AdminController@permissions_destroy')->name('permissionsDestroy');
-
 
 
     /*Blog module start*/
@@ -401,7 +352,6 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Blog module end*/
 
 
-
     /*Blog module start*/
 
     Route::get('/contact-enquiry/destroy/{id}', 'Enquiry\ContactEnquiryController@destroy')->name('contact-enquiry-destroy');
@@ -409,7 +359,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::resource('/contact-enquiry', 'Enquiry\ContactEnquiryController');
 
     /*Blog module end*/
-
 
 
     /*Blog module start*/
@@ -421,7 +370,6 @@ Route::group(array('prefix' => 'admin'), function () {
     /*Blog module end*/
 
 
-
     /*Blog module start*/
 
     Route::get('/health-insurance-enquiry/destroy/{id}', 'Enquiry\HealthInsuranceEnquiryController@destroy')->name('health-insurance-destroy');
@@ -429,11 +377,9 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::resource('/health-insurance-enquiry', 'Enquiry\HealthInsuranceEnquiryController');
 
 
-
     Route::get('/investment-enquiry/destroy/{id}', 'Enquiry\InvestmentEnquiryController@destroy')->name('investment-enquiry-destroy');
 
     Route::resource('/investment-enquiry', 'Enquiry\InvestmentEnquiryController');
-
 
 
     Route::get('/loan-enquiry/destroy/{id}', 'Enquiry\LoanEnquiryController@destroy')->name('loan-enquiry-destroy');
@@ -441,9 +387,7 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::resource('/loan-enquiry', 'Enquiry\LoanEnquiryController');
 
 
-
     /*Blog module end*/
-
 
 
     /*Tag Module start*/
@@ -453,13 +397,10 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::resource('/tag', 'CMS\TagController');
 
 
-
     /*Tag module end*/
 
 
-
     Route::get('/temp-update', 'Products\ProductsController@pathUpdateInTechAndLong')->name('temp-update');
-
 
 
     /* PROMOTION PRODUCTS */
@@ -471,21 +412,16 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/promotion-products/add-db', 'Products\ProductsController@promotion_products_add_db')->name('promotion-products-add-db');
 
 
-
     Route::get('/promotion-products/{id}/edit', 'Products\ProductsController@promotion_products_edit')->name('promotion-products-edit');
-
 
 
     Route::post('/promotion-products/{id}/update', 'Products\ProductsController@promotion_products_update')->name('promotion-products-update');
 
 
-
     Route::get('/promotion-products-remove/{id}', 'Products\ProductsController@promotion_products_remove')->name('promotion-products-remove');
 
 
-
     Route::get('/promotion-products/get-formula/{id}', 'Products\ProductsController@promotion_products_get_formula')->name('promotion-products-get-formula');
-
 
 
     Route::get('/default-search/{productTypeId}', 'Products\ProductsController@defaultSearch')->name('default-search');
@@ -495,7 +431,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::put('/default-search-update', 'Products\ProductsController@defaultSearchUpdate');
 
 
-
     Route::get('/tool-tip/{productTypeId}', 'Products\ProductsController@toolTip')->name('tool-tip');
 
     Route::post('/tool-tip-update', 'Products\ProductsController@toolTipUpdate');
@@ -503,33 +438,24 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::put('/tool-tip-update', 'Products\ProductsController@toolTipUpdate');
 
 
-
-
-
     /* PROMOTION FORMULA */
 
     Route::get('/promotion-formula', 'Products\ProductsController@promotion_formula')->name('promotion-formula');
 
 
-
     Route::post('/promotion-formula-db', 'Products\ProductsController@promotion_formula_db')->name('promotion-formula-db');
-
 
 
     Route::get('/promotion-formula/{id}/edit', 'Products\ProductsController@promotion_formula_edit')->name('promotion-formula-edit');
 
 
-
     Route::post('/promotion-formula/{id}/update', 'Products\ProductsController@promotion_formula_update')->name('promotion-formula-update');
-
 
 
     Route::get('/promotion-formula-remove/{id}', 'Products\ProductsController@promotion_formula_remove')->name('promotion-formula-remove');
 
 
-
     Route::get('/bank-products', 'Products\ProductsController@bank_products')->name('bank-products');
-
 
 
     Route::post('/add-more-placement-range', 'Products\ProductsController@addMorePlacementRange')->name('add-more-placement-range');
@@ -545,7 +471,6 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/check-tenure', 'Products\ProductsController@checkTenure')->name('check-tenure');
 
 
-
     Route::post('/add-product-name', 'Products\ProductsController@addProductName')->name('add-product-name');
 
     Route::post('/add-price-range', 'Products\ProductsController@addPriceRange')->name('add-price-range');
@@ -557,19 +482,14 @@ Route::group(array('prefix' => 'admin'), function () {
     Route::post('/get-formula-detail', 'Products\ProductsController@getFormulaDetail')->name('get-formula-detail');
 
 
-
-
-
     Route::post('/promotion-products/get-formula', 'Products\ProductsController@promotion_products_get_formula')->name('promotion-products-get-formula');
 
     Route::post('/promotion-products/change-rate-type', 'Products\ProductsController@changeRateType')->name('change-rate-type');
 
 
-
     Route::put('/promotion-products/{id}/update', 'Products\ProductsController@promotion_products_update')->name('promotion-products-update');
 
     Route::get('/bank-products', 'Products\ProductsController@promotion_products')->name('bank-products');
-
 
 
     /* REPORTS */
@@ -584,12 +504,12 @@ Route::group(array('prefix' => 'admin'), function () {
 
     Route::get('/reminder-email', 'Products\ProductsController@reminder')->name('reminder-email');
 
+    Route::get('/customer-update-detail', 'Reports\ReportController@customerUpdateDetails')->name('customer-update-detail');
 
 
     /* REMOVE IMAGE */
 
     Route::post('/remove-image', 'AdminController@removeImage')->name('remove-image');
-
 
 
     /*Start Rate types*/
@@ -601,15 +521,9 @@ Route::group(array('prefix' => 'admin'), function () {
     /*End Rate types*/
 
 
-
-
-
-
-
 });
 
 Route::get('{slug}', 'CMS\PagesFrontController@show')->name('slug');
-
 
 
 /* FRONT END PRODUCT MANAGEMENT */
@@ -623,7 +537,6 @@ Route::post('product-management/store', 'User\ProductManagementController@store'
 Route::get('product-management/delete/{id}', 'User\ProductManagementController@destroy')->name('product-management.delete');
 
 
-
 /* ACCOUNT INFORMATION */
 
 Route::get('/account-information/edit/{id}/{location}', 'User\AccountInformationController@edit')->name('account-information.edit');
@@ -631,7 +544,6 @@ Route::get('/account-information/edit/{id}/{location}', 'User\AccountInformation
 Route::post('/account-information/update/{id}', 'User\AccountInformationController@update')->name('account-information.update');
 
 Route::post('/account-information-delete/{id}', 'User\AccountInformationController@deleteDeactivate')->name('account-information-delete');
-
 
 
 Route::post('/fixed-deposit-mode/search/', 'CMS\PagesFrontController@search_fixed_deposit')->name('fixed-deposit-mode.search');
@@ -651,7 +563,6 @@ Route::get('/aioa-deposit-mode/search/', 'CMS\PagesFrontController@aioDepositMod
 Route::post('/loan/search/', 'CMS\PagesFrontController@searchLoan')->name('loan.search');
 
 Route::get('/loan/search/', 'CMS\PagesFrontController@loanMode');
-
 
 
 Route::post('/product-search', 'CMS\PagesFrontController@product_search_homepage')->name('product-search');

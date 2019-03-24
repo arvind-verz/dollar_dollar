@@ -1,6 +1,6 @@
 @component('mail::message')
 <p>Hi {{$data['old_first_name']}} {{$data['old_last_name']}},</p>
-<p>Details has been updated by {{strtolower($data['updated_by'])}}, please check the updated details below.</p>
+<p>Details has been updated by you, please check the updated details below.</p>
 @component('mail::table')
 <table>
     @if(isset($data['salutation']))

@@ -99,6 +99,7 @@
                         <ul class="treeview-menu">
                             <li><a href="{{ route('customer-report') }}"><i class="fa fa-plus"></i> Customer</a></li>
                             <li><a href="{{ route('customer-deletion-report') }}"><i class="fa fa-plus"></i> Customer Deactivation </a></li>
+                            <li><a href="{{ route('customer-update-detail') }}"><i class="fa fa-plus"></i> Customer Update Detail </a></li>
                         </ul>
                     </li>
                     @else

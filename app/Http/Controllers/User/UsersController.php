@@ -27,6 +27,7 @@ use App\Tag;
 use App\UserLog;
 use App\SystemSetting;
 use Illuminate\Support\Facades\Hash;
+use App\CustomerUpdateDetail;
 
 class UsersController extends Controller
 {
@@ -100,6 +101,9 @@ class UsersController extends Controller
     {
         // dd($request->all());
         $data = [];
+        $oldData = [];
+        $newData = [];
+        $updated = false;
         $systemSetting = $this->systemSetting;
         $user = User::find($id);
         if (!$user) {
@@ -132,22 +136,34 @@ class UsersController extends Controller
         $data['old_first_name'] = $oldUser->first_name;
         $data['old_last_name'] = $oldUser->last_name;
         if ($oldUser->salutation != $request->salutation) {
-            $data['salutation'] = $request->salutation;
+            $newData['salutation'] = $data['salutation'] = $request->salutation;
+            $oldData['salutation'] = $oldUser->salutation;
+            $updated = true;
         }
         if ($oldUser->first_name != $request->first_name) {
-            $data['first_name'] = $request->first_name;
+            $newData['first_name'] = $data['first_name'] = $request->first_name;
+            $oldData['first_name'] = $oldUser->first_name;
+            $updated = true;
         }
         if ($oldUser->last_name != $request->last_name) {
-            $data['last_name'] = $request->last_name;
+            $newData['last_name'] = $data['last_name'] = $request->last_name;
+            $oldData['last_name'] = $oldUser->last_name;
+            $updated = true;
         }
         if ($oldUser->email != $request->email) {
-            $data['email'] = $request->email;
+            $newData['email'] = $data['email'] = $request->email;
+            $oldData['email'] = $oldUser->email;
+            $updated = true;
         }
         if ($oldUser->tel_phone != $request->tel_phone) {
-            $data['tel_phone'] = $request->tel_phone;
+            $newData['tel_phone'] = $data['tel_phone'] = $request->tel_phone;
+            $oldData['tel_phone'] = $oldUser->tel_phone;
+            $updated = true;
         }
         if ($oldUser->status != $request->status) {
-            $data['status'] = $request->status;
+            $newData['status'] = $data['status'] = $request->status;
+            $oldData['status'] = $oldUser->status;
+            $updated = true;
         }
         if (is_null($request->email_notification)) {
             $request->email_notification = 0;
@@ -156,62 +172,78 @@ class UsersController extends Controller
             $request->adviser = 0;
         }
         if ($oldUser->email_notification != $request->email_notification) {
-            $data['email_notification'] = $request->email_notification;
+            $newData['email_notification'] = $data['email_notification'] = $request->email_notification;
+            $oldData['email_notification'] = $oldUser->email_notification;
+            $updated = true;
         }
         if ($oldUser->adviser != $request->adviser) {
-            $data['adviser'] = $request->adviser;
-        }
-        $status = $user->status;
-        // update Post
-        $user->salutation = $request->input('salutation');
-        $user->first_name = $request->input('first_name');
-        $user->last_name = $request->input('last_name');
-        $user->email = $request->input('email');
-        $user->tel_phone = $request->input('tel_phone');
-        $user->status = $request->input('status');
-        $user->email_notification = isset($request->email_notification) ? $request->email_notification : 0;
-        $user->adviser = isset($request->adviser) ? $request->adviser : 0;
-        $user->updated_at_admin = Carbon::now()->toDateTimeString();
-        $user->updated_by = ADMIN_USER;
-        $user->save();
-
-
-        if ($request->status == 0 && $status != 0) {
-            $userLog = New UserLog();
-            $userLog->user_id = $id;
-            $userLog->status = DEACTIVATED;
-            $userLog->updated_by_id = Auth::user()->id;
-            $userLog->updated_by = ADMIN_USER;
-            $userLog->updated_on = Carbon::now()->toDateTimeString();
-            $userLog->save();
+            $newData['adviser'] = $data['adviser'] = $request->adviser;
+            $oldData['adviser'] = $oldUser->adviser;
+            $updated = true;
         }
 
+        if ($updated) {
+            $status = $user->status;
+            // update Post
+            $user->salutation = $request->input('salutation');
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            $user->email = $request->input('email');
+            $user->tel_phone = $request->input('tel_phone');
+            $user->status = $request->input('status');
+            $user->email_notification = isset($request->email_notification) ? $request->email_notification : 0;
+            $user->adviser = isset($request->adviser) ? $request->adviser : 0;
+            $user->updated_at_admin = Carbon::now()->toDateTimeString();
+            $user->updated_by = ADMIN_USER;
+            $user->save();
 
-        $newUser = User::find($id);
-        if ($newUser) {
+            $customerDetailUpdate = new CustomerUpdateDetail();
+            $customerDetailUpdate->user_id = $id;
+            $customerDetailUpdate->first_name = $user->first_name;
+            $customerDetailUpdate->last_name = $user->last_name;
+            $customerDetailUpdate->old_detail = json_encode($oldData);
+            $customerDetailUpdate->updated_detail = json_encode($newData);
+            $customerDetailUpdate->updated_by = ADMIN_USER;
+            $customerDetailUpdate->save();
 
-            $data['updated_at_admin'] = $newUser->updated_at_admin;
-            $data['profile_url'] = url('/') . '/account-information';
-            $data['sender_email'] = $systemSetting->auto_email;
-            $data['sender_name'] = $systemSetting->email_sender_name;
-
-            try {
-                Mail::to($newUser->email)->send(new UpdateDetailNotify($data));
-            } catch (Exception $exception) {
-                //dd($exception);
+            if ($request->status == 0 && $status != 0) {
+                $userLog = New UserLog();
+                $userLog->user_id = $id;
+                $userLog->status = DEACTIVATED;
+                $userLog->updated_by_id = Auth::user()->id;
+                $userLog->updated_by = ADMIN_USER;
+                $userLog->updated_on = Carbon::now()->toDateTimeString();
+                $userLog->save();
             }
+
+
+            $newUser = User::find($id);
+            if ($newUser) {
+
+                $data['updated_at_admin'] = $newUser->updated_at_admin;
+                $data['profile_url'] = url('/') . '/account-information';
+                $data['sender_email'] = $systemSetting->auto_email;
+                $data['sender_name'] = $systemSetting->email_sender_name;
+                $data['updated_by'] = ADMIN_USER;
+
+                try {
+                    Mail::to($newUser->email)->send(new UpdateDetailNotify($data));
+                } catch (Exception $exception) {
+                    //dd($exception);
+                }
+            }
+            activity()
+                ->performedOn($newUser)
+                ->withProperties([
+                    'ip' => \Request::ip(),
+                    'module' => USER_MODULE,
+                    'msg' => $newUser->email . ' ' . UPDATED_ALERT,
+                    'old' => $oldUser,
+                    'new' => $newUser
+                ])
+                ->log(UPDATE);
         }
-        activity()
-            ->performedOn($newUser)
-            ->withProperties([
-                'ip' => \Request::ip(),
-                'module' => USER_MODULE,
-                'msg' => $newUser->email . ' ' . UPDATED_ALERT,
-                'old' => $oldUser,
-                'new' => $newUser
-            ])
-            ->log(UPDATE);
-        return redirect(route('users.index'))->with('success', $newUser->email . ' ' . UPDATED_ALERT);
+        return redirect(route('users.index'))->with('success', $user->email . ' ' . UPDATED_ALERT);
     }
 
     /**
@@ -230,17 +262,20 @@ class UsersController extends Controller
 
         if ($user) {
 
-            User::where('id', $id)
-                ->update(['delete_status' => 1]);
-
 
             $userLog = New UserLog();
             $userLog->user_id = $id;
+            $userLog->first_name = $user->first_name;
+            $userLog->last_name = $user->last_name;
+            $userLog->country_code = $user->country_code;
+            $userLog->tel_phone = $user->tel_phone;
+            $userLog->email = $user->email;
             $userLog->status = DELETED;
             $userLog->updated_by_id = Auth::user()->id;
             $userLog->updated_by = ADMIN_USER;
             $userLog->updated_on = Carbon::now()->toDateTimeString();
             $userLog->save();
+            User::destroy($id);
             DB::table('product_managements')->where('user_id', '=', $id)->delete();
             //store log of activity
             activity()
@@ -524,95 +559,97 @@ class UsersController extends Controller
         $select_type = isset($request->select_type) ? $request->select_type : '';
         //return $ids;
         if (count($ids)) {
-            foreach ($ids as $id) {
-                if ($type == 'bulk_customer_remove') {
-                    $users = User::find($id);
-                    $users->updated_at_admin = Carbon::now()->toDateTimeString();
-                    $users->updated_by = "Admin";
-                    $users->delete_status = 1;
-                } elseif ($type == 'bulk_user_remove') {
-                    $users = Admin::find($id);
-                    $users->updated_at = Carbon::now()->toDateTimeString();
-                    $users->delete_status = 1;
-                } elseif ($type == 'bulk_user_status_update') {
-                    $users = User::find($id);
-                    if ($select_type == 'active') {
-                        $users->status = 1;
-                    } else {
-                        $users->status = 0;
-                    }
-                    $users->updated_at_admin = Carbon::now()->toDateTimeString();
-                    $users->updated_by = "Admin";
+            if ($type == 'bulk_customer_update_detail_clear_remove') {
+                CustomerUpdateDetail::destroy($ids);
+            } else {
+                foreach ($ids as $id) {
+                    if ($type == 'bulk_customer_remove') {
+                        $users = User::find($id);
+                        $users->updated_at_admin = Carbon::now()->toDateTimeString();
+                        $users->updated_by = "Admin";
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_user_remove') {
+                        $users = Admin::find($id);
+                        $users->updated_at = Carbon::now()->toDateTimeString();
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_user_status_update') {
+                        $users = User::find($id);
+                        if ($select_type == 'active') {
+                            $users->status = 1;
+                        } else {
+                            $users->status = 0;
+                        }
+                        $users->updated_at_admin = Carbon::now()->toDateTimeString();
+                        $users->updated_by = "Admin";
 
-                } elseif ($type == 'bulk_product_remove') {
-                    $users = PromotionProducts::find($id);
-                    $users->delete_status = 1;
-                } elseif ($type == 'bulk_product_status_update') {
-                    $users = PromotionProducts::find($id);
-                    if ($select_type == 'active') {
-                        $users->status = 1;
-                    } else {
-                        $users->status = 0;
+                    } elseif ($type == 'bulk_product_remove') {
+                        $users = PromotionProducts::find($id);
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_product_status_update') {
+                        $users = PromotionProducts::find($id);
+                        if ($select_type == 'active') {
+                            $users->status = 1;
+                        } else {
+                            $users->status = 0;
+                        }
+                    } elseif ($type == 'bulk_brand_remove') {
+                        $users = Brand::find($id);
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_brand_status_update') {
+                        $users = Brand::find($id);
+                        if ($select_type == 'active') {
+                            $users->display = 1;
+                        } else {
+                            $users->display = 0;
+                        }
+                    } elseif ($type == 'bulk_ads_remove') {
+                        $users = AdsManagement::find($id);
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_ads_status_update') {
+                        $users = AdsManagement::find($id);
+                        if ($select_type == 'active') {
+                            $users->display = 1;
+                        } else {
+                            $users->display = 0;
+                        }
+                    } elseif ($type == 'bulk_enquiry_remove') {
+                        $users = ContactEnquiry::find($id);
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_loan_enquiry_remove') {
+                        $users = LoanEnquiry::find($id);
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_health_insurance_remove') {
+                        $users = HealthInsuranceEnquiry::find($id);
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_life_insurance_remove') {
+                        $users = LifeInsuranceEnquiry::find($id);
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_investment_remove') {
+                        $users = InvestmentEnquiry::find($id);
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_tag_remove') {
+                        $users = Tag::find($id);
+                        $users->delete_status = 1;
+                    } elseif ($type == 'bulk_tag_status_update') {
+                        $users = Tag::find($id);
+                        if ($select_type == 'active') {
+                            $users->status = 1;
+                        } else {
+                            $users->status = 0;
+                        }
+                    } elseif ($type == 'bulk_user_clear_remove') {
+                        $users = UserLog::find($id);
+                        $users->delete_status = 1;
+
+                    } elseif ($type == 'bulk_legend_remove') {
+                        $users = systemSettingLegendTable::find($id);
+                        $users->delete_status = 1;
+
                     }
-                } elseif ($type == 'bulk_brand_remove') {
-                    $users = Brand::find($id);
-                    $users->delete_status = 1;
-                } elseif ($type == 'bulk_brand_status_update') {
-                    $users = Brand::find($id);
-                    if ($select_type == 'active') {
-                        $users->display = 1;
-                    } else {
-                        $users->display = 0;
-                    }
-                } elseif ($type == 'bulk_ads_remove') {
-                    $users = AdsManagement::find($id);
-                    $users->delete_status = 1;
-                } elseif ($type == 'bulk_ads_status_update') {
-                    $users = AdsManagement::find($id);
-                    if ($select_type == 'active') {
-                        $users->display = 1;
-                    } else {
-                        $users->display = 0;
-                    }
-                } elseif ($type == 'bulk_enquiry_remove') {
-                    $users = ContactEnquiry::find($id);
-                    $users->delete_status = 1;
-                } elseif ($type == 'bulk_loan_enquiry_remove') {
-                    $users = LoanEnquiry::find($id);
-                    $users->delete_status = 1;
-                } elseif ($type == 'bulk_health_insurance_remove') {
-                    $users = HealthInsuranceEnquiry::find($id);
-                    $users->delete_status = 1;
-                } elseif ($type == 'bulk_life_insurance_remove') {
-                    $users = LifeInsuranceEnquiry::find($id);
-                    $users->delete_status = 1;
-                }elseif ($type == 'bulk_investment_remove') {
-                    $users = InvestmentEnquiry::find($id);
-                    $users->delete_status = 1;
+                    //return $users;
+
+                    $users->save();
                 }
-                elseif ($type == 'bulk_tag_remove') {
-                    $users = Tag::find($id);
-                    $users->delete_status = 1;
-                } elseif ($type == 'bulk_tag_status_update') {
-                    $users = Tag::find($id);
-                    if ($select_type == 'active') {
-                        $users->status = 1;
-                    } else {
-                        $users->status = 0;
-                    }
-                } elseif ($type == 'bulk_user_clear_remove') {
-                    $users = UserLog::find($id);
-                    $users->delete_status = 1;
-
-                }
-                elseif ($type == 'bulk_legend_remove') {
-                    $users = systemSettingLegendTable::find($id);
-                    $users->delete_status = 1;
-
-                }
-                //return $users;
-
-                $users->save();
             }
 
             echo "success";

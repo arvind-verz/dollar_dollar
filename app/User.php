@@ -41,5 +41,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function customerUpdateDetail()
+    {
+        return $this->belongsTo('App\CustomerUpdateDetail'); // links this->id to events.course_id
+    }
+
 
 }

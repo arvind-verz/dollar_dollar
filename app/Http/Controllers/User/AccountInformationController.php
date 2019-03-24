@@ -16,12 +16,25 @@ use Carbon\Carbon;
 use App\UserLog;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ProfileUpdated;
+use App\CustomerUpdateDetail;
+use Exception;
+use App\Mail\UpdateDetailNotify;
 
 class AccountInformationController extends Controller
 {
+    private $systemSetting;
+
     public function __construct()
     {
         $this->middleware('auth');
+        $systemSetting = \Helper::getSystemSetting();
+        if (!$systemSetting) {
+            $systemSetting = new SystemSetting();
+            $systemSetting->email_sender_name = env('MAIL_FROM_NAME');
+            $systemSetting->admin_email = env('ADMIN_EMAIL');
+            $systemSetting->auto_email = env('MAIL_FROM_ADDRESS');
+        }
+        $this->systemSetting = $systemSetting;
     }
 
     /**
@@ -123,41 +136,101 @@ class AccountInformationController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $data = [];
-        
+        $oldData = [];
+        $newData = [];
+        $updated = false;
+        $systemSetting = $this->systemSetting;
         $account_information = User::find($id);
+        $oldUser = $account_information;
         $validate = Validator::make($request->all(), [
             'email' => 'required|email',
             'first_name' => 'required',
             'last_name' => 'required',
             'tel_phone' => 'numeric|nullable'
         ]);
-        $email_notification = $adviser = 0;
-        if (!empty($request->email_notification)) {
-            $email_notification = 1;
-        }
-        if (!empty($request->adviser)) {
-            $adviser = 1;
-        }
+
         if ($validate->fails()) {
             return redirect()->route('account-information.edit')->withErrors($validate)->withInput();
         } else {
-            $account_information->email = $request->email;
-            $account_information->first_name = $request->first_name;
-            $account_information->last_name = $request->last_name;
-            $account_information->country_code = $request->country_code;
-            $account_information->tel_phone = $request->tel_phone;
-            /*$account_information->notification    =   $request->privacy;*/
-            $account_information->email_notification = $email_notification;
-            $account_information->adviser = $adviser;
-            $account_information->save();
+            $data['old_first_name'] = $oldUser->first_name;
+            $data['old_last_name'] = $oldUser->last_name;
+
+            if ($oldUser->first_name != $request->first_name) {
+                $newData['first_name'] = $data['first_name'] = $request->first_name;
+                $oldData['first_name'] = $oldUser->first_name;
+                $updated = true;
+            }
+            if ($oldUser->last_name != $request->last_name) {
+                $newData['last_name'] = $data['last_name'] = $request->last_name;
+                $oldData['last_name'] = $oldUser->last_name;
+                $updated = true;
+            }
+            if ($oldUser->email != $request->email) {
+                $newData['email'] = $data['email'] = $request->email;
+                $oldData['email'] = $oldUser->email;
+                $updated = true;
+            }
+            if ($oldUser->tel_phone != $request->tel_phone) {
+                $newData['tel_phone'] = $data['tel_phone'] = $request->tel_phone;
+                $oldData['tel_phone'] = $oldUser->tel_phone;
+                $updated = true;
+            }
+            if ($oldUser->country_code != $request->country_code) {
+                $newData['country_code'] = $data['country_code'] = $request->country_code;
+                $oldData['country_code'] = $oldUser->country_code;
+                $updated = true;
+            }
+            if (is_null($request->email_notification)) {
+                $request->email_notification = 0;
+            }
+            if (is_null($request->adviser)) {
+                $request->adviser = 0;
+            }
+            if ($oldUser->email_notification != $request->email_notification) {
+                $newData['email_notification'] = $data['email_notification'] = $request->email_notification;
+                $oldData['email_notification'] = $oldUser->email_notification;
+                $updated = true;
+            }
+            if ($oldUser->adviser != $request->adviser) {
+                $newData['adviser'] = $data['adviser'] = $request->adviser;
+                $oldData['adviser'] = $oldUser->adviser;
+                $updated = true;
+            }
+            if ($updated) {
+                $account_information->email = $request->email;
+                $account_information->first_name = $request->first_name;
+                $account_information->last_name = $request->last_name;
+                $account_information->country_code = $request->country_code;
+                $account_information->tel_phone = $request->tel_phone;
+                /*$account_information->notification    =   $request->privacy;*/
+                $account_information->email_notification = $request->email_notification;
+                $account_information->adviser = $request->adviser;
+                $account_information->save();
+
+                $customerDetailUpdate = new CustomerUpdateDetail();
+                $customerDetailUpdate->user_id = $id;
+                $customerDetailUpdate->first_name = $account_information->first_name;
+                $customerDetailUpdate->last_name = $account_information->last_name;
+                $customerDetailUpdate->old_detail = json_encode($oldData);
+                $customerDetailUpdate->updated_detail = json_encode($newData);
+                $customerDetailUpdate->updated_by = FRONT_USER;
+                $customerDetailUpdate->save();
+
+                $data['profile_url'] = url('/') . '/account-information';
+                $data['sender_email'] = $systemSetting->auto_email;
+                $data['sender_name'] = $systemSetting->email_sender_name;
+                $data['updated_by'] = YOU;
+
+                try {
+                    Mail::to($account_information->email)->send(new UpdateDetailNotify($data));
+                } catch (Exception $exception) {
+                    dd($exception);
+                }
+            }
         }
-        $data = [
-            'sender_email'  =>  $request->email,
-            'sender_name'   =>  $request->first_name . ' ' . $request->last_name,
-        ];
-        //dd($data);
-        Mail::to($request->email)->send(new ProfileUpdated($data));
+
         if (!empty($request->location)) {
             return redirect($request->location)->with('success', 'Data ' . UPDATED_ALERT);
         } else {
@@ -173,17 +246,19 @@ class AccountInformationController extends Controller
             return redirect()->route('/');
         } else {
             if ($request->type == "delete") {
-                $accountInformation->delete_status = 1;
-                $accountInformation->updated_by = "User";
-                $accountInformation->updated_at = Carbon::now()->toDateTimeString();
 
                 $userLog = New UserLog();
+                $userLog->first_name = $accountInformation->first_name;
+                $userLog->last_name = $accountInformation->last_name;
+                $userLog->country_code = $accountInformation->country_code;
+                $userLog->tel_phone = $accountInformation->tel_phone;
+                $userLog->email = $accountInformation->email;
                 $userLog->user_id = $id;
                 $userLog->status = DELETED;
                 $userLog->updated_by_id = $id;
                 $userLog->updated_by = FRONT_USER;
                 $userLog->updated_on = Carbon::now()->toDateTimeString();
-
+                User::destroy($id);
             } elseif ($request->type == "deactivate") {
                 // $accountInformation->status = 0;
                 $accountInformation->status = 0;
@@ -196,10 +271,10 @@ class AccountInformationController extends Controller
                 $userLog->updated_by_id = $id;
                 $userLog->updated_by = FRONT_USER;
                 $userLog->updated_on = Carbon::now()->toDateTimeString();
-
+                $accountInformation->save();
 
             }
-            $accountInformation->save();
+
             $userLog->save();
         }
         return redirect()->route('user.logout')->with('success', 'Data ' . UPDATED_ALERT);

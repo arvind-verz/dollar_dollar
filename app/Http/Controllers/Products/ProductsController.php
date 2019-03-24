@@ -380,11 +380,13 @@ class ProductsController extends Controller
                 $range['other_minimum_amount1'] = $request->other_minimum_amount1_aioa5 ? (int)$request->other_minimum_amount1_aioa5 : null;
                 $range['other_interest1'] = $request->other_interest1_aioa5 ? (float)$request->other_interest1_aioa5 : null;
                 $range['status_other1'] = $request->status_other1_aioa5 ? (int)$request->status_other1_aioa5 : 0;
+                $range['checked_status_other1'] = $request->checked_status_other1_aioa5 ? (int)$request->checked_status_other1_aioa5 : 0;
 
                 $range['other_interest2_name'] = $request->other_interest2_name_aioa5 ? $request->other_interest2_name_aioa5 : null;
                 $range['other_minimum_amount2'] = $request->other_minimum_amount2_aioa5 ? (int)$request->other_minimum_amount2_aioa5 : null;
                 $range['other_interest2'] = $request->other_interest2_aioa5 ? (float)$request->other_interest2_aioa5 : null;
                 $range['status_other2'] = $request->status_other2_aioa5 ? (int)$request->status_other2_aioa5 : 0;
+                $range['checked_status_other2'] = $request->checked_status_other2_aioa5 ? (int)$request->checked_status_other2_aioa5 : 0;
 
                 $range['first_cap_amount'] = $request->first_cap_amount_aioa5 ? (int)$request->first_cap_amount_aioa5 : null;
                 $range['bonus_interest_remaining_amount'] = $request->bonus_interest_remaining_amount_aioa5 ? (float)$request->bonus_interest_remaining_amount_aioa5 : null;
@@ -863,14 +865,19 @@ class ProductsController extends Controller
                 $range['bonus_interest_privilege'] = $request->bonus_interest_privilege_aioa5 ? (float)$request->bonus_interest_privilege_aioa5 : null;
                 $range['minimum_loan_pa'] = $request->minimum_loan_pa_aioa5 ? (int)$request->minimum_loan_pa_aioa5 : null;
                 $range['bonus_interest_loan'] = $request->bonus_interest_loan_aioa5 ? (float)$request->bonus_interest_loan_aioa5 : null;
+
                 $range['other_interest1_name'] = $request->other_interest1_name_aioa5 ? $request->other_interest1_name_aioa5 : null;
                 $range['other_minimum_amount1'] = $request->other_minimum_amount1_aioa5 ? (int)$request->other_minimum_amount1_aioa5 : null;
                 $range['other_interest1'] = $request->other_interest1_aioa5 ? (float)$request->other_interest1_aioa5 : null;
                 $range['status_other1'] = $request->status_other1_aioa5 ? (int)$request->status_other1_aioa5 : 0;
+                $range['checked_status_other1'] = $request->checked_status_other1_aioa5 ? (int)$request->checked_status_other1_aioa5 : 0;
+
                 $range['other_interest2_name'] = $request->other_interest2_name_aioa5 ? $request->other_interest2_name_aioa5 : null;
                 $range['other_minimum_amount2'] = $request->other_minimum_amount2_aioa5 ? (int)$request->other_minimum_amount2_aioa5 : null;
                 $range['other_interest2'] = $request->other_interest2_aioa5 ? (float)$request->other_interest2_aioa5 : null;
                 $range['status_other2'] = $request->status_other2_aioa5 ? (int)$request->status_other2_aioa5 : 0;
+                $range['checked_status_other2'] = $request->checked_status_other2_aioa5 ? (int)$request->checked_status_other2_aioa5 : 0;
+
                 $range['first_cap_amount'] = $request->first_cap_amount_aioa5 ? (int)$request->first_cap_amount_aioa5 : null;
                 $range['bonus_interest_remaining_amount'] = $request->bonus_interest_remaining_amount_aioa5 ? (float)$request->bonus_interest_remaining_amount_aioa5 : null;
                 $ranges[] = $range;

@@ -1,29 +1,33 @@
 $(document).ready(function () {
 //Initialize Select2 Elements
     $('.select2').select2();
-
-    $('#products').DataTable(
-        {
-            "pageLength": 100,
-            'ordering': true,
-            'order': [[9, 'desc']],
-            "columnDefs": [],
-            "aoColumnDefs": [{
-                "aTargets": [],
-                "bSortable": false,
-            },
-                {width: 60, targets: 0},
-                {width: 100, targets: 1},
-                {width: 100, targets: 2},
-                {width: 100, targets: 3},
-                {width: 100, targets: 4},
-                {width: 100, targets: 5},
-                {width: 100, targets: 6},
-                {width: 100, targets: 7},
-                {width: 100, targets: 8},
-                {width: 100, targets: 9}
-            ]
-        });
+    var productsTable =
+        $('#products').DataTable(
+            {
+                dom: 'lrtip',
+                "pageLength": 100,
+                'ordering': true,
+                'order': [[9, 'desc']],
+                "columnDefs": [],
+                "aoColumnDefs": [{
+                    "aTargets": [],
+                    "bSortable": false,
+                },
+                    {width: 60, targets: 0},
+                    {width: 100, targets: 1},
+                    {width: 100, targets: 2},
+                    {width: 100, targets: 3},
+                    {width: 100, targets: 4},
+                    {width: 100, targets: 5},
+                    {width: 100, targets: 6},
+                    {width: 100, targets: 7},
+                    {width: 100, targets: 8},
+                    {width: 100, targets: 9}
+                ]
+            });
+    $('#product-filter').on('change', function () {
+        productsTable.search(this.value).draw();
+    });
     $('#ads').DataTable(
         {
             "pageLength": 100,
@@ -370,7 +374,7 @@ $(document).ready(function () {
         {
             "pageLength": 100,
             'ordering': true,
-            'order': [[9, 'desc'], [8, 'desc'],[7, 'desc']],
+            'order': [[9, 'desc'], [8, 'desc'], [7, 'desc']],
             "aoColumnDefs": [{
                 "aTargets": [],
                 "bSortable": false
@@ -418,7 +422,7 @@ $(document).ready(function () {
                             mm = '0' + mm
                         }
                         today = yy + '' + mm + '' + dd;
-                        return 'Activitylog ' + today;
+                        return 'Activity log ' + today;
                     }
                 },
                 {
@@ -440,7 +444,7 @@ $(document).ready(function () {
                             mm = '0' + mm
                         }
                         today = yy + '' + mm + '' + dd;
-                        return 'Activitylog ' + today;
+                        return 'Activity log ' + today;
                     }
                 }
             ],
@@ -460,7 +464,70 @@ $(document).ready(function () {
                 {width: 100, targets: 6}
             ]
         });
-
+    $('#customer-update-detail-report').DataTable(
+        {
+            dom: 'lBfrtip',
+            buttons: [
+                {
+                    extend: 'pdf',
+                    footer: true,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5]
+                    },
+                    filename: function () {
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1; //January is 0!
+                        var yyyy = today.getFullYear();
+                        var yy = yyyy.toString().substring(2);
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        today = yy + '' + mm + '' + dd;
+                        return 'Activity log ' + today;
+                    }
+                },
+                {
+                    extend: 'excel',
+                    footer: true,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5]
+                    },
+                    filename: function () {
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth() + 1; //January is 0!
+                        var yyyy = today.getFullYear();
+                        var yy = yyyy.toString().substring(2);
+                        if (dd < 10) {
+                            dd = '0' + dd
+                        }
+                        if (mm < 10) {
+                            mm = '0' + mm
+                        }
+                        today = yy + '' + mm + '' + dd;
+                        return 'Activity log ' + today;
+                    }
+                }
+            ],
+            "pageLength": 100,
+            'ordering': true,
+            'order': [[5, 'desc']],
+            "aoColumnDefs": [{
+                "aTargets": [],
+                "bSortable": false,
+            },
+                {width: 100, targets: 0},
+                {width: 500, targets: 1},
+                {width: 300, targets: 2},
+                {width: 300, targets: 3},
+                {width: 150, targets: 4},
+                {width: 100, targets: 5}
+            ]
+        });
 
     $('#rate-types').DataTable(
         {
@@ -582,7 +649,7 @@ $(document).ready(function () {
                     extend: 'print',
                     footer: true,
                     exportOptions: {
-                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10,11]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     },
                     title: 'Life enquiry',
                     customize: function (win) {
@@ -597,7 +664,7 @@ $(document).ready(function () {
                     extend: 'csv',
                     footer: true,
                     exportOptions: {
-                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10,11]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     },
                     filename: function () {
                         var today = new Date();
@@ -619,7 +686,7 @@ $(document).ready(function () {
                     extend: 'excel',
                     footer: true,
                     exportOptions: {
-                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10,11]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     },
                     filename: function () {
                         var today = new Date();
@@ -658,7 +725,7 @@ $(document).ready(function () {
                     extend: 'print',
                     footer: true,
                     exportOptions: {
-                        columns: [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
                     },
                     title: 'Investment enquiry',
                     customize: function (win) {
@@ -673,7 +740,7 @@ $(document).ready(function () {
                     extend: 'csv',
                     footer: true,
                     exportOptions: {
-                        columns: [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
                     },
                     filename: function () {
                         var today = new Date();
@@ -695,7 +762,7 @@ $(document).ready(function () {
                     extend: 'excel',
                     footer: true,
                     exportOptions: {
-                        columns: [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
                     },
                     filename: function () {
                         var today = new Date();
@@ -734,7 +801,7 @@ $(document).ready(function () {
                     extend: 'print',
                     footer: true,
                     exportOptions: {
-                        columns: [ 2, 3, 4, 5, 6, 7, 8, 9,10]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10]
                     },
                     title: 'Health enquiry',
                     customize: function (win) {
@@ -749,7 +816,7 @@ $(document).ready(function () {
                     extend: 'csv',
                     footer: true,
                     exportOptions: {
-                        columns: [ 2, 3, 4, 5, 6, 7, 8, 9,10]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10]
                     },
                     filename: function () {
                         var today = new Date();
@@ -771,7 +838,7 @@ $(document).ready(function () {
                     extend: 'excel',
                     footer: true,
                     exportOptions: {
-                        columns: [ 2, 3, 4, 5, 6, 7, 8, 9,10]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10]
                     },
                     filename: function () {
                         var today = new Date();
@@ -810,7 +877,7 @@ $(document).ready(function () {
                     extend: 'print',
                     footer: true,
                     exportOptions: {
-                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10,11]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     },
                     title: 'Loan enquiry',
                     customize: function (win) {
@@ -825,7 +892,7 @@ $(document).ready(function () {
                     extend: 'csv',
                     footer: true,
                     exportOptions: {
-                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10,11]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     },
                     filename: function () {
                         var today = new Date();
@@ -847,7 +914,7 @@ $(document).ready(function () {
                     extend: 'excel',
                     footer: true,
                     exportOptions: {
-                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10,11]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
                     },
                     filename: function () {
                         var today = new Date();

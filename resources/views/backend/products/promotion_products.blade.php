@@ -23,38 +23,13 @@
 
                         <h3 class="box-title">{{$productType}}</h3>
                         @if($productTypeId==LOAN)
-                        <select name="filter_category" class="form-control"
-                                style="width: 10em;float: right;margin-right: 10px;">
-                            <option value="">-- Select --</option>
-                            <option value="">
-                                All
-                            </option>
-                            @php $rate_type = []; @endphp
-                            @if($products->count())
-                                @foreach($products as $product)
-                                <?php
-                                $productRange = null;
-                                if ($product->product_range) {
-                                    $range = \GuzzleHttp\json_decode($product->product_range);
-                                    if (count($range)) {
-                                        $productRange = $range[0];
-                                    }
-                                }
-                                if($productTypeId==LOAN)
-                                {
-                                    if($productRange)
-                                    {
-                                        $rate_type[] = $productRange->rate_type;
-                                    }
-                                }
-
-                                ?>
-                                @endforeach
-                                @foreach(array_unique($rate_type) as $value)
-                                    <option>{{ $value }}</option>
-                                @endforeach
-                            @endif
-                        </select>
+                            <select name="filter_category" id="product-filter" class="form-control"
+                                    style="width: 10em;float: right;margin-right: 10px;">
+                                <option value="">-- Select --</option>
+                                <option value="">All</option>
+                                <option value="{{FIXED_RATE}}">{{FIXED_RATE}}</option>
+                                <option value="{{FLOATING_RATE}}">{{FLOATING_RATE}}</option>
+                            </select>
                             <a href="{{ route('rate-type.index') }}"
                                class="btn btn-info pull-right mr-10"><i class="fa fa-gear"></i>
                                 Rate Types
@@ -238,11 +213,11 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
-<script type="text/javascript">
-$(document).ready(function() {
+    <script type="text/javascript">
+        $(document).ready(function () {
 
-    
-});
 
-</script>
+        });
+
+    </script>
 @endsection
