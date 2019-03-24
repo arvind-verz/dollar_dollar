@@ -4178,14 +4178,14 @@ class PagesFrontController extends Controller
                                 $criteriaMatchCount++;
                             }
                         }
-                        if (!empty($productRange->other_minimum_amount1) && ($productRange->status_other1 == 1)) {
+                        if (!empty($productRange->other_minimum_amount1) && ($productRange->status_other1 == 1) && (isset($productRange->checked_status_other1) && $productRange->checked_status_other1 == 1)) {
                             if ($placement > 0 && $productRange->other_minimum_amount1 <= $placement) {
                                 $product->other_highlight1 = true;
                                 $totalInterest = $totalInterest + $productRange->other_interest1;
                                 $criteriaMatchCount++;
                             }
                         }
-                        if (!empty($productRange->other_minimum_amount2) && ($productRange->status_other2 == 1)) {
+                        if (!empty($productRange->other_minimum_amount2) && ($productRange->status_other2 == 1) && (isset($productRange->checked_status_other2) && $productRange->checked_status_other2 == 1)) {
                             if ($placement > 0 && $productRange->other_minimum_amount2 <= $placement) {
                                 $product->other_highlight2 = true;
                                 $totalInterest = $totalInterest + $productRange->other_interest2;

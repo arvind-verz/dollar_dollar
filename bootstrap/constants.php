@@ -95,6 +95,7 @@ define('USER_MODULE_SINGLE', "User");
 define('REPORT_MODULE_SINGLE', "Report");
 define('CUSTOMER_MODULE_SINGLE', "Customer");
 define('CUSTOMER_DELETION_MODULE_SINGLE', "Customer Deletion ");
+define('CUSTOMER_UPDATE_DETAIL_SINGLE', "Customer Update Details ");
 define('ORDER_MODULE_SINGLE', "Order");
 define('HOMEPAGE_MODULE_SINGLE', "Homepage");
 define('ACTIVITY_LOG_MODULE_SINGLE', "Activity Log");
@@ -361,6 +362,7 @@ define('DELETED', 2);
 //update By
 define('ADMIN_USER', 'Admin');
 define('FRONT_USER', 'User');
+define('YOU', 'You');
 
 
 

@@ -92,12 +92,12 @@
                                     </p> -->
                                     {!! Form::hidden('location', isset($location) ? $location : '')  !!}
                                     <p><strong> Subscribe to our weekly newsletter </strong><input type="checkbox"
-                                                                                                   class="form-control"
+                                                                                                   class="form-control" value="1"
                                                                                                    name="email_notification"
                                                                                                    @if(AUTH::user()->email_notification==1) checked @endif>
                                     </p>
 
-                                    <p><input type="checkbox" class="form-control" name="adviser"
+                                    <p><input type="checkbox" class="form-control" name="adviser" value="1"
                                               @if(AUTH::user()->adviser==1) checked @endif><strong> I would like to be
                                             informed of products, services, offers provided by dollardollar.sg and it’s
                                             business partners. I have consent to have marketing information sent to me

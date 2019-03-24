@@ -162,8 +162,8 @@ class BlogController extends Controller
         if (isset($request->tags)) {
             $tags = $request->tags;
         }
-        $page->posted_by = $request->posted_by;
-        $page->posted_on = $request->posted_on;
+        //$page->posted_by = $request->posted_by;
+        //$page->posted_on = $request->posted_on;
         $page->tags = json_encode($tags);
         $page->short_description = $request->short_description;
         $page->contents = $request->contents;

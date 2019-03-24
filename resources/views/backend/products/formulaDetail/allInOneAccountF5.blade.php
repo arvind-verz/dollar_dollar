@@ -118,7 +118,8 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="">Minimum Requirement Amount (Salary 2)</label>
                                     <input type="text" class="form-control only_numeric" id=""
-                                           name="minimum_salary_aioa5_2" value="{{ isset($value->minimum_salary_2)?$value->minimum_salary_2:null  }}"
+                                           name="minimum_salary_aioa5_2"
+                                           value="{{ isset($value->minimum_salary_2)?$value->minimum_salary_2:null  }}"
                                            placeholder="">
 
                                 </div>
@@ -213,7 +214,7 @@
                                            value="{{ $value->other_interest1_name  }}"
                                            placeholder="">
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="">Minimum Requirement Amount </label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="other_minimum_amount1_aioa5"
@@ -228,24 +229,44 @@
                                            value="{{ $value->other_interest1  }}"
                                            placeholder="">
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-2 mb-3">
                                     @if($value->status_other1==1)
-                                            <input type="hidden" id="aioa-5-1-status-input" name="status_other1_aioa5"
-                                                   value="1"/>
-                                            <label for="">Status</label>
-                                            <button type="button" data-status="true" id="aioa-5-1-status"
-                                                    class="btn btn-block btn-success btn-social"
-                                                    onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
-                                            </button>
+                                        <input type="hidden" id="aioa-5-1-status-input" name="status_other1_aioa5"
+                                               value="1"/>
+                                        <label for="">Status</label>
+                                        <button type="button" data-status="true" id="aioa-5-1-status"
+                                                class="btn btn-block btn-success btn-social"
+                                                onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
+                                        </button>
 
                                     @else
-                                            <input type="hidden" id="aioa-5-1-status-input" name="status_other1_aioa5"
-                                                   value="0"/>
-                                            <label for="">Status</label>
-                                            <button type="button" data-status="false" id="aioa-5-1-status"
-                                                    class="btn btn-block btn-danger btn-social"
-                                                    onclick="changeAIO5Status(this)"><i class="fa fa-times"></i> Disable
-                                            </button>
+                                        <input type="hidden" id="aioa-5-1-status-input" name="status_other1_aioa5"
+                                               value="0"/>
+                                        <label for="">Status</label>
+                                        <button type="button" data-status="false" id="aioa-5-1-status"
+                                                class="btn btn-block btn-danger btn-social"
+                                                onclick="changeAIO5Status(this)"><i class="fa fa-times"></i> Disable
+                                        </button>
+                                    @endif
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    @if((isset($value->checked_status_other1)) && $value->checked_status_other1==1)
+                                        <input type="hidden" id="aioa-5-1-checked-status-input" name="checked_status_other1_aioa5"
+                                               value="1"/>
+                                        <label for="">Checked Status</label>
+                                        <button type="button" data-status="true" id="aioa-5-1-checked-status"
+                                                class="btn btn-block btn-success btn-social"
+                                                onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
+                                        </button>
+
+                                    @else
+                                        <input type="hidden" id="aioa-5-1-checked-status-input" name="checked_status_other1_aioa5"
+                                               value="0"/>
+                                        <label for="">Checked Status</label>
+                                        <button type="button" data-status="false" id="aioa-5-1-checked-status"
+                                                class="btn btn-block btn-danger btn-social"
+                                                onclick="changeAIO5Status(this)"><i class="fa fa-times"></i> Disable
+                                        </button>
                                     @endif
                                 </div>
                             </div>
@@ -264,7 +285,7 @@
                                            value="{{ $value->other_interest2_name  }}"
                                            placeholder="">
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="">Minimum Requirement Amount </label>
                                     <input type="text" class="form-control only_numeric" id=""
                                            name="other_minimum_amount2_aioa5"
@@ -279,7 +300,7 @@
                                            value="{{ $value->other_interest2  }}"
                                            placeholder="">
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-2 mb-3">
                                     @if($value->status_other2==1)
                                         <input type="hidden" id="aioa-5-2-status-input" name="status_other2_aioa5"
                                                value="1"/>
@@ -294,6 +315,26 @@
                                                value="0"/>
                                         <label for="">Status</label>
                                         <button type="button" data-status="false" id="aioa-5-2-status"
+                                                class="btn btn-block btn-danger btn-social"
+                                                onclick="changeAIO5Status(this)"><i class="fa fa-times"></i> Disable
+                                        </button>
+                                    @endif
+                                </div>
+                                <div class="col-md-2 mb-3">
+                                    @if((isset($value->checked_status_other2)) && $value->checked_status_other2==1)
+                                        <input type="hidden" id="aioa-5-2-checked-status-input" name="checked_status_other2_aioa5"
+                                               value="1"/>
+                                        <label for="">Checked Status</label>
+                                        <button type="button" data-status="true" id="aioa-5-2-checked-status"
+                                                class="btn btn-block btn-success btn-social"
+                                                onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
+                                        </button>
+
+                                    @else
+                                        <input type="hidden" id="aioa-5-2-checked-status-input" name="checked_status_other2_aioa5"
+                                               value="0"/>
+                                        <label for="">Checked Status</label>
+                                        <button type="button" data-status="false" id="aioa-5-2-checked-status"
                                                 class="btn btn-block btn-danger btn-social"
                                                 onclick="changeAIO5Status(this)"><i class="fa fa-times"></i> Disable
                                         </button>
@@ -538,7 +579,7 @@
                                    name="other_interest1_name_aioa5"
                                    placeholder="">
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="">Minimum Requirement Amount </label>
                             <input type="text" class="form-control only_numeric" id=""
                                    name="other_minimum_amount1_aioa5"
@@ -551,10 +592,18 @@
                                    name="other_interest1_aioa5"
                                    placeholder="">
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-2 mb-3">
                             <input type="hidden" id="aioa-5-1-status-input" name="status_other1_aioa5" value="1"/>
                             <label for="">Status</label>
                             <button type="button" data-status="true" id="aioa-5-1-status"
+                                    class="btn btn-block btn-success btn-social"
+                                    onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <input type="hidden" id="aioa-5-1-checked-status-input" name="checked_status_other1_aioa5" value="1"/>
+                            <label for="">Status</label>
+                            <button type="button" data-status="true" id="aioa-5-1-checked-status"
                                     class="btn btn-block btn-success btn-social"
                                     onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
                             </button>
@@ -574,7 +623,7 @@
                                    name="other_interest2_name_aioa5"
                                    placeholder="">
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label for="">Minimum Requirement Amount </label>
                             <input type="text" class="form-control only_numeric" id=""
                                    name="other_minimum_amount2_aioa5"
@@ -587,10 +636,18 @@
                                    name="other_interest2_aioa5"
                                    placeholder="">
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-2 mb-3">
                             <input type="hidden" id="aioa-5-2-status-input" name="status_other2_aioa5" value="1"/>
                             <label for="">Status</label>
                             <button type="button" data-status="true" id="aioa-5-2-status"
+                                    class="btn btn-block btn-success btn-social"
+                                    onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <input type="hidden" id="aioa-5-2-checked-status-input" name="checked_status_other2_aioa5" value="1"/>
+                            <label for="">Status</label>
+                            <button type="button" data-status="true" id="aioa-5-2-checked-status"
                                     class="btn btn-block btn-success btn-social"
                                     onclick="changeAIO5Status(this)"><i class="fa fa-check"></i> Enable
                             </button>

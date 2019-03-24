@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Reports;
 
+use App\CustomerUpdateDetail;
 use App\Http\Controllers\Controller;
 use App\ProductManagement;
 use Exporter;
@@ -26,10 +27,9 @@ class ReportController extends Controller
     public function customer_report()
     {
         $customer_reports = ProductManagement::join('users', 'product_managements.user_id', '=', 'users.id')
-            ->leftJoin('brands', 'product_managements.bank_id', '=', 'brands.id')
-            ->select('users.id as users_id', 'users.*', 'brands.*', 'product_managements.*')
+           // ->leftJoin('brands', 'product_managements.bank_id', '=', 'brands.id')
+            ->select('users.id as users_id', 'users.*', 'product_managements.*')
             ->get();
-
         DB::connection()->enableQueryLog();
         $customer_reports_groups = ProductManagement::join('users', 'product_managements.user_id', '=', 'users.id')
             ->leftJoin('brands', 'product_managements.bank_id', '=', 'brands.id')
@@ -48,10 +48,7 @@ class ReportController extends Controller
     {
         //$CheckLayoutPermission = $this->view_all_permission(@Auth::user()->role_type_id, CUSTOMER_MODULE_ID);   
 
-        $users = UserLog::join('users', 'user_logs.user_id', '=', 'users.id')
-            ->where('user_logs.delete_status', 0)
-            ->select('users.first_name','users.last_name','users.email','users.tel_phone','user_logs.*')
-            ->get();
+        $users = UserLog::where('user_logs.delete_status', 0)->get();
         //dd($users);
         return view("backend.reports.customer-report.delete-deactivation", compact("users", "CheckLayoutPermission"));
     }
@@ -63,6 +60,13 @@ class ReportController extends Controller
         return view('backend.reports.product-report.index', [
             'product_reports' => $product_reports,
         ]);
+    }
+
+    public function customerUpdateDetails()
+    {
+
+        $customerUpdateDetails = CustomerUpdateDetail::all();
+        return view('backend.reports.customer-report.customer-update-detail', compact('customerUpdateDetails'));
     }
 
     public function customer_report_excel()
