@@ -24,6 +24,7 @@ use App\LoanEnquiry;
 use App\PromotionProducts;
 use App\SystemSetting;
 use App\AdsManagement;
+use App\EmailTemplate;
 
 class EnquiryFrontController extends Controller
 {
@@ -155,7 +156,7 @@ class EnquiryFrontController extends Controller
 
             'subject' => 'required|max:255',
             'message' => 'required|max:3500',
-            'g-recaptcha-response' => 'required|captcha'
+            //'g-recaptcha-response' => 'required|captcha'
         ];
         $validator = Validator::make($request->all(), $fields);
         if (!$request->full_name) {
@@ -216,7 +217,7 @@ class EnquiryFrontController extends Controller
             'coverage' => 'required|max:255',
             'level' => 'required|max:255',
             'time' => 'required|max:255',
-            'g-recaptcha-response' => 'required|captcha'
+            //'g-recaptcha-response' => 'required|captcha'
         ];
 
         if (isset($request->time)) {
@@ -306,7 +307,7 @@ class EnquiryFrontController extends Controller
             'dob' => 'required|max:255',
             'smoke' => 'required|max:255',
             'time' => 'required',
-            'g-recaptcha-response' => 'required|captcha'
+            //'g-recaptcha-response' => 'required|captcha'
         ];
 
         if (isset($request->time)) {
@@ -395,7 +396,7 @@ class EnquiryFrontController extends Controller
             'risks' => 'required',
             'age' => 'required',
             'time' => 'required',
-            'g-recaptcha-response' => 'required|captcha'
+            //'g-recaptcha-response' => 'required|captcha'
         ];
         if (isset($request->experience)) {
             if ($request->experience == YES) {
@@ -514,7 +515,7 @@ class EnquiryFrontController extends Controller
         $systemSetting = $this->systemSetting;
         $ads = $this->ads;
         //check validation
-        $fields = ['g-recaptcha-response' => 'required|captcha'];
+        $fields = [] ; //'g-recaptcha-response' => 'required|captcha'];
 
         $validator = Validator::make($request->all(), $fields);
         if (!$request->full_name) {

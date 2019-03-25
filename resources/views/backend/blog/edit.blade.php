@@ -51,20 +51,24 @@
                                         @if(isset($page->blog_image) && ($page->blog_image != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
-                                                    <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImage(this, '{{ $page->id }}');"><i class="fas fa-times fa-lg"></i></a>
+                                                    <a href="javascript:void(0)" class="text-danger" title="close"
+                                                       onclick="removeImage(this, '{{ $page->id }}');"><i
+                                                                class="fas fa-times fa-lg"></i></a>
                                                     <img class="attachment-img" src="{!! asset($page->blog_image) !!}"
                                                          alt="Banner Image">
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 500*250 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 500*250 for better display
+                                        </div>
                                     </div>
                                     <!-- <div class="form-group">
                                         {{Form::label('blog_image_ads', ' Image Ads',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="@if(isset($page->blog_image_ads) && ($page->blog_image_ads != ''))col-sm-8 @else col-sm-10 @endif">
+                                            <div class="@if(isset($page->blog_image_ads) && ($page->blog_image_ads != ''))col-sm-8 @else col-sm-10 @endif">
                                             {{Form::file('blog_image_ads', ['class' => 'form-control', 'placeholder' => ''])}}
-                                        </div>
-                                        @if(isset($page->blog_image_ads) && ($page->blog_image_ads != ''))
+                                            </div>
+                                            @if(isset($page->blog_image_ads) && ($page->blog_image_ads != ''))
                                             <div class=" col-sm-2">
                                                 <div class="attachment-block clearfix">
                                                     <a href="javascript:void(0)" class="text-danger" title="close" onclick="removeImageads(this, '{{ $page->id }}');"><i class="fas fa-times fa-lg"></i></a>
@@ -73,14 +77,14 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 500*250 for better display</div>
-                                    </div>
-                                    <div class="form-group">
-                                        {{Form::label('blog_image_ads_link', 'Image Ads Link',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::text('blog_image_ads_link', $page->blog_image_ads_link, ['class' => 'form-control', 'placeholder' => ''])}}
+                                            <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 500*250 for better display</div>
                                         </div>
-                                    </div> -->
+                                        <div class="form-group">
+                                            {{Form::label('blog_image_ads_link', 'Image Ads Link',['class'=>'col-sm-2 control-label'])}}
+                                            <div class="col-sm-10">
+                                                {{Form::text('blog_image_ads_link', $page->blog_image_ads_link, ['class' => 'form-control', 'placeholder' => ''])}}
+                                            </div>
+                                        </div> -->
                                     <div class="form-group">
                                         {{Form::label('short_description', 'Short Description',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
@@ -99,8 +103,10 @@
                                         <label class="col-sm-2 control-label">Posted On</label>
 
                                         <div class="col-sm-10">
-
-                                            <input type="text" class="form-control datepicker1" name="posted_on" value="{{ date('Y-m-d', strtotime($page->posted_on)) }}">
+                                            <input type="text" class="form-control pull-right datepicker1"
+                                                   name="posted_on" id="posted_on"
+                                                   data-date="{{ $page->posted_on ? date('Y-m-d', strtotime($page->posted_on )) : '' }}"
+                                                   value="{{ $page->posted_on ? date('Y-m-d', strtotime($page->posted_on )) : null }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -108,7 +114,8 @@
 
                                         <div class="col-sm-10">
 
-                                            <input type="text" class="form-control" name="posted_by" value="{{ $page->posted_by }}">
+                                            <input type="text" class="form-control" name="posted_by"
+                                                   value="{{ $page->posted_by }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -124,8 +131,10 @@
                                                         @if(CONTACT_US_SECTION_VALUE == $page->contact_or_offer) selected="selected" @endif>{{CONTACT_US_SECTION}}</option>
                                                 <option value="{{OFFER_SECTION_VALUE}}"
                                                         @if(OFFER_SECTION_VALUE == $page->contact_or_offer) selected="selected" @endif>{{OFFER_SECTION}}</option>
-                                                        <option value="{{FOOTER3_VALUE}}" @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER3}}</option>
-                                                <option value="{{FOOTER4_VALUE}}" @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER4}}</option>
+                                                <option value="{{FOOTER3_VALUE}}"
+                                                        @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER3}}</option>
+                                                <option value="{{FOOTER4_VALUE}}"
+                                                        @if(FOOTER3_VALUE == $page->contact_or_offer) selected="selected" @endif>{{FOOTER4}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -136,8 +145,9 @@
                                             <select class="form-control select2"
                                                     data-placeholder="Select" name="disable_ads"
                                                     style="width: 100%;">
-                                                <option value="null" >Select</option>
-                                                <option value="1" @if($page->disable_ads==1) selected @endif>Yes</option>
+                                                <option value="null">Select</option>
+                                                <option value="1" @if($page->disable_ads==1) selected @endif>Yes
+                                                </option>
                                                 <option value="0" @if($page->disable_ads==0) selected @endif>No</option>
                                             </select>
                                         </div>
@@ -284,30 +294,30 @@
     <!-- /.content -->
 @endsection
 <script>
-function removeImage(ref, id) {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('remove-image') }}",
-                    data: "type=blog&id="+id,
-                    cache: false,
-                    success: function(data) {
-                        if(data.trim()=='success') {
-                            $(ref).parents(".col-sm-2").remove();
-                        }
-                    }
-                });
+    function removeImage(ref, id) {
+        $.ajax({
+            method: "POST",
+            url: "{{ route('remove-image') }}",
+            data: "type=blog&id=" + id,
+            cache: false,
+            success: function (data) {
+                if (data.trim() == 'success') {
+                    $(ref).parents(".col-sm-2").remove();
+                }
             }
-            function removeImageads(ref, id) {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('remove-image') }}",
-                    data: "type=blogads&id="+id,
-                    cache: false,
-                    success: function(data) {
-                        if(data.trim()=='success') {
-                            $(ref).parents(".col-sm-2").remove();
-                        }
-                    }
-                });
+        });
+    }
+    function removeImageads(ref, id) {
+        $.ajax({
+            method: "POST",
+            url: "{{ route('remove-image') }}",
+            data: "type=blogads&id=" + id,
+            cache: false,
+            success: function (data) {
+                if (data.trim() == 'success') {
+                    $(ref).parents(".col-sm-2").remove();
+                }
             }
-    </script>
+        });
+    }
+</script>

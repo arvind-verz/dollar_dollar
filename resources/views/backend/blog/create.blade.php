@@ -48,21 +48,23 @@
                                         <div class="col-sm-10">
                                             {{Form::file('blog_image', ['class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 500*250 for better display</div>
+                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image
+                                            size should be 500*250 for better display
+                                        </div>
                                     </div>
                                     <!-- <div class="form-group">
                                         {{Form::label('blog_image_ads', ' Image Ads',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::file('blog_image_ads', ['class' => 'form-control', 'placeholder' => ''])}}
+                                            <div class="col-sm-10">
+                                                {{Form::file('blog_image_ads', ['class' => 'form-control', 'placeholder' => ''])}}
+                                            </div>
+                                            <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 500*250 for better display</div>
                                         </div>
-                                        <div class="text-muted col-sm-offset-2 col-md-12"><strong>Note:</strong> Image size should be 500*250 for better display</div>
-                                    </div>
-                                    <div class="form-group">
-                                        {{Form::label('blog_image_ads_link', 'Image Ads Link',['class'=>'col-sm-2 control-label'])}}
-                                        <div class="col-sm-10">
-                                            {{Form::text('blog_image_ads_link', old('blog_image_ads_link'), ['class' => 'form-control', 'placeholder' => ''])}}
-                                        </div>
-                                    </div> -->
+                                        <div class="form-group">
+                                            {{Form::label('blog_image_ads_link', 'Image Ads Link',['class'=>'col-sm-2 control-label'])}}
+                                            <div class="col-sm-10">
+                                                {{Form::text('blog_image_ads_link', old('blog_image_ads_link'), ['class' => 'form-control', 'placeholder' => ''])}}
+                                            </div>
+                                        </div> -->
                                     <div class="form-group">
                                         {{Form::label('short_description', 'Short Description',['class'=>'col-sm-2 control-label'])}}
                                         <div class="col-sm-10">
@@ -79,15 +81,16 @@
                                         <label class="col-sm-2 control-label">Posted On</label>
 
                                         <div class="col-sm-10">
-
-                                            <input type="text" class="form-control datepicker1" name="posted_on" value="">
+                                            <input type="text" class="form-control datepicker1"
+                                                   data-date="{{ old('posted_on') ? date('Y-m-d', strtotime(old('posted_on'))) :date('Y-m-d', time())  }}"
+                                                   name="posted_on" id="posted_on"
+                                                   value="{{ old('posted_on') ? date('Y-m-d', strtotime(old('posted_on'))) :date('Y-m-d', time())  }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Posted By</label>
 
                                         <div class="col-sm-10">
-
                                             <input type="text" class="form-control" name="posted_by" value="">
                                         </div>
                                     </div>
@@ -99,7 +102,7 @@
                                             <select class="form-control select2"
                                                     data-placeholder="Select Menu" name="contact_or_offer"
                                                     style="width: 100%;">
-                                                <option value="null" >Select display section</option>
+                                                <option value="null">Select display section</option>
                                                 <option value="{{CONTACT_US_SECTION_VALUE}}">{{CONTACT_US_SECTION}}</option>
                                                 <option value="{{OFFER_SECTION_VALUE}}">{{OFFER_SECTION}}</option>
                                                 <option value="{{FOOTER3_VALUE}}">{{FOOTER3}}</option>
@@ -114,7 +117,7 @@
                                             <select class="form-control select2"
                                                     data-placeholder="Select" name="disable_ads"
                                                     style="width: 100%;">
-                                                <option value="null" >Select</option>
+                                                <option value="null">Select</option>
                                                 <option value="1">Yes</option>
                                                 <option value="0">No</option>
                                             </select>
@@ -184,7 +187,7 @@
                                                     data-placeholder="" name="tags[]"
                                                     style="width: 100%;">
                                                 @foreach($tags as $tag)
-                                                    <option value="{{ $tag->id }}" >{{ $tag->title }}</option>
+                                                    <option value="{{ $tag->id }}">{{ $tag->title }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

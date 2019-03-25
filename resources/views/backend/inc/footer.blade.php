@@ -67,6 +67,45 @@
         }
     };
     tinymce.init(editor_config);
+
+
+    tinymce.init({
+
+        // basic tinyMCE stuff
+        path_absolute: APP_URL+'/',
+        selector: ".email-editor",
+        content_css: '/css/variable.css',
+        menubar: false,
+        toolbar: "bold,italic,code",
+        font_formats: 'Roboto,sans-serif;',
+
+        /* setup : function(ed) {
+         window.tester = ed;
+         ed.addButton('mybutton', {
+         title : 'My button',
+         text : 'Username',
+         onclick : function() {
+         ed.plugins.variables.addVariable('username');
+         }
+         });
+
+         ed.on('variableClick', function(e) {
+         console.log('click', e);
+         });
+         },*/
+
+        // variable plugin related
+        plugins: "variables,code",
+        variable_mapper: {
+            name: 'Name',
+            phone: 'Phone',
+            email: 'Email address'
+        }
+        // variable_prefix: '{{',
+    // variable_suffix: '}}'
+        // variable_class: 'bbbx-my-variable',
+        ,variable_valid: ['name', 'phone', 'email']
+    });
     // Load multiple scripts
     var scriptLoader = new tinymce.dom.ScriptLoader();
     scriptLoader.add(APP_URL + '/frontend/js/jquery.min.js');
