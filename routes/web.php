@@ -520,6 +520,15 @@ Route::group(array('prefix' => 'admin'), function () {
 
     /*End Rate types*/
 
+    /*Email Templates route start*/
+    Route::get('/email-template', 'CMS\EmailTemplateController@index')->name('email-template.index');
+    Route::get('/email-template/create/', 'CMS\EmailTemplateController@create')->name('email-template.create');
+    Route::post('/email-template/store', 'CMS\EmailTemplateController@store');
+    Route::get('/email-template/edit/{id}', 'CMS\EmailTemplateController@edit')->name('email-template.edit');
+    Route::put('/email-template/update/{id}', 'CMS\EmailTemplateController@update');
+    //Route::get('/email-template/destroy/{id}', 'CMS\EmailTemplateController@destroy');
+    /*Email Templates route end*/
+
 
 });
 

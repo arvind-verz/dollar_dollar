@@ -59,6 +59,7 @@ define('DASHBOARD', "Dashboard");
 define('PRODUCT_MODULE', "Product Management");
 define('CATEGORY_MODULE', "Category Management");
 define('BRAND_MODULE', "Brand Management");
+define('EMAIL_TEMPLATE_MODULE', "Email Template");
 define('BANNER_MODULE', "Banner Management");
 define('USER_MODULE', "User Management");
 define('CUSTOMER_MODULE', "Customer Management");
@@ -91,6 +92,7 @@ define('CATEGORY_MODULE_SINGLE', "Category");
 define('BANNER_MODULE_SINGLE', "Banner");
 define('ADS_MODULE_SINGLE', "Ads");
 define('BRAND_MODULE_SINGLE', "Brand");
+define('EMAIL_TEMPLATE_MODULE_SINGLE', "Email Template");
 define('USER_MODULE_SINGLE', "User");
 define('REPORT_MODULE_SINGLE', "Report");
 define('CUSTOMER_MODULE_SINGLE', "Customer");
@@ -143,6 +145,7 @@ define('PAGE_MODULE_ID', 26);
 define('BANNER_MODULE_ID', 27);
 define('ADS_MODULE_ID', 39);
 define('BRAND_MODULE_ID', 28);
+define('EMAIL_TEMPLATE_MODULE_ID', 40);
 define('CATEGORY_MODULE_ID', 29);
 define('PRODUCT_MODULE_ID', 30);
 define('CUSTOMER_MODULE_ID', 31);
@@ -171,6 +174,7 @@ define('UPDATED_ALERT', " has been successfully updated.");
 define('DELETED_ALERT', " has been successfully deleted.");
 define('ALREADY_TAKEN_ALERT', " has already been taken.");
 define('OPPS_ALERT', " Oops! Something went wrong!");
+define('EMAIL_TEMPLATE_ERROR', " New Email template not available.");
 define('CREDENTIALS_ALERT', " These credentials do not match our records.");
 define('SELECT_ALERT', " has been not selected.");
 define('MAX_HOME_BANNER_ALERT', " You can upload only 4 banners for ");
@@ -363,6 +367,10 @@ define('DELETED', 2);
 define('ADMIN_USER', 'Admin');
 define('FRONT_USER', 'User');
 define('YOU', 'You');
+
+//Email template Id
+define('CONTACT_ENQUIRY_TEMP_ID', 1);
+
 
 
 
