@@ -18,6 +18,7 @@ use Exception;
 use App\Mail\NewUserWelcome;
 use App\AdsManagement;
 use App\SystemSetting;
+use App\EmailTemplate;
 
 class RegisterController extends Controller
 {
@@ -197,18 +198,67 @@ class RegisterController extends Controller
                     $adLink = $ads->ad_link;
                 }
 
-                $data = $user->toArray();
-                $data['blog_url'] = url('/') . '/blog-list';
-                $data['admin_url'] = url('/') . '/admin';
-                $data['ad'] = $ad;
-                $data['ad_link'] = $adLink;
-                $data['sender_email'] = $systemSetting->auto_email;
-                $data['sender_name'] = $systemSetting->email_sender_name;
-                try {
-                    Mail::to($registration->email)->send(new NewUserWelcome($data));
-                    Mail::to($systemSetting->admin_email)->send(new NewUserNotify($data));
-                } catch (Exception $exception) {
-//dd($exception);
+                $emailTemplate = EmailTemplate::find(NEW_USER_NOTIFY_MAIL_ID);
+                if ($emailTemplate) {
+                    $emailTemplate->auto_email = $systemSetting->auto_email;
+                    $emailTemplate->email_sender_name = $systemSetting->email_sender_name;
+                    $emailTemplate->admin_email = $systemSetting->admin_email;
+                    $emailTemplate->email = $request->email;
+                    $systemSetting = $this->systemSetting;
+                    $logo = null;
+                    if ($systemSetting) {
+                        $logo = $systemSetting->logo;
+                    }
+                    $data1 = [];
+                    $data2 = [];
+                    $data2['{{first_name}}']=$data1['{{first_name}}'] = $user->first_name;
+                    $data2['{{last_name}}']=$data1['{{last_name}}'] = $user->last_name;
+                    $data1['{{email}}'] = $user->email;
+                    $data1['{{country_code}}'] = $user->country_code;
+                    $data1['{{telephone}}'] = $user->tel_phone;
+                    $data1['{{created_at}}'] = date("Y-m-d H:i", strtotime($user->created_at));
+
+                    if ($logo) {
+                        $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'> <img src='.asset($logo).'> </a>';
+                    } else {
+                        $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'>'.config('app.name').'</a>';
+                    }
+                    $data2['{{ad}}'] = "<a href=".$adLink."><img style='max-width: 570px;' src=".asset($ad)."></a>";
+                    $key1 = array_keys($data1);
+                    $value1 = array_values($data1);
+                    $newContent1 = \Helper::replaceStrByValue($key1, $value1, $emailTemplate->contents);
+
+                    try {
+                        Mail::send('frontend.emails.reminder', ['content' => $newContent1], function ($message) use ($emailTemplate) {
+                            $message->from($emailTemplate->auto_email, $emailTemplate->email_sender_name);
+                            $message->to($emailTemplate->admin_email)->subject($emailTemplate->subject);
+                        });
+
+                    } catch (Exception $exception) {
+                        return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+                    }
+                    $thankEmail = EmailTemplate::find(NEW_USER_WELCOME_MAIL_ID);
+                    if($thankEmail){
+                        $key2 = array_keys($data2);
+                        $value2 = array_values($data2);
+                        $newContent2 = \Helper::replaceStrByValue($key2, $value2, $thankEmail->contents);
+                        $thankEmail->auto_email = $systemSetting->auto_email;
+                        $thankEmail->email_sender_name = $systemSetting->email_sender_name;
+                        $thankEmail->admin_email = $systemSetting->admin_email;
+                        $thankEmail->email = $request->email;
+
+                        try {
+                            Mail::send('frontend.emails.reminder', ['content' => $newContent2], function ($message) use ($thankEmail) {
+                                $message->from($thankEmail->auto_email, $thankEmail->email_sender_name);
+                                $message->to($thankEmail->email)->subject($thankEmail->subject);
+                            });
+                        } catch (Exception $exception) {
+                            //dd($exception);
+                            return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+                        }
+                    }
+
+                    return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
                 }
             }
             $redirect_url = $request->redirect_url;

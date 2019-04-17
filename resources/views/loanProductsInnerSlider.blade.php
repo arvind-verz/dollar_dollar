@@ -2,7 +2,7 @@
     <div class="product-row-01 pc-only clearfix slider-class">
         @php $i = 1;$featured = []; @endphp
         @foreach($sliderProducts as $product)
-            @if($product->featured==1)
+            @if($product->featured==1 && $firstTimeLoad==0)
                 @php $featured[] = $i; @endphp
                 <div class="product-col-01">
                     <div class="ps-slider--feature-product saving">
@@ -78,7 +78,7 @@
                  data-owl-nav-right="&lt;i class='fa fa-caret-right'&gt;&lt;/i&gt;">
                 @php $i = 1; @endphp
                 @foreach($sliderProducts as $product)
-                    @if($product->featured==0)
+                    @if($product->featured==0 || $firstTimeLoad==1)
                         <div class="ps-block--short-product second" data-mh="product">
                             <div class="slider-img"><img src="{{ asset($product->brand_logo) }}" alt=""></div>
                             @if(isset($searchFilter['filter']))

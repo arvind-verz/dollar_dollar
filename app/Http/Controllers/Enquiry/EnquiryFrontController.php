@@ -17,7 +17,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Http\Request;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 use App\Page;
 use App\LoanEnquiry;
@@ -150,13 +150,17 @@ class EnquiryFrontController extends Controller
     public function postContactEnquiry(Request $request)
     {
         $systemSetting = $this->systemSetting;
+        $logo = null;
+        if ($systemSetting) {
+            $logo = $systemSetting->logo;
+        }
         $ads = $this->ads;
         //check validation
         $fields = [
 
             'subject' => 'required|max:255',
             'message' => 'required|max:3500',
-            //'g-recaptcha-response' => 'required|captcha'
+            'g-recaptcha-response' => 'required|captcha'
         ];
         $validator = Validator::make($request->all(), $fields);
         if (!$request->full_name) {
@@ -176,15 +180,8 @@ class EnquiryFrontController extends Controller
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
-        $data = $request->all();
-        $data['sender_email'] = $systemSetting->auto_email;
-        $data['sender_name'] = $systemSetting->email_sender_name;
-        $data['ad'] = null;
-        $data['ad_link'] = null;
-        if($ads){
-            $data['ad'] = $ads->ad;
-            $data['ad_link'] = $ads->ad_link;
-        }
+
+
 
         $contactEnquiry = new ContactEnquiry();
 
@@ -195,29 +192,83 @@ class EnquiryFrontController extends Controller
         $contactEnquiry->subject = $request->subject;
         $contactEnquiry->message = $request->message;
         $contactEnquiry->save();
+        $emailTemplate = EmailTemplate::find(CONTACT_ENQUIRY_ID);
+        if ($emailTemplate) {
+            $emailTemplate->auto_email = $systemSetting->auto_email;
+            $emailTemplate->email_sender_name = $systemSetting->email_sender_name;
+            $emailTemplate->admin_email = $systemSetting->admin_email;
+            $emailTemplate->email = $request->email;
+            $ad = null;
+            $adLink = null;
+            if($ads){
+                $ad = $ads->ad;
+                $adLink = $ads->ad_link;
+            }
+            $data1 = [];
+            $data2 = [];
+            $data1['{{full_name}}'] = $request->full_name;
+            $data2['{{full_name}}'] = $request->full_name;
+            $data1['{{email}}'] = $request->email;
+            $data1['{{country_code}}'] = $request->country_code;
+            $data1['{{telephone}}'] = $request->telephone;
+            $data1['{{subject}}'] = $request->subject;
+            $data1['{{message}}'] = $request->message;
 
-        try {
-            Mail::to($systemSetting->admin_email)->send(new ContactEnquiryMail($data));
-            Mail::to($request->email)->send(new ThankYou($data));
-        } catch (Exception $exception) {
-            //dd($exception);
-            return redirect(url('contact'))->with('error', 'Oops! Something wrong please try after sometime.');
+            if ($logo) {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'> <img src='.asset($logo).'> </a>';
+            } else {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'>'.config('app.name').'</a>';
+            }
+            $data2['{{ad}}'] = "<a href=".$adLink."><img style='max-width: 570px;' src=".asset($ad)."></a>";
+            $key1 = array_keys($data1);
+            $value1 = array_values($data1);
+            $newContent1 = \Helper::replaceStrByValue($key1, $value1, $emailTemplate->contents);
+
+            try {
+                Mail::send('frontend.emails.reminder', ['content' => $newContent1], function ($message) use ($emailTemplate) {
+                    $message->from($emailTemplate->auto_email, $emailTemplate->email_sender_name);
+                    $message->to($emailTemplate->admin_email)->subject($emailTemplate->subject);
+                });
+
+            } catch (Exception $exception) {
+                return redirect(url('contact'))->with('error', 'Oops! Something wrong please try after sometime.');
+            }
+            $thankEmail = EmailTemplate::find(THANK_YOU_MAIL_ID);
+            if($thankEmail){
+                $key2 = array_keys($data2);
+                $value2 = array_values($data2);
+                $newContent2 = \Helper::replaceStrByValue($key2, $value2, $thankEmail->contents);
+                $thankEmail->auto_email = $systemSetting->auto_email;
+                $thankEmail->email_sender_name = $systemSetting->email_sender_name;
+                $thankEmail->admin_email = $systemSetting->admin_email;
+                $thankEmail->email = $request->email;
+
+                try {
+                    Mail::send('frontend.emails.reminder', ['content' => $newContent2], function ($message) use ($thankEmail) {
+                        $message->from($thankEmail->auto_email, $thankEmail->email_sender_name);
+                        $message->to($thankEmail->email)->subject($thankEmail->subject);
+                    });
+                } catch (Exception $exception) {
+                    //dd($exception);
+                    return redirect(url('contact'))->with('error', 'Oops! Something wrong please try after sometime.');
+                }
+            }
+
+            return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
         }
-        return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+        return redirect(url('contact'))->with('error', 'Oops! Something wrong please try after sometime.');
+
     }
 
     public function postHealthEnquiry(Request $request)
     {
         $systemSetting = $this->systemSetting;
-        $ads = $this->ads;
-
-        // dd($request->all());
         //check validation
         $fields = [
             'coverage' => 'required|max:255',
             'level' => 'required|max:255',
             'time' => 'required|max:255',
-            //'g-recaptcha-response' => 'required|captcha'
+            'g-recaptcha-response' => 'required|captcha'
         ];
 
         if (isset($request->time)) {
@@ -248,15 +299,7 @@ class EnquiryFrontController extends Controller
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
-        $data = $request->all();
-        $data['sender_email'] = $systemSetting->auto_email;
-        $data['sender_name'] = $systemSetting->email_sender_name;
-        $data['ad'] = null;
-        $data['ad_link'] = null;
-        if($ads){
-            $data['ad'] = $ads->ad;
-            $data['ad_link'] = $ads->ad_link;
-        }
+
         $healthInsuranceEnquiry = new HealthInsuranceEnquiry();
 
         $healthInsuranceEnquiry->coverage = $request->coverage;
@@ -284,14 +327,81 @@ class EnquiryFrontController extends Controller
             $user->save();
         }
 
-        try {
-            Mail::to(WEALTH_EMAIL)->send(new HealthEnquiryMail($data));
-            Mail::to($request->email)->send(new ThankYou($data));
-        } catch (Exception $exception) {
-            //dd($exception);
-            return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+        $emailTemplate = EmailTemplate::find(HEALTH_ENQUIRY_MAIL_ID);
+        if ($emailTemplate) {
+            $emailTemplate->auto_email = $systemSetting->auto_email;
+            $emailTemplate->email_sender_name = $systemSetting->email_sender_name;
+            $emailTemplate->admin_email = $systemSetting->admin_email;
+            $emailTemplate->email = $request->email;
+            $systemSetting = $this->systemSetting;
+            $logo = null;
+            if ($systemSetting) {
+                $logo = $systemSetting->logo;
+            }
+            $ads = $this->ads;
+            $ad = null;
+            $adLink = null;
+            if($ads){
+                $ad = $ads->ad;
+                $adLink = $ads->ad_link;
+            }
+            $data1 = [];
+            $data2 = [];
+            $data2['{{full_name}}']=$data1['{{full_name}}'] = $request->full_name;
+            $data1['{{email}}'] = $request->email;
+            $data1['{{country_code}}'] = $request->country_code;
+            $data1['{{telephone}}'] = $request->telephone;
+            $data1['{{subject}}'] = $request->subject;
+            $data1['{{message}}'] = $request->message;
+            $data1['{{coverage}}'] = $request->coverage;
+            $data1['{{level}}'] = $request->level;
+            $data1['{{health_condition}}'] = $request->health_condition;
+            $data1['{{time}}'] = implode(', ',$times);
+            $data1['{{other_value}}'] = $request->other_value?$request->other_value:'-';
+
+            if ($logo) {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'> <img src='.asset($logo).'> </a>';
+            } else {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'>'.config('app.name').'</a>';
+            }
+            $data2['{{ad}}'] = "<a href=".$adLink."><img style='max-width: 570px;' src=".asset($ad)."></a>";
+            $key1 = array_keys($data1);
+            $value1 = array_values($data1);
+            $newContent1 = \Helper::replaceStrByValue($key1, $value1, $emailTemplate->contents);
+
+            try {
+                Mail::send('frontend.emails.reminder', ['content' => $newContent1], function ($message) use ($emailTemplate) {
+                    $message->from($emailTemplate->auto_email, $emailTemplate->email_sender_name);
+                    $message->to(WEALTH_EMAIL)->subject($emailTemplate->subject);
+                });
+
+            } catch (Exception $exception) {
+                return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+            }
+            $thankEmail = EmailTemplate::find(THANK_YOU_MAIL_ID);
+            if($thankEmail){
+                $key2 = array_keys($data2);
+                $value2 = array_values($data2);
+                $newContent2 = \Helper::replaceStrByValue($key2, $value2, $thankEmail->contents);
+                $thankEmail->auto_email = $systemSetting->auto_email;
+                $thankEmail->email_sender_name = $systemSetting->email_sender_name;
+                $thankEmail->admin_email = $systemSetting->admin_email;
+                $thankEmail->email = $request->email;
+
+                try {
+                    Mail::send('frontend.emails.reminder', ['content' => $newContent2], function ($message) use ($thankEmail) {
+                        $message->from($thankEmail->auto_email, $thankEmail->email_sender_name);
+                        $message->to($thankEmail->email)->subject($thankEmail->subject);
+                    });
+                } catch (Exception $exception) {
+                    //dd($exception);
+                    return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+                }
+            }
+
+            return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
         }
-        return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+        return redirect(url(HEALTH_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
     }
 
     public function postLifeEnquiry(Request $request)
@@ -307,7 +417,7 @@ class EnquiryFrontController extends Controller
             'dob' => 'required|max:255',
             'smoke' => 'required|max:255',
             'time' => 'required',
-            //'g-recaptcha-response' => 'required|captcha'
+            'g-recaptcha-response' => 'required|captcha'
         ];
 
         if (isset($request->time)) {
@@ -333,15 +443,7 @@ class EnquiryFrontController extends Controller
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
-        $data = $request->all();
-        $data['sender_email'] = $systemSetting->auto_email;
-        $data['sender_name'] = $systemSetting->email_sender_name;
-        $data['ad'] = null;
-        $data['ad_link'] = null;
-        if($ads){
-            $data['ad'] = $ads->ad;
-            $data['ad_link'] = $ads->ad_link;
-        }
+
 
         $lifeInsuranceEnquiry = new LifeInsuranceEnquiry();
         $components = [];
@@ -374,14 +476,81 @@ class EnquiryFrontController extends Controller
             $user->save();
         }
 
-        try {
-            Mail::to(WEALTH_EMAIL)->send(new LifeEnquiryMail($data));
-            Mail::to($request->email)->send(new ThankYou($data));
-        } catch (Exception $exception) {
+        $emailTemplate = EmailTemplate::find(LIFE_ENQUIRY_MAIL_ID);
+        if ($emailTemplate) {
+            $emailTemplate->auto_email = $systemSetting->auto_email;
+            $emailTemplate->email_sender_name = $systemSetting->email_sender_name;
+            $emailTemplate->admin_email = $systemSetting->admin_email;
+            $emailTemplate->email = $request->email;
+            $systemSetting = $this->systemSetting;
+            $logo = null;
+            if ($systemSetting) {
+                $logo = $systemSetting->logo;
+            }
+            $ads = $this->ads;
+            $ad = null;
+            $adLink = null;
+            if($ads){
+                $ad = $ads->ad;
+                $adLink = $ads->ad_link;
+            }
+            $data1 = [];
+            $data2 = [];
+            $data2['{{full_name}}']=$data1['{{full_name}}'] = $request->full_name;
+            $data1['{{email}}'] = $request->email;
+            $data1['{{country_code}}'] = $request->country_code;
+            $data1['{{telephone}}'] = $request->telephone;
+            $data1['{{components}}'] = implode(', ',$components);
+            $data1['{{gender}}'] = $request->gender;
+            $data1['{{dob}}'] = date("Y-m-d", strtotime($request->dob));
+            $data1['{{smoke}}'] = $request->smoke;
+            $data1['{{time}}'] = implode(', ',$times);
+            $data1['{{other_value}}'] = $request->other_value?$request->other_value:'-';
 
-            return redirect(url(LIFE_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+            if ($logo) {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'> <img src='.asset($logo).'> </a>';
+            } else {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'>'.config('app.name').'</a>';
+            }
+            $data2['{{ad}}'] = "<a href=".$adLink."><img style='max-width: 570px;' src=".asset($ad)."></a>";
+            $key1 = array_keys($data1);
+            $value1 = array_values($data1);
+            $newContent1 = \Helper::replaceStrByValue($key1, $value1, $emailTemplate->contents);
+
+            try {
+                Mail::send('frontend.emails.reminder', ['content' => $newContent1], function ($message) use ($emailTemplate) {
+                    $message->from($emailTemplate->auto_email, $emailTemplate->email_sender_name);
+                    $message->to(WEALTH_EMAIL)->subject($emailTemplate->subject);
+                });
+
+            } catch (Exception $exception) {
+                return redirect(url(LIFE_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+            }
+            $thankEmail = EmailTemplate::find(THANK_YOU_MAIL_ID);
+            if($thankEmail){
+                $key2 = array_keys($data2);
+                $value2 = array_values($data2);
+                $newContent2 = \Helper::replaceStrByValue($key2, $value2, $thankEmail->contents);
+                $thankEmail->auto_email = $systemSetting->auto_email;
+                $thankEmail->email_sender_name = $systemSetting->email_sender_name;
+                $thankEmail->admin_email = $systemSetting->admin_email;
+                $thankEmail->email = $request->email;
+
+                try {
+                    Mail::send('frontend.emails.reminder', ['content' => $newContent2], function ($message) use ($thankEmail) {
+                        $message->from($thankEmail->auto_email, $thankEmail->email_sender_name);
+                        $message->to($thankEmail->email)->subject($thankEmail->subject);
+                    });
+                } catch (Exception $exception) {
+                    //dd($exception);
+                    return redirect(url(LIFE_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+                }
+            }
+
+            return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
         }
-        return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+        return redirect(url(LIFE_INSURANCE_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+
     }
 
     public function investmentEnquiry(Request $request)
@@ -396,7 +565,7 @@ class EnquiryFrontController extends Controller
             'risks' => 'required',
             'age' => 'required',
             'time' => 'required',
-            //'g-recaptcha-response' => 'required|captcha'
+            'g-recaptcha-response' => 'required|captcha'
         ];
         if (isset($request->experience)) {
             if ($request->experience == YES) {
@@ -433,15 +602,7 @@ class EnquiryFrontController extends Controller
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
-        $data = $request->all();
-        $data['sender_email'] = $systemSetting->auto_email;
-        $data['sender_name'] = $systemSetting->email_sender_name;
-        $data['ad'] = null;
-        $data['ad_link'] = null;
-        if($ads){
-            $data['ad'] = $ads->ad;
-            $data['ad_link'] = $ads->ad_link;
-        }
+
 
         $investmentEnquiry = new InvestmentEnquiry();
         $goals = [];
@@ -480,14 +641,83 @@ class EnquiryFrontController extends Controller
             $user->save();
         }
 
-        try {
-            Mail::to(WEALTH_EMAIL)->send(new InvestmentEnquiryMail($data));
-            Mail::to($request->email)->send(new ThankYou($data));
-        } catch (Exception $exception) {
+        $emailTemplate = EmailTemplate::find(INVESTMENT_ENQUIRY_MAIL_ID);
+        if ($emailTemplate) {
+            $emailTemplate->auto_email = $systemSetting->auto_email;
+            $emailTemplate->email_sender_name = $systemSetting->email_sender_name;
+            $emailTemplate->admin_email = $systemSetting->admin_email;
+            $emailTemplate->email = $request->email;
+            $systemSetting = $this->systemSetting;
+            $logo = null;
+            if ($systemSetting) {
+                $logo = $systemSetting->logo;
+            }
+            $ads = $this->ads;
+            $ad = null;
+            $adLink = null;
+            if($ads){
+                $ad = $ads->ad;
+                $adLink = $ads->ad_link;
+            }
+            $data1 = [];
+            $data2 = [];
+            $data2['{{full_name}}']=$data1['{{full_name}}'] = $request->full_name;
+            $data1['{{email}}'] = $request->email;
+            $data1['{{country_code}}'] = $request->country_code;
+            $data1['{{telephone}}'] = $request->telephone;
+            $data1['{{goals}}'] = implode(', ',$goals);
+            $data1['{{goal_other_value}}'] = $request->other_value?$request->goal_other_value:'-';
+            $data1['{{risks}}'] = implode(', ',$risks);
+            $data1['{{experience}}'] = $request->experience;
+            $data1['{{experience_detail}}'] = $request->experience_detail;
+            $data1['{{age}}'] = $request->age;
+            $data1['{{time}}'] = implode(', ',$times);
+            $data1['{{other_value}}'] = $request->other_value?$request->other_value:'-';
 
-            return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+            if ($logo) {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'> <img src='.asset($logo).'> </a>';
+            } else {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'>'.config('app.name').'</a>';
+            }
+            $data2['{{ad}}'] = "<a href=".$adLink."><img style='max-width: 570px;' src=".asset($ad)."></a>";
+            $key1 = array_keys($data1);
+            $value1 = array_values($data1);
+            $newContent1 = \Helper::replaceStrByValue($key1, $value1, $emailTemplate->contents);
+
+            try {
+                Mail::send('frontend.emails.reminder', ['content' => $newContent1], function ($message) use ($emailTemplate) {
+                    $message->from($emailTemplate->auto_email, $emailTemplate->email_sender_name);
+                    $message->to(WEALTH_EMAIL)->subject($emailTemplate->subject);
+                });
+
+            } catch (Exception $exception) {
+                return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+            }
+            $thankEmail = EmailTemplate::find(THANK_YOU_MAIL_ID);
+            if($thankEmail){
+                $key2 = array_keys($data2);
+                $value2 = array_values($data2);
+                $newContent2 = \Helper::replaceStrByValue($key2, $value2, $thankEmail->contents);
+                $thankEmail->auto_email = $systemSetting->auto_email;
+                $thankEmail->email_sender_name = $systemSetting->email_sender_name;
+                $thankEmail->admin_email = $systemSetting->admin_email;
+                $thankEmail->email = $request->email;
+
+                try {
+                    Mail::send('frontend.emails.reminder', ['content' => $newContent2], function ($message) use ($thankEmail) {
+                        $message->from($thankEmail->auto_email, $thankEmail->email_sender_name);
+                        $message->to($thankEmail->email)->subject($thankEmail->subject);
+                    });
+                } catch (Exception $exception) {
+                    //dd($exception);
+                    return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+                }
+            }
+
+            return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
         }
-        return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+        return redirect(url(INVESTMENT_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+
     }
 
     public function loanEnquiry(Request $request)
@@ -515,7 +745,7 @@ class EnquiryFrontController extends Controller
         $systemSetting = $this->systemSetting;
         $ads = $this->ads;
         //check validation
-        $fields = [] ; //'g-recaptcha-response' => 'required|captcha'];
+        $fields = ['g-recaptcha-response' => 'required|captcha'] ;
 
         $validator = Validator::make($request->all(), $fields);
         if (!$request->full_name) {
@@ -549,16 +779,6 @@ class EnquiryFrontController extends Controller
         if ($validator->getMessageBag()->count()) {
             return back()->withInput()->withErrors($validator->errors());
         }
-        $data = $request->all();
-        $data['sender_email'] = $systemSetting->auto_email;
-        $data['sender_name'] = $systemSetting->email_sender_name;
-        $data['ad'] = null;
-        $data['ad_link'] = null;
-        if($ads){
-            $data['ad'] = $ads->ad;
-            $data['ad_link'] = $ads->ad_link;
-        }
-
         $loanEnquiry = new LoanEnquiry();
         $productIds = [];
         if (!empty($request->product_ids)) {
@@ -594,14 +814,80 @@ class EnquiryFrontController extends Controller
             }
         }
 
-        try {
-            Mail::to(HOME_LOAN_EMAIL)->send(new LoanEnquiryMail($data));
-            Mail::to($request->email)->send(new ThankYou($data));
-        } catch (Exception $exception) {
-            //dd($exception);
-            return redirect(url(LOAN_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+        $emailTemplate = EmailTemplate::find(LOAN_ENQUIRY_MAIL_ID);
+        if ($emailTemplate) {
+            $emailTemplate->auto_email = $systemSetting->auto_email;
+            $emailTemplate->email_sender_name = $systemSetting->email_sender_name;
+            $emailTemplate->admin_email = $systemSetting->admin_email;
+            $emailTemplate->email = $request->email;
+            $systemSetting = $this->systemSetting;
+            $logo = null;
+            if ($systemSetting) {
+                $logo = $systemSetting->logo;
+            }
+            $ads = $this->ads;
+            $ad = null;
+            $adLink = null;
+            if($ads){
+                $ad = $ads->ad;
+                $adLink = $ads->ad_link;
+            }
+            $data1 = [];
+            $data2 = [];
+            $data2['{{full_name}}']=$data1['{{full_name}}'] = $request->full_name;
+            $data1['{{email}}'] = $request->email;
+            $data1['{{country_code}}'] = $request->country_code;
+            $data1['{{telephone}}'] = $request->telephone;
+            $data1['{{product_names}}'] = implode(', ',$productNames);
+            $data1['{{rate_type_search}}'] = $request->rate_type_search?$request->rate_type_search:'-';
+            $data1['{{loan_amount}}'] = $request->loan_amount?$request->loan_amount:'-';
+            $data1['{{loan_type}}'] = $request->loan_type?$request->loan_type:'-';
+            $data1['{{existing_bank_loan}}'] = isset($request->existing_bank_loan) ? $request->existing_bank_loan :'-';
+
+            if ($logo) {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'> <img src='.asset($logo).'> </a>';
+            } else {
+                $data1['{{logo}}']=$data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href='.url("/").'>'.config('app.name').'</a>';
+            }
+            $data2['{{ad}}'] = "<a href=".$adLink."><img style='max-width: 570px;' src=".asset($ad)."></a>";
+            $key1 = array_keys($data1);
+            $value1 = array_values($data1);
+            $newContent1 = \Helper::replaceStrByValue($key1, $value1, $emailTemplate->contents);
+
+            try {
+                Mail::send('frontend.emails.reminder', ['content' => $newContent1], function ($message) use ($emailTemplate) {
+                    $message->from($emailTemplate->auto_email, $emailTemplate->email_sender_name);
+                    $message->to(HOME_LOAN_EMAIL)->subject($emailTemplate->subject);
+                });
+
+            } catch (Exception $exception) {
+                return redirect(url(LOAN_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+            }
+            $thankEmail = EmailTemplate::find(THANK_YOU_MAIL_ID);
+            if($thankEmail){
+                $key2 = array_keys($data2);
+                $value2 = array_values($data2);
+                $newContent2 = \Helper::replaceStrByValue($key2, $value2, $thankEmail->contents);
+                $thankEmail->auto_email = $systemSetting->auto_email;
+                $thankEmail->email_sender_name = $systemSetting->email_sender_name;
+                $thankEmail->admin_email = $systemSetting->admin_email;
+                $thankEmail->email = $request->email;
+
+                try {
+                    Mail::send('frontend.emails.reminder', ['content' => $newContent2], function ($message) use ($thankEmail) {
+                        $message->from($thankEmail->auto_email, $thankEmail->email_sender_name);
+                        $message->to($thankEmail->email)->subject($thankEmail->subject);
+                    });
+                } catch (Exception $exception) {
+                    //dd($exception);
+                    return redirect(url(LOAN_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+                }
+            }
+
+            return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
         }
-        return redirect(url('thank'))->with('success', 'Your inquiry has been sent to the respective team.');
+        return redirect(url(LOAN_ENQUIRY))->with('error', 'Oops! Something wrong please try after sometime.');
+
     }
 
     public function testMail(Request $request)

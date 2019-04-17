@@ -1,0 +1,3 @@
+.ps-table--product thead tr th, td {
+    border: double !important;
+}

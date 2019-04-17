@@ -45,6 +45,7 @@
                                             <tr>
                                                 <th>Action</th>
                                                 <th>Email Template</th>
+                                                <th>Subject</th>
                                                 <th>Status</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
@@ -73,8 +74,12 @@
 
 
                                                         </td>
+
                                                         <td>
                                                             {{$emailTemplate->title}}
+                                                        </td>
+                                                        <td>
+                                                            {{$emailTemplate->subject}}
                                                         </td>
                                                         <td>
                                                             @if($emailTemplate->status==1)

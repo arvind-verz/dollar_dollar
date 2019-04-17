@@ -75,7 +75,7 @@ class TagController extends Controller
             try {
 
                 Tag::insert(
-                    ['title' => $value, 'status' => $request->status, 'created_by' => Auth::user()->id, 'created_at' => Carbon::now()->toDateTimeString()]
+                    ['title' => $value, 'status' => $request->status, 'created_by' => Auth::user()->id, 'created_at' => Carbon::now()->toDateTimeString(),'updated_at' => Carbon::now()->toDateTimeString()]
                 );
             } catch (\Exception $exception) {
                 return redirect()->back()->with('error', OPPS_ALERT);

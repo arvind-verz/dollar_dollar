@@ -18,6 +18,7 @@ use App\Mail\ForgotPassword;
 use App\AdsManagement;
 use App\SystemSetting;
 use App\Mail\ResetNewPassword;
+use App\EmailTemplate;
 
 
 class UserFrontController extends Controller
@@ -27,7 +28,7 @@ class UserFrontController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['logout', 'getLoginStatus', 'postContactUs','postResetNewPassword', 'postForgotPassword', 'postForgotPasswordReset', 'postResetPassword']]);
+        $this->middleware('auth', ['except' => ['logout', 'getLoginStatus', 'postContactUs', 'postResetNewPassword', 'postForgotPassword', 'postForgotPasswordReset', 'postResetPassword']]);
         $systemSetting = \Helper::getSystemSetting();
         if (!$systemSetting) {
             $systemSetting = new SystemSetting();
@@ -267,46 +268,70 @@ class UserFrontController extends Controller
         } else {
             $ads = collect([]);
             $adsCollection = AdsManagement::where('delete_status', 0)
-                        ->where('display', 1)
-                        ->where('page', 'email')
-                        ->inRandomOrder()
-                        ->get();
-                    
-                    if ($adsCollection->count()) {
-                        $ads = \Helper::manageAds($adsCollection);
-                    }
-        $current_time = strtotime(date('Y-m-d', strtotime('now')));
-        $ad_start_date = strtotime($ads->ad_start_date);
-        $ad_end_date = strtotime($ads->ad_end_date);
-        
+                ->where('display', 1)
+                ->where('page', 'email')
+                ->inRandomOrder()
+                ->get();
 
-        if($ads->paid_ads_status==1 && $current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads->paid_ad_image)) {
-            $ad = $ads->paid_ad_image;
-             $adLink = $ads->paid_ad_link;
+            if ($adsCollection->count()) {
+                $ads = \Helper::manageAds($adsCollection);
+            }
+            $current_time = strtotime(date('Y-m-d', strtotime('now')));
+            $ad_start_date = strtotime($ads->ad_start_date);
+            $ad_end_date = strtotime($ads->ad_end_date);
 
-        }else {
-            $ad = $ads->ad_image;
-            $adLink = $ads->ad_link;
-        }
+
+            if ($ads->paid_ads_status == 1 && $current_time >= $ad_start_date && $current_time <= $ad_end_date && !empty($ads->paid_ad_image)) {
+                $ad = $ads->paid_ad_image;
+                $adLink = $ads->paid_ad_link;
+
+            } else {
+                $ad = $ads->ad_image;
+                $adLink = $ads->ad_link;
+            }
             DB::table('password_resets')->insert(['email' => $user->email, 'token' => str_random(80), 'created_at' => Carbon::now()->toDateTimeString()]);
             $pw_reset = DB::table('password_resets')->where('email', $user->email)->first();
             $token = \Helper::base64_encode($pw_reset->token);
             $url = url('/') . '/password-reset/' . $token;
             $contactUrl = url('/') . '/contact';
 
-            $data = ['ad_link'=>$adLink,'ad'=> $ad,'first_name' => $user->first_name, 'last_name' => $user->last_name, 'url' => $url, 'contact_url' => $contactUrl];
-            $data['sender_email'] = $systemSetting->auto_email;
-            $data['sender_name'] = $systemSetting->email_sender_name;
-            try {
-                Mail::to($user->email)->send(new ForgotPassword($data));
-            } catch (Exception $exception) {
-                //dd($exception);
-                return redirect()->back()->with('error', 'Oops! Something wrong please try after sometime.');
+            $data1 = ['{{ad_link}}' => $adLink,'{{first_name}}' => $user->first_name, '{{last_name}}' => $user->last_name, '{{url}}' => $url];
+            $emailTemplate = EmailTemplate::find(FORGOT_LOGIN_MAIL_ID);
+            if ($emailTemplate) {
+                $emailTemplate->auto_email = $systemSetting->auto_email;
+                $emailTemplate->email_sender_name = $systemSetting->email_sender_name;
+                $emailTemplate->admin_email = $systemSetting->admin_email;
+                $emailTemplate->email = $request->email;
+                $systemSetting = $this->systemSetting;
+                $logo = null;
+                if ($systemSetting) {
+                    $logo = $systemSetting->logo;
+                }
+                if ($logo) {
+                    $data1['{{logo}}'] = $data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href=' . url("/") . '> <img src=' . asset($logo) . '> </a>';
+                } else {
+                    $data1['{{logo}}'] = $data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href=' . url("/") . '>' . config('app.name') . '</a>';
+                }
+                $data1['{{ad}}'] = "<a href=" . $adLink . "><img style='max-width: 570px;' src=" . asset($ad) . "></a>";
+                $key1 = array_keys($data1);
+                $value1 = array_values($data1);
+                $newContent1 = \Helper::replaceStrByValue($key1, $value1, $emailTemplate->contents);
+                try {
+                    Mail::send('frontend.emails.reminder', ['content' => $newContent1], function ($message) use ($emailTemplate) {
+                        $message->from($emailTemplate->auto_email, $emailTemplate->email_sender_name);
+                        $message->to($emailTemplate->email)->subject($emailTemplate->subject);
+                    });
+
+                } catch (Exception $exception) {
+                    return redirect()->back()->with('error', 'Oops! Something wrong please try after sometime.');
+                }
+
             }
 
             return redirect()->back()->with(['status' => 'We have sent password reset link to your mail', 'form' => 'forgot']);
         }
     }
+
     public function postResetNewPassword(Request $request)
     {
         $systemSetting = $this->systemSetting;
@@ -338,11 +363,11 @@ class UserFrontController extends Controller
             $ad_end_date = strtotime($ads->ad_end_date);
 
 
-            if($ads->paid_ads_status==1 && $current_time>=$ad_start_date && $current_time<=$ad_end_date && !empty($ads->paid_ad_image)) {
+            if ($ads->paid_ads_status == 1 && $current_time >= $ad_start_date && $current_time <= $ad_end_date && !empty($ads->paid_ad_image)) {
                 $ad = $ads->paid_ad_image;
                 $adLink = $ads->paid_ad_link;
 
-            }else {
+            } else {
                 $ad = $ads->ad_image;
                 $adLink = $ads->ad_link;
             }
@@ -352,16 +377,38 @@ class UserFrontController extends Controller
             $url = url('/') . '/password-reset/' . $token;
             $contactUrl = url('/') . '/contact';
 
-            $data = ['ad_link'=>$adLink,'ad'=> $ad,'first_name' => $user->first_name, 'last_name' => $user->last_name, 'url' => $url, 'contact_url' => $contactUrl];
-            $data['sender_email'] = $systemSetting->auto_email;
-            $data['sender_name'] = $systemSetting->email_sender_name;
-            try {
-                Mail::to($user->email)->send(new ResetNewPassword($data));
-            } catch (Exception $exception) {
-                //dd($exception);
-                return redirect()->back()->with('error', 'Oops! Something wrong please try after sometime.');
-            }
+            $data1 = ['{{ad_link}}' => $adLink,'{{first_name}}' => $user->first_name, '{{last_name}}' => $user->last_name, '{{url}}' => $url];
+            $emailTemplate = EmailTemplate::find(RESET_LOGIN_MAIL_ID);
+            if ($emailTemplate) {
+                $emailTemplate->auto_email = $systemSetting->auto_email;
+                $emailTemplate->email_sender_name = $systemSetting->email_sender_name;
+                $emailTemplate->admin_email = $systemSetting->admin_email;
+                $emailTemplate->email = $request->email;
+                $systemSetting = $this->systemSetting;
+                $logo = null;
+                if ($systemSetting) {
+                    $logo = $systemSetting->logo;
+                }
+                if ($logo) {
+                    $data1['{{logo}}'] = $data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href=' . url("/") . '> <img src=' . asset($logo) . '> </a>';
+                } else {
+                    $data1['{{logo}}'] = $data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href=' . url("/") . '>' . config('app.name') . '</a>';
+                }
+                $data1['{{ad}}'] = "<a href=" . $adLink . "><img style='max-width: 570px;' src=" . asset($ad) . "></a>";
+                $key1 = array_keys($data1);
+                $value1 = array_values($data1);
+                $newContent1 = \Helper::replaceStrByValue($key1, $value1, $emailTemplate->contents);
+                try {
+                    Mail::send('frontend.emails.reminder', ['content' => $newContent1], function ($message) use ($emailTemplate) {
+                        $message->from($emailTemplate->auto_email, $emailTemplate->email_sender_name);
+                        $message->to($emailTemplate->email)->subject($emailTemplate->subject);
+                    });
 
+                } catch (Exception $exception) {
+                    return redirect()->back()->with('error', 'Oops! Something wrong please try after sometime.');
+                }
+
+            }
             return redirect()->back()->with(['status' => 'We have sent password reset link to your mail', 'form' => 'forgot']);
         }
     }

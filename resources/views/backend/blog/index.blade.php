@@ -66,6 +66,7 @@
                                                 <th>Status</th>
                                                 <th>Ads Status</th>
                                                 <th>Category</th>
+                                                <th>Posted By</th>
                                                 <th>Slug</th>
                                                 <th>Created on</th>
                                                 <th>Updated on</th>
@@ -115,6 +116,9 @@
                                                         </td>
                                                         <td>
                                                             {{ $page->menu_title }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $page->posted_by }}
                                                         </td>
                                                         <td>
                                                             {{ $page->slug }}

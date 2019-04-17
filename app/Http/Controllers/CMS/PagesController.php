@@ -263,7 +263,7 @@ class PagesController extends Controller
             $page->status = $request->status;
         }
         $page->after_login = $request->after_login;
-        $page->created_at = Carbon::now()->toDateTimeString();
+        $page->updated_at = Carbon::now()->toDateTimeString();
         $page->save();
 
         $newPage = Page::find($id);

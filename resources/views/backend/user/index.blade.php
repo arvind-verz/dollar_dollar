@@ -55,6 +55,7 @@
                                                 <th>Created on</th>
                                                 <th>Updated on by user</th>
                                                 <th>Updated on by admin</th>
+                                                <th>Updated on</th>
 
                                             </tr>
                                             </thead>
@@ -126,6 +127,13 @@
                                                                 {!! $user->updated_at_admin !!}
                                                             @else
                                                                 {!!  date("Y-m-d H:i", strtotime($user->updated_at_admin))   !!}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if($user->updated_at==null)
+                                                                {!! $user->updated_at !!}
+                                                            @else
+                                                                {!!  date("Y-m-d H:i", strtotime($user->updated_at))   !!}
                                                             @endif
                                                         </td>
 

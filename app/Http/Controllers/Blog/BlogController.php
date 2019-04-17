@@ -71,12 +71,16 @@ class BlogController extends Controller
                 ->get();
         }
 
-
+        $authors = Page::select('posted_by')
+            ->where('delete_status', 0)
+            ->whereNotNull('posted_by')
+            ->groupBy('posted_by')
+            ->get();
         $tags = Tag::where('status', 1)
             ->where('delete_status', 0)
             ->get();
 
-        return view("backend.blog.create", compact("menus", "tags", "filterCategory"));
+        return view("backend.blog.create", compact("menus", "tags",'authors', "filterCategory"));
     }
 
     /**
@@ -92,6 +96,7 @@ class BlogController extends Controller
             'name' => 'required',
             'contents' => 'required',
             'title' => 'required',
+            'posted_by' => 'required',
         ];
         //dd($request->all());
 
@@ -216,7 +221,12 @@ class BlogController extends Controller
     {
         $filterCategory = $request->filter_category ? $request->filter_category : "all";
         $page = Page::find($id);
-
+        $authors = Page::select('posted_by')
+            ->where('delete_status', 0)
+            ->whereNotNull('posted_by')
+            ->groupBy('posted_by')
+            ->get();
+        //dd($authors);
         if (!$page) {
             return redirect()->action('Blog\BlogController@index')->with('error', OPPS_ALERT);
         }
@@ -242,7 +252,7 @@ class BlogController extends Controller
             ->where('delete_status', 0)
             ->get();
 
-        return view("backend.blog.edit", compact("menus", "page", "tags", "filterCategory"));
+        return view("backend.blog.edit", compact("menus", "page", "tags",'authors', "filterCategory"));
     }
 
     /**
@@ -263,6 +273,7 @@ class BlogController extends Controller
         $validatorFields = [
             'name' => 'required',
             'title' => 'required',
+            'posted_by' => 'required'
         ];
 
         if ($page->is_dynamic == 0) {

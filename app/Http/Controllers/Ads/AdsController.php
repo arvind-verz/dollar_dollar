@@ -372,7 +372,7 @@ class AdsController extends Controller
         $ads->horizontal_paid_ad_link = $request->horizontal_paid_ad_link;
         $ads->display = $request->display;
         $ads->paid_ads_status = $paidAddStatus;
-        $ads->created_at = Carbon::now()->toDateTimeString();
+        $ads->updated_at = Carbon::now()->toDateTimeString();
         $ads->save();
         $newAds = AdsManagement::find($id);
 //store activity log

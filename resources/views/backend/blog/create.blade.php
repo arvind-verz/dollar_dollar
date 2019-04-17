@@ -89,9 +89,16 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Posted By</label>
+                                        <datalist id="authors">
+                                            <?php
+                                                if($authors->count()){
+                                            foreach ($authors as $author) { ?>
+                                            <option value="<?php echo  $author->posted_by; ?>">
+                                            <?php } }?>
 
+                                        </datalist>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="posted_by" value="">
+                                            <input type="text" data-required='true' class="form-control" list="authors" name="posted_by" value="{{old('posted_by')}}">
                                         </div>
                                     </div>
                                     <div class="form-group">

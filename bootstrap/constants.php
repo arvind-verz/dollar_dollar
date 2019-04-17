@@ -369,7 +369,19 @@ define('FRONT_USER', 'User');
 define('YOU', 'You');
 
 //Email template Id
-define('CONTACT_ENQUIRY_TEMP_ID', 1);
+define('CONTACT_ENQUIRY_ID', 1);
+define('THANK_YOU_MAIL_ID', 2);
+define('HEALTH_ENQUIRY_MAIL_ID', 3);
+define('LIFE_ENQUIRY_MAIL_ID', 4);
+define('INVESTMENT_ENQUIRY_MAIL_ID', 5);
+define('LOAN_ENQUIRY_MAIL_ID', 6);
+define('NEW_USER_NOTIFY_MAIL_ID', 7);
+define('NEW_USER_WELCOME_MAIL_ID', 8);
+define('PROFILE_UPDATED_BY_ADMIN_MAIL_ID', 9);
+define('PRODUCT_REMINDER_MAIL_ID', 10);
+define('RESET_LOGIN_MAIL_ID', 11);
+define('UPDATE_DETAIL_NOTIFY_MAIL_ID', 12);
+define('FORGOT_LOGIN_MAIL_ID', 13);
 
 
 

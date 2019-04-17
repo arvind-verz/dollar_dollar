@@ -24,15 +24,18 @@
                     <!-- Custom Tabs -->
                     <div class="nav-tabs-custom" id="rootwizard">
                         <ul class="nav nav-tabs pull-right">
+                            <a href="#basic-detail" id="tab-3" data-toggle="tab"  class="display-none" >Other Detail</a>
+                            <a href="#formula-detail" id="tab-2" data-toggle="tab"  class="display-none">Formula Detail</a>
+                            <a href="#product-detail" id="tab-1" class="display-none" data-toggle="tab">Product
+                                Detail</a>
 
-                            <li><a href="#basic-detail" data-toggle="tab" class="pointer-disable">Other Detail</a></li>
-                            <li><a href="#formula-detail" data-toggle="tab" class="pointer-disable">Formula Detail</a>
+                            <li><a  data-href-target="#tab-3"   class="all-validation" data-index="1">Other Detail</a></li>
+                            <li><a  data-href-target="#tab-2" data-index="0"  class="all-validation">Formula Detail</a>
                             </li>
-                            <li class="active"><a href="#product-detail" data-toggle="tab" class="pointer-disable">Product
+                            <li class="active"><a data-href-target="#tab-1" data-index="2"  class="all-validation" >Product
                                     Detail</a></li>
                             <li class="pull-left header"><i class="fa fa-edit"></i>
                                 {{'Product '.EDIT_ACTION}}</li>
-
                         </ul>
                         <div class="box-body">
 
@@ -290,6 +293,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="box-footer wizard">
+                                        <a href="{{ route('promotion-products',['productTypeId'=>$product->promotion_type_id]) }}"
+                                           class="btn btn-default back"><i class="fa fa-close">
+                                            </i> Cancel</a>
+                                        <a href="javascript:;" data-href-target="#tab-2"  data-index="0"  class="all-validation btn btn-warning pull-right next">Next <i
+                                                    class="fa  fa-angle-double-right "></i></a>
+                                    </div>
                                 </div>
                                 <!-- /.tab-pane -->
 
@@ -316,6 +326,12 @@
                                             unavailable</h3>
                                     </div>
                                     @include('backend.products.formulaDetail.LoanF1')
+                                    <div class="box-footer wizard">
+                                        <a href="javascript:;" data-href-target="#tab-1"  data-index="2"  class="all-validation btn btn-warning previous"><i
+                                                    class="fa  fa-angle-double-left"></i> Previous</a>
+                                        <a href="javascript:;" data-href-target="#tab-3"  data-index="1"  class="all-validation btn btn-warning pull-right next">Next <i
+                                                    class="fa  fa-angle-double-right "></i></a>
+                                    </div>
                                 </div>
                                 <div class="tab-pane" id="basic-detail">
                                     <div class="form-group">
@@ -436,25 +452,19 @@
                                             {{Form::text('ad_horizontal_link_popup_top', isset($ads[3]->ad_link_horizontal_popup_top) ? $ads[3]->ad_link_horizontal_popup_top : '' , ['id'=>'link_ad','class' => 'form-control', 'placeholder' => ''])}}
                                         </div>
                                     </div>
+                                    <div class="box-footer wizard">
+                                        <a href="javascript:;" data-href-target="#tab-2"  data-index="0"  class="all-validation btn btn-warning previous"><i
+                                                    class="fa  fa-angle-double-left"></i> Previous</a>
+                                        <button type="submit" class=" btn btn-info pull-right finish"><i
+                                                    class="fa  fa-check"></i>
+                                            Update
+                                        </button>
+                                    </div>
                                 </div>
 
                             </div>
                             {{Form::hidden('_method','PUT')}}
                                     <!-- /.box-body -->
-                            <div class="box-footer wizard">
-                                <a href="{{ route('promotion-products',['productTypeId'=>$product->promotion_type_id]) }}"
-                                   class="btn btn-default back"><i class="fa fa-close">
-                                    </i> Cancel</a>
-                                <a href="javascript:;" class="btn btn-warning previous"><i
-                                            class="fa  fa-angle-double-left"></i> Previous</a>
-                                <a href="javascript:;" class=" btn btn-warning pull-right next">Next <i
-                                            class="fa  fa-angle-double-right "></i></a>
-                                <button type="submit" class="btn btn-info pull-right finish"><i
-                                            class="fa  fa-check"></i>
-                                    Update
-                                </button>
-                                </ul>
-                            </div>
                             <!-- /.tab-content -->
                             {!! Form::close() !!}
 

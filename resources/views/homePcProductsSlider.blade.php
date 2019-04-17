@@ -1,6 +1,6 @@
 @foreach($products as $product)
 
-    @if($product->featured==1)
+    @if($product->featured==1 && $product->product_url!=FOREIGN_CURRENCY_DEPOSIT_MODE)
 
         <?php $featured[] = $i; ?>
 

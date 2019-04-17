@@ -835,7 +835,7 @@ class PagesFrontController extends Controller
 
     public function loanMode()
     {
-        $request = [];
+        $request = ['first_time' => 1];
         return $this->loan($request);
 
     }
@@ -2689,10 +2689,9 @@ class PagesFrontController extends Controller
         } else {
             $searchFilter = $request;
         }
-        if ($currency) {
+        if ($currency && $currency != 'All') {
             $products = $products->where('currency', $currency);
         }
-
         foreach ($products as $key => &$product) {
             //dd($product);
             $defaultSearch = DefaultSearch::where('promotion_id', FOREIGN_CURRENCY_DEPOSIT)->first();
@@ -2769,7 +2768,7 @@ class PagesFrontController extends Controller
 
                                 $bonusInterestHighlight[$tenureKey] = false;
                                 if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
-                                    if ((is_null($brandId) || ($brandId == $product->bank_id)) && (is_null($currency) || ($currency == $product->currency))) {
+                                    if ((is_null($brandId) || ($brandId == $product->bank_id)) && ($currency == 'All' || ($currency == $product->currency))) {
                                         $productRange->placement_highlight = true;
                                         $productRange->placement_value = true;
                                         $status = true;
@@ -2899,7 +2898,7 @@ class PagesFrontController extends Controller
 
                     if (count($searchFilter)) {
                         if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
-                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && (is_null($currency) || ($currency == $product->currency))) {
+                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && ($currency == 'All' || ($currency == $product->currency))) {
                                 $productRange->placement_highlight = true;
                                 $productRange->placement_value = true;
                                 $status = true;
@@ -3003,7 +3002,7 @@ class PagesFrontController extends Controller
 
                     if (count($searchFilter)) {
                         if ($searchValue >= $productRange->min_range && $searchValue <= $productRange->max_range) {
-                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && (is_null($currency) || ($currency == $product->currency))) {
+                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && ($currency = 'All' || ($currency == $product->currency))) {
                                 $productRange->high_light = true;
                                 $status = true;
                             }
@@ -3083,7 +3082,7 @@ class PagesFrontController extends Controller
                     if (count($searchFilter)) {
                         if (($searchValue >= $productRange->min_range) && ($searchValue > 0)) {
 
-                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && (is_null($currency) || ($currency == $product->currency))) {
+                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && ($currency = 'All' || ($currency == $product->currency))) {
                                 $highlight = $k;
                                 $status = true;
                             }
@@ -3220,7 +3219,7 @@ class PagesFrontController extends Controller
                             } else {
                                 $placement = $searchValue;
                             }
-                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && (is_null($currency) || ($currency == $product->currency))) {
+                            if ((is_null($brandId) || ($brandId == $product->bank_id)) && ($currency = 'All' || ($currency == $product->currency))) {
                                 $product->highlight = true;
                                 $status = true;
                             }
@@ -3424,6 +3423,7 @@ class PagesFrontController extends Controller
                     $products = $results;
                 }
             }
+
             $featured = $products->where('featured', 1)->values();
             $nonFeatured = $products->where('featured', 0)->values();
             $products = $featured->merge($nonFeatured);
@@ -4516,6 +4516,7 @@ class PagesFrontController extends Controller
         $filter = isset($request['filter']) ? $request['filter'] : INTEREST;
         $pageNo = isset($request['page_no']) ? $request['page_no'] : 1;
         $type = isset($request['type']) ? $request['type'] : '';
+        $firstTimeLoad = isset($request['first_time']) ? $request['first_time'] : 0;
 
         $start_date = \Helper::startOfDayBefore();
         $end_date = \Helper::endOfDayAfter();
@@ -4569,7 +4570,7 @@ class PagesFrontController extends Controller
                     $defaultPropertyType = HDB_PROPERTY;
                     $defaultCompletion = COMPLETE;
                 }
-                if (!count($request)) {
+                if (isset($request['first_time']) && $request['first_time'] == 1) {
                     $placement = 0;
                     $searchValue = $defaultPlacement;
                     $rateType = $defaultRateType;
@@ -4810,7 +4811,7 @@ class PagesFrontController extends Controller
 
         //dd($products);
 
-        return view('frontend.products.loan', compact("productIdsPerPage", "pageNo", "pages", "brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "ads_manage", "toolTips"));
+        return view('frontend.products.loan', compact("firstTimeLoad","productIdsPerPage", "pageNo", "pages", "brands", "page", "systemSetting", "banners", "products", "remainingProducts", "sliderProducts", "searchFilter", "ads_manage", "toolTips"));
     }
 
     public function combineCriteriaFilter(Request $request)
@@ -5891,7 +5892,7 @@ class PagesFrontController extends Controller
 
             if ($request->target == "pc-slider") {
                 foreach ($products as $product) {
-                    if ($product->featured == 1) {
+                    if ($product->featured == 1 && $product->product_url!=FOREIGN_CURRENCY_DEPOSIT_MODE) {
                         $featured[] = $i; ?>
                         <div class="product-col-01 home-featured">
                             <div class="ps-slider--feature-product saving">
@@ -6026,7 +6027,7 @@ class PagesFrontController extends Controller
                          data-owl-nav-right="<i class='fa fa-angle-right'></i>"
                          data-owl-speed="5000">
                         <?php foreach ($products as $product) {
-                            if ($product->featured == 0) { ?>
+                            if ($product->featured == 0 || $product->product_url==FOREIGN_CURRENCY_DEPOSIT_MODE) { ?>
 
                                 <div class="ps-block--short-product second">
                                     <div class="slider-img">

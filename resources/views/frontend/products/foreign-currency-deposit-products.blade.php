@@ -138,7 +138,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 foreign1">
                                         <select class="form-control currency" name="currency">
-                                            <option value="">All</option>
+                                            <option value="All">All</option>
                                             @if(count($currencies))
                                                 @foreach($currencies as $currency)
                                                     <option value="{{$currency->id}}"
@@ -181,7 +181,7 @@
             <!-- Search form end -->
             @if(count($products))
                 @include('productsSpInnerSlider')
-                @include('productsInnerSlider')
+                @include('foreignCurrencyInnerProductsInnerSlider')
             @endif
             @include('frontend.includes.legend')
             @if($products->count())

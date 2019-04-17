@@ -65,7 +65,7 @@
                         <!-- Go to www.addthis.com/dashboard to customize your tools -->
                         <div class="addthis_inline_share_toolbox"></div>
                     </div>
-                    <div class="ps-post__content ps-document">
+                    <div class="ps-post__content ps-document mce-content-body">
                         {!!  $page->contents!!}
                     </div>
                     <div class="ps-post__footer">
