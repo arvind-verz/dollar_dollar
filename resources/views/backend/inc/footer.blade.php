@@ -8,7 +8,8 @@
             APP_URL + '/frontend/plugins/bootstrap-select/dist/css/bootstrap-select.min.css',
             APP_URL + '/frontend/plugins/jquery-ui/jquery-ui.min.css',
             APP_URL + '/frontend/css/main.css',
-            APP_URL + '/frontend/css/custom.css'
+            APP_URL + '/frontend/css/custom.css',
+            APP_URL + '/frontend/css/custom-tiny.css'
         ],
         toolbar: "insert | insertfile  undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect | forecolor backcolor | image | code | table",
         setup: function (ed) {
@@ -97,14 +98,60 @@
         // variable plugin related
         plugins: "variables,code",
         variable_mapper: {
-            name: 'Name',
-            phone: 'Phone',
-            email: 'Email address'
+            full_name: 'Full Name',
+            email: 'Email',
+            telephone: 'Contact Number',
+            country_code: 'Country Code',
+            subject: 'Subject',
+            message: 'Message',
+            coverage: 'Coverage',
+            level: 'Level',
+            health_condition: 'Health Condition',
+            time: 'Time',
+            other_value: 'Other Value',
+            goals: 'Goals',
+            goal_other_value: 'Goals Other Value',
+            experience: 'Experience',
+            experience_detail: 'Experience Detail',
+            risks: 'Risk',
+            age: 'Age',
+            components: 'Components',
+            gender: 'Gender',
+            dob: 'Dob',
+            smoke: 'Smoke',
+            product_names: 'Products Name',
+            rate_type_search: 'Rate Type',
+            loan_amount: 'Loan Amount',
+            loan_type: 'Loan Type',
+            created_at: 'Created at',
+            ad_link: 'Ad Link',
+            ad: 'Ad Image',
+            logo: 'Logo',
+            end_date: 'End Date',
+            first_name: 'First Name',
+            last_name: 'Last Name',
+            reminder_day: 'Reminder Day',
+            bank: 'Bank',
+            account_name: 'Account Name',
+            amount: 'Amount',
+            tenure: 'Tenor',
+            tenure_calender: 'Tenor Type',
+            start_date: 'Start Date',
+            interest_earned: 'Interest Earned',
+            old_first_name: 'First Name',
+            old_last_name: 'Last Name',
+            salutation: 'Salutation',
+            status: 'Status',
+            email_notification: 'Email Notification',
+            adviser: 'Adviser',
+            updated_at_admin: 'Update Date',
+            updated_by: 'Update By',
+            updated_detail: 'Updated Details'
         }
         // variable_prefix: '{{',
     // variable_suffix: '}}'
         // variable_class: 'bbbx-my-variable',
-        ,variable_valid: ['name', 'phone', 'email']
+        ,variable_valid: ['full_name', 'email', 'telephone','country_code','subject','message','coverage','level','health_condition','time','other_value','goals','goal_other_value','experience','experience_detail','risks','age','components','gender','dob','smoke','product_names','rate_type_search','loan_amount','loan_amount','loan_type','created_at','created_at','ad_link','ad','logo','end_date','first_name','last_name','reminder_day','bank','account_name','amount','tenure','tenure_calender','start_date','interest_earned','old_first_name','old_last_name','salutation','status','email_notification','adviser','updated_at_admin','updated_by','updated_detail']
     });
     // Load multiple scripts
     var scriptLoader = new tinymce.dom.ScriptLoader();
@@ -298,11 +345,9 @@
     });
 </script>
 <script>
-    $(document).ready(function () {
-        $('#rootwizard').bootstrapWizard({
-            'tabClass': 'nav nav-pills',
-            'onPrevious': function (tab, navigation, index) {
-//alert(index);
+    $(document).on("click", ".all-validation", function() {
+
+                var index = $(this).data('index');
                 $("#error-div").addClass('display-none');
                 var product_id = $.trim($("#product-id").val());
                 var errorSection = document.getElementById("js-errors");
@@ -329,7 +374,7 @@
                     '<?php echo SAVING_DEPOSIT_F4; ?>', '<?php echo PRIVILEGE_DEPOSIT_F4; ?>', '<?php echo FOREIGN_CURRENCY_DEPOSIT_F5; ?>'
                 ];
                 var AIOA = ['<?php echo ALL_IN_ONE_ACCOUNT_F1; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F2; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F3; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F4; ?>', '<?php echo ALL_IN_ONE_ACCOUNT_F5; ?>'];
-                if (index == 1) {
+                if (index == 0 || index == 1 ) {
                     var name = $.trim($('#name').val());
                     var bank = $.trim($('#bank').val());
                     var ongoingStatus = $.trim($('#ongoing-status-1').data('status'));
@@ -420,7 +465,7 @@
                         i++;
                     }
                 }
-                if (index == 0) {
+                if (index == 1) {
                     var productType = $.trim($('#product-type').val());
                     var currency = $.trim($('#currency').val());
                     if ((productType == '<?php echo FOREIGN_CURRENCY_DEPOSIT ;?>') && (currency.length == 0)) {
@@ -1534,10 +1579,13 @@
                         errorSection.innerHTML = errorSection.innerHTML + '<p>' + v + '</p>';
                     });
                     return false;
+                }else{
+                    var target = $(this).data('href-target');
+                    $(target).trigger( "click" );
+
                 }
-            }
+
         });
-    });
     $(".alert-hide").on("click", function () {
         $("#error-div").addClass('display-none');
     });

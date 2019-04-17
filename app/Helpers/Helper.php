@@ -801,12 +801,12 @@ foreach ($productRanges as $k => $productRange) {
 $productRange->tenure_highlight = false;
 $interest = $productRange->bonus_interest + $productRange->rate_interest_other;
 if ($interest <= 0) {
-                            $productRange->monthly_payment = 0;
-                        }else{
-                            $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-                            $result = $mortage->calculate();
-                            $productRange->monthly_payment = $result->monthlyPayment;
-                        }
+                    $productRange->monthly_payment = 0;
+                }else{
+                    $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                    $result = $mortage->calculate();
+                    $productRange->monthly_payment = $result->monthlyPayment;
+                }
 if ($tenure > $totalTenure) {
 if ($j <= 2) {
 $totalInterest += $interest;
@@ -821,12 +821,12 @@ while ($j <= 2)
 {
 $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
 if ($interest <= 0) {
-                            $monthlyThereAfterPayment = 0;
-                        }else{
-                            $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-                            $result = $mortage->calculate();
-                            $monthlyThereAfterPayment = $result->monthlyPayment;
-                        }
+                    $monthlyThereAfterPayment = 0;
+                }else{
+                    $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                    $result = $mortage->calculate();
+                    $monthlyThereAfterPayment = $result->monthlyPayment;
+                }
 $totalInterest += $interest;
 $totalTenure++;
 $totalMonthlyInstallment += $monthlyThereAfterPayment;
@@ -834,12 +834,12 @@ $j++;
 }
 $interest = $firstProductRange->there_after_bonus_interest + $firstProductRange->there_after_rate_interest_other;
 if ($interest <= 0) {
-                        $product->there_after_installment = 0;
-                    }else{
-                        $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
-                        $result = $mortage->calculate();
-                        $product->there_after_installment = $result->monthlyPayment;
-                    }
+                $product->there_after_installment = 0;
+            }else{
+                $mortage = new Defr\MortageRequest($searchValue, $interest, $tenure);
+                $result = $mortage->calculate();
+                $product->there_after_installment = $result->monthlyPayment;
+            }
 $product->placement = $searchValue;
 $product->tenure = $tenure;
 if ($tenure > $productRangeCount) {
@@ -888,24 +888,24 @@ $table_tag[] = '<td></td>';
 $i = 1;
 foreach($customer_reports as $customer_report) {
 if($i!=1) { ?> <tr>
-    <td><?php echo ucfirst($customer_report->first_name) . ' ' . ucfirst($customer_report->last_name).'<br/>'. $customer_report->email.'<br/>'. $customer_report->country_code . $customer_report->tel_phone; ?></td></td>
-    <td style='display: none'></td>
-    <td></td>
-    <?php } ?>
-    <td><?php if(!$customer_report->title){ echo $customer_report->other_bank;} else{echo $customer_report->title;}  ?></td>
-    <td><?php echo ucwords($customer_report->account_name); ?></td>
-    <td><?php echo '$'.$customer_report->amount; ?></td>
-    <td><?php if($customer_report->end_date) {echo date('d-m-Y', strtotime($customer_report->end_date));} ?></td>
-    <td>
-        <?php
-        if($customer_report->status==1) {
-        echo 'Active';
-        }
-        else {
-        echo 'Inactive';
-        }
-        ?>
-    </td>
+<td><?php echo ucfirst($customer_report->first_name) . ' ' . ucfirst($customer_report->last_name).'<br/>'. $customer_report->email.'<br/>'. $customer_report->country_code . $customer_report->tel_phone; ?></td></td>
+<td style='display: none'></td>
+<td></td>
+<?php } ?>
+<td><?php if(!$customer_report->title){ echo $customer_report->other_bank;} else{echo $customer_report->title;}  ?></td>
+<td><?php echo ucwords($customer_report->account_name); ?></td>
+<td><?php echo '$'.$customer_report->amount; ?></td>
+<td><?php if($customer_report->end_date) {echo date('d-m-Y', strtotime($customer_report->end_date));} ?></td>
+<td>
+<?php
+if($customer_report->status==1) {
+echo 'Active';
+}
+else {
+echo 'Inactive';
+}
+?>
+</td>
 <?php if($i!=1) { ?> </tr> <?php }
 if($i==1) { ?> </tr> <?php }
 $i++;
@@ -969,10 +969,16 @@ return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 public static function getPostedBy()
 {
-    if(!empty($id)) {
-        $data = Admin::find('id', $id)->first();
-        return $data->first_name . ' ' . $data->last_name;
-    }
-    return "";
+if(!empty($id)) {
+$data = Admin::find('id', $id)->first();
+return $data->first_name . ' ' . $data->last_name;
 }
+return "";
+}
+
+public static function replaceStrByValue($key, $value, $contents)
+    {
+        $newContents = str_replace($key, $value, $contents);
+        return $newContents;
+    }
 }

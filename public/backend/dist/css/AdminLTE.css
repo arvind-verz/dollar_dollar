@@ -6751,3 +6751,6 @@ td img {
     font-weight: 600;
     padding: 1px 10px;
 }
+.all-validation{
+    cursor: pointer;
+}

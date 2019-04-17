@@ -32,7 +32,7 @@ $(document).ready(function () {
         {
             "pageLength": 100,
             'ordering': true,
-            'order': [[16, 'desc'], [15, 'desc']],
+            'order': [[16, 'desc']],
             "columnDefs": [],
             "aoColumnDefs": [{
                 "aTargets": [],
@@ -61,7 +61,7 @@ $(document).ready(function () {
         {
             "pageLength": 100,
             'ordering': true,
-            'order': [[11, 'desc'], [10, 'desc']],
+            'order': [[11, 'desc']],
             "columnDefs": [],
             "aoColumnDefs": [{
                 "aTargets": [],
@@ -145,8 +145,7 @@ $(document).ready(function () {
             "pageLength": 100,
             'ordering': true,
             'order': [
-                [6, 'desc'],
-                [5, 'desc']
+                [6, 'desc']
             ],
             "aoColumnDefs": [{
                 "aTargets": [],
@@ -163,29 +162,28 @@ $(document).ready(function () {
                     extend: 'print',
                     footer: true,
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
+                        columns: [1, 2, 3, 4, 5, 6, 7,8]
                     }
                 },
                 {
                     extend: 'csv',
                     footer: true,
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
+                        columns: [1, 2, 3, 4, 5, 6, 7,8]
                     }
                 },
                 {
                     extend: 'excel',
                     footer: true,
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7]
+                        columns: [1, 2, 3, 4, 5, 6, 7,8]
                     }
                 }
             ],
             "pageLength": 100,
             'ordering': true,
             'order': [
-                [7, 'desc'],
-                [6, 'desc']
+                [8, 'desc']
             ],
             "aoColumnDefs": [{
                 "aTargets": [],
@@ -208,10 +206,12 @@ $(document).ready(function () {
                     customize: function (win) {
                         $(win.document.body)
                             .css('font-size', '10pt');
+                        $(win.document.body)
+                            .css('margin', '20pt');
                         $(win.document.body).find('table')
                             .addClass('compact')
                             .css('font-size', 'inherit');
-                    }
+                    },
                 },
                 {
                     extend: 'csv',
@@ -291,10 +291,12 @@ $(document).ready(function () {
                     customize: function (win) {
                         $(win.document.body)
                             .css('font-size', '10pt');
+                        $(win.document.body)
+                            .css('margin', '20pt');
                         $(win.document.body).find('table')
                             .addClass('compact')
                             .css('font-size', 'inherit');
-                    }
+                    },
                 },
                 {
                     extend: 'csv',
@@ -360,7 +362,7 @@ $(document).ready(function () {
         {
             "pageLength": 100,
             'ordering': true,
-            'order': [[5, 'desc'], [4, 'desc']],
+            'order': [[5, 'desc']],
             "columnDefs": [],
             "aoColumnDefs": [{
                 "aTargets": [],
@@ -374,7 +376,7 @@ $(document).ready(function () {
         {
             "pageLength": 100,
             'ordering': true,
-            'order': [[9, 'desc'], [8, 'desc'], [7, 'desc']],
+            'order': [[10, 'desc']],
             "aoColumnDefs": [{
                 "aTargets": [],
                 "bSortable": false
@@ -388,7 +390,7 @@ $(document).ready(function () {
         {
             "pageLength": 100,
             'ordering': true,
-            'order': [[7, 'desc'], [6, 'desc']],
+            'order': [[7, 'desc']],
             "aoColumnDefs": [{
                 "aTargets": [],
                 "bSortable": false
@@ -404,7 +406,9 @@ $(document).ready(function () {
             dom: 'lBfrtip',
             buttons: [
                 {
-                    extend: 'pdf',
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
                     footer: true,
                     exportOptions: {
                         columns: [0, 1, 2, 3, 4, 5, 6]
@@ -543,6 +547,22 @@ $(document).ready(function () {
 
             ]
         });
+
+
+    $('#email-templates').DataTable(
+        {
+            "pageLength": 100,
+            'ordering': true,
+            'order': [[5, 'desc']],
+            "columnDefs": [],
+            "aoColumnDefs": [{
+                "aTargets": [],
+                "bSortable": false
+            },
+                {width: 100, targets: 0},
+
+            ]
+        });
     /*$('#product-ads').DataTable(
      {
      "pageLength": 100,
@@ -573,6 +593,8 @@ $(document).ready(function () {
                     customize: function (win) {
                         $(win.document.body)
                             .css('font-size', '10pt');
+                        $(win.document.body)
+                            .css('margin', '20pt');
                         $(win.document.body).find('table')
                             .addClass('compact')
                             .css('font-size', 'inherit');
@@ -655,10 +677,12 @@ $(document).ready(function () {
                     customize: function (win) {
                         $(win.document.body)
                             .css('font-size', '10pt');
+                        $(win.document.body)
+                            .css('margin', '20pt');
                         $(win.document.body).find('table')
                             .addClass('compact')
                             .css('font-size', 'inherit');
-                    }
+                    },
                 },
                 {
                     extend: 'csv',
@@ -731,10 +755,12 @@ $(document).ready(function () {
                     customize: function (win) {
                         $(win.document.body)
                             .css('font-size', '10pt');
+                        $(win.document.body)
+                            .css('margin', '20pt');
                         $(win.document.body).find('table')
                             .addClass('compact')
                             .css('font-size', 'inherit');
-                    }
+                    },
                 },
                 {
                     extend: 'csv',
@@ -807,10 +833,12 @@ $(document).ready(function () {
                     customize: function (win) {
                         $(win.document.body)
                             .css('font-size', '10pt');
+                        $(win.document.body)
+                            .css('margin', '20pt');
                         $(win.document.body).find('table')
                             .addClass('compact')
                             .css('font-size', 'inherit');
-                    }
+                    },
                 },
                 {
                     extend: 'csv',
@@ -883,10 +911,12 @@ $(document).ready(function () {
                     customize: function (win) {
                         $(win.document.body)
                             .css('font-size', '10pt');
+                        $(win.document.body)
+                            .css('margin', '20pt');
                         $(win.document.body).find('table')
                             .addClass('compact')
                             .css('font-size', 'inherit');
-                    }
+                    },
                 },
                 {
                     extend: 'csv',

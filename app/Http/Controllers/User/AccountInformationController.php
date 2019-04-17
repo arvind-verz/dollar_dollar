@@ -19,6 +19,7 @@ use App\Mail\ProfileUpdated;
 use App\CustomerUpdateDetail;
 use Exception;
 use App\Mail\UpdateDetailNotify;
+use App\EmailTemplate;
 
 class AccountInformationController extends Controller
 {
@@ -138,6 +139,7 @@ class AccountInformationController extends Controller
     {
 
         $data = [];
+        $data1 = [];
         $oldData = [];
         $newData = [];
         $updated = false;
@@ -154,8 +156,8 @@ class AccountInformationController extends Controller
         if ($validate->fails()) {
             return redirect()->route('account-information.edit')->withErrors($validate)->withInput();
         } else {
-            $data['old_first_name'] = $oldUser->first_name;
-            $data['old_last_name'] = $oldUser->last_name;
+            $data1['{{old_first_name}}'] = $oldUser->first_name;
+            $data1['{{old_last_name}}'] = $oldUser->last_name;
 
             if ($oldUser->first_name != $request->first_name) {
                 $newData['first_name'] = $data['first_name'] = $request->first_name;
@@ -191,12 +193,43 @@ class AccountInformationController extends Controller
             if ($oldUser->email_notification != $request->email_notification) {
                 $newData['email_notification'] = $data['email_notification'] = $request->email_notification;
                 $oldData['email_notification'] = $oldUser->email_notification;
+                if ($data['email_notification'] == 0) {
+                    $data['email_notification'] = "No";
+                } elseif ($data['email_notification'] == 1) {
+                    $data['email_notification'] = "Yes";
+                }
                 $updated = true;
             }
             if ($oldUser->adviser != $request->adviser) {
                 $newData['adviser'] = $data['adviser'] = $request->adviser;
+                if ($data['adviser'] == 0) {
+                    $data['adviser'] = "No";
+                } elseif ($data['adviser'] == 1) {
+                    $data['adviser'] = "Yes";
+                }
                 $oldData['adviser'] = $oldUser->adviser;
                 $updated = true;
+            }
+            $ads = collect([]);
+            $adsCollection = AdsManagement::where('delete_status', 0)
+                ->where('display', 1)
+                ->where('page', 'email')
+                ->inRandomOrder()
+                ->get();
+
+            if ($adsCollection->count()) {
+                $ads = \Helper::manageAds($adsCollection);
+            }
+            $current_time = strtotime(date('Y-m-d', strtotime('now')));
+            $ad_start_date = strtotime($ads->ad_start_date);
+            $ad_end_date = strtotime($ads->ad_end_date);
+
+            if ($ads->paid_ads_status == 1 && $current_time >= $ad_start_date && $current_time <= $ad_end_date && !empty($ads->paid_ad_image)) {
+                $ad = $ads->paid_ad_image;
+                $adLink = $ads->paid_ad_link;
+            } else {
+                $ad = $ads->ad_image;
+                $adLink = $ads->ad_link;
             }
             if ($updated) {
                 $account_information->email = $request->email;
@@ -204,7 +237,8 @@ class AccountInformationController extends Controller
                 $account_information->last_name = $request->last_name;
                 $account_information->country_code = $request->country_code;
                 $account_information->tel_phone = $request->tel_phone;
-                /*$account_information->notification    =   $request->privacy;*/
+                $accountInformation->updated_at = Carbon::now()->toDateTimeString();
+                $account_information->updated_at_user    =   Carbon::now()->toDateTimeString();
                 $account_information->email_notification = $request->email_notification;
                 $account_information->adviser = $request->adviser;
                 $account_information->save();
@@ -218,15 +252,118 @@ class AccountInformationController extends Controller
                 $customerDetailUpdate->updated_by = FRONT_USER;
                 $customerDetailUpdate->save();
 
-                $data['profile_url'] = url('/') . '/account-information';
-                $data['sender_email'] = $systemSetting->auto_email;
-                $data['sender_name'] = $systemSetting->email_sender_name;
-                $data['updated_by'] = YOU;
+                $emailTemplate = EmailTemplate::find(UPDATE_DETAIL_NOTIFY_MAIL_ID);
+                if ($emailTemplate) {
+                    $emailTemplate->auto_email = $systemSetting->auto_email;
+                    $emailTemplate->email_sender_name = $systemSetting->email_sender_name;
+                    $emailTemplate->admin_email = $systemSetting->admin_email;
+                    $emailTemplate->email = $request->email;
+                    $systemSetting = $this->systemSetting;
+                    $logo = null;
+                    if ($systemSetting) {
+                        $logo = $systemSetting->logo;
+                    }
 
-                try {
-                    Mail::to($account_information->email)->send(new UpdateDetailNotify($data));
-                } catch (Exception $exception) {
-                    dd($exception);
+                    $data1['{{updated_detail}}'] = '<table style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; margin: 30px auto; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;"><tbody>';
+
+                    if (isset($data['salutation'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Salutation</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['salutation'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['first_name'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">First Name</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['first_name'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['last_name'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Last Name</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['last_name'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['email'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Email</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['email'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['password'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Password</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['password'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['country_code'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Country Code</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['country_code'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['tel_phone'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Contact Number</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['tel_phone'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['status'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Status</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['status'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['email_notification'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Newsletter</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['email_notification'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['adviser'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Consent to marketing information</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . $data['adviser'] . '</td>
+</tr>';
+                    }
+                    if (isset($data['updated_at_admin'])) {
+                        $data1['{{updated_detail}}'] .= '<tr>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">Update on</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">:</td>
+<td style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 15px; line-height: 18px; padding: 10px 0; margin: 0;">' . date("Y-m-d h:i A", strtotime($data['updated_at_admin'])) . '</td>
+</tr>';
+                    }
+                    $data1['{{updated_detail}}'] .= '</tbody></table>';
+
+                    if ($logo) {
+                        $data1['{{logo}}'] = $data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href=' . url("/") . '> <img src=' . asset($logo) . '> </a>';
+                    } else {
+                        $data1['{{logo}}'] = $data2['{{logo}}'] = '<a target="_blank" rel="noopener noreferrer" style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #bbbfc3; font-size: 19px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;" href=' . url("/") . '>' . config('app.name') . '</a>';
+                    }
+                    $data2['{{ad}}'] = "<a href=" . $adLink . "><img style='max-width: 570px;' src=" . asset($ad) . "></a>";
+                    $key1 = array_keys($data1);
+                    $value1 = array_values($data1);
+                    $newContent1 = \Helper::replaceStrByValue($key1, $value1, $emailTemplate->contents);
+                    try {
+                        Mail::send('frontend.emails.reminder', ['content' => $newContent1], function ($message) use ($emailTemplate) {
+                            $message->from($emailTemplate->auto_email, $emailTemplate->email_sender_name);
+                            $message->to($emailTemplate->email)->subject($emailTemplate->subject);
+                        });
+
+                    } catch (Exception $exception) {
+
+                    }
+
                 }
             }
         }
@@ -264,6 +401,7 @@ class AccountInformationController extends Controller
                 $accountInformation->status = 0;
                 $accountInformation->updated_by = "User";
                 $accountInformation->updated_at = Carbon::now()->toDateTimeString();
+                $accountInformation->updated_at_user = Carbon::now()->toDateTimeString();
 
                 $userLog = New UserLog();
                 $userLog->user_id = $id;
