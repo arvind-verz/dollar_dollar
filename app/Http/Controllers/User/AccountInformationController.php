@@ -237,7 +237,7 @@ class AccountInformationController extends Controller
                 $account_information->last_name = $request->last_name;
                 $account_information->country_code = $request->country_code;
                 $account_information->tel_phone = $request->tel_phone;
-                $accountInformation->updated_at = Carbon::now()->toDateTimeString();
+                $account_information->updated_at = Carbon::now()->toDateTimeString();
                 $account_information->updated_at_user    =   Carbon::now()->toDateTimeString();
                 $account_information->email_notification = $request->email_notification;
                 $account_information->adviser = $request->adviser;
